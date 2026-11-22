@@ -470,6 +470,12 @@ function updateMode() {
   }
 }
 
+// Cancel buttons are type="button" so that pressing Enter/Go in a field submits
+// the dialog's primary action instead of cancelling it.
+for (const b of document.querySelectorAll('dialog [data-close]')) {
+  b.addEventListener('click', () => b.closest('dialog').close('cancel'));
+}
+
 // ---------------------------------------------------------------------------
 // Input handling
 // ---------------------------------------------------------------------------
