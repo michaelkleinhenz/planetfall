@@ -73,7 +73,7 @@ function parseJson(text) {
  */
 export async function interpret({ apiKey, model, input, language, scene, history, repair, signal }) {
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: SYSTEM_PROMPT, cache: true },
     {
       role: 'user',
       content:

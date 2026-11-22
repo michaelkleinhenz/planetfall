@@ -30,6 +30,26 @@ export async function pickDefaultModel() {
   }
 }
 
+// Providers that need an explicit cache breakpoint (cache_control). Most other
+// providers on OpenRouter (OpenAI, DeepSeek, xAI, ...) cache long, identical
+// prompt prefixes automatically, so a stable system prompt is all they need.
+const EXPLICIT_CACHE = /^(anthropic|google)\//;
+
+/**
+ * Messages may carry `cache: true` to mark a long, unchanging prefix (the system
+ * prompt) for prompt caching. Cached input tokens are billed at a fraction of
+ * the normal price on subsequent requests.
+ */
+function prepareMessages(model, messages) {
+  return messages.map(({ cache, ...m }) => {
+    if (!cache || !EXPLICIT_CACHE.test(model)) return m;
+    return { ...m, content: [{ type: 'text', text: m.content, cache_control: { type: 'ephemeral' } }] };
+  });
+}
+
+/** Running token totals for this page session (also logged to the console). */
+export const usageStats = { requests: 0, promptTokens: 0, cachedTokens: 0, completionTokens: 0, cost: 0 };
+
 export async function chat({ apiKey, model, messages, temperature = 0, maxTokens = 400, signal }) {
   const res = await fetch(`${API}/chat/completions`, {
     method: 'POST',
@@ -39,7 +59,13 @@ export async function chat({ apiKey, model, messages, temperature = 0, maxTokens
       'Content-Type': 'application/json',
       'X-Title': 'Planetfall AI',
     },
-    body: JSON.stringify({ model, messages, temperature, max_tokens: maxTokens }),
+    body: JSON.stringify({
+      model,
+      messages: prepareMessages(model, messages),
+      temperature,
+      max_tokens: maxTokens,
+      usage: { include: true },
+    }),
   });
   if (!res.ok) {
     let detail = '';
@@ -49,5 +75,15 @@ export async function chat({ apiKey, model, messages, temperature = 0, maxTokens
     throw err;
   }
   const data = await res.json();
+  const u = data.usage;
+  if (u) {
+    usageStats.requests++;
+    usageStats.promptTokens += u.prompt_tokens || 0;
+    usageStats.cachedTokens += u.prompt_tokens_details?.cached_tokens || 0;
+    usageStats.completionTokens += u.completion_tokens || 0;
+    usageStats.cost += u.cost || 0;
+    console.debug('[openrouter]', model, `prompt ${u.prompt_tokens} (cached ${u.prompt_tokens_details?.cached_tokens || 0}),`,
+      `completion ${u.completion_tokens}, cost $${(u.cost || 0).toFixed(5)} | session $${usageStats.cost.toFixed(4)}`);
+  }
   return data.choices?.[0]?.message?.content ?? '';
 }

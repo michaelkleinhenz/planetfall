@@ -23,6 +23,10 @@ AI interpreter. Without a key, the game runs with the classic parser.
   interface. With the AI on, the game's text is also translated live (click a passage to
   see the original English), and you can type in German. The game itself keeps running in
   English, and translations are cached in the browser.
+- **Prompt caching:** the long, unchanging instructions (verb list and rules) are sent
+  as a cacheable prefix. Anthropic and Google models get an explicit cache breakpoint;
+  OpenAI, DeepSeek and others cache identical prefixes automatically. Token usage,
+  cached tokens and cost per request are logged to the browser console (`[openrouter]`).
 - Start a line with `>` to bypass the AI and talk to the original parser directly.
 - The UI also has undo (Ctrl+Z), named save slots, autosave/resume, and optionally shows
   the commands the AI sent to the game.

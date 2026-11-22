@@ -56,7 +56,7 @@ export async function translate({ apiKey, model, language, text, signal }) {
   if (c.has(key)) return c.get(key);
   const ask = (extra = '') => limited(() => chat({
     apiKey, model, signal, maxTokens: Math.min(4000, 200 + text.length * 2),
-    messages: [{ role: 'system', content: SYSTEM(language) }, { role: 'user', content: wrap(language, text) + extra }],
+    messages: [{ role: 'system', content: SYSTEM(language), cache: true }, { role: 'user', content: wrap(language, text) + extra }],
   })).then(clean);
   let out = await ask();
   if (unchanged(out, text) && /[a-z]{3}/i.test(text)) {
