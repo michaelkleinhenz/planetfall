@@ -5,6 +5,7 @@ import { GameSession } from './engine/session.js';
 import { interpret, isParserError } from './ai/interpreter.js';
 import { currentScene } from './ai/scene.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
+import { translate, translateLabel } from './ai/translator.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -12,7 +13,7 @@ const els = {
   hint: $('hint'), badge: $('mode-badge'), room: $('status-room'), score: $('status-score'), time: $('status-time'),
   undo: $('btn-undo'), save: $('btn-save'), load: $('btn-load'), settingsBtn: $('btn-settings'),
   settings: $('settings-dialog'), setKey: $('set-key'), setModel: $('set-model'), setAi: $('set-ai'),
-  setShow: $('set-show'), modelList: $('model-list'),
+  setShow: $('set-show'), modelList: $('model-list'), setLang: $('set-lang'),
   slots: $('slots-dialog'), slotsTitle: $('slots-title'), slotsList: $('slots-list'), slotName: $('slot-name'),
   slotNameField: $('slot-name-field'), slotsOk: $('slots-ok'),
 };
@@ -32,11 +33,16 @@ const store = {
 };
 
 const settings = Object.assign(
-  { apiKey: '', model: '', aiEnabled: true, showCommands: true },
+  { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: '' },
   store.get('pf.settings', {}),
 );
 const saveSettings = () => store.set('pf.settings', settings);
 const aiActive = () => settings.aiEnabled && !!settings.apiKey;
+// Translation is active when a non-English language is chosen and the AI is on.
+const targetLanguage = () => {
+  const l = (settings.language || '').trim();
+  return aiActive() && l && !/^english$/i.test(l) ? l : '';
+};
 
 // ---------------------------------------------------------------------------
 // Transcript rendering
@@ -63,13 +69,32 @@ function renderGameText(segments, container) {
       continue;
     }
     const p = el('p', 'game-text');
-    // Highlight room headings (a line that is exactly the current room's name).
-    const lines = seg.text.split('\n');
+    // Room headings: lines that are exactly the current room's name (remembered per segment,
+    // so they stay highlighted in translations and after reloads).
+    const orig = seg.text.split('\n');
+    if (!seg.titles) {
+      seg.titles = orig.flatMap((line, i) => (currentRoom && (line === currentRoom ||
+        line.startsWith(currentRoom + ', in the') || line.startsWith(currentRoom + ', on the')) ? [i] : []));
+    }
+    const showTranslation = seg.translated && !seg.showOriginal;
+    const lines = (showTranslation ? seg.translated : seg.text).split('\n');
+    const titleSet = new Set(lines.length === orig.length || !showTranslation ? seg.titles : []);
     lines.forEach((line, i) => {
-      const isTitle = currentRoom && (line === currentRoom || line.startsWith(currentRoom + ', in the') || line.startsWith(currentRoom + ', on the'));
-      if (isTitle) p.append(el('span', 'room-title', line));
+      if (titleSet.has(i)) p.append(el('span', 'room-title', line));
       else p.append(document.createTextNode(line + (i < lines.length - 1 ? '\n' : '')));
     });
+    if (seg.translated) {
+      p.classList.add('translated');
+      p.title = seg.showOriginal ? 'Original text — click to show the translation' : 'Click to show the original English text';
+      p.addEventListener('click', () => {
+        if (window.getSelection()?.toString()) return;
+        seg.showOriginal = !seg.showOriginal;
+        const fresh = el('div');
+        renderGameText([seg], fresh);
+        p.replaceWith(...fresh.childNodes);
+      });
+    }
+    if (seg.translating) p.classList.add('translating');
     container.append(p);
   }
 }
@@ -123,6 +148,7 @@ const session = new GameSession({
   onStatus: ({ room, score, moves }) => {
     currentRoom = room;
     els.room.textContent = room || '—';
+    if (targetLanguage()) updateStatusRoom();
     els.score.textContent = score;
     els.time.textContent = moves;
   },
@@ -152,7 +178,8 @@ async function handleInput(raw) {
       const res = await session.send(text);
       gameEnded = false;
       undoStack = [];
-      addEntry({ input: text, steps: [{ segments: res.segments }] });
+      const entry = { input: text, steps: [{ segments: res.segments }] };
+      await translateEntry(entry, addEntry(entry));
       return;
     }
     undoStack.push(session.currentSnapshot());
@@ -162,7 +189,7 @@ async function handleInput(raw) {
       const cmd = text.replace(/^>\s*/, '');
       const res = await sendToGame(cmd);
       const entry = { input: text, steps: [{ segments: res.segments }] };
-      addEntry(entry);
+      await translateEntry(entry, addEntry(entry));
       aiHistory.push({ input: cmd, commands: [cmd], output: res.text });
     } else {
       await aiTurn(text);
@@ -184,7 +211,7 @@ async function aiTurn(text) {
   let result;
   try {
     result = await interpret({
-      apiKey: settings.apiKey, model: settings.model, input: text,
+      apiKey: settings.apiKey, model: settings.model, input: text, language: targetLanguage(),
       scene: currentScene(), history: aiHistory.slice(-10),
     });
   } catch (err) {
@@ -195,6 +222,7 @@ async function aiTurn(text) {
       { segments: res.segments });
     aiHistory.push({ input: text, commands: [text], output: res.text });
     node = rerender(node, entry);
+    await translateEntry(entry, node);
     return;
   }
   stopThinking();
@@ -210,7 +238,7 @@ async function aiTurn(text) {
       try {
         const stop = showThinking(node);
         const fix = await interpret({
-          apiKey: settings.apiKey, model: settings.model, input: text, scene: currentScene(),
+          apiKey: settings.apiKey, model: settings.model, input: text, language: targetLanguage(), scene: currentScene(),
           history: aiHistory.slice(-10), repair: { command, error: res.text },
         });
         stop();
@@ -233,7 +261,8 @@ async function aiTurn(text) {
   }
   if (!result.commands.length && !result.reply) entry.steps.push({ note: "I couldn't turn that into a game command." });
   aiHistory.push({ input: text, commands: result.commands, output: outputs.join('\n') });
-  rerender(node, entry);
+  node = rerender(node, entry);
+  await translateEntry(entry, node);
 }
 
 function rerender(node, entry) {
@@ -241,6 +270,37 @@ function rerender(node, entry) {
   node.replaceWith(fresh);
   scrollDown();
   return fresh;
+}
+
+/** Translate all untranslated game text in an entry, updating its node as it goes. */
+async function translateEntry(entry, node) {
+  const language = targetLanguage();
+  if (!language) return node;
+  const segs = (entry.steps || []).flatMap((st) => st.segments || []).filter((sg) => !sg.fixed && !sg.translated);
+  if (!segs.length) return node;
+  segs.forEach((sg) => { sg.translating = true; });
+  node = rerender(node, entry);
+  await Promise.all(segs.map(async (sg) => {
+    try {
+      sg.translated = await translate({ apiKey: settings.apiKey, model: settings.model, language, text: sg.text });
+    } catch (err) {
+      sg.translateError = err.message;
+    }
+    sg.translating = false;
+  }));
+  const failed = segs.find((sg) => sg.translateError);
+  if (failed) entry.steps.push({ note: `Translation failed (${failed.translateError}); showing the original text.`, error: true });
+  return rerender(node, entry);
+}
+
+async function updateStatusRoom() {
+  const language = targetLanguage();
+  if (!language || !currentRoom) { els.room.textContent = currentRoom || '—'; return; }
+  const room = currentRoom;
+  try {
+    const t = await translateLabel({ apiKey: settings.apiKey, model: settings.model, language, text: room });
+    if (room === currentRoom) els.room.textContent = t;
+  } catch { /* keep English */ }
 }
 
 async function undo() {
@@ -334,6 +394,7 @@ async function openSettings() {
   els.setModel.value = settings.model;
   els.setAi.checked = settings.aiEnabled;
   els.setShow.checked = settings.showCommands;
+  els.setLang.value = settings.language || '';
   els.settings.showModal();
   if (!els.modelList.childElementCount) {
     listModels().then((models) => {
@@ -352,10 +413,25 @@ els.settings.addEventListener('close', async () => {
   settings.model = els.setModel.value.trim();
   settings.aiEnabled = els.setAi.checked;
   settings.showCommands = els.setShow.checked;
+  const prevLang = settings.language;
+  settings.language = els.setLang.value.trim();
   if (settings.apiKey && !settings.model) settings.model = await pickDefaultModel();
   saveSettings();
   updateMode();
+  if (settings.language !== prevLang) {
+    updateStatusRoom();
+    if (targetLanguage()) translateVisible();
+  }
 });
+
+/** After switching language: translate the most recent turns already on screen. */
+async function translateVisible() {
+  const turns = [...els.transcript.querySelectorAll('section.turn')];
+  const recent = transcriptLog.slice(-6);
+  const nodes = turns.slice(-recent.length);
+  for (const sg of recent.flatMap((e) => (e.steps || []).flatMap((st) => st.segments || []))) delete sg.translated;
+  await Promise.all(recent.map((e, i) => (nodes[i] ? translateEntry(e, nodes[i]) : null)));
+}
 
 function updateMode() {
   const ai = aiActive();
@@ -366,7 +442,10 @@ function updateMode() {
   els.input.placeholder = ai ? 'Say anything… e.g. "grab the brush and head up the stairs"' : 'Type a command, e.g. "examine brush"';
   els.hint.replaceChildren();
   if (ai) {
-    els.hint.append('AI interpreter on — start a line with ">" to talk to the original parser directly.');
+    const lang = targetLanguage();
+    els.hint.append(lang
+      ? `AI interpreter on · playing in ${lang} — type in any language; click a passage to see the original.`
+      : 'AI interpreter on — start a line with ">" to talk to the original parser directly.');
   } else {
     els.hint.append('Classic parser. ');
     const a = el('a', null, settings.apiKey ? 'Turn on the AI interpreter' : 'Add an OpenRouter key');
@@ -449,7 +528,8 @@ async function boot() {
       addEntry({ steps: [{ segments: opening.segments }] });
     }
   } else {
-    addEntry({ steps: [{ segments: opening.segments }] });
+    const entry = { steps: [{ segments: opening.segments }] };
+    translateEntry(entry, addEntry(entry));
     aiHistory.push({ input: '', commands: [], output: opening.text });
   }
   if (settings.apiKey && !settings.model) {

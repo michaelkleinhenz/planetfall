@@ -19,6 +19,10 @@ AI interpreter. Without a key, the game runs with the classic parser.
 
 - The key is stored only in your browser (localStorage) and sent only to openrouter.ai.
 - Pick any OpenRouter model. Left empty, one is chosen from a preference list.
+- **Play in any language:** set a language in the settings. The AI then translates the
+  game's text as you play (click a passage to see the original English) and understands
+  what you type in that language. The game itself keeps running in English, and
+  translations are cached in the browser.
 - Start a line with `>` to bypass the AI and talk to the original parser directly.
 - The UI also has undo (Ctrl+Z), named save slots, autosave/resume, and optionally shows
   the commands the AI sent to the game.

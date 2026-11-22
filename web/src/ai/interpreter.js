@@ -71,7 +71,7 @@ function parseJson(text) {
  * Translate player input into game commands.
  * @returns {Promise<{commands: string[], reply: string}>}
  */
-export async function interpret({ apiKey, model, input, scene, history, repair, signal }) {
+export async function interpret({ apiKey, model, input, language, scene, history, repair, signal }) {
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
     {
@@ -82,6 +82,9 @@ export async function interpret({ apiKey, model, input, scene, history, repair, 
         (repair
           ? `Your previous command "${repair.command}" was rejected by the parser with: "${repair.error.trim()}". ` +
             `Rephrase it using only known words, or return no commands with a reply if it cannot be expressed.\n\n`
+          : '') +
+        (language
+          ? `The player is playing in ${language}: their input may be in ${language} (map it to the English game vocabulary), and any "reply" must be written in ${language}.\n\n`
           : '') +
         `PLAYER INPUT: ${input}`,
     },

@@ -214,3 +214,7 @@ code { font-family: var(--mono); font-size: .92em; }
   .transcript { padding: 18px 16px; font-size: 17px; }
   .inputbar { padding: 10px 16px 12px; }
 }
+
+.game-text.translated { cursor: pointer; }
+.game-text.translated:hover { text-decoration: underline dotted color-mix(in srgb, var(--muted) 50%, transparent); text-underline-offset: 5px; }
+.game-text.translating { opacity: .45; transition: opacity .3s; }

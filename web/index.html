@@ -70,6 +70,17 @@
         <input id="set-model" type="text" list="model-list" spellcheck="false" placeholder="Leave empty to pick automatically">
         <datalist id="model-list"></datalist>
       </label>
+      <label class="field">
+        <span>Language</span>
+        <input id="set-lang" type="text" list="lang-list" placeholder="English (original)" spellcheck="false">
+        <datalist id="lang-list">
+          <option value="English"><option value="Deutsch"><option value="Français"><option value="Español">
+          <option value="Italiano"><option value="Português"><option value="Nederlands"><option value="Polski">
+          <option value="Svenska"><option value="Türkçe"><option value="Русский"><option value="Українська">
+          <option value="日本語"><option value="中文"><option value="한국어"><option value="العربية"><option value="हिन्दी">
+        </datalist>
+      </label>
+      <p class="muted small">In another language, the AI translates the game's text for you and understands what you type in that language. Click any passage to see the original English.</p>
       <label class="check"><input id="set-ai" type="checkbox"> Use the AI interpreter</label>
       <label class="check"><input id="set-show" type="checkbox"> Show the commands the AI sends to the game</label>
       <p class="muted small">Your key is stored only in this browser (localStorage) and sent only to openrouter.ai.
