@@ -25,6 +25,16 @@ AI interpreter. Without a key, the game runs with the classic parser.
 
 Terminal play (classic parser): `npm run play`.
 
+### Deploying to GitHub Pages
+
+`.github/workflows/pages.yml` regenerates the translation, runs the tests and publishes
+`web/` to GitHub Pages on every push to `main`/`master` (or when started manually). Enable
+it once under **Settings → Pages → Source: GitHub Actions**.
+
+The site is fully static and needs no secrets: each player enters their own OpenRouter key,
+which is kept only in their own browser's localStorage. It is sent only from that browser
+directly to openrouter.ai, never to GitHub or any other server.
+
 ## How it works
 
 | Part | Location | What it does |
