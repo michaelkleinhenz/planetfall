@@ -389,7 +389,7 @@ async function giveHint(stronger, typed) {
     });
     entry.steps.push({ note: hint, hint: true, level: hintLevel });
   } catch (err) {
-    entry.steps.push({ note: t('hintFailed', { error: err.message }), error: true });
+    entry.steps.push({ note: t('hintFailed', { error: errorText(err) }), error: true });
   } finally {
     stop();
     node = rerender(node, entry);
@@ -414,7 +414,7 @@ async function aiTurn(text) {
     stopThinking();
     // Fall back to the original parser so the game stays playable.
     const res = await sendToGame(text);
-    entry.steps.push({ note: t('aiFailed', { error: err.message }), error: true },
+    entry.steps.push({ note: t('aiFailed', { error: errorText(err) }), error: true },
       { segments: res.segments });
     aiHistory.push({ input: text, commands: [text], output: res.text });
     node = rerender(node, entry);
@@ -472,12 +472,56 @@ function rerender(node, entry) {
   return fresh;
 }
 
+/** A short, localised description of an OpenRouter/network failure. */
+function errorText(err) {
+  const s = err?.status;
+  const key = s === 401 || s === 403 ? 'errAuth' : s === 402 ? 'errCredits' : s === 429 ? 'errRate'
+    : s === 404 || s === 400 && /model/i.test(err.message) ? 'errModel' : s >= 500 ? 'errServer'
+    : err instanceof TypeError ? 'errNetwork' : s ? 'errOther' : null;
+  if (!key) return err?.message || String(err);
+  return settings.language === 'en' ? `${t(key)} (${err.message})` : `${t(key)} (${s || '—'})`;
+}
+
+// Rough language check: does this read like English rather than German?
+function looksEnglish(text) {
+  const words = text.toLowerCase().match(/[a-zäöüß']+/g) || [];
+  const en = words.filter((w) => /^(the|you|your|is|are|and|not|can't|cannot|it|this|that|of|to|a|an|with|there|here|nothing|what|which)$/.test(w)).length;
+  const de = words.filter((w) => /^(der|die|das|du|dein|deine|ist|sind|und|nicht|kannst|es|ein|eine|mit|hier|nichts|was|welche|zu|den|dem)$/.test(w)).length;
+  return en > de;
+}
+
+/** AI-written lines (narrator replies, hints) that came back in English get translated too. */
+async function translateAiLines(entry, language) {
+  const steps = (entry.steps || []).filter((st) => (st.narration || st.hint) && !st.error &&
+    st.lineLanguage !== language && !st.translatingLine);
+  let changed = false;
+  await Promise.all(steps.map(async (st) => {
+    const text = st.originalNarration ?? st.narration ?? st.originalNote ?? st.note;
+    st.translatingLine = true;
+    try {
+      if (looksEnglish(text)) {
+        const tl = await translate({ apiKey: settings.apiKey, model: settings.model, language, text });
+        if (st.narration != null) { st.originalNarration ??= st.narration; st.narration = tl; }
+        else { st.originalNote ??= st.note; st.note = tl; }
+        changed = true;
+      }
+      st.lineLanguage = language;
+    } catch { /* keep the line as it is */ }
+    st.translatingLine = false;
+  }));
+  return changed;
+}
+
 /** Translate all untranslated game text in an entry, updating its node as it goes. */
 async function translateEntry(entry, node) {
   const language = targetLanguage();
   if (!language) return node;
   // Each entry is translated once per language. Segments still in progress or
   // already failed are skipped, so this is safe to call repeatedly.
+  translateAiLines(entry, language).then((changed) => {
+    const current = changed && [...els.transcript.children].find((n) => n.entry === entry);
+    if (current) rerender(current, entry);
+  });
   const segs = (entry.steps || []).flatMap((st) => st.segments || [])
     .filter((sg) => !sg.fixed && sg.text.trim() && (sg.translatedTo !== language || (!sg.translated && !sg.translating && !sg.translateError)))
     .filter((sg) => !sg.translating);
@@ -489,7 +533,7 @@ async function translateEntry(entry, node) {
     try {
       sg.translated = await translate({ apiKey: settings.apiKey, model: settings.model, language, text: sg.text });
     } catch (err) {
-      sg.translateError = err.message;
+      sg.translateError = errorText(err);
     }
     sg.translating = false;
   }));
@@ -656,6 +700,11 @@ function translateVisible() {
     if (!entry) continue;
     if (!targetLanguage()) {
       for (const sg of (entry.steps || []).flatMap((st) => st.segments || [])) { delete sg.translated; delete sg.translatedTo; delete sg.translateError; }
+      for (const st of entry.steps || []) {
+        if (st.originalNarration != null) { st.narration = st.originalNarration; delete st.originalNarration; }
+        if (st.originalNote != null) { st.note = st.originalNote; delete st.originalNote; }
+        delete st.lineLanguage;
+      }
     }
     rerender(node, entry);
   }

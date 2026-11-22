@@ -104,7 +104,8 @@ export async function interpret({ apiKey, model, input, language, scene, history
             `Rephrase it using only known words, or return no commands with a reply if it cannot be expressed.\n\n`
           : '') +
         (language
-          ? `The player is playing in ${language}: their input may be in ${language} (map it to the English game vocabulary), and any "reply" must be written in ${language}.\n\n`
+          ? `LANGUAGE: The player is playing in ${language}. Their input may be in ${language} or English (map it to the English game vocabulary). ` +
+            `Write every "reply" in ${language}, always — even if the player writes in English. Commands stay in English.\n\n`
           : '') +
         `PLAYER INPUT: ${input}`,
     },
