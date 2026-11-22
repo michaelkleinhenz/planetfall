@@ -23,6 +23,12 @@ AI interpreter. Without a key, the game runs with the classic parser.
   interface. With the AI on, the game's text is also translated live (click a passage to
   see the original English), and you can type in German. The game itself keeps running in
   English, and translations are cached in the browser.
+- **Hints:** the 💡 button (or typing "hint" / "help", "Tipp" / "Hilfe") asks the AI for an
+  InvisiClues-style hint. It reads the game's actual code for your situation: the routines
+  for the current room, its exits and everything in view or carried, plus the current
+  values of the game variables they check. It also sees the recent transcript. Hints are
+  graded: a nudge first, then a direction, then the solution ("Stronger hint"), and
+  they're never about code. Needs an OpenRouter key.
 - **Play with buttons:** a row of quick actions above the input offers the exits of
   the current room, Look / Inventory / Wait, and everything in view. Tap a thing to get
   the verbs that make sense for it (examine, take/drop, open/close, read, eat, wear,

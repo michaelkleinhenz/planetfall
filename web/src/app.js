@@ -6,13 +6,14 @@ import { interpret, isParserError } from './ai/interpreter.js';
 import { currentScene, actionContext } from './ai/scene.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
+import { getHint } from './ai/hints.js';
 import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
   transcript: $('transcript'), form: $('command-form'), input: $('command'), send: $('send'),
   hint: $('hint'), badge: $('mode-badge'), room: $('status-room'), score: $('status-score'), time: $('status-time'),
-  undo: $('btn-undo'), save: $('btn-save'), load: $('btn-load'), settingsBtn: $('btn-settings'),
+  undo: $('btn-undo'), hintBtn: $('btn-hint'), save: $('btn-save'), load: $('btn-load'), settingsBtn: $('btn-settings'),
   settings: $('settings-dialog'), setKey: $('set-key'), setModel: $('set-model'), setAi: $('set-ai'),
   setShow: $('set-show'), modelList: $('model-list'), setLang: $('set-lang'),
   slots: $('slots-dialog'), slotsTitle: $('slots-title'), slotsList: $('slots-list'), slotName: $('slot-name'),
@@ -204,7 +205,18 @@ function renderEntry(entry, animate = true) {
   if (!animate) turn.style.animation = 'none';
   if (entry.input != null) turn.append(el('p', 'player', entry.input));
   for (const step of entry.steps || []) {
-    if (step.note) turn.append(el('div', `ai-note${step.error ? ' error' : ''}`, step.note));
+    if (step.hint) {
+      const note = el('div', 'ai-note hint-note', step.note);
+      note.dataset.label = t(`hintLabel${step.level}`);
+      if (step.level < 3 && entry === lastHintEntry) {
+        const more = el('button', 'hint-more', t('hintStronger'));
+        more.type = 'button';
+        more.dataset.keepFocus = '';
+        more.addEventListener('click', () => giveHint(true));
+        note.append(more);
+      }
+      turn.append(note);
+    } else if (step.note) turn.append(el('div', `ai-note${step.error ? ' error' : ''}`, step.note));
     if (step.command && settings.showCommands && entry.viaAI) {
       const wrap = el('div', 'interp');
       wrap.append(el('span', `chip${step.parserError ? ' error' : ''}`, step.command));
@@ -304,6 +316,10 @@ async function handleInput(raw, opts = {}) {
       autosave();
       return;
     }
+    if (!opts.command && HINT_WORDS.test(text) && settings.apiKey) {
+      await giveHint(false, text);
+      return;
+    }
     undoStack.push(session.currentSnapshot());
     if (undoStack.length > 100) undoStack.shift();
     if (opts.command) {
@@ -329,6 +345,51 @@ async function handleInput(raw, opts = {}) {
     setInputEnabled(true);
     renderActions();
     keepFocus();
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Hints
+// ---------------------------------------------------------------------------
+
+const HINT_WORDS = /^\s*(hint|hints|help|clue|tipp|tipps|tip|hilfe|hinweis)\s*[?!.]*\s*$/i;
+let hintLevel = 0;
+let hintKey = '';
+let lastHintEntry = null;
+
+/** Ask for a hint; `stronger` raises the level for the same situation (1 nudge .. 3 solution). */
+async function giveHint(stronger, typed) {
+  if (!settings.apiKey) { addEntry({ input: typed || t('hintRequest'), steps: [{ note: t('hintNeedsKey'), error: true }] }); return; }
+  const ownBusy = !busy;
+  if (!ownBusy && !typed) return;
+  if (ownBusy) { busy = true; setInputEnabled(false); }
+  const key = `${currentRoom}|${els.score.textContent}`;
+  hintLevel = key === hintKey ? Math.min(3, hintLevel + 1) : 1;
+  if (!stronger && key !== hintKey) hintLevel = 1;
+  hintKey = key;
+  const entry = { input: typed || (stronger ? t('hintStronger') : t('hintRequest')), steps: [] };
+  const prevHint = lastHintEntry;
+  lastHintEntry = entry;
+  if (prevHint) {
+    // Only the newest hint offers a "stronger hint" button.
+    const prevNode = [...els.transcript.children].find((n) => n.entry === prevHint);
+    if (prevNode) rerender(prevNode, prevHint);
+  }
+  let node = addEntry(entry);
+  const stop = showThinking(node);
+  try {
+    const hint = await getHint({
+      apiKey: settings.apiKey, model: settings.model, level: hintLevel,
+      language: AI_LANGUAGE_NAME[settings.language] || 'English', history: aiHistory,
+    });
+    entry.steps.push({ note: hint, hint: true, level: hintLevel });
+  } catch (err) {
+    entry.steps.push({ note: t('hintFailed', { error: err.message }), error: true });
+  } finally {
+    stop();
+    node = rerender(node, entry);
+    if (ownBusy) { busy = false; setInputEnabled(true); renderActions(); keepFocus(); }
+    autosave();
   }
 }
 
@@ -767,6 +828,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 els.undo.addEventListener('click', undo);
+els.hintBtn.addEventListener('click', () => giveHint(false));
 els.save.addEventListener('click', () => { if (!busy) { els.input.value = ''; handleInput('>save'); } });
 els.load.addEventListener('click', () => { if (!busy) { els.input.value = ''; handleInput('>restore'); } });
 els.settingsBtn.addEventListener('click', openSettings);
