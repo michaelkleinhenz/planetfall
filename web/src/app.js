@@ -451,7 +451,7 @@ async function aiTurn(text) {
     if (parserError) break;
   }
   if (!result.commands.length && !result.reply) entry.steps.push({ note: t('cantMap') });
-  aiHistory.push({ input: text, commands: result.commands, output: outputs.join('\n') });
+  aiHistory.push({ input: text, reply: result.reply, commands: result.commands, output: outputs.join('\n') });
   node = rerender(node, entry);
   await translateEntry(entry, node);
 }

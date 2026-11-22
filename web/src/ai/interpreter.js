@@ -5,7 +5,7 @@
 // still comes from the original game.
 
 import { chat } from './openrouter.js';
-import { SYNTAX_HELP, VERB_SYNONYMS } from '../game/story-data.js';
+import { SYNTAX_HELP, VERB_SYNONYMS, FULL_WORDS } from '../game/story-data.js';
 import { sceneText } from './scene.js';
 
 // Debugging/meta syntaxes the AI should never produce.
@@ -22,6 +22,12 @@ function verbReference() {
 
 const REF = verbReference();
 
+// Every word the original parser knows (full spellings; it compares only the first 6 letters).
+const VOCABULARY = [...new Set(Object.values(FULL_WORDS).flat())]
+  .filter((w) => /^[a-z][a-z-]*$/.test(w) && !/^(zzmgck|intnum|shit|fuck|damn)$/.test(w))
+  .sort()
+  .join(' ');
+
 const SYSTEM_PROMPT = `You are the command interpreter for PLANETFALL, the 1983 Infocom science-fiction text adventure.
 The original game logic and its original text parser run unchanged. Your only job is to translate what the player types (free natural language, any phrasing, typos, other languages) into commands the original parser understands.
 
@@ -34,6 +40,7 @@ HOW THE ORIGINAL PARSER WORKS
 - Useful commands: look, examine X, inventory, wait, again, score, time, diagnose, sleep, read X, open/close X, turn on/off X, wear/remove X, eat/drink X, give X to Y, show X to Y, throw X at Y, save, restore, restart, verbose, brief.
 - Known verb patterns (OBJ = object): ${REF.patterns}
 - Verb synonyms: ${REF.synonyms}
+- The parser knows ONLY these words (plus numbers like 4600); any other word makes it fail with "I don't know the word". Rephrase with these words: ${VOCABULARY}
 
 RULES
 1. Output ONLY a JSON object, no prose, no code fences:
@@ -44,14 +51,18 @@ RULES
 5. If the game just asked a question (e.g. "Which button do you mean...", "What do you want to put...?", a yes/no question, or RESTART/RESTORE/QUIT after death), answer it with a complete command or the expected word.
 6. If the input is already a valid command, pass it through unchanged (fix obvious typos).
 7. If the player is chatting, asking about the story so far, or asking what something means, answer briefly in "reply" (in the player's language) using only the transcript, and return no commands. Never narrate game outcomes yourself — the game does that.
-8. If you cannot map the request to the game at all, return {"commands": [], "reply": "<short explanation and a suggestion>"}.`;
+8. If you cannot map the request to the game at all, return {"commands": [], "reply": "<short explanation and a suggestion>"}.
+9. Resolve references using the transcript: "it", "them", "that one", "the other one", "again", "do the same with X", "go back", and short answers to a question that you (AI:) or the game asked in the previous turn (e.g. you asked for a number and the player replies "4600" -> combine both into one full command). Always write the resolved, explicit command.
+10. Never promise what a command will do. Only suggest commands built from the known words and verb patterns.
+11. Your whole answer is always the JSON object, even when you only reply to the player.`;
 
 function transcriptText(history) {
   const parts = [];
   let budget = 5000;
   for (let i = history.length - 1; i >= 0 && budget > 0; i--) {
     const h = history[i];
-    const block = `${h.input ? `PLAYER: ${h.input}\n` : ''}${h.commands?.length ? `COMMANDS: ${h.commands.join(' / ')}\n` : ''}GAME: ${h.output.trim()}`;
+    const block = `${h.input ? `PLAYER: ${h.input}\n` : ''}${h.reply ? `AI: ${h.reply}\n` : ''}` +
+      `${h.commands?.length ? `COMMANDS: ${h.commands.join(' / ')}\n` : ''}${h.output?.trim() ? `GAME: ${h.output.trim()}` : '(no game command was sent)'}`;
     budget -= block.length;
     parts.unshift(block.length > 1800 ? block.slice(0, 1800) + ' …' : block);
   }
@@ -62,7 +73,8 @@ function parseJson(text) {
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
   if (start < 0 || end < start) throw new Error('The AI did not return JSON.');
-  const obj = JSON.parse(text.slice(start, end + 1));
+  let obj;
+  try { obj = JSON.parse(text.slice(start, end + 1)); } catch { throw new Error('The AI did not return valid JSON.'); }
   const commands = Array.isArray(obj.commands) ? obj.commands.map(String).map((c) => c.trim()).filter(Boolean).slice(0, 6) : [];
   return { commands, reply: typeof obj.reply === 'string' ? obj.reply.trim() : '' };
 }
@@ -90,7 +102,23 @@ export async function interpret({ apiKey, model, input, language, scene, history
     },
   ];
   const raw = await chat({ apiKey, model, messages, signal });
-  return parseJson(raw);
+  try {
+    return parseJson(raw);
+  } catch {
+    // One more try, reminding the model of the format.
+    const again = await chat({
+      apiKey, model, signal,
+      messages: [...messages, { role: 'assistant', content: raw },
+        { role: 'user', content: 'Answer again, as the JSON object only: {"commands": [...], "reply": "..."}' }],
+    });
+    try {
+      return parseJson(again);
+    } catch {
+      // Still prose: treat it as a message to the player rather than a failure.
+      const text = (again || raw).trim();
+      return { commands: [], reply: text.length > 600 ? text.slice(0, 600) + ' …' : text };
+    }
+  }
 }
 
 // Responses produced by the parser itself (no game time passes).
