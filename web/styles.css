@@ -216,7 +216,7 @@ code { font-family: var(--mono); font-size: .92em; }
 }
 
 .game-text.translated { cursor: pointer; }
-.game-text.translated:hover { text-decoration: underline dotted color-mix(in srgb, var(--muted) 50%, transparent); text-underline-offset: 5px; }
+@media (hover: hover) { .game-text.translated:hover { text-decoration: underline dotted color-mix(in srgb, var(--muted) 50%, transparent); text-underline-offset: 5px; } }
 .game-text.translating { opacity: .45; transition: opacity .3s; }
 
 .dialog h3.subheading { margin: 8px 0 0; font-size: 15px; padding-top: 12px; border-top: 1px solid var(--line); }

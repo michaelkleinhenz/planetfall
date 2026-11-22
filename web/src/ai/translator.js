@@ -30,15 +30,25 @@ const SYSTEM = (language) => `You translate text from PLANETFALL, the 1983 Infoc
 /**
  * Translate one block of game text. Returns the translated text (cached).
  */
+// At most a few translation requests in flight (scrolling back through a long
+// transcript would otherwise fire dozens at once).
+let active = 0;
+const waiting = [];
+async function limited(fn) {
+  if (active >= 3) await new Promise((r) => waiting.push(r));
+  active++;
+  try { return await fn(); } finally { active--; waiting.shift()?.(); }
+}
+
 export async function translate({ apiKey, model, language, text, signal }) {
   if (!text.trim()) return text;
   const c = loadCache();
   const key = `${language}\u0000${text}`;
   if (c.has(key)) return c.get(key);
-  const out = (await chat({
+  const out = (await limited(() => chat({
     apiKey, model, signal, maxTokens: Math.min(4000, 200 + text.length * 2),
     messages: [{ role: 'system', content: SYSTEM(language) }, { role: 'user', content: text }],
-  })).replace(/^```[a-z]*\n?|\n?```$/g, '');
+  }))).replace(/^```[a-z]*\n?|\n?```$/g, '');
   c.set(key, out);
   saveCache();
   return out;

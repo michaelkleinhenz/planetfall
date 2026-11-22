@@ -114,6 +114,8 @@ function renderEntry(entry, animate = true) {
   }
   if (entry.system) turn.append(el('p', 'system-note', entry.system));
   els.transcript.append(turn);
+  turn.entry = entry;
+  lazyTranslator.observe(turn);
   return turn;
 }
 
@@ -266,9 +268,13 @@ async function aiTurn(text) {
 }
 
 function rerender(node, entry) {
+  // Only follow the output when the turn being updated is the newest one;
+  // translating older turns must not yank the view away from what you read.
+  const isLast = node === els.transcript.lastElementChild;
   const fresh = renderEntry(entry, false);
+  lazyTranslator.unobserve(node);
   node.replaceWith(fresh);
-  scrollDown();
+  if (isLast) scrollDown();
   return fresh;
 }
 
@@ -276,7 +282,12 @@ function rerender(node, entry) {
 async function translateEntry(entry, node) {
   const language = targetLanguage();
   if (!language) return node;
-  const segs = (entry.steps || []).flatMap((st) => st.segments || []).filter((sg) => !sg.fixed && !sg.translated);
+  // Each entry is translated once per language. Segments still in progress or
+  // already failed are skipped, so this is safe to call repeatedly.
+  const segs = (entry.steps || []).flatMap((st) => st.segments || [])
+    .filter((sg) => !sg.fixed && sg.text.trim() && (sg.translatedTo !== language || (!sg.translated && !sg.translating && !sg.translateError)))
+    .filter((sg) => !sg.translating);
+  for (const sg of segs) if (sg.translatedTo !== language) { delete sg.translated; delete sg.translateError; sg.translatedTo = language; }
   if (!segs.length) return node;
   segs.forEach((sg) => { sg.translating = true; });
   node = rerender(node, entry);
@@ -431,13 +442,27 @@ els.settings.addEventListener('close', async () => {
 });
 
 /** After switching language: translate the most recent turns already on screen. */
-async function translateVisible() {
-  const turns = [...els.transcript.querySelectorAll('section.turn')];
-  const recent = transcriptLog.slice(-6);
-  const nodes = turns.slice(-recent.length);
-  for (const sg of recent.flatMap((e) => (e.steps || []).flatMap((st) => st.segments || []))) delete sg.translated;
-  if (!targetLanguage()) { recent.forEach((e, i) => nodes[i] && rerender(nodes[i], e)); return; }
-  await Promise.all(recent.map((e, i) => (nodes[i] ? translateEntry(e, nodes[i]) : null)));
+// Story text is translated lazily: whenever a turn scrolls into view and is not
+// yet translated into the current language. This covers the whole transcript,
+// including turns from before a language switch or a reload.
+const lazyTranslator = new IntersectionObserver((items) => {
+  for (const it of items) {
+    if (!it.isIntersecting || !targetLanguage()) continue;
+    const node = it.target;
+    if (node.isConnected && node.entry) translateEntry(node.entry, node);
+  }
+}, { rootMargin: '400px 0px' });
+
+/** After switching language: re-render everything; visible turns get (re)translated. */
+function translateVisible() {
+  for (const node of [...els.transcript.querySelectorAll('section.turn')]) {
+    const entry = node.entry;
+    if (!entry) continue;
+    if (!targetLanguage()) {
+      for (const sg of (entry.steps || []).flatMap((st) => st.segments || [])) { delete sg.translated; delete sg.translatedTo; delete sg.translateError; }
+    }
+    rerender(node, entry);
+  }
 }
 
 function updateMode() {
