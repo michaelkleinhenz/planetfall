@@ -30,10 +30,12 @@ jobs:
         run: npm run build
       - name: Verify against the original game
         run: npm test
+      - name: Version all script and stylesheet URLs (so a normal reload gets the new release)
+        run: node tools/stamp.mjs dist
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest

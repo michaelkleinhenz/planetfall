@@ -48,6 +48,10 @@ Terminal play (classic parser): `npm run play`.
 `web/` to GitHub Pages on every push to `main`/`master` (or when started manually). Enable
 it once under **Settings → Pages → Source: GitHub Actions**.
 
+Before upload, `tools/stamp.mjs` copies `web/` to `dist/` and adds the commit id to every
+script and stylesheet URL (`app.js?v=…`). GitHub Pages lets browsers cache files for ten
+minutes, but with versioned URLs a normal reload always loads a new deployment.
+
 The site is fully static and needs no secrets: each player enters their own OpenRouter key,
 which is kept only in their own browser's localStorage. It is sent only from that browser
 directly to openrouter.ai, never to GitHub or any other server.
