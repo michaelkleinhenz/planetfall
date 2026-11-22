@@ -25,11 +25,12 @@ export async function runGame(io, { seed } = {}) {
       }
       return; // not reached: the main loop never returns
     } catch (e) {
-      if (e instanceof RestartSignal) { entry = 'start'; continue; }
+      if (e instanceof RestartSignal) { io.restarted?.(); entry = 'start'; continue; }
       if (e instanceof RestoreSignal) { if (e.notice) tell(e.notice); entry = 'main'; continue; }
       if (e instanceof QuitSignal) {
         if (io.ended) await io.ended();
         else return;
+        io.restarted?.();
         entry = 'start';
         continue;
       }

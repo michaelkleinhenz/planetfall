@@ -158,10 +158,25 @@ const session = new GameSession({
   onRestore: () => openSlots('load'),
 });
 
+let restartResponse = null; // set when the game restarted during the current input
+
 async function sendToGame(command) {
   const res = await session.send(command);
   gameEnded = !!res.ended;
+  if (res.restarted) restartResponse = res;
   return res;
+}
+
+/** A new game started (RESTART, or any input after QUIT): show it like a fresh page load. */
+function startFresh(res) {
+  els.transcript.replaceChildren();
+  transcriptLog = [];
+  undoStack = [];
+  gameEnded = false;
+  aiHistory = [{ input: '', commands: [], output: res.text }];
+  const entry = { steps: [{ segments: res.segments }] };
+  translateEntry(entry, addEntry(entry));
+  window.scrollTo({ top: 0 });
 }
 
 function autosave() {
@@ -177,11 +192,8 @@ async function handleInput(raw) {
   setInputEnabled(false);
   try {
     if (gameEnded) {
-      const res = await session.send(text);
-      gameEnded = false;
-      undoStack = [];
-      const entry = { input: text, steps: [{ segments: res.segments }] };
-      await translateEntry(entry, addEntry(entry));
+      startFresh(await session.send(text));
+      autosave();
       return;
     }
     undoStack.push(session.currentSnapshot());
@@ -196,7 +208,8 @@ async function handleInput(raw) {
     } else {
       await aiTurn(text);
     }
-    if (gameEnded) addEntry({ system: t('gameEnded') });
+    if (restartResponse) { startFresh(restartResponse); restartResponse = null; }
+    else if (gameEnded) addEntry({ system: t('gameEnded') });
     autosave();
   } finally {
     busy = false;
@@ -258,7 +271,7 @@ async function aiTurn(text) {
     entry.steps.push({ command, segments: res.segments, parserError });
     outputs.push(res.text);
     node = rerender(node, entry);
-    if (res.ended || /RESTART, RESTORE, or QUIT|\(Y is affirmative\)|Please answer YES or NO/.test(res.text)) break;
+    if (res.restarted || res.ended || /RESTART, RESTORE, or QUIT|\(Y is affirmative\)|Please answer YES or NO/.test(res.text)) break;
     if (parserError) break;
   }
   if (!result.commands.length && !result.reply) entry.steps.push({ note: t('cantMap') });

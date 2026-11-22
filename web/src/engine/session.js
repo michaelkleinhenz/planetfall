@@ -31,6 +31,8 @@ export class GameSession {
         this.flush({ ended: false });
       }),
       status: (s) => this.onStatus(s),
+      // A new game begins: drop what the old game printed, and tell the host.
+      restarted: () => { this.segments = []; this.restartedFlag = true; },
       save: (snap) => this.onSave(snap),
       restore: () => this.onRestore(),
       ended: () => new Promise((resolve) => {
@@ -58,7 +60,9 @@ export class GameSession {
     const text = segments.map((s) => s.text).join('');
     const waiters = this.waiters;
     this.waiters = [];
-    for (const w of waiters) w({ segments, text, ...extra });
+    const restarted = !!this.restartedFlag;
+    this.restartedFlag = false;
+    for (const w of waiters) w({ segments, text, restarted, ...extra });
   }
 
   /** Send a command line (or a {snapshot} load request); resolves with the response. */
