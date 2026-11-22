@@ -220,3 +220,12 @@ code { font-family: var(--mono); font-size: .92em; }
 .game-text.translating { opacity: .45; transition: opacity .3s; }
 
 .dialog h3.subheading { margin: 8px 0 0; font-size: 15px; padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* Title / copyright block (opening text and VERSION) */
+.banner { margin: 0 0 20px; padding: 2px 0 14px; border-bottom: 1px solid var(--line); }
+.banner-title {
+  font-family: var(--mono); font-weight: 700; font-size: 18px; letter-spacing: .32em;
+  color: var(--accent);
+}
+.banner-sub { font-family: var(--story-font); font-style: italic; font-size: 15px; color: var(--accent-2); margin-top: 2px; }
+.banner-meta { font-family: var(--ui-font); font-size: 12px; line-height: 1.55; color: var(--muted); margin-top: 6px; }

@@ -68,6 +68,14 @@ function renderGameText(segments, container) {
       container.append(el('pre', 'game-text fixed', seg.text));
       continue;
     }
+    // The title/copyright block (opening text and VERSION) gets its own compact styling.
+    const banner = findBanner(seg.text);
+    if (banner) {
+      container.append(renderBanner(seg.text.split('\n').slice(banner.start, banner.end + 1)));
+      const rest = splitAround(seg, banner);
+      if (rest) renderGameText([rest], container);
+      continue;
+    }
     const p = el('p', 'game-text');
     // Room headings: lines that are exactly the current room's name (remembered per segment,
     // so they stay highlighted in translations and after reloads).
@@ -97,6 +105,47 @@ function renderGameText(segments, container) {
     if (seg.translating) p.classList.add('translating');
     container.append(p);
   }
+}
+
+const BANNER_END = /^Release \d+ \/ Serial number \d+$/;
+
+function findBanner(text) {
+  const lines = text.split('\n');
+  const start = lines.indexOf('PLANETFALL');
+  if (start < 0) return null;
+  for (let end = start + 1; end < Math.min(lines.length, start + 8); end++) {
+    if (BANNER_END.test(lines[end])) return { start, end };
+  }
+  return null;
+}
+
+function renderBanner(lines) {
+  const box = el('div', 'banner');
+  box.append(el('div', 'banner-title', lines[0]));
+  if (lines[1]) box.append(el('div', 'banner-sub', lines[1]));
+  const meta = el('div', 'banner-meta');
+  lines.slice(2).forEach((l, i) => {
+    if (i) meta.append(el('br'));
+    meta.append(l);
+  });
+  box.append(meta);
+  return box;
+}
+
+/** The part of a segment after the banner, keeping its translation in step. */
+function splitAround(seg, { start, end }) {
+  const cut = (text) => text.split('\n').filter((_, i) => i < start || i > end).join('\n').replace(/^\n+/, '');
+  const text = cut(seg.text);
+  if (!text.trim()) return null;
+  // Keep the same object for the remainder so translation state and clicks stay attached.
+  seg.rest ??= { fixed: false };
+  seg.rest.text = text;
+  if (seg.translated) {
+    const tl = seg.translated.split('\n');
+    seg.rest.translated = tl.length === seg.text.split('\n').length ? cut(seg.translated) : tl.slice(end + 1).join('\n').replace(/^\n+/, '');
+  } else delete seg.rest.translated;
+  seg.rest.translating = seg.translating;
+  return seg.rest;
 }
 
 function renderEntry(entry, animate = true) {
