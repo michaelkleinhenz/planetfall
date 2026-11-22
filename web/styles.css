@@ -229,3 +229,51 @@ code { font-family: var(--mono); font-size: .92em; }
 }
 .banner-sub { font-family: var(--story-font); font-style: italic; font-size: 15px; color: var(--accent-2); margin-top: 2px; }
 .banner-meta { font-family: var(--ui-font); font-size: 12px; line-height: 1.55; color: var(--muted); margin-top: 6px; }
+
+/* ---------- quick actions ---------- */
+.inputbar { position: sticky; }
+.actionbar {
+  max-width: 76ch; margin: 0 auto 8px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  padding: 2px 2px 4px; -webkit-overflow-scrolling: touch;
+}
+.actionbar::-webkit-scrollbar { display: none; }
+.actionbar:empty { display: none; }
+.act {
+  flex: none; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  font: 500 13.5px var(--ui-font); color: var(--text); cursor: pointer;
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.act:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+.act:active { transform: scale(.97); }
+.act.dir { font-family: var(--mono); font-weight: 700; color: var(--accent); min-width: 40px; justify-content: center; padding: 6px 10px; }
+.act.obj { color: var(--accent-2); }
+.act.obj.held::after { content: "•"; color: var(--muted); }
+.act.verb { color: var(--accent-2); }
+.act.back { color: var(--muted); }
+.act.answer { color: var(--bg); background: var(--accent-2); border-color: var(--accent-2); font-weight: 700; }
+.act-sep { flex: none; width: 1px; background: var(--line); margin: 4px 2px; }
+.act-target { flex: none; align-self: center; font: 600 13px var(--ui-font); color: var(--muted); padding: 0 4px; }
+.actionbar[aria-busy="true"] .act { opacity: .45; pointer-events: none; }
+
+/* ---------- paging ---------- */
+.more-btn {
+  position: absolute; left: 50%; top: -38px; transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+  font: 700 12.5px var(--ui-font); letter-spacing: .04em; color: var(--bg);
+  background: var(--accent); border: 0; border-radius: 999px; padding: 6px 12px 6px 14px; box-shadow: var(--shadow);
+  animation: rise .2s ease-out;
+}
+.more-btn[hidden] { display: none; }
+.more-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+body.paging .transcript { padding-bottom: var(--page-space, 60vh); }
+#command-form.busy .send-btn { opacity: .4; }
+
+body.paging .inputbar:focus-within .hint { display: none; }
+/* Solid bottom bar (text must not show through the buttons), with a soft fade above it. */
+.inputbar { background: var(--bg); padding-top: 10px; }
+.inputbar::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -24px; height: 24px; pointer-events: none;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+.more-btn { z-index: 1; }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
   <title>Planetfall AI</title>
   <meta name="description" content="Infocom's 1983 classic Planetfall, translated to JavaScript, with an AI command interpreter.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='36' r='18' fill='%23e8a33d'/%3E%3Cellipse cx='32' cy='36' rx='29' ry='7' fill='none' stroke='%237fd1c7' stroke-width='3'/%3E%3C/svg%3E">
@@ -25,7 +25,7 @@
       <span><span data-i18n="time">Time</span> <b id="status-time">0</b></span>
     </div>
     <nav class="actions">
-      <button id="btn-undo" class="icon-btn" title="Undo last turn (Ctrl+Z)" aria-label="Undo" data-i18n-title="undoTitle" data-i18n-aria="undo">
+      <button id="btn-undo" class="icon-btn" data-keep-focus title="Undo last turn (Ctrl+Z)" aria-label="Undo" data-i18n-title="undoTitle" data-i18n-aria="undo">
         <svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
       </button>
       <button id="btn-save" class="icon-btn" title="Save game" aria-label="Save" data-i18n-title="saveTitle" data-i18n-aria="save">
@@ -42,12 +42,17 @@
 
   <main id="transcript" class="transcript" aria-live="polite"></main>
 
-  <footer class="inputbar">
+  <footer class="inputbar" id="inputbar">
+    <button id="more" class="more-btn" type="button" hidden data-keep-focus data-i18n-title="moreTitle">
+      <span data-i18n="more">More</span>
+      <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div id="actions" class="actionbar" role="toolbar" data-i18n-aria="actionsLabel"></div>
     <form id="command-form" autocomplete="off">
       <span id="mode-badge" class="mode-badge" title="Interpreter mode" data-i18n-title="modeTitle">CLASSIC</span>
       <input id="command" type="text" spellcheck="false" autocapitalize="off"
              placeholder="What do you want to do?" aria-label="Your command" data-i18n-aria="commandLabel" disabled>
-      <button id="send" type="submit" class="send-btn" aria-label="Send" data-i18n-aria="send" disabled>
+      <button id="send" type="submit" class="send-btn" aria-label="Send" data-i18n-aria="send" data-keep-focus disabled>
         <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
       </button>
     </form>

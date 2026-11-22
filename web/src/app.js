@@ -3,7 +3,7 @@
 
 import { GameSession } from './engine/session.js';
 import { interpret, isParserError } from './ai/interpreter.js';
-import { currentScene } from './ai/scene.js';
+import { currentScene, actionContext } from './ai/scene.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
@@ -17,6 +17,7 @@ const els = {
   setShow: $('set-show'), modelList: $('model-list'), setLang: $('set-lang'),
   slots: $('slots-dialog'), slotsTitle: $('slots-title'), slotsList: $('slots-list'), slotName: $('slot-name'),
   slotNameField: $('slot-name-field'), slotsOk: $('slots-ok'),
+  topbar: document.querySelector('.topbar'), inputbar: $('inputbar'), more: $('more'), actions: $('actions'),
 };
 
 // ---------------------------------------------------------------------------
@@ -58,9 +59,59 @@ function el(tag, cls, text) {
   return e;
 }
 
+// On phones the keyboard stays open and only a small part of the transcript is
+// visible, so each new turn is shown from its first line ("paging"); if the reply
+// is longer than the visible area, a "More" button (or Enter on an empty line)
+// pages down. On larger screens the view simply follows the newest text.
+const paging = matchMedia('(pointer: coarse)').matches || matchMedia('(max-width: 700px)').matches;
+if (paging) document.body.classList.add('paging');
+
+function visibleBounds() {
+  return {
+    top: els.topbar.getBoundingClientRect().bottom,
+    bottom: Math.min(els.inputbar.getBoundingClientRect().top, window.visualViewport?.height ?? innerHeight),
+  };
+}
+
+function updatePageSpace() {
+  const { top, bottom } = visibleBounds();
+  document.body.style.setProperty('--page-space', `${Math.max(120, bottom - top - 40)}px`);
+  updateMore();
+}
+
+function updateMore() {
+  if (!paging) { els.more.hidden = true; return; }
+  const last = els.transcript.lastElementChild;
+  els.more.hidden = !last || last.getBoundingClientRect().bottom <= visibleBounds().bottom + 4;
+}
+
+/** Show a new turn from its beginning. */
+function pinTurn(node) {
+  if (!paging) return scrollDown();
+  requestAnimationFrame(() => {
+    const y = node.getBoundingClientRect().top + window.scrollY - visibleBounds().top - 10;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    setTimeout(updateMore, 400);
+  });
+}
+
+function pageDown() {
+  const { top, bottom } = visibleBounds();
+  window.scrollBy({ top: Math.max(60, bottom - top - 48), behavior: 'smooth' });
+  setTimeout(updateMore, 400);
+}
+
 function scrollDown() {
+  if (paging) { requestAnimationFrame(updateMore); return; }
   requestAnimationFrame(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
 }
+
+let moreFrame = 0;
+window.addEventListener('scroll', () => {
+  if (!moreFrame) moreFrame = requestAnimationFrame(() => { moreFrame = 0; updateMore(); });
+}, { passive: true });
+window.addEventListener('resize', updatePageSpace);
+window.visualViewport?.addEventListener('resize', updatePageSpace);
 
 function renderGameText(segments, container) {
   for (const seg of segments) {
@@ -172,7 +223,8 @@ function addEntry(entry) {
   transcriptLog.push(entry);
   if (transcriptLog.length > 300) transcriptLog = transcriptLog.slice(-300);
   const node = renderEntry(entry);
-  scrollDown();
+  if (entry.input != null) pinTurn(node);
+  else scrollDown();
   return node;
 }
 
@@ -226,6 +278,9 @@ function startFresh(res) {
   const entry = { steps: [{ segments: res.segments }] };
   translateEntry(entry, addEntry(entry));
   window.scrollTo({ top: 0 });
+  actionTarget = null;
+  renderActions();
+  updateMore();
 }
 
 function autosave() {
@@ -234,7 +289,11 @@ function autosave() {
   store.set('pf.autosave', { snapshot: snap, transcript: transcriptLog.slice(-120), aiHistory: aiHistory.slice(-12) });
 }
 
-async function handleInput(raw) {
+/**
+ * Handle one input line. `opts.command` (from a quick-action button) is sent to
+ * the game as-is, with `opts.label` shown in the transcript.
+ */
+async function handleInput(raw, opts = {}) {
   const text = raw.trim();
   if (busy) return;
   busy = true;
@@ -247,8 +306,13 @@ async function handleInput(raw) {
     }
     undoStack.push(session.currentSnapshot());
     if (undoStack.length > 100) undoStack.shift();
-    const direct = !aiActive() || text.startsWith('>') || text === '';
-    if (direct) {
+    if (opts.command) {
+      const res = await sendToGame(opts.command);
+      const label = opts.label || opts.command;
+      const entry = { input: label, viaAI: label.toLowerCase() !== opts.command, steps: [{ command: opts.command, segments: res.segments }] };
+      await translateEntry(entry, addEntry(entry));
+      aiHistory.push({ input: opts.command, commands: [opts.command], output: res.text });
+    } else if (!aiActive() || text.startsWith('>') || text === '') {
       const cmd = text.replace(/^>\s*/, '');
       const res = await sendToGame(cmd);
       const entry = { input: text, steps: [{ segments: res.segments }] };
@@ -263,7 +327,8 @@ async function handleInput(raw) {
   } finally {
     busy = false;
     setInputEnabled(true);
-    els.input.focus();
+    renderActions();
+    keepFocus();
   }
 }
 
@@ -271,6 +336,7 @@ async function aiTurn(text) {
   const entry = { input: text, viaAI: true, steps: [] };
   let node = renderEntry(entry);
   transcriptLog.push(entry);
+  pinTurn(node);
   const stopThinking = showThinking(node);
   let result;
   try {
@@ -390,7 +456,8 @@ async function undo() {
   } finally {
     busy = false;
     setInputEnabled(true);
-    els.input.focus();
+    renderActions();
+    keepFocus();
   }
 }
 
@@ -495,6 +562,7 @@ els.settings.addEventListener('close', async () => {
   applyStatic();
   updateMode();
   updateStatusRoom();
+  renderActions();
   const target = targetLanguage();
   if (settings.language !== prevLang) {
     if (settings.language === 'en') addEntry({ system: t('nowEnglish') });
@@ -556,16 +624,121 @@ for (const b of document.querySelectorAll('dialog [data-close]')) {
 // Input handling
 // ---------------------------------------------------------------------------
 
+// The text field is never disabled while the game works: disabling it would
+// blur it and close the phone keyboard. Submits are ignored while busy instead.
 function setInputEnabled(on) {
-  els.input.disabled = !on;
+  els.input.disabled = false;
   els.send.disabled = !on;
+  els.form.classList.toggle('busy', !on);
+  els.actions.setAttribute('aria-busy', String(!on));
   els.undo.disabled = !on || !undoStack.length;
+}
+
+function keepFocus() {
+  if (document.activeElement !== els.input && !document.querySelector('dialog[open]')) {
+    els.input.focus({ preventScroll: true });
+  }
+}
+
+// Tapping these controls must not take focus away from the text field.
+for (const ev of ['pointerdown', 'mousedown']) {
+  document.addEventListener(ev, (e) => {
+    if (e.target.closest('[data-keep-focus], .act')) e.preventDefault();
+  });
+}
+els.more.addEventListener('click', pageDown);
+
+// ---------------------------------------------------------------------------
+// Quick actions
+// ---------------------------------------------------------------------------
+
+let actionTarget = null; // object whose verbs are shown
+
+function actButton(label, cls, onClick, title) {
+  const b = el('button', `act ${cls}`, label);
+  b.type = 'button';
+  if (title) b.title = title;
+  b.addEventListener('click', () => { if (!busy) onClick(); });
+  return b;
+}
+
+function runAction(command, label) {
+  actionTarget = null;
+  handleInput('', { command, label });
+}
+
+const VERB_COMMAND = {
+  examine: 'examine', take: 'take', drop: 'drop', open: 'open', close: 'close', lookin: 'look in', read: 'read',
+  eat: 'eat', wear: 'wear', remove: 'remove', turnon: 'turn on', turnoff: 'turn off', push: 'push', talk: 'talk to',
+};
+
+const objectLabels = new Map(); // English label -> translated label
+
+function objectLabel(label) {
+  if (!targetLanguage()) return label;
+  const key = `${settings.language}:${label}`;
+  if (objectLabels.has(key)) return objectLabels.get(key);
+  objectLabels.set(key, label);
+  translateLabel({ apiKey: settings.apiKey, model: settings.model, language: targetLanguage(), text: label })
+    .then((tl) => { objectLabels.set(key, tl); renderActions(); })
+    .catch(() => {});
+  return label;
+}
+
+function renderActions() {
+  const bar = els.actions;
+  bar.replaceChildren();
+  const last = transcriptLog[transcriptLog.length - 1];
+  const lastText = (last?.steps || []).flatMap((st) => st.segments || []).map((sg) => sg.text).join('\n');
+
+  // The game is waiting for a specific answer.
+  if (gameEnded) return;
+  if (/RESTART, RESTORE, or QUIT/.test(lastText)) {
+    for (const k of ['restart', 'restore', 'quit']) bar.append(actButton(t(`act_${k}`), 'answer', () => runAction(k, t(`act_${k}`))));
+    return;
+  }
+  if (/\(Y is affirmative\)|YES or NO|\(Type YES or NO\)/i.test(lastText)) {
+    bar.append(actButton(t('act_yes'), 'answer', () => runAction('yes', t('act_yes'))),
+      actButton(t('act_no'), 'answer', () => runAction('no', t('act_no'))));
+    return;
+  }
+
+  const ctx = actionContext();
+  if (actionTarget) {
+    const o = ctx.objects.find((x) => x.obj === actionTarget);
+    if (o) {
+      bar.append(actButton('‹', 'back', () => { actionTarget = null; renderActions(); }, t('back')));
+      bar.append(el('span', 'act-target', objectLabel(o.label)));
+      for (const v of o.verbs) {
+        const cmd = `${VERB_COMMAND[v]} ${o.cmd}`;
+        bar.append(actButton(t(`verb_${v}`), 'verb', () => runAction(cmd, `${t(`verb_${v}`)}: ${objectLabel(o.label)}`)));
+      }
+      bar.scrollLeft = 0;
+      return;
+    }
+    actionTarget = null;
+  }
+  for (const d of ctx.exits) {
+    bar.append(actButton(t(`dir_${d}`), 'dir', () => runAction(d, t(`dirname_${d}`)), t(`dirname_${d}`)));
+  }
+  if (ctx.exits.length) bar.append(el('span', 'act-sep'));
+  for (const k of ['look', 'inventory', 'wait']) {
+    bar.append(actButton(t(`act_${k}`), 'cmd', () => runAction(k, t(`act_${k}`))));
+  }
+  if (ctx.objects.length) bar.append(el('span', 'act-sep'));
+  for (const o of ctx.objects) {
+    const b = actButton(objectLabel(o.label), `obj${o.held ? ' held' : ''}`, () => { actionTarget = o.obj; renderActions(); },
+      o.held ? `${o.name} (${t('heldMark')})` : o.name);
+    bar.append(b);
+  }
+  bar.scrollLeft = 0;
 }
 
 els.form.addEventListener('submit', (e) => {
   e.preventDefault();
   const v = els.input.value;
   if (busy) return;
+  if (!v.trim() && !els.more.hidden) { pageDown(); return; }
   if (v.trim()) {
     commandHistory.push(v);
     commandHistory = commandHistory.slice(-100);
@@ -637,8 +810,16 @@ async function boot() {
     updateMode();
   }
   setInputEnabled(true);
-  els.input.focus();
-  window.scrollTo({ top: document.body.scrollHeight });
+  els.input.focus({ preventScroll: true });
+  updatePageSpace();
+  renderActions();
+  if (paging) {
+    const turns = els.transcript.querySelectorAll('section.turn');
+    const lastTurn = [...turns].reverse().find((n) => n.entry?.input != null);
+    if (lastTurn) pinTurn(lastTurn); else window.scrollTo({ top: 0 });
+  } else {
+    window.scrollTo({ top: document.body.scrollHeight });
+  }
 }
 
 boot();

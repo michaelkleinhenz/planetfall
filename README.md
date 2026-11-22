@@ -23,6 +23,15 @@ AI interpreter. Without a key, the game runs with the classic parser.
   interface. With the AI on, the game's text is also translated live (click a passage to
   see the original English), and you can type in German. The game itself keeps running in
   English, and translations are cached in the browser.
+- **Play with buttons:** a row of quick actions above the input offers the exits of
+  the current room, Look / Inventory / Wait, and everything in view. Tap a thing to get
+  the verbs that make sense for it (examine, take/drop, open/close, read, eat, wear,
+  push, talk to, ...). Yes/No and Restart/Restore/Quit appear when the game asks for
+  them. Buttons send commands straight to the game, so they work without an AI key and
+  cost nothing.
+- **Phones:** the keyboard stays open while you play. Each reply starts at the top of
+  the screen, and long replies page with a "More" button (or Enter on an empty line), so
+  there is no scrolling back.
 - **Prompt caching:** the long, unchanging instructions (verb list and rules) are sent
   as a cacheable prefix. Anthropic and Google models get an explicit cache breakpoint;
   OpenAI, DeepSeek and others cache identical prefixes automatically. Token usage,

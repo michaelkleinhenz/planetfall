@@ -81,3 +81,74 @@ export function sceneText(scene) {
   }
   return lines.join('\n');
 }
+
+// ---------------------------------------------------------------------------
+// Quick actions (buttons): exits and sensible verbs for things in view
+// ---------------------------------------------------------------------------
+
+const DIRECTIONS = ['north', 'ne', 'east', 'se', 'south', 'sw', 'west', 'nw', 'up', 'down', 'in', 'out'];
+const DIR_PROP = { north: 'NORTH', ne: 'NE', east: 'EAST', se: 'SE', south: 'SOUTH', sw: 'SW', west: 'WEST', nw: 'NW', up: 'UP', down: 'DOWN', in: 'IN', out: 'OUT' };
+
+/** Directions with an exit defined for the current room (excluding plain "you can't go" messages). */
+function exits() {
+  const out = [];
+  for (const d of DIRECTIONS) {
+    const a = inspect.getPropAddr(g.HERE, G.P[DIR_PROP[d]]);
+    if (a && inspect.propSize(a) !== 2) out.push(d); // size 2 = message-only exit
+  }
+  return out;
+}
+
+function shortLabel(name) {
+  if (name.length <= 22) return name;
+  return name.split(/\s+/).slice(-2).join(' ');
+}
+
+function verbsFor(o, held) {
+  const f = (flag) => inspect.hasFlag(o, flag);
+  const words = inspect.objectWords(o);
+  const v = ['examine'];
+  if (f(G.ACTORBIT)) v.push('talk');
+  if (held) v.push('drop');
+  else if (f(G.TAKEBIT)) v.push('take');
+  if (f(G.CONTBIT) || f(G.DOORBIT)) v.push(f(G.OPENBIT) ? 'close' : 'open');
+  if (f(G.CONTBIT) && f(G.OPENBIT)) v.push('lookin');
+  if (f(G.READBIT)) v.push('read');
+  if (f(G.FOODBIT)) v.push('eat');
+  if (f(G.WEARBIT)) v.push(f(G.WORNBIT) ? 'remove' : 'wear');
+  if (f(G.LIGHTBIT)) v.push(f(G.ONBIT) ? 'turnoff' : 'turnon');
+  if (words.some((w) => /^(button|switch|lever)$/.test(w))) v.push('push');
+  return v;
+}
+
+/** What the action buttons can offer right now. */
+export function actionContext() {
+  const scene = { dark: !g.LIT, exits: g.LIT ? exits() : [], objects: [] };
+  if (!g.LIT) {
+    // Still allow handling what you carry.
+    for (const { obj } of visibleChildren(G.ADVENTURER, 0, [])) addObject(scene, obj, true);
+    return scene;
+  }
+  for (const { obj } of visibleChildren(g.HERE, 0, [])) addObject(scene, obj, inspect.loc(obj) === G.ADVENTURER);
+  const gp = inspect.getPropAddr(g.HERE, G.P.GLOBAL);
+  if (gp) for (let i = 0; i < inspect.propSize(gp); i++) addObject(scene, inspect.memory[gp + i], false, true);
+  for (const { obj } of visibleChildren(G.ADVENTURER, 0, [])) addObject(scene, obj, true);
+  // Disambiguate commands for objects sharing a noun ("red button" / "blue button").
+  const byNoun = new Map();
+  for (const o of scene.objects) byNoun.set(o.noun, (byNoun.get(o.noun) || 0) + 1);
+  for (const o of scene.objects) o.cmd = byNoun.get(o.noun) > 1 && o.adjective ? `${o.adjective} ${o.noun}` : o.noun;
+  return scene;
+}
+
+function addObject(scene, obj, held, scenery = false) {
+  if (scene.objects.some((o) => o.obj === obj)) return;
+  if (obj === G.ADVENTURER || inspect.hasFlag(obj, G.INVISIBLE)) return;
+  const nouns = inspect.objectWords(obj).filter((w) => !/^(it|that|this|him|zzmgck)$/.test(w));
+  if (!nouns.length) return;
+  const name = inspect.objectName(obj);
+  // Prefer a noun that appears in the object's name ("scrub brush" -> "brush").
+  const noun = nouns.find((n) => name.toLowerCase().includes(n)) || nouns[0];
+  const adjs = inspect.objectAdjectives(obj);
+  const adjective = adjs.find((a) => name.toLowerCase().includes(a) && a !== noun) || adjs[0];
+  scene.objects.push({ obj, name, label: shortLabel(name), noun, adjective, held, scenery, verbs: verbsFor(obj, held) });
+}
