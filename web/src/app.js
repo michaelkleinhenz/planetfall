@@ -205,6 +205,11 @@ function renderEntry(entry, animate = true) {
   if (!animate) turn.style.animation = 'none';
   if (entry.input != null) turn.append(el('p', 'player', entry.input));
   for (const step of entry.steps || []) {
+    if (step.narration) {
+      const p = el('p', 'game-text narrated', step.narration);
+      p.title = t('narratedTitle');
+      turn.append(p);
+    }
     if (step.hint) {
       const note = el('div', 'ai-note hint-note', step.note);
       note.dataset.label = t(`hintLabel${step.level}`);
@@ -417,7 +422,7 @@ async function aiTurn(text) {
     return;
   }
   stopThinking();
-  if (result.reply) entry.steps.push({ note: result.reply });
+  if (result.reply) entry.steps.push({ narration: result.reply });
   const outputs = [];
   for (let i = 0; i < result.commands.length; i++) {
     let command = result.commands[i];
@@ -440,7 +445,7 @@ async function aiTurn(text) {
           parserError = isParserError(res.text);
           result.commands.splice(i, 1, ...fix.commands);
         } else if (fix.reply) {
-          entry.steps.push({ note: fix.reply });
+          entry.steps.push({ narration: fix.reply });
         }
       } catch { /* keep the original response */ }
     }
@@ -450,7 +455,7 @@ async function aiTurn(text) {
     if (res.restarted || res.ended || /RESTART, RESTORE, or QUIT|\(Y is affirmative\)|Please answer YES or NO/.test(res.text)) break;
     if (parserError) break;
   }
-  if (!result.commands.length && !result.reply) entry.steps.push({ note: t('cantMap') });
+  if (!result.commands.length && !result.reply) entry.steps.push({ narration: t('cantMap') });
   aiHistory.push({ input: text, reply: result.reply, commands: result.commands, output: outputs.join('\n') });
   node = rerender(node, entry);
   await translateEntry(entry, node);
