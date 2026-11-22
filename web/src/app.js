@@ -6,6 +6,7 @@ import { interpret, isParserError } from './ai/interpreter.js';
 import { currentScene } from './ai/scene.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
+import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -33,16 +34,15 @@ const store = {
 };
 
 const settings = Object.assign(
-  { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: '' },
+  { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: 'en' },
   store.get('pf.settings', {}),
 );
+settings.language = normalizeLanguage(settings.language);
+setLanguage(settings.language);
 const saveSettings = () => store.set('pf.settings', settings);
 const aiActive = () => settings.aiEnabled && !!settings.apiKey;
 // Translation is active when a non-English language is chosen and the AI is on.
-const targetLanguage = () => {
-  const l = (settings.language || '').trim();
-  return aiActive() && l && !/^english$/i.test(l) ? l : '';
-};
+const targetLanguage = () => (aiActive() ? AI_LANGUAGE_NAME[settings.language] || '' : '');
 
 // ---------------------------------------------------------------------------
 // Transcript rendering
@@ -85,7 +85,7 @@ function renderGameText(segments, container) {
     });
     if (seg.translated) {
       p.classList.add('translated');
-      p.title = seg.showOriginal ? 'Original text — click to show the translation' : 'Click to show the original English text';
+      p.title = seg.showOriginal ? t('showTranslation') : t('showOriginal');
       p.addEventListener('click', () => {
         if (window.getSelection()?.toString()) return;
         seg.showOriginal = !seg.showOriginal;
@@ -194,7 +194,7 @@ async function handleInput(raw) {
     } else {
       await aiTurn(text);
     }
-    if (gameEnded) addEntry({ system: 'The game has ended. Type anything to start a new game.' });
+    if (gameEnded) addEntry({ system: t('gameEnded') });
     autosave();
   } finally {
     busy = false;
@@ -218,7 +218,7 @@ async function aiTurn(text) {
     stopThinking();
     // Fall back to the original parser so the game stays playable.
     const res = await sendToGame(text);
-    entry.steps.push({ note: `${err.message} — sent your input to the original parser instead.`, error: true },
+    entry.steps.push({ note: t('aiFailed', { error: err.message }), error: true },
       { segments: res.segments });
     aiHistory.push({ input: text, commands: [text], output: res.text });
     node = rerender(node, entry);
@@ -259,7 +259,7 @@ async function aiTurn(text) {
     if (res.ended || /RESTART, RESTORE, or QUIT|\(Y is affirmative\)|Please answer YES or NO/.test(res.text)) break;
     if (parserError) break;
   }
-  if (!result.commands.length && !result.reply) entry.steps.push({ note: "I couldn't turn that into a game command." });
+  if (!result.commands.length && !result.reply) entry.steps.push({ note: t('cantMap') });
   aiHistory.push({ input: text, commands: result.commands, output: outputs.join('\n') });
   node = rerender(node, entry);
   await translateEntry(entry, node);
@@ -289,7 +289,7 @@ async function translateEntry(entry, node) {
     sg.translating = false;
   }));
   const failed = segs.find((sg) => sg.translateError);
-  if (failed) entry.steps.push({ note: `Translation failed (${failed.translateError}); showing the original text.`, error: true });
+  if (failed) entry.steps.push({ note: t('translationFailed', { error: failed.translateError }), error: true });
   return rerender(node, entry);
 }
 
@@ -312,7 +312,7 @@ async function undo() {
     await session.load(snap);
     gameEnded = false;
     aiHistory.pop();
-    addEntry({ system: 'Undone — back to the previous turn.' });
+    addEntry({ system: t('undone') });
     autosave();
   } finally {
     busy = false;
@@ -336,10 +336,10 @@ function openSlots(mode, snap) {
   slotsMode = mode;
   slotsSnapshot = snap;
   slotsSelected = null;
-  els.slotsTitle.textContent = mode === 'save' ? 'Save game' : 'Restore a saved game';
+  els.slotsTitle.textContent = mode === 'save' ? t('saveGameTitle') : t('restoreGameTitle');
   els.slotNameField.style.display = mode === 'save' ? '' : 'none';
-  els.slotsOk.textContent = mode === 'save' ? 'Save' : 'Restore';
-  els.slotName.value = mode === 'save' ? `${currentRoom || 'Game'} — ${new Date().toLocaleString()}` : '';
+  els.slotsOk.textContent = mode === 'save' ? t('saveButton') : t('restoreButton');
+  els.slotName.value = mode === 'save' ? `${els.room.textContent !== '—' ? els.room.textContent : t('defaultSaveName')} — ${new Date().toLocaleString(settings.language)}` : '';
   drawSlots();
   els.slots.showModal();
   if (mode === 'save') els.slotName.select();
@@ -350,13 +350,13 @@ function drawSlots() {
   const saves = listSaves();
   els.slotsList.replaceChildren();
   const names = Object.keys(saves).sort((a, b) => saves[b].date - saves[a].date);
-  if (!names.length) els.slotsList.append(el('p', 'empty', 'No saved games yet.'));
+  if (!names.length) els.slotsList.append(el('p', 'empty', t('noSaves')));
   for (const name of names) {
     const b = el('button', `slot${slotsSelected === name ? ' selected' : ''}`);
     b.type = 'button';
-    b.append(el('span', 'slot-name', name), el('span', 'slot-meta', new Date(saves[name].date).toLocaleDateString()));
+    b.append(el('span', 'slot-name', name), el('span', 'slot-meta', new Date(saves[name].date).toLocaleDateString(settings.language)));
     const del = el('span', 'slot-del', '×');
-    del.title = 'Delete';
+    del.title = t('delete');
     del.addEventListener('click', (e) => {
       e.stopPropagation();
       const s = listSaves(); delete s[name]; store.set('pf.saves', s); drawSlots();
@@ -394,7 +394,7 @@ async function openSettings() {
   els.setModel.value = settings.model;
   els.setAi.checked = settings.aiEnabled;
   els.setShow.checked = settings.showCommands;
-  els.setLang.value = settings.language || '';
+  els.setLang.value = settings.language;
   els.settings.showModal();
   if (!els.modelList.childElementCount) {
     listModels().then((models) => {
@@ -409,32 +409,25 @@ async function openSettings() {
 
 els.settings.addEventListener('close', async () => {
   if (els.settings.returnValue !== 'ok') return;
+  const prevTarget = targetLanguage();
   settings.apiKey = els.setKey.value.trim();
   settings.model = els.setModel.value.trim();
   settings.aiEnabled = els.setAi.checked;
   settings.showCommands = els.setShow.checked;
   const prevLang = settings.language;
-  settings.language = els.setLang.value.trim();
+  settings.language = normalizeLanguage(els.setLang.value);
   if (settings.apiKey && !settings.model) settings.model = await pickDefaultModel();
   saveSettings();
+  setLanguage(settings.language);
+  applyStatic();
   updateMode();
-  const wanted = (settings.language || '').trim();
-  if (settings.language !== prevLang || (wanted && !/^english$/i.test(wanted))) {
-    updateStatusRoom();
-    if (targetLanguage()) {
-      if (settings.language !== prevLang) {
-        addEntry({ system: `Now playing in ${wanted}. Translating… (click a passage to see the original English)` });
-        translateVisible();
-      }
-    } else if (wanted && !/^english$/i.test(wanted)) {
-      addEntry({ system: !settings.apiKey
-        ? `Playing in ${wanted} needs the AI: add your OpenRouter API key in the settings (⚙).`
-        : `Playing in ${wanted} needs the AI interpreter: turn on "Use the AI interpreter" in the settings (⚙).` });
-    } else if (prevLang && settings.language !== prevLang) {
-      addEntry({ system: 'Back to the original English text.' });
-      translateVisible();
-    }
+  updateStatusRoom();
+  const target = targetLanguage();
+  if (settings.language !== prevLang) {
+    if (settings.language === 'en') addEntry({ system: t('nowEnglish') });
+    else addEntry({ system: target ? t('nowGerman') : !settings.apiKey ? t('needsKey') : t('needsAi') });
   }
+  if (target !== prevTarget) translateVisible();
 });
 
 /** After switching language: translate the most recent turns already on screen. */
@@ -449,24 +442,20 @@ async function translateVisible() {
 
 function updateMode() {
   const ai = aiActive();
-  els.badge.textContent = ai ? 'AI' : 'CLASSIC';
+  els.badge.textContent = ai ? t('badgeAi') : t('badgeClassic');
   els.badge.classList.toggle('ai', ai);
-  els.badge.title = ai ? `AI interpreter (${settings.model}) — click to switch to the classic parser`
-    : settings.apiKey ? 'Classic parser — click to switch on the AI interpreter' : 'Classic parser — add an OpenRouter key to use the AI';
-  els.input.placeholder = ai ? 'Say anything… e.g. "grab the brush and head up the stairs"' : 'Type a command, e.g. "examine brush"';
+  els.badge.title = ai ? t('badgeTitleAi', { model: settings.model })
+    : settings.apiKey ? t('badgeTitleClassicKey') : t('badgeTitleClassicNoKey');
+  els.input.placeholder = ai ? t('placeholderAi') : t('placeholderClassic');
   els.hint.replaceChildren();
   if (ai) {
-    const lang = targetLanguage();
-    els.hint.append(lang
-      ? `AI interpreter on · playing in ${lang} — type in any language; click a passage to see the original.`
-      : 'AI interpreter on — start a line with ">" to talk to the original parser directly.');
+    els.hint.append(targetLanguage() ? t('hintAiTranslated') : t('hintAi'));
   } else {
-    els.hint.append('Classic parser. ');
-    const a = el('a', null, settings.apiKey ? 'Turn on the AI interpreter' : 'Add an OpenRouter key');
+    els.hint.append(t('hintClassic'));
+    const a = el('a', null, settings.apiKey ? t('hintTurnOnAi') : t('hintAddKey'));
     a.href = '#'; a.addEventListener('click', (e) => { e.preventDefault(); openSettings(); });
-    els.hint.append(a, ' to type in plain language.');
-    const lang = (settings.language || '').trim();
-    if (lang && !/^english$/i.test(lang)) els.hint.append(` (Needed for playing in ${lang}.)`);
+    els.hint.append(a, t('hintPlainLanguage'));
+    if (settings.language !== 'en') els.hint.append(t('hintNeededForTranslation'));
   }
 }
 
@@ -533,6 +522,7 @@ els.badge.addEventListener('click', () => {
 // ---------------------------------------------------------------------------
 
 async function boot() {
+  applyStatic();
   updateMode();
   const opening = await session.start();
   const saved = store.get('pf.autosave', null);
@@ -542,7 +532,7 @@ async function boot() {
       aiHistory = saved.aiHistory || [];
       for (const entry of transcriptLog) renderEntry(entry, false);
       await session.load(saved.snapshot);
-      addEntry({ system: 'Welcome back — your game was restored. (Type "restart" to begin again.)' });
+      addEntry({ system: t('welcomeBack') });
     } catch {
       store.remove('pf.autosave');
       transcriptLog = [];

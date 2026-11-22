@@ -185,7 +185,7 @@ body {
 .muted.small { font-size: 12.5px; }
 .muted a { color: var(--accent-2); }
 .field { display: flex; flex-direction: column; gap: 5px; font-size: 13px; font-weight: 600; }
-.field input {
+.field input, .field select {
   font: 15px var(--mono); padding: 9px 11px; border-radius: 9px; border: 1px solid var(--line);
   background: var(--bg); color: var(--text);
 }
@@ -218,3 +218,5 @@ code { font-family: var(--mono); font-size: .92em; }
 .game-text.translated { cursor: pointer; }
 .game-text.translated:hover { text-decoration: underline dotted color-mix(in srgb, var(--muted) 50%, transparent); text-underline-offset: 5px; }
 .game-text.translating { opacity: .45; transition: opacity .3s; }
+
+.dialog h3.subheading { margin: 8px 0 0; font-size: 15px; padding-top: 12px; border-top: 1px solid var(--line); }

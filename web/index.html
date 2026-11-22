@@ -20,21 +20,21 @@
     <div class="status" aria-live="polite">
       <span id="status-room" class="status-room">—</span>
       <span class="status-sep">·</span>
-      <span>Score <b id="status-score">0</b></span>
+      <span><span data-i18n="score">Score</span> <b id="status-score">0</b></span>
       <span class="status-sep">·</span>
-      <span>Time <b id="status-time">0</b></span>
+      <span><span data-i18n="time">Time</span> <b id="status-time">0</b></span>
     </div>
     <nav class="actions">
-      <button id="btn-undo" class="icon-btn" title="Undo last turn (Ctrl+Z)" aria-label="Undo">
+      <button id="btn-undo" class="icon-btn" title="Undo last turn (Ctrl+Z)" aria-label="Undo" data-i18n-title="undoTitle" data-i18n-aria="undo">
         <svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
       </button>
-      <button id="btn-save" class="icon-btn" title="Save game" aria-label="Save">
+      <button id="btn-save" class="icon-btn" title="Save game" aria-label="Save" data-i18n-title="saveTitle" data-i18n-aria="save">
         <svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3"/><path d="M8 21v-7h8v7"/></svg>
       </button>
-      <button id="btn-load" class="icon-btn" title="Restore a saved game" aria-label="Restore">
+      <button id="btn-load" class="icon-btn" title="Restore a saved game" aria-label="Restore" data-i18n-title="loadTitle" data-i18n-aria="load">
         <svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v11H3z"/></svg>
       </button>
-      <button id="btn-settings" class="icon-btn" title="AI settings" aria-label="Settings">
+      <button id="btn-settings" class="icon-btn" title="Settings" aria-label="Settings" data-i18n-title="settingsTitle" data-i18n-aria="settingsTitle">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
       </button>
     </nav>
@@ -44,10 +44,10 @@
 
   <footer class="inputbar">
     <form id="command-form" autocomplete="off">
-      <span id="mode-badge" class="mode-badge" title="Interpreter mode">CLASSIC</span>
+      <span id="mode-badge" class="mode-badge" title="Interpreter mode" data-i18n-title="modeTitle">CLASSIC</span>
       <input id="command" type="text" spellcheck="false" autocapitalize="off"
-             placeholder="What do you want to do?" aria-label="Your command" disabled>
-      <button id="send" type="submit" class="send-btn" aria-label="Send" disabled>
+             placeholder="What do you want to do?" aria-label="Your command" data-i18n-aria="commandLabel" disabled>
+      <button id="send" type="submit" class="send-btn" aria-label="Send" data-i18n-aria="send" disabled>
         <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
       </button>
     </form>
@@ -56,38 +56,32 @@
 
   <dialog id="settings-dialog" class="dialog">
     <form method="dialog" id="settings-form">
-      <h2>AI interpreter</h2>
-      <p class="muted">The original parser only understands its own vocabulary. With an
-        <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a> API key,
-        an AI model translates whatever you type into commands the game understands. All story
-        text still comes from the original game.</p>
+      <h2 data-i18n="settingsHeading">Settings</h2>
       <label class="field">
-        <span>OpenRouter API key</span>
+        <span data-i18n="languageLabel">Language</span>
+        <select id="set-lang">
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </label>
+      <p class="muted small" data-i18n="languageHelp"></p>
+      <h3 class="subheading" data-i18n="aiHeading">AI interpreter</h3>
+      <p class="muted" data-i18n-html="aiIntro"></p>
+      <label class="field">
+        <span data-i18n="keyLabel">OpenRouter API key</span>
         <input id="set-key" type="password" placeholder="sk-or-…" autocomplete="off" spellcheck="false">
       </label>
       <label class="field">
-        <span>Model</span>
-        <input id="set-model" type="text" list="model-list" spellcheck="false" placeholder="Leave empty to pick automatically">
+        <span data-i18n="modelLabel">Model</span>
+        <input id="set-model" type="text" list="model-list" spellcheck="false" data-i18n-placeholder="modelPlaceholder">
         <datalist id="model-list"></datalist>
       </label>
-      <label class="field">
-        <span>Language</span>
-        <input id="set-lang" type="text" list="lang-list" placeholder="English (original)" spellcheck="false">
-        <datalist id="lang-list">
-          <option value="English"><option value="Deutsch"><option value="Français"><option value="Español">
-          <option value="Italiano"><option value="Português"><option value="Nederlands"><option value="Polski">
-          <option value="Svenska"><option value="Türkçe"><option value="Русский"><option value="Українська">
-          <option value="日本語"><option value="中文"><option value="한국어"><option value="العربية"><option value="हिन्दी">
-        </datalist>
-      </label>
-      <p class="muted small">In another language, the AI translates the game's text for you and understands what you type in that language. Click any passage to see the original English.</p>
-      <label class="check"><input id="set-ai" type="checkbox"> Use the AI interpreter</label>
-      <label class="check"><input id="set-show" type="checkbox"> Show the commands the AI sends to the game</label>
-      <p class="muted small">Your key is stored only in this browser (localStorage) and sent only to openrouter.ai.
-        Prefix a command with <code>&gt;</code> to send it straight to the original parser.</p>
+      <label class="check"><input id="set-ai" type="checkbox"> <span data-i18n="useAi">Use the AI interpreter</span></label>
+      <label class="check"><input id="set-show" type="checkbox"> <span data-i18n="showCommands">Show the commands the AI sends to the game</span></label>
+      <p class="muted small" data-i18n-html="privacy"></p>
       <div class="dialog-actions">
-        <button type="button" value="cancel" class="btn ghost" data-close>Cancel</button>
-        <button value="ok" id="settings-ok" class="btn primary">Save settings</button>
+        <button type="button" value="cancel" class="btn ghost" data-close data-i18n="cancel">Cancel</button>
+        <button value="ok" id="settings-ok" class="btn primary" data-i18n="saveSettings">Save settings</button>
       </div>
     </form>
   </dialog>
@@ -97,11 +91,11 @@
       <h2 id="slots-title">Save game</h2>
       <div id="slots-list" class="slots"></div>
       <label class="field" id="slot-name-field">
-        <span>Save name</span>
-        <input id="slot-name" type="text" maxlength="40" placeholder="e.g. before the bio-lab">
+        <span data-i18n="saveName">Save name</span>
+        <input id="slot-name" type="text" maxlength="40" data-i18n-placeholder="saveNamePlaceholder">
       </label>
       <div class="dialog-actions">
-        <button type="button" value="cancel" class="btn ghost" data-close>Cancel</button>
+        <button type="button" value="cancel" class="btn ghost" data-close data-i18n="cancel">Cancel</button>
         <button value="ok" id="slots-ok" class="btn primary">Save</button>
       </div>
     </form>
