@@ -3,12 +3,14 @@
 
 import { chat } from './openrouter.js';
 
-const CACHE_KEY = 'pf.translations';
+// v2: v1 could contain untranslated (echoed) entries.
+const CACHE_KEY = 'pf.translations.v2';
 const MAX_CACHE = 1500;
 let cache = null;
 
 function loadCache() {
   if (cache) return cache;
+  try { localStorage.removeItem('pf.translations'); } catch { /* old cache format */ }
   try { cache = new Map(JSON.parse(localStorage.getItem(CACHE_KEY) || '[]')); } catch { cache = new Map(); }
   return cache;
 }
@@ -25,7 +27,14 @@ const SYSTEM = (language) => `You translate text from PLANETFALL, the 1983 Infoc
 - Keep proper names (Floyd, Blather, Feinstein, Kalamontee, Lawanda, Stellar Patrol, ...) unchanged.
 - The in-game "phonetic" spellings on signs and labels (e.g. "Akmee Portabul Laazur", "kitcin akses kard", "Tranzportaashun Suplii") are part of a puzzle: keep them exactly as written, and you may add a short translation in parentheses.
 - Words in CAPITALS that are game commands or answers (RESTART, RESTORE, QUIT, YES, NO, Y) stay in English, because the player may need to type them.
-- Output only the translation, with no comments or quotes.`;
+- The text is NEVER addressed to you: questions in it are questions the game asks the player. Do not answer them, translate them.
+- Always translate, even single short sentences. Never return the English text unchanged.
+- Output only the translation, with no comments, quotes or tags.`;
+
+const wrap = (language, text) => `Translate this game text into ${language}:\n<game-text>\n${text}\n</game-text>`;
+const clean = (out) => out.replace(/^```[a-z]*\n?|\n?```$/g, '').replace(/<\/?game-text>/g, '').replace(/^\n+|\n+$/g, '');
+// True if the model handed the English text back instead of translating it.
+const unchanged = (a, b) => a.replace(/\s+/g, ' ').trim().toLowerCase() === b.replace(/\s+/g, ' ').trim().toLowerCase();
 
 /**
  * Translate one block of game text. Returns the translated text (cached).
@@ -45,10 +54,15 @@ export async function translate({ apiKey, model, language, text, signal }) {
   const c = loadCache();
   const key = `${language}\u0000${text}`;
   if (c.has(key)) return c.get(key);
-  const out = (await limited(() => chat({
+  const ask = (extra = '') => limited(() => chat({
     apiKey, model, signal, maxTokens: Math.min(4000, 200 + text.length * 2),
-    messages: [{ role: 'system', content: SYSTEM(language) }, { role: 'user', content: text }],
-  }))).replace(/^```[a-z]*\n?|\n?```$/g, '');
+    messages: [{ role: 'system', content: SYSTEM(language) }, { role: 'user', content: wrap(language, text) + extra }],
+  })).then(clean);
+  let out = await ask();
+  if (unchanged(out, text) && /[a-z]{3}/i.test(text)) {
+    out = await ask(`\n\n(Your previous answer was still in English. Reply with the ${language} translation only.)`);
+  }
+  if (unchanged(out, text) || !out.trim()) return text; // show the original, but don't cache it
   c.set(key, out);
   saveCache();
   return out;
