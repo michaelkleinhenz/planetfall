@@ -418,9 +418,22 @@ els.settings.addEventListener('close', async () => {
   if (settings.apiKey && !settings.model) settings.model = await pickDefaultModel();
   saveSettings();
   updateMode();
-  if (settings.language !== prevLang) {
+  const wanted = (settings.language || '').trim();
+  if (settings.language !== prevLang || (wanted && !/^english$/i.test(wanted))) {
     updateStatusRoom();
-    if (targetLanguage()) translateVisible();
+    if (targetLanguage()) {
+      if (settings.language !== prevLang) {
+        addEntry({ system: `Now playing in ${wanted}. Translating… (click a passage to see the original English)` });
+        translateVisible();
+      }
+    } else if (wanted && !/^english$/i.test(wanted)) {
+      addEntry({ system: !settings.apiKey
+        ? `Playing in ${wanted} needs the AI: add your OpenRouter API key in the settings (⚙).`
+        : `Playing in ${wanted} needs the AI interpreter: turn on "Use the AI interpreter" in the settings (⚙).` });
+    } else if (prevLang && settings.language !== prevLang) {
+      addEntry({ system: 'Back to the original English text.' });
+      translateVisible();
+    }
   }
 });
 
@@ -430,6 +443,7 @@ async function translateVisible() {
   const recent = transcriptLog.slice(-6);
   const nodes = turns.slice(-recent.length);
   for (const sg of recent.flatMap((e) => (e.steps || []).flatMap((st) => st.segments || []))) delete sg.translated;
+  if (!targetLanguage()) { recent.forEach((e, i) => nodes[i] && rerender(nodes[i], e)); return; }
   await Promise.all(recent.map((e, i) => (nodes[i] ? translateEntry(e, nodes[i]) : null)));
 }
 
@@ -451,6 +465,8 @@ function updateMode() {
     const a = el('a', null, settings.apiKey ? 'Turn on the AI interpreter' : 'Add an OpenRouter key');
     a.href = '#'; a.addEventListener('click', (e) => { e.preventDefault(); openSettings(); });
     els.hint.append(a, ' to type in plain language.');
+    const lang = (settings.language || '').trim();
+    if (lang && !/^english$/i.test(lang)) els.hint.append(` (Needed for playing in ${lang}.)`);
   }
 }
 
