@@ -1,0 +1,15 @@
+{
+  "name": "planetfall-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Infocom's Planetfall translated from ZIL to JavaScript, playable in the browser with an AI command interpreter (OpenRouter).",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/zil2js/compile.mjs",
+    "verify": "node tools/zil2js/verify.mjs",
+    "test": "node tools/zil2js/verify.mjs && node tests/transcripts.test.mjs",
+    "play": "node tools/play.mjs",
+    "start": "python3 -m http.server 8000 --directory web"
+  },
+  "engines": { "node": ">=18" }
+}

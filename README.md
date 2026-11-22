@@ -1,3 +1,62 @@
+# Planetfall AI — the 1983 classic in modern JavaScript, with an AI interpreter
+
+This fork adds a playable web version of Planetfall in which **an AI model replaces the
+original text parser's strict input requirements**. Type whatever you like ("grab the brush
+and head up the stairs", "ask Floyd to come along", typos, even other languages). The model
+translates it into commands in the game's own vocabulary, and **the original game logic and
+parser, translated to JavaScript, execute them**. Every line of story text, every puzzle and
+every riddle is Infocom's original.
+
+## Play
+
+```sh
+npm start            # serves web/ on http://localhost:8000
+```
+
+Any static file server works (`web/` uses plain ES modules, no build step). Open the
+settings (⚙) and paste an [OpenRouter](https://openrouter.ai/keys) API key to turn on the
+AI interpreter. Without a key, the game runs with the classic parser.
+
+- The key is stored only in your browser (localStorage) and sent only to openrouter.ai.
+- Pick any OpenRouter model. Left empty, one is chosen from a preference list.
+- Start a line with `>` to bypass the AI and talk to the original parser directly.
+- The UI also has undo (Ctrl+Z), named save slots, autosave/resume, and optionally shows
+  the commands the AI sent to the game.
+
+Terminal play (classic parser): `npm run play`.
+
+## How it works
+
+| Part | Location | What it does |
+|---|---|---|
+| ZIL → JS compiler | `tools/zil2js/` | Reads the original `.zil` sources and translates all 516 routines into readable async JavaScript. It also builds the game's data image: object tree, property tables, vocabulary and syntax tables. |
+| Generated game | `web/src/game/planetfall.js`, `story-data.js` | The translated game. Regenerate with `npm run build`. |
+| Runtime | `web/src/engine/` | The Z-machine-style primitives the code relies on (objects, properties, tables, text, tokenizer, save/restore, seeded RNG) and a session wrapper. |
+| AI interpreter | `web/src/ai/` | Builds a scene description from the live game state (location, inventory, visible objects with their nouns and adjectives) plus the recent transcript. It asks the model for JSON `{commands, reply}`. If the original parser rejects a command, it gives the model one chance to rephrase, which is safe because parser errors take no game time. |
+| Web app | `web/index.html`, `web/src/app.js` | The browser front end. |
+
+### Faithfulness
+
+The translation keeps the original ZILCH compiler's semantics: for example `<RETURN value>`
+inside a loop returns from the routine. Object numbering and the vocabulary/object-tree
+layout are cross-checked against the original compiler's data listing
+(`planetfalldat.zap`; run `npm run verify`).
+
+`npm test` replays about 5,500 recorded commands through the JavaScript version. These are
+one walkthrough plus random play from several checkpoints, including deaths, restarts,
+sleeping and dreams. The test compares the output line for line with transcripts recorded
+from the original compiled story file `COMPILED/planetfall.z3` (release 39). Both runs seed
+the RNG via the game's own `#random` command. The recorded paths cover the first half of
+the game: the Feinstein, the escape pod, the Kalamontee complex, Floyd, the elevators and
+the tower. The rest uses the same compiler but has not been compared transcript by
+transcript yet.
+
+Source fix-ups applied at compile time (documented in `tools/zil2js/compile.mjs`):
+`comptwo.zil` is truncated in the last object definition, and its ending is restored from
+`comptwo.zabstr`. A stray `Y` atom in `SLOT-F` is ignored.
+
+---
+
 # Planetfall Source Code Collection
 
 Planetfall is a 1983 interactive fiction game written by Steve Meretzky and published by Infocom.
