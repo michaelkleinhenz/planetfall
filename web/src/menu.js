@@ -28,13 +28,24 @@ export function renderMenu({ openSettings }) {
     const named = Object.keys(store.get(gameKey(meta.id, 'saves'), {})).length;
     const card = el('article', 'game-card');
     card.dataset.game = meta.id;
-    // A generated cover panel (original artwork, not the box art).
     const cover = el('a', 'gc-cover');
     cover.href = gameUrl(meta.id);
     cover.setAttribute('aria-label', meta.title);
-    const art = el('span', 'gc-emblem');
-    art.innerHTML = emblem(meta.id);
-    cover.append(el('span', 'gc-stars'), art, el('span', 'gc-cover-title', meta.title), el('span', 'gc-cover-year', String(meta.year)));
+    if (meta.cover) {
+      // The game's box art.
+      const img = el('img', 'gc-cover-img');
+      img.src = meta.cover;
+      img.alt = `${meta.title} — cover`;
+      img.width = 264; img.height = 352;
+      img.decoding = 'async';
+      cover.classList.add('has-image');
+      cover.append(img);
+    } else {
+      // A generated cover panel when there is no cover image.
+      const art = el('span', 'gc-emblem');
+      art.innerHTML = emblem(meta.id);
+      cover.append(el('span', 'gc-stars'), art, el('span', 'gc-cover-title', meta.title), el('span', 'gc-cover-year', String(meta.year)));
+    }
     const body = el('div', 'gc-body');
     body.append(el('h3', null, meta.title));
     body.append(el('div', 'gc-sub', `${meta.subtitle ? meta.subtitle + ' · ' : ''}${meta.author}, ${meta.year}`));
