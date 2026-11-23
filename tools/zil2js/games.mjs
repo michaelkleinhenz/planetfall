@@ -138,6 +138,7 @@ export const GAMES = {
     srcDir: 'games/starcross',
     main: 'starcross',
     objectOrder: { story: 'COMPILED/starcross.z3' },
+    oldReturn: true,
     storyFile: 'COMPILED/starcross.z3',
   },
   'suspect': {

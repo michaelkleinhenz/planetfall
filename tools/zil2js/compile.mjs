@@ -1246,7 +1246,7 @@ class Compiler {
     // (LDESC "text" CR): a stray CR after a string is ignored.
     if (vals.length > 1 && vals[0].t === 'str' && vals.slice(1).every((v) => v.t === 'atom' && v.v === 'CR')) vals = [vals[0]];
     const w = (v) => [(v >> 8) & 255, v & 255];
-    if (this.directions.includes(pname) && !(vals.length === 1 && vals[0].t === 'num')) {
+    if ((this.directions.includes(pname) || (vals[0]?.t === 'atom' && (vals[0].v === 'TO' || vals[0].v === 'PER'))) && !(vals.length === 1 && vals[0].t === 'num')) {
       // Exits
       if (vals[0].t === 'str') return w(this.stringId(zilText(vals[0].v)));                 // NEXIT
       if (vals[0].v === 'PER') return [...w(this.routineId(vals[1].v)), 0];                 // FEXIT
@@ -1409,6 +1409,11 @@ class RoutineCompiler {
   }
 
   stmt(node, mode) {
+    // A stray COND clause after a COND (Zork II's DREARY-ROOM-FCN): its forms run in order.
+    if (node.t === 'list' && node.items.length > 1 && node.items[0].t === 'atom' && node.items[0].v === 'T') {
+      warn(`${this.name}: stray clause ${show(node).slice(0, 60)} compiled as statements`);
+      return this.block(node.items.slice(1), mode);
+    }
     if (node.t === 'form' && node.items.length) {
       const h = node.items[0].t === 'atom' ? node.items[0].v : null;
       const args = node.items.slice(1);
