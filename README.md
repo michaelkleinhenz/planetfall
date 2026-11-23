@@ -94,6 +94,11 @@ Microsoft). All others are shared by historicalsource for education and research
   isn't shown on phones and tablets. It only knows what you have seen, so it gives
   nothing away.
 - Undo, named save slots, autosave and resume, and a main menu to switch games.
+- **Debug reports:** Settings → *Report a problem* downloads a file that describes the
+  current state: the inputs sent to the game with its raw replies, the full game state
+  before each of the last turns, the scene, the transcript (with the commands the AI
+  sent) and any errors. The API key is never included. `node tools/debug-report.mjs
+  report.json` replays it exactly and shows where the result differs.
 - **Manuals and feelies:** several games need items from their original package to be
   played (maps, codes, documents). Each game links to its page in the
   [Infocom Gallery](https://gallery.guetech.org/greybox.html), on the menu card and with
@@ -153,6 +158,9 @@ turned up, among them:
   interpreter at compile time;
 - later compiler features: compact syntax tables, TELL-TOKENS, MAP-CONTENTS, DO loops,
   LOWCORE, BIT-SYNONYM and the like.
+- flags that no object has (so they can't be matched by object) take their numbers from
+  the original syntax tables: GWIM compares a syntax's FIND flag with RMUNGBIT, and a
+  syntax without FIND has 0, so a wrong number made a bare verb ("open") act on nothing;
 - the version 4/5 data formats (14-byte objects, 9-letter dictionary words, compact
   vocabularies) and MDL-ZIL, the Lisp-like dialect Bureaucracy is written in (DEFINE,
   DEFSTRUCT, DEFINE-GLOBALS and compile-time code that builds its forms).

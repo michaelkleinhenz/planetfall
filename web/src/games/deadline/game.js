@@ -10,6 +10,13 @@ import {
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
+export const TOOLBIT = 2;
+export const RMUNGBIT = 3;
+export const LIGHTBIT = 4;
+export const FOODBIT = 5;
+export const DRINKBIT = 6;
+export const FLAMEBIT = 7;
+export const WEAPONBIT = 8;
 export const FURTINTURE = 9;
 export const DRUGBIT = 10;
 export const TRYTAKEBIT = 11;
@@ -33,13 +40,6 @@ export const OPENBIT = 28;
 export const SURFACEBIT = 29;
 export const TRANSBIT = 30;
 export const INVISIBLE = 31;
-export const WEAPONBIT = 0;
-export const FLAMEBIT = 1;
-export const DRINKBIT = 2;
-export const FOODBIT = 3;
-export const LIGHTBIT = 4;
-export const RMUNGBIT = 5;
-export const TOOLBIT = 6;
 
 // ---- Objects and rooms ----
 export const GLOBAL_CONCERT = 1;

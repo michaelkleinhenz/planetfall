@@ -1,0 +1,79 @@
+PLANETFALL
+Infocom interactive fiction - a science fiction story
+Copyright (c) TIME by Infocom, Inc. All rights reserved.
+PLANETFALL is a registered trademark of Infocom, Inc.
+Release 39 / Serial number 880501
+
+Another routine day of drudgery aboard the Stellar Patrol Ship Feinstein. This morning's assignment for a certain lowly Ensign Seventh Class: scrubbing the filthy metal deck at the port end of Level Nine. With your Patrol-issue self-contained multi-purpose all-weather scrub brush you shine the floor with a diligence born of the knowledge that at any moment dreaded Ensign First Class Blather, the bane of your shipboard existence, could appear.
+
+Deck Nine
+This is a featureless corridor similar to every other corridor on the ship. It curves away to starboard, and a gangway leads up. To port is the entrance to one of the ship's primary escape pods. The pod bulkhead is closed.
+
+>
+
+>
+Time passes...
+
+>
+Time passes...
+
+>
+Time passes...
+
+>
+What do you want to examine?
+
+>
+You can't see any brochu here!
+
+>
+What do you want to open?
+
+>
+(ID card)
+"STELLAR PATROL
+Special Assignment Task Force
+ID Number:  TIME-531-541"
+
+The alien ambassador from the planet Blow'k-bibben-Gordo ambles toward you from down the corridor. He is munching on something resembling an enormous stalk of celery, and he leaves a trail of green slime on the deck. He stops nearby, and you wince as a pool of slime begins forming beneath him on your newly-polished deck. The ambassador wheezes loudly and hands you a brochure outlining his planet's major exports.
+
+>
+What do you want to look at?
+
+>
+piece of celery: The ambassador seems perturbed by your lack of normal protocol.
+alien ambassador: You can't be serious.
+
+The ambassador recites a plea for coexistence between your races.
+
+>
+What do you want to take?
+
+>
+You already have it.
+
+The ambassador asks where Admiral Smithers can be found.
+
+>
+Gangway
+This is a steep metal gangway connecting Deck Eight, above, and Deck Nine, below.
+
+>
+You recline on the floor for a bit, and then stand up again.
+
+>
+You are already standing, I think.
+You hear a distant bellowing ... something about an Ensign Seventh Class whose life is in danger.
+
+>
+What do you want to examine?
+
+>
+"The leading export of Blow'k-bibben-Gordo is the adventure game
+
+          *** PLANETFALL ***
+
+written by S. Eric Meretzky.
+Buy one today. Better yet, buy a thousand."
+
+>

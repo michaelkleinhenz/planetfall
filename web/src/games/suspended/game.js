@@ -25,21 +25,21 @@ export const INVISIBLE = 13;
 export const TURNBIT = 14;
 export const WEARBIT = 15;
 export const FURNITURE = 16;
+export const READBIT = 17;
 export const TAKEBIT = 18;
 export const CONTBIT = 19;
+export const FOODBIT = 20;
+export const DRINKBIT = 21;
 export const CUTABLEBIT = 22;
 export const TOOLBIT = 23;
 export const VICBIT = 24;
+export const DOORBIT = 25;
 export const FIXABLEBIT = 26;
 export const CLIMBBIT = 27;
 export const VEHBIT = 28;
+export const WEAPONBIT = 29;
 export const VILLAIN = 30;
 export const WEARABLEBIT = 31;
-export const WEAPONBIT = 0;
-export const DOORBIT = 1;
-export const DRINKBIT = 17;
-export const FOODBIT = 20;
-export const READBIT = 21;
 
 // ---- Objects and rooms ----
 export const CIRCLE2 = 1;

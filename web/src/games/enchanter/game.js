@@ -36,11 +36,11 @@ export const TOOLBIT = 23;
 export const DOORBIT = 24;
 export const RLANDBIT = 25;
 export const CLIMBBIT = 26;
+export const FLAMEBIT = 27;
 export const BURNBIT = 28;
 export const VEHBIT = 29;
 export const WEAPONBIT = 30;
 export const VILLAIN = 31;
-export const FLAMEBIT = 0;
 
 // ---- Objects and rooms ----
 export const FOREST = 1;

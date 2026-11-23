@@ -3,9 +3,11 @@
 // games/) to the page and to the AI interpreter (ai/).
 
 import { GameSession } from './engine/session.js';
+import { inspect } from './engine/runtime.js';
 import { interpret, isParserError } from './ai/interpreter.js';
 import { currentScene, actionContext, currentRoom as roomObject } from './ai/scene.js';
 import { Automap, drawMap } from './automap.js';
+import { DebugLog, downloadJSON, BUILD, REPORT_README } from './debug.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
@@ -323,9 +325,15 @@ const session = new GameSession({
 
 let restartResponse = null; // set when the game restarted during the current input
 
+// Inputs, raw replies and recent game states, for debug reports (see debug.js).
+const debugLog = new DebugLog(GAME_ID ? store.get(K('debuglog'), null) : null);
+debugLog.captureErrors();
+
 async function sendToGame(command) {
-  const before = automap ? safeRoom() : 0;
+  const before = safeRoom();
+  const logEntry = debugLog.input(command, { snapshot: session.currentSnapshot(), room: before, keyInput: session.waitingForKey });
   const res = await session.send(command);
+  debugLog.output(logEntry, res, safeRoom());
   gameEnded = !!res.ended;
   if (res.restarted) restartResponse = res;
   if (automap) {
@@ -467,6 +475,7 @@ function startFresh(res) {
 function autosave() {
   const snap = session.currentSnapshot();
   if (!snap) return;
+  store.set(K('debuglog'), debugLog.toJSON());
   store.set(K('autosave'), {
     snapshot: snap, transcript: transcriptLog.slice(-120), aiHistory: aiHistory.slice(-12),
     meta: { room: els.room.textContent, score: Number(els.score.textContent) || 0, moves: Number(els.time.textContent) || 0, clock: GAMES[GAME_ID]?.clock ? els.time.textContent : undefined, date: Date.now() },
@@ -725,6 +734,7 @@ async function undo() {
   setInputEnabled(false);
   try {
     const snap = undoStack.pop();
+    debugLog.checkpoint(debugLog.add('undo').n, snap);
     await session.load(snap);
     if (automap) { try { automap.sync(); } catch { /* keep the map */ } renderMap(); }
     gameEnded = false;
@@ -801,6 +811,55 @@ els.slots.addEventListener('close', () => {
     const saves = listSaves();
     resolve(ok && slotsSelected && saves[slotsSelected] ? saves[slotsSelected].snapshot : null);
   }
+});
+
+// ---------------------------------------------------------------------------
+// Debug report (Settings: "Report a problem")
+// ---------------------------------------------------------------------------
+
+/** Everything needed to understand and replay a problem; never the API key. */
+function debugReport() {
+  const meta = GAMES[GAME_ID];
+  const safe = (f) => { try { return f(); } catch (e) { return { error: String(e?.message ?? e) }; } };
+  const roomId = safeRoom();
+  return {
+    format: 'planetfall-ai-debug-report',
+    version: 1,
+    readme: REPORT_README,
+    created: new Date().toISOString(),
+    build: BUILD,
+    page: location.origin + location.pathname + location.search,
+    browser: { userAgent: navigator.userAgent, language: navigator.language, viewport: [innerWidth, innerHeight], pixelRatio: devicePixelRatio, paging },
+    settings: {
+      language: settings.language, aiEnabled: settings.aiEnabled, hasApiKey: !!settings.apiKey, aiActive: aiActive(),
+      model: settings.model, showCommands: settings.showCommands, mapOpen: settings.mapOpen,
+    },
+    game: { id: GAME_ID, title: meta?.title, zVersion: current.story?.LAYOUT?.version },
+    state: {
+      busy, gameEnded, waitingForKey: !!session.waitingForKey,
+      room: { id: roomId, name: safe(() => (roomId ? inspect.objectName(roomId) : '')) },
+      header: { room: els.room.textContent, score: els.score.textContent, time: els.time.textContent },
+      upperWindow: document.getElementById('upper-window')?.hidden ? null : document.getElementById('upper-window')?.textContent,
+      lastInput: commandHistory[commandHistory.length - 1] ?? null,
+      undoDepth: undoStack.length,
+    },
+    scene: safe(() => currentScene()),
+    actions: safe(() => actionContext()),
+    log: debugLog.entries,
+    checkpoints: debugLog.checkpoints,
+    current: session.currentSnapshot(),
+    errors: debugLog.errors,
+    transcript: transcriptLog.slice(-150),
+    aiHistory,
+    commandHistory: commandHistory.slice(-60),
+    automap: automap?.toJSON() ?? null,
+  };
+}
+
+$('debug-report').addEventListener('click', () => {
+  if (!GAME_ID) { alert(t('debugNoGame')); return; }
+  const stamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 19);
+  downloadJSON(debugReport(), `debug-${GAME_ID}-${stamp}.json`);
 });
 
 // ---------------------------------------------------------------------------
@@ -1132,6 +1191,7 @@ async function boot() {
       transcriptLog = saved.transcript || [];
       aiHistory = saved.aiHistory || [];
       for (const entry of transcriptLog) renderEntry(entry, false);
+      debugLog.checkpoint(debugLog.add('resume').n, saved.snapshot);
       await session.load(saved.snapshot);
       addEntry({ system: t('welcomeBack') });
     } catch {
@@ -1144,6 +1204,7 @@ async function boot() {
     const entry = { steps: [{ segments: opening.segments }] };
     translateEntry(entry, addEntry(entry));
     aiHistory.push({ input: '', commands: [], output: opening.text });
+    debugLog.checkpoint(debugLog.add('start', { output: opening.text.slice(0, 6000) }).n, session.currentSnapshot());
   }
   initMap();
   if (settings.apiKey && !settings.model) {

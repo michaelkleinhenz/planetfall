@@ -10,8 +10,10 @@ import {
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
+export const WEAPONBIT = 0;
 export const BURNBIT = 1;
 export const DOORBIT = 2;
+export const LIGHTBIT = 3;
 export const CONTBIT = 4;
 export const READBIT = 6;
 export const SEARCHBIT = 7;
@@ -39,8 +41,6 @@ export const TOUCHBIT = 28;
 export const INVISIBLE = 29;
 export const RMUNGBIT = 30;
 export const NARTICLEBIT = 31;
-export const WEAPONBIT = 0;
-export const LIGHTBIT = 3;
 
 // ---- Objects and rooms ----
 export const POLICE_DOOR = 1;

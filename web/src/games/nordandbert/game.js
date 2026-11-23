@@ -12,7 +12,7 @@ import {
 
 // ---- Flags (object attributes) ----
 export const TRYTAKEBIT = 0;
-export const TAKEBIT = 1;
+export const NO_D_CONT = 1;
 export const INTEGRALBIT = 2;
 export const NOALL = 3;
 export const N0_D_CONT = 4;
@@ -25,7 +25,6 @@ export const WORNBIT = 10;
 export const FOODBIT = 11;
 export const DESC_IN_ROOMBIT = 12;
 export const FIRST_TIMEBIT = 13;
-export const NO_D_CONT = 14;
 export const KLUDGEBIT = 15;
 export const TRANSFORMED = 16;
 export const SEENBIT = 17;
@@ -49,14 +48,15 @@ export const INVISIBLE = 35;
 export const WEARBIT = 36;
 export const WONBIT = 37;
 export const READBIT = 38;
+export const TAKEBIT = 39;
 export const CONTBIT = 40;
 export const LIGHTBIT = 41;
 export const DOORBIT = 42;
 export const RANKBIT = 43;
+export const BURNBIT = 44;
 export const VEHBIT = 45;
 export const ONBIT = 46;
 export const ACTORBIT = 47;
-export const BURNBIT = 32;
 
 // ---- Objects and rooms ----
 export const SPLEEN = 1;

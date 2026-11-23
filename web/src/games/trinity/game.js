@@ -48,6 +48,7 @@ export const TOOL = 36;
 export const LIGHTED = 37;
 export const FOODBIT = 38;
 export const CONTAINER = 39;
+export const LIGHTBIT = 40;
 export const TAKEABLE = 41;
 export const SHARPENED = 42;
 export const OPENABLE = 43;
@@ -55,7 +56,6 @@ export const LOCATION = 44;
 export const MANUALLY = 45;
 export const LIVING = 46;
 export const PERSON = 47;
-export const LIGHTBIT = 2;
 
 // ---- Objects and rooms ----
 export const NWROOM = 1;

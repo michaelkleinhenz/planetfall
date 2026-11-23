@@ -780,6 +780,7 @@ class Compiler {
       const b = bitSets.findIndex((k, i) => k === key && !usedBits.has(i));
       if (b >= 0) { assigned.set(f, b); usedBits.add(b); }
     }
+    this.storyMatchedFlags = new Set(assigned.keys());
     const unmatched = [...this.flags.keys()].filter((f) => !assigned.has(f));
     if (unmatched.length) warn(`flags not found in the story file (numbered freely): ${unmatched.join(' ')}`);
     let free = 0;
@@ -1273,6 +1274,7 @@ class Compiler {
       const verb = canon(syn[0].v);
       const actNum = this.actNums.get(verb);
       let objs = 0, prep1 = 0, prep2 = 0, fwim1 = 0, fwim2 = 0, loc1 = 0, loc2 = 0;
+      let findName1 = null, findName2 = null;
       let i = 1;
       let pendingPrep = 0;
       for (; i < syn.length; i++) {
@@ -1287,7 +1289,7 @@ class Compiler {
         } else if (n.t === 'list') {
           if (n.items[0].v === 'FIND') {
             const f = this.flag(n.items[1].v);
-            if (objs === 1) fwim1 = f; else fwim2 = f;
+            if (objs === 1) { fwim1 = f; findName1 = this.bitSynonyms.get(n.items[1].v) ?? n.items[1].v; } else { fwim2 = f; findName2 = this.bitSynonyms.get(n.items[1].v) ?? n.items[1].v; }
           } else {
             let bits = 0;
             for (const a of n.items) {
@@ -1307,7 +1309,79 @@ class Compiler {
         this.actions.get(aname).pre = pre;
       }
       if (!this.verbSyntax.has(actNum)) this.verbSyntax.set(actNum, []);
-      this.verbSyntax.get(actNum).push({ objs, prep1, prep2, fwim1, fwim2, loc1, loc2, action: this.actions.get(aname).num, verb, src: syn });
+      this.verbSyntax.get(actNum).push({ objs, prep1, prep2, fwim1, fwim2, loc1, loc2, findName1, findName2, action: this.actions.get(aname).num, verb, src: syn });
+    }
+  }
+
+  /**
+   * Flags that no object has in the story file (so flagsFromStory can't match
+   * them) may still be compared with numbers stored elsewhere: GWIM tests a
+   * syntax's FIND flag against RMUNGBIT, and a syntax without FIND has 0. Find
+   * each such flag's original number in the story's syntax tables: our syntax
+   * list for a verb, with the unknown FIND bytes as wildcards, must appear there.
+   */
+  flagsFromSyntax() {
+    const d = this.story?.data;
+    if (!d || !this.storyMatchedFlags) return;
+    const free = (name) => name && !this.storyMatchedFlags.has(name);
+    const compact = this.constants.has('P-SYNLEN-1') || this.constants.has('K-P-SLEN-1');
+    const reverse = (CFG.syntaxOrder ?? this.inferSyntaxOrder()) === 'reverse';
+    const encode = (e) => {
+      const h1 = free(e.findName1) ? e.findName1 : null;
+      const h2 = free(e.findName2) ? e.findName2 : null;
+      if (compact) {
+        const n = e.objs & 3;
+        const out = [[((n << 6) | (e.prep1 & 63)) & 255], [e.action]];
+        if (n >= 1) out.push([e.fwim1, h1], [e.loc1]);
+        if (n >= 2) out.push([e.prep2], [e.fwim2, h2], [e.loc2]);
+        return out;
+      }
+      return [[e.objs], [e.prep1], [e.prep2], [e.fwim1, h1], [e.fwim2, h2], [e.loc1], [e.loc2], [e.action]];
+    };
+    const values = new Map(); // flag -> Set of numbers seen in the story
+    for (const list0 of this.verbSyntax.values()) {
+      const list = reverse ? [...list0].reverse() : list0;
+      const pat = [[list.length]];
+      for (const e of list) pat.push(...encode(e));
+      if (!pat.some((x) => x[1])) continue;
+      const hits = [];
+      for (let p = 64; p < d.length - pat.length && hits.length < 2; p++) {
+        let ok = true;
+        for (let k = 0; k < pat.length && ok; k++) ok = pat[k][1] ? true : d[p + k] === pat[k][0];
+        if (ok) hits.push(p);
+      }
+      if (hits.length !== 1) continue;
+      pat.forEach(([, name], k) => {
+        if (!name) return;
+        if (!values.has(name)) values.set(name, new Set());
+        values.get(name).add(d[hits[0] + k]);
+      });
+    }
+    const used = new Set([...this.storyMatchedFlags].map((f) => this.flags.get(f)));
+    const fixed = new Map();
+    for (const [name, set] of values) {
+      if (set.size !== 1) continue;
+      const v = [...set][0];
+      if (v >= MAX_FLAGS() || used.has(v)) continue;
+      fixed.set(name, v); used.add(v);
+    }
+    if (!fixed.size) return;
+    if (process.env.ZDEBUG) console.error('flags from syntax tables', Object.fromEntries(fixed));
+    // The remaining free flags take numbers nobody else uses.
+    const renumber = new Map(fixed);
+    let next = 0;
+    for (const f of this.flags.keys()) {
+      if (this.storyMatchedFlags.has(f) || renumber.has(f)) continue;
+      while (used.has(next)) next++;
+      renumber.set(f, next); used.add(next);
+    }
+    for (const [f, v] of renumber) this.flags.set(f, v);
+    this.flags = new Map([...this.flags].sort((a, b) => a[1] - b[1]));
+    for (const list of this.verbSyntax.values()) {
+      for (const e of list) {
+        if (e.findName1) e.fwim1 = this.flags.get(e.findName1);
+        if (e.findName2) e.fwim2 = this.flags.get(e.findName2);
+      }
     }
   }
 
@@ -2485,6 +2559,7 @@ export function compileAll(gameId = 'planetfall') {
   c.number();
   c.buildVocabulary();
   c.buildActions();
+  c.flagsFromSyntax();
   c.buildMemory();
   const code = c.generateCode();
   return { c, code };

@@ -36,10 +36,10 @@ export const CONTBIT = 24;
 export const TAKEBIT = 25;
 export const DOORBIT = 26;
 export const FOODBIT = 27;
+export const RMUNGBIT = 28;
 export const CLIMBBIT = 29;
 export const VEHBIT = 30;
 export const ACTORBIT = 31;
-export const RMUNGBIT = 0;
 
 // ---- Objects and rooms ----
 export const DORM_B = 1;

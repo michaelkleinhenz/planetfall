@@ -36,13 +36,13 @@ export const DRINKBIT = 21;
 export const DOORBIT = 22;
 export const CLIMBBIT = 23;
 export const FIGHTBIT = 24;
+export const FLAMEBIT = 25;
 export const BURNBIT = 26;
 export const VEHBIT = 27;
 export const TOOLBIT = 28;
 export const WEAPONBIT = 29;
 export const ACTORBIT = 30;
 export const LIGHTBIT = 31;
-export const FLAMEBIT = 25;
 
 // ---- Objects and rooms ----
 export const ROUND_BUTTON = 1;

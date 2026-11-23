@@ -50,10 +50,10 @@ export const READBIT = 40;
 export const WEARBIT = 41;
 export const TAKEBIT = 42;
 export const CONTBIT = 43;
+export const DRINKBIT = 44;
 export const DOORBIT = 45;
 export const THE = 46;
 export const PERSON = 47;
-export const DRINKBIT = 0;
 
 // ---- Objects and rooms ----
 export const FOREST = 1;
