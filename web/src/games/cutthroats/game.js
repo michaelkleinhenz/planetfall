@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -277,6 +277,7 @@ export const P1$OBJECT = 0;
 export const P1$VERB = 1;
 export const P1$ADJECTIVE = 2;
 export const P1$DIRECTION = 3;
+export const ZSTR_ON = 0;
 export const C_ENABLED$ = 0;
 export const C_TABLELEN = 246;
 export const C_INTLEN = 6;

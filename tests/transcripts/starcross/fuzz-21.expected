@@ -1,0 +1,959 @@
+STARCROSS
+Infocom interactive fiction - a science-fiction story
+Copyright (c) TIME by Infocom, Inc. All rights reserved.
+STARCROSS is a registered trademark of Infocom, Inc.
+Release 18 / Serial number 830114
+
+You are sound asleep in your bunk aboard the deep-space black hole prospecting ship "Starcross," operating out of Ceres. Just as your sleep becomes deep and comfortable, an alarm bell begins ringing! It's the mass detector! Instantly you awake. This hasn't been a profitable trip so far, and you don't even have the cash for repairs. This could be the break you've been waiting for.
+
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+There is a tape library here. (outside the bunk)
+
+>
+I don't know the word '#random'.
+
+>
+I beg your pardon?
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+There is a tape library here. (outside the bunk)
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You must get up first!
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+An expressionless but nonetheless surly voice issues from the computer: "Please turn that alarm off! We'll both have headaches if you don't."
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You must get up first!
+The alarm bell on the mass detector is ringing stridently.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You don't have the tape library.
+The alarm bell on the mass detector is ringing stridently.
+
+>
+You must get up first!
+The alarm bell on the mass detector is ringing stridently.
+"If you won't turn it off, I will. I can't take the noise any more."
+
+>
+You don't have the tape library.
+
+>
+You don't have the tape library.
+
+>
+You don't have the tape library.
+
+>
+You don't have the tape library.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+Taken.
+
+>
+You don't have the bunk.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You are in it, loser!
+
+>
+You can't turn that on.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+You can't turn that on.
+
+>
+You don't have the bunk.
+
+>
+You can't wear that, and besides, it wouldn't fit.
+
+>
+You can't turn that off.
+
+>
+I don't know how to look inside a bunk.
+
+>
+It smells just like a bunk.
+
+>
+You can't move the bunk.
+
+>
+You can't turn that on.
+
+>
+You must get up first!
+
+>
+I don't think that the bunk would agree with you.
+
+>
+You can't move the bunk.
+
+>
+Bizarre!
+
+>
+I don't know the word 'show'.
+
+>
+I don't know the word 'ne'.
+
+>
+You must tell me how to do that to a bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+Bizarre!
+
+>
+You don't have the bunk.
+
+>
+How can I read a bunk?
+
+>
+You must get up first!
+
+>
+You can't talk to the bunk!
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+How can I read a bunk?
+
+>
+I don't know the word 'ne'.
+
+>
+You can't talk to the bunk!
+
+>
+You can't turn that off.
+
+>
+Fiddling with the bunk isn't notably helpful.
+
+>
+The bunk makes no sound.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'show'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't understand that sentence.
+
+>
+Pushing the bunk isn't notably helpful.
+
+>
+You must be very clever to do that to the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't understand that sentence.
+
+>
+What do you want to hit the cot with?
+
+>
+I don't think that the bunk would agree with you.
+
+>
+You must tell me how to do that to a bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't move the bunk.
+
+>
+There is nothing but dust there.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+Are you enjoying yourself?
+
+>
+You don't have the bunk.
+
+>
+You can't talk to the bunk!
+
+>
+I don't know the word 'ne'.
+
+>
+Have you tried skipping from star to star, too?
+
+>
+I'd sooner kiss a pig.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You are in it, loser!
+
+>
+I don't know the word 'show'.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+Bizarre!
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+How can I read a bunk?
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'show'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know how to look inside a bunk.
+
+>
+I don't know the word 'show'.
+
+>
+I don't know the word 'show'.
+
+>
+I don't know the word 'show'.
+
+>
+You don't have the bunk.
+
+>
+You must get up first!
+
+>
+I don't know the word 'ne'.
+
+>
+You can't talk to the bunk!
+
+>
+I don't know how to look inside a bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+You are in it, loser!
+
+>
+You must get up first!
+
+>
+I don't think that the bunk would agree with you.
+
+>
+You can't wear that, and besides, it wouldn't fit.
+
+>
+You don't have the bunk.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+I don't know how to look inside a bunk.
+
+>
+You must get up first!
+
+>
+What do you want to hit the cot with?
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+I don't know the word 'show'.
+
+>
+What do you want to hit the bed with?
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+There is nothing but dust there.
+
+>
+You don't have the bunk.
+
+>
+I don't understand that sentence.
+
+>
+How can I read a bunk?
+
+>
+You must tell me how to do that to a bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+Pushing the bunk isn't notably helpful.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't wear that, and besides, it wouldn't fit.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You are in it, loser!
+
+>
+You can't wear that, and besides, it wouldn't fit.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>
+You must get up first!
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+I don't know how to look inside a bunk.
+
+>
+You must be very clever to do that to the bunk.
+
+>
+You are in it, loser!
+
+>
+You are in it, loser!
+
+>
+You can't move the bunk.
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+I see nothing special about the bunk.
+
+>
+Have you tried skipping from star to star, too?
+
+>
+You don't have the bunk.
+
+>
+You are in it, loser!
+
+>
+You are in perfect health.
+
+>
+Bizarre!
+
+>
+Bizarre!
+
+>
+You are in it, loser!
+
+>
+You must get up first!
+
+>
+You must get up first!
+
+>
+I don't know the word 'ne'.
+
+>
+You can't move the bunk.
+
+>
+You can't turn that off.
+
+>
+There's nothing to empty.
+
+>
+I don't know the word 'ne'.
+
+>
+How can I read a bunk?
+
+>
+The bunk makes no sound.
+
+>
+You are in it, loser!
+
+>
+The bunk makes no sound.
+
+>
+You must tell me how to do that to a bunk.
+
+>
+Bizarre!
+
+>
+I don't know the word 'show'.
+
+>
+Fiddling with the bunk has no effect.
+
+>
+I don't know the word 'ne'.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>
+You must tell me how to do that to a bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+You must be very clever to do that to the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't think that the bunk would agree with you.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't turn that on.
+
+>
+It smells just like a bunk.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>
+You can't move the bunk.
+
+>
+I don't think that the bunk would agree with you.
+
+>
+The bunk makes no sound.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't move the bunk.
+
+>
+Fiddling with the bunk isn't notably helpful.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>
+You can't wear that, and besides, it wouldn't fit.
+
+>
+You must get up first!
+
+>
+I don't think that the bunk would agree with you.
+
+>
+You find nothing unusual.
+
+>
+You can't talk to the bunk!
+
+>
+I don't know the word 'ne'.
+
+>
+Pushing the bunk isn't notably helpful.
+
+>
+I don't know the word 'ne'.
+
+>
+You are in it, loser!
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+Bizarre!
+
+>
+I don't think that the bunk would agree with you.
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+You are in it, loser!
+
+>
+I don't know how to look inside a bunk.
+
+>
+I see nothing special about the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+There's nothing to empty.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't turn that off.
+
+>
+I don't understand that sentence.
+
+>
+What do you want to hit the cot with?
+
+>
+I don't know the word 'ne'.
+
+>
+Pushing the bunk isn't notably helpful.
+
+>
+You can't turn that on.
+
+>
+You can't turn that on.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+I don't know the word 'ne'.
+
+>
+It smells just like a tape library.
+
+>
+You must get up first!
+
+>
+You don't have the bunk.
+
+>
+I see nothing special about the bunk.
+
+>
+You don't have the bunk.
+
+>
+I see nothing special about the bunk.
+
+>
+You must be very clever to do that to the bunk.
+
+>
+You must get up first!
+
+>
+You must be very clever to do that to the bunk.
+
+>
+I don't know the word 'show'.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You are in perfect health.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't turn that on.
+
+>
+You don't have the bunk.
+
+>
+Have you tried skipping from star to star, too?
+
+>
+You are in it, loser!
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You can't turn that off.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't understand that sentence.
+
+>
+I don't know the word 'ne'.
+
+>
+I don't understand that sentence.
+
+>
+You don't have the bunk.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+You must get up first!
+
+>
+You can't talk to the bunk!
+
+>
+What do you want to hit the cot with?
+
+>
+I don't know the word 'ne'.
+
+>
+I don't know the word 'ne'.
+
+>
+You don't have the bunk.
+
+>
+You are in it, loser!
+
+>
+I don't know how to look inside a bunk.
+
+>
+The bunk makes no sound.
+
+>
+I don't know the word 'ne'.
+
+>
+You are in it, loser!
+
+>
+I don't know the word 'ne'.
+
+>
+It smells just like a bunk.
+
+>
+There's nothing to empty.
+
+>
+I don't know the word 'ne'.
+
+>
+You must get up first!
+
+>
+I don't know the word 'ne'.
+
+>
+Bizarre!
+
+>
+Pushing the bunk does nothing.
+
+>
+Living Quarters
+(You are in the bunk.)
+This nook is your spartan living quarters, containing only a bunk and a bureau. The only exit is to starboard.
+
+>

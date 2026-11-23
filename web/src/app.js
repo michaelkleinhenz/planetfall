@@ -165,16 +165,22 @@ function renderGameText(segments, container) {
   }
 }
 
-const BANNER_END = /^Release \d+ \/ Serial number \d+$/;
+const BANNER_END = /^(Release|Revision)( number)? \d+ \/ Serial [Nn]umber \d+$/;
 
 function findBanner(text) {
   const lines = text.split('\n');
   const start = lines.indexOf(current.meta?.bannerTitle);
-  if (start < 0) return null;
-  for (let end = start + 1; end < Math.min(lines.length, start + 8); end++) {
-    if (BANNER_END.test(lines[end])) return { start, end };
+  if (start >= 0) {
+    for (let end = start + 1; end < Math.min(lines.length, start + 8); end++) {
+      if (BANNER_END.test(lines[end])) return { start, end };
+    }
   }
-  return null;
+  // Otherwise: the paragraph that ends with the release / serial number line.
+  const end = lines.findIndex((l) => BANNER_END.test(l));
+  if (end < 1) return null;
+  let s = end;
+  while (s > 0 && end - s < 6 && lines[s - 1].trim()) s--;
+  return s < end ? { start: s, end } : null;
 }
 
 function renderBanner(lines) {

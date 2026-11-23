@@ -1,0 +1,939 @@
+MINI-ZORK I: The Great Underground Empire
+Copyright (c) TIME Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 34 / Serial number 871124
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door. You could circle the house to the north or south.
+There is a small mailbox here.
+
+>
+
+>
+[I beg your pardon?]
+
+>
+West of House
+You are standing in an open field west of a white house, with a boarded front door. You could circle the house to the north or south.
+There is a small mailbox here.
+
+>
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. A narrow path winds north through the trees.
+
+>
+Behind House
+You are behind the white house. Paths lead into the forest to the east and northeast. In one corner of the house is a small window which is slightly ajar.
+
+>
+North of House
+
+>
+Behind House
+
+>
+North of House
+
+>
+West of House
+There is a small mailbox here.
+
+>
+North of House
+
+>
+Behind House
+
+>
+North of House
+
+>
+Behind House
+
+>
+You can't go that way.
+
+>
+North of House
+
+>
+You can't go that way.
+
+>
+West of House
+There is a small mailbox here.
+
+>
+South of House
+You are facing the south side of a white house. There is no door here, and all the windows are boarded.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+The windows are all boarded.
+
+>
+The windows are all boarded.
+
+>
+Behind House
+
+>
+North of House
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Forest Path
+This is a path through a dimly lit forest, curving from south to east. A large tree with low branches stands by the edge of the path.
+On the ground is a pile of leaves.
+
+>
+[What do you want to hit the pile with?]
+
+>
+[I don't know the word "wear".]
+
+>
+You're not holding the pile of leaves.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Pushing the pile of leaves doesn't seem to work.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+In disturbing the leaves, a grating is revealed. Taken.
+
+>
+Pushing the pile of leaves isn't notably helpful.
+
+>
+You can't go that way.
+
+>
+Shaken.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Up a Tree
+You are ten feet above the ground, nestled among large branches.
+Beside you on the branch is a small bird's nest.
+In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You already did that!
+
+>
+You can't turn that on.
+
+>
+You cannot climb any higher.
+
+>
+You can't look inside a jeweled egg.
+
+>
+[What do you want to hit the leaf with?]
+
+>
+You cannot climb any higher.
+
+>
+You're not holding the bird's nest.
+
+>
+You cannot climb any higher.
+
+>
+[Taken]
+You can't turn that off.
+
+>
+If you wish to burn the bird's nest, say so.
+
+>
+You can't go that way.
+
+>
+[Taken]
+How does one read a bird's nest?
+
+>
+You can't turn that off.
+
+>
+You find nothing unusual.
+
+>
+Moved.
+
+>
+You cannot climb any higher.
+
+>
+[I don't know the word "show".]
+
+>
+You cannot climb any higher.
+
+>
+You must tell me how to do that to a pile of leaves.
+
+>
+You cannot climb any higher.
+
+>
+You can't do that.
+
+>
+You cannot climb any higher.
+
+>
+How does one read a jeweled egg?
+
+>
+The pile of leaves makes no sound.
+
+>
+Pushing the pile of leaves has no effect.
+
+>
+[I don't know the word "show".]
+
+>
+You already did that!
+
+>
+How does one read a bird's nest?
+
+>
+You find nothing unusual.
+
+>
+You cannot climb any higher.
+
+>
+Pushing the jeweled egg isn't notably helpful.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+[I don't know the word "show".]
+
+>
+You can't give a jeweled egg to a pile of leaves!
+
+>
+You must tell me how to do that to a jeweled egg.
+
+>
+You cannot climb any higher.
+
+>
+It is already open.
+
+>
+How does one read a jeweled egg?
+
+>
+You cannot climb any higher.
+
+>
+[What do you want to hit the nest with?]
+
+>
+You can't do that.
+
+>
+Up a Tree
+You are ten feet above the ground, nestled among large branches.
+
+>
+You already did that!
+
+>
+You must tell me how to do that to a pile of leaves.
+
+>
+You can't turn that off.
+
+>
+You already did that!
+
+>
+You can't go that way.
+
+>
+Thrown.
+
+>
+Taken.
+
+>
+The pile of leaves falls to the ground.
+
+>
+There is nothing special about the jeweled egg.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+I'd sooner kiss a pig.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You already did that!
+
+>
+You cannot climb any higher.
+
+>
+You can't talk to the jeweled egg!
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't do that.
+
+>
+You can't do that.
+
+>
+You cannot climb any higher.
+
+>
+It's unlikely that the jeweled egg would agree with you.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+Shaken.
+
+>
+Shaken.
+
+>
+The jeweled egg makes no sound.
+
+>
+You cannot climb any higher.
+
+>
+You can't look inside a jeweled egg.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+Up a Tree
+You are ten feet above the ground, nestled among large branches.
+
+>
+This egg only opens in the larger, disk-based version of Zork I.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+This egg only opens in the larger, disk-based version of Zork I.
+
+>
+I'd sooner kiss a pig.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+How does one read a jeweled egg?
+
+>
+You can't turn that off.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+It's unlikely that the jeweled egg would agree with you.
+
+>
+You cannot climb any higher.
+
+>
+You can't give a jeweled egg to a jeweled egg!
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You can't look inside a jeweled egg.
+
+>
+You cannot climb any higher.
+
+>
+[I don't know the word "wear".]
+
+>
+You find nothing unusual.
+
+>
+Pushing the jeweled egg has no effect.
+
+>
+[What do you want to hit the egg with?]
+
+>
+[I don't know the word "wear".]
+
+>
+There is nothing but dust there.
+
+>
+Pushing the jeweled egg doesn't seem to work.
+
+>
+[There were too many nouns in that sentence.]
+
+>
+You cannot climb any higher.
+
+>
+[I don't know the word "wear".]
+
+>
+You must tell me how to do that to a jeweled egg.
+
+>
+[What do you want to hit the egg with?]
+
+>
+You cannot climb any higher.
+
+>
+Pushing the jeweled egg isn't notably helpful.
+
+>
+Pushing the jeweled egg doesn't seem to work.
+
+>
+You can't do that.
+
+>
+You already did that!
+
+>
+[I don't know the word "empty".]
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You can't give a jeweled egg to a jeweled egg!
+
+>
+You cannot climb any higher.
+
+>
+You already did that!
+
+>
+[I don't know the word "empty".]
+
+>
+You find nothing unusual.
+
+>
+You cannot climb any higher.
+
+>
+Shaken.
+
+>
+The jeweled egg makes no sound.
+
+>
+You already did that!
+
+>
+You cannot climb any higher.
+
+>
+There is nothing special about the jeweled egg.
+
+>
+You are in perfect health.
+
+>
+You can't do that.
+
+>
+You can't give a jeweled egg to a jeweled egg!
+
+>
+[There were too many nouns in that sentence.]
+
+>
+Moved.
+
+>
+You cannot climb any higher.
+
+>
+[I don't know the word "empty".]
+
+>
+The jeweled egg falls to the ground.
+
+>
+[There were too many nouns in that sentence.]
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+[There were too many nouns in that sentence.]
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+Up a Tree
+You are ten feet above the ground, nestled among large branches.
+
+>
+Closed.
+
+>
+The bird's nest falls to the ground.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+Up a Tree
+You are ten feet above the ground, nestled among large branches.
+
+>

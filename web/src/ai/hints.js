@@ -98,7 +98,7 @@ export async function getHint({ apiKey, model, language, level, history, signal 
     `${h.input ? `PLAYER: ${h.input}\n` : ''}GAME: ${h.output.trim().slice(0, 1200)}`).join('\n---\n');
   const user =
     `HINT LEVEL: ${level}\n\n` +
-    `SCORE: ${g.SCORE} of ${current.meta.maxScore}. MOVES/TIME: ${g.MOVES}.\n\n` +
+    `SCORE: ${g.SCORE}${current.meta.maxScore ? ` of ${current.meta.maxScore}` : ""}. MOVES/TIME: ${g.MOVES}.\n\n` +
     `CURRENT SCENE:\n${sceneText(currentScene())}\n\n` +
     `RECENT TRANSCRIPT (oldest first):\n${transcript || '(none)'}\n\n` +
     `GAME VARIABLES USED BY THE CODE BELOW:\n${vars.join('\n') || '(none)'}\n\n` +

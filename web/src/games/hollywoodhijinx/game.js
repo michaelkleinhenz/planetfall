@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -393,6 +393,8 @@ export const X_S = 8;
 export const X_H = 16;
 export const HEDGE_OBJECT_TABLE_LENGTH = 70;
 export const NEW_VOC$ = 1;
+export const CRLF_CHARACTER = 126;
+export const ZSTR_ON = 0;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----
@@ -2168,7 +2170,7 @@ async function ORPHAN_MERGE() {
   return true;
 }
 
-async function CLAUSE_WIN(adj) {
+async function CLAUSE_WIN(adj = false) {
   if (adj) {
     put(g.P_ITBL, P_VERB, get(g.P_OTBL, P_VERB));
   } else {
@@ -2442,7 +2444,7 @@ async function PREP_PRINT(prep, sp$ = true) {
   }
 }
 
-async function CLAUSE_COPY(src, dest, insrt) {
+async function CLAUSE_COPY(src, dest, insrt = false) {
   let ocl = 0, beg = 0, end = 0, bb = 0, ee = 0, obeg = 0, cnt = 0, b = 0, e = 0;
   bb = get(g.P_CCTBL, CC_SBPTR);
   ee = get(g.P_CCTBL, CC_SEPTR);
@@ -2492,7 +2494,7 @@ async function CLAUSE_COPY(src, dest, insrt) {
   return put(dest, ee, ocl + ((get(ocl, P_MATCHLEN) * P_LEXELEN) + 2));
 }
 
-async function CLAUSE_ADD(wrd, check$) {
+async function CLAUSE_ADD(wrd, check$ = false) {
   let ocl = 0, ptr = 0;
   ocl = get(g.P_CCTBL, CC_OCLAUSE);
   ptr = get(ocl, P_MATCHLEN);
@@ -3985,7 +3987,7 @@ async function DESCRIBE_CONTENTS(obj, level = (-1), all$ = D_ALL$) {
   }
 }
 
-async function DESCRIBABLE$(obj, cont$) {
+async function DESCRIBABLE$(obj, cont$ = false) {
   if (hasFlag(obj, INVISIBLE)) {
     return false;
   } else if (obj == g.WINNER) {
@@ -11850,7 +11852,7 @@ async function BUCKET_F(oarg = false) {
       if (oarg == M_OBJDESC$) {
         return true;
       }
-      tell("\nA ", S(BUCKET), " is hanging from");
+      tell("\nA ", D(BUCKET), " is hanging from");
       await TPRINT(g.BUCKET_PEG);
       if (loc(PORTABLE_WATER) == BUCKET) {
         tell(". The bucket ");

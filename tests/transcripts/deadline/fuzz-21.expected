@@ -1,0 +1,980 @@
+DEADLINE
+Infocom interactive fiction - a mystery story
+Copyright (c) TIME, TIME by Infocom, Inc. All rights reserved.
+DEADLINE is a registered trademark of Infocom, Inc.
+Release 28 / Serial number 850129
+
+South Lawn
+You are on a wide lawn just north of the entrance to the Robner estate. Directly north at the end of a pebbled path is the Robner house, flanked to the northeast and northwest by a vast expanse of well-kept lawn. Beyond the house can be seen the lakefront.
+
+>
+The word '#random' isn't in your vocabulary.
+
+>
+What?
+
+>
+South Lawn
+You are on a wide lawn just north of the entrance to the Robner estate. Directly north at the end of a pebbled path is the Robner house, flanked to the northeast and northwest by a vast expanse of well-kept lawn. Beyond the house can be seen the lakefront.
+
+>
+Front Path
+You are at the Robners' front door, which is closed.
+You can walk around the house from here to the east or west. To the south a rolling lawn leads to the entrance of the estate.
+
+>
+The inspector wouldn't agree with you.
+
+>
+Front Path
+You are at the Robners' front door, which is closed.
+You can walk around the house from here to the east or west. To the south a rolling lawn leads to the entrance of the estate.
+
+>
+You can't go that way.
+
+>
+You can't give a player to a player!
+
+>
+The front door is closed.
+
+>
+The inspector wouldn't agree with you.
+
+>
+There's nothing special about the player.
+
+>
+South Lawn
+
+>
+You're not carrying the inspector.
+
+>
+The player makes no sound.
+
+>
+Leaving the estate would mean quitting the case and, most probably, your job.
+
+>
+Front Path
+
+>
+The word 'empty' isn't in your vocabulary.
+
+>
+You find nothing unusual.
+
+>
+That last sentence didn't make sense.
+
+>
+You can't turn that off.
+
+>
+You cannot read the player.
+
+>
+Talking to yourself is said to be a sign of impending mental collapse.
+
+>
+That last sentence didn't make sense.
+
+>
+The front door is closed.
+
+>
+The player wouldn't agree with you.
+
+>
+You can't give a player to a player!
+
+>
+There's nothing special about the inspector.
+
+>
+The player makes no sound.
+
+>
+South Lawn
+
+>
+Pushing the player isn't particularly useful.
+
+>
+Front Path
+
+>
+The front door is closed.
+
+>
+Don't be ridiculous.
+
+>
+Pushing the player isn't particularly useful.
+
+>
+You can't go that way.
+
+>
+You can't take it; thus, you can't shake it!
+
+>
+You can't go that way.
+
+>
+The front door is closed.
+
+>
+The front door is closed.
+
+>
+The front door is closed.
+
+>
+You can't go that way.
+
+>
+East of Front Door
+You are in front of the Robner house just east of the front door. A small window, closed and securely locked, is the only thing of note here. To the northeast is the east side of the house.
+The ornately carved cornerstone of the house is nearby.
+
+>
+South Lawn
+
+>
+Don't be ridiculous.
+
+>
+You can't turn that on.
+
+>
+Front Path
+
+>
+West of Front Door
+You are in front of the Robner house just west of the front door. To the north is a large bay window through which can be seen part of the living room. To the northwest is the west side of the house.
+
+>
+Nice try.
+
+>
+You can't turn that on.
+
+>
+You can't take it; thus, you can't shake it!
+
+>
+The word 'wear' isn't in your vocabulary.
+
+>
+You can't turn that off.
+
+>
+One can't look inside the me.
+
+>
+It smells just like a inspector.
+
+>
+You can't move the me.
+
+>
+You can't turn that on.
+
+>
+The bay window is closed.
+
+>
+The player wouldn't agree with you.
+
+>
+You can't move the inspector.
+
+>
+Bizarre!
+
+>
+Do you often talk to yourself?
+
+>
+The bay window is closed.
+
+>
+You must be very clever to do that to the player.
+
+>
+The bay window is closed.
+
+>
+Bizarre!
+
+>
+You're not carrying the me.
+
+>
+You cannot read the player.
+
+>
+You can't go that way.
+
+>
+Talking to yourself is said to be a sign of impending mental collapse.
+
+>
+The bay window is closed.
+
+>
+You can't take it; thus, you can't shake it!
+
+>
+The bay window is closed.
+
+>
+The bay window is closed.
+
+>
+You cannot read the player.
+
+>
+The bay window is closed.
+
+>
+Talking to yourself is said to be a sign of impending mental collapse.
+
+>
+You can't turn that off.
+
+>
+Fiddling with the player has no effect.
+You notice a very faint ringing sound coming from the house.
+
+>
+The player makes no sound.
+
+>
+The bay window is closed.
+
+>
+Do you often talk to yourself?
+
+>
+The bay window is closed.
+
+>
+The bay window is closed.
+
+>
+That last sentence didn't make sense.
+
+>
+Pushing the player has no effect.
+
+>
+You must be very clever to do that to the player.
+
+>
+The bay window is closed.
+
+>
+That last sentence didn't make sense.
+
+>
+What do you want to hit the inspector with?
+
+>
+The inspector wouldn't agree with you.
+
+>
+You must be very clever to do that to the me.
+
+>
+The bay window is closed.
+
+>
+You can't move the inspector.
+
+>
+There is nothing but dust there.
+
+>
+The bay window is closed.
+
+>
+You can't go that way.
+
+>
+South Lawn
+
+>
+You're not carrying the player.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+Nice try.
+
+>
+Talking to yourself is said to be a sign of impending mental collapse.
+
+>
+Front Path
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+What a (ahem!) strange idea!
+
+>
+The front door is closed.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+West of Front Door
+
+>
+Surely you jest.
+
+>
+Do you often talk to yourself?
+
+>
+You can't give a player to a player!
+
+>
+The bay window is closed.
+
+>
+The bay window is closed.
+
+>
+Bizarre!
+
+>
+The bay window is closed.
+
+>
+You're not carrying the me.
+
+>
+The bay window is closed.
+
+>
+You're not carrying the player.
+
+>
+You cannot read the player.
+
+>
+The bay window is closed.
+
+>
+The bay window is closed.
+
+>
+You can't take it; thus, you can't shake it!
+
+>
+Do you often talk to yourself?
+
+>
+The bay window is closed.
+
+>
+One can't look inside the inspector.
+
+>
+Do you often talk to yourself?
+
+>
+Do you often talk to yourself?
+
+>
+Do you often talk to yourself?
+
+>
+You're not carrying the inspector.
+A car pulls up the drive to the south, and Mr. Baxter steps out onto the lawn.
+
+>
+South Lawn
+Mr. Baxter is here.
+
+>
+Front Path
+
+>
+Talking to yourself is said to be a sign of impending mental collapse.
+
+>
+One can't look inside the inspector.
+
+>
+The front door is closed.
+To the east Mr. McNabb comes into view from the northwest.
+
+>
+South Lawn
+Mr. Baxter is here.
+
+>
+Surely you jest.
+
+>
+Front Path
+Mr. McNabb is off to the east.
+
+>
+The inspector wouldn't agree with you.
+Mr. Baxter is walking past you.
+
+>
+The word 'wear' isn't in your vocabulary.
+
+>
+Nope. Nothing hiding under Mr. Baxter.
+Mr. Baxter heads off to the north.
+
+>
+Front Path
+You are at the Robners' front door, which is open.
+You can walk around the house from here to the east or west. To the south a rolling lawn leads to the entrance of the estate.
+
+>
+Mrs. Robner appears, walking down a hallway from the north.
+"Hello," she says, "I'm Mrs. Robner. Please come in. I'm afraid I really can't help you much. This is surely a terrible waste of time, not to mention upsetting, having all these police marching around the house. This has been a trying time, as I suppose you can understand. As I told Mr. Coates and the other detective, you may look around but you must be out by 8 o'clock at the latest. Oh, I almost forgot...Mr. Coates will be reading my husband's will at noon in the living room. You may attend if you wish.""I'm going to make myself some breakfast now. I'll be around all day if you need anything. I'll do what I can to help. Good day!"
+Foyer
+This is the foyer of the Robner house, beautifully appointed with a fine crystal chandelier, marble floors, and a large marble-topped table. The front door, to the south, is closed. The foyer continues north.
+Mr. Baxter, off to the north, ducks into a room to the west.
+Mrs. Robner heads off to the north.
+
+>
+North of Foyer
+This is a hallway north of the foyer. To the west is an open doorway, and to the east is the foot of a staircase. The hall continues north.
+Mrs. Robner heads off to the north.
+To the north Mrs. Rourke enters the hallway from the north.
+
+>
+One can't look inside the player.
+Mrs. Robner, off to the north, ducks into a room to the north.
+Mrs. Rourke, off to the north, ducks into a room to the west.
+
+>
+You can't go that way.
+
+>
+What do you want to hit the inspector with?
+
+>
+Corner
+You are at the corner of two halls, one a short hallway to the west ending with a set of doors, and the other a long hall leading south toward the front door. To the north are swinging double doors leading into the kitchen.
+
+>
+You can't go that way.
+
+>
+Do you often talk to yourself?
+
+>
+What do you want to hit the player with?
+
+>
+You can't go that way.
+
+>
+Kitchen
+This is the Robner kitchen, quite large and with a full complement of appliances and labor-saving devices. On one wall, a beautifully-crafted shelf unit contains rare china, a unique hand-painted family heirloom depicting scenes from Greek mythology. The china consists of many place settings of plates, teacups, and saucers. There are several cabinets which likely contain silverware, glasses, and the like. To the east is a pantry.
+Mrs. Robner heads off to the south.
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+Pushing the shelf unit isn't particularly useful.
+
+>
+That last sentence didn't make sense.
+
+>
+You can't go that way.
+
+>
+It is already closed.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+That's easy for you to say, since you don't even have it.
+
+>
+You can't go that way.
+
+>
+Pushing the group of cups has no effect.
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+You can't be serious!
+
+>
+The word 'wear' isn't in your vocabulary.
+
+>
+Kitchen
+This is the Robner kitchen, quite large and with a full complement of appliances and labor-saving devices. On one wall, a beautifully-crafted shelf unit contains rare china, a unique hand-painted family heirloom depicting scenes from Greek mythology. The china consists of many place settings of plates, teacups, and saucers. There are several cabinets which likely contain silverware, glasses, and the like. To the east is a pantry.
+
+>
+You can't go that way.
+
+>
+Corner
+
+>
+You can't give a player to a player!
+
+>
+One can't look inside the me.
+
+>
+You must be very clever to do that to the player.
+
+>
+Surely you jest.
+
+>
+Don't be ridiculous.
+
+>
+You can't move the inspector.
+
+>
+You can't go that way.
+
+>
+You can't take it; thus, you can't shake it!
+
+>
+You can't go that way.
+
+>
+There's nothing special about the inspector.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+You can't give a player to a player!
+
+>
+Don't be ridiculous.
+
+>
+You're OK for now.
+
+>
+Bizarre!
+
+>
+Bizarre!
+
+>
+Surely you jest.
+
+>
+You can't go that way.
+
+>
+North of Foyer
+
+>
+Corner
+
+>
+You can't move the inspector.
+
+>
+You can't turn that off.
+
+>
+The word 'empty' isn't in your vocabulary.
+
+>
+You can't go that way.
+
+>
+You cannot read the player.
+
+>
+The player makes no sound.
+
+>
+You can't be serious!
+
+>
+The player makes no sound.
+
+>
+You must be very clever to do that to the inspector.
+
+>
+Bizarre!
+
+>
+Do you often talk to yourself?
+Mrs. Rourke is walking past you.
+
+>
+Fiddling with the Mrs. Rourke isn't particularly useful.
+Mrs. Rourke heads off to the north.
+
+>
+You must be very clever to do that to the me.
+
+>
+You must be very clever to do that to the me.
+
+>
+You can't go that way.
+
+>
+North of Foyer
+
+>
+You must be very clever to do that to the inspector.
+
+>
+Corner
+
+>
+The me wouldn't agree with you.
+
+>
+You can't go that way.
+
+>
+You can't turn that on.
+
+>
+It smells just like a player.
+
+>
+Corner
+You are at the corner of two halls, one a short hallway to the west ending with a set of doors, and the other a long hall leading south toward the front door. To the north are swinging double doors leading into the kitchen.
+
+>
+You can't move the inspector.
+
+>
+The player wouldn't agree with you.
+George is walking past you.
+Mrs. Rourke is walking past you.
+
+>
+Mrs. Rourke makes no sound.
+George heads off to the south.
+Mrs. Rourke heads off to the south.
+
+>
+One can't look inside the player.
+George, off to the south, disappears from sight to the east.
+Mrs. Rourke is to the south, heading toward the south.
+
+>
+You're OK for now.
+Mrs. Rourke is to the south, heading toward the north.
+
+>
+Fiddling with the player has no effect.
+Mrs. Rourke is walking past you.
+
+>
+Corner
+You are at the corner of two halls, one a short hallway to the west ending with a set of doors, and the other a long hall leading south toward the front door. To the north are swinging double doors leading into the kitchen.
+Mrs. Rourke heads off to the west.
+
+>
+The word 'wear' isn't in your vocabulary.
+
+>
+North of Foyer
+To the north Mrs. Rourke enters the hallway from the west.
+
+>
+The inspector wouldn't agree with you.
+Mrs. Rourke is walking past you.
+
+>
+Mrs. Rourke grudgingly allows you to search. You find nothing whatsoever of interest.
+Mrs. Rourke heads off to the east.
+
+>
+You can't turn that on.
+Mrs. Rourke, off to the east, disappears from sight to the south.
+
+>
+You must be very clever to do that to the inspector.
+
+>
+Corner
+
+>
+You must be very clever to do that to the player.
+
+>
+That last sentence didn't make sense.
+
+>
+Fiddling with the player isn't particularly useful.
+To the south Mrs. Rourke enters the hallway from the east.
+
+>
+Bizarre!
+Mrs. Rourke is walking past you.
+
+>
+Fiddling with the Mrs. Rourke has no effect.
+Mrs. Robner is walking past you.
+Mrs. Rourke heads off to the west.
+
+>
+The mother wouldn't agree with you.
+Mrs. Robner heads off to the south.
+
+>
+Do you often talk to yourself?
+Mrs. Robner, off to the south, ducks into a room to the west.
+
+>
+You can't go that way.
+
+>
+You can't give a player to a player!
+
+>
+Kitchen
+
+>
+One can't look inside the teacup.
+
+>
+You're not carrying the appliance.
+
+>
+The word 'empty' isn't in your vocabulary.
+
+>
+You can't go that way.
+
+>
+You can't give a china to a player!
+
+>
+You can't go that way.
+
+>
+You can't turn that off.
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+What do you want to hit the china with?
+
+>
+You can't go that way.
+
+>
+Pushing the appliance has no effect.
+
+>
+You can't turn that on.
+
+>
+You can't turn that on.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Corner
+
+>
+You can't go that way.
+
+>
+It smells just like a player.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+The player wouldn't agree with you.
+
+>
+There's nothing special about the me.
+
+>
+You can't give a player to a player!
+
+>
+There's nothing special about the me.
+
+>
+You must be very clever to do that to the inspector.
+
+>
+Kitchen
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+You can't go that way.
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+You can't go that way.
+
+>
+You're OK for now.
+
+>
+Kitchen
+This is the Robner kitchen, quite large and with a full complement of appliances and labor-saving devices. On one wall, a beautifully-crafted shelf unit contains rare china, a unique hand-painted family heirloom depicting scenes from Greek mythology. The china consists of many place settings of plates, teacups, and saucers. There are several cabinets which likely contain silverware, glasses, and the like. To the east is a pantry.
+
+>
+You can't go that way.
+
+>
+You can't turn that on.
+
+>
+That's easy for you to say, since you don't even have it.
+
+>
+Surely you jest.
+
+>
+You can't turn that on.
+
+>
+You must be very clever to do that to the inspector.
+
+>
+The word 'empty' isn't in your vocabulary.
+
+>
+That last sentence didn't make sense.
+
+>
+Kitchen
+This is the Robner kitchen, quite large and with a full complement of appliances and labor-saving devices. On one wall, a beautifully-crafted shelf unit contains rare china, a unique hand-painted family heirloom depicting scenes from Greek mythology. The china consists of many place settings of plates, teacups, and saucers. There are several cabinets which likely contain silverware, glasses, and the like. To the east is a pantry.
+
+>
+That last sentence didn't make sense.
+
+>
+You must be very clever to do that to the washer.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You're not carrying the teacup.
+
+>
+Do you expect applause from the appliance?
+
+>
+You can't go that way.
+
+>
+You can't take it; thus, you can't shake it!
+
+>
+You can't go that way.
+
+>
+That's easy for you to say, since you don't even have it.
+
+>
+Corner
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Kitchen
+
+>
+You can't go that way.
+
+>
+Bizarre!
+
+>
+Pushing the cabinet has no effect.
+
+>
+The word 'wear' isn't in your vocabulary.
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+Which group do you mean, the group of saucers or the group of cups?
+
+>
+The washer wouldn't agree with you.
+
+>
+Kitchen
+This is the Robner kitchen, quite large and with a full complement of appliances and labor-saving devices. On one wall, a beautifully-crafted shelf unit contains rare china, a unique hand-painted family heirloom depicting scenes from Greek mythology. The china consists of many place settings of plates, teacups, and saucers. There are several cabinets which likely contain silverware, glasses, and the like. To the east is a pantry.
+
+>

@@ -1,0 +1,986 @@
+It must be the warlock Krill. The odd disappearances, the mysterious dissolution of regions sacred to the Circle, the lessening of the Powers -- these could only be his handiwork. The Circle gathers and its leader, the esteemed Belboz, reveals to them an ancient document which portends evil days much like our own.
+
+"Krill's evil must be unmade," he begins, "but to send a powerful Enchanter is ill-omened. It would be ruinous to reveal oversoon our full powers." A ripple of concern spreads over the face of each Enchanter. Belboz pauses, and collects his resolve. "Have hope! This has been written by a hand far wiser than mine!"
+
+He recites a short spell and you appear. Belboz approaches, transfixing you with his gaze, and hands you the document. The other Enchanters await his decree. "These words, written ages ago, can have only one meaning. You, a novice Enchanter with but a few simple spells in your Book, must seek out Krill, explore the Castle he has overthrown, and learn his secrets. Only then may his vast evil be lessened or, with good fortune, destroyed."
+
+The Circle rises and intones a richly woven spell, whose many textures imbue the small, darkened chamber with warmth and hope. There is a surge of power; you are Sent.
+
+ENCHANTER
+Infocom interactive fiction - a fantasy story
+Copyright (C) TIME, TIME, TIME by Infocom, Inc. All rights reserved.
+ENCHANTER is a registered trademark of Infocom, Inc.
+Release 29 / Serial number 860820
+
+Fork
+You stand at a point of decision on a road which makes a wide fork to the northeast and southeast, circling the base of the Lonely Mountain, which looms high overhead to the east. A very long and winding road starts here and stretches out of sight to the west through low, smoky hills.
+The sun is rising over the lands to the east.
+
+>
+
+>
+I beg your pardon?
+
+>
+Fork
+You stand at a point of decision on a road which makes a wide fork to the northeast and southeast, circling the base of the Lonely Mountain, which looms high overhead to the east. A very long and winding road starts here and stretches out of sight to the west through low, smoky hills.
+The sun is rising over the lands to the east.
+
+>
+You can't go that way.
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+Outside of Shack
+You are south of an old wooden shack, apparently deserted. The trail extends from northeast to southwest here, circling the Lonely Mountain, which lies to the southeast.
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any enchanter here!
+
+>
+Fork
+
+>
+You can't see any enchanter here!
+
+>
+You can't go that way.
+
+>
+Dusty Trail
+The trail here turns dry and dusty. To the northwest is the fork leading to the Long Road, and the trail continues to the southeast.
+
+>
+I don't know the word "empty".
+
+>
+Loop
+The trail makes a hairpin turn here, swinging out to the northwest and northeast, where it enters a small village. Low, smoky hills stretch out to the west and south.
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't go that way.
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't see any lantern here!
+
+>
+Those things aren't here!
+
+>
+Deserted Village
+This is the castle's village. Formerly, peasants lived here, going to their farm plots each day. Merchants and artisans made it a center of cultural activity. But now it's deserted. Or almost: there is smoke rising from a particularly decrepit hovel to the south. A path travels through the village from southwest to northeast, heading towards the castle, and a less-used trail heads north up the mountain.
+The sun has now risen above the hills.
+
+>
+You can't see any enchanter here!
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+
+>
+You can't see any lantern here!
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+
+>
+You can't see any sword here!
+
+>
+Those things aren't here!
+
+>
+You can't see any sword here!
+
+>
+Mountain Trail
+This spot halfway up the Lonely Mountain is desolate of vegetation. Short, stunted trees with branches empty surround you and the air is heavy and smoke-filled.
+
+>
+You can't see any sword here!
+
+>
+Lonely Mountain
+This is the top of the Lonely Mountain. In olden days, mariners had named it Signal Mountain, for its glistening peak reflected the pale moonlight, providing an unmistakable landmark on unclouded nights. The bald mountain face is made of a shining substance whose nature is unknown to you. Looking to the west, low hills stretch to the horizon, and small pieces of the Long Road can be seen winding their way to distant lands. To the east, far away, can be seen a great castle at the edge of the Sea. Three turrets it has; two, old and still majestic, lie on either side of a third, cold, black as night and squat as a toad. An evil smoke seems to emanate from this tower, shrouding the others in a darkening fog. A small mountain trail leaves the peak and descends to the south into a small village far below.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any lantern here!
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any sword here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+Mountain Trail
+
+>
+You can't see any lantern here!
+
+>
+Lonely Mountain
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+Mountain Trail
+
+>
+Those things aren't here!
+
+>
+Deserted Village
+
+>
+You can't see any enchanter here!
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+Mountain Trail
+
+>
+Lonely Mountain
+
+>
+That sentence isn't one I recognize.
+
+>
+Mountain Trail
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't see any enchanter here!
+
+>
+Lonely Mountain
+
+>
+You can't see any sword here!
+
+>
+Mountain Trail
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+Mountain Trail
+This spot halfway up the Lonely Mountain is desolate of vegetation. Short, stunted trees with branches empty surround you and the air is heavy and smoke-filled.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+Deserted Village
+
+>
+You can't see any lantern here!
+
+>
+It is dark and smoky in here, but this is a place of great disorder, and its odor is indescribable. A pile of rags sits near a small pot which is bubbling and steaming over a tiny fire. The pile of rags sports a gnarled hand which busies itself with the noisome stew. A closer look reveals a withered crone at the other end of the hand.
+
+The creature looks you over keenly and speaks: "I should have thought they would send someone more ... more ..." She laughs in an unsettling way. "They've all left! A great storm is brewing in the east, my friend, and all have fled before it!" She starts to chuckle. "Take this and begone!" With a wave of her hand, you find yourself reeling out of the door of the hovel, holding some sort of scroll in your hand.
+
+>
+Wasn't that fun?
+
+>
+Wasn't that fun?
+
+>
+Those things aren't here!
+
+>
+You can't see any enchanter here!
+
+>
+It is dark and smoky in here, but this is a place of great disorder, and its odor is indescribable. A pile of rags sits near a small pot which is bubbling and steaming over a tiny fire. The pile of rags sports a gnarled hand which busies itself with the noisome stew. A closer look reveals a withered crone at the other end of the hand.
+As you enter the crone's hovel, she booms at you: "Are you here again? What a wizard!" Her emphasis on the word "wizard" is filled with derision. "Make a small effort, would you, to make your Circle proud of you?" The same horrible emphasis on "proud" fills you with revulsion. "Go!" You find yourself back in the village.
+
+>
+Wasn't that fun?
+
+>
+You can't see any lantern here!
+
+>
+Wasn't that fun?
+
+>
+It is dark and smoky in here, but this is a place of great disorder, and its odor is indescribable. A pile of rags sits near a small pot which is bubbling and steaming over a tiny fire. The pile of rags sports a gnarled hand which busies itself with the noisome stew. A closer look reveals a withered crone at the other end of the hand.
+As you enter the crone's hovel, she booms at you: "Are you here again? What a wizard!" Her emphasis on the word "wizard" is filled with derision. "Make a small effort, would you, to make your Circle proud of you?" The same horrible emphasis on "proud" fills you with revulsion. "Go!" You find yourself back in the village.
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+
+>
+Mountain Trail
+Your mouth is getting rather dry.
+
+>
+You can't see any enchanter here!
+
+>
+Those things aren't here!
+
+>
+You can't see any enchanter here!
+
+>
+Those things aren't here!
+
+>
+Lonely Mountain
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any sword here!
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any sword here!
+
+>
+Mountain Trail
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+Lonely Mountain
+
+>
+You can't see any lantern here!
+
+>
+Wasn't that fun?
+
+>
+Lonely Mountain
+This is the top of the Lonely Mountain. In olden days, mariners had named it Signal Mountain, for its glistening peak reflected the pale moonlight, providing an unmistakable landmark on unclouded nights. The bald mountain face is made of a shining substance whose nature is unknown to you. Looking to the west, low hills stretch to the horizon, and small pieces of the Long Road can be seen winding their way to distant lands. To the east, far away, can be seen a great castle at the edge of the Sea. Three turrets it has; two, old and still majestic, lie on either side of a third, cold, black as night and squat as a toad. An evil smoke seems to emanate from this tower, shrouding the others in a darkening fog. A small mountain trail leaves the peak and descends to the south into a small village far below.
+
+>
+You can't see any sword here!
+
+>
+Mountain Trail
+
+>
+Lonely Mountain
+
+>
+You can't see any sword here!
+
+>
+You can't see any enchanter here!
+
+>
+Mountain Trail
+You are becoming quite thirsty.
+
+>
+Deserted Village
+
+>
+Mountain Trail
+
+>
+You can't see any enchanter here!
+
+>
+Lonely Mountain
+
+>
+Mountain Trail
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+Those things aren't here!
+
+>
+Lonely Mountain
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any lantern here!
+
+>
+Mountain Trail
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+Those things aren't here!
+
+>
+Lonely Mountain
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't go that way.
+
+>
+You can't see any sword here!
+
+>
+I don't know the word "empty".
+
+>
+Those things aren't here!
+
+>
+Mountain Trail
+You are very thirsty now. You'd better have a drink soon.
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+Lonely Mountain
+
+>
+You can't see any lantern here!
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any enchanter here!
+
+>
+Those things aren't here!
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any sword here!
+
+>
+I don't know the word "empty".
+
+>
+You can't see any sword here!
+
+>
+You can't go that way.
+
+>
+You can't see any enchanter here!
+
+>
+At the last moment, you remember that you don't know a flying spell.
+Your stomach is starting to grumble.
+
+>
+You can't see any enchanter here!
+
+>
+Wasn't that fun?
+
+>
+Those things aren't here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+I don't know the word "empty".
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+Wasn't that fun?
+
+>
+That sentence isn't one I recognize.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+Your lips are parched. If you don't get a drink soon you will pass out.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+Lonely Mountain
+This is the top of the Lonely Mountain. In olden days, mariners had named it Signal Mountain, for its glistening peak reflected the pale moonlight, providing an unmistakable landmark on unclouded nights. The bald mountain face is made of a shining substance whose nature is unknown to you. Looking to the west, low hills stretch to the horizon, and small pieces of the Long Road can be seen winding their way to distant lands. To the east, far away, can be seen a great castle at the edge of the Sea. Three turrets it has; two, old and still majestic, lie on either side of a third, cold, black as night and squat as a toad. An evil smoke seems to emanate from this tower, shrouding the others in a darkening fog. A small mountain trail leaves the peak and descends to the south into a small village far below.
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+Wasn't that fun?
+
+>
+You can't see any lantern here!
+
+>
+Lonely Mountain
+This is the top of the Lonely Mountain. In olden days, mariners had named it Signal Mountain, for its glistening peak reflected the pale moonlight, providing an unmistakable landmark on unclouded nights. The bald mountain face is made of a shining substance whose nature is unknown to you. Looking to the west, low hills stretch to the horizon, and small pieces of the Long Road can be seen winding their way to distant lands. To the east, far away, can be seen a great castle at the edge of the Sea. Three turrets it has; two, old and still majestic, lie on either side of a third, cold, black as night and squat as a toad. An evil smoke seems to emanate from this tower, shrouding the others in a darkening fog. A small mountain trail leaves the peak and descends to the south into a small village far below.
+You are becoming quite hungry.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+Mountain Trail
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+I don't know the word "goo".
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+Deserted Village
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+The sun starts to set behind the Lonely Mountain in the west.
+You are beginning to feel faint from lack of water.
+
+>
+You can't see any lantern here!
+
+>
+Mountain Trail
+
+>
+I don't know the word "goo".
+
+>
+You can't see any sword here!
+
+>
+Deserted Village
+The darkening sky is lit by a waning moon.
+
+>
+I don't know the word "red".
+
+>
+Those things aren't here!
+
+>
+It is dark and smoky in here, but this is a place of great disorder, and its odor is indescribable. A pile of rags sits near a small pot which is bubbling and steaming over a tiny fire. The pile of rags sports a gnarled hand which busies itself with the noisome stew. A closer look reveals a withered crone at the other end of the hand.
+As you enter, the woman in rags wags her head slowly. "You've returned, have you? You need help perhaps? Well, I've given you all the help in my meager store. You want more? Leave me!" You find yourself in the village.
+
+>
+You can't see any lantern here!
+
+>
+Mountain Trail
+The darkening sky is lit by a waning moon.
+
+>
+You can't see any lantern here!
+
+>
+Deserted Village
+The darkening sky is lit by a waning moon.
+You are beginning to tire and the spells you've memorized are becoming confused.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+You wander around in the village, find nothing of interest, and return to the path.
+You are very hungry now. You'd better have something to eat.
+
+>
+Mountain Trail
+The darkening sky is lit by a waning moon.
+
+>
+Those things aren't here!
+
+>
+Those things aren't here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+Lonely Mountain
+The darkening sky is lit by a waning moon.
+
+>
+At the last moment, you remember that you don't know a flying spell.
+
+>
+You can't see any sword here!
+
+>
+At the last moment, you remember that you don't know a flying spell.
+You pass out from lack of water and die.
+
+    ****  You have died  ****
+
+You awaken among the members of the Circle. Belboz the Necromancer looks tired, and scattered about are the remains of the components of a spell of great healing power. The other members of the Circle are pleased to see you revived, but worried by the setback. "I think Krill is too powerful," says one. "This inexperienced wizard will never defeat one so puissant as he." Quiet discussion ensues, with well-concealed acrimony beneath the surface.
+Debate ensues, with Belboz returning frequently to the contents of the ancient manuscript. His wishes prevail, and it is agreed to send you back....
+
+Eastern Fork
+You are at a fork in the road where paths to the northwest and southwest girdle the base of the Lonely Mountain and a smaller path winds its way to the east.
+The darkening sky is lit by a waning moon.
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any enchanter here!
+
+>
+Western Road
+You are on an east-west road, which wends its way through the dark, rolling hills of this land. To the west rises a high mountain, to the east stands a high castle with dark towers.
+The darkening sky is lit by a waning moon.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any enchanter here!
+
+>
+Outside Gate
+You are outside the western entrance to the castle. To the east stands an iron gate which is closed and chained. A winding road starts here and proceeds to the west.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+You are feeling tired.
+
+>
+You can't see any enchanter here!
+
+>
+You can't go that way.
+The darkened sky is now full of bright stars. It is night.
+Your stomach is starting to grumble.
+
+>
+You can't go that way.
+
+>
+You can't see any sword here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't see any sword here!
+
+>
+You can't go that way.
+
+>
+You are feeling tired. You are well hydrated and a bit hungry.
+
+>
+I don't know the word "goo".
+
+>
+You can't go that way.
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't go that way.
+
+>
+You can't see any sword here!
+
+>
+You can't see any sword here!
+
+>
+You can't see any lantern here!
+
+>
+Those things aren't here!
+
+>
+You can't go that way.
+You are worn out.
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't see any lantern here!
+
+>
+You can't go that way.
+You are becoming quite hungry.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't see any lantern here!
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Those things aren't here!
+
+>
+Those things aren't here!
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't see any enchanter here!
+
+>
+You can't go that way.
+
+>
+You can't see any enchanter here!
+
+>
+I don't know the word "empty".
+
+>
+You can't go that way.
+You are feeling wrung out and tired.
+
+>
+You can't go that way.
+You are very hungry now. You'd better have something to eat.
+
+>
+You can't go that way.
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any sword here!
+
+>
+Those things aren't here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't see any sword here!
+
+>
+You can't go that way.
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+Those things aren't here!
+
+>
+You can't see any enchanter here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any lantern here!
+
+>
+You can't see any sword here!
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+You are getting more and more tired.
+
+>
+Outside Gate
+You are outside the western entrance to the castle. To the east stands an iron gate which is closed and chained. A winding road starts here and proceeds to the west.
+You're fairly starving. If you don't eat soon you will pass out.
+
+>

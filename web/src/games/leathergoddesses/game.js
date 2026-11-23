@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -2044,7 +2044,7 @@ async function ORPHAN_MERGE() {
   return true;
 }
 
-async function CLAUSE_WIN(adj) {
+async function CLAUSE_WIN(adj = false) {
   if (adj) {
     put(g.P_ITBL, P_VERB, get(g.P_OTBL, P_VERB));
   } else {
@@ -2321,7 +2321,7 @@ async function PREP_PRINT(prep) {
   }
 }
 
-async function CLAUSE_COPY(src, dest, insrt) {
+async function CLAUSE_COPY(src, dest, insrt = false) {
   let ocl = 0, beg = 0, end = 0, bb = 0, ee = 0, obeg = 0, cnt = 0, b = 0, e = 0;
   bb = get(g.P_CCTBL, CC_SBPTR);
   ee = get(g.P_CCTBL, CC_SEPTR);
@@ -6698,7 +6698,7 @@ async function DESCRIBE_CONTENTS(obj, level = (-1), all$ = D_ALL$) {
   }
 }
 
-async function DESCRIBABLE$(obj, cont$) {
+async function DESCRIBABLE$(obj, cont$ = false) {
   if (hasFlag(obj, INVISIBLE)) {
     return false;
   } else if (obj == g.WINNER) {

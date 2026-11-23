@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -374,6 +374,7 @@ export const CEXITFLAG = 1;
 export const CEXITSTR = 1;
 export const DEXITOBJ = 1;
 export const DEXITSTR = 1;
+export const ZSTR_ON = 0;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----
@@ -17530,7 +17531,6 @@ async function I_JOEY() {
     move(JOEY, LOCAL_GLOBALS);
     if (g.HERE == EAST_CAMP) {
       (await TELL_SCREWS("enters"));
-      false /* stray atom OH in original source */;
       g.FOLLOW_FLAG = 4;
       enable(await QUEUE(I_FOLLOW.id, 2));
       tell(" the ");

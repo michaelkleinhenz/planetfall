@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -387,6 +387,7 @@ export const CEXITFLAG = 1;
 export const CEXITSTR = 1;
 export const DEXITOBJ = 1;
 export const DEXITSTR = 1;
+export const ZSTR_ON = 0;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----
@@ -18482,7 +18483,7 @@ async function SAY_GLOW() {
   return true;
 }
 
-async function NOT_SATISFIED(conditions$) {
+async function NOT_SATISFIED(conditions$ = false) {
   await REFER_TO_MANUAL();
   tell(" for a summary of what you must ");
   if (conditions$) {
@@ -18917,7 +18918,7 @@ async function NERVOUSLY() {
   return true;
 }
 
-async function FROWNS(female$) {
+async function FROWNS(female$ = false) {
   tell(" frowns, blinks ");
   if (female$) {
     tell("her");

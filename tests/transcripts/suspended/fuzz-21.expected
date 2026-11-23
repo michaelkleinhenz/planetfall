@@ -1,0 +1,981 @@
+SUSPENDED
+Infocom interactive fiction - a science-fiction story
+Copyright (c) TIME, TIME by Infocom, Inc. All rights reserved.
+SUSPENDED is a registered trademark of Infocom, Inc.
+Release 8 / Serial number 830521
+
+FC ALERT! Planetside systems are deteriorating. FC imbalance detected. Emergency reviving systems completed. You are now in control of the complex.
+
+SENSA INTERRUPT: Seismic aftershock detected ten meters north of Beta FC. Tremor intensity 9.7. Projected damage: connecting cables in Primary and Secondary Channels.
+
+FC INTERRUPT: All Robots, report locations.
+
+IRIS: In the Weather Monitors.
+WALDO: In the Gamma Repair.
+SENSA: In the Central Chamber.
+AUDA: In the Entry Area.
+POET: In the Central Chamber.
+WHIZ: In the Advisory Peripheral.
+
+(FC linked to Iris)>#random 42
+FC: I don't know the word '#random'.
+
+(FC linked to Iris)>@seed 42
+FC: Communication meaningless.
+
+(FC linked to Iris)>look
+Internal map reference -- Weather Monitors
+I can't see a thing.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>empty barrier
+FC: I don't know the word 'empty'.
+
+(FC linked to Iris)>look
+Internal map reference -- Weather Monitors
+Get me a seeing-eye cane. Without my visual function, I'm worthless.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Everything is dark.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>empty barrier
+FC: I don't know the word 'empty'.
+
+(FC linked to Iris)>eat barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Where's my white cane?
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>remove barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>examine barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Everything is dark.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>sw
+I don't see how.
+
+(FC linked to Iris)>slide barrier through barrier
+FC: I don't understand that sentence.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Everything is dark.
+
+(FC linked to Iris)>give barrier to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Get me a seeing-eye cane. Without my visual function, I'm worthless.
+
+SENSA INTERRUPT: Secondary tremor detected in lower level. Intensity: 7.3. Projected damage: Cooling systems for FCs in Maintenance Area.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>push barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>shake barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Get me a seeing-eye robot.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>move barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>listen to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>look in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>move barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>read barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>eat barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>talk to barrier
+FC: I don't know the word 'talk'.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>read barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Get me a seeing-eye cane. Without my visual function, I'm worthless.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Get me a seeing-eye cane. Without my visual function, I'm worthless.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>look under barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+I can't see a thing.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>slide barrier through barrier
+FC: I don't understand that sentence.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Everything is dark.
+
+(FC linked to Iris)>remove barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>push barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>look in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>shake barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>shake barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>throw barrier at barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>put barrier in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>examine barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>jump
+I would if I could.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>jump
+Trying to do that's like asking me to blink.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>remove barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>shake barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>climb barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>put barrier in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>pick up barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+I can't see a thing.
+
+(FC linked to Iris)>up
+I don't see how.
+
+IRIS INTERRUPT: You may not be aware of this, but I'm not working. I need to get repaired.
+
+(FC linked to Iris)>remove barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>slide barrier through barrier
+FC: I don't understand that sentence.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>look in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>jump
+I can't, so I shan't.
+
+(FC linked to Iris)>look
+Internal map reference -- Sub Supply Room
+Visual function nonfunctional.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+I'm doing the best I can, but without visual circuits, that's next to nothing.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Get me a seeing-eye robot.
+
+(FC linked to Iris)>talk to barrier
+FC: I don't know the word 'talk'.
+
+(FC linked to Iris)>read barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+I'm doing the best I can, but without visual circuits, that's next to nothing.
+
+(FC linked to Iris)>remove barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>give barrier to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>talk to barrier
+FC: I don't know the word 'talk'.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>look
+Internal map reference -- Weather Monitors
+Visual function nonfunctional.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>listen to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>pick up barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>push barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>slide barrier through barrier
+FC: I don't understand that sentence.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>empty barrier
+FC: I don't know the word 'empty'.
+
+(FC linked to Iris)>give barrier to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>eat barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Visual function nonfunctional.
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>drop barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>pick up barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>empty barrier
+FC: I don't know the word 'empty'.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+I don't mean to complain, but it would be nice if I got repaired.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>eat barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+SENSA INTERRUPT: Secondary tremor detected by Filtering Computers. Intensity: 8.4. Projected damage: Automatic controls for surface transportation; Automatic controls for Hydroponics Area.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Everything is dark.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>move barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>shake barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>listen to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>take barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>read barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>search barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>climb barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>search barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+IRIS INTERRUPT: Hey, I could really help a lot if you fixed me. All it takes is one little IC.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Get me a seeing-eye cane. Without my visual function, I'm worthless.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>move barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>listen to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Get me a seeing-eye robot.
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>close barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>drop barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+I can't see.
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>put barrier in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>give barrier to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>move barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+I can't see.
+
+(FC linked to Iris)>jump
+I would if I could.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Visual function nonfunctional.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Get me a seeing-eye cane. Without my visual function, I'm worthless.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>drop barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>climb barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>climb barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+I can't see.
+
+(FC linked to Iris)>wear barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>put barrier in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>look in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>throw barrier at barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+FC INTERRUPT: ALERT! ALERT!
+Intruders detected in Sterilization Chamber!
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>look under barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>move barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>climb barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+I don't see how.
+
+AUDA INTERRUPT: Some talking mechanisms just entered the room.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>hit barrier
+FC: What do you want to hit the barrier with?
+
+(FC linked to Iris)>listen to panel
+Visual scanners cannot see any panel here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+I'm doing the best I can, but without visual circuits, that's next to nothing.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>take barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>examine barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>search barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>examine barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>take barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+I can't see.
+
+(FC linked to Iris)>eat barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>push barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>diagnose
+FC: I don't know the word 'diagnose'.
+
+(FC linked to Iris)>look
+Internal map reference -- Weather Monitors
+Everything is dark.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>pick up barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>give barrier to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>take panel
+Visual scanners cannot see any panel here.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>turn off barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>give barrier to barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>open barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>talk to barrier
+FC: I don't know the word 'talk'.
+
+(FC linked to Iris)>north
+I don't see how.
+
+(FC linked to Iris)>south
+Internal map reference -- Sub Supply Room
+Everything is dark.
+
+(FC linked to Iris)>touch barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>throw barrier at barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>shake barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>take barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>talk to barrier
+FC: I don't know the word 'talk'.
+
+(FC linked to Iris)>smell barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>climb barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>take barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>wear barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>south
+I don't see how.
+
+(FC linked to Iris)>look in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>drink barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>kiss barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>jump
+I would if I could.
+
+(FC linked to Iris)>put barrier in barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>north
+Internal map reference -- Weather Monitors
+Visual function nonfunctional.
+
+IRIS INTERRUPT: You can get some information on repairing me at the Advisory Peripheral, if you haven't already asked.
+
+(FC linked to Iris)>slide barrier through barrier
+FC: I don't understand that sentence.
+
+(FC linked to Iris)>up
+I don't see how.
+
+(FC linked to Iris)>turn on barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>take barrier
+Visual scanners cannot see any barrier here.
+
+(FC linked to Iris)>show barrier to barrier
+FC: I don't know the word 'show'.
+
+(FC linked to Iris)>talk to barrier
+FC: I don't know the word 'talk'.
+
+(FC linked to Iris)>look
+Internal map reference -- Weather Monitors
+I'm doing the best I can, but without visual circuits, that's next to nothing.
+
+(FC linked to Iris)>

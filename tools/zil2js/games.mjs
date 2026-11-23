@@ -52,6 +52,7 @@ export const GAMES = {
     srcDir: 'games/deadline',
     main: 'deadline',
     objectOrder: { story: 'COMPILED/dead-deadline.z3' },
+    oldReturn: true,
     storyFile: 'COMPILED/dead-deadline.z3',
   },
   'enchanter': {
@@ -154,6 +155,7 @@ export const GAMES = {
     srcDir: 'games/suspended',
     main: 'suspended',
     objectOrder: { story: 'COMPILED/suspended.z3' },
+    oldReturn: true,
     // A stray character in the original source.
     fixups: { people: (t) => t.replace('<SET-GOAL ,PEOPLE ,INNER-CORE>>>\n\n<ROUTINE PEOPLE-GIVEN-BAG', '<SET-GOAL ,PEOPLE ,INNER-CORE>>\n\n<ROUTINE PEOPLE-GIVEN-BAG') },
     storyFile: 'COMPILED/suspended.z3',
@@ -170,6 +172,7 @@ export const GAMES = {
     srcDir: 'games/witness',
     main: 'witness',
     objectOrder: { story: 'COMPILED/r21.z3' },
+    oldReturn: true,
     // A stray character in the original source.
     fixups: { places: (t) => t.replace('"Inside the house"\n)>[\n', '"Inside the house"\n').replace(/^\s*\]?\[?\s*$/gm, '') },
     storyFile: 'COMPILED/r21.z3',
