@@ -1,19 +1,20 @@
-// Runs the translated Planetfall game.  The host supplies I/O callbacks:
+// Runs the translated game that is currently loaded (engine/current.js).  The host supplies I/O callbacks:
 //   output(text, {fixed})   - game text
 //   input() -> Promise<str> - next command line
 //   status({room, score, moves})
 //   save(snapshot) -> Promise<bool>, restore() -> Promise<snapshot|null>
 //   ended() -> Promise<void> (called after QUIT; resolve to restart)
 
-import * as story from '../game/story-data.js';
-import { ROUTINES, start, mainLoop } from '../game/planetfall.js';
+import { current } from './current.js';
 import {
   initRuntime, resetState, RestartSignal, QuitSignal, RestoreSignal, tell, seedRandom,
 } from './runtime.js';
 
 export async function runGame(io, { seed } = {}) {
+  if (!current.code) throw new Error('No game loaded (see engine/current.js).');
+  const { start, mainLoop, ROUTINES } = current.code;
   if (seed !== undefined) seedRandom(seed);
-  initRuntime(story, ROUTINES, io);
+  initRuntime(current.story, ROUTINES, io);
   let entry = 'start';
   for (;;) {
     try {

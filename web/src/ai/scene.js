@@ -3,7 +3,11 @@
 // translate "grab the shiny thing" into "take key".
 
 import { g, inspect } from '../engine/runtime.js';
-import * as G from '../game/planetfall.js';
+import { current } from '../engine/current.js';
+
+const G = () => current.code;
+// A flag the current game doesn't define is treated as never set.
+const flag = (o, f) => f != null && inspect.hasFlag(o, f);
 
 function describe(o) {
   const words = inspect.objectWords(o).filter((w) => !/^(it|that|this|him|zzmgck)$/.test(w));
@@ -16,11 +20,11 @@ function describe(o) {
 
 function visibleChildren(container, depth, out, { includeActor = false } = {}) {
   for (const o of inspect.children(container)) {
-    if (o === G.ADVENTURER && !includeActor) continue;
-    if (inspect.hasFlag(o, G.INVISIBLE)) continue;
+    if (o === G().ADVENTURER && !includeActor) continue;
+    if (flag(o, G().INVISIBLE)) continue;
     out.push({ obj: o, inside: container });
-    const open = inspect.hasFlag(o, G.OPENBIT) || inspect.hasFlag(o, G.TRANSBIT) || inspect.hasFlag(o, G.SURFACEBIT);
-    if (depth < 3 && open && !inspect.hasFlag(o, G.ACTORBIT)) visibleChildren(o, depth + 1, out);
+    const open = flag(o, G().OPENBIT) || flag(o, G().TRANSBIT) || flag(o, G().SURFACEBIT);
+    if (depth < 3 && open && !flag(o, G().ACTORBIT)) visibleChildren(o, depth + 1, out);
   }
   return out;
 }
@@ -36,20 +40,20 @@ export function currentScene() {
     visible: [],
     scenery: [],
   };
-  for (const { obj } of visibleChildren(G.ADVENTURER, 0, [])) {
+  for (const { obj } of visibleChildren(G().ADVENTURER, 0, [])) {
     const d = describe(obj);
     if (d.nouns.length) scene.inventory.push(d);
   }
   if (lit) {
     for (const { obj, inside } of visibleChildren(here, 0, [])) {
-      if (inspect.loc(obj) === G.ADVENTURER) continue;
+      if (inspect.loc(obj) === G().ADVENTURER) continue;
       const d = describe(obj);
       if (!d.nouns.length) continue;
       if (inside !== here) d.in = inspect.objectName(inside);
       scene.visible.push(d);
     }
     // Room-specific scenery: local globals and pseudo-objects of this room.
-    const gp = inspect.getPropAddr(here, G.P.GLOBAL);
+    const gp = inspect.getPropAddr(here, G().P.GLOBAL);
     if (gp) {
       const mem = inspect.memory;
       for (let i = 0; i < inspect.propSize(gp); i++) {
@@ -57,7 +61,7 @@ export function currentScene() {
         if (d.nouns.length) scene.scenery.push(d);
       }
     }
-    const pp = inspect.getPropAddr(here, G.P.PSEUDO);
+    const pp = inspect.getPropAddr(here, G().P.PSEUDO);
     if (pp) {
       for (let i = 0; i < inspect.propSize(pp) / 4; i++) scene.scenery.push({ nouns: [inspect.pseudoWord(pp, i)] });
     }
@@ -93,7 +97,7 @@ const DIR_PROP = { north: 'NORTH', ne: 'NE', east: 'EAST', se: 'SE', south: 'SOU
 function exits() {
   const out = [];
   for (const d of DIRECTIONS) {
-    const a = inspect.getPropAddr(g.HERE, G.P[DIR_PROP[d]]);
+    const a = inspect.getPropAddr(g.HERE, G().P[DIR_PROP[d]]);
     if (a && inspect.propSize(a) !== 2) out.push(d); // size 2 = message-only exit
   }
   return out;
@@ -105,18 +109,18 @@ function shortLabel(name) {
 }
 
 function verbsFor(o, held) {
-  const f = (flag) => inspect.hasFlag(o, flag);
+  const f = (fl) => flag(o, fl);
   const words = inspect.objectWords(o);
   const v = ['examine'];
-  if (f(G.ACTORBIT)) v.push('talk');
+  if (f(G().ACTORBIT)) v.push('talk');
   if (held) v.push('drop');
-  else if (f(G.TAKEBIT)) v.push('take');
-  if (f(G.CONTBIT) || f(G.DOORBIT)) v.push(f(G.OPENBIT) ? 'close' : 'open');
-  if (f(G.CONTBIT) && f(G.OPENBIT)) v.push('lookin');
-  if (f(G.READBIT)) v.push('read');
-  if (f(G.FOODBIT)) v.push('eat');
-  if (f(G.WEARBIT)) v.push(f(G.WORNBIT) ? 'remove' : 'wear');
-  if (f(G.LIGHTBIT)) v.push(f(G.ONBIT) ? 'turnoff' : 'turnon');
+  else if (f(G().TAKEBIT)) v.push('take');
+  if (f(G().CONTBIT) || f(G().DOORBIT)) v.push(f(G().OPENBIT) ? 'close' : 'open');
+  if (f(G().CONTBIT) && f(G().OPENBIT)) v.push('lookin');
+  if (f(G().READBIT)) v.push('read');
+  if (f(G().FOODBIT)) v.push('eat');
+  if (f(G().WEARBIT)) v.push(f(G().WORNBIT) ? 'remove' : 'wear');
+  if (f(G().LIGHTBIT)) v.push(f(G().ONBIT) ? 'turnoff' : 'turnon');
   if (words.some((w) => /^(button|switch|lever)$/.test(w))) v.push('push');
   return v;
 }
@@ -126,13 +130,13 @@ export function actionContext() {
   const scene = { dark: !g.LIT, exits: g.LIT ? exits() : [], objects: [] };
   if (!g.LIT) {
     // Still allow handling what you carry.
-    for (const { obj } of visibleChildren(G.ADVENTURER, 0, [])) addObject(scene, obj, true);
+    for (const { obj } of visibleChildren(G().ADVENTURER, 0, [])) addObject(scene, obj, true);
     return scene;
   }
-  for (const { obj } of visibleChildren(g.HERE, 0, [])) addObject(scene, obj, inspect.loc(obj) === G.ADVENTURER);
-  const gp = inspect.getPropAddr(g.HERE, G.P.GLOBAL);
+  for (const { obj } of visibleChildren(g.HERE, 0, [])) addObject(scene, obj, inspect.loc(obj) === G().ADVENTURER);
+  const gp = inspect.getPropAddr(g.HERE, G().P.GLOBAL);
   if (gp) for (let i = 0; i < inspect.propSize(gp); i++) addObject(scene, inspect.memory[gp + i], false, true);
-  for (const { obj } of visibleChildren(G.ADVENTURER, 0, [])) addObject(scene, obj, true);
+  for (const { obj } of visibleChildren(G().ADVENTURER, 0, [])) addObject(scene, obj, true);
   // Disambiguate commands for objects sharing a noun ("red button" / "blue button").
   const byNoun = new Map();
   for (const o of scene.objects) byNoun.set(o.noun, (byNoun.get(o.noun) || 0) + 1);
@@ -142,7 +146,7 @@ export function actionContext() {
 
 function addObject(scene, obj, held, scenery = false) {
   if (scene.objects.some((o) => o.obj === obj)) return;
-  if (obj === G.ADVENTURER || inspect.hasFlag(obj, G.INVISIBLE)) return;
+  if (obj === G().ADVENTURER || flag(obj, G().INVISIBLE)) return;
   const nouns = inspect.objectWords(obj).filter((w) => !/^(it|that|this|him|zzmgck)$/.test(w));
   if (!nouns.length) return;
   const name = inspect.objectName(obj);

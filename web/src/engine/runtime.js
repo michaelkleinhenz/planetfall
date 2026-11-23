@@ -159,6 +159,22 @@ export function getPropAddr(o, p) {
   }
 }
 
+/** NEXTP: the property after p (p = 0: the first property), or 0 at the end. */
+export function nextProp(o, p) {
+  let a = propTable(o);
+  a += 1 + 2 * mem[a];
+  if (p) {
+    for (;;) {
+      const sb = mem[a];
+      if (sb === 0) return 0;
+      const num = sb & 31;
+      a += 2 + (sb >> 5);
+      if (num === p) break;
+    }
+  }
+  return mem[a] & 31;
+}
+
 export function propSize(addr) {
   if (!addr) return 0;
   return (mem[addr - 1] >> 5) + 1;

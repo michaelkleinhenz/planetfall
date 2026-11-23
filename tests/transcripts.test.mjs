@@ -8,8 +8,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normalize } from './normalize.mjs';
 import { runGame } from '../web/src/engine/game.js';
+import { loadGame } from '../web/src/engine/current.js';
+import { GAMES } from '../web/src/games/registry.js';
 
-const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'transcripts');
+const base = path.join(path.dirname(fileURLToPath(import.meta.url)), 'transcripts');
 
 function play(commands) {
   return new Promise((resolve, reject) => {
@@ -33,19 +35,23 @@ function play(commands) {
 }
 
 let failed = 0;
+for (const gameId of fs.readdirSync(base).filter((d) => GAMES[d]).sort()) {
+  await loadGame(GAMES[gameId]);
+  const dir = path.join(base, gameId);
 for (const f of fs.readdirSync(dir).filter((f) => f.endsWith('.cmds')).sort()) {
   const cmds = fs.readFileSync(path.join(dir, f), 'utf8').split('\n').filter(Boolean);
   const expected = fs.readFileSync(path.join(dir, f.replace('.cmds', '.expected')), 'utf8');
   const actual = normalize(await play(cmds));
   if (actual === expected) {
-    console.log(`ok   ${f} (${cmds.length} commands)`);
+    console.log(`ok   ${gameId}/${f} (${cmds.length} commands)`);
   } else {
     failed++;
     const a = actual.split('\n'), e = expected.split('\n');
     let i = 0;
     while (i < a.length && a[i] === e[i]) i++;
-    console.log(`FAIL ${f}: first difference at line ${i + 1}`);
+    console.log(`FAIL ${gameId}/${f}: first difference at line ${i + 1}`);
     console.log(`  expected: ${JSON.stringify(e[i])}\n  actual:   ${JSON.stringify(a[i])}`);
   }
+}
 }
 process.exit(failed ? 1 : 0);

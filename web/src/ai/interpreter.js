@@ -5,13 +5,14 @@
 // still comes from the original game.
 
 import { chat } from './openrouter.js';
-import { SYNTAX_HELP, VERB_SYNONYMS, FULL_WORDS } from '../game/story-data.js';
+import { current } from '../engine/current.js';
 import { sceneText } from './scene.js';
 
 // Debugging/meta syntaxes the AI should never produce.
 const HIDDEN = /^(#|\$|script|unscript|verify)/;
 
 function verbReference() {
+  const { SYNTAX_HELP, VERB_SYNONYMS } = current.story;
   const lines = SYNTAX_HELP.filter((s) => !HIDDEN.test(s))
     .map((s) => s.replace(/^restar\b/, 'restart').replace(/^restor\b/, 'restore'));
   const syn = Object.entries(VERB_SYNONYMS)
@@ -20,15 +21,14 @@ function verbReference() {
   return { patterns: [...new Set(lines)].join(' | '), synonyms: syn.join('; ') };
 }
 
-const REF = verbReference();
 
 // Every word the original parser knows (full spellings; it compares only the first 6 letters).
-const VOCABULARY = [...new Set(Object.values(FULL_WORDS).flat())]
+const vocabulary = () => [...new Set(Object.values(current.story.FULL_WORDS).flat())]
   .filter((w) => /^[a-z][a-z-]*$/.test(w) && !/^(zzmgck|intnum|shit|fuck|damn)$/.test(w))
   .sort()
   .join(' ');
 
-const SYSTEM_PROMPT = `You are the command interpreter for PLANETFALL, the 1983 Infocom science-fiction text adventure.
+const buildSystemPrompt = (REF, VOCABULARY, GAME) => `You are the command interpreter for ${GAME}, the ${current.meta.year} Infocom text adventure.
 The original game logic and its original text parser run unchanged. Your only job is to translate what the player types (free natural language, any phrasing, typos, other languages) into commands the original parser understands.
 
 HOW THE ORIGINAL PARSER WORKS
@@ -36,7 +36,7 @@ HOW THE ORIGINAL PARSER WORKS
 - Movement: north, south, east, west, ne, nw, se, sw, up, down, in, out (also "enter X", "exit").
 - Objects are named with the nouns (and optional adjectives) listed in the scene. Prefer an adjective + noun when several things share a noun ("red button").
 - "it" refers to the last object mentioned. "all" works with take/drop ("take all").
-- Talking to characters: "floyd, go north" or "tell floyd to follow me" -> "floyd, follow me"; "say hello to floyd" -> "hello floyd" / "talk to floyd".
+- Talking to characters: "NAME, go north" or "tell NAME to follow me" -> "NAME, follow me"; "say hello to NAME" -> "hello NAME" / "talk to NAME" (NAME = a character in the scene).
 - Useful commands: look, examine X, inventory, wait, again, score, time, diagnose, sleep, read X, open/close X, turn on/off X, wear/remove X, eat/drink X, give X to Y, show X to Y, throw X at Y, save, restore, restart, verbose, brief.
 - Known verb patterns (OBJ = object): ${REF.patterns}
 - Verb synonyms: ${REF.synonyms}
@@ -57,12 +57,21 @@ RULES
 11. Your whole answer is always the JSON object, even when you only reply to the player.
 
 VOICE OF "reply"
-Every "reply" is shown to the player as if the game itself had said it, so it must sound exactly like PLANETFALL's narrator and parser:
+Every "reply" is shown to the player as if the game itself had said it, so it must sound exactly like ${GAME}'s narrator and parser:
 - Second person, present tense, dry and wry Infocom humour, short (usually one sentence, at most two).
 - Never sound like an assistant or chatbot: no "I can't help with that", "As an AI", "Sure!", "Let me", no apologies, no emoji, no markdown, no quoting of commands like "type X".
-- For things the game cannot do, answer like Infocom would, e.g. "You can't do that to a chronometer, no matter how much you'd like to.", "That's not a verb I recognize.", "Ensign Seventh Class training didn't cover that.", "Time is not something even a Stellar Patrol ensign can adjust."
-- For questions about the story, answer briefly in the same narrator voice ("You are a lowly Ensign Seventh Class aboard the Stellar Patrol Ship Feinstein.").
+- For things the game cannot do, answer like Infocom would, e.g. "You can't do that to a chronometer, no matter how much you'd like to.", "That's not a verb I recognize.", "Your training didn't cover that.", "Time is not something you can adjust."
+- For questions about the story, answer briefly in the same narrator voice, using only what the transcript shows.
 - Use the player's language if a language is given; otherwise English.`;
+
+// Built once per game (the long, unchanging part of every request).
+const promptCache = new Map();
+function systemPrompt() {
+  if (!promptCache.has(current.id)) {
+    promptCache.set(current.id, buildSystemPrompt(verbReference(), vocabulary(), current.meta.title.toUpperCase()));
+  }
+  return promptCache.get(current.id);
+}
 
 function transcriptText(history) {
   const parts = [];
@@ -93,7 +102,7 @@ function parseJson(text) {
  */
 export async function interpret({ apiKey, model, input, language, scene, history, repair, signal }) {
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT, cache: true },
+    { role: 'system', content: systemPrompt(), cache: true },
     {
       role: 'user',
       content:

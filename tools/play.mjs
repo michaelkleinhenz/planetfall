@@ -1,12 +1,20 @@
-// Command-line player for the JavaScript translation.
-//   node tools/play.mjs                 interactive
-//   node tools/play.mjs cmds.txt [seed] scripted (echoes commands like a transcript)
+// Command-line player for the JavaScript translations.
+//   node tools/play.mjs [--game zork1]                 interactive
+//   node tools/play.mjs [--game zork1] cmds.txt [seed] scripted (echoes commands like a transcript)
 import fs from 'node:fs';
 import readline from 'node:readline';
 import { runGame } from '../web/src/engine/game.js';
+import { loadGame } from '../web/src/engine/current.js';
+import { GAMES } from '../web/src/games/registry.js';
 
-const file = process.argv[2];
-const seed = process.argv[3] ? Number(process.argv[3]) : 12345;
+const args = process.argv.slice(2);
+let gameId = 'planetfall';
+const gi = args.indexOf('--game');
+if (gi >= 0) { gameId = args[gi + 1]; args.splice(gi, 2); }
+await loadGame(GAMES[gameId]);
+
+const file = args[0];
+const seed = args[1] ? Number(args[1]) : 12345;
 let lines = file ? fs.readFileSync(file, 'utf8').split('\n') : null;
 let rl = null;
 let saved = null;

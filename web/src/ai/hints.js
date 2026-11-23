@@ -9,7 +9,9 @@
 
 import { chat } from './openrouter.js';
 import { g, getProp, getPropAddr, propSize, get, inspect } from '../engine/runtime.js';
-import * as G from '../game/planetfall.js';
+import { current } from '../engine/current.js';
+
+const G = () => current.code;
 import { actionContext } from './scene.js';
 import { sceneText, currentScene } from './scene.js';
 
@@ -18,7 +20,7 @@ const MAX_ROUTINE = 3500;   // characters per routine
 const MAX_CODE = 16000;     // characters of code per request
 
 function routineSource(id) {
-  const fn = G.ROUTINES[id];
+  const fn = G().ROUTINES[id];
   if (!fn) return null;
   let src = fn.toString();
   if (src.length > MAX_ROUTINE) src = src.slice(0, MAX_ROUTINE) + '\n  /* … truncated … */\n}';
@@ -40,19 +42,19 @@ export function hintContext() {
   };
 
   const here = g.HERE;
-  add(`Current location "${inspect.objectName(here)}": room handler`, getProp(here, G.P.ACTION));
+  add(`Current location "${inspect.objectName(here)}": room handler`, getProp(here, G().P.ACTION));
   // Exits that are decided by code (e.g. doors, conditions).
   for (const d of DIRS) {
-    const pt = getPropAddr(here, G.P[d]);
+    const pt = getPropAddr(here, G().P[d]);
     if (pt && propSize(pt) === 3) add(`Exit ${d.toLowerCase()} from this location`, get(pt, 0));
   }
   // Pseudo-objects mentioned in the room description.
-  const pp = getPropAddr(here, G.P.PSEUDO);
+  const pp = getPropAddr(here, G().P.PSEUDO);
   if (pp) for (let i = 0; i < propSize(pp) / 4; i++) add(`"${inspect.pseudoWord(pp, i)}" in this location`, get(pp + 4 * i, 1));
   // Things in view and carried.
   const ctx = actionContext();
   for (const o of ctx.objects) {
-    add(`${o.held ? 'Carried' : 'In view'}: "${o.name}"`, getProp(o.obj, G.P.ACTION));
+    add(`${o.held ? 'Carried' : 'In view'}: "${o.name}"`, getProp(o.obj, G().P.ACTION));
   }
 
   // Current values of the game variables the collected code reads.
@@ -68,9 +70,9 @@ export function hintContext() {
   return { code, vars };
 }
 
-const SYSTEM = (language) => `You are the hint system for PLANETFALL, the 1983 Infocom text adventure, in the spirit of Infocom's InvisiClues booklets.
+const SYSTEM = (language) => `You are the hint system for ${current.meta.title.toUpperCase()}, the ${current.meta.year} Infocom text adventure, in the spirit of Infocom's InvisiClues booklets.
 
-You receive the player's current situation and recent transcript, plus the ACTUAL GAME CODE that governs it: the JavaScript translation of the original ZIL routines for the current location, its exits, and every object in view or carried, together with the current values of the game variables those routines test. Read the code to work out what the player can do here, what is blocked, and what each object reacts to (look for the verbs a routine handles with isVerb(V.X, ...), the conditions on flags and variables, and what changes the score). You may also use your general knowledge of Planetfall, but the code and the current state are authoritative.
+You receive the player's current situation and recent transcript, plus the ACTUAL GAME CODE that governs it: the JavaScript translation of the original ZIL routines for the current location, its exits, and every object in view or carried, together with the current values of the game variables those routines test. Read the code to work out what the player can do here, what is blocked, and what each object reacts to (look for the verbs a routine handles with isVerb(V.X, ...), the conditions on flags and variables, and what changes the score). You may also use your general knowledge of ${current.meta.title}, but the code and the current state are authoritative.
 
 Decide the most useful next step for making progress or staying alive. If the transcript shows urgent trouble (hunger, thirst, exhaustion, sickness, a countdown, danger), address that first.
 
@@ -96,7 +98,7 @@ export async function getHint({ apiKey, model, language, level, history, signal 
     `${h.input ? `PLAYER: ${h.input}\n` : ''}GAME: ${h.output.trim().slice(0, 1200)}`).join('\n---\n');
   const user =
     `HINT LEVEL: ${level}\n\n` +
-    `SCORE: ${g.SCORE} of 80. MOVES/TIME: ${g.MOVES}.\n\n` +
+    `SCORE: ${g.SCORE} of ${current.meta.maxScore}. MOVES/TIME: ${g.MOVES}.\n\n` +
     `CURRENT SCENE:\n${sceneText(currentScene())}\n\n` +
     `RECENT TRANSCRIPT (oldest first):\n${transcript || '(none)'}\n\n` +
     `GAME VARIABLES USED BY THE CODE BELOW:\n${vars.join('\n') || '(none)'}\n\n` +

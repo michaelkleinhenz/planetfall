@@ -1,32 +1,25 @@
-// ZIL -> JavaScript compiler for Planetfall.
+// ZIL -> JavaScript compiler for Infocom games (version-3 Z-machine era ZIL).
 //
-// Reads the original ZIL sources, builds the Z-machine style data image
+// Reads a game's original ZIL sources, builds the Z-machine style data image
 // (object tree, property tables, vocabulary, syntax tables, static tables)
 // and translates every ROUTINE into a readable async JavaScript function.
 //
-// Usage: node tools/zil2js/compile.mjs  (writes web/src/game/*.js)
+// Usage: node tools/zil2js/compile.mjs [game|all]   (writes web/src/games/<game>/*.js)
+// Games are configured in tools/zil2js/games.mjs.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readZil, show } from './reader.mjs';
-import { encodeText, dictBytes, dictKey } from '../../web/src/engine/zscii.js';
+import { encodeText, dictBytes, dictKey, decodeText } from '../../web/src/engine/zscii.js';
+import { GAMES } from './games.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, '../..');
-const OUT_DIR = path.join(ROOT, 'web/src/game');
 
-// The ZIL files, in the order planetfall.zil inserts them.
-const FILES = ['syntax', 'misc', 'globals', 'parser', 'verbs', 'compone', 'comptwo', 'planetfall'];
-
-// Known damage in the source snapshot: comptwo.zil is truncated in the middle of
-// the last object (TRIFFID).  comptwo.zabstr shows the intended ending.
-const FIXUPS = {
-  comptwo: (text) => text.replace(/\(FLAGS ACTORBIL M\s*$/, '(FLAGS ACTORBIT)>\n'),
-};
-
-// Compile-time environment: this is the production build (PREDGEN), compiled by ZILCH.
-const COMPILE_TIME_ASSIGNED = new Set(['PREDGEN', 'ZILCH']);
+// The game being compiled (set by compileAll).
+let CFG = null;
+let GAME_ID = null;
 
 const warnings = [];
 function warn(msg) { warnings.push(msg); }
@@ -35,23 +28,76 @@ function warn(msg) { warnings.push(msg); }
 // Load & flatten top-level definitions
 // ---------------------------------------------------------------------------
 
+const isNode = (x) => x && typeof x === 'object' && typeof x.t === 'string';
+
+/**
+ * Evaluate the small subset of MDL used in compile-time conditionals (%<...>):
+ * COND, GASSIGNED?, ==?/=?/EQUAL?, NOT, AND, OR, global values of the game's
+ * compile-time settings (e.g. ,ZORK-NUMBER), numbers, T and quoted code.
+ * Returns a JS value (boolean/number) or a ZIL node to splice in.
+ */
 function evalCompileTime(node) {
-  // Supports the tiny subset of MDL used in %<COND ...> blocks.
-  if (node.t === 'form') {
-    const h = node.items[0]?.v;
-    if (h === 'COND') {
-      for (const clause of node.items.slice(1)) {
-        if (evalCompileTime(clause.items[0])) {
-          return clause.items.length > 1 ? clause.items[clause.items.length - 1] : null;
-        }
-      }
-      return null;
+  if (!node) return null;
+  switch (node.t) {
+    case 'num': return node.v;
+    case 'str': return node;
+    case 'quote': return node.v;
+    case 'atom': return node.v === 'T' ? true : node;
+    case 'gval': {
+      const name = node.v.v;
+      if (name in CFG.values) return CFG.values[name];
+      throw new Error('Unknown compile-time value ,' + name);
     }
-    if (h === 'GASSIGNED?') return COMPILE_TIME_ASSIGNED.has(node.items[1].v);
-    if (h === 'NOT') return !evalCompileTime(node.items[1]);
+    case 'macro': return evalCompileTime(node.v);
+    case 'form': {
+      if (!node.items.length) return false;
+      const h = node.items[0].v;
+      const args = node.items.slice(1);
+      switch (h) {
+        case 'COND':
+          for (const clause of args) {
+            const test = evalCompileTime(clause.items[0]);
+            if (test) return clause.items.length > 1 ? evalCompileTime(clause.items[clause.items.length - 1]) : test;
+          }
+          return null;
+        case 'GASSIGNED?': return CFG.assigned.includes(args[0].v) || args[0].v in CFG.values;
+        case 'NOT': return !evalCompileTime(args[0]);
+        case 'AND': { let r = true; for (const a of args) { r = evalCompileTime(a); if (!r) return r; } return r; }
+        case 'OR': { for (const a of args) { const r = evalCompileTime(a); if (r) return r; } return false; }
+        case '==?': case '=?': case 'EQUAL?': {
+          const [a, ...rest] = args.map(evalCompileTime);
+          return rest.some((b) => b === a);
+        }
+        case 'N==?': case 'N=?': return evalCompileTime(args[0]) !== evalCompileTime(args[1]);
+      }
+      // Any other form: code to be compiled as-is.
+      return node;
+    }
+    case 'list': return node;
   }
-  if (node.t === 'atom' && node.v === 'T') return true;
   throw new Error('Unsupported compile-time expression: ' + show(node));
+}
+
+/** Replace %<...> nodes nested anywhere inside a form or list by their result. */
+function expandMacros(node) {
+  if (!isNode(node)) return node;
+  if (node.items) {
+    const items = [];
+    for (const child of node.items) {
+      if (child.t === 'macro') {
+        const r = evalCompileTime(child.v);
+        if (isNode(r)) items.push(expandMacros(r));
+        else if (r === true) items.push({ t: 'atom', v: 'T' });
+        else if (typeof r === 'number') items.push({ t: 'num', v: r });
+        // false/null: nothing is inserted
+      } else {
+        items.push(expandMacros(child));
+      }
+    }
+    return { ...node, items };
+  }
+  if (node.v && isNode(node.v) && node.t !== 'macro') return { ...node, v: expandMacros(node.v) };
+  return node;
 }
 
 function topLevelForms() {
@@ -60,22 +106,87 @@ function topLevelForms() {
     if (!node) return;
     if (node.t === 'macro') {
       const r = evalCompileTime(node.v);
-      if (r && typeof r === 'object') visit(r, file);
+      if (isNode(r)) visit(r, file);
       return;
     }
     if (node.t === 'quote') return visit(node.v, file);
     if (node.t !== 'form') return;
     const head = node.items[0]?.v;
     if (head === 'PROG') { node.items.slice(2).forEach((n) => visit(n, file)); return; }
-    node.file = file;
-    out.push(node);
+    // A top-level COND is evaluated when the file is loaded, i.e. at compile time.
+    if (head === 'COND') {
+      for (const clause of node.items.slice(1)) {
+        if (evalCompileTime(clause.items[0])) { clause.items.slice(1).forEach((n) => visit(n, file)); break; }
+      }
+      return;
+    }
+    const expanded = expandMacros(node);
+    expanded.file = file;
+    out.push(expanded);
   };
-  for (const f of FILES) {
-    let text = fs.readFileSync(path.join(ROOT, f + '.zil'), 'latin1');
-    if (FIXUPS[f]) text = FIXUPS[f](text);
-    for (const node of readZil(text, f + '.zil')) visit(node, f);
+  for (const f of CFG.files) {
+    const dir = path.join(ROOT, CFG.srcDir);
+    const name = fs.readdirSync(dir).find((n) => n.toLowerCase() === f.toLowerCase() + '.zil');
+    if (!name) throw new Error(`${GAME_ID}: missing source file ${f}.zil`);
+    let text = fs.readFileSync(path.join(dir, name), 'latin1');
+    if (CFG.fixups?.[f]) text = CFG.fixups[f](text);
+    for (const node of readZil(text, name)) visit(node, f);
   }
   return out;
+}
+
+/** Decode Z-text from a story file, expanding abbreviations (z-chars 1-3). */
+function decodeStory(d, addr, depth = 0) {
+  const A = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', ' \n0123456789.,!?_#\'"/\\-:()'];
+  const abbr = (d[0x18] << 8) | d[0x19];
+  let out = '', alph = 0, esc = -1, hi = 0, ab = -1;
+  for (;;) {
+    const w = (d[addr] << 8) | d[addr + 1];
+    addr += 2;
+    for (const z of [(w >> 10) & 31, (w >> 5) & 31, w & 31]) {
+      if (ab >= 0) {
+        const entry = abbr + 2 * (32 * (ab - 1) + z);
+        if (depth < 2) out += decodeStory(d, ((d[entry] << 8) | d[entry + 1]) * 2, depth + 1);
+        ab = -1; continue;
+      }
+      if (esc === 0) { hi = z; esc = 1; continue; }
+      if (esc === 1) { out += String.fromCharCode((hi << 5) | z); esc = -1; continue; }
+      if (z === 0) { out += ' '; continue; }
+      if (z >= 1 && z <= 3) { ab = z; continue; }
+      if (z === 4) { alph = 1; continue; }
+      if (z === 5) { alph = 2; continue; }
+      if (alph === 2 && z === 6) { esc = 0; alph = 0; continue; }
+      out += A[alph][z - 6]; alph = 0;
+    }
+    if (w & 0x8000) break;
+  }
+  return out;
+}
+
+/** Read the original story file (object names, release, serial) if the game has one. */
+function readStoryFile() {
+  if (!CFG.storyFile) return null;
+  const file = path.join(ROOT, CFG.srcDir, CFG.storyFile);
+  if (!fs.existsSync(file)) return null;
+  const d = fs.readFileSync(file);
+  const w = (a) => (d[a] << 8) | d[a + 1];
+  if (d[0] !== 3) throw new Error(`${CFG.storyFile}: only version-3 story files are supported`);
+  const objTable = w(0x0a) + 62;
+  const names = [];
+  // The object table ends where the first property table begins.
+  let firstProp = Infinity;
+  for (let n = 1; objTable + (n - 1) * 9 < firstProp; n++) {
+    const a = objTable + (n - 1) * 9;
+    const pt = w(a + 7);
+    firstProp = Math.min(firstProp, pt);
+    names.push(d[pt] ? decodeStory(d, pt + 1) : '');
+  }
+  return {
+    release: w(2),
+    serial: String.fromCharCode(...d.slice(18, 24)),
+    objectNames: names,
+    parents: names.map((_, i) => d[objTable + i * 9 + 4]),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -174,7 +285,7 @@ class Compiler {
         case 'PROPDEF': this.propdefs.set(it[1].v, it[2].v); break;
         case 'DEFMAC': case 'DEFINE': case 'VERSION': case 'FREQUENT-WORDS?': case 'OR': case 'PRINC':
         case 'GC': case 'BLOAT': case 'IFILE': case 'ENDLOAD': case 'GDECL': case 'SET': case 'COND':
-        case 'ID': case 'IMAGE':
+        case 'ID': case 'IMAGE': case 'INSERT-FILE': case 'SNAME': case 'PRINC':
           break;
         default:
           warn('ignored top-level form ' + head);
@@ -192,24 +303,77 @@ class Compiler {
   // Object numbers are observable: the game compares PRSO (which holds a
   // direction's property number after a WALK) with object constants such as
   // NOT-HERE-OBJECT.  To behave exactly like the original we reuse the object
-  // numbering ZILCH chose, taken from its data listing when it is available.
+  // numbering ZILCH chose, taken from its data listing or from the original
+  // story file when one is available.
   numberObjects() {
     this.sourceObjects = this.objects.slice();
-    const listing = path.join(ROOT, 'planetfalldat.zap');
-    if (!fs.existsSync(listing)) return;
-    const order = [];
-    for (const l of fs.readFileSync(listing, 'latin1').split('\n')) {
-      const m = /^\s+\.OBJECT ([^,]+),/.exec(l);
-      if (m) order.push(m[1]);
+    let order = null;
+    if (CFG.objectOrder?.zap) {
+      const listing = path.join(ROOT, CFG.srcDir, CFG.objectOrder.zap);
+      if (fs.existsSync(listing)) {
+        order = [];
+        for (const l of fs.readFileSync(listing, 'latin1').split('\n')) {
+          const m = /^\s+\.OBJECT ([^,]+),/.exec(l);
+          if (m) order.push(m[1]);
+        }
+      }
+    } else if (CFG.objectOrder?.story && this.story) {
+      order = this.matchStoryObjects();
     }
     const byName = new Map(this.objects.map((o) => [o.name, o]));
-    if (order.length !== this.objects.length || !order.every((n) => byName.has(n))) {
-      warn('object numbering from planetfalldat.zap does not fit the source; using source order');
+    if (!order || order.length !== this.objects.length || !order.every((n) => byName.has(n))) {
+      if (order) warn('object numbering from the original does not fit the source; using source order');
       return;
     }
     this.objects = order.map((n) => byName.get(n));
     this.objIndex = new Map(this.objects.map((o, i) => [o.name, i + 1]));
   }
+
+  /** Match source objects to the story file's object numbers by name and location. */
+  matchStoryObjects() {
+    const { objectNames, parents } = this.story;
+    if (objectNames.length !== this.objects.length) {
+      warn(`story file has ${objectNames.length} objects, source has ${this.objects.length}`);
+      return null;
+    }
+    const descOf = (o) => {
+      const d = o.props.find((p) => p.items[0].v === 'DESC');
+      return d ? zilText(d.items[1].v) : '';
+    };
+    const locOf = (o) => {
+      const p = o.props.find((q) => (q.items[0].v === 'IN' && !this.isExit(q)) || q.items[0].v === 'LOC');
+      return p ? p.items[1].v : null;
+    };
+    const order = new Array(objectNames.length).fill(null);
+    const used = new Set();
+    // Pass 1: unique names. Pass 2: names plus parent. Pass 3: whatever is left, in order.
+    for (let pass = 1; pass <= 3; pass++) {
+      for (let i = 0; i < objectNames.length; i++) {
+        if (order[i]) continue;
+        let cands = this.objects.filter((o) => !used.has(o.name) && descOf(o) === objectNames[i]);
+        if (pass >= 2 && cands.length > 1) {
+          const parent = parents[i] ? objectNames[parents[i] - 1] : null;
+          cands = cands.filter((o) => {
+            const l = locOf(o);
+            const lo = l && this.objects.find((x) => x.name === l);
+            return lo ? descOf(lo) === parent : !parent;
+          });
+        }
+        if (cands.length === 1 || (pass === 3 && cands.length)) {
+          order[i] = cands[0].name;
+          used.add(cands[0].name);
+        }
+      }
+    }
+    if (order.some((x) => !x)) {
+      const missing = order.map((x, i) => (x ? null : `#${i + 1} "${objectNames[i]}"`)).filter(Boolean);
+      const left = this.objects.filter((o) => !used.has(o.name)).map((o) => `${o.name} "${descOf(o)}"`);
+      warn(`could not match every object to the story file: ${missing.join(', ')} / unmatched source: ${left.join(', ')}`);
+      return null;
+    }
+    return order;
+  }
+
 
   // ---------------- numbering ----------------
 
@@ -316,6 +480,12 @@ class Compiler {
       }
     };
     this.vocab = { words, byName, entry };
+    // Later versions of ZILCH (e.g. Zork I) give nouns a value byte too (1), and
+    // their parser's WT? relies on it; Planetfall's parser special-cases nouns.
+    const noun = (e) => {
+      e.object = true;
+      if (CFG.nounValue) setPart(e, 'object', CFG.nounValue);
+    };
 
     // Buzz words
     let b = 255;
@@ -369,10 +539,10 @@ class Compiler {
     for (const o of this.objects) {
       for (const p of o.props) {
         const pname = p.items[0].v;
-        if (pname === 'SYNONYM') for (const a of p.items.slice(1)) entry(a.v).object = true;
+        if (pname === 'SYNONYM') for (const a of p.items.slice(1)) noun(entry(a.v));
         if (pname === 'ADJECTIVE') for (const a of p.items.slice(1)) setPart(entry(a.v), 'adj', this.adjNums.get(a.v));
         if (pname === 'PSEUDO') {
-          for (let i = 1; i < p.items.length; i += 2) entry(p.items[i].v.toUpperCase()).object = true;
+          for (let i = 1; i < p.items.length; i += 2) noun(entry(p.items[i].v.toUpperCase()));
         }
       }
     }
@@ -384,6 +554,7 @@ class Compiler {
     }
     // Words referenced from code (W?FOO)
     for (const w of this.referencedPrefixed('W?')) if (!byName.has(w)) entry(w);
+    if (CFG.nounValue) for (const e of words.values()) if (e.object) noun(e);
   }
 
   wordAddr(name) {
@@ -457,33 +628,47 @@ class Compiler {
   table(node) {
     const kind = node.items[0].v;
     let args = node.items.slice(1);
-    let byteMode = false, lengthPrefix = kind === 'LTABLE' || kind === 'PLTABLE';
+    let byteMode = false, lengthPrefix = kind === 'LTABLE' || kind === 'PLTABLE', lexv = false;
+    const readFlags = () => {
+      while (args.length && args[0].t === 'list') {
+        for (const f of args[0].items) {
+          if (f.v === 'BYTE') byteMode = true;
+          if (f.v === 'LENGTH') lengthPrefix = true;
+          if (f.v === 'LEXV') lexv = true;
+        }
+        args = args.slice(1);
+      }
+    };
+    // Elements may be marked #BYTE / #WORD individually.
+    const element = (a) => (a.t === 'hash'
+      ? { v: this.staticValue(a.v), byte: a.type === 'BYTE' }
+      : { v: this.staticValue(a), byte: byteMode });
+    const put = (e) => (e.byte ? this.byte(e.v) : this.word(e.v));
+
     if (kind === 'ITABLE') {
-      // <ITABLE [NONE|BYTE|WORD] count [init]>
+      // <ITABLE [NONE|BYTE|WORD] count [(flags)] [element pattern...]>
       let spec = 'NONE';
       if (args[0].t === 'atom') { spec = args[0].v; args = args.slice(1); }
       const count = args[0].v;
-      const isByte = spec === 'BYTE';
+      args = args.slice(1);
+      if (spec === 'BYTE') { byteMode = true; lengthPrefix = true; }
+      if (spec === 'WORD') lengthPrefix = true;
+      readFlags();
+      const pattern = args.length ? args.map(element) : [{ v: 0, byte: byteMode }];
       this.align();
       const addr = this.here();
-      if (spec === 'BYTE') this.byte(count);
-      else if (spec === 'WORD') this.word(count);
-      for (let i = 0; i < count; i++) (isByte ? this.byte(0) : this.word(0));
+      if (lexv) { this.byte(count); this.byte(0); }          // parse buffer: max words, count
+      else if (lengthPrefix) (byteMode ? this.byte(count) : this.word(count));
+      for (let i = 0; i < count; i++) pattern.forEach(put);
       return addr;
     }
-    while (args.length && args[0].t === 'list') {
-      for (const f of args[0].items) {
-        if (f.v === 'BYTE') byteMode = true;
-        if (f.v === 'LENGTH') lengthPrefix = true;
-      }
-      args = args.slice(1);
-    }
+    readFlags();
     // Nested tables and strings must be allocated before this table starts.
-    const values = args.map((a) => this.staticValue(a));
+    const values = args.map(element);
     this.align();
     const addr = this.here();
     if (lengthPrefix) (byteMode ? this.byte(values.length) : this.word(values.length));
-    for (const v of values) (byteMode ? this.byte(v) : this.word(v));
+    values.forEach(put);
     return addr;
   }
 
@@ -538,8 +723,10 @@ class Compiler {
     // Header (64 bytes)
     for (let i = 0; i < 64; i++) this.byte(0);
     this.mem[0] = 3;                 // version
-    this.mem[2] = 0; this.mem[3] = 39; // release
-    '880501'.split('').forEach((c, i) => { this.mem[18 + i] = c.charCodeAt(0); });
+    const release = this.story?.release ?? 1;
+    const serial = this.story?.serial ?? '000000';
+    this.mem[2] = release >> 8; this.mem[3] = release & 255;
+    serial.split('').forEach((c, i) => { this.mem[18 + i] = c.charCodeAt(0); });
     this.mem[56] = 0;
 
     // Routine ids (1-based, in source order)
@@ -608,8 +795,8 @@ class Compiler {
     for (const e of entries) {
       const bytes = dictBytes(e.text);
       let ps = 0;
-      const PSBIT = { verb: 64, adj: 32, dir: 16, prep: 8, buzz: 4 };
-      const P1 = { verb: 1, adj: 2, dir: 3, prep: 0, buzz: 0 };
+      const PSBIT = { object: 128, verb: 64, adj: 32, dir: 16, prep: 8, buzz: 4 };
+      const P1 = { object: 0, verb: 1, adj: 2, dir: 3, prep: 0, buzz: 0 };
       if (e.object) ps |= 128;
       for (const p of e.order) ps |= PSBIT[p];
       const valued = e.order;
@@ -745,7 +932,7 @@ const CONTROL = new Set(['RETURN', 'RTRUE', 'RFALSE', 'RFATAL', 'AGAIN', 'REPEAT
 const SIMPLE_HELPERS = {
   'FSET?': 'hasFlag', FSET: 'setFlag', FCLEAR: 'clearFlag', MOVE: 'move', REMOVE: 'remove',
   LOC: 'loc', 'FIRST?': 'first', 'NEXT?': 'next', GETP: 'getProp', PUTP: 'putProp',
-  GETPT: 'getPropAddr', PTSIZE: 'propSize', GET: 'get', PUT: 'put', GETB: 'getb', PUTB: 'putb',
+  GETPT: 'getPropAddr', PTSIZE: 'propSize', NEXTP: 'nextProp', NTH: 'get', GET: 'get', PUT: 'put', GETB: 'getb', PUTB: 'putb',
   RANDOM: 'random', PRINTD: 'printD', PRINTB: 'printB', PRINTC: 'printC', PRINTN: 'printN',
   PRINT: 'printS', PRINTI: 'print', VALUE: 'globalValue', BTST: 'btst', VERIFY: 'verify',
   DIROUT: 'dirOut', DIRIN: 'dirIn', '/': 'div', MOD: 'mod',
@@ -824,6 +1011,8 @@ class RoutineCompiler {
 
   block(forms, mode) {
     const out = [];
+    // Type declarations (#DECL) are compiler hints only.
+    forms = forms.filter((f) => !(f.t === 'hash' && f.type === 'DECL'));
     forms = forms.filter((f) => f.t !== 'str' || forms[forms.length - 1] === f);
     if (forms.length === 0) return this.emitValue('false', mode);
     forms.forEach((f, i) => {
@@ -1063,14 +1252,27 @@ class RoutineCompiler {
       const a = args[i];
       if (a.t === 'str') { parts.push(JSON.stringify(zilText(a.v))); continue; }
       if (a.t === 'atom' && (a.v === 'CR' || a.v === 'CRLF')) { parts.push('"\\n"'); continue; }
-      if (a.t === 'atom' && (a.v === 'D' || a.v === 'N' || a.v === 'C')) {
+      if (a.t === 'atom' && TELL_TOKENS[a.v]) {
         const x = args[++i];
-        const fn = a.v === 'D' ? 'D' : a.v === 'N' ? 'N' : 'C';
+        const fn = TELL_TOKENS[a.v];
+        if (fn === 'A') {
+          // <TELL A obj>: the game's own PRINTA routine (article + name).
+          flush();
+          out.push(`await PRINTA(${stripParens(this.ex(x))});`);
+          continue;
+        }
         if (this.isExpr(x) && !this.mayPrint(x)) { parts.push(`${fn}(${stripParens(this.ex(x))})`); continue; }
         flush();
         const t = this.tmp();
         out.push(...this.stmt(x, { k: 'set', v: t }));
         out.push(`tell(${fn}(${t}));`);
+        continue;
+      }
+      if (a.t === 'atom' && this.c.props.has(a.v)) {
+        // <TELL LDESC obj>: print a property of an object.
+        const x = args[++i];
+        parts.push(`S(getProp(${stripParens(this.ex(x))}, P.${jsName(a.v)}))`);
+        this.c.usedPrefixed.add('P?' + a.v);
         continue;
       }
       if (this.isExpr(a) && !this.mayPrint(a)) { parts.push(`S(${stripParens(this.ex(a))})`); continue; }
@@ -1200,8 +1402,24 @@ class RoutineCompiler {
       case 'IN?': return `(loc(${stripParens(A(0))}) == ${A(1)})`;
       case 'REST': return args.length === 1 ? `(${A(0)} + 1)` : `(${A(0)} + ${A(1)})`;
       case 'BACK': return args.length === 1 ? `(${A(0)} - 1)` : `(${A(0)} - ${A(1)})`;
-      case 'PROB': return `prob(${stripParens(A(0))})`;
+      case 'PROB':
+        if (args.length > 1) return `(await ZPROB(${stripParens(A(0))}))`;
+        return CFG.prob === 'lt' ? `(${A(0)} > random(100))` : `prob(${stripParens(A(0))})`;
       case 'VERB?': return `isVerb(${args.map((a) => `V.${jsName(a.v)}`).join(', ')})`;
+      case 'PRSO?': case 'PRSI?': case 'ROOM?': {
+        const v = { 'PRSO?': 'g.PRSO', 'PRSI?': 'g.PRSI', 'ROOM?': 'g.HERE' }[h];
+        return `(${args.map((a) => `${v} == ${this.ex(a.t === 'atom' ? { t: 'gval', v: a } : a)}`).join(' || ')})`;
+      }
+      case 'BSET': case 'BCLEAR': {
+        const fn = h === 'BSET' ? 'setFlag' : 'clearFlag';
+        const o = stripParens(A(0));
+        return `(${args.slice(1).map((b) => `${fn}(${o}, ${this.ex(b.t === 'atom' ? { t: 'gval', v: b } : b)})`).join(', ')})`;
+      }
+      case 'BSET?': {
+        const o = stripParens(A(0));
+        return `(${args.slice(1).map((b) => `hasFlag(${o}, ${this.ex(b.t === 'atom' ? { t: 'gval', v: b } : b)})`).join(' || ')})`;
+      }
+      case 'FLAMING?': return `(hasFlag(${stripParens(A(0))}, FLAMEBIT) && hasFlag(${stripParens(A(0))}, ONBIT))`;
       case 'ENABLE': return `enable(${stripParens(A(0))})`;
       case 'DISABLE': return `disable(${stripParens(A(0))})`;
       case 'OPENABLE?': return `(hasFlag(${stripParens(A(0))}, DOORBIT) || hasFlag(${stripParens(A(0))}, CONTBIT))`;
@@ -1240,10 +1458,12 @@ class RoutineCompiler {
   }
 }
 
+const TELL_TOKENS = { D: 'D', DESC: 'D', OBJ: 'D', O: 'D', N: 'N', NUM: 'N', C: 'C', CHR: 'C', CHAR: 'C', A: 'A', AN: 'A' };
+
 // Names exported by the runtime; locals must not shadow them.
 const RUNTIME_NAMES = new Set([
   'g', 'tell', 'print', 'crlf', 'eq', 'hasflag', 'setflag', 'clearflag', 'move', 'remove', 'loc', 'first', 'next',
-  'getprop', 'putprop', 'getpropaddr', 'propsize', 'get', 'put', 'getb', 'putb', 'random', 'prob', 'isverb',
+  'getprop', 'putprop', 'getpropaddr', 'propsize', 'nextprop', 'get', 'put', 'getb', 'putb', 'random', 'prob', 'isverb',
   'enable', 'disable', 'apply', 'globalvalue', 'btst', 'verify', 'dirout', 'dirin', 'div', 'mod', 'read', 'save',
   'restore', 'restart', 'quit', 'printd', 'printb', 'printc', 'printn', 'prints', 'd', 'n', 'c', 's', 'v', 'p', 'w',
   'a', 'pr', 'act',
@@ -1281,8 +1501,13 @@ function mergeStrings(parts) {
 // Main
 // ---------------------------------------------------------------------------
 
-export function compileAll() {
+export function compileAll(gameId = 'planetfall') {
+  GAME_ID = gameId;
+  CFG = GAMES[gameId];
+  if (!CFG) throw new Error('unknown game ' + gameId);
+  warnings.length = 0;
   const c = new Compiler();
+  c.story = readStoryFile();
   c.usedPrefixed = new Set();
   c.collect(topLevelForms());
   c.number();
@@ -1296,16 +1521,16 @@ export function compileAll() {
 function emit({ c, code }) {
   const header = (title) => `// ${title}
 // AUTO-GENERATED by tools/zil2js/compile.mjs from the original ZIL source of
-// PLANETFALL (c) 1983 Infocom, Inc.  Do not edit by hand -- edit the compiler instead.
+// ${CFG.title.toUpperCase()} (c) Infocom, Inc.  Do not edit by hand -- edit the compiler instead.
 `;
   const lines = [];
-  lines.push(header('Planetfall game logic, translated from ZIL to JavaScript.'));
+  lines.push(header(`${CFG.title} game logic, translated from ZIL to JavaScript.`));
   lines.push(`import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
-  getProp, putProp, getPropAddr, propSize, get, put, getb, putb, random, prob, isVerb,
+  getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-} from '../engine/runtime.js';
+} from '../../engine/runtime.js';
 `);
   // Constants
   lines.push('// ---- Flags (object attributes) ----');
@@ -1342,8 +1567,9 @@ function emit({ c, code }) {
   lines.push('];');
   lines.push('ROUTINES.forEach((fn, id) => { if (fn) fn.id = id; });');
   lines.push(`export { GO as start, MAIN_LOOP as mainLoop };`);
+  const OUT_DIR = path.join(ROOT, 'web/src/games', GAME_ID);
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(path.join(OUT_DIR, 'planetfall.js'), lines.join('\n'));
+  fs.writeFileSync(path.join(OUT_DIR, 'game.js'), lines.join('\n'));
 
   // Data module
   const b64 = Buffer.from(Uint8Array.from(c.mem)).toString('base64');
@@ -1360,7 +1586,7 @@ function emit({ c, code }) {
     if (c.actNums.has(c.canonWord(canon))) (verbSynonyms[c.canonWord(canon).toLowerCase()] ??= []).push(alias.toLowerCase());
   }
   const data = [
-    header('Planetfall story data (memory image, strings, layout).'),
+    header(`${CFG.title} story data (memory image, strings, layout).`),
     `export const MEMORY_BASE64 = ${JSON.stringify(b64)};`,
     '',
     '// Strings referenced by game data (property values, table entries, globals), by id.',
@@ -1387,9 +1613,12 @@ function emit({ c, code }) {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const result = compileAll();
-  emit(result);
-  for (const w of warnings) console.warn('warning:', w);
-  console.log(`compiled ${result.c.routines.size} routines, ${result.c.objects.length} objects, ` +
-    `${result.c.vocab.words.size} words, ${result.c.mem.length} bytes of data`);
+  const which = process.argv[2] || 'all';
+  for (const id of which === 'all' ? Object.keys(GAMES) : [which]) {
+    const result = compileAll(id);
+    emit(result);
+    for (const w of warnings) console.warn(`warning (${id}):`, w);
+    console.log(`${id}: compiled ${result.c.routines.size} routines, ${result.c.objects.length} objects, ` +
+      `${result.c.vocab.words.size} words, ${result.c.mem.length} bytes of data`);
+  }
 }
