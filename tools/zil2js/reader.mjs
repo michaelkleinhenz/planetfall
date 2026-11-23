@@ -51,6 +51,8 @@ export function readZil(text, file = '?') {
     if (c === '<') {
       i++;
       const items = readSeq('>');
+      // <form>:TYPE (an MDL-ZIL type annotation) is dropped
+      if (text[i] === ':') { i++; readAtomText(); }
       return { t: 'form', items, line: startLine };
     }
     if (c === '(') {
@@ -110,6 +112,8 @@ export function readZil(text, file = '?') {
     const a = readAtomText();
     if (a === '') err(`unexpected character ${JSON.stringify(c)}`);
     if (/^[-+]?[0-9]+$/.test(a)) return { t: 'num', v: parseInt(a, 10), line: startLine };
+    // NAME:<OR FIX FALSE> (an MDL-ZIL type) : the type form is dropped
+    if (a.endsWith(':') && a.length > 1 && text[i] === '<') { readOne(); return { t: 'atom', v: a.slice(0, -1), line: startLine }; }
     return { t: 'atom', v: a, line: startLine };
   }
 

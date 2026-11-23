@@ -27,6 +27,11 @@ let saved = null;
 
 const io = {
   output: (t) => process.stdout.write(t),
+  // PLAY_UPPER=1 shows what the game draws in the upper window
+  ...(process.env.PLAY_UPPER ? {
+    upper: (t) => process.stdout.write(`\x1b[7m${t}\x1b[0m`),
+    cursor: (l, c) => process.stdout.write(`\n[${l},${c}] `),
+  } : {}),
   input: async () => {
     if (lines) {
       if (!lines.length || (lines.length === 1 && lines[0] === '')) process.exit(0);

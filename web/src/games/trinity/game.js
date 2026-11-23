@@ -1007,7 +1007,6 @@ export const V = {
 
 // ---- Properties (P?xxx) ----
 export const P = {
-  : 18,
   ACTION: 40,
   ADJECTIVE: 50,
   CAPACITY: 46,

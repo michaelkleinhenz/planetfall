@@ -278,7 +278,7 @@ export function D(o) { return objectName(o); }
 /** Number (TELL N n). */
 export function N(n) { return String(Number(n)); }
 /** Character (TELL C c). */
-export function C(c) { return String.fromCharCode(Number(c)); }
+export function C(c) { return Number(c) ? String.fromCharCode(Number(c)) : ''; }
 /** A string value: either a literal or a string id from the story data. */
 export function S(x) {
   if (typeof x === 'string') return x;
@@ -441,6 +441,7 @@ const SEPARATORS = new Set(['.', ',', '"']);
 /** READ: wait for a line of input and tokenize it into the parse buffer. */
 export async function read(inbuf, lexv) {
   inbuf = Number(inbuf); lexv = Number(lexv);
+  keyBuffer.length = 0;
   io.status?.({ room: objectName(g.HERE), score: g.SCORE, moves: g.MOVES });
   let line = await io.input();
   if (line && typeof line === 'object') {
@@ -502,15 +503,21 @@ export function tokenize(inbuf, lexv, dict = 0, keepUnknown = false) {
  * INPUT: one key press. The front end supplies lines, so this takes the
  * first character of the next line (Return for an empty one).
  */
+// A typed line feeds its characters one key at a time, then Return (so forms
+// that read key by key, like Bureaucracy's, can be filled in with lines).
+const keyBuffer = [];
 export async function readChar() {
-  io.status?.({ room: objectName(g.HERE), score: g.SCORE, moves: g.MOVES });
-  const line = io.inputChar ? await io.inputChar() : await io.input();
-  if (line && typeof line === 'object') {
-    loadSnapshot(line.snapshot);
-    throw new RestoreSignal(line.notice ?? '');
+  if (!keyBuffer.length) {
+    io.status?.({ room: objectName(g.HERE), score: g.SCORE, moves: g.MOVES });
+    const line = io.inputChar ? await io.inputChar() : await io.input();
+    if (line && typeof line === 'object') {
+      loadSnapshot(line.snapshot);
+      throw new RestoreSignal(line.notice ?? '');
+    }
+    for (const ch of String(line ?? '')) keyBuffer.push(ch.charCodeAt(0));
+    keyBuffer.push(13);
   }
-  const t = String(line ?? '');
-  return t.length ? t.charCodeAt(0) : 13;
+  return keyBuffer.shift();
 }
 
 // ---------------------------------------------------------------------------
@@ -581,6 +588,12 @@ export const inspect = {
     // Adjective numbers -> words, via the dictionary.
     const adj = getPropAddr(o, story.LAYOUT.props.ADJECTIVE);
     if (!adj) return [];
+    // Version 4+: the property lists the words themselves.
+    if (V >= 4) {
+      const out = [];
+      for (let i = 0; i < propSize(adj) / 2; i++) out.push(...wordTexts(rw(adj + 2 * i) & 0xffff));
+      return out;
+    }
     const nums = new Set();
     for (let i = 0; i < propSize(adj); i++) nums.add(mem[adj + i]);
     const out = [];

@@ -1168,9 +1168,9 @@ async function PICK_ONE(frob) {
 
 async function SPRINT(obj) {
   if (obj < 10) {
-    tell("  ");
+    tell("   ");
   } else if (obj < 100) {
-    tell(" ");
+    tell("  ");
   } else if (obj < 1000) {
     tell(" ");
   }
@@ -6795,7 +6795,7 @@ async function BORDELLO_AD_F() {
     return true;
   } else if (isVerb(V.READ, V.EXAMINE)) {
     await SCORE(37);
-    tell("  GIRLS! GIRLS! GIRLS!\n\nMona's Pleasure Parlor has it all!!\n   * Massage Parlor\n   * Topless Club\n   * Escort Agency\n   * Bordello\n   * XXX Videos\n   * Accessory Shop and more!\nIn Eastbank, on the corner of River\nand Franklin.\n");
+    tell("   GIRLS! GIRLS! GIRLS!\n\nMona's Pleasure Parlor has it all!!\n   * Massage Parlor\n   * Topless Club\n   * Escort Agency\n   * Bordello\n   * XXX Videos\n   * Accessory Shop and more!\nIn Eastbank, on the corner of River\nand Franklin.\n");
     return true;
   } else {
     return false;
@@ -11949,47 +11949,47 @@ async function TUBE_SIGN_F() {
   }
   if (isVerb(V.READ)) {
     if (TUBE_AT_STADIUM == g.HERE || TUBE_AT_STADIUM == current_station) {
-      tell("     ");
+      tell("      ");
       printD(ROCKVIL_STADIUM);
-      tell("\n (Red Tubeline Terminus)\n");
+      tell("\n  (Red Tubeline Terminus)\n");
       return true;
     } else if (TUBE_AT_PARK == g.HERE || TUBE_AT_PARK == current_station) {
-      tell(" Halley Park\n  Rockvil Zoo\n");
+      tell("  Halley Park\n  Rockvil Zoo\n");
       return true;
     } else if (TUBE_AT_HEIMAN == g.HERE || TUBE_AT_HEIMAN == current_station) {
-      tell(" Elm and River Street\n    (");
+      tell("  Elm and River Street\n    (");
       printD(HEIMAN_VILLAGE);
       tell(")\n");
       return true;
     } else if (TUBE_AT_FACTORY == g.HERE || TUBE_AT_FACTORY == current_station) {
-      tell(" Wicker Drive and River Street\n     (Red Tubeline Terminus)\n        (Omni-Fabb Plant)\n");
+      tell("  Wicker Drive and River Street\n     (Red Tubeline Terminus)\n        (Omni-Fabb Plant)\n");
       return true;
     } else if (TUBE_AT_AIRPORT == g.HERE || TUBE_AT_AIRPORT == current_station) {
-      tell("     Airport Terminals\n  (Brown Tubeline Terminus)\n");
+      tell("      Airport Terminals\n  (Brown Tubeline Terminus)\n");
       return true;
     } else if (TUBE_AT_BODANSKI == g.HERE || TUBE_AT_BODANSKI == current_station) {
       if (!(g.SYEAR == 2041)) {
-        tell("  ");
+        tell("   ");
       }
-      tell(" ");
+      tell("  ");
       printD(BODANSKI_SQUARE);
       crlf();
       if (g.SYEAR == 2041) {
-        tell(" (Train Station)\n");
+        tell("  (Train Station)\n");
         return true;
       } else {
-        tell(" (Church of God's Word)\n");
+        tell("  (Church of God's Word)\n");
         return true;
       }
     } else if (TUBE_AT_UNIVERSITY == g.HERE || TUBE_AT_UNIVERSITY == current_station) {
-      tell(" Elm Street and University Avenue\n");
+      tell("  Elm Street and University Avenue\n");
       await PRINT_SPACES(12);
       tell("(Rockvil U)\n     (Brown Tubeline Terminus)\n");
       return true;
     } else if (TUBE_JUNCTION == g.HERE || TUBE_JUNCTION == current_station) {
       await PRINT_SPACES(10);
       printD(SKYBUS_TERMINAL);
-      tell("\n (Transfer Between Brown and Red)\n");
+      tell("\n  (Transfer Between Brown and Red)\n");
       return true;
     } else if (!(await MOBY_VERB$())) {
       return await CANT_SEE(TUBE_SIGN);
@@ -15763,7 +15763,7 @@ async function JIGS_UP(desc) {
   crlf();
   crlf();
   highlight(H_BOLD);
-  tell(" -- SIMULATION TERMINATED --");
+  tell("  -- SIMULATION TERMINATED --");
   highlight(0);
   crlf();
   x = first(ROOMS);
@@ -17199,7 +17199,7 @@ async function GLOBAL_SIGN_F() {
   } else if (!(isVerb(V.READ, V.EXAMINE))) {
     return false;
   } else if (g.HERE == KENNEDY_PARK) {
-    tell("  \"KENNEDY PARK CONDOMINIUMS\n    Elegant Urban Living\n    Opening December 15, 2061\n    Rockvil Development Corp.\"\n");
+    tell("   \"KENNEDY PARK CONDOMINIUMS\n    Elegant Urban Living\n    Opening December 15, 2061\n    Rockvil Development Corp.\"\n");
     return true;
   } else if (g.HERE == POST_OFFICE) {
     tell("\"Open daily, ");
@@ -17211,10 +17211,10 @@ async function GLOBAL_SIGN_F() {
     tell("m to 4pm.\"\n");
     return true;
   } else if (g.HERE == CONSTRUCTION_SITE_1) {
-    tell(" \"First Continent Bank Building\n   6,000 sq. meters of office space\n   Opening September 1, 2042\"\n");
+    tell("  \"First Continent Bank Building\n   6,000 sq. meters of office space\n   Opening September 1, 2042\"\n");
     return true;
   } else if (g.HERE == CONSTRUCTION_SITE_2) {
-    tell("   ");
+    tell("    ");
     printD(HEIMAN_VILLAGE);
     tell(" Two\n ** City Within a City **\n   Opening July 8, 2042\n");
     return true;
@@ -18310,7 +18310,7 @@ async function INVERSE_LINE(line_number, center_half = false) {
   }
   highlight(1);
   loop1: for (;;) {
-    tell("                                       ");
+    tell("                                        ");
     if (center_half) {
       break loop1;
     } else {
@@ -19101,7 +19101,7 @@ async function MESSAGE_C_F() {
     printD(SIMULATION_MODE);
     tell(" at any time. The Social Science group has come up with a list of things to record:\n");
     loop1: for (;;) {
-      tell("  ", S(get(g.RECORDING_TABLE, cnt)), "\n");
+      tell("   ", S(get(g.RECORDING_TABLE, cnt)), "\n");
       cnt = cnt + 2;
       if (cnt > 17) {
         break loop1;
@@ -19229,17 +19229,17 @@ async function OUTLETS_F() {
       tell("There are currently no active outlets.\n");
       return true;
     } else {
-      tell("   ");
+      tell("    ");
       printD(CONTROL_CENTER);
-      tell(" (PPCC)\n   ");
+      tell(" (PPCC)\n    ");
       printD(ROOFTOP);
-      tell(" (RCRO)\n   ");
+      tell(" (RCRO)\n    ");
       printD(OFFICE);
-      tell(" (PEOF)\n   ");
+      tell(" (PEOF)\n    ");
       printD(CAFETERIA);
-      tell(" (PCAF)\n   ");
+      tell(" (PCAF)\n    ");
       printD(CORE);
-      tell(" (MACO)\n   ");
+      tell(" (MACO)\n    ");
       printD(NEWS);
       tell(" (WNNF)\nTo activate a specific outlet, submit the associated code.\n");
       return true;
@@ -20331,24 +20331,24 @@ async function INTERFACE_MODE_F() {
 async function PORT_LIST_F() {
   if (isVerb(V.READ, V.DISPLAY, V.WHAT, V.EXAMINE)) {
     printD(PORT_LIST);
-    tell(":\n  ");
+    tell(":\n   ");
     printD(SIMULATION_CONTROLLER);
-    tell("\n  ");
+    tell("\n   ");
     printD(HVAC_CONTROLLER);
-    tell("\n  ");
+    tell("\n   ");
     printD(JANITORIAL_CONTROLLER);
-    tell("\n  ");
+    tell("\n   ");
     printD(TRAFFIC_COMPUTER);
-    tell("\n  ");
+    tell("\n   ");
     printD(WEATHER_COMPUTER);
     crlf();
     if (loc(WNN_FEEDER) == INTERFACE_ROOM) {
-      tell("  ");
+      tell("   ");
       printD(WNN_FEEDER);
       crlf();
     }
     if (loc(AUDITING_SYSTEM) == INTERFACE_ROOM) {
-      tell("  ");
+      tell("   ");
       printD(AUDITING_SYSTEM);
       crlf();
     }
@@ -20704,7 +20704,7 @@ async function SIMULATION_CONTROLLER_F() {
       if (get(g.SIM_LEVEL_TABLE, 4) > 0) {
         await SIM_STATUS(2081, get(g.SIM_LEVEL_TABLE, 4));
       }
-      tell("   (time in minutes.seconds.tenths-of-seconds)\n");
+      tell("    (time in minutes.seconds.tenths-of-seconds)\n");
       if (g.COMPLETED_TASKS) {
         tell("\nBased on the data accumulated during previous simulations, s");
         await SIMULATIONS_AVAILABLE();
@@ -20883,7 +20883,7 @@ async function AUDITING_SYSTEM_F() {
         tell("0\n");
       } else {
         if (x < 10) {
-          tell(" ");
+          tell("  ");
         } else if (x < 100) {
           tell(" ");
         }

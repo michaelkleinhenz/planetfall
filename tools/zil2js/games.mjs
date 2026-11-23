@@ -201,7 +201,15 @@ export const GAMES = {
   // Version 4 (EZIP) and version 5 (XZIP) games
   'amfv': { title: 'A Mind Forever Voyaging', srcDir: 'games/amfv', main: 's5', objectOrder: { story: 'COMPILED/s5.z4' }, storyFile: 'COMPILED/s5.z4' },
   'trinity': { title: 'Trinity', srcDir: 'games/trinity', main: 'trinity', objectOrder: { story: 'COMPILED/tr.z4' }, storyFile: 'COMPILED/tr.z4' },
-  'bureaucracy': { title: 'Bureaucracy', srcDir: 'games/bureaucracy', main: 'b', objectOrder: { story: 'COMPILED/b.z4' }, storyFile: 'COMPILED/b.z4' },
+  'bureaucracy': {
+    title: 'Bureaucracy',
+    srcDir: 'games/bureaucracy',
+    main: 'b',
+    objectOrder: { story: 'COMPILED/b.z4' },
+    storyFile: 'COMPILED/b.z4',
+    // Written in the later ZIL dialect: DEFINE declares routines.
+    defineRoutines: true,
+  },
   'nordandbert': {
     title: "Nord and Bert Couldn't Make Head or Tail of It",
     srcDir: 'games/nordandbert',
@@ -210,9 +218,25 @@ export const GAMES = {
     storyFile: 'COMPILED/j3.z4',
     // The archive lacks the file with PICK-NEXT, PICK-ONE and DPRINT (TELLS.ZIL
     // replaced MISC.ZIL without them). PICK-NEXT as in Trinity, PICK-ONE from the
-    // game's older MISC.ZIL, DPRINT without MISC.ZIL's Leather Goddesses leftovers.
+    // game's older MISC.ZIL, DPRINT without MISC.ZIL's Leather Goddesses leftovers,
+    // and MISC.ZIL's TELL-TOKENS.
     fixups: {
       tells: (t) => t + `
+<TELL-TOKENS (CRLF CR)   <CRLF>
+	     D ,SIDEKICK <DPRINT-SIDEKICK>
+	     D *	 <DPRINT .X>
+	     A *	 <APRINT .X>
+	     T ,PRSO 	 <TPRINT-PRSO>
+	     T ,PRSI	 <TPRINT-PRSI>
+	     T *	 <TPRINT .X>
+	     AR *	 <ARPRINT .X>
+	     TR *	 <TRPRINT .X>
+	     N *	 <PRINTN .X>
+	     C *         <PRINTC .X>>
+
+<ROUTINE DPRINT-SIDEKICK ()
+	 <DPRINT ,SIDEKICK>>
+
 <ROUTINE PICK-NEXT (TBL "AUX" CNT STR)
 	 <SET CNT <GET .TBL 1>>
 	 <SET STR <GET .TBL .CNT>>

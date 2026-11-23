@@ -346,18 +346,12 @@ function zilText(s) {
   // "|" is a line break; a source line break directly after "|" is dropped;
   // any other source line break becomes a space.
   let out = '';
-  // (see below: a leading indentation of several spaces loses one in version 4+)
-  if (ZV >= 4 && s.startsWith('  ')) s = s.slice(1);
   for (let i = 0; i < s.length; i++) {
     const c = s[i];
     if (c === CRLF_CHAR) {
       out += '\n';
       if (s[i + 1] === '\r') i++;
       if (s[i + 1] === '\n') i++;
-      // The version 4+ compiler shortened an indentation of several spaces at
-      // the start of a line by one (A Mind Forever Voyaging: "|    " is
-      // stored as a break and three spaces, " (PPCC)" and ":  Living" as written).
-      else if (ZV >= 4 && s[i + 1] === ' ' && s[i + 2] === ' ') i++;
     } else if (c === '\r') {
       continue;
     } else if (c === '\n') {
@@ -388,6 +382,9 @@ class Compiler {
     this.flags = new Map();
     this.bitSynonyms = new Map();
     this.usedHelpers = new Set();
+    this.dgFields = new Map();
+    this.structFields = new Map();
+    this.structDefaults = new Map();
     this.props = new Map();
     this.strings = [null];        // id -> text
     this.stringIds = new Map();
@@ -408,7 +405,11 @@ class Compiler {
       'PS?BUZZ-WORD': 4, 'P1?NONE': 0, 'P1?OBJECT': 0, 'P1?VERB': 1, 'P1?ADJECTIVE': 2, 'P1?DIRECTION': 3,
     };
     for (const [k, v] of Object.entries(builtins)) this.constants.set(k, { t: 'num', v });
-    for (const f of forms) {
+    const queue = [...forms];
+    this.mdl.structField = (name) => this.structFields.get(name) ?? null;
+    this.mdl.onDeclare = (decl) => queue.unshift({ ...decl, file: 'compile-time' });
+    while (queue.length) {
+      const f = queue.shift();
       const head = f.items[0]?.v;
       const it = f.items;
       switch (head) {
@@ -420,7 +421,52 @@ class Compiler {
           this.objects.push({ name: it[1].v, room: head === 'ROOM', props: it.slice(2) });
           break;
         case 'GLOBAL': this.globals.set(it[1].v.replace(/:.*$/, ''), it[2]); break;
-        case 'CONSTANT': this.constants.set(it[1].v, it[2]); break;
+        case 'CONSTANT': case 'MSETG':
+          this.constants.set(it[1].v, it[2]);
+          // also visible to compile-time code
+          if (it[2]?.t === 'num' || it[2]?.t === 'str') this.mdl.globals.set(it[1].v, it[2]);
+          break;
+        case 'SET-DEFSTRUCT-FILE-DEFAULTS':
+          this.structDefaults.set(f.file, structOptions(it.slice(1), { nth: 'GET', put: 'PUT', start: 0 }));
+          break;
+        case 'DEFSTRUCT': {
+          // <DEFSTRUCT NAME (TABLE ('NTH op) ('PUT op) ('START-OFFSET n)) (FIELD type 'NTH op 'PUT op ...) ...>
+          // (MDL-ZIL): <FIELD obj> reads element i of obj with the NTH operation, <FIELD obj v> writes it.
+          const base = structOptions(it[2]?.t === 'list' ? it[2].items.slice(1) : [],
+            this.structDefaults.get(f.file) ?? { nth: 'GET', put: 'PUT', start: 0 });
+          it.slice(3).forEach((fdef, i) => {
+            if (fdef.t !== 'list') return;
+            const opts = { nth: base.nth, put: base.put, idx: base.start + i };
+            const fi = fdef.items;
+            for (let k = 1; k < fi.length; k++) {
+              if (fi[k].t === 'quote' && fi[k].v.t === 'atom') {
+                const key = fi[k].v.v;
+                if (key === 'NTH') opts.nth = zAlias(fi[++k].v);
+                else if (key === 'PUT') opts.put = zAlias(fi[++k].v);
+                else if (key === 'OFFSET') opts.idx = fi[++k].v;
+              }
+            }
+            this.structFields.set(fi[0].v.replace(/:.*$/, ''), opts);
+          });
+          break;
+        }
+        case 'DEFINE-GLOBALS': {
+          // <DEFINE-GLOBALS NAME (FIELD[:TYPE] [BYTE] init) ...> (MDL-ZIL): the
+          // fields live in a table NAME; <FIELD> reads one, <FIELD value> sets it.
+          const elems = [];
+          let off = 0;
+          for (const fdef of it.slice(2)) {
+            if (fdef.t !== 'list') continue;
+            const name = fdef.items[0].v.replace(/:.*$/, '');
+            const byte = fdef.items[1]?.t === 'atom' && fdef.items[1].v === 'BYTE';
+            const init = fdef.items[byte || (fdef.items[1]?.t === 'atom' && fdef.items[1].v === 'WORD') ? 2 : 1] ?? { t: 'num', v: 0 };
+            this.dgFields.set(name, { table: it[1].v, off, byte });
+            elems.push(byte ? { t: 'hash', type: 'BYTE', v: init } : init);
+            off += byte ? 1 : 2;
+          }
+          this.constants.set(it[1].v, { t: 'form', items: [{ t: 'atom', v: 'TABLE' }, ...elems] });
+          break;
+        }
         case 'SETG':
           if (it[1].v === 'CRLF-CHARACTER' && it[2]?.t === 'char') CRLF_CHAR = it[2].v;
           // <SETG ROOM? ,HERE?>: an alias for a compile-time function.
@@ -429,6 +475,8 @@ class Compiler {
             break;
           }
           if (it[2]?.t === 'num' || it[2]?.t === 'atom' || it[2]?.t === 'str') this.mdl.globals.set(it[1].v, it[2]);
+          // MDL-ZIL (Bureaucracy): a top-level SETG declares a global variable.
+          if (CFG.defineRoutines) { this.globals.set(it[1].v.replace(/:.*$/, ''), it[2]); break; }
           // Top-level SETGs are compile-time constants unless declared as GLOBALs.
           if (!this.constants.has(it[1].v)) this.constants.set(it[1].v, it[2]);
           break;
@@ -438,8 +486,30 @@ class Compiler {
         case 'DIRECTIONS': this.directions.push(...it.slice(1).map((a) => a.v)); break;
         case 'PROPDEF': this.propdefs.set(it[1].v, it[2].v); break;
         case 'TELL-TOKENS': this.tellTokens = parseTellTokens(it.slice(1)); break;
+        case 'SETG20': this.mdl.eval(f, new Map()); break;
+        // <LONG-WORDS?>: the compiler builds LONG-WORD-TABLE, the full text of
+        // dictionary words longer than the dictionary keeps.
+        case 'LONG-WORDS?': this.constants.set('LONG-WORD-TABLE', { t: 'longwords' }); break;
+        case 'VOC':
+          // <VOC "WORD" PART> at top level: a dictionary word
+          if (it[1]?.t === 'str' || it[1]?.t === 'atom') this.mdl.vocab.push({ t: 'vocab', word: it[1].v, part: it[2]?.v || 'NOUN' });
+          break;
         case 'BIT-SYNONYM': for (const a of it.slice(2)) if (a.t === 'atom') this.bitSynonyms.set(a.v, it[1].v); break;
-        case 'DEFMAC': case 'DEFINE':
+        case 'DEFINE':
+          // Later ZIL (Bureaucracy): DEFINE declares a routine, DEFINE20 a
+          // compile-time function. <DEFINE NAME ACT (args) ...> names the
+          // routine's activation for <RETURN value .ACT>.
+          if (CFG.defineRoutines) {
+            let items = it;
+            let activation = null;
+            if (items[2]?.t === 'atom' && items[3]?.t === 'list') { activation = items[2].v; items = [items[0], items[1], ...items.slice(3)]; }
+            const r = { ...f, items: [{ t: 'atom', v: 'ROUTINE' }, ...items.slice(1)], activation };
+            this.routines.set(items[1].v.replace(/!$/, ''), r);
+            break;
+          }
+          this.mdl.define(f);
+          break;
+        case 'DEFMAC': case 'DEFINE20':
           this.mdl.define(f);
           break;
         case 'VERSION': case 'FREQUENT-WORDS?': case 'OR': case 'PRINC':
@@ -447,13 +517,50 @@ class Compiler {
         case 'ID': case 'IMAGE': case 'INSERT-FILE': case 'SNAME': case 'PRINC':
           break;
         default:
+          // A game macro called at top level (Bureaucracy's BUILD-FORM): its
+          // expansion is a declaration, or a PROG / list of them.
+          if (head && this.mdl.has(head) && this.mdl.isMacro?.(head) !== false) {
+            let r;
+            try { r = this.mdl.expand(f); } catch (e) { if (process.env.ZDEBUG) console.error(e.stack); warn(`expanding top-level ${head}: ${e.message}`); break; }
+            const out = [];
+            const add = (x) => {
+              if (!x || typeof x !== 'object') return;
+              if (x.t === 'form' && x.items[0]?.v === 'PROG') x.items.slice(2).forEach(add);
+              else if (x.t === 'form' && x.items.length) out.push({ ...x, file: f.file });
+              else if (x.t === 'list') x.items.forEach(add);
+            };
+            add(r);
+            queue.unshift(...out);
+            break;
+          }
           warn('ignored top-level form ' + head);
+      }
+    }
+    // Constants the MDL-ZIL environment predefined (Bureaucracy)
+    if (CFG.defineRoutines) {
+      for (const [k, v] of Object.entries({ 'M-FATAL': 2, 'FATAL-VALUE': 2, 'M-ENTER': 2 })) {
+        if (!this.constants.has(k) && !this.globals.has(k)) this.constants.set(k, { t: 'num', v });
       }
     }
     // Exit-type constants that later ZILCH predefined (Planetfall defines them itself).
     const exitConsts = { REXIT: 0, UEXIT: 1, NEXIT: 2, FEXIT: 3, CEXIT: 4, DEXIT: 5, NEXITSTR: 0, FEXITFCN: 0, CEXITFLAG: 1, CEXITSTR: 1, DEXITOBJ: 1, DEXITSTR: 1 };
     for (const [k, v] of Object.entries(exitConsts)) if (!this.constants.has(k) && !this.globals.has(k)) this.constants.set(k, { t: 'num', v });
     this.expandUserMacros();
+    // A CONSTANT that code changes with SETG is really a global (Bureaucracy's P-PRSO).
+    const setgs = new Set();
+    const findSetg = (n) => {
+      if (!n || typeof n !== 'object') return;
+      if (n.t === 'form' && n.items[0]?.v === 'SETG' && n.items[1]?.t === 'atom') setgs.add(n.items[1].v);
+      (n.items || []).forEach(findSetg);
+      if (n.v && typeof n.v === 'object') findSetg(n.v);
+    };
+    for (const r of this.routines.values()) findSetg(r);
+    for (const name of setgs) {
+      if (!this.globals.has(name) && this.constants.has(name)) {
+        this.globals.set(name, this.constants.get(name));
+        this.constants.delete(name);
+      }
+    }
     this.numberObjects();
     // Globals declared with GLOBAL override same-named top-level SETG constants.
     for (const g of this.globals.keys()) {
@@ -523,6 +630,10 @@ class Compiler {
         const v = { t: 'vocab', word: node.items[1].v, part: node.items[2]?.v || 'NOUN' };
         this.mdl.vocab.push(v);
         return v;
+      }
+      // MDL-ZIL's Z-prefixed names for the Z-machine operations (ZGET = GET ...)
+      if (CFG.defineRoutines && node.t === 'form' && Z_ALIASES[node.items[0]?.v] && !this.routines.has(node.items[0].v)) {
+        node = { ...node, items: [{ ...node.items[0], v: Z_ALIASES[node.items[0].v] }, ...node.items.slice(1)] };
       }
       if (node.t === 'form' && ['MAP-CONTENTS', 'MAP-DIRECTIONS', 'DO'].includes(node.items[0]?.v) && !this.mdl.has(node.items[0].v)
           && !this.routines.has(node.items[0].v) && node.items[1]?.t === 'list') {
@@ -769,7 +880,7 @@ class Compiler {
       for (const g of this.globals.values()) walk(g);
       for (const o of this.objects) o.props.forEach(walk);
     }
-    return [...this._refs].filter((a) => a.startsWith(prefix)).map((a) => a.slice(prefix.length));
+    return [...this._refs].filter((a) => a.startsWith(prefix)).map((a) => a.slice(prefix.length)).filter(Boolean);
   }
 
   // ---------------- strings & routines ----------------
@@ -922,6 +1033,7 @@ class Compiler {
   staticValue(node, ctx = 'value') {
     if (typeof node === 'number') return node;
     if (node.t === 'form' && node.items[0]?.v === 'STRING') node = this.mdl.eval(node, new Map());
+    if (node.t === 'form' && (node.items[0]?.v === 'BYTE' || node.items[0]?.v === 'WORD') && node.items.length === 2) return this.staticValue(node.items[1], ctx);
     // <GLOBAL X <SETG X-ATOM 420>>: the value, also kept as a compile-time constant
     if (node.t === 'form' && node.items[0]?.v === 'SETG' && node.items.length === 3) return this.staticValue(node.items[2], ctx);
     switch (node.t) {
@@ -933,6 +1045,10 @@ class Compiler {
         if (['TABLE', 'LTABLE', 'ITABLE', 'PTABLE', 'PLTABLE'].includes(node.items[0].v)) return this.table(node);
         if (node.items[0].v === '+') return node.items.slice(1).reduce((a, n) => a + this.staticValue(n), 0);
         if (node.items[0].v === '*') return node.items.slice(1).reduce((a, n) => a * this.staticValue(n), 1);
+        if (node.items[0].v === '-') { const v = node.items.slice(1).map((n) => this.staticValue(n)); return v.length === 1 ? -v[0] : v.slice(1).reduce((a, n) => a - n, v[0]); }
+        if (node.items[0].v === 'ORB' || node.items[0].v === 'BOR') return node.items.slice(1).reduce((a, n) => a | this.staticValue(n), 0);
+        if (node.items[0].v === 'ANDB' || node.items[0].v === 'BAND') return node.items.slice(1).reduce((a, n) => a & this.staticValue(n), -1);
+        if (node.items[0].v === 'LSH') { const v = this.staticValue(node.items[1]), k = this.staticValue(node.items[2]); return k >= 0 ? v << k : v >> -k; }
         if (node.items[0].v === '/') return node.items.slice(2).reduce((a, n) => Math.trunc(a / this.staticValue(n)), this.staticValue(node.items[1]));
         if (node.items[0].v === 'ASCII') return node.items[1].t === 'char' ? node.items[1].v.charCodeAt(0) : this.staticValue(node.items[1]);
         if (node.items[0].v === '-') return this.staticValue(node.items[1]) - node.items.slice(2).reduce((a, n) => a + this.staticValue(n), 0);
@@ -949,6 +1065,32 @@ class Compiler {
         return this.staticValue(r, ctx);
       }
       case 'vocab': return this.wordAddr(node.word.toUpperCase());
+      case 'longwords': {
+        // <count of words> then (dictionary word, full text) pairs
+        if (node.addr === undefined) {
+          const max = ZV <= 3 ? 6 : 9;
+          const long = this.dictEntries.filter((e) => e.text.length > max);
+          this.align();
+          node.addr = this.here();
+          this.word(2 * long.length);
+          for (const e of long) { this.word(e.addr); this.word(this.stringId(e.text)); }
+        }
+        return node.addr;
+      }
+      case 'ctable': {
+        // A table built by compile-time code (MDL ITABLE + PUT/PUTB)
+        if (node.addr === undefined) {
+          this.align();
+          node.addr = this.here();
+          for (let i = 0; i < node.size; i++) this.byte(0);
+          for (const [off, c] of node.cells) {
+            const v = this.staticValue(c.v, ctx);
+            if (c.size === 1) this.mem[node.addr + off] = v & 255;
+            else { this.mem[node.addr + off] = (v >> 8) & 255; this.mem[node.addr + off + 1] = v & 255; }
+          }
+        }
+        return node.addr;
+      }
     }
     throw new Error('cannot evaluate statically: ' + show(node) + ' ' + JSON.stringify(node).slice(0, 200));
   }
@@ -1416,7 +1558,11 @@ class RoutineCompiler {
     let mode = 'req';
     for (const a of argList) {
       if (a.t === 'str') { mode = a.v === 'OPTIONAL' || a.v === 'OPT' ? 'opt' : a.v === 'AUX' || a.v === 'EXTRA' ? 'aux' : mode; continue; }
-      const nm = a.t === 'list' ? a.items[0].v : a.v;
+      // NAME or NAME:TYPE (MDL-ZIL declares types)
+      const raw = a.t === 'list' ? a.items[0] : a;
+      const rawName = raw.t === 'quote' ? raw.v.v : raw.v;
+      if (typeof rawName !== 'string') { warn(`${this.name}: ignoring parameter ${show(a)}`); continue; }
+      const nm = rawName.replace(/:.*$/, '');
       const init = a.t === 'list' ? a.items[1] : null;
       const js = this.localName(nm);
       this.locals.set(nm, js);
@@ -1562,7 +1708,7 @@ class RoutineCompiler {
     const out = [];
     if (bindings && bindings.items && bindings.items.length) {
       for (const b of bindings.items) {
-        const nm = b.t === 'list' ? b.items[0].v : b.v;
+        const nm = (b.t === 'list' ? b.items[0].v : b.v).replace(/:.*$/, '');
         const js = this.localName(nm);
         // A loop variable the routine does not declare itself
         if (!this.locals.has(nm)) (this.loopLocals ??= new Set()).add(js);
@@ -1815,7 +1961,7 @@ class RoutineCompiler {
   }
 
   varRef(atomNode, isGlobal) {
-    const n = atomNode.v;
+    const n = typeof atomNode.v === 'string' ? atomNode.v.replace(/:.*$/, '') : atomNode.v;
     if (!isGlobal && this.locals.has(n)) return this.locals.get(n);
     if (this.c.globals.has(n)) return `g.${jsName(n)}`;
     if (this.locals.has(n)) return this.locals.get(n);
@@ -1824,6 +1970,7 @@ class RoutineCompiler {
 
   gval(name) {
     const c = this.c;
+    name = name.replace(/(.):.*$/, '$1'); // ,NAME:TYPE (MDL-ZIL)
     if (c.globals.has(name)) return `g.${jsName(name)}`;
     if (c.objIndex.has(name) || c.flags.has(name)) return jsName(name);
     if (c.bitSynonyms.has(name) && c.flags.has(c.bitSynonyms.get(name))) return `${jsName(c.bitSynonyms.get(name))} /* ${name} */`;
@@ -1855,7 +2002,7 @@ class RoutineCompiler {
       case 'char': return `${node.v.charCodeAt(0)} /* ${JSON.stringify(node.v)} */`;
       case 'str': return JSON.stringify(zilText(node.v));
       case 'lval': {
-        const n = node.v.v;
+        const n = node.v.v.replace(/:.*$/, '');
         if (this.locals.has(n)) return this.locals.get(n);
         if (this.c.globals.has(n)) return `g.${jsName(n)}`;
         // .NAME for an object or constant: ZILCH used its value.
@@ -1892,6 +2039,22 @@ class RoutineCompiler {
     if (head.t !== 'atom') throw new Error(`${this.name}: bad form ${show(node)}`);
     // FOO! is the routine FOO (see collect)
     const h = head.v.endsWith('!') && this.c.routines.has(head.v.slice(0, -1)) ? head.v.slice(0, -1) : head.v;
+    // DEFSTRUCT field accessors (MDL-ZIL)
+    if (this.c.structFields.has(h) && !this.c.routines.has(h) && args.length >= 1) {
+      const f = this.c.structFields.get(h);
+      const n = { t: 'num', v: f.idx };
+      const form = args.length === 1
+        ? { t: 'form', items: [{ t: 'atom', v: f.nth }, args[0], n] }
+        : { t: 'form', items: [{ t: 'atom', v: f.put }, args[0], n, args[1]] };
+      return this.ex(form);
+    }
+    // DEFINE-GLOBALS fields (MDL-ZIL)
+    if (this.c.dgFields.has(h) && !this.c.routines.has(h)) {
+      const f = this.c.dgFields.get(h);
+      const t = this.c.atomValue(f.table);
+      if (!args.length) return f.byte ? `getb(${t}, ${f.off})` : `get(${t + f.off}, 0)`;
+      return f.byte ? `putb(${t}, ${f.off}, ${stripParens(A(0))})` : `put(${t + f.off}, 0, ${stripParens(A(0))})`;
+    }
     // A game routine with a macro-like name (e.g. Planetfall's HERE?) is a call.
     if (MACRO_LIKE.has(h) && this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
     switch (h) {
@@ -1912,7 +2075,18 @@ class RoutineCompiler {
       case 'LOWCORE': case 'LOWCORE-TABLE': {
         // Header words by name (later ZILCH)
         const offs = { ZVERSION: 0, ZORKID: 2, ENDLOD: 4, START: 6, VOCAB: 8, OBJECT: 10, GLOBALS: 12, PURBOT: 14,
-          FLAGS: 16, SERIAL: 18, FWORDS: 24, PLENTH: 26, PCHKSM: 28, INTWRD: 30, SCRWRD: 32 };
+          FLAGS: 16, SERIAL: 18, FWORDS: 24, PLENTH: 26, PCHKSM: 28, INTWRD: 30, SCRWRD: 32, HWRD: 34, VWRD: 36, FWRD: 38 };
+        // Byte fields: interpreter id and version, screen rows and columns
+        const bytes = { INTID: 30, INTVR: 31, SCRV: 32, SCRH: 33, MSLOCX: -1, MSLOCY: -1 };
+        if (h === 'LOWCORE' && args[0].t === 'atom' && bytes[args[0].v] !== undefined) {
+          if (bytes[args[0].v] < 0) return '0 /* mouse position */';
+          return args.length > 1 ? `putb(0, ${bytes[args[0].v]}, ${stripParens(A(1))})` : `getb(0, ${bytes[args[0].v]})`;
+        }
+        // <LOWCORE (FIELD n)>: byte n of a header word
+        if (h === 'LOWCORE' && args[0].t === 'list') {
+          const o = offs[args[0].items[0].v] + args[0].items[1].v;
+          return args.length > 1 ? `putb(0, ${o}, ${stripParens(A(1))})` : `getb(0, ${o})`;
+        }
         const off = offs[args[0].v];
         if (off === undefined) throw new Error(`${this.name}: unknown LOWCORE field ${show(args[0])}`);
         if (h === 'LOWCORE-TABLE') {
@@ -1922,6 +2096,8 @@ class RoutineCompiler {
         }
         return args.length > 1 ? `put(0, ${off / 2}, ${stripParens(A(1))})` : `get(0, ${off / 2})`;
       }
+      case '__never__':
+        break;
       case 'RARG?': {
         // <RARG? LOOK ENTER>: the routine's RARG is M-LOOK or M-ENTER (later ZILCH)
         const r = this.varRef({ t: 'atom', v: 'RARG' });
@@ -1944,6 +2120,8 @@ class RoutineCompiler {
       case '-': return args.length === 1 ? `(-${A(0)})` : `(${args.map((a) => this.ex(a)).join(' - ')})`;
       case '*': return `(${args.map((a) => this.ex(a)).join(' * ')})`;
       case 'BAND': case 'ANDB': return `(${A(0)} & ${A(1)})`;
+      case 'XORB': return `((${A(0)} ^ ${A(1)}) << 16 >> 16)`;
+      case 'CHTYPE': return A(0); // a type cast: the value itself
       case 'BOR': case 'ORB': return `(${A(0)} | ${A(1)})`;
       case 'IN?': return `(loc(${stripParens(A(0))}) == ${A(1)})`;
       case 'REST': return args.length === 1 ? `(${A(0)} + 1)` : `(${A(0)} + ${A(1)})`;
@@ -2106,6 +2284,24 @@ function rewriteMapLoop(node) {
   const step = F(A('COND'), { t: 'list', items: [F(A('SET'), A(p), F(A('GETPT'), room, L(d))), ...rest] });
   return F(A('PROG'), { t: 'list', items: [A(d), A(p)] }, F(A('SET'), A(d), { t: 'num', v: 32 }), F(A('REPEAT'), { t: 'list', items: [] }, stop, step));
 }
+
+/** ('NTH op) ('PUT op) ('START-OFFSET n) options of a DEFSTRUCT or of SET-DEFSTRUCT-FILE-DEFAULTS. */
+function structOptions(items, defaults) {
+  const o = { ...defaults };
+  for (const x of items) {
+    if (x.t !== 'list' || x.items[0]?.t !== 'quote') continue;
+    const key = x.items[0].v.v;
+    if (key === 'NTH') o.nth = zAlias(x.items[1].v);
+    else if (key === 'PUT') o.put = zAlias(x.items[1].v);
+    else if (key === 'START-OFFSET') o.start = x.items[1].v;
+  }
+  return o;
+}
+const zAlias = (name) => Z_ALIASES[name] ?? name;
+
+const Z_ALIASES = { ZGET: 'GET', ZPUT: 'PUT', ZREST: 'REST', ZREMOVE: 'REMOVE', ZRANDOM: 'RANDOM', ZPRINT: 'PRINT',
+  ZAPPLY: 'APPLY', ZPRINTB: 'PRINTB', ZBUFOUT: 'BUFOUT', ZABS: 'ABS', ZREAD: 'READ', ZBACK: 'BACK', ZCRLF: 'CRLF',
+  ZGETB: 'GETB', ZPUTB: 'PUTB', ZMEMQ: 'MEMQ', ZSAVE: 'SAVE', ZRESTORE: 'RESTORE' };
 
 /** Replace .NAME in a form by a node. */
 function substLval(node, name, value) {

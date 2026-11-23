@@ -26,13 +26,17 @@ export class MDL {
     this.onWarn = onWarn;
     this.vocab = [];            // VOC results
     this.loopDepth = 0;
+    this.structField = () => null;  // DEFSTRUCT field lookup (set by the compiler)
+    this.onDeclare = () => {};      // <EVAL <FORM GLOBAL ...>> and the like
   }
 
   /** Register a <DEFINE name (params) body...> or <DEFMAC ...> form. */
   define(form) {
     const it = form.items;
     const name = clean(it[1].v);
-    this.defs.set(name, { name, params: it[2].items || [], body: it.slice(3), macro: it[0].v === 'DEFMAC' });
+    // <DEFINE NAME ACTIVATION (params) ...>
+    const k = it[2]?.t === 'atom' && it[3]?.t === 'list' ? 3 : 2;
+    this.defs.set(name, { name, params: it[k].items || [], body: it.slice(k + 1), macro: it[0].v === 'DEFMAC' });
   }
 
   has(name) { return this.defs.has(clean(name)); }
@@ -50,6 +54,14 @@ export class MDL {
   // ------------------------------------------------------------------ calls
 
   invoke(def, rawArgs, callerEnv, unevaluatedByDefault = false) {
+    // <F !.LIST>: a segment's elements become separate arguments
+    if (!unevaluatedByDefault && rawArgs.some((x) => x?.t === 'seg')) {
+      rawArgs = rawArgs.flatMap((x) => {
+        if (x?.t !== 'seg') return [x];
+        const v = this.eval(x.v, callerEnv);
+        return (v?.items || []).map((e) => ({ t: 'value', v: e }));
+      });
+    }
     const env = new Map();
     env.parent = callerEnv ?? null; // MDL scoping is dynamic
     let mode = 'req';
@@ -164,6 +176,23 @@ export class MDL {
     const h = clean(head.v);
     if (SPECIAL.has(h)) return this.special(h, args, env, node);
     if (h === 'MULTIFROB') return this.multifrob(...this.evalItems(args, env));
+    // DEFSTRUCT field of a compile-time table: <FIELD tbl> / <FIELD tbl value>
+    const sf = !this.defs.has(h) && this.structField(h);
+    if (sf) {
+      const a = this.evalItems(args, env);
+      if (a[0]?.t === 'ctable') return a.length > 1 ? ctPut(a[0], sf.idx, a[1], sf.put) : ctGet(a[0], sf.idx, sf.nth);
+    }
+    // <MAKE-STRUCT 'STRUCT table 'FIELD value ...>: fill a table's fields
+    if (/^MAKE-/.test(h) && !this.defs.has(h)) {
+      const a = this.evalItems(args, env);
+      if (a[0]?.t === 'atom' && a[1]?.t === 'ctable') {
+        for (let k = 2; k + 1 < a.length; k += 2) {
+          const f = this.structField(a[k].v);
+          if (f) ctPut(a[1], f.idx, a[k + 1], f.put);
+        }
+        return a[1];
+      }
+    }
     if (this.defs.has(h)) return this.invoke(this.defs.get(h), args, env, this.defs.get(h).macro);
     if (BUILTINS.has(h)) return this.builtin(h, args, env);
     // A ZIL form that is just data (e.g. <TABLE ...> inside generated code).
@@ -192,8 +221,8 @@ export class MDL {
         if (rest[0]?.t === 'atom') rest = rest.slice(1); // activation name
         for (const b of rest[0]?.items || []) {
           if (b.t === 'str') continue;
-          if (b.t === 'list') local.set(b.items[0].v, this.eval(b.items[1], local));
-          else if (b.t === 'atom') local.set(b.v, null);
+          if (b.t === 'list') local.set(b.items[0].v.replace(/:.*$/, ''), this.eval(b.items[1], local));
+          else if (b.t === 'atom') local.set(b.v.replace(/:.*$/, ''), null);
         }
         const body = rest.slice(1);
         const depth = ++this.loopDepth;
@@ -217,7 +246,7 @@ export class MDL {
       case 'AGAIN': throw new AgainSignal(this.loopDepth);
       case 'FUNCTION': return { t: 'closure', def: { name: 'lambda', params: args[0].items || [], body: args.slice(1), macro: false }, env };
       case 'SET': return this.setLocal(env, args[0].v ?? this.eval(args[0], env).v, this.eval(args[1], env));
-      case 'SETG': { const v = this.eval(args[1], env); this.globals.set(args[0].v ?? this.eval(args[0], env).v, v); return v; }
+      case 'SETG': case 'SETG20': { const v = this.eval(args[1], env); this.globals.set(args[0].v ?? this.eval(args[0], env).v, v); return v; }
       case 'ASSIGNED?': return this.assigned(env, args[0].v) ? T : null;
       case 'GASSIGNED?': return this.globals.has(args[0].v) || this.defs.has(args[0].v) ? T : null;
       case 'MAPF': case 'MAPR': {
@@ -284,7 +313,14 @@ export class MDL {
         return a[0];
       }
       case 'NTH': return nth(a[0], a.length > 1 ? n(a[1]) : 1);
-      case 'REST': { const k = a.length > 1 ? n(a[1]) : 1; if (a[0].t === 'str') return { ...a[0], v: a[0].v.slice(k) }; return { ...a[0], items: a[0].items.slice(k) }; }
+      case 'REST': {
+        const k = a.length > 1 ? n(a[1]) : 1;
+        if (a[0].t === 'str') return { ...a[0], v: a[0].v.slice(k) };
+        // A view that shares the original list, as in MDL (PUTREST on it changes the original).
+        const root = a[0].root ?? a[0];
+        const off = (a[0].off ?? 0) + k;
+        return { t: a[0].t, root, off, get items() { return root.items.slice(off); } };
+      }
       case 'LENGTH': return num(len(a[0]));
       case 'EMPTY?': return len(a[0]) === 0 ? T : null;
       case 'LENGTH?': return len(a[0]) <= n(a[1]) ? num(len(a[0])) : null;
@@ -321,28 +357,68 @@ export class MDL {
       case 'PARSE': case 'ATOM': return atom(a[0].v);
       case 'STRING': return { t: 'str', v: a.map((x) => (x.t === 'char' ? x.v : x.t === 'str' ? x.v : x.t === 'atom' ? x.v : String(x.v))).join('') };
       case 'ASCII': return a[0].t === 'char' ? num(a[0].v.charCodeAt(0)) : { t: 'char', v: String.fromCharCode(n(a[0])) };
-      case 'ERROR': throw new Error(`MDL ERROR: ${a.map(show).join(' ')}`);
+      case 'ERROR': throw new Error(`MDL ERROR: ${a.map((x) => (x == null ? '<>' : show(x))).join(' ')}`);
       case 'PRINC': case 'PRIN1': case 'PRINT': case 'CRLF': case 'INSERT-FILE': return T;
-      case 'PUTREST': a[0].items.splice(1, Infinity, ...(a[1]?.items || [])); return a[0];
-      case 'PUT': { if (a[0].items) a[0].items[n(a[1]) - 1] = toNode(a[2]); return a[0]; }
+      case 'PUTREST': {
+        const root = a[0].root ?? a[0];
+        root.items.splice((a[0].off ?? 0) + 1, Infinity, ...(a[1]?.items || []));
+        return a[0];
+      }
+      case 'PUT': {
+        if (a[0]?.t === 'ctable') return ctPut(a[0], n(a[1]), a[2], 'PUT');
+        if (a[0].root) a[0].root.items[a[0].off + n(a[1]) - 1] = toNode(a[2]);
+        else if (a[0].items) a[0].items[n(a[1]) - 1] = toNode(a[2]);
+        return a[0];
+      }
       case 'GVAL': return this.gval(a[0].v);
       case 'LVAL': return this.lookup(env, a[0].v);
       case 'VOC': { const v = { t: 'vocab', word: a[0].v, part: a[1]?.v || 'NOUN' }; this.vocab.push(v); return v; }
       case 'APPLY': return this.callValue(a[0], a.slice(1), env);
-      case 'EVAL': return this.eval(a[0], env);
-      case 'TABLE': case 'LTABLE': case 'PTABLE': case 'PLTABLE': case 'ITABLE':
+      case 'EVAL': {
+        // A declaration built at compile time (Bureaucracy's forms): hand it to the compiler.
+        const f = a[0];
+        if (f?.t === 'form' && ['GLOBAL', 'CONSTANT', 'SETG', 'MSETG', 'OBJECT', 'ROUTINE'].includes(f.items[0]?.v)) {
+          this.onDeclare(f);
+          if (f.items[0].v === 'CONSTANT' || f.items[0].v === 'MSETG') this.globals.set(f.items[1].v, f.items[2]);
+          return f.items[2] ?? T;
+        }
+        return this.eval(a[0], env);
+      }
+      case 'GETB': case 'ZGETB': if (a[0]?.t === 'ctable') return ctGet(a[0], n(a[1]), 'GETB'); break;
+      case 'GET': case 'ZGET': if (a[0]?.t === 'ctable') return ctGet(a[0], n(a[1]), 'GET'); break;
+      case 'PUTB': case 'ZPUTB': if (a[0]?.t === 'ctable') return ctPut(a[0], n(a[1]), a[2], 'PUTB'); break;
+      case 'ZPUT': if (a[0]?.t === 'ctable') return ctPut(a[0], n(a[1]), a[2], 'PUT'); break;
+      case 'ITABLE': {
+        // <ITABLE n [(BYTE)] ...>: a compile-time table that code can fill in
+        const count = n(a[0]);
+        const byte = a.slice(1).some((x) => x?.t === 'list' && x.items.some((i) => i.v === 'BYTE'));
+        return { t: 'ctable', size: byte ? count : 2 * count, cells: new Map() };
+      }
+      case 'TABLE': case 'LTABLE': case 'PTABLE': case 'PLTABLE':
         return { t: 'form', items: [atom(h), ...a.map(toNode)] };
     }
     throw new Error(`MDL: unhandled builtin ${h}`);
   }
 }
 
-const SPECIAL = new Set(['QUOTE', 'COND', 'AND', 'OR', 'PROG', 'REPEAT', 'BIND', 'RETURN', 'AGAIN', 'FUNCTION', 'SET', 'SETG',
+const SPECIAL = new Set(['SETG20', 'QUOTE', 'COND', 'AND', 'OR', 'PROG', 'REPEAT', 'BIND', 'RETURN', 'AGAIN', 'FUNCTION', 'SET', 'SETG',
   'ASSIGNED?', 'GASSIGNED?', 'MAPF', 'MAPR', 'MAPRET', 'MAPSTOP', 'MAPLEAVE']);
-const BUILTINS = new Set(['FORM', 'LIST', 'VECTOR', 'UVECTOR', 'CHTYPE', 'NTH', 'REST', 'LENGTH', 'EMPTY?', 'LENGTH?', 'TYPE?', 'TYPE',
+const BUILTINS = new Set(['GETB', 'ZGETB', 'GET', 'ZGET', 'PUTB', 'ZPUTB', 'ZPUT', 'FORM', 'LIST', 'VECTOR', 'UVECTOR', 'CHTYPE', 'NTH', 'REST', 'LENGTH', 'EMPTY?', 'LENGTH?', 'TYPE?', 'TYPE',
   'PRIMTYPE', '==?', '=?', 'EQUAL?', 'N==?', 'N=?', '+', '-', '*', '/', 'MOD', 'G?', 'L?', 'G=?', 'L=?', '0?', '1?', 'LSH', 'ORB', 'BOR',
   'ANDB', 'BAND', 'XORB', 'NOT', 'MAX', 'MIN', 'SPNAME', 'PARSE', 'ATOM', 'STRING', 'ASCII', 'ERROR', 'PRINC', 'PRIN1', 'PRINT',
   'CRLF', 'INSERT-FILE', 'PUTREST', 'PUT', 'GVAL', 'LVAL', 'VOC', 'APPLY', 'EVAL', 'TABLE', 'LTABLE', 'PTABLE', 'PLTABLE', 'ITABLE']);
+
+// Compile-time tables: cells by byte offset, each a byte or a word holding a node.
+function ctGet(t, i, op) {
+  const word = op === 'GET' || op === 'ZGET';
+  const c = t.cells.get(word ? 2 * i : i);
+  return c ? c.v : num(0);
+}
+function ctPut(t, i, v, op) {
+  const word = op === 'PUT' || op === 'ZPUT';
+  t.cells.set(word ? 2 * i : i, { v: v ?? num(0), size: word ? 2 : 1 });
+  return v;
+}
 
 function toNode(x) { return x === null || x === undefined ? { t: 'form', items: [] } : x; }
 function len(x) { return x?.t === 'str' ? x.v.length : (x?.items || []).length; }
