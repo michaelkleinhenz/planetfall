@@ -7359,7 +7359,7 @@ async function I_MATCH() {
 }
 
 async function I_LANTERN() {
-  let tick = 0, tbl = globalValue(g.LAMP_TABLE);
+  let tick = 0, tbl = g.LAMP_TABLE;
   enable(await QUEUE(I_LANTERN.id, tick = get(tbl, 0)));
   await LIGHT_INT(LAMP, tbl, tick);
   if (!(tick == 0)) {
@@ -7370,7 +7370,7 @@ async function I_LANTERN() {
 }
 
 async function I_CANDLES() {
-  let tick = 0, tbl = globalValue(g.CANDLE_TABLE);
+  let tick = 0, tbl = g.CANDLE_TABLE;
   setFlag(CANDLES, TOUCHBIT);
   enable(await QUEUE(I_CANDLES.id, tick = get(tbl, 0)));
   await LIGHT_INT(CANDLES, tbl, tick);

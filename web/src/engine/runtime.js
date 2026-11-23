@@ -248,6 +248,12 @@ export function isVerb(...actions) { return actions.some((a) => g.PRSA == a); }
 export function enable(int) { return put(int, 0, 1); }
 export function disable(int) { return put(int, 0, 0); }
 export function globalValue(n) { return g[story.GLOBAL_NAMES[n - 16]]; }
+// <SET .X v>: store into variable number X. Only globals (16+) are reachable
+// here; local variables of the running routine cannot be addressed by number.
+export function setVarIndirect(n, v) {
+  if (n >= 16 && story.GLOBAL_NAMES[n - 16]) g[story.GLOBAL_NAMES[n - 16]] = v;
+  return v;
+}
 
 export async function apply(fn, ...args) {
   if (!fn) return false;

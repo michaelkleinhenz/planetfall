@@ -992,11 +992,22 @@ class Compiler {
       for (const list of this.verbSyntax.values()) list.reverse();
     }
     const vtblEntries = new Map();
+    // The game's parser reads compact syntax tables when it defines P-SYNLEN-1.
+    const compact = this.constants.has('P-SYNLEN-1');
     for (const act of verbs) {
       const list = this.verbSyntax.get(act);
       vtblEntries.set(act, this.here());
       this.byte(list.length);
       for (const s of list) {
+        if (compact) {
+          // Compact syntax tables (1987+): prep1 | objects << 6, action,
+          // then fwim/loc for each object (and prep2 for the second).
+          const n = s.objs & 3;
+          this.byte(((n << 6) | (s.prep1 & 63)) & 255); this.byte(s.action);
+          if (n >= 1) { this.byte(s.fwim1); this.byte(s.loc1); }
+          if (n >= 2) { this.byte(s.prep2); this.byte(s.fwim2); this.byte(s.loc2); }
+          continue;
+        }
         this.byte(s.objs); this.byte(s.prep1); this.byte(s.prep2); this.byte(s.fwim1);
         this.byte(s.fwim2); this.byte(s.loc1); this.byte(s.loc2); this.byte(s.action);
       }
@@ -1592,7 +1603,7 @@ class RoutineCompiler {
     if (!isGlobal && this.locals.has(n)) return this.locals.get(n);
     if (this.c.globals.has(n)) return `g.${jsName(n)}`;
     if (this.locals.has(n)) return this.locals.get(n);
-    throw new Error(`${this.name}: unknown variable ${n}`);
+    throw new Error(`${this.name}: unknown variable ${typeof n === "string" ? n : show(atomNode)}`);
   }
 
   gval(name) {
@@ -1647,6 +1658,8 @@ class RoutineCompiler {
     const args = node.items.slice(1);
     const A = (i) => this.ex(args[i]);
     const all = () => args.map((a) => stripParens(this.ex(a)));
+    // <1 .TBL>: element 1 of a table (MDL's NTH shorthand)
+    if (head.t === 'num' && args.length === 1) return `get(${stripParens(A(0))}, ${head.v})`;
     if (head.t !== 'atom') throw new Error(`${this.name}: bad form ${show(node)}`);
     const h = head.v;
     // A game routine with a macro-like name (e.g. Planetfall's HERE?) is a call.
@@ -1664,6 +1677,14 @@ class RoutineCompiler {
       case 'N==?': return `(${A(0)} != ${A(1)})`;
       case 'L?': return `(${A(0)} < ${A(1)})`;
       case 'G?': return `(${A(0)} > ${A(1)})`;
+      case 'VALUE':
+        // <VALUE NAME>: the variable called NAME (local first, then global).
+        if (args[0].t === 'atom') return this.varRef(args[0]);
+        return `globalValue(${stripParens(A(0))})`;
+      case 'G=?': return `(${A(0)} >= ${A(1)})`;
+      case 'L=?': return `(${A(0)} <= ${A(1)})`;
+      case 'T?': return `!!${wrap(A(0))}`;
+      case 'F?': return `!${wrap(A(0))}`;
       case '0?': case 'ZERO?': return `(${A(0)} == 0)`;
       case '1?': return `(${A(0)} == 1)`;
       case 'NOT': return `!${wrap(A(0))}`;
@@ -1700,7 +1721,10 @@ class RoutineCompiler {
       case 'OPENABLE?': return `(hasFlag(${stripParens(A(0))}, DOORBIT) || hasFlag(${stripParens(A(0))}, CONTBIT))`;
       case 'ABS': return `Math.abs(${stripParens(A(0))})`;
       case 'CRLF': return 'crlf()';
-      case 'SET': case 'SETG': return `(${this.varRef(args[0], h === 'SETG')} = ${stripParens(A(1))})`;
+      case 'SET': case 'SETG':
+        // <SET .X value>: sets the variable whose number is the value of X.
+        if (args[0].t === 'lval' || args[0].t === 'gval') return `setVarIndirect(${stripParens(A(0))}, ${stripParens(A(1))})`;
+        return `(${this.varRef(args[0], h === 'SETG')} = ${stripParens(A(1))})`;
       case 'INC': return `(++${this.varRef(args[0])})`;
       case 'DEC': return `(--${this.varRef(args[0])})`;
       case 'DLESS?': return `(--${this.varRef(args[0])} < ${A(1)})`;
@@ -1717,6 +1741,11 @@ class RoutineCompiler {
     if (SIMPLE_HELPERS[h]) return `${SIMPLE_HELPERS[h]}(${all().join(', ')})`;
     if (ASYNC_HELPERS[h]) return `(await ${ASYNC_HELPERS[h]}(${all().join(', ')}))`;
     if (this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
+    if (/^[A-Z][A-Z0-9-]*[A-Z0-9?]$/.test(h) && !this.c.mdl.has(h)) {
+      // A routine the sources call but never define (left out of this release).
+      warn(`${this.name}: calls undefined routine ${h} (treated as returning false)`);
+      return 'false';
+    }
     throw new Error(`${this.name}: unknown form ${h} in ${show(node)}`);
   }
 
@@ -1843,7 +1872,7 @@ function emit({ c, code }) {
   lines.push(`import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 `);

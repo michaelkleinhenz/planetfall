@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import readline from 'node:readline';
 import { runGame } from '../web/src/engine/game.js';
 import { loadGame } from '../web/src/engine/current.js';
+import { random } from '../web/src/engine/runtime.js';
 import { GAMES } from '../web/src/games/registry.js';
 
 const args = process.argv.slice(2);
@@ -31,6 +32,10 @@ const io = {
       if (!lines.length || (lines.length === 1 && lines[0] === '')) process.exit(0);
       const l = lines.shift();
       process.stdout.write(l + '\n');
+      // "@seed N" seeds the random number generator directly (as the test
+      // oracle does) and reaches the game as an empty line.
+      const m = /^@seed (\d+)$/.exec(l.trim());
+      if (m) { random(-Number(m[1])); return ''; }
       return l;
     }
     rl ??= readline.createInterface({ input: process.stdin });

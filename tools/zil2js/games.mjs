@@ -155,8 +155,8 @@ export const GAMES = {
     title: "Wishbringer",
     srcDir: 'games/wishbringer',
     main: 'wishbringer',
-    objectOrder: { story: 'COMPILED/nj2.z3' },
-    storyFile: 'COMPILED/nj2.z3',
+    objectOrder: { story: 'COMPILED/j2.z3' },
+    storyFile: 'COMPILED/j2.z3',
   },
   'witness': {
     title: "The Witness",

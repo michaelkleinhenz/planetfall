@@ -2680,7 +2680,7 @@ async function PARSER() {
         put(g.P_VTBL, 0, wrd);
         putb(g.P_VTBL, 2, getb(g.P_LEXV, num = (ptr * 2) + 2));
         putb(g.P_VTBL, 3, getb(g.P_LEXV, num + 1));
-      } else if ((val = await WT$(wrd, PS$PREPOSITION, 0)) || (((wrd == W.ALL || wrd == W.ONE || wrd == W.BOTH) || (await WT$(wrd, PS$ADJECTIVE)) || (await WT$(wrd, PS$OBJECT))) && (val = 0))) {
+      } else if ((val = await WT$(wrd, PS$PREPOSITION, 0)) || (((wrd == W.ALL || wrd == W.ONE || wrd == W.BOTH) || (await WT$(wrd, PS$ADJECTIVE)) || (await WT$(wrd, PS$OBJECT))) && (val = 0, true))) {
         if ((g.P_LEN > 0) && eq(get(g.P_LEXV, ptr + P_LEXELEN), W.OF) && (val == 0) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.A) && !(wrd == W.BOTH)) {
         } else if (!(val == 0) && ((g.P_LEN == 0) || eq(get(g.P_LEXV, ptr + 2), W.THEN, W.PERIOD))) {
           g.P_END_ON_PREP = true;
@@ -2986,7 +2986,7 @@ async function ACLAUSE_WIN(adj) {
     put(g.P_CCTBL, CC_DEPTR, g.P_ACLAUSE + 1);
     await CLAUSE_COPY(g.P_OTBL, g.P_OTBL, adj);
   }
-  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2);
+  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2, true);
   g.P_ACLAUSE = false;
   return true;
 }
@@ -2997,7 +2997,7 @@ async function NCLAUSE_WIN() {
   put(g.P_CCTBL, CC_DBPTR, g.P_ACLAUSE);
   put(g.P_CCTBL, CC_DEPTR, g.P_ACLAUSE + 1);
   await CLAUSE_COPY(g.P_ITBL, g.P_OTBL);
-  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2);
+  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2, true);
   g.P_ACLAUSE = false;
   return true;
 }
