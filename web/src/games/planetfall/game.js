@@ -2007,7 +2007,6 @@ async function SLOT_F() {
     } else if (g.PRSO == LOWER_ELEVATOR_CARD) {
       if (g.HERE == LOWER_ELEVATOR) {
         g.LOWER_ELEVATOR_ON = true;
-        false /* stray atom Y in original source */;
         enable(await QUEUE(I_TURNOFF_LOWER_ELEVATOR.id, 200));
         tell(S(g.ELEVATOR_ENABLED), "\n");
         return true;

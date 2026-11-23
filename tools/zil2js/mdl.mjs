@@ -269,7 +269,13 @@ export class MDL {
       case 'LENGTH': return num(len(a[0]));
       case 'EMPTY?': return len(a[0]) === 0 ? T : null;
       case 'LENGTH?': return len(a[0]) <= n(a[1]) ? num(len(a[0])) : null;
-      case 'TYPE?': { const ty = typeOf(a[0]); return a.slice(1).some((x) => x.v === ty) ? atom(ty) : null; }
+      case 'TYPE?': {
+        // .X and ,X are LVAL/GVAL in later MDL and FORMs in older versions.
+        const ty = typeOf(a[0]);
+        const alt = a[0]?.t === 'lval' || a[0]?.t === 'gval' ? 'FORM' : null;
+        const hit = a.slice(1).find((x) => x.v === ty) || a.slice(1).find((x) => x.v === alt);
+        return hit ? atom(hit.v) : null;
+      }
       case 'TYPE': return atom(typeOf(a[0]));
       case 'PRIMTYPE': return atom({ FORM: 'LIST', LIST: 'LIST' }[typeOf(a[0])] || typeOf(a[0]));
       case '==?': case '=?': case 'EQUAL?': return a.slice(1).some((b) => same(a[0], b)) ? T : null;

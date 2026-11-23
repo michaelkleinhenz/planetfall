@@ -476,6 +476,13 @@ class Compiler {
       try {
         const probe = show(this.mdl.expand({ t: 'form', items: [{ t: 'atom', v: 'TELL' }, { t: 'atom', v: 'D' }, { t: 'gval', v: { t: 'atom', v: 'X' } }] }));
         this.gameTell = !/<PRINTD /.test(probe);
+        // ... or one with extra tokens such as PRSO (Deadline)
+        if (!this.gameTell) {
+          try {
+            const p2 = show(this.mdl.expand({ t: 'form', items: [{ t: 'atom', v: 'TELL' }, { t: 'atom', v: 'PRSO' }] }));
+            if (/PRSO-PRINT|PRINT-PRSO/.test(p2)) this.gameTell = true;
+          } catch { /* the standard TELL rejects a bare PRSO */ }
+        }
       } catch (e) { if (process.env.ZDEBUG) console.error('TELL probe', e.message); }
     }
     const expandable = (h) => h && this.mdl.has(h) && (!NATIVE_MACROS.has(h) || (h === 'TELL' && this.gameTell)) && !this.routines.has(h);
@@ -907,6 +914,11 @@ class Compiler {
     if (this.globals.has(name)) return this.globalInitialValue(name);
     const m = /^(P|W|A|PR|ACT|V)\?(.*)$/.exec(name);
     if (m) return this.prefixedValue(m[1], m[2]);
+    // e.g. Deadline's table naming the room SHALL-3, which was taken out
+    if (/^[A-Z][A-Z0-9-]*$/.test(name) && !['TO', 'PER', 'IF', 'IS', 'ELSE'].includes(name)) {
+      warn(`unknown atom ${name} (treated as 0)`);
+      return 0;
+    }
     throw new Error('unknown atom ' + name);
   }
 
@@ -1589,6 +1601,12 @@ class RoutineCompiler {
       const a = args[i];
       if (a.t === 'str') { parts.push(JSON.stringify(zilText(a.v))); continue; }
       if (a.t === 'tellcall') { flush(); out.push(...this.stmt(a.v, { k: 'void' })); continue; }
+      // <TELL 'OBJ>: the object's name (later ZILCH)
+      if (a.t === 'quote' && (a.v.t === 'atom' || a.v.t === 'gval' || a.v.t === 'lval')) {
+        const x = a.v.t === 'atom' ? { t: 'gval', v: a.v } : a.v;
+        parts.push(`D(${stripParens(this.ex(x))})`);
+        continue;
+      }
       if (a.t === 'atom' && (a.v === 'CR' || a.v === 'CRLF')) { parts.push('"\\n"'); continue; }
       // The game's own TELL-TOKENS definitions.
       const custom = a.t === 'atom' && this.c.tellTokens?.filter((e) => e.tokens.includes(a.v));
@@ -1717,7 +1735,9 @@ class RoutineCompiler {
       warn(`${this.name}: ,${name} refers to a local variable`);
       return this.locals.get(name);
     }
-    throw new Error(`${this.name}: unknown global ,${name}`);
+    // A global the source never defines (e.g. ,OBJECT in Leather Goddesses' V-UNCOVER).
+    warn(`${this.name}: unknown global ,${name} (treated as 0)`);
+    return '0';
   }
 
   ex(node) {
@@ -1762,7 +1782,8 @@ class RoutineCompiler {
     // <1 .TBL>: element 1 of a table (MDL's NTH shorthand)
     if (head.t === 'num' && args.length === 1) return `get(${stripParens(A(0))}, ${head.v})`;
     if (head.t !== 'atom') throw new Error(`${this.name}: bad form ${show(node)}`);
-    const h = head.v;
+    // FOO! is the routine FOO (see collect)
+    const h = head.v.endsWith('!') && this.c.routines.has(head.v.slice(0, -1)) ? head.v.slice(0, -1) : head.v;
     // A game routine with a macro-like name (e.g. Planetfall's HERE?) is a call.
     if (MACRO_LIKE.has(h) && this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
     switch (h) {
