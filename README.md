@@ -88,6 +88,11 @@ Microsoft). All others are shared by historicalsource for education and research
   to the game directly, without the AI.
 - **Built for phones:** the keyboard stays open, and each reply starts at the top of the
   screen. Long replies page with a "More" button instead of scrolling.
+- **Automap (desktop):** a panel beside the story draws the rooms you have visited and
+  the ways between them as you play, with stubs for exits you haven't taken yet. Drag to
+  move it, scroll or use +/− to zoom; the 🗺 button in the toolbar shows or hides it. It
+  isn't shown on phones and tablets. It only knows what you have seen, so it gives
+  nothing away.
 - Undo, named save slots, autosave and resume, and a main menu to switch games.
 - **Manuals and feelies:** several games need items from their original package to be
   played (maps, codes, documents). Each game links to its page in the

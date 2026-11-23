@@ -73,6 +73,7 @@ function gameCard(meta, save) {
     fresh.addEventListener('click', () => {
       if (!confirm(t('menuNewGameConfirm', { title: meta.title }))) return;
       store.remove(gameKey(meta.id, 'autosave'));
+      store.remove(gameKey(meta.id, 'automap'));
       location.href = gameUrl(meta.id);
     });
     actions.append(fresh);

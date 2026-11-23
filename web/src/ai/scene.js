@@ -93,15 +93,38 @@ export function sceneText(scene) {
 const DIRECTIONS = ['north', 'ne', 'east', 'se', 'south', 'sw', 'west', 'nw', 'up', 'down', 'in', 'out'];
 const DIR_PROP = { north: 'NORTH', ne: 'NE', east: 'EAST', se: 'SE', south: 'SOUTH', sw: 'SW', west: 'WEST', nw: 'NW', up: 'UP', down: 'DOWN', in: 'IN', out: 'OUT' };
 
-/** Directions with an exit defined for the current room (excluding plain "you can't go" messages). */
-function exits() {
+/**
+ * The room the player is in: HERE, or for games without it (Sherlock) the
+ * room that (perhaps through a vehicle) contains the player.
+ */
+export function currentRoom() {
+  if (typeof g.HERE === 'number' && g.HERE > 0) return g.HERE;
+  const code = G();
+  let o = code.PLAYER ?? code.PROTAGONIST ?? code.ADVENTURER ?? code.CH_PLAYER ?? g.WINNER;
+  for (let i = 0; i < 8 && o; i++) {
+    const parent = inspect.loc(o);
+    if (!parent || parent === code.ROOMS) return o;
+    o = parent;
+  }
+  return 0;
+}
+
+/** Directions with an exit defined for a room (excluding plain "you can't go" messages). */
+export function roomExits(room = currentRoom()) {
   const out = [];
+  if (!room) return out;
+  // Size of a message-only exit: 2 bytes in version 3, 3 in later versions.
+  const layout = current.story?.LAYOUT ?? {};
+  const msgSize = layout.exitMessageSize ?? ((layout.version ?? 3) >= 4 ? 3 : 2);
   for (const d of DIRECTIONS) {
-    const a = inspect.getPropAddr(g.HERE, G().P[DIR_PROP[d]]);
-    if (a && inspect.propSize(a) !== 2) out.push(d); // size 2 = message-only exit
+    const p = G().P?.[DIR_PROP[d]];
+    if (p == null) continue;
+    const a = inspect.getPropAddr(room, p);
+    if (a && inspect.propSize(a) !== msgSize) out.push(d);
   }
   return out;
 }
+const exits = () => roomExits();
 
 function shortLabel(name) {
   if (name.length <= 22) return name;

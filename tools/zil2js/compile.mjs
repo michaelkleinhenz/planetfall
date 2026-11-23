@@ -2574,6 +2574,8 @@ function emit({ c, code }) {
       stringBase: STRING_BASE, routineBase: ROUTINE_BASE,
       dictionary: c.dictStart, dictionaryCount: c.dictEntries.length, entryLength: c.entryLength, version: ZV,
       ...(c.negativeFrom ? { negativeFrom: c.negativeFrom } : {}),
+      // Size of a message-only exit property where it isn't the version's usual one (Sherlock).
+      ...(CFG.exits === 'byte-rooms' ? { exitMessageSize: 4 } : {}),
       objectNames: c.objects.map((o) => o.name), rooms: c.objects.filter((o) => o.room).map((o) => o.name),
       flags: Object.fromEntries(c.flags), props: Object.fromEntries(c.props),
     })};`,

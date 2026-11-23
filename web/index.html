@@ -41,6 +41,9 @@
       <a id="btn-gallery" class="icon-btn" target="_blank" rel="noopener" hidden title="Manual and feelies" aria-label="Manual and feelies" data-i18n-title="galleryTitle" data-i18n-aria="galleryTitle">
         <svg viewBox="0 0 24 24"><path d="M12 6.5C10.3 5.2 7.9 4.5 4 4.5v13c3.9 0 6.3.7 8 2 1.7-1.3 4.1-2 8-2v-13c-3.9 0-6.3.7-8 2z"/><path d="M12 6.5v13"/></svg>
       </a>
+      <button id="btn-map" class="icon-btn desktop-only" aria-pressed="false" title="Map" aria-label="Map" data-i18n-title="mapTitle" data-i18n-aria="mapTitle">
+        <svg viewBox="0 0 24 24"><path d="M3.5 6.5 9 4l6 2.5L20.5 4v13.5L15 20l-6-2.5L3.5 20z"/><path d="M9 4v13.5"/><path d="M15 6.5V20"/></svg>
+      </button>
       <button id="btn-settings" class="icon-btn" title="Settings" aria-label="Settings" data-i18n-title="settingsTitle" data-i18n-aria="settingsTitle">
         <svg viewBox="0 0 24 24"><path d="M4 7.5h8.5"/><path d="M17.5 7.5H20"/><circle cx="15" cy="7.5" r="2.5"/><path d="M4 16.5h2.5"/><path d="M11.5 16.5H20"/><circle cx="9" cy="16.5" r="2.5"/></svg>
       </button>
@@ -71,6 +74,20 @@
   </main>
 
   <main id="transcript" class="transcript" aria-live="polite"></main>
+
+  <!-- Automap (desktop only): rooms visited and the ways between them -->
+  <aside id="automap" class="automap" hidden aria-labelledby="automap-title">
+    <div class="am-head">
+      <span id="automap-title" class="am-title" data-i18n="mapTitle">Map</span>
+      <button id="am-zoomout" class="am-btn" type="button" title="Zoom out" data-i18n-title="mapZoomOut">−</button>
+      <button id="am-zoomin" class="am-btn" type="button" title="Zoom in" data-i18n-title="mapZoomIn">+</button>
+      <button id="am-center" class="am-btn" type="button" title="Back to your location" data-i18n-title="mapCenter">◎</button>
+      <button id="am-clear" class="am-btn" type="button" title="Clear the map" data-i18n-title="mapClear">⌫</button>
+      <button id="am-close" class="am-btn" type="button" title="Close" data-i18n-title="mapClose">×</button>
+    </div>
+    <svg id="automap-svg" class="am-svg" role="img" data-i18n-aria="mapTitle" aria-label="Map"></svg>
+    <p id="am-empty" class="am-empty" data-i18n="mapEmpty"></p>
+  </aside>
 
   <footer class="inputbar" id="inputbar">
     <button id="more" class="more-btn" type="button" hidden data-keep-focus data-i18n-title="moreTitle">

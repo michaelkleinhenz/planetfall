@@ -4,7 +4,8 @@
 
 import { GameSession } from './engine/session.js';
 import { interpret, isParserError } from './ai/interpreter.js';
-import { currentScene, actionContext } from './ai/scene.js';
+import { currentScene, actionContext, currentRoom as roomObject } from './ai/scene.js';
+import { Automap, drawMap } from './automap.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
@@ -42,7 +43,7 @@ const GAME_ID = (() => {
 const K = (name) => gameKey(GAME_ID, name);
 
 const settings = Object.assign(
-  { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: 'en' },
+  { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: 'en', mapOpen: true },
   store.get('pf.settings', {}),
 );
 settings.language = normalizeLanguage(settings.language);
@@ -83,6 +84,9 @@ function visibleBounds() {
 function updatePageSpace() {
   const { top, bottom } = visibleBounds();
   document.body.style.setProperty('--page-space', `${Math.max(120, bottom - top - 40)}px`);
+  // The automap panel fills the space between the top bar and the input bar.
+  document.body.style.setProperty('--map-top', `${Math.round(top)}px`);
+  document.body.style.setProperty('--map-bottom', `${Math.round(innerHeight - els.inputbar.getBoundingClientRect().top)}px`);
   updateMore();
 }
 
@@ -320,11 +324,130 @@ const session = new GameSession({
 let restartResponse = null; // set when the game restarted during the current input
 
 async function sendToGame(command) {
+  const before = automap ? safeRoom() : 0;
   const res = await session.send(command);
   gameEnded = !!res.ended;
   if (res.restarted) restartResponse = res;
+  if (automap) {
+    try { if (automap.observe(command, before)) saveMap(); } catch { /* the map never gets in the game's way */ }
+    renderMap();
+  }
   return res;
 }
+
+// ---------------------------------------------------------------------------
+// Automap (desktop only): rooms visited and the ways between them
+// ---------------------------------------------------------------------------
+
+const mapEls = { panel: $('automap'), svg: $('automap-svg'), empty: $('am-empty'), btn: $('btn-map') };
+const desktopMedia = matchMedia('(min-width: 1100px) and (hover: hover) and (pointer: fine)');
+let automap = null;
+const mapView = { scale: 0.85, cx: 0, cy: 0, panX: 0, panY: 0 };
+const mapLabels = new Map(); // English room name -> translated label (or a pending promise)
+
+function safeRoom() { try { return roomObject(); } catch { return 0; } }
+const mapOpen = () => !mapEls.panel.hidden && desktopMedia.matches;
+const saveMap = () => store.set(K('automap'), automap.toJSON());
+
+function initMap() {
+  automap = new Automap(store.get(K('automap'), null));
+  try { automap.sync(); saveMap(); } catch { /* no room yet */ }
+  setMapOpen(settings.mapOpen);
+}
+
+function setMapOpen(open) {
+  mapEls.panel.hidden = !open;
+  mapEls.btn.setAttribute('aria-pressed', String(open));
+  updateMapShift();
+  renderMap();
+}
+
+/** Room names in the transcript's language (translated once, then cached). */
+function mapLabel(name) {
+  const language = targetLanguage();
+  if (!language) return name;
+  const key = `${language}:${name}`;
+  const hit = mapLabels.get(key);
+  if (typeof hit === 'string') return hit;
+  if (!hit) {
+    mapLabels.set(key, translateLabel({ apiKey: settings.apiKey, model: settings.model, language, text: name })
+      .then((label) => { mapLabels.set(key, label); renderMap(false); })
+      .catch(() => mapLabels.set(key, name)));
+  }
+  return name;
+}
+
+function renderMap(recenter = true) {
+  if (!automap || !mapOpen()) return;
+  const [cx, cy] = drawMap(automap, mapEls.svg, mapLabel);
+  if (recenter) Object.assign(mapView, { cx, cy, panX: 0, panY: 0 });
+  applyMapView();
+  mapEls.empty.hidden = Object.keys(automap.rooms).length > 1;
+}
+
+function applyMapView() {
+  const r = mapEls.svg.getBoundingClientRect();
+  if (!r.width) return;
+  const w = r.width / mapView.scale;
+  const h = r.height / mapView.scale;
+  mapEls.svg.setAttribute('viewBox', `${mapView.cx + mapView.panX - w / 2} ${mapView.cy + mapView.panY - h / 2} ${w} ${h}`);
+}
+
+/** Move the text column left where it would run under the open map. */
+function updateMapShift() {
+  let shift = 0;
+  if (mapOpen()) {
+    const left = els.transcript.offsetLeft;
+    const right = left + els.transcript.offsetWidth;
+    const limit = window.innerWidth - mapEls.panel.offsetWidth - 18 - 24;
+    shift = Math.max(0, Math.min(right - limit, left - 16));
+  }
+  document.body.style.setProperty('--map-shift', `${shift}px`);
+}
+
+mapEls.btn.addEventListener('click', () => {
+  settings.mapOpen = mapEls.panel.hidden;
+  saveSettings();
+  setMapOpen(settings.mapOpen);
+});
+$('am-close').addEventListener('click', () => { settings.mapOpen = false; saveSettings(); setMapOpen(false); });
+$('am-zoomin').addEventListener('click', () => { mapView.scale = Math.min(2, mapView.scale * 1.25); applyMapView(); });
+$('am-zoomout').addEventListener('click', () => { mapView.scale = Math.max(0.3, mapView.scale / 1.25); applyMapView(); });
+$('am-center').addEventListener('click', () => renderMap(true));
+$('am-clear').addEventListener('click', () => {
+  if (!automap || !confirm(t('mapClearConfirm'))) return;
+  automap.clear();
+  try { automap.sync(); } catch { /* no room */ }
+  saveMap();
+  renderMap();
+});
+mapEls.svg.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  mapView.scale = Math.min(2, Math.max(0.3, mapView.scale * (e.deltaY < 0 ? 1.1 : 1 / 1.1)));
+  applyMapView();
+}, { passive: false });
+mapEls.svg.addEventListener('pointerdown', (e) => {
+  const start = { x: e.clientX, y: e.clientY, panX: mapView.panX, panY: mapView.panY };
+  mapEls.svg.setPointerCapture(e.pointerId);
+  mapEls.svg.classList.add('dragging');
+  const move = (ev) => {
+    mapView.panX = start.panX - (ev.clientX - start.x) / mapView.scale;
+    mapView.panY = start.panY - (ev.clientY - start.y) / mapView.scale;
+    applyMapView();
+  };
+  const up = () => {
+    mapEls.svg.classList.remove('dragging');
+    mapEls.svg.removeEventListener('pointermove', move);
+    mapEls.svg.removeEventListener('pointerup', up);
+    mapEls.svg.removeEventListener('pointercancel', up);
+  };
+  mapEls.svg.addEventListener('pointermove', move);
+  mapEls.svg.addEventListener('pointerup', up);
+  mapEls.svg.addEventListener('pointercancel', up);
+});
+desktopMedia.addEventListener('change', () => { updateMapShift(); renderMap(); });
+window.addEventListener('resize', () => { updateMapShift(); applyMapView(); });
+new ResizeObserver(() => { updatePageSpace(); applyMapView(); }).observe(els.topbar);
 
 /** A new game started (RESTART, or any input after QUIT): show it like a fresh page load. */
 function startFresh(res) {
@@ -603,6 +726,7 @@ async function undo() {
   try {
     const snap = undoStack.pop();
     await session.load(snap);
+    if (automap) { try { automap.sync(); } catch { /* keep the map */ } renderMap(); }
     gameEnded = false;
     aiHistory.pop();
     addEntry({ system: t('undone') });
@@ -1021,6 +1145,7 @@ async function boot() {
     translateEntry(entry, addEntry(entry));
     aiHistory.push({ input: '', commands: [], output: opening.text });
   }
+  initMap();
   if (settings.apiKey && !settings.model) {
     settings.model = await pickDefaultModel();
     saveSettings();
