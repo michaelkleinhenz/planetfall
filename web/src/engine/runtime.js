@@ -239,7 +239,7 @@ export function objectName(o) {
 // ---------------------------------------------------------------------------
 
 export function tell(...parts) {
-  const text = parts.join('');
+  let text = parts.join('');
   if (!text) return true;
   if (tableOut.length) {
     const t = tableOut[tableOut.length - 1];
@@ -248,6 +248,7 @@ export function tell(...parts) {
     return true;
   }
   if (!screenOut) return true;
+  if (currentFont === 3) text = font3(text);
   // Text for the upper window (v3 split screen, e.g. Seastalker's sonar)
   // goes to the front end's upper-window handler, if it has one.
   if (currentWindow === 1) { io.upper?.(text); return true; }
@@ -359,6 +360,12 @@ export function printTable(table, width, height = 1, skip = 0) {
     for (let c = 0; c < width; c++) row += String.fromCharCode(mem[a + c]);
     rows.push(row);
   }
+  // In the upper window every row starts below the first, in the same column.
+  const pos = currentWindow === 1 && !tableOut.length && io.upperPos?.();
+  if (pos) {
+    rows.forEach((row, r) => { if (r) cursorSet(pos.line + r, pos.col); tell(row); });
+    return true;
+  }
   return tell(rows.join('\n'));
 }
 
@@ -388,9 +395,27 @@ export function checkUnicode() { return 3; }
 export function printUnicode(c) { return tell(String.fromCharCode(Number(c))); }
 export function eraseLine() { io.eraseLine?.(); return true; }
 /** CURGET table: the cursor position (the front end has no real cursor: line 1, column 1). */
-export function cursorGet(table) { put(table, 0, cursorPos.line); put(table, 1, cursorPos.col); return true; }
+export function cursorGet(table) {
+  const pos = (currentWindow === 1 && io.upperPos?.()) || cursorPos;
+  put(table, 0, pos.line); put(table, 1, pos.col); return true;
+}
 export function setColor(fg, bg) { io.color?.(Number(fg), Number(bg)); return true; }
 let currentFont = 1;
+// Font 3, the character graphics font (Z-machine standard §16; used by Beyond
+// Zork's borders, map and gauges), as Unicode block and box characters.
+const FONT3 = [
+  ' ', '←', '→', '╱', '╲', ' ', '─', '─', '│', '│', '┴', '┬', '├', '┤', '└', '┌', '┐', '┘',
+  '└', '┌', '┐', '┘', '█', '▀', '▄', '▌', '▐', '▄', '▀', '▌', '▐', '▝', '▗', '▖', '▘',
+  '▝', '▗', '▖', '▘', '?', '?', '?', '?', '▔', '▁', '▏', '▕', ' ', '▏', '▎', '▍', '▌', '▋', '▊',
+  '▉', '█', '▕', '▏', '╳', '┼', '↑', '↓', '↕', '⎕', '?',
+  'ᚪ', 'ᛒ', 'ᛇ', 'ᛞ', 'ᛖ', 'ᚠ', 'ᚷ', 'ᚻ', 'ᛁ', 'ᛄ', 'ᛦ', 'ᛚ', 'ᛗ', 'ᚾ', 'ᚩ', 'ᖾ', 'ᚳ', 'ᚱ',
+  'ᛋ', 'ᛏ', 'ᚢ', 'ᛠ', 'ᚹ', 'ᛉ', 'ᚥ', 'ᛟ', '↑', '↓', '↕', '?',
+];
+function font3(text) {
+  let out = '';
+  for (const ch of text) { const c = ch.charCodeAt(0); out += c >= 32 && c <= 126 ? FONT3[c - 32] : ch; }
+  return out;
+}
 export function setFont(f) { const old = currentFont; if (Number(f)) currentFont = Number(f); return old; }
 // Mouse, picture and window operations of later games: nothing to do here.
 export function mouseInfo() { return true; }
@@ -515,8 +540,8 @@ export function tokenize(inbuf, lexv, dict = 0, keepUnknown = false) {
  * INPUT: one key press. The front end supplies lines, so this takes the
  * first character of the next line (Return for an empty one).
  */
-// A typed line feeds its characters one key at a time, then Return (so forms
-// that read key by key, like Bureaucracy's, can be filled in with lines).
+// A typed line feeds its characters one key at a time (so forms that read key
+// by key, like Bureaucracy's, can be filled in with lines).
 const keyBuffer = [];
 export async function readChar() {
   if (!keyBuffer.length) {
@@ -526,8 +551,11 @@ export async function readChar() {
       loadSnapshot(line.snapshot);
       throw new RestoreSignal(line.notice ?? '');
     }
-    for (const ch of String(line ?? '')) keyBuffer.push(ch.charCodeAt(0));
-    keyBuffer.push(13);
+    // One character: just that key (menus: Beyond Zork's \ and ]); longer
+    // text: its keys and Return (form fields); nothing: Return.
+    const text = String(line ?? '');
+    for (const ch of text) keyBuffer.push(ch.charCodeAt(0));
+    if (text.length !== 1) keyBuffer.push(13);
   }
   return keyBuffer.shift();
 }

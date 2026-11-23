@@ -46,6 +46,16 @@ function collectCompileConstants(nodes) {
     const it = n.items;
     const h = it[0]?.v;
     if ((h === 'CONSTANT' || h === 'SETG') && it[1]?.t === 'atom' && it[2]?.t === 'num') COMPILE_CONSTANTS.set(it[1].v, it[2].v);
+    // <CONSTANT X <+ ,A ,B>> over earlier numeric constants (Beyond Zork's INIT-POTENTIAL)
+    else if (h === 'CONSTANT' && it[1]?.t === 'atom') {
+      const e = it[2]?.t === 'macro' ? it[2].v : it[2];
+      const known = (a) => a.t === 'num' || (a.t === 'gval' && COMPILE_CONSTANTS.has(a.v.v))
+        || (a.t === 'macro' && known(a.v))
+        || (a.t === 'form' && ['+', '-', '*', '/'].includes(a.items[0]?.v) && a.items.slice(1).every(known));
+      if (e?.t === 'form' && known(e)) {
+        COMPILE_CONSTANTS.set(it[1].v, evalCompileTime(e));
+      }
+    }
     if (top && (h === 'GLOBAL' || h === 'CONSTANT')) it.slice(2).forEach((x) => visit(x, false));
     if (!top && h === 'SETG') return;
   };

@@ -696,9 +696,9 @@ export const MHEIGHT = 11;
 export const MAP_SIZE = 187;
 export const MAP = 52132;
 export const CENTERX = 8;
-export const NCENTERX = 0;
+export const NCENTERX = -8;
 export const CENTERY = 5;
-export const NCENTERY = 0;
+export const NCENTERY = -5;
 export const ROOMS_MAPPED_LENGTH = 46;
 export const ROOMS_MAPPED = 52320;
 export const MAP_TOP = 1;
@@ -840,8 +840,8 @@ export const APPBOX = 18;
 export const CNAMES = 53110;
 export const CSTATS = 53194;
 export const INIT_POTENTIAL = 60;
-export const AVERAGE = 0;
-export const SPREAD = 0;
+export const AVERAGE = 10;
+export const SPREAD = 5;
 export const THRESHOLDS = 53206;
 export const MAX_LEVEL = 8;
 export const RANK_NAMES = 53224;
@@ -2681,7 +2681,7 @@ async function NEW_MAP() {
 async function DRAW_MAP() {
   copyTable(ROOMS_MAPPED, 0, ROOMS_MAPPED_LENGTH);
   putb(MAP, 0, SP);
-  copyTable(MAP, MAP + 1, 1);
+  copyTable(MAP, MAP + 1, -186);
   await apply(g.MAP_ROUTINE, g.HERE, g.MAPY, g.MAPX);
   return false;
 }
@@ -3235,7 +3235,7 @@ async function LOWER_SLINE() {
 async function SETUP_DBOX() {
   g.DBOX_LINES = 0;
   putb(DBOX, 0, SP);
-  copyTable(DBOX, DBOX + 1, 1);
+  copyTable(DBOX, DBOX + 1, -1551);
   put(DBOX, 0, 0);
   dirOut(D_TABLE_ON, DBOX);
   return false;
@@ -4405,7 +4405,7 @@ async function DISPLAY_STATS() {
   g.DBOX_LINES = 0;
   g.IN_DBOX = SHOWING_STATS;
   putb(DBOX, 0, SP);
-  copyTable(DBOX, DBOX + 1, 1);
+  copyTable(DBOX, DBOX + 1, -1551);
   await DISPLAY_DBOX();
   await STATBARS(13 - g.MAX_DHEIGHT);
   return false;
@@ -14619,7 +14619,7 @@ async function DEFAULT_SOFTS() {
 async function SOFTS_TO_DBOX(keys) {
   let x = 0, tbl = 0, tbl2 = 0, len = 0;
   putb(DBOX, 0, SP);
-  copyTable(DBOX, DBOX + 1, 1);
+  copyTable(DBOX, DBOX + 1, -1551);
   x = 0;
   for (;;) {
     tbl2 = DBOX + (x * SOFT_LEN);
@@ -42065,7 +42065,7 @@ async function SHOW_MENU_ITEM(line, inv = 0) {
 async function SETUP_CHARACTER() {
   let last = 0, x = 0, stat = 0;
   putb(DBOX, 0, SP);
-  copyTable(DBOX, DBOX + 1, 1);
+  copyTable(DBOX, DBOX + 1, -1551);
   loop1: for (;;) {
     setColor(g.FORE, g.BGND);
     clearScreen(-1);
@@ -42183,7 +42183,7 @@ async function SETUP_CHARACTER() {
       break loop4;
     }
   }
-  if (s16(g.CHECKSUM) > s16(6)) {
+  if (s16(g.CHECKSUM) > s16(66)) {
     await CHEATER();
     return false;
   }
@@ -42569,13 +42569,13 @@ async function ROLL_YOUR_OWN() {
         break loop4;
       }
     }
-    g.POTENTIAL = 6;
+    g.POTENTIAL = 66;
     stat = ENDURANCE;
     loop5: for (;;) {
       xstat = getb(stat_order, stat);
       delta = 1;
       if (!(g.POTENTIAL == 0)) {
-        delta = random(1);
+        delta = random(11);
         --delta;
         delta = AVERAGE + (SPREAD - delta);
         if (s16(delta) > s16(g.POTENTIAL)) {
@@ -43162,7 +43162,7 @@ async function ENDING() {
   clearScreen(-1);
   splitWindow(14);
   putb(DBOX, 0, SP);
-  copyTable(DBOX, DBOX + 1, 1);
+  copyTable(DBOX, DBOX + 1, -1551);
   await SHOW_RANK(g.WIDTH);
   if (g.VT220 == 0) {
     await APPLE_BARS();

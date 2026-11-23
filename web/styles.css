@@ -496,9 +496,11 @@ a.icon-btn[hidden] { display: none; }
 /* the game's upper window (fixed-width grid drawn by the game) */
 .upper-window {
   flex-basis: 100%; margin: 2px 0 0; padding: 8px 10px; overflow-x: auto;
-  font: 500 clamp(9px, 1.55vw, 13px)/1.35 var(--mono); color: var(--text);
+  font: 500 clamp(9px, 1.55vw, 13px)/1.2 var(--mono); color: var(--text);
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
   white-space: pre; max-height: 60vh;
 }
 .upper-window[hidden] { display: none; }
 .upper-window .inv { background: var(--text); color: var(--bg); }
+.upper-window .upper-cursor { background: var(--accent); color: var(--bg); animation: upper-blink 1.1s steps(2, start) infinite; }
+@keyframes upper-blink { to { background: transparent; color: inherit; } }

@@ -48,6 +48,7 @@ const STRINGS = {
 
     placeholderAi: 'Say anything… e.g. "grab the brush and head up the stairs"',
     placeholderAiGame: 'Say anything… e.g. "{example}"',
+    placeholderKeys: 'The game is reading keys: type your answer and press Enter (arrow keys work too)',
     placeholderClassic: 'Type a command, e.g. "examine brush"',
     hintAi: 'AI interpreter on — start a line with ">" to talk to the original parser directly.',
     hintAiTranslated: 'AI interpreter on · story translated — click a passage to see the original English.',
@@ -174,6 +175,7 @@ const STRINGS = {
 
     placeholderAi: 'Sag einfach, was du tun willst … z. B. „nimm die Bürste und geh die Treppe hoch“',
     placeholderAiGame: 'Sag einfach, was du tun willst … z. B. „{example}“',
+    placeholderKeys: 'Das Spiel liest Tasten: Antwort tippen und Enter drücken (Pfeiltasten gehen auch)',
     placeholderClassic: 'Gib einen Befehl ein, z. B. "examine brush"',
     hintAi: 'KI-Interpreter an — mit ">" am Zeilenanfang sprichst du direkt mit dem Original-Parser.',
     hintAiTranslated: 'KI-Interpreter an · Geschichte wird übersetzt — Klick auf einen Abschnitt zeigt das englische Original.',

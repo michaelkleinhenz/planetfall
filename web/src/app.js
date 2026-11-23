@@ -121,16 +121,26 @@ window.addEventListener('resize', updatePageSpace);
 window.visualViewport?.addEventListener('resize', updatePageSpace);
 
 /** The game's upper window, as the game drew it (rows of characters). */
-function renderUpper(rows) {
+function renderUpper(rows, cursor) {
   const box = document.getElementById('upper-window');
   if (!box) return;
   if (!rows) { box.hidden = true; box.replaceChildren(); return; }
   box.hidden = false;
   const frag = document.createDocumentFragment();
   rows.forEach((row, i) => {
+    // the cursor (where the game is waiting for typing, e.g. a form field)
+    if (cursor && cursor.line === i + 1) {
+      row = row.slice();
+      while (row.length < cursor.col) row.push({ ch: ' ', inv: false });
+      row[cursor.col - 1] = { ...row[cursor.col - 1], cursor: true };
+    }
     let run = '', inv = false;
     const flushRun = () => { if (!run) return; if (inv) frag.append(el('span', 'inv', run)); else frag.append(document.createTextNode(run)); run = ''; };
-    for (const c of row) { if (c.inv !== inv) { flushRun(); inv = c.inv; } run += c.ch; }
+    for (const c of row) {
+      if (c.cursor) { flushRun(); frag.append(el('span', 'upper-cursor', c.ch)); continue; }
+      if (c.inv !== inv) { flushRun(); inv = c.inv; }
+      run += c.ch;
+    }
     flushRun();
     if (i < rows.length - 1) frag.append(document.createTextNode('\n'));
   });
@@ -302,7 +312,7 @@ const session = new GameSession({
     els.score.textContent = score;
     els.time.textContent = GAMES[GAME_ID]?.clock ? clockTime(score, moves) : moves;
   },
-  onUpper: (rows) => renderUpper(rows),
+  onUpper: (rows, cursor) => { renderUpper(rows, cursor); queueMicrotask(updateMode); },
   onSave: (snap) => openSlots('save', snap),
   onRestore: () => openSlots('load'),
 });
@@ -367,10 +377,10 @@ async function handleInput(raw, opts = {}) {
       const entry = { input: label, viaAI: label.toLowerCase() !== opts.command, steps: [{ command: opts.command, segments: res.segments }] };
       await translateEntry(entry, addEntry(entry));
       aiHistory.push({ input: opts.command, commands: [opts.command], output: res.text });
-    } else if (!aiActive() || text.startsWith('>') || text === '') {
+    } else if (!aiActive() || text.startsWith('>') || text === '' || session.waitingForKey) {
       const cmd = text.replace(/^>\s*/, '');
       const res = await sendToGame(cmd);
-      const entry = { input: text, steps: [{ segments: res.segments }] };
+      const entry = { input: text.replace(/[\x81-\x84]/g, (c) => '↑↓←→'[c.charCodeAt(0) - 129]), steps: [{ segments: res.segments }] };
       await translateEntry(entry, addEntry(entry));
       aiHistory.push({ input: cmd, commands: [cmd], output: res.text });
     } else {
@@ -764,7 +774,8 @@ function updateMode() {
   els.badge.title = ai ? t('badgeTitleAi', { model: settings.model })
     : settings.apiKey ? t('badgeTitleClassicKey') : t('badgeTitleClassicNoKey');
   const example = current.meta?.example?.[settings.language] ?? current.meta?.example?.en;
-  els.input.placeholder = ai ? (example ? t('placeholderAiGame', { example }) : t('placeholderAi')) : t('placeholderClassic');
+  els.input.placeholder = session.waitingForKey ? t('placeholderKeys')
+    : ai ? (example ? t('placeholderAiGame', { example }) : t('placeholderAi')) : t('placeholderClassic');
   els.hint.replaceChildren();
   if (ai) {
     els.hint.append(targetLanguage() ? t('hintAiTranslated') : t('hintAi'));
@@ -912,7 +923,16 @@ els.form.addEventListener('submit', (e) => {
   handleInput(v);
 });
 
+// Z-machine key codes of the cursor keys, for games that read single keys
+// (Beyond Zork's menus): sent at once when the input line is empty.
+const ARROW_KEYS = { ArrowUp: 129, ArrowDown: 130, ArrowLeft: 131, ArrowRight: 132 };
+
 els.input.addEventListener('keydown', (e) => {
+  if (session?.waitingForKey && !els.input.value && ARROW_KEYS[e.key] && !busy) {
+    e.preventDefault();
+    handleInput(String.fromCharCode(ARROW_KEYS[e.key]));
+    return;
+  }
   if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
     if (!commandHistory.length) return;
     e.preventDefault();
@@ -968,6 +988,8 @@ async function boot() {
   const second = $('status-second-label');
   second.dataset.i18n = meta.statusSecond === 'time' ? 'time' : 'moves';
   second.textContent = t(second.dataset.i18n);
+  // Games that draw their own status line: only the room is shown here.
+  if (meta.ownStatus) { els.score.closest('.stat').hidden = true; els.time.closest('.stat').hidden = true; }
   // Time games have no score: only the clock is shown.
   if (meta.clock) els.score.closest('.stat').hidden = true;
   updateMode();

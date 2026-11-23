@@ -42,6 +42,7 @@ export class GameSession {
       split: (n) => this.upper.split(n),
       window: (w) => this.upper.select(w),
       cursor: (l, c) => this.upper.moveTo(l, c),
+      upperPos: () => ({ line: this.upper.line, col: this.upper.col }),
       upper: (text) => this.upper.write(text),
       highlight: (style) => this.upper.style(style),
       clear: (w) => this.upper.clear(w),
@@ -79,7 +80,9 @@ export class GameSession {
     const restarted = !!this.restartedFlag;
     this.restartedFlag = false;
     const upper = this.upper.view();
-    this.onUpper(upper);
+    this.onUpper(upper, this.upper.cursorView());
+    // The game reads single keys (a form, "press any key"): input goes to it as typed.
+    this.waitingForKey = !!extra.keyInput;
     for (const w of waiters) w({ segments, text, restarted, upper, ...extra });
   }
 
@@ -161,6 +164,9 @@ export class UpperWindow {
     if (w === -1) { this.height = 0; this.rows = []; this.line = 1; this.col = 1; }
     else if (w === -2 || w === 1) { this.rows = []; this.line = 1; this.col = 1; }
   }
+  /** Where the cursor is, when the game writes into this window. */
+  cursorView() { return this.active ? { line: this.line, col: this.col } : null; }
+
   /** What the page shows: the visible rows, or null when there is nothing. */
   view() {
     const rows = this.rows.slice(0, this.height || this.rows.length);
