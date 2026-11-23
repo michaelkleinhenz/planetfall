@@ -843,7 +843,7 @@ class Compiler {
         if (pname === 'SYNONYM') for (const a of p.items.slice(1)) noun(entry(a.v));
         if (pname === 'ADJECTIVE') for (const a of p.items.slice(1)) setPart(entry(a.v), 'adj', this.adjNums.get(a.v));
         if (pname === 'PSEUDO') {
-          for (let i = 1; i < p.items.length; i += 2) noun(entry(p.items[i].v.toUpperCase()));
+          for (let i = 1; i < p.items.length; i += 2) if (typeof p.items[i].v === 'string') noun(entry(p.items[i].v.toUpperCase()));
         }
       }
     }
@@ -1269,6 +1269,8 @@ class Compiler {
       case 'PSEUDO': {
         const out = [];
         for (let i = 0; i < vals.length; i += 2) {
+          // (PSEUDO NULL-F) in Suspect: a lone value is stored as it is
+          if (i + 1 >= vals.length) { out.push(...w(this.staticValue(vals[i]))); break; }
           out.push(...w(this.wordAddr(vals[i].v.toUpperCase())), ...w(this.routineId(vals[i + 1].v)));
         }
         return out;
@@ -1312,6 +1314,7 @@ const SIMPLE_HELPERS = {
   PRINT: 'printS', PRINTI: 'print', VALUE: 'globalValue', BTST: 'btst', VERIFY: 'verify',
   DIROUT: 'dirOut', DIRIN: 'dirIn', '/': 'div', MOD: 'mod',
   SPLIT: 'splitWindow', SCREEN: 'setWindow', SOUND: 'sound',
+  CURSET: 'cursorSet', HLIGHT: 'highlight', BUFOUT: 'bufOut', CLEAR: 'clearScreen',
 };
 const ASYNC_HELPERS = { READ: 'read', SAVE: 'save', RESTORE: 'restore', RESTART: 'restart', QUIT: 'quit' };
 
@@ -1837,6 +1840,8 @@ class RoutineCompiler {
       case 'N==?': return `(${A(0)} != ${A(1)})`;
       case 'L?': return `(${A(0)} < ${A(1)})`;
       case 'G?': return `(${A(0)} > ${A(1)})`;
+      case 'GVAL': if (args[0]?.t === 'atom') return this.gval(args[0].v); break;
+      case 'LVAL': if (args[0]?.t === 'atom') return this.varRef(args[0]); break;
       case 'LOWCORE': case 'LOWCORE-TABLE': {
         // Header words by name (later ZILCH)
         const offs = { ZVERSION: 0, ZORKID: 2, ENDLOD: 4, START: 6, VOCAB: 8, OBJECT: 10, GLOBALS: 12, PURBOT: 14,
@@ -2115,7 +2120,7 @@ function emit({ c, code }) {
   lines.push(`import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 `);

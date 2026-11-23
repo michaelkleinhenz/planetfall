@@ -70,6 +70,10 @@ export function resetState() {
   }
   fixedFont = false;
   if (!rngSeeded) rngState = (Math.random() * 0x7fffffff) | 1;
+  // Header Flags 1 as a v3 interpreter without a status window reports it
+  // (like the reference interpreter): games then print what they would have
+  // drawn in the upper window inline (Suspended, Seastalker, Deadline).
+  mem[1] = (mem[1] & 0x8f) | 0x10 | 0x40;
 }
 
 // ---------------------------------------------------------------------------
@@ -208,6 +212,11 @@ export function objectName(o) {
 export function tell(...parts) {
   const text = parts.join('');
   if (!text) return true;
+  if (tableOut) {
+    for (const ch of text) putb(tableOut.addr + 2, tableOut.len++, ch === '\n' ? 13 : ch.charCodeAt(0));
+    put(tableOut.addr, 0, tableOut.len);
+    return true;
+  }
   // Text for the upper window (v3 split screen, e.g. Seastalker's sonar)
   // goes to the front end's upper-window handler, if it has one.
   if (currentWindow === 1) { io.upper?.(text); return true; }
@@ -220,6 +229,12 @@ export function tell(...parts) {
 let currentWindow = 0;
 export function splitWindow(lines) { io.split?.(Number(lines)); if (!lines) currentWindow = 0; return true; }
 export function setWindow(w) { currentWindow = Number(w); io.window?.(currentWindow); return true; }
+// Screen control used by a few games' status lines (Suspended): the upper
+// window is handled by the front end, so these only pass the request on.
+export function cursorSet(line, col) { io.cursor?.(Number(line), Number(col)); return true; }
+export function highlight(style) { io.highlight?.(Number(style)); return true; }
+export function bufOut() { return true; }
+export function clearScreen(w) { io.clear?.(Number(w)); return true; }
 /** SOUND (Lurking Horror's beeps and effects): not played. */
 export function sound() { return true; }
 export function print(s) { return tell(s); }
@@ -254,7 +269,16 @@ export function btst(a, b) { return (a & b) === b; }
 export function div(a, b) { return Math.trunc(a / b); }
 export function mod(a, b) { return a % b; }
 export function verify() { return true; }
-export function dirOut() { return true; }
+// DIROUT: output stream 3 (to a table: a word count, then the characters)
+// is the only one that matters here; transcript and command recording are
+// not supported. Suspended uses <DIROUT 1 table> for the same thing.
+let tableOut = null;
+export function dirOut(n, table) {
+  n = Number(n);
+  if (table && n > 0 && n !== 2 && n !== 4) { tableOut = { addr: Number(table), len: 0 }; put(tableOut.addr, 0, 0); }
+  else if (tableOut && (n === 0 || n === -3 || n === -1)) tableOut = null;
+  return true;
+}
 export function dirIn() { return true; }
 export function isVerb(...actions) { return actions.some((a) => g.PRSA == a); }
 export function enable(int) { return put(int, 0, 1); }

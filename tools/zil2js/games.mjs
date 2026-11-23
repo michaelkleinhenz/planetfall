@@ -146,14 +146,17 @@ export const GAMES = {
     srcDir: 'games/suspect',
     main: 'suspect',
     objectOrder: { story: 'COMPILED/dm3.z3' },
+    oldReturn: true,
     storyFile: 'COMPILED/dm3.z3',
   },
   'suspended': {
     title: "Suspended",
     srcDir: 'games/suspended',
     main: 'suspended',
-    objectOrder: { story: 'COMPILED/r7.z3' },
-    storyFile: 'COMPILED/r7.z3',
+    objectOrder: { story: 'COMPILED/suspended.z3' },
+    // A stray character in the original source.
+    fixups: { people: (t) => t.replace('<SET-GOAL ,PEOPLE ,INNER-CORE>>>\n\n<ROUTINE PEOPLE-GIVEN-BAG', '<SET-GOAL ,PEOPLE ,INNER-CORE>>\n\n<ROUTINE PEOPLE-GIVEN-BAG') },
+    storyFile: 'COMPILED/suspended.z3',
   },
   'wishbringer': {
     title: "Wishbringer",
@@ -167,6 +170,8 @@ export const GAMES = {
     srcDir: 'games/witness',
     main: 'witness',
     objectOrder: { story: 'COMPILED/r21.z3' },
+    // A stray character in the original source.
+    fixups: { places: (t) => t.replace('"Inside the house"\n)>[\n', '"Inside the house"\n').replace(/^\s*\]?\[?\s*$/gm, '') },
     storyFile: 'COMPILED/r21.z3',
   },
   'zork2': {
