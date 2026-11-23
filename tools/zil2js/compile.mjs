@@ -1632,7 +1632,7 @@ function emit({ c, code }) {
   ];
   fs.writeFileSync(path.join(OUT_DIR, 'story-data.js'), data.join('\n'));
   const license = path.join(ROOT, CFG.srcDir, 'LICENSE');
-  if (CFG.srcDir !== '.' && fs.existsSync(license)) fs.copyFileSync(license, path.join(OUT_DIR, 'LICENSE'));
+  if (fs.existsSync(license)) fs.copyFileSync(license, path.join(OUT_DIR, 'LICENSE'));
   return c;
 }
 

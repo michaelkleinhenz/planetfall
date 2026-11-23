@@ -1,6 +1,6 @@
 // Replays recorded command sequences through the JavaScript translation and
 // compares the output with the transcript of the ORIGINAL game (release 39
-// story file, COMPILED/planetfall.z3) for the same commands.
+// story files in games/<game>/COMPILED/) for the same commands.
 //
 //   node tests/transcripts.test.mjs
 import fs from 'node:fs';

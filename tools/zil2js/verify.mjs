@@ -1,12 +1,12 @@
 // Cross-checks the compiler's output against the original ZILCH data listing
-// (planetfalldat.zap): vocabulary parts of speech, object tree and syntax tables.
+// (games/planetfall/planetfalldat.zap): vocabulary parts of speech and object tree.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileAll } from './compile.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const zap = fs.readFileSync(path.join(ROOT, 'planetfalldat.zap'), 'latin1').split('\n');
+const zap = fs.readFileSync(path.join(ROOT, 'games/planetfall/planetfalldat.zap'), 'latin1').split('\n');
 const { c } = compileAll();
 let problems = 0;
 const report = (m) => { problems++; if (problems < 80) console.log(m); };

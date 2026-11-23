@@ -8,7 +8,7 @@
 export const GAMES = {
   planetfall: {
     title: 'Planetfall',
-    srcDir: '.',
+    srcDir: 'games/planetfall',
     files: ['syntax', 'misc', 'globals', 'parser', 'verbs', 'compone', 'comptwo', 'planetfall'],
     fixups: {
       // comptwo.zil is truncated in the middle of the last object (TRIFFID);

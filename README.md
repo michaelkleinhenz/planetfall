@@ -1,149 +1,114 @@
-# Planetfall AI: Infocom classics in modern JavaScript, with an AI interpreter
+# Planetfall AI
 
-This fork adds a playable web version of **Planetfall** and **Zork I**. Pick the game from
-the main menu. In both, **an AI model replaces the original text parser's strict input
-requirements**. Type whatever you like ("grab the brush and head up the stairs", "ask
-Floyd to come along", typos, even German). The model translates it into commands in the
-game's own vocabulary, and **the original game logic and parser, translated to
-JavaScript from the original ZIL source, execute them**. Every line of story text, every
-puzzle and every riddle is Infocom's original.
+Infocom's classic text adventures, **translated line by line from their original ZIL source
+into modern JavaScript** and playable in the browser. **An AI model takes the place of
+the strict old parser's input rules.** Type what you mean, in English or German, with
+typos and all. The AI turns it into commands in the game's own vocabulary, and the
+original game logic runs them. Every word of the story, every puzzle and every joke is
+Infocom's.
 
-| Game | Source | License |
-|---|---|---|
-| Planetfall (1983) | this repository (root) | shared for education and research; not an open license |
-| Zork I (1980) | `games/zork1/`, from [historicalsource/zork1](https://github.com/historicalsource/zork1) | MIT, (c) 2025 Microsoft (`games/zork1/LICENSE`) |
+**Play:** https://michaelkleinhenz.github.io/planetfall/
 
-## Play
+| Game | Year | Source | License of the source |
+|---|---|---|---|
+| Planetfall | 1983 | `games/planetfall/` | none: shared for education and research |
+| Zork I: The Great Underground Empire | 1980 | `games/zork1/` | MIT, © 2025 Microsoft |
+
+## Features
+
+- **AI interpreter (optional):** it uses an [OpenRouter](https://openrouter.ai/keys) API
+  key you enter in the settings. Without a key the games run with their original parser.
+  - Free-form input: "grab the brush and head up the stairs", "ask Floyd to come along",
+    "öffne den Briefkasten".
+  - The AI understands references to earlier turns ("it", "the other one", answers to the
+    game's questions).
+  - If the parser rejects a command, the AI gets one chance to rephrase it. Parser errors
+    take no game time, so this is safe.
+  - Replies for things the game can't do are written in the game's own narrator voice and
+    marked ✦.
+- **English or German:** German switches the whole interface. With the AI on, the
+  story is translated as you play (tap a passage for the original English), and you can
+  type in German.
+- **Hints:** the 💡 button, or typing "hint" / "Tipp", gives InvisiClues-style hints
+  generated from the game's actual code for your situation. They come at three levels:
+  nudge, direction, then solution.
+- **Play with buttons:** a quick-action row shows the room's exits, Look / Inventory /
+  Wait, and everything in view. Each thing offers only the verbs that fit it. Buttons talk
+  to the game directly, without the AI.
+- **Built for phones:** the keyboard stays open, and each reply starts at the top of the
+  screen. Long replies page with a "More" button instead of scrolling.
+- Undo, named save slots, autosave and resume, and a main menu to switch games.
+- **Your data stays in your browser:** settings, progress and saves live in
+  localStorage, per game, and nothing is sent to any server except your AI requests to
+  OpenRouter. There are no cookies, analytics or third-party scripts. The menu can
+  download a backup of all your data and restore it, in this or another browser. The API
+  key is included only if you tick the box.
+
+## Run locally
 
 ```sh
-npm start            # serves web/ on http://localhost:8000
+npm start              # serves web/ on http://localhost:8000
+npm run play           # Planetfall in the terminal (original parser)
+npm run play -- --game zork1
 ```
 
-Any static file server works (`web/` uses plain ES modules, no build step). Open the
-settings (⚙) and paste an [OpenRouter](https://openrouter.ai/keys) API key to turn on the
-AI interpreter. Without a key, the game runs with the classic parser.
+There's no build step for the web app: `web/` is plain HTML, CSS and ES modules.
+Node.js 18+ is needed for the tools and tests.
 
-- The key is stored only in your browser (localStorage) and sent only to openrouter.ai.
-- Pick any OpenRouter model. Left empty, one is chosen from a preference list.
-- **English or German:** choose the language in the settings. German switches the whole
-  interface. With the AI on, the game's text is also translated live (click a passage to
-  see the original English), and you can type in German. The game itself keeps running in
-  English, and translations are cached in the browser.
-- **Hints:** the 💡 button (or typing "hint" / "help", "Tipp" / "Hilfe") asks the AI for an
-  InvisiClues-style hint. It reads the game's actual code for your situation: the routines
-  for the current room, its exits and everything in view or carried, plus the current
-  values of the game variables they check. It also sees the recent transcript. Hints are
-  graded: a nudge first, then a direction, then the solution ("Stronger hint"), and
-  they're never about code. Needs an OpenRouter key.
-- **Play with buttons:** a row of quick actions above the input offers the exits of
-  the current room, Look / Inventory / Wait, and everything in view. Tap a thing to get
-  the verbs that make sense for it (examine, take/drop, open/close, read, eat, wear,
-  push, talk to, ...). Yes/No and Restart/Restore/Quit appear when the game asks for
-  them. Buttons send commands straight to the game, so they work without an AI key and
-  cost nothing.
-- **Phones:** the keyboard stays open while you play. Each reply starts at the top of
-  the screen, and long replies page with a "More" button (or Enter on an empty line), so
-  there is no scrolling back.
-- **Prompt caching:** the long, unchanging instructions (verb list and rules) are sent
-  as a cacheable prefix. Anthropic and Google models get an explicit cache breakpoint;
-  OpenAI, DeepSeek and others cache identical prefixes automatically. Token usage,
-  cached tokens and cost per request are logged to the browser console (`[openrouter]`).
-- **Your data stays in your browser:** settings, progress and saved games are kept in
-  localStorage, per game. The main menu can download a backup file of all of it (the
-  OpenRouter key only if you tick the box) and restore it, also in another browser.
-- Start a line with `>` to bypass the AI and talk to the original parser directly.
-- The UI also has undo (Ctrl+Z), named save slots, autosave/resume, and optionally shows
-  the commands the AI sent to the game.
-
-Terminal play (classic parser): `npm run play`.
-
-### Deploying to GitHub Pages
-
-`.github/workflows/pages.yml` regenerates the translation, runs the tests and publishes
-`web/` to GitHub Pages on every push to `main`/`master` (or when started manually). Enable
-it once under **Settings → Pages → Source: GitHub Actions**.
-
-Before upload, `tools/stamp.mjs` copies `web/` to `dist/` and adds the commit id to every
-script and stylesheet URL (`app.js?v=…`). GitHub Pages lets browsers cache files for ten
-minutes, but with versioned URLs a normal reload always loads a new deployment.
-
-The site is fully static and needs no secrets: each player enters their own OpenRouter key,
-which is kept only in their own browser's localStorage. It is sent only from that browser
-directly to openrouter.ai, never to GitHub or any other server.
+```sh
+npm run build          # regenerate web/src/games/* from the ZIL sources
+npm test               # vocabulary/object-tree check + transcript comparison with the originals
+```
 
 ## How it works
 
 | Part | Location | What it does |
 |---|---|---|
-| ZIL → JS compiler | `tools/zil2js/` (games configured in `games.mjs`) | Reads the original `.zil` sources and translates all 516 routines into readable async JavaScript. It also builds the game's data image: object tree, property tables, vocabulary and syntax tables. |
-| Generated games | `web/src/games/<game>/game.js`, `story-data.js` (registry: `web/src/games/registry.js`) | The translated game. Regenerate with `npm run build`. |
-| Runtime | `web/src/engine/` | The Z-machine-style primitives the code relies on (objects, properties, tables, text, tokenizer, save/restore, seeded RNG) and a session wrapper. |
-| AI interpreter | `web/src/ai/` | Builds a scene description from the live game state (location, inventory, visible objects with their nouns and adjectives) plus the recent transcript. It asks the model for JSON `{commands, reply}`. If the original parser rejects a command, it gives the model one chance to rephrase, which is safe because parser errors take no game time. |
-| Web app | `web/index.html`, `web/src/app.js` | The browser front end. |
-
-The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
-now Microsoft). It isn't covered by any license in this repository; it was added by the site
-owner for the game menu.
-
-Fonts are self-hosted (no requests to font services): Literata, Inter and JetBrains Mono,
-under the SIL Open Font License (`web/fonts/LICENSE-*.txt`).
+| Original sources | `games/<game>/` | Unmodified ZIL source archives plus the original compiled story files (see `games/README.md`). |
+| ZIL → JS compiler | `tools/zil2js/` | Reads the ZIL source and translates every routine (516 in Planetfall, 440 in Zork I) into readable async JavaScript. It also builds each game's data image: object tree, property tables, vocabulary and syntax tables. Per-game settings are in `games.mjs`. |
+| Generated games | `web/src/games/<game>/` | `game.js` (the code) and `story-data.js` (the data), plus `registry.js` with per-game metadata for the app. |
+| Runtime | `web/src/engine/` | The Z-machine-style primitives the translated code calls: objects, properties, tables, text, the tokenizer, save/restore and a seeded RNG. Also the session that turns the game's input loop into request/response. |
+| AI | `web/src/ai/` | OpenRouter client (with prompt caching), command interpreter, live translation, scene description and hints. |
+| Web app | `web/` | Menu, transcript, quick actions, settings, storage and backups. Fonts are self-hosted (SIL OFL, `web/fonts/`). |
+| Tests | `tests/` | Recorded command sequences with the original games' output. |
 
 ### Faithfulness
 
-The translation keeps the original ZILCH compiler's semantics: for example `<RETURN value>`
-inside a loop returns from the routine. Object numbering and the vocabulary/object-tree
-layout are cross-checked against the original compiler's data listing
-(`planetfalldat.zap`; run `npm run verify`).
+The translated games behave exactly like the original releases. `npm test` replays about
+11,000 recorded commands, a walkthrough plus random play from several checkpoints per
+game, through the JavaScript version. It compares the output line for line with
+transcripts from the original story files (Planetfall release 39, Zork I release 119),
+run in the [ifvms](https://github.com/curiousdannii/ifvms.js) Z-machine interpreter. Both
+sides seed the random number generator through the games' own `#random` command.
 
-`npm test` replays about 5,500 recorded commands through the JavaScript version. These are
-one walkthrough plus random play from several checkpoints, including deaths, restarts,
-sleeping and dreams. The test compares the output line for line with transcripts recorded
-from the original compiled story file `COMPILED/planetfall.z3` (release 39). Both runs seed
-the RNG via the game's own `#random` command. The recorded paths cover the first half of
-the game: the Feinstein, the escape pod, the Kalamontee complex, Floyd, the elevators and
-the tower. The rest uses the same compiler but has not been compared transcript by
-transcript yet.
+The compiler reproduces several details of the original ZILCH compiler, each confirmed
+against the originals:
+- `<RETURN value>` inside a loop returns from the routine;
+- object numbers come from the original story file or compiler listing;
+- tables can mix byte and word entries;
+- sentence spacing is collapsed.
 
-Source fix-ups applied at compile time (documented in `tools/zil2js/compile.mjs`):
-`comptwo.zil` is truncated in the last object definition, and its ending is restored from
-`comptwo.zabstr`. A stray `Y` atom in `SLOT-F` is ignored.
+The recorded runs cover roughly the first half of each game. The rest went through the same
+compiler but hasn't been compared transcript by transcript yet.
 
----
+## Deployment
 
-# Planetfall Source Code Collection
+`.github/workflows/pages.yml` runs on every push to `master`. It rebuilds the games from
+source, runs the tests, and publishes `web/` to GitHub Pages. Before upload,
+`tools/stamp.mjs` adds the commit id to every script and stylesheet URL, so a normal
+reload always picks up a new release despite GitHub Pages' ten-minute caching. The site
+is fully static and needs no secrets.
 
-Planetfall is a 1983 interactive fiction game written by Steve Meretzky and published by Infocom.
+## Licenses and credits
 
-Further information on Planetfall:
-
-* [Wikipedia](https://en.wikipedia.org/wiki/Planetfall)
-* [The Digital Antiquarian](https://www.filfre.net/2013/03/planetfall/)
-* [The Interactive Fiction Database](https://ifdb.tads.org/viewgame?id=xe6kb3cuqwie2q38)
-* [The Infocom Gallery](http://infocom.elsewhere.org/gallery/planetfall/planetfall.html)
-* [IFWiki](http://www.ifwiki.org/index.php/Planetfall)
-
-__What is this Repository?__
-
-This repository is a directory of source code for the Infocom game "Planetfall", including a variety of files both used and discarded in the production of the game. It is written in ZIL (Zork Implementation Language), a refactoring of MDL (Muddle), itself a dialect of LISP created by MIT students and staff.
-
-The source code was contributed anonymously and represents a snapshot of the Infocom development system at time of shutdown - there is no remaining way to compare it against any official version as of this writing, and so it should be considered canonical, but not necessarily the exact source code arrangement for production.
-
-__Basic Information on the Contents of This Repository__
-
-It is mostly important to note that there is currently no known way to compile the source code in this repository into a final "Z-machine Interpreter Program" (ZIP) file. There are .ZIP files in some of the Infocom Source Code repositories but they were there as of final spin-down of the Infocom Drive and the means to create them is currently lost.
-
-Throughout its history, Infocom used a TOPS20 mainframe with a compiler (ZILCH) to create and edit language files - this repository is a mirror of the source code directory archive of Infocom but could represent years of difference from what was originally released.
-
-In general, Infocom games were created by taking previous Infocom source code, copying the directory, and making changes until the game worked the way the current Implementor needed. Structure, therefore, tended to follow from game to game and may or may not accurately reflect the actual function of the code.
-
-There are also multiple versions of the "Z-Machine" and code did change notably between the first years of Infocom and a decade later. Addition of graphics, sound and memory expansion are all slowly implemented over time.
-
-__What is the Purpose of this Repository__
-
-This collection is meant for education, discussion, and historical work, allowing researchers and students to study how code was made for these interactive fiction games and how the system dealt with input and processing. It is not considered to be under an open license.
-
-Researchers are encouraged to share their discoveries about the information in this source code and the history of Infocom and its many innovative employees.
-
-__Some Trivia and Notes on this Repository__
-
-* First game created by Steve Meretzky after working as a tester for Infocom.
+- **Planetfall** © 1983 Infocom, Inc. The source comes from
+  [historicalsource/planetfall](https://github.com/historicalsource/planetfall), which
+  shares it for education and research and states that it is not under an open license.
+- **Zork I** © Infocom, Inc. The source is under the MIT License, © 2025 Microsoft
+  ([historicalsource/zork1](https://github.com/historicalsource/zork1)). The license is
+  reproduced in `games/zork1/LICENSE` and next to the generated code.
+- The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
+  now Microsoft). It isn't covered by any license in this repository.
+- Fonts: Literata, Inter and JetBrains Mono, under the SIL Open Font License.
+- The converter, runtime, AI layer and web app in `tools/`, `web/` (except the generated
+  games, fonts and covers) and `tests/` were written for this project.
