@@ -214,6 +214,7 @@ export const GAMES = {
     srcDir: 'games/infocom-sampler',
     main: 'sampler',
     objectOrder: { story: 'COMPILED/demo-r15.z3' },
+    oldReturn: true,
     storyFile: 'COMPILED/demo-r15.z3',
   },
 };

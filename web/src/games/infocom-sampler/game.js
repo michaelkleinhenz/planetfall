@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -5185,9 +5185,10 @@ async function PRINT_CONT(obj, v$ = false, level = 0) {
   if (g.WINNER == obj || g.WINNER == loc(obj)) {
     inv$ = true;
   } else {
-    for (;;) {
+    loop1: for (;;) {
       if (!y) {
-        return !_1st$;
+        !_1st$;
+        break loop1;
       } else if (y == av) {
         pv$ = true;
       } else if (y == g.WINNER) {
@@ -6760,7 +6761,7 @@ async function MAILBOX_F() {
 }
 
 async function I_LANTERN() {
-  let tick = 0, tbl = globalValue(g.LAMP_TABLE);
+  let tick = 0, tbl = g.LAMP_TABLE;
   enable(await QUEUE(I_LANTERN.id, tick = get(tbl, 0)));
   await LIGHT_INT(LAMP, tbl, tick);
   if (!(tick == 0)) {
@@ -7086,7 +7087,7 @@ async function DO_FIGHT(len) {
       cnt = cnt + 1;
       if (cnt > len) {
         res = true;
-        return true;
+        break loop2;
       }
       oo = get(g.VILLAINS, cnt);
       o = get(oo, V_VILLAIN);

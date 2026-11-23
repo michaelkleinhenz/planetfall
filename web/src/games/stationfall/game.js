@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -1889,7 +1889,7 @@ async function ORPHAN_MERGE() {
   return true;
 }
 
-async function CLAUSE_WIN(adj) {
+async function CLAUSE_WIN(adj = false) {
   if (adj) {
     put(g.P_ITBL, P_VERB, get(g.P_OTBL, P_VERB));
   } else {
@@ -2154,7 +2154,7 @@ async function PREP_PRINT(prep) {
   }
 }
 
-async function CLAUSE_COPY(src, dest, insrt) {
+async function CLAUSE_COPY(src, dest, insrt = false) {
   let ocl = 0, beg = 0, end = 0, bb = 0, ee = 0, obeg = 0, cnt = 0, b = 0, e = 0;
   bb = get(g.P_CCTBL, CC_SBPTR);
   ee = get(g.P_CCTBL, CC_SEPTR);
@@ -2940,7 +2940,7 @@ async function I_WELDER() {
     move(WELDER, g.HERE);
     g.WELDER_COUNTER = g.WELDER_COUNTER + 1;
     g.WELDER_TABLE_POINTER = random(g.NUMBER_OF_WELDERS);
-    tell("   You spot a ", S(WELDER), " approaching. ");
+    tell("   You spot a ", D(WELDER), " approaching. ");
     if (!(hasFlag(WELDER, TOUCHBIT))) {
       setFlag(WELDER, TOUCHBIT);
       await PERFORM(V.WHAT, WELDER);
@@ -3316,7 +3316,7 @@ async function I_LOG_READER() {
     tell("   The reader begins producing a whining noise.\n");
     return true;
   } else if ((g.LOG_READER_COUNTER == 13) && (g.HERE == COMMANDERS_OFFICE)) {
-    tell("   The whine from the ", S(LOG_READER), " rises in pitch, and grows louder by the millichron!\n");
+    tell("   The whine from the ", D(LOG_READER), " rises in pitch, and grows louder by the millichron!\n");
     return true;
   } else if (g.LOG_READER_COUNTER == 14) {
     remove(LOG_READER);
@@ -5316,7 +5316,7 @@ async function PRE_SHOOT() {
       return true;
     } else {
       g.PRSI = ZAPGUN;
-      tell("(with the ", S(ZAPGUN), ")\n");
+      tell("(with the ", D(ZAPGUN), ")\n");
     }
   }
   if (!g.PRSI) {
@@ -5458,7 +5458,7 @@ async function PRE_SMELL() {
 async function V_SMELL() {
   if (!g.PRSO || (g.PRSO == AIR)) {
     if (g.BALLOON_ODOR) {
-      tell("The awful odor of the ", S(BALLOON), "'s digestive gas is thankfully fading.\n");
+      tell("The awful odor of the ", D(BALLOON), "'s digestive gas is thankfully fading.\n");
       return true;
     } else if ((g.HERE == GREASY_STRAW) && !(hasFlag(NECTAR, TOUCHBIT))) {
       tell("There's something yum-smelling around here!\n");
@@ -5780,9 +5780,9 @@ async function V_TIME(no_cr = false) {
   } else {
     tell("is impossible to determine, since you");
     if (!(hasFlag(CHRONOMETER, WORNBIT))) {
-      tell("'ve removed your ", S(CHRONOMETER));
+      tell("'ve removed your ", D(CHRONOMETER));
     } else {
-      tell("r ", S(CHRONOMETER), " has stopped");
+      tell("r ", D(CHRONOMETER), " has stopped");
     }
   }
   if (no_cr) {
@@ -6048,7 +6048,7 @@ async function V_USE() {
 
 async function PRE_VALIDATE() {
   if (!g.PRSI && !(await VISIBLE$(VALIDATION_STAMP))) {
-    tell("You don't have a ", S(VALIDATION_STAMP), "!\n");
+    tell("You don't have a ", D(VALIDATION_STAMP), "!\n");
     return true;
   } else if (!g.PRSI && !(await ULTIMATELY_IN$(VALIDATION_STAMP))) {
     tell(S(g.YNH));
@@ -6171,7 +6171,7 @@ async function V_WALK() {
 
 async function DESCRIBE_AUTO_DOOR() {
   if (g.HERE == BRIG || g.HERE == ARMORY) {
-    tell("The ", S(SECURITY_DOOR), " ");
+    tell("The ", D(SECURITY_DOOR), " ");
   } else {
     tell("The auto-door ");
   }
@@ -6685,7 +6685,7 @@ async function DESCRIBE_START(obj) {
   }
 }
 
-async function DESCRIBABLE$(obj, cont$) {
+async function DESCRIBABLE$(obj, cont$ = false) {
   if (hasFlag(obj, INVISIBLE)) {
     return false;
   } else if (obj == g.WINNER) {
@@ -7376,7 +7376,7 @@ async function SIGN_F() {
     } else if (g.HERE == GYM) {
       tell("\"IMPORTANT! The ", D(EXERCISE_MACHINE), " has diagnostic frequencies which communicate with each other on frequency 710. Do not bring anything which broadcasts on that frequency within range of the machine!\"");
       if (!(loc(EXERCISE_MACHINE) == GYM)) {
-        tell(" Strangely, you don't see any ", S(EXERCISE_MACHINE), " anywhere in the gym.");
+        tell(" Strangely, you don't see any ", D(EXERCISE_MACHINE), " anywhere in the gym.");
       }
       return crlf();
     } else if (g.HERE == SHIPPING_ROOM) {
@@ -7485,7 +7485,7 @@ async function HANDS_F() {
   } else if (isVerb(V.SHOOT)) {
     return (await JIGS_UP("Done. You might remain alive long enough to type EXAMINE MY STUMP. Oops, I guess not."));
   } else if (isVerb(V.DRILL)) {
-    tell("Hmmm. Are you trying for a hole in ", S(g.PRSO), " to match the hole in your head?\n");
+    tell("Hmmm. Are you trying for a hole in ", D(g.PRSO), " to match the hole in your head?\n");
     return true;
   } else if (isVerb(V.TAKE_WITH) && (g.PRSI == HANDS)) {
     await PERFORM(V.TAKE, g.PRSO);
@@ -7696,7 +7696,7 @@ async function BED_F() {
     setFlag(VALIDATION_STAMP, TOUCHBIT);
     move(VALIDATION_STAMP, g.HERE);
     await THIS_IS_IT(VALIDATION_STAMP);
-    tell("You discover a ", S(VALIDATION_STAMP), "!\n");
+    tell("You discover a ", D(VALIDATION_STAMP), "!\n");
     return true;
   } else if (isVerb(V.DRILL, V.KILL, V.SHOOT)) {
     tell("That would be a clear case of mattresscide!\n");
@@ -7779,7 +7779,7 @@ async function WAKING_UP() {
   if (hasFlag(SPACESUIT, WORNBIT)) {
     (await JIGS_UP("You dream of being buried alive in an ancient Egyptian pyramid, inside the sarcophagus with some long-dead pharaoh. Phew, does he stink! You gasp and gag as the air in the coffin runs low.\n   This dream, incidentally, is not a particularly unusual one among people who go to sleep inside space suits with limited oxygen supplies."));
   } else if (!(g.COURSE_PICKED == g.RIGHT_COURSE) && (g.HERE == SPACETRUCK)) {
-    tell("You wake up gasping for air! The ", S(SPACETRUCK_OBJECT));
+    tell("You wake up gasping for air! The ", D(SPACETRUCK_OBJECT));
     if (await RUNNING$(I_SPACETRUCK.id)) {
       tell(" is dead in uncharted space and it");
     } else {
@@ -7974,7 +7974,7 @@ async function WELDER_F() {
       return true;
     }
   } else if (isVerb(V.WHAT)) {
-    tell("A ", S(WELDER), " is a very simple machine which repairs any leaks or holes in the hull of any sort of space habitat. Because of the potentially catastrophic effects of a break in the integrity of a hull on the habitat's air supply, ", S(WELDER), "s are kept active at all times, roaming around with their sensing devices alert for the tiniest leak.\n");
+    tell("A ", D(WELDER), " is a very simple machine which repairs any leaks or holes in the hull of any sort of space habitat. Because of the potentially catastrophic effects of a break in the integrity of a hull on the habitat's air supply, ", D(WELDER), "s are kept active at all times, roaming around with their sensing devices alert for the tiniest leak.\n");
     return true;
   } else if (isVerb(V.SHOOT)) {
     remove(WELDER);
@@ -8273,10 +8273,10 @@ async function FORM_F() {
 async function CHRONOMETER_F() {
   if (isVerb(V.EXAMINE, V.READ)) {
     if (g.DAY > 2) {
-      tell("You glance at your ", S(CHRONOMETER), ", and realize with annoyance that it has stopped. You can't recall doing anything that might have broken it.\n");
+      tell("You glance at your ", D(CHRONOMETER), ", and realize with annoyance that it has stopped. You can't recall doing anything that might have broken it.\n");
       return true;
     } else {
-      tell("It is a standard wrist ", S(CHRONOMETER), " with a digital display. ");
+      tell("It is a standard wrist ", D(CHRONOMETER), " with a digital display. ");
       await V_TIME(true);
       tell(" The back is engraved with the message \"Good luck in the Patrol! Love, Mom and Dad.\"\n");
       return true;
@@ -8288,7 +8288,7 @@ async function CHRONOMETER_F() {
 
 async function PATROL_UNIFORM_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("It is a standard-issue one-pocket Stellar ", S(PATROL_UNIFORM), ", a miracle of modern technology. It will keep its owner warm in cold climates and cool in warm locales. It provides protection against mild radiation, repels all insects, absorbs sweat, promotes healthy skin tone, and on top of everything else, it is super-comfy");
+    tell("It is a standard-issue one-pocket Stellar ", D(PATROL_UNIFORM), ", a miracle of modern technology. It will keep its owner warm in cold climates and cool in warm locales. It provides protection against mild radiation, repels all insects, absorbs sweat, promotes healthy skin tone, and on top of everything else, it is super-comfy");
     if (g.SUIT_PRESSED) {
       tell(". The uniform has been recently pressed");
     }
@@ -8489,7 +8489,7 @@ async function FLOYD_F(oarg = false) {
       }
     } else if (isVerb(V.TAKE) && (loc(g.PRSO) == HEATING_CHAMBER)) {
       move(g.PRSO, g.HERE);
-      tell("\"Okay!\" Floyd reaches into the ", S(HEATING_CHAMBER), " and grabs");
+      tell("\"Okay!\" Floyd reaches into the ", D(HEATING_CHAMBER), " and grabs");
       await TPRINT_PRSO();
       tell(". \"Yikes, it's hot!\" He drops it to the deck, where it quickly cools.\n");
       return true;
@@ -8916,7 +8916,7 @@ async function PICK_ROBOT() {
 
 async function CARGO_BAY_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This huge airlock is essentially a giant loading dock, where truckloads of forms arrive from various printing planets throughout the sector and are immediately distributed throughout the administrative deck. The only exit on foot is back the way you came. A ", S(SPACETRUCK_OBJECT), ", its hatch ");
+    tell("This huge airlock is essentially a giant loading dock, where truckloads of forms arrive from various printing planets throughout the sector and are immediately distributed throughout the administrative deck. The only exit on foot is back the way you came. A ", D(SPACETRUCK_OBJECT), ", its hatch ");
     await OPEN_CLOSED(SPACETRUCK_HATCH);
     tell(", waits in the cargo bay.");
     return true;
@@ -9032,7 +9032,7 @@ async function PILOT_SEAT_F(varg = false) {
       g.FLOYD_SPOKE = true;
       g.AWAITING_REPLY = 2;
       await QUEUE(I_REPLY.id, g.C_ELAPSED + 2);
-      tell(" \"Let Floyd launch the ", S(SPACETRUCK_OBJECT), "? Please? Floyd has not crashed a truck in over two weeks!\"");
+      tell(" \"Let Floyd launch the ", D(SPACETRUCK_OBJECT), "? Please? Floyd has not crashed a truck in over two weeks!\"");
     }
     return true;
   } else {
@@ -9115,7 +9115,7 @@ async function I_SPACETRUCK() {
       tell("   With a final burst, the braking rockets bring you to a halt a few thousand meters from the station.\n");
       return true;
     } else {
-      tell("The forward braking rockets sputter off as the ", S(SPACETRUCK_OBJECT), " comes to a dead stop in space. There is no space station, or any other sign of human civilization, in sight.\n");
+      tell("The forward braking rockets sputter off as the ", D(SPACETRUCK_OBJECT), " comes to a dead stop in space. There is no space station, or any other sign of human civilization, in sight.\n");
       return true;
     }
   } else if (g.SPACETRUCK_COUNTER == 5) {
@@ -9190,7 +9190,7 @@ async function SPACE_LIQUID(obj) {
 async function SPACE_FOOD() {
   remove(ORANGE_GOO);
   remove(GRAY_GOO);
-  tell("The food in the ", S(FOOD_KIT), " instantly crystallizes and drifts away.\n");
+  tell("The food in the ", D(FOOD_KIT), " instantly crystallizes and drifts away.\n");
   return true;
 }
 
@@ -9300,7 +9300,7 @@ async function GOO_F() {
 
 async function DOCKING_BAY_2_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This is a tall, narrow bay. Your ", S(SPACETRUCK_OBJECT), " is docked here. Its hatch is ");
+    tell("This is a tall, narrow bay. Your ", D(SPACETRUCK_OBJECT), " is docked here. Its hatch is ");
     await OPEN_CLOSED(SPACETRUCK_HATCH);
     tell(". To the east is the huge door into the station.");
     return true;
@@ -9382,7 +9382,7 @@ async function JAMMER_F() {
     remove(FORKLIFT);
     remove(EXERCISE_MACHINE);
     await DEQUEUE(I_FORKLIFT.id);
-    tell("The ", S(EXERCISE_MACHINE), " springs to life, its powerful arms clamping shut on the forklift. The vehicle belches exhaust as it tries to free itself. The two machines tumble over in a death grip and then explode! When the smoke clears, there's not a trace of either machine.\n");
+    tell("The ", D(EXERCISE_MACHINE), " springs to life, its powerful arms clamping shut on the forklift. The vehicle belches exhaust as it tries to free itself. The two machines tumble over in a death grip and then explode! When the smoke clears, there's not a trace of either machine.\n");
     return true;
   } else {
     return false;
@@ -9769,7 +9769,7 @@ async function COMMANDERS_OFFICE_F(rarg) {
   } else if (rarg == M_LOOK) {
     tell("This is the Station Commander's H.Q., with doors to the south and east, and doorways to the north and northwest.");
     if (!(loc(LOG_READER) == g.HERE)) {
-      tell(" There's a black scar where the ", S(LOG_READER), " once sat.");
+      tell(" There's a black scar where the ", D(LOG_READER), " once sat.");
     }
     return true;
   } else {
@@ -9786,7 +9786,7 @@ async function LOG_READER_F() {
     if (hasFlag(LOG_READER, ACTIVEBIT) && (loc(LOG_TAPE) == LOG_READER)) {
       tell("The red button is glowing. ");
     }
-    tell("At the moment, the ", S(LOG_READER), " is o");
+    tell("At the moment, the ", D(LOG_READER), " is o");
     if (hasFlag(LOG_READER, ACTIVEBIT)) {
       tell("n");
     } else {
@@ -9839,7 +9839,7 @@ async function LOG_READER_BUTTON_F() {
   } else if (isVerb(V.PUSH)) {
     if ((loc(LOG_TAPE) == LOG_READER) && hasFlag(LOG_READER, ACTIVEBIT)) {
       if (g.LOG_COUNTER == 10) {
-        tell("A mechanized voice from the ", S(LOG_READER), " says, \"End of Log.\"\n");
+        tell("A mechanized voice from the ", D(LOG_READER), " says, \"End of Log.\"\n");
         return true;
       } else {
         return await READ_LOG();
@@ -9856,11 +9856,11 @@ async function LOG_READER_BUTTON_F() {
 async function READ_LOG() {
   g.LOG_COUNTER = g.LOG_COUNTER + 1;
   if (g.LOG_COUNTER == 1) {
-    tell("A gravelly voice comes from the ", S(LOG_READER), ": ");
+    tell("A gravelly voice comes from the ", D(LOG_READER), ": ");
   }
   tell("\"11349.12.");
   if (g.LOG_COUNTER == 1) {
-    tell("2.3800: Some kripping jokers have been pilfering the station's fuel cells to go out on joyrides! I have hidden the fuel cells up in the Dome's ", S(HOUSING), ", slapped a lock on the bin, and deposited the key in my safe! There will be no joyriding in my command!");
+    tell("2.3800: Some kripping jokers have been pilfering the station's fuel cells to go out on joyrides! I have hidden the fuel cells up in the Dome's ", D(HOUSING), ", slapped a lock on the bin, and deposited the key in my safe! There will be no joyriding in my command!");
   } else if (g.LOG_COUNTER == 2) {
     tell("2.5100: Reproductions Officer Hausberg reports that collater #22 is off-line for routine service. Estimates one or two days downtime. Also, unidentified craft detected in sector. No response to hailings. Sending Finsterwald to intercept.");
   } else if (g.LOG_COUNTER == 3) {
@@ -9870,19 +9870,19 @@ async function READ_LOG() {
   } else if (g.LOG_COUNTER == 5) {
     tell("3.5100: No cooperation from Shady Dan, so I'm putting the village off-limits to station personnel. No more village entry forms will be validated.");
   } else if (g.LOG_COUNTER == 6) {
-    tell("3.5250: Some kripping joker snuck into my office and validated a whole batch of village entry forms! I won't take that kind of trot aboard my station! I'll hide the stamp under my bed until I find out who's responsible. Also, I gave Schmidt permission to move the alien pyramid to the ", S(HOLDING_TANK), " in the Sci Sub-Module for further study; the ", S(SKELETON), " is too brittle to move, they say. Hmmm... This ", S(LOG_READER), " is overheating. I'll have to dig out the spare.");
+    tell("3.5250: Some kripping joker snuck into my office and validated a whole batch of village entry forms! I won't take that kind of trot aboard my station! I'll hide the stamp under my bed until I find out who's responsible. Also, I gave Schmidt permission to move the alien pyramid to the ", D(HOLDING_TANK), " in the Sci Sub-Module for further study; the ", D(SKELETON), " is too brittle to move, they say. Hmmm... This ", D(LOG_READER), " is overheating. I'll have to dig out the spare.");
   } else if (g.LOG_COUNTER == 7) {
     tell("3.7700: Equipment Officer Mertzhoffer informs me that there have been several unexplainable breakdowns in the Gymnastic Equipment and the Laundering Machinery. All very simple equipment; could it be sabotage? If so, how? Who? Why?");
   } else if (g.LOG_COUNTER == 8) {
     tell("4.1650: Emergency communication from the S.P.S. Duffy. They are critically low on ", S(g.FORM_NAME), ", and are sending someone over to pick up a truckload of them. Reproductions Officer Hausberg says that the #22 collater should be available to prepare the forms.");
   } else if (g.LOG_COUNTER == 9) {
-    tell("4.1850: Hausberg reports an unexpected shutdown of web-feeder #17. No apparent reason for the shutdown, and no warning, either. He says that one of his personnel almost lost an arm when it shut down. We may have to halt the entire plant to investigate. No telling how long... What the... Trot! Now the spare ", S(LOG_READER), " is overheating, also!");
+    tell("4.1850: Hausberg reports an unexpected shutdown of web-feeder #17. No apparent reason for the shutdown, and no warning, either. He says that one of his personnel almost lost an arm when it shut down. We may have to halt the entire plant to investigate. No telling how long... What the... Trot! Now the spare ", D(LOG_READER), " is overheating, also!");
   } else {
-    tell("4.1900: One of the ensigns in the filing division was seriously injured when one of the ", S(WELDER), "s malfunctioned. She's in Sick Bay now; Doc says she should pull through. I've been in space for 32 years and I've never heard of a ", S(WELDER), " malfun... What the krip!...");
+    tell("4.1900: One of the ensigns in the filing division was seriously injured when one of the ", D(WELDER), "s malfunctioned. She's in Sick Bay now; Doc says she should pull through. I've been in space for 32 years and I've never heard of a ", D(WELDER), " malfun... What the krip!...");
   }
   tell("\"");
   if (!(g.LOG_COUNTER == 10)) {
-    tell("\n   A mechanized voice from the ", S(LOG_READER), " intones the single word \"More,\" and the red button on the reader lights up.");
+    tell("\n   A mechanized voice from the ", D(LOG_READER), " intones the single word \"More,\" and the red button on the reader lights up.");
   }
   return crlf();
 }
@@ -10087,7 +10087,7 @@ async function EXERCISE_MACHINE_F(oarg) {
     return false;
   } else if (isVerb(V.ENTER)) {
     if (await RUNNING$(I_EXERCISE_MACHINE.id)) {
-      tell("The ", S(EXERCISE_MACHINE));
+      tell("The ", D(EXERCISE_MACHINE));
       return (await JIGS_UP(" hums encouraging platitudes as it exercises you to death."));
     } else if (g.HERE == COMPUTER_CONTROL) {
       tell("The forklift is in the way.\n");
@@ -10103,7 +10103,7 @@ async function EXERCISE_MACHINE_F(oarg) {
     await TRPRINT(EXERCISE_MACHINE);
     return true;
   } else if (isVerb(V.KILL, V.MUNG)) {
-    tell("The ", S(EXERCISE_MACHINE), " is made of zynoid-reinforced hyper-steel.\n");
+    tell("The ", D(EXERCISE_MACHINE), " is made of zynoid-reinforced hyper-steel.\n");
     return true;
   } else if (isVerb(V.USE)) {
     if (loc(PROTAGONIST) == EXERCISE_MACHINE) {
@@ -10282,9 +10282,9 @@ async function CHAPEL_F(rarg) {
     } else {
       tell("is one of the");
     }
-    tell(" universal symbols of every major galactic religion: an ", S(ETERNAL_FLAME));
+    tell(" universal symbols of every major galactic religion: an ", D(ETERNAL_FLAME));
     if (!(hasFlag(STAR, TOUCHBIT))) {
-      tell(" and a ", S(STAR));
+      tell(" and a ", D(STAR));
     }
     tell(". ");
     if (hasFlag(ETERNAL_FLAME, ONBIT)) {
@@ -10345,7 +10345,7 @@ async function STAR_F() {
 async function ETERNAL_FLAME_F() {
   if (isVerb(V.EXAMINE)) {
     if (hasFlag(ETERNAL_FLAME, ONBIT)) {
-      tell("The ", S(ETERNAL_FLAME), " burns high above the floor of the chapel. It looks like a reproduction of the ", S(ETERNAL_FLAME), " designed by the 108th century artist, Ernie DaCosta, for the Sierra Vista Monastery on Bulbus VII.\n");
+      tell("The ", D(ETERNAL_FLAME), " burns high above the floor of the chapel. It looks like a reproduction of the ", D(ETERNAL_FLAME), " designed by the 108th century artist, Ernie DaCosta, for the Sierra Vista Monastery on Bulbus VII.\n");
       return true;
     } else {
       tell(S(g.FLAME_EXTINGUISHED), "\n");
@@ -10403,7 +10403,7 @@ async function SWITCH_F() {
       await CANT_REACH(SWITCH);
       return true;
     }
-    tell("The ", S(ETERNAL_FLAME), " ");
+    tell("The ", D(ETERNAL_FLAME), " ");
     if (hasFlag(ETERNAL_FLAME, ONBIT)) {
       clearFlag(ETERNAL_FLAME, ACTIVEBIT);
       clearFlag(ETERNAL_FLAME, ONBIT);
@@ -10416,7 +10416,7 @@ async function SWITCH_F() {
       if (loc(BALLOON) == g.HERE) {
         move(BALLOON, LEVEL_THREE);
         move(LEASH, LEVEL_THREE);
-        tell(" The ", S(BALLOON), " shoots out of the Chapel.");
+        tell(" The ", D(BALLOON), " shoots out of the Chapel.");
       }
       return crlf();
     }
@@ -10669,7 +10669,7 @@ async function NANOFILM_READER_F() {
     tell(S(g.HUH));
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("The ", S(NANOFILM_READER), " must be a voice-output model, since it has no screen. The reader is o");
+    tell("The ", D(NANOFILM_READER), " must be a voice-output model, since it has no screen. The reader is o");
     if (hasFlag(NANOFILM_READER, ACTIVEBIT)) {
       tell("n");
     } else {
@@ -10704,7 +10704,7 @@ async function NANOFILM_READER_F() {
     if (spool == MAUVE_SPOOL) {
       tell("Gamma-Delta-Gamma class Deep-Space Stations are equipped with a full range of collating machinery. The workhorse of the...\" There is a burst of static from the reader. \"...common malfunction of this large collater. First check the lower fromitz...\" More static. \"...and replace with");
     } else if (spool == LILAC_SPOOL) {
-      tell("Replacement of depleted fuel cells on a Forms Transport ", S(SPACETRUCK), " is a fast and simple proc...\" Static. \"...with the quarnum wrench against the...\" More serious static. \"...at which point the fuel cell opening will appear");
+      tell("Replacement of depleted fuel cells on a Forms Transport ", D(SPACETRUCK), " is a fast and simple proc...\" Static. \"...with the quarnum wrench against the...\" More serious static. \"...at which point the fuel cell opening will appear");
     } else {
       tell("Maintenance of the chapel equipment is simple, and should take little time away from your Chaplain duties. Fuel must be added periodically to the flame's fuel reservoir, located...\" A loud burst of static drowns out the recording. \"...ontact the station's Requisitions Officer if replacements are unavailable from the...\" More static. \"...iode in the Chapel's star has an expected life of");
     }
@@ -10738,7 +10738,7 @@ async function DOME_F(rarg) {
     } else {
       tell("are");
     }
-    tell(" an ", S(GRATING));
+    tell(" an ", D(GRATING));
     if (hasFlag(GRATING, TOUCHBIT)) {
       tell(", which has been bent back from the air shaft to form an opening.");
       return true;
@@ -10746,7 +10746,7 @@ async function DOME_F(rarg) {
       tell(", which looks a bit loose.");
       return true;
     } else {
-      tell(" and a thick metal ", S(HOUSING), " with a sign stencilled on it.");
+      tell(" and a thick metal ", D(HOUSING), " with a sign stencilled on it.");
       return true;
     }
   } else {
@@ -10846,7 +10846,7 @@ async function GRATING_F() {
       tell("The grating has been bent back far enough for you to squeeze through.\n");
       return true;
     } else if (g.GRATING_LOOSE) {
-      tell("The ", S(GRATING), " looks loose.\n");
+      tell("The ", D(GRATING), " looks loose.\n");
       return true;
     } else {
       return false;
@@ -10991,7 +10991,7 @@ async function PEDESTAL_F() {
 
 async function SKELETON_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("It's fairly humanoid in shape. The most unusual feature of the ", S(SKELETON), " is an unusually overdeveloped tongue case.\n");
+    tell("It's fairly humanoid in shape. The most unusual feature of the ", D(SKELETON), " is an unusually overdeveloped tongue case.\n");
     return true;
   } else if (await TOUCHING$(SKELETON)) {
     remove(SKELETON);
@@ -11016,13 +11016,13 @@ async function ROBOT_SHOP_F(rarg) {
 
 async function HEATING_CHAMBER_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("The ", S(HEATING_CHAMBER), " cleans or sterilizes small tools and equipment. There's a small opening for placing items in the chamber.\n");
+    tell("The ", D(HEATING_CHAMBER), " cleans or sterilizes small tools and equipment. There's a small opening for placing items in the chamber.\n");
     return true;
   } else if (isVerb(V.OPEN, V.CLOSE)) {
     tell(S(g.HUH));
     return true;
   } else if (isVerb(V.ON, V.OFF)) {
-    tell("Since they take so long to heat up, ", S(HEATING_CHAMBER), "s are usually kept on all the time. This one has no visible on-off switch.\n");
+    tell("Since they take so long to heat up, ", D(HEATING_CHAMBER), "s are usually kept on all the time. This one has no visible on-off switch.\n");
     return true;
   } else if (isVerb(V.REACH_IN)) {
     tell("As a safety precaution, because of the intense heat within the chamber, the opening is too small for a normal human hand to pass through.\n");
@@ -11241,7 +11241,7 @@ async function GENERIC_SHAFT_F() {
 
 async function ELEVATOR_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This is a large, cubical frame, open on all four sides. The ", S(ELEVATOR_SHAFT), " encloses the elevator on every side except the west. There is a keypad for typing the number of the level you want to go to.");
+    tell("This is a large, cubical frame, open on all four sides. The ", D(ELEVATOR_SHAFT), " encloses the elevator on every side except the west. There is a keypad for typing the number of the level you want to go to.");
     return true;
   } else if ((rarg == M_END) && (g.ELEVATOR_LEVEL == 7)) {
     return await BELOW_DECK_NOISES();
@@ -11269,7 +11269,7 @@ async function ELEVATOR_EXIT_F() {
 }
 
 async function ELEVATOR_ENTER_F() {
-  tell("The ", S(ELEVATOR_SHAFT), " is s");
+  tell("The ", D(ELEVATOR_SHAFT), " is s");
   if (g.DAY > 2) {
     tell("upposed to be a weightless environment, outside of the station's artificial gravity field. But the gravity in the shaft is one standard Gee!");
   } else {
@@ -11334,7 +11334,7 @@ async function SECURITY_DOOR_F() {
       await PERFORM(V.OPEN, AUTO_DOOR);
       return true;
     } else {
-      tell("The only way to open a ", S(SECURITY_DOOR), " is by putting a properly coded ID card in the door's ID reader.\n");
+      tell("The only way to open a ", D(SECURITY_DOOR), " is by putting a properly coded ID card in the door's ID reader.\n");
       return true;
     }
   } else if (isVerb(V.CLOSE) && hasFlag(SECURITY_DOOR, OPENBIT)) {
@@ -11352,7 +11352,7 @@ async function I_SECURITY_DOOR() {
       await I_FLOYD();
       g.FLOYD_SPOKE = true;
     }
-    tell("   The ", S(SECURITY_DOOR), " glides shut.\n");
+    tell("   The ", D(SECURITY_DOOR), " glides shut.\n");
     return true;
   } else {
     return false;
@@ -11369,7 +11369,7 @@ async function ID_READER_F() {
     } else if (g.ID_RANK > 6) {
       setFlag(SECURITY_DOOR, OPENBIT);
       await QUEUE(I_SECURITY_DOOR.id, g.C_ELAPSED + 2);
-      tell("The ", S(SECURITY_DOOR), " slides open.\n");
+      tell("The ", D(SECURITY_DOOR), " slides open.\n");
       return true;
     } else {
       tell(S(g.NOTHING_HAPPENS));
@@ -11486,7 +11486,7 @@ async function PLATO_F() {
       tell("\"Regretably, such criminal skills are not among my limited abilities.\"\n");
       return true;
     } else if (isVerb(V.OPEN, V.UNLOCK) && (g.PRSO == SECURITY_DOOR)) {
-      tell("\"I, being a robot and a subject of irrational discrimination, have not been issued an identification card. You, presumably, have such a card, but I have grave doubts that your rank is sufficient for opening a ", S(SECURITY_DOOR), ".\"\n");
+      tell("\"I, being a robot and a subject of irrational discrimination, have not been issued an identification card. You, presumably, have such a card, but I have grave doubts that your rank is sufficient for opening a ", D(SECURITY_DOOR), ".\"\n");
       return true;
     } else if (isVerb(V.OFF, V.KILL, V.MUNG) && (g.PRSO == WELDER)) {
       tell("\"I (gulp) decline on the grounds that I am an unregenerate coward.\"\n");
@@ -11498,7 +11498,7 @@ async function PLATO_F() {
       tell("\"Humblest greetings, Lieutenant!\"\n");
       return true;
     } else {
-      tell(S(VOLUME), " must be engrossing, because he didn't hear you.\n");
+      tell(D(VOLUME), " must be engrossing, because he didn't hear you.\n");
       return true;
     }
   } else if (isVerb(V.TAKE) && g.FLOYD_TRYTAKEN) {
@@ -11780,16 +11780,16 @@ async function I_EXERCISE_MACHINE() {
     await DEQUEUE(I_EXERCISE_MACHINE.id);
     await QUEUE(I_FORKLIFT.id, -1);
     move(FORKLIFT, g.HERE);
-    tell("The ", S(EXERCISE_MACHINE), " experiences a series of mechanical spasms and then freezes.\n   Before you can catch your breath, a huge, grime-covered forklift descends from the ladder hole on a cushion of anti-gravity. It settles down", S(g.FORKLIFT_DESC), "\n");
+    tell("The ", D(EXERCISE_MACHINE), " experiences a series of mechanical spasms and then freezes.\n   Before you can catch your breath, a huge, grime-covered forklift descends from the ladder hole on a cushion of anti-gravity. It settles down", S(g.FORKLIFT_DESC), "\n");
     return true;
   } else if (g.EXERCISE_MACHINE_COUNTER == 1) {
-    tell("The ", S(EXERCISE_MACHINE), " rolls slowly towards you, bellowing, \"No pain, no gain!\"\n");
+    tell("The ", D(EXERCISE_MACHINE), " rolls slowly towards you, bellowing, \"No pain, no gain!\"\n");
     return true;
   } else if (g.EXERCISE_MACHINE_COUNTER == 2) {
-    tell("As the ", S(EXERCISE_MACHINE), " nears you, its massive weights and levers begin crashing violently against each other.\n");
+    tell("As the ", D(EXERCISE_MACHINE), " nears you, its massive weights and levers begin crashing violently against each other.\n");
     return true;
   } else {
-    tell("The ", S(EXERCISE_MACHINE));
+    tell("The ", D(EXERCISE_MACHINE));
     return (await JIGS_UP(" reaches you, and performs various repetitions all over your body, proving that exercise isn't always good for you."));
   }
 }
@@ -11805,7 +11805,7 @@ async function FORKLIFT_F(oarg = false) {
     tell("The forklift sits", S(g.FORKLIFT_DESC), " It's revving its engine, and probably not because its pistons need a workout!\n");
     return true;
   } else if (isVerb(V.ENTER)) {
-    tell("The immobile ", S(EXERCISE_MACHINE), " blocks access into the forklift.\n");
+    tell("The immobile ", D(EXERCISE_MACHINE), " blocks access into the forklift.\n");
     return true;
   } else {
     return false;
@@ -11833,7 +11833,7 @@ async function COMPUTER_CONTROL_EXIT_F() {
     tell("The forklift blocks your way.\n");
     return false;
   } else if (loc(EXERCISE_MACHINE) == g.HERE) {
-    tell("The ", S(EXERCISE_MACHINE), " blocks your way.\n");
+    tell("The ", D(EXERCISE_MACHINE), " blocks your way.\n");
     return false;
   } else if (g.PRSO == P.NORTH) {
     return BOTTOM_OF_ELEVATOR_SHAFT;
@@ -11873,7 +11873,7 @@ async function I_FACTORY() {
 async function PYRAMID_F() {
   if (isVerb(V.PUT_ON) && (g.PRSO == FOIL)) {
     if (g.FLOYD_SHOT) {
-      tell("The foil settles over the pyramid like a blanket, reflecting the pyramid's evil emanations right back into itself. A reverberating whine, like an electronically amplified beehive, fills the room. The whine grows louder and louder, the pyramid and its pedestal begin vibrating, and the sharp smell of ozone assaults you.\n   The noise and the smell and the vibration overwhelm you. As your knees buckle and you drop to the deck, the pyramid explodes in a burst of intense white light. The explosion leaves you momentarily blinded, but you can hear a mechanized voice on the P.A. system, getting slower and deeper like a stereo disc that has lost its power: \"Launch aborted -- launch -- abort --\"\n   The replica pyramids fade to darkness, and a subtle change in background sound tells you that the space station's systems and machinery are returning to their normal functions.\n   Still dazed, you crawl over to Floyd, lying in a smoking heap near the blackened pedestal. Damaged beyond any conceivable repairs, he half-opens his eyes and looks up at you for the last time. \"Floyd sorry for the way he acted. Floyd knows...you did what you...had to do.\" Wincing in pain, he slowly reaches over to touch your hand. \"One last game of Hider-and-Seeker? You be It. Ollie ollie...\" His voice is growing weaker. \"...oxen...\" His eyes close. \"...free...\" His hand slips away from yours, and he slumps backwards, lifeless. One of his compartments falls open, and Floyd's favorite paddleball set drops to the deck.\n   In the long silence that follows, something Plato said echoes through your mind. \"...think instead about the joy-filled times when you and your friend were together.\" A noise makes you turn around, and you see Oliver, the little robot that stirred such brotherly feelings in Floyd. Toddling over to you on unsteady legs, he looks uncomprehendingly at Floyd's remains, but picks up the paddleball set. Oliver looks up at you, tugs on the leg of your ", S(PATROL_UNIFORM), ", and asks in a quavering voice, \"Play game... Play game with Oliver?\"\n\n");
+      tell("The foil settles over the pyramid like a blanket, reflecting the pyramid's evil emanations right back into itself. A reverberating whine, like an electronically amplified beehive, fills the room. The whine grows louder and louder, the pyramid and its pedestal begin vibrating, and the sharp smell of ozone assaults you.\n   The noise and the smell and the vibration overwhelm you. As your knees buckle and you drop to the deck, the pyramid explodes in a burst of intense white light. The explosion leaves you momentarily blinded, but you can hear a mechanized voice on the P.A. system, getting slower and deeper like a stereo disc that has lost its power: \"Launch aborted -- launch -- abort --\"\n   The replica pyramids fade to darkness, and a subtle change in background sound tells you that the space station's systems and machinery are returning to their normal functions.\n   Still dazed, you crawl over to Floyd, lying in a smoking heap near the blackened pedestal. Damaged beyond any conceivable repairs, he half-opens his eyes and looks up at you for the last time. \"Floyd sorry for the way he acted. Floyd knows...you did what you...had to do.\" Wincing in pain, he slowly reaches over to touch your hand. \"One last game of Hider-and-Seeker? You be It. Ollie ollie...\" His voice is growing weaker. \"...oxen...\" His eyes close. \"...free...\" His hand slips away from yours, and he slumps backwards, lifeless. One of his compartments falls open, and Floyd's favorite paddleball set drops to the deck.\n   In the long silence that follows, something Plato said echoes through your mind. \"...think instead about the joy-filled times when you and your friend were together.\" A noise makes you turn around, and you see Oliver, the little robot that stirred such brotherly feelings in Floyd. Toddling over to you on unsteady legs, he looks uncomprehendingly at Floyd's remains, but picks up the paddleball set. Oliver looks up at you, tugs on the leg of your ", D(PATROL_UNIFORM), ", and asks in a quavering voice, \"Play game... Play game with Oliver?\"\n\n");
       g.SCORE = g.SCORE + 5;
       await CONTINUE();
       await TELL_SCORE();
@@ -11948,7 +11948,7 @@ async function IRIS_HATCH_F() {
 
 async function CRYSTAL_BALL_F() {
   if (isVerb(V.LOOK_INSIDE)) {
-    tell("As you gaze into the ball, a vision takes shape...tiny letters, deep within the crystal... \"Tips: Be general with your predictions. Always promise romantic encounters. And wave your hands around the ", S(CRYSTAL_BALL), "; the marks just love that touch.\"\n");
+    tell("As you gaze into the ball, a vision takes shape...tiny letters, deep within the crystal... \"Tips: Be general with your predictions. Always promise romantic encounters. And wave your hands around the ", D(CRYSTAL_BALL), "; the marks just love that touch.\"\n");
     return true;
   } else {
     return false;
@@ -12068,7 +12068,7 @@ async function MIRROR_F() {
 
 async function FOIL_F() {
   if (isVerb(V.MEASURE, V.EXAMINE)) {
-    tell("It's a large piece of ", S(FOIL), ", about two meters on a side.\n");
+    tell("It's a large piece of ", D(FOIL), ", about two meters on a side.\n");
     return true;
   } else if (isVerb(V.CRUMPLE)) {
     tell("You crumple the foil into a fist-sized wad, but it instantly returns to its wrinkle-free state.\n");
@@ -12095,7 +12095,7 @@ async function CAGE_F() {
     setFlag(CAGE, OPENBIT);
     move(BALLOON, g.HERE);
     move(LEASH, g.HERE);
-    tell("As you open the cage, the ", S(BALLOON), " floats out of it.\n");
+    tell("As you open the cage, the ", D(BALLOON), " floats out of it.\n");
     return true;
   } else if (isVerb(V.ENTER)) {
     tell("When you were an Ensign Seventh Class, you spent many a day in the brig of the S.P.S. Feinstein. That was enough time behind bars to last a lifetime (Footnote 7).\n");
@@ -12110,12 +12110,12 @@ async function BALLOON_F() {
     await PERFORM(V.OPEN, CAGE);
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("This is quite a thrill -- you've never seen an ", S(BALLOON), " before! This particular specimen has a leash attached to it. Balloon creatures, you've heard, don't mind being leashed.\n");
+    tell("This is quite a thrill -- you've never seen an ", D(BALLOON), " before! This particular specimen has a leash attached to it. Balloon creatures, you've heard, don't mind being leashed.\n");
     return true;
   } else if (isVerb(V.SHOOT, V.MUNG, V.DRILL)) {
     remove(BALLOON);
     remove(LEASH);
-    tell("The ", S(BALLOON), ", considered by many to be the friendliest and most peaceful animal in the known universe, ");
+    tell("The ", D(BALLOON), ", considered by many to be the friendliest and most peaceful animal in the known universe, ");
     if (isVerb(V.SHOOT)) {
       tell("is consumed in a ball of burning hydrogen.");
       if (g.HANGING_IN_AIR) {
@@ -12168,11 +12168,11 @@ async function LEASH_F() {
       return true;
     } else {
       g.HANGING_IN_AIR = true;
-      tell("As you grab the leash, the startled ", S(BALLOON), " tries to get away by hyperinflating. Slowly, its buoyancy lifts you right ");
+      tell("As you grab the leash, the startled ", D(BALLOON), " tries to get away by hyperinflating. Slowly, its buoyancy lifts you right ");
       if (hasFlag(BOOTS, WORNBIT)) {
         clearFlag(BOOTS, WORNBIT);
         move(BOOTS, g.HERE);
-        tell("out of the ", S(BOOTS));
+        tell("out of the ", D(BOOTS));
       } else {
         tell("off the deck");
       }
@@ -12273,7 +12273,7 @@ async function CASINO_F(rarg) {
   if (rarg == M_LOOK) {
     tell("This dimly-lit space building once featured some plush decor, but now the room is ratty, faded, and reeking of tobacco smoke. Deserted gambling tables fill all six sides of the room. ");
     if (loc(ROULETTE_WHEEL) == g.HERE) {
-      tell("A spotlight illuminates a lone ", S(ROULETTE_WHEEL), ". ");
+      tell("A spotlight illuminates a lone ", D(ROULETTE_WHEEL), ". ");
     }
     tell("The");
     if (g.ROULETTE_TURNED) {
@@ -12298,7 +12298,7 @@ async function ROULETTE_WHEEL_F() {
       clearFlag(CASINO, NWELDERBIT);
       g.ROBOT_EVILNESS = g.ROBOT_EVILNESS + 1;
       g.SCORE = g.SCORE + 4;
-      tell("As you turn the ", S(ROULETTE_WHEEL), ", exits appear above you and to the north!\n");
+      tell("As you turn the ", D(ROULETTE_WHEEL), ", exits appear above you and to the north!\n");
       return true;
     }
   } else if (isVerb(V.SPLAY_WITH) && (g.PRSO == ROULETTE_WHEEL) && !g.ROULETTE_TURNED) {
@@ -12428,7 +12428,7 @@ async function BOOK_F() {
   if (isVerb(V.OPEN, V.LOOK_INSIDE, V.READ, V.EXAMINE)) {
     if (loc(PAPER) == BOOK) {
       move(PAPER, g.HERE);
-      tell("As you open the book, a ", S(PAPER), " flutters out!\n");
+      tell("As you open the book, a ", D(PAPER), " flutters out!\n");
       return true;
     } else {
       tell("The book is a technical linguistics text, far beyond your understanding of the subject.\n");
@@ -12551,7 +12551,7 @@ async function OUTER_AIRLOCK_DOOR_F() {
       if (loc(BALLOON) == g.HERE) {
         remove(BALLOON);
         remove(LEASH);
-        tell("   The ", S(BALLOON), ", unable to adjust to the sudden drop in pressure, explodes into a puff of hydrogen that immediately vanishes!\n");
+        tell("   The ", D(BALLOON), ", unable to adjust to the sudden drop in pressure, explodes into a puff of hydrogen that immediately vanishes!\n");
       }
       if ((await ULTIMATELY_IN$(FOOD_KIT)) && (FOOD_KIT == loc(ORANGE_GOO) || FOOD_KIT == loc(GRAY_GOO)) && hasFlag(FOOD_KIT, OPENBIT)) {
         tell("   ");
@@ -12646,7 +12646,7 @@ async function LOST_IN_SPACE() {
 
 async function VACUUM_STORAGE_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This area outside the airlock is being used for vacuum storage, in much the same way that your dad kept beer cold in the back yard during winters on Gallium. In fact, the villagers usually refer to this place as the \"vac yard.\" Only the ", S(BOOTS), ", clinging to the outer skin of the warehouse, is preventing you from floating off into space. Tethered all around you: those items in the Trading Post's inventory that, for reasons of temperature or anti-corrosion, must be stored here in space. The door to the airlock, \"above\" you, is ");
+    tell("This area outside the airlock is being used for vacuum storage, in much the same way that your dad kept beer cold in the back yard during winters on Gallium. In fact, the villagers usually refer to this place as the \"vac yard.\" Only the ", D(BOOTS), ", clinging to the outer skin of the warehouse, is preventing you from floating off into space. Tethered all around you: those items in the Trading Post's inventory that, for reasons of temperature or anti-corrosion, must be stored here in space. The door to the airlock, \"above\" you, is ");
     await OPEN_CLOSED(OUTER_AIRLOCK_DOOR);
     tell(".");
     return true;
@@ -12717,11 +12717,11 @@ async function SPRAY_CAN_F() {
     g.SPRAY_COUNTER = g.SPRAY_COUNTER - 1;
     tell("A dusty mist puffs from the can and begins dissipating");
     if (loc(BALLOON) == g.HERE) {
-      tell(". The ", S(BALLOON), " begins darting around the room, its mouth absurdly wide open");
+      tell(". The ", D(BALLOON), " begins darting around the room, its mouth absurdly wide open");
     } else if ((g.HERE == PET_STORE) && (loc(BALLOON) == CAGE)) {
-      tell(". The ", S(BALLOON), " puffs wildly around the cage, trying to get at the yummy spores");
+      tell(". The ", D(BALLOON), " puffs wildly around the cage, trying to get at the yummy spores");
     } else if ((await NEXT_ROOM$(BALLOON)) && !(g.HERE == BRIG || g.HERE == ARMORY)) {
-      tell(". The ", S(BALLOON));
+      tell(". The ", D(BALLOON));
       if ((g.HERE == CHAPEL) && hasFlag(ETERNAL_FLAME, ONBIT)) {
         tell(" appears in the doorway, stops, and hastily puffs away.\n");
         return true;
@@ -12729,11 +12729,11 @@ async function SPRAY_CAN_F() {
         tell(" farts in, hungrily gobbling up the spores");
       }
       if (g.CROSSED_BOUNDARY || (loc(BALLOON) == ELEVATOR) || (g.HERE == ELEVATOR)) {
-        tell(". As the ", S(BALLOON), " crosses the boundary ");
+        tell(". As the ", D(BALLOON), " crosses the boundary ");
         if (g.CROSSED_BOUNDARY) {
           tell("between the Command Module and the village");
         } else {
-          tell("of the ", S(ELEVATOR_SHAFT));
+          tell("of the ", D(ELEVATOR_SHAFT));
         }
         tell(", it is caught unawares by the sudden ");
         if ((g.CROSSED_BOUNDARY == 1) || (g.HERE == ELEVATOR)) {
@@ -12808,7 +12808,7 @@ async function NEXT_ROOM$(obj) {
 
 async function STRONG_BOX_F() {
   if (isVerb(V.TAKE, V.MOVE, V.RAISE)) {
-    tell("The ", S(STRONG_BOX), " is fastened down.\n");
+    tell("The ", D(STRONG_BOX), " is fastened down.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     tell("The box has a HUGE lock");
@@ -12819,7 +12819,7 @@ async function STRONG_BOX_F() {
     tell(S(g.PERIOD_CR));
     return true;
   } else if (isVerb(V.OPEN, V.UNLOCK, V.LOOK_INSIDE)) {
-    tell("The lock on the ", S(STRONG_BOX), " is only SLIGHTLY smaller than an average asteroid.\n");
+    tell("The lock on the ", D(STRONG_BOX), " is only SLIGHTLY smaller than an average asteroid.\n");
     return true;
   } else if (isVerb(V.PICK)) {
     tell("You have neither the tools nor the expertise.\n");
@@ -12828,7 +12828,7 @@ async function STRONG_BOX_F() {
     remove(STRONG_BOX);
     move(COIN, g.HERE);
     await THIS_IS_IT(COIN);
-    tell("The ", S(STRONG_BOX), " is vaporized, leaving a solitary coin!\n");
+    tell("The ", D(STRONG_BOX), " is vaporized, leaving a solitary coin!\n");
     return true;
   } else if (isVerb(V.DRILL)) {
     return await MAKE_HOLE_WITH_DRILL(STRONG_BOX);
@@ -12931,7 +12931,7 @@ async function OSTRICH_F() {
       crlf();
       return true;
     } else if (loc(HEATING_CHAMBER) == g.HERE) {
-      tell("into the ", S(HEATING_CHAMBER), ". After a quick singe, it jerks its head out, squawking in pain.\n");
+      tell("into the ", D(HEATING_CHAMBER), ". After a quick singe, it jerks its head out, squawking in pain.\n");
       return true;
     } else {
       tell("under its wing");
@@ -13025,7 +13025,7 @@ async function ID_CHANGER_TYPE() {
       }
       return (await RECORDING("A scrambled card cannot be altered"));
     } else if (g.P_NUMBER > 10) {
-      tell("\"Error!\" chirps the ", S(ID_CHANGER), ". \"The highest rank number recognized by the Stellar Patrol is 10.\"\n");
+      tell("\"Error!\" chirps the ", D(ID_CHANGER), ". \"The highest rank number recognized by the Stellar Patrol is 10.\"\n");
       return true;
     } else if (g.P_NUMBER < 1) {
       tell("You may DESERVE a rank that low, but unfortunately it doesn't exist.\n");
@@ -13065,7 +13065,7 @@ async function BOOTS_F() {
     }
   } else if (isVerb(V.TAKE_WITH, V.ATTRACT) && (g.PRSO == MEDIUM_BIT || g.PRSO == SMALL_BIT || g.PRSO == LARGE_BIT)) {
     if (loc(g.PRSO) == HEATING_CHAMBER) {
-      tell("The bit is too far below the opening of the ", S(HEATING_CHAMBER), " to be attracted by the boots.\n");
+      tell("The bit is too far below the opening of the ", D(HEATING_CHAMBER), " to be attracted by the boots.\n");
       return true;
     } else {
       move(g.PRSO, PROTAGONIST);
