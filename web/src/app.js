@@ -12,6 +12,7 @@ import { playIntro, paletteOf } from './intro.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
+import { immerse, needsAtmosphere } from './ai/immersive.js';
 import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
 import { store, gameKey, migrateLegacyKeys } from './storage.js';
 import { renderMenu } from './menu.js';
@@ -270,8 +271,8 @@ function renderEntry(entry, animate = true) {
   if (entry.input != null) turn.append(el('p', 'player', entry.input));
   for (const step of entry.steps || []) {
     if (step.narration) {
-      const p = el('p', 'game-text narrated', step.narration);
-      p.title = t('narratedTitle');
+      const p = el('p', `game-text narrated${step.immersive ? ' immersive' : ''}`, step.narration);
+      p.title = t(step.immersive ? 'immersiveTitle' : 'narratedTitle');
       turn.append(p);
     }
     if (step.hint) {
@@ -526,14 +527,18 @@ async function handleInput(raw, opts = {}) {
       const res = await sendToGame(opts.command);
       const label = opts.label || opts.command;
       const entry = { input: label, viaAI: label.toLowerCase() !== opts.command, steps: [{ command: opts.command, segments: res.segments }] };
-      await translateEntry(entry, addEntry(entry));
-      aiHistory.push({ input: opts.command, commands: [opts.command], output: res.text });
+      let node = addEntry(entry);
+      await translateEntry(entry, node);
+      node = await addAtmosphere(entry, node, { input: label, command: opts.command, output: res.text });
+      aiHistory.push({ input: opts.command, commands: [opts.command], output: res.text, reply: atmosphereOf(entry) });
     } else if (!aiActive() || text.startsWith('>') || text === '' || session.waitingForKey) {
       const cmd = text.replace(/^>\s*/, '');
       const res = await sendToGame(cmd);
       const entry = { input: text.replace(/[\x81-\x84]/g, (c) => '↑↓←→'[c.charCodeAt(0) - 129]), steps: [{ segments: res.segments }] };
-      await translateEntry(entry, addEntry(entry));
-      aiHistory.push({ input: cmd, commands: [cmd], output: res.text });
+      let node = addEntry(entry);
+      await translateEntry(entry, node);
+      if (!session.waitingForKey && cmd) node = await addAtmosphere(entry, node, { input: cmd, command: cmd, output: res.text });
+      aiHistory.push({ input: cmd, commands: [cmd], output: res.text, reply: atmosphereOf(entry) });
     } else {
       await aiTurn(text);
     }
@@ -603,7 +608,7 @@ async function aiTurn(text) {
   try {
     result = await interpret({
       apiKey: settings.apiKey, model: settings.model, input: text, language: targetLanguage(),
-      scene: currentScene(), history: aiHistory.slice(-10),
+      scene: currentScene(), history: aiHistory.slice(-10), immersive: immersiveOn(),
     });
   } catch (err) {
     stopThinking();
@@ -630,7 +635,7 @@ async function aiTurn(text) {
         const stop = showThinking(node);
         const fix = await interpret({
           apiKey: settings.apiKey, model: settings.model, input: text, language: targetLanguage(), scene: currentScene(),
-          history: aiHistory.slice(-10), repair: { command, error: res.text },
+          history: aiHistory.slice(-10), repair: { command, error: res.text }, immersive: immersiveOn(),
         });
         stop();
         if (fix.commands.length) {
@@ -651,9 +656,54 @@ async function aiTurn(text) {
     if (parserError) break;
   }
   if (!result.commands.length && !result.reply) entry.steps.push({ narration: t('cantMap') });
-  aiHistory.push({ input: text, reply: result.reply, commands: result.commands, output: outputs.join('\n') });
   node = rerender(node, entry);
   await translateEntry(entry, node);
+  // Immersive mode: atmosphere where the game's last answer was a stock phrase.
+  const lastStep = [...entry.steps].reverse().find((st) => st.segments);
+  if (lastStep && outputs.length) {
+    node = await addAtmosphere(entry, node, { input: text, command: lastStep.command ?? result.commands.at(-1), output: outputs.at(-1) });
+  }
+  aiHistory.push({ input: text, reply: [result.reply, atmosphereOf(entry)].filter(Boolean).join('\n'), commands: result.commands, output: outputs.join('\n') });
+}
+
+// ---------------------------------------------------------------------------
+// Immersive mode (per game, with the AI on): atmosphere where the game is terse
+// ---------------------------------------------------------------------------
+
+const immersiveOn = () => aiActive() && !!GAME_ID && store.get(K('immersive'), false) === true;
+const atmosphereOf = (entry) => entry.steps?.find((st) => st.immersive)?.narration ?? '';
+
+/**
+ * After the game answered `command` with a stock phrase ("There's nothing
+ * special about the posters."), add the AI's description. The same thing in the
+ * same room is described the same way every time (cached per game).
+ */
+async function addAtmosphere(entry, node, { input, command, output }) {
+  if (!immersiveOn() || !command || !needsAtmosphere(output) || gameEnded) return node;
+  const room = els.room.textContent || '';
+  const key = `${settings.language}|${room}|${command.toLowerCase().replace(/\s+/g, ' ').trim()}`;
+  const cache = store.get(K('immersion'), {});
+  let text = cache[key];
+  if (text == null) {
+    const stop = showThinking(node);
+    try {
+      text = await immerse({
+        apiKey: settings.apiKey, model: settings.model, language: targetLanguage(), input, command, output,
+        scene: currentScene(), history: aiHistory.slice(-8),
+      });
+    } catch {
+      text = null; // no atmosphere this time; try again next time
+    }
+    stop();
+    if (text == null) return node;
+    cache[key] = text;
+    const keys = Object.keys(cache);
+    if (keys.length > 400) for (const k of keys.slice(0, keys.length - 400)) delete cache[k];
+    store.set(K('immersion'), cache);
+  }
+  if (!text) return node;
+  entry.steps.push({ narration: text, immersive: true });
+  return rerender(node, entry);
 }
 
 function rerender(node, entry) {
@@ -877,7 +927,7 @@ function debugReport() {
     browser: { userAgent: navigator.userAgent, language: navigator.language, viewport: [innerWidth, innerHeight], pixelRatio: devicePixelRatio, paging },
     settings: {
       language: settings.language, aiEnabled: settings.aiEnabled, hasApiKey: !!settings.apiKey, aiActive: aiActive(),
-      model: settings.model, showCommands: settings.showCommands, mapOpen: settings.mapOpen,
+      model: settings.model, showCommands: settings.showCommands, mapOpen: settings.mapOpen, immersive: immersiveOn(),
     },
     game: { id: GAME_ID, title: meta?.title, zVersion: current.story?.LAYOUT?.version },
     state: {
@@ -917,6 +967,11 @@ async function openSettings() {
   els.setAi.checked = settings.aiEnabled;
   els.setShow.checked = settings.showCommands;
   els.setLang.value = settings.language;
+  $('set-immersive-field').hidden = !GAME_ID;
+  if (GAME_ID) {
+    $('set-immersive').checked = store.get(K('immersive'), false) === true;
+    $('set-immersive-label').textContent = t('immersiveLabel', { title: GAMES[GAME_ID].title });
+  }
   els.settings.showModal();
   if (!els.modelList.childElementCount) {
     listModels().then((models) => {
@@ -945,6 +1000,7 @@ els.settings.addEventListener('close', async () => {
     return;
   }
   const prevTarget = targetLanguage();
+  store.set(K('immersive'), $('set-immersive').checked);
   settings.apiKey = els.setKey.value.trim();
   settings.model = els.setModel.value.trim();
   settings.aiEnabled = els.setAi.checked;
@@ -997,7 +1053,7 @@ function translateVisible() {
 
 function updateMode() {
   const ai = aiActive();
-  els.badge.textContent = ai ? t('badgeAi') : t('badgeClassic');
+  els.badge.textContent = ai ? (immersiveOn() ? t('badgeImmersive') : t('badgeAi')) : t('badgeClassic');
   els.badge.classList.toggle('ai', ai);
   els.badge.title = ai ? t('badgeTitleAi', { model: settings.model })
     : settings.apiKey ? t('badgeTitleClassicKey') : t('badgeTitleClassicNoKey');

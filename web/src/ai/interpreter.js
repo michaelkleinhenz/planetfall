@@ -7,6 +7,7 @@
 import { chat } from './openrouter.js';
 import { current } from '../engine/current.js';
 import { sceneText } from './scene.js';
+import { INTERPRETER_RULE } from './immersive.js';
 
 // Debugging/meta syntaxes the AI should never produce.
 const HIDDEN = /^(#|\$|script|unscript|verify)/;
@@ -100,7 +101,7 @@ function parseJson(text) {
  * Translate player input into game commands.
  * @returns {Promise<{commands: string[], reply: string}>}
  */
-export async function interpret({ apiKey, model, input, language, scene, history, repair, signal }) {
+export async function interpret({ apiKey, model, input, language, scene, history, repair, immersive, signal }) {
   const messages = [
     { role: 'system', content: systemPrompt(), cache: true },
     {
@@ -112,6 +113,7 @@ export async function interpret({ apiKey, model, input, language, scene, history
           ? `Your previous command "${repair.command}" was rejected by the parser with: "${repair.error.trim()}". ` +
             `Rephrase it using only known words, or return no commands with a reply if it cannot be expressed.\n\n`
           : '') +
+        (immersive ? `${INTERPRETER_RULE}\n\n` : '') +
         (language
           ? `LANGUAGE: The player is playing in ${language}. Their input may be in ${language} or English (map it to the English game vocabulary). ` +
             `Write every "reply" in ${language}, always — even if the player writes in English. Commands stay in English.\n\n`
