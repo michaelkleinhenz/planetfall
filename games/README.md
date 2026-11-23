@@ -18,7 +18,6 @@ folder is the original release used as the reference in the transcript tests.
 | `suspended/` | Suspended | r8 | None: shared for education and research |
 | `witness/` | The Witness | r21 | None: shared for education and research |
 | `cutthroats/` | Cutthroats | r25 | None: shared for education and research |
-| `infocom-sampler/` | Infocom Sampler | — | None: shared for education and research |
 | `seastalker/` | Seastalker | r16 | None: shared for education and research |
 | `sorcerer/` | Sorcerer | r18 | None: shared for education and research |
 | `suspect/` | Suspect | r18 | None: shared for education and research |
@@ -29,11 +28,9 @@ folder is the original release used as the reference in the transcript tests.
 | `hollywoodhijinx/` | Hollywood Hijinx | r37 | None: shared for education and research |
 | `leathergoddesses/` | Leather Goddesses of Phobos | r59 | None: shared for education and research |
 | `moonmist/` | Moonmist | r13 | None: shared for education and research |
-| `minizork-1987/` | Mini-Zork I | r34 | None: shared for education and research |
 | `plunderedhearts/` | Plundered Hearts | r26 | None: shared for education and research |
 | `stationfall/` | Stationfall | — | None: shared for education and research |
 | `lurkinghorror/` | The Lurking Horror | r221 | None: shared for education and research |
-| `minizork2-1988/` | Mini-Zork II | r2 | None: shared for education and research |
 
 Each folder's `SOURCE-COMMIT` (where present) names the commit of the historicalsource
 repository it was copied from.

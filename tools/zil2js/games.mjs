@@ -198,26 +198,4 @@ export const GAMES = {
     srcDir: 'games/stationfall',
     main: 's6',
   },
-  'minizork-1987': {
-    title: "Mini-Zork (1987)",
-    srcDir: 'games/minizork-1987',
-    main: 'mini',
-    objectOrder: { story: 'COMPILED/mini.z3' },
-    storyFile: 'COMPILED/mini.z3',
-  },
-  'minizork2-1988': {
-    title: "Mini-Zork II (1988)",
-    srcDir: 'games/minizork2-1988',
-    main: 'mini2',
-    objectOrder: { story: 'COMPILED/mini2.z3' },
-    storyFile: 'COMPILED/mini2.z3',
-  },
-  'infocom-sampler': {
-    title: "Infocom Sampler",
-    srcDir: 'games/infocom-sampler',
-    main: 'sampler',
-    objectOrder: { story: 'COMPILED/demo-r15.z3' },
-    oldReturn: true,
-    storyFile: 'COMPILED/demo-r15.z3',
-  },
 };

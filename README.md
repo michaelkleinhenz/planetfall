@@ -9,8 +9,8 @@ Infocom's.
 
 **Play:** https://michaelkleinhenz.github.io/planetfall/
 
-All 27 Infocom games whose ZIL source is public and that ran on version 3 of the
-Z-machine are included:
+All 24 Infocom games whose ZIL source is public and that ran on version 3 of the
+Z-machine are included (the demos, Mini-Zork I and II and the Sampler, are left out):
 
 | Game | Year | Author | Source | Compared with | Result |
 |---|---|---|---|---|---|
@@ -25,7 +25,6 @@ Z-machine are included:
 | Suspended | 1983 | Michael Berlyn | `games/suspended/` | r8 | source is a later revision (1985): parser messages differ |
 | The Witness | 1983 | Stu Galley | `games/witness/` | r21 | source is a later revision: vocabulary and messages differ |
 | Cutthroats | 1984 | Michael Berlyn & Jerry Wolper | `games/cutthroats/` | r25 | identical except the banner |
-| Infocom Sampler | 1984 | Infocom | `games/infocom-sampler/` | — | the archive's story file is an earlier sampler |
 | Seastalker | 1984 | Stu Galley & Jim Lawrence | `games/seastalker/` | r16 | identical except the banner |
 | Sorcerer | 1984 | Steve Meretzky | `games/sorcerer/` | r18 | identical |
 | Suspect | 1984 | Dave Lebling | `games/suspect/` | r18 | identical except the banner (until the first restart) |
@@ -36,11 +35,9 @@ Z-machine are included:
 | Hollywood Hijinx | 1986 | Dave Anderson & Liz Cyr-Jones | `games/hollywoodhijinx/` | r37 | identical |
 | Leather Goddesses of Phobos | 1986 | Steve Meretzky | `games/leathergoddesses/` | r59 | identical |
 | Moonmist | 1986 | Stu Galley & Jim Lawrence | `games/moonmist/` | r13 | identical |
-| Mini-Zork I | 1987 | Marc Blank & Dave Lebling | `games/minizork-1987/` | r34 | identical |
 | Plundered Hearts | 1987 | Amy Briggs | `games/plunderedhearts/` | r26 | identical |
 | Stationfall | 1987 | Steve Meretzky | `games/stationfall/` | — | no original story file in the archive |
 | The Lurking Horror | 1987 | Dave Lebling | `games/lurkinghorror/` | r221 | identical |
-| Mini-Zork II | 1988 | Marc Blank & Dave Lebling | `games/minizork2-1988/` | r2 | identical |
 
 "Compared with" is the original release in the source archive; "identical" means a
 300–600 command random play-through gives exactly the same transcript in the original
@@ -128,7 +125,7 @@ recorded runs (about 18,000 commands) against the recorded transcripts.
 The compiler reproduces the details of the original ZILCH compiler these comparisons
 turned up, among them:
 - `<RETURN value>` inside a loop returns from the routine, except in games built with an
-  older compiler (Infidel, Deadline, Starcross, Cutthroats, Suspect, the Sampler), where it
+  older compiler (Infidel, Deadline, Starcross, Cutthroats, Suspect, Suspended, The Witness), where it
   leaves the loop;
 - object numbers, attribute numbers and the order of syntax entries come from the original
   story file; the game's own macros (TELL, VERB?, PSEUDO, ...) run in a small MDL
