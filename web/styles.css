@@ -256,6 +256,38 @@ code { font-family: var(--mono); font-size: .9em; }
 }
 .banner-sub { position: relative; margin-top: 6px; font: italic 400 16px/1.4 var(--story-font); color: var(--text-dim); }
 .banner-meta { position: relative; margin-top: 12px; font: 400 11.5px/1.65 var(--mono); color: var(--muted); }
+/* With the box cover beside the text, when there is room for it. */
+.banner.with-cover { container-type: inline-size; }
+.banner-cover { display: none; }
+@container (min-width: 460px) {
+  .banner-inner { display: flex; }
+  .banner-text { flex: 1; min-width: 0; align-self: center; }
+  .banner-cover {
+    display: block; position: relative; flex: none; width: 96px; margin: -4px 22px -2px 0; align-self: center;
+    border-radius: 3px; overflow: hidden; transform: perspective(600px) rotateY(14deg) rotateZ(-1.5deg);
+    transform-origin: left center; transition: transform .45s cubic-bezier(.2, .8, .2, 1.2);
+    box-shadow: 10px 14px 22px -12px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .08),
+      0 0 34px -8px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .banner-cover img { display: block; width: 100%; height: auto; }
+  /* a light sheen that passes over the box */
+  .banner-cover::after {
+    content: ""; position: absolute; inset: -30%; pointer-events: none; mix-blend-mode: screen;
+    background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, .5) 50%, transparent 58%);
+    transform: translateX(-70%); animation: banner-sheen 7s 1.2s ease-in-out infinite;
+  }
+  .banner:hover .banner-cover { transform: perspective(600px) rotateY(0deg) rotateZ(0deg) scale(1.04); }
+  /* the cover's colours, softly, behind the card */
+  .banner-inner::before {
+    content: ""; position: absolute; inset: -60px auto -60px -60px; width: 320px; pointer-events: none; z-index: 0;
+    background: var(--banner-cover) center / cover; filter: blur(34px) saturate(1.5); opacity: .22;
+    mask-image: linear-gradient(90deg, #000 30%, transparent);
+  }
+  .banner-cover, .banner-text { position: relative; z-index: 1; }
+}
+@container (min-width: 620px) { .banner-cover { width: 112px; } }
+@keyframes banner-sheen { 0%, 60% { transform: translateX(-70%); } 100% { transform: translateX(70%); } }
+@media (prefers-reduced-motion: reduce) { .banner-cover::after { animation: none; display: none; } }
 
 /* ---------- console (input bar) ---------- */
 .inputbar { position: sticky; bottom: 0; z-index: 15; padding: 10px clamp(14px, 3vw, 28px) 14px; background: var(--bg); }

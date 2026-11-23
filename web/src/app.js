@@ -219,14 +219,32 @@ function findBanner(text) {
 
 function renderBanner(lines) {
   const box = el('div', 'banner');
-  box.append(el('div', 'banner-title', lines[0]));
-  if (lines[1]) box.append(el('div', 'banner-sub', lines[1]));
+  const text = el('div', 'banner-text');
+  text.append(el('div', 'banner-title', lines[0]));
+  if (lines[1]) text.append(el('div', 'banner-sub', lines[1]));
   const meta = el('div', 'banner-meta');
   lines.slice(2).forEach((l, i) => {
     if (i) meta.append(el('br'));
     meta.append(l);
   });
-  box.append(meta);
+  text.append(meta);
+  // The box cover beside it, where the card is wide enough (see the CSS).
+  const cover = current.meta?.cover;
+  if (cover) {
+    box.classList.add('with-cover');
+    box.style.setProperty('--banner-cover', `url("${cover}")`);
+    const fig = el('div', 'banner-cover');
+    const img = el('img');
+    img.src = cover;
+    img.alt = '';
+    img.decoding = 'async';
+    fig.append(img);
+    const inner = el('div', 'banner-inner');
+    inner.append(fig, text);
+    box.append(inner);
+    return box;
+  }
+  box.append(text);
   return box;
 }
 
