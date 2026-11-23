@@ -223,7 +223,8 @@ function inferConfig(cfg) {
     for (const node of readZil(main, cfg.main)) {
       if (node.t !== 'form') continue;
       const h = node.items[0]?.v;
-      if ((h === 'INSERT-FILE' || h === 'IFILE') && node.items[1]?.t === 'str') {
+      // INSERT-FILE, IFILE, or a game's own loader such as Infidel's INSERT-CRUFTY.
+      if (/^(INSERT-FILE|IFILE|INSERT-[A-Z]+)$/.test(h) && node.items[1]?.t === 'str') {
         const f = node.items[1].v.toLowerCase();
         if (sourceText(f + '.zil') && !files.includes(f)) files.push(f);
       }
@@ -468,14 +469,24 @@ class Compiler {
    * itself are left alone, as are names that are also routines.
    */
   expandUserMacros() {
-    const expandable = (h) => h && this.mdl.has(h) && !NATIVE_MACROS.has(h) && !this.routines.has(h);
+    // A game whose own TELL prints differently from the standard one (e.g.
+    // Cutthroats: D calls DPRINT, PRSO/PRSI tokens) gets its TELL expanded.
+    this.gameTell = false;
+    if (this.mdl.has('TELL') && !this.routines.has('TELL')) {
+      try {
+        const probe = show(this.mdl.expand({ t: 'form', items: [{ t: 'atom', v: 'TELL' }, { t: 'atom', v: 'D' }, { t: 'gval', v: { t: 'atom', v: 'X' } }] }));
+        this.gameTell = !/<PRINTD /.test(probe);
+      } catch (e) { if (process.env.ZDEBUG) console.error('TELL probe', e.message); }
+    }
+    const expandable = (h) => h && this.mdl.has(h) && (!NATIVE_MACROS.has(h) || (h === 'TELL' && this.gameTell)) && !this.routines.has(h);
     const walk = (node, depth = 0) => {
       if (!node || typeof node !== 'object' || !node.t) return node;
-      if (node.t === 'form' && node.items.length && node.items[0].t === 'atom' && expandable(node.items[0].v)) {
+      if (node.t === 'form' && !node.native && node.items.length && node.items[0].t === 'atom' && expandable(node.items[0].v)) {
         if (depth > 50) throw new Error('macro expansion too deep: ' + show(node));
         let r;
         try { r = this.mdl.expand(node); } catch (e) { if (process.env.ZDEBUG) console.error(e.stack); throw new Error(`expanding ${show(node).slice(0, 120)}: ${e.message}`); }
         if (r === null) return { t: 'form', items: [] };
+        if (node.items[0].v === 'TELL') return walk(tellFromExpansion(r), depth + 1);
         if (r.t === 'atom' && r.v === 'T') return r;
         return walk(r, depth + 1);
       }
@@ -516,6 +527,53 @@ class Compiler {
     }
     this.objects = order.map((n) => byName.get(n));
     this.objIndex = new Map(this.objects.map((o, i) => [o.name, i + 1]));
+    this.objectsMatchStory = !!this.story && this.story.objectNames.length === this.objects.length;
+  }
+
+  /**
+   * Take the attribute numbers from the original story file: a flag gets the
+   * bit that is set on exactly the same objects. Parsers compare flag numbers
+   * (e.g. a syntax without FIND has 0, and GWIM tests for RMUNGBIT), so
+   * the numbers matter.
+   */
+  flagsFromStory() {
+    if (!this.objectsMatchStory) return;
+    const d = this.story.data;
+    const objTable = ((d[10] << 8) | d[11]) + 62;
+    const n = this.objects.length;
+    const bitSets = [];
+    for (let b = 0; b < 32; b++) {
+      const set = [];
+      for (let i = 0; i < n; i++) if (d[objTable + i * 9 + (b >> 3)] & (0x80 >> (b & 7))) set.push(i);
+      bitSets.push(set.join(','));
+    }
+    const flagSets = new Map();
+    this.objects.forEach((o, i) => {
+      for (const p of o.props) {
+        if (p.items[0].v !== 'FLAGS') continue;
+        for (const a of p.items.slice(1)) {
+          const f = this.bitSynonyms.get(a.v) ?? a.v;
+          if (!flagSets.has(f)) flagSets.set(f, new Set());
+          flagSets.get(f).add(i);
+        }
+      }
+    });
+    const assigned = new Map();
+    const usedBits = new Set();
+    for (const [f, set] of flagSets) {
+      const key = [...set].sort((a, b) => a - b).join(',');
+      const b = bitSets.findIndex((k, i) => k === key && !usedBits.has(i));
+      if (b >= 0) { assigned.set(f, b); usedBits.add(b); }
+    }
+    const unmatched = [...this.flags.keys()].filter((f) => !assigned.has(f));
+    if (unmatched.length) warn(`flags not found in the story file (numbered freely): ${unmatched.join(' ')}`);
+    let free = 0;
+    for (const f of unmatched) {
+      while (usedBits.has(free)) free++;
+      assigned.set(f, free); usedBits.add(free);
+    }
+    this.flags = new Map([...assigned].sort((a, b) => a[1] - b[1]));
+    this.flagNext = () => { let b = 0; while ([...this.flags.values()].includes(b)) b++; return b; };
   }
 
   /** Match source objects to the story file's object numbers by name and location. */
@@ -533,6 +591,28 @@ class Compiler {
       const p = o.props.find((q) => (q.items[0].v === 'IN' && !this.isExit(q)) || q.items[0].v === 'LOC');
       return p ? p.items[1].v : null;
     };
+    const d = this.story.data;
+    const w = (a) => (d[a] << 8) | d[a + 1];
+    const objTable = w(10) + 62;
+    const storySig = (i) => {
+      let bits = 0;
+      for (let k = 0; k < 4; k++) for (let x = d[objTable + i * 9 + k]; x; x &= x - 1) bits++;
+      let p = w(objTable + i * 9 + 7);
+      p += 1 + 2 * d[p];
+      let props = 0;
+      while (d[p]) { props++; p += 1 + (d[p] >> 5) + 1; }
+      return `${bits}/${props}`;
+    };
+    const sourceSig = (o) => {
+      const flags = new Set();
+      let props = 0;
+      for (const p of o.props) {
+        const h = p.items[0].v;
+        if (h === 'FLAGS') p.items.slice(1).forEach((a) => flags.add(this.bitSynonyms.get(a.v) ?? a.v));
+        else if (h !== 'DESC' && !((h === 'IN' || h === 'LOC') && !this.isExit(p))) props++;
+      }
+      return `${flags.size}/${props}`;
+    };
     const order = new Array(objectNames.length).fill(null);
     const used = new Set();
     // Pass 1: unique names. Pass 2: names plus parent. Pass 3: whatever is left, in order.
@@ -547,6 +627,13 @@ class Compiler {
             const lo = l && this.objects.find((x) => x.name === l);
             return lo ? descOf(lo) === parent : !parent;
           });
+        }
+        if (pass >= 2 && cands.length > 1) {
+          // Same name and place (e.g. ROOMS and GLOBAL-OBJECTS): compare the
+          // number of attributes and properties.
+          const sig = storySig(i);
+          const narrowed = cands.filter((o) => sourceSig(o) === sig);
+          if (narrowed.length) cands = narrowed;
         }
         if (cands.length === 1 || (pass === 3 && cands.length)) {
           order[i] = cands[0].name;
@@ -573,6 +660,7 @@ class Compiler {
         if (p.items[0].v === 'FLAGS') for (const a of p.items.slice(1)) this.flag(a.v);
       }
     }
+    this.flagsFromStory();
     // Properties: directions take the highest numbers.
     let pn = 31;
     for (const d of this.directions) this.props.set(d, pn--);
@@ -604,7 +692,7 @@ class Compiler {
   flag(name) {
     if (this.bitSynonyms.has(name)) name = this.bitSynonyms.get(name);
     if (!this.flags.has(name)) {
-      this.flags.set(name, this.flags.size);
+      this.flags.set(name, this.flagNext ? this.flagNext() : this.flags.size);
       if (this.flags.size > 32) throw new Error('too many flags');
     }
     return this.flags.get(name);
@@ -1341,9 +1429,11 @@ class RoutineCompiler {
     // ZILCH semantics (verified against the compiled .zap output):
     // <RETURN value> always returns from the routine, while a bare <RETURN>
     // exits the innermost REPEAT/PROG (or the routine, outside of loops).
+    // Older ZILCH (e.g. the 1983 Infidel) kept MDL's meaning instead: any
+    // RETURN leaves the innermost loop, with its value.
     const loop = this.loops[this.loops.length - 1];
-    if (valNode) return this.stmt(valNode, { k: 'ret' });
-    const val = { t: 'atom', v: 'T' };
+    if (valNode && !(CFG.oldReturn && loop)) return this.stmt(valNode, { k: 'ret' });
+    const val = valNode ?? { t: 'atom', v: 'T' };
     if (!loop) return this.stmt(val, { k: 'ret' });
     if (loop.mode.k === 'ret') return this.stmt(val, { k: 'ret' });
     if (loop.mode.k === 'set') return [...this.stmt(val, loop.mode), `break ${loop.label};`];
@@ -1498,6 +1588,7 @@ class RoutineCompiler {
     for (let i = 0; i < args.length; i++) {
       const a = args[i];
       if (a.t === 'str') { parts.push(JSON.stringify(zilText(a.v))); continue; }
+      if (a.t === 'tellcall') { flush(); out.push(...this.stmt(a.v, { k: 'void' })); continue; }
       if (a.t === 'atom' && (a.v === 'CR' || a.v === 'CRLF')) { parts.push('"\\n"'); continue; }
       // The game's own TELL-TOKENS definitions.
       const custom = a.t === 'atom' && this.c.tellTokens?.filter((e) => e.tokens.includes(a.v));
@@ -1621,6 +1712,11 @@ class RoutineCompiler {
     }
     if (name === 'LOW-DIRECTION') return 'LOW_DIRECTION';
     if (name === 'SERIAL') return '0 /* ZILCH serial (unused) */';
+    if (this.locals.has(name)) {
+      // ,NAME for a local of this routine: ZILCH used the local.
+      warn(`${this.name}: ,${name} refers to a local variable`);
+      return this.locals.get(name);
+    }
     throw new Error(`${this.name}: unknown global ,${name}`);
   }
 
@@ -1634,6 +1730,11 @@ class RoutineCompiler {
         const n = node.v.v;
         if (this.locals.has(n)) return this.locals.get(n);
         if (this.c.globals.has(n)) return `g.${jsName(n)}`;
+        // .NAME for an object or constant: ZILCH used its value.
+        if (this.c.objIndex.has(n) || this.c.constants.has(n)) {
+          warn(`${this.name}: .${n} is not a local; using its global value`);
+          return this.gval(n);
+        }
         throw new Error(`${this.name}: unknown local .${n}`);
       }
       case 'gval': return this.gval(node.v.v);
@@ -1701,7 +1802,9 @@ class RoutineCompiler {
       case 'PROB':
         if (args.length > 1) return `(await ZPROB(${stripParens(A(0))}))`;
         return CFG.prob === 'lt' ? `(${A(0)} > random(100))` : `prob(${stripParens(A(0))})`;
-      case 'VERB?': return `isVerb(${args.map((a) => `V.${jsName(a.v)}`).join(', ')})`;
+      case 'VERB?':
+        // <VERB? ,X> (a typo in Cutthroats) compares PRSA with the value itself.
+        return `isVerb(${args.map((a) => (a.t === 'atom' ? `V.${jsName(a.v)}` : stripParens(this.ex(a)))).join(', ')})`;
       case 'PRSO?': case 'PRSI?': case 'ROOM?': case 'HERE?': case 'WINNER?': {
         const v = { 'PRSO?': 'g.PRSO', 'PRSI?': 'g.PRSI', 'ROOM?': 'g.HERE', 'HERE?': 'g.HERE', 'WINNER?': 'g.WINNER' }[h];
         return `(${args.map((a) => `${v} == ${this.ex(a.t === 'atom' ? { t: 'gval', v: a } : a)}`).join(' || ')})`;
@@ -1790,6 +1893,26 @@ function parseTellTokens(items) {
     out.push({ tokens, arg, template });
   }
   return out;
+}
+
+/**
+ * Turn the expansion of a game's own TELL macro (<PROG () <PRINTI "x">
+ * <DPRINT ,O> <CRLF>>) back into a native TELL, keeping the game's own
+ * printing routines as calls.
+ */
+function tellFromExpansion(r) {
+  const body = r.t === 'form' && r.items[0]?.v === 'PROG' ? r.items.slice(2) : [r];
+  const args = [{ t: 'atom', v: 'TELL' }];
+  const simple = { PRINTD: 'D', PRINTN: 'N', PRINTC: 'C' };
+  for (const f of body) {
+    const h = f.t === 'form' ? f.items[0]?.v : null;
+    if ((h === 'PRINTI' || h === 'PRINT') && f.items[1]?.t === 'str') args.push(f.items[1]);
+    else if (h === 'CRLF') args.push({ t: 'atom', v: 'CR' });
+    else if (simple[h]) args.push({ t: 'atom', v: simple[h] }, f.items[1]);
+    else if (h === 'PRINT') args.push(f.items[1]);
+    else args.push({ t: 'tellcall', v: f });
+  }
+  return { t: 'form', native: true, items: args };
 }
 
 /** Replace .NAME in a form by a node. */

@@ -5,39 +5,39 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
-export const TREASUREBIT = 0;
-export const TAKEBIT = 1;
-export const RLANDBIT = 2;
-export const ONBIT = 3;
-export const NDESCBIT = 4;
-export const DRINKBIT = 5;
-export const DOORBIT = 6;
-export const CONTBIT = 7;
-export const READBIT = 8;
-export const TOOLBIT = 9;
-export const NWALLBIT = 10;
-export const NONLANDBIT = 11;
-export const ACTORBIT = 12;
-export const OPENBIT = 13;
-export const TRYTAKEBIT = 14;
-export const TRANSBIT = 15;
-export const INVISIBLE = 16;
-export const TOUCHBIT = 17;
-export const SURFACEBIT = 18;
-export const SEARCHBIT = 19;
-export const SACREDBIT = 20;
-export const VEHBIT = 21;
-export const BURNBIT = 22;
-export const FOODBIT = 23;
-export const LIGHTBIT = 24;
-export const WEAPONBIT = 25;
-export const FLAMEBIT = 26;
-export const CLIMBBIT = 27;
+export const NWALLBIT = 4;
+export const NONLANDBIT = 5;
+export const TREASUREBIT = 6;
+export const SACREDBIT = 7;
+export const NDESCBIT = 8;
+export const TRANSBIT = 9;
+export const SEARCHBIT = 10;
+export const OPENBIT = 11;
+export const TRYTAKEBIT = 12;
+export const SURFACEBIT = 13;
+export const TOUCHBIT = 14;
+export const INVISIBLE = 15;
+export const READBIT = 16;
+export const TAKEBIT = 17;
+export const LIGHTBIT = 18;
+export const CONTBIT = 19;
+export const ONBIT = 20;
+export const FOODBIT = 21;
+export const DRINKBIT = 22;
+export const WEAPONBIT = 23;
+export const DOORBIT = 24;
+export const VEHBIT = 25;
+export const RLANDBIT = 27;
+export const BURNBIT = 29;
+export const TOOLBIT = 30;
+export const ACTORBIT = 31;
+export const FLAMEBIT = 0;
+export const CLIMBBIT = 1;
 
 // ---- Objects and rooms ----
 export const STATUETTE = 1;
@@ -66,7 +66,7 @@ export const PALANTIR_2 = 23;
 export const ICE_ROOM = 24;
 export const GAZEBO_OBJECT = 25;
 export const PALANTIR_4 = 26;
-export const GLOBAL_OBJECTS = 27;
+export const ROOMS = 27;
 export const POOL = 28;
 export const ADVENTURER = 29;
 export const WIDE_LEDGE = 30;
@@ -80,7 +80,7 @@ export const CARD = 37;
 export const DREARY_ROOM = 38;
 export const CERBERUS = 39;
 export const BLUE_BOOK = 40;
-export const ROOMS = 41;
+export const GLOBAL_OBJECTS = 41;
 export const TROPHY_ROOM = 42;
 export const SAFE_HOLE = 43;
 export const IT = 44;

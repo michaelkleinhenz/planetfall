@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -2369,7 +2369,7 @@ async function GLOBAL_CHECK(tbl) {
   if (rmg = getPropAddr(g.HERE, P.GLOBAL)) {
     rmgl = propSize(rmg) - 1;
     loop1: for (;;) {
-      if (false) {
+      if (await THIS_IT$(obj = getb(rmg, cnt), tbl)) {
         await OBJ_FOUND(obj, tbl);
       }
       if (++cnt > rmgl) {
@@ -2427,7 +2427,7 @@ async function SEARCH_LIST(obj, tbl, lvl) {
   let fls = 0, nobj = 0;
   if (obj = first(obj)) {
     for (;;) {
-      if (!(lvl == P_SRCBOT) && getPropAddr(obj, P.SYNONYM) && false) {
+      if (!(lvl == P_SRCBOT) && getPropAddr(obj, P.SYNONYM) && (await THIS_IT$(obj, tbl))) {
         await OBJ_FOUND(obj, tbl);
       }
       if ((!(lvl == P_SRCTOP) || hasFlag(obj, SEARCHBIT) || hasFlag(obj, SURFACEBIT)) && (nobj = first(obj)) && hasFlag(obj, OPENBIT)) {
@@ -2588,6 +2588,20 @@ async function PRSI_PRINT() {
   } else {
     return await BUFFER_PRINT(ptr, get(g.P_ITBL, P_NC2L), false);
   }
+}
+
+async function THIS_IT$(obj, tbl) {
+  let syns = 0;
+  if (hasFlag(obj, INVISIBLE)) {
+    return false;
+  } else if (g.P_NAM && !(await ZMEMQ(g.P_NAM, syns = getPropAddr(obj, P.SYNONYM), div(propSize(syns), 2) - 1))) {
+    return false;
+  } else if (g.P_ADJ && (!(syns = getPropAddr(obj, P.ADJECTIVE)) || !(await ZMEMQB(g.P_ADJ, syns, propSize(syns) - 1)))) {
+    return false;
+  } else if (!(g.P_GWIMBIT == 0) && !(hasFlag(obj, g.P_GWIMBIT))) {
+    return false;
+  }
+  return true;
 }
 
 async function V_VERBOSE() {
@@ -2751,9 +2765,10 @@ async function PRINT_CONT(obj, v$ = false, level = 0) {
   if (g.WINNER == obj || g.WINNER == loc(obj)) {
     inv$ = true;
   } else {
-    for (;;) {
+    loop1: for (;;) {
       if (!y) {
-        return !_1st$;
+        !_1st$;
+        break loop1;
       } else if (y == av) {
         pv$ = true;
       } else if (y == g.WINNER) {
@@ -2770,12 +2785,13 @@ async function PRINT_CONT(obj, v$ = false, level = 0) {
     }
   }
   y = first(obj);
-  for (;;) {
+  loop2: for (;;) {
     if (!y) {
       if (pv$ && av && first(av)) {
         await PRINT_CONT(av, v$, level);
       }
-      return !_1st$;
+      !_1st$;
+      break loop2;
     } else if (y == av || y == ADVENTURER) {
     } else if (!(hasFlag(y, INVISIBLE)) && (inv$ || hasFlag(y, TOUCHBIT) || !(getProp(y, P.FDESC)))) {
       if (!(hasFlag(y, NDESCBIT))) {
@@ -9744,6 +9760,7 @@ export const ROUTINES = [null,
   LIT$,
   PRSO_PRINT,
   PRSI_PRINT,
+  THIS_IT$,
   V_VERBOSE,
   V_BRIEF,
   V_SUPER_BRIEF,

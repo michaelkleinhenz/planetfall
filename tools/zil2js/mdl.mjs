@@ -51,7 +51,7 @@ export class MDL {
 
   invoke(def, rawArgs, callerEnv, unevaluatedByDefault = false) {
     const env = new Map();
-    env.parent = null;
+    env.parent = callerEnv ?? null; // MDL scoping is dynamic
     let mode = 'req';
     let i = 0;
     const evalArg = (node, quoted) => (quoted ? node : this.eval(node, callerEnv));

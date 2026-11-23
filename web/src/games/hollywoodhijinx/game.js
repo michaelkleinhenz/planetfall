@@ -5,288 +5,288 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
-export const NARTICLEBIT = 0;
-export const EVERYBIT = 1;
-export const INVISIBLE = 2;
-export const TOUCHBIT = 3;
-export const SURFACEBIT = 4;
-export const TRYTAKEBIT = 5;
-export const OPENBIT = 6;
-export const SEARCHBIT = 7;
-export const TRANSBIT = 8;
-export const WEARBIT = 9;
-export const VOWELBIT = 10;
-export const ONBIT = 11;
-export const RLANDBIT = 12;
-export const ACTORBIT = 13;
-export const TAKEBIT = 14;
-export const NDESCBIT = 15;
-export const LOCKEDBIT = 16;
-export const WORNBIT = 17;
-export const INDOORSBIT = 18;
-export const TOOLBIT = 19;
-export const WETBIT = 20;
-export const DOORBIT = 21;
-export const FLAMEBIT = 22;
-export const VEHBIT = 23;
-export const OUTDOORSBIT = 24;
-export const CAVEBIT = 25;
-export const READBIT = 26;
-export const CONTBIT = 27;
-export const LIGHTBIT = 28;
-export const BURNBIT = 29;
-export const TRYTAKE = 30;
+export const TRYTAKE = 1;
+export const BURNBIT = 2;
+export const LIGHTBIT = 3;
+export const CONTBIT = 4;
+export const READBIT = 5;
+export const CAVEBIT = 6;
+export const OUTDOORSBIT = 7;
+export const VEHBIT = 8;
+export const FLAMEBIT = 9;
+export const DOORBIT = 10;
+export const WORNBIT = 11;
+export const TOOLBIT = 12;
+export const INDOORSBIT = 13;
+export const WETBIT = 14;
+export const LOCKEDBIT = 15;
+export const NDESCBIT = 16;
+export const TAKEBIT = 17;
+export const ACTORBIT = 18;
+export const RLANDBIT = 19;
+export const ONBIT = 20;
+export const VOWELBIT = 21;
+export const WEARBIT = 22;
+export const TRANSBIT = 23;
+export const SEARCHBIT = 24;
+export const OPENBIT = 25;
+export const TRYTAKEBIT = 26;
+export const SURFACEBIT = 27;
+export const TOUCHBIT = 28;
+export const INVISIBLE = 29;
+export const NARTICLEBIT = 30;
+export const EVERYBIT = 31;
 
 // ---- Objects and rooms ----
-export const DUMMY_OBJECT = 1;
-export const NOT_HERE_OBJECT = 2;
-export const GLOBAL_OBJECTS = 3;
-export const LOCAL_GLOBALS = 4;
-export const ROOMS = 5;
-export const INTNUM = 6;
-export const PSEUDO_OBJECT = 7;
-export const IT = 8;
-export const LIGHTS = 9;
-export const GROUND = 10;
-export const MAZE_HOLE = 11;
-export const WALLS = 12;
-export const CEILING = 13;
-export const HANDS = 14;
-export const YOUR_FEET = 15;
-export const PLAYER = 16;
-export const ME = 17;
-export const GLOBAL_ROOM = 18;
-export const HER = 19;
-export const HIM = 20;
-export const THEM = 21;
-export const INTDIR = 22;
-export const WINDOW = 23;
-export const FILM = 24;
-export const SLIDE = 25;
-export const FILM_PROJECTOR = 26;
-export const SLIDE_PROJECTOR = 27;
-export const PROJECTED_IMAGE = 28;
-export const PROJECTION_SCREEN = 29;
-export const LENS_CAP = 30;
-export const FILM_PROJECTOR_LENS = 31;
-export const SLIDE_PROJECTOR_LENS = 32;
-export const PROJECTION_BOOTH = 33;
-export const SCREENING_ROOM = 34;
-export const OUTSIDE_PARLOR = 35;
-export const PARLOR = 36;
-export const CRAWL_SPACE_DOOR = 37;
-export const CRAWL_SPACE_NORTH = 38;
-export const FIRST_SECRET_ROOM = 39;
-export const PARKING_METER = 40;
-export const CRAWL_SPACE_SOUTH = 41;
-export const SQUARE_POST = 42;
-export const ROUND_POST = 43;
-export const PIANO = 44;
-export const NORTH_NICHE = 45;
-export const SOUTH_NICHE = 46;
-export const P_DEBUG = 47;
-export const LETTER = 48;
-export const PHOTO = 49;
-export const BUCK = 50;
-export const FLASHLIGHT = 51;
-export const STAIRS = 52;
-export const FOYER = 53;
-export const FOYER_CD = 54;
-export const FOYER_STAIRS = 55;
-export const NEWEL = 56;
-export const CELLAR = 57;
-export const CELLAR_CD = 58;
-export const DISPLAY_LIGHTS = 59;
-export const COMPUTER = 60;
-export const RESET_BUTTON = 61;
-export const CARD = 62;
-export const HOPPER = 63;
-export const TOUPEE = 64;
-export const INDIGO_CARD = 65;
-export const YELLOW_CARD = 66;
-export const GREEN_CARD = 67;
-export const RED_CARD = 68;
-export const BLUE_CARD = 69;
-export const ORANGE_CARD = 70;
-export const VIOLET_CARD = 71;
-export const LIVING_ROOM = 72;
-export const PERSIAN_RUG = 73;
-export const MANTLE = 74;
-export const BLUE_CANDLE = 75;
-export const WHITE_CANDLE = 76;
-export const RED_CANDLE = 77;
-export const RED_FEET = 78;
-export const WHITE_FEET = 79;
-export const BLUE_FEET = 80;
-export const RED_WAX = 81;
-export const WHITE_WAX = 82;
-export const BLUE_WAX = 83;
-export const PORTRAIT = 84;
-export const WALL_SAFE = 85;
-export const GRATER = 86;
-export const FIREPLACE_GLOBAL = 87;
-export const FIREPLACE = 88;
-export const BRICK_HOLE = 89;
-export const BRICK_HOLE_GLOBAL = 90;
-export const BRICK = 91;
-export const CHIMNEY_1 = 92;
-export const CHIMNEY_2 = 93;
-export const CHIMNEY_3 = 94;
-export const PENGUIN = 95;
-export const MASK = 96;
-export const ROOF_1 = 97;
-export const ROOF_2 = 98;
-export const CHIMNEY = 99;
-export const VERTICAL_MAP = 100;
-export const HORIZONTAL_MAP = 101;
-export const KITCHEN = 102;
-export const DINING_ROOM = 103;
-export const DINING_ROOM_TABLE = 104;
-export const UPSTAIRS_HALL_MIDDLE = 105;
-export const UPSTAIRS_HALL_EAST = 106;
-export const FINCH = 107;
-export const SACK = 108;
-export const SACK_WINDOW = 109;
-export const UPSTAIRS_HALL_WEST = 110;
-export const BEDROOM_1 = 111;
-export const BEDROOM_2 = 112;
-export const BEDROOM_3 = 113;
-export const HANDLES = 114;
-export const UPSTAIRS_BATHROOM = 115;
-export const BATH_MAT = 116;
-export const NEWSLETTER = 117;
-export const UPSTAIRS_CD = 118;
-export const PHONE = 119;
-export const TOILET = 120;
-export const SEAT = 121;
-export const BED = 122;
-export const SOFA = 123;
-export const MATCHBOX = 124;
-export const WAX_COAT_1 = 125;
-export const WAX_COAT_2 = 126;
-export const RED_MATCH = 127;
-export const GREEN_MATCH = 128;
-export const BOAT_DOCK = 129;
-export const PORTABLE_WATER = 130;
-export const WATER = 131;
-export const ON_POOL_1 = 132;
-export const IN_POOL_1 = 133;
-export const UNDERPASS_1 = 134;
-export const UNDERPASS_2 = 135;
-export const IN_POOL_2 = 136;
-export const ON_POOL_2 = 137;
-export const LEDGE = 138;
-export const TUNNEL = 139;
-export const BOMB_SHELTER = 140;
-export const SAWHORSE = 141;
-export const HATCH = 142;
-export const CHAIN = 143;
-export const LEFT_END = 144;
-export const RIGHT_END = 145;
-export const PLANK = 146;
-export const PIPE = 147;
-export const BS_SAFE = 148;
+export const SAWHORSE = 1;
+export const SOUTH_JUNCTION = 2;
+export const CORPSE_LINE = 3;
+export const HANDS = 4;
+export const PARLOR = 5;
+export const CLOSET_REF = 6;
+export const PARKING_METER = 7;
+export const LEFT_END = 8;
+export const WHITE_CANDLE = 9;
+export const INLET = 10;
+export const NEWEL = 11;
+export const TOKYO = 12;
+export const WINDOW = 13;
+export const POND = 14;
+export const PROP_VAULT = 15;
+export const STICK = 16;
+export const SOFA = 17;
+export const SHAFT_BOTTOM = 18;
+export const BLUE_WAX = 19;
+export const RED_MATCH = 20;
+export const ME = 21;
+export const INDIGO_CARD = 22;
+export const RED_FEET = 23;
+export const CHIMNEY_2 = 24;
+export const PATIO_DOOR = 25;
+export const GARDEN_WALLS = 26;
+export const BLACK_BUTTON = 27;
+export const PENGUIN = 28;
+export const SHEARS = 29;
+export const KITCHEN = 30;
+export const SOUTHWEST_JUNCTION = 31;
+export const CANNON_BALL = 32;
+export const LIGHTS = 33;
+export const HEDGE_MAZE_OBJ = 34;
+export const DINING_ROOM = 35;
+export const CELLAR = 36;
+export const PEG_5 = 37;
+export const P_DEBUG = 38;
+export const LEDGE = 39;
+export const INTDIR = 40;
+export const ROOMS = 41;
+export const PEG_3 = 42;
+export const PEG_2 = 43;
+export const CHIMNEY = 44;
+export const UNDERPASS_1 = 45;
+export const GREEN_CARD = 46;
+export const ROOF_1 = 47;
+export const PEG_1 = 48;
+export const SQUARE_POST = 49;
+export const CHIMNEY_3 = 50;
+export const PEG_0 = 51;
+export const PLAYER = 52;
+export const CHUTE = 53;
+export const LOCAL_GLOBALS = 54;
+export const HER = 55;
+export const WHITE_FEET = 56;
+export const HATCH_HOLE = 57;
+export const UPSTAIRS_HALL_EAST = 58;
+export const BATH_MAT = 59;
+export const PATIO = 60;
+export const CHAIN = 61;
+export const BUCKET = 62;
+export const CARD = 63;
+export const YELLOW_CARD = 64;
+export const PORTRAIT = 65;
+export const ROPE = 66;
+export const PHOTO = 67;
+export const RIGHT_END = 68;
+export const GLOBAL_OBJECTS = 69;
+export const PROJECTION_BOOTH = 70;
+export const IT = 71;
+export const WALLS = 72;
+export const EAST_GARDEN = 73;
+export const BLUE_FEET = 74;
+export const WAX_COAT_1 = 75;
+export const CLUB = 76;
+export const WAX_COAT_2 = 77;
+export const TOP_LANDING = 78;
+export const UPPER_BEACH_STAIRS = 79;
+export const LIVING_ROOM = 80;
+export const BLUE_CARD = 81;
+export const BLUE_CANDLE = 82;
+export const BRICK_HOLE_GLOBAL = 83;
+export const LADIES_ROOM = 84;
+export const MASK = 85;
+export const NORTH_GARDEN = 86;
+export const MOP = 87;
+export const BEACH = 88;
+export const HOUSE = 89;
+export const BOMB_SHELTER = 90;
+export const CHIMNEY_1 = 91;
+export const BRICK_HOLE = 92;
+export const NORTHWEST_JUNCTION = 93;
+export const HANDLES = 94;
+export const WEST_GARDEN = 95;
+export const LADDER = 96;
+export const GAME_ROOM = 97;
+export const PIPE = 98;
+export const NORTHEAST_JUNCTION = 99;
+export const MONUMENT = 100;
+export const LOWER_BEACH_STAIRS = 101;
+export const RESET_BUTTON = 102;
+export const COMPUTER = 103;
+export const ORCHIDS = 104;
+export const CRAWL_SPACE_SOUTH = 105;
+export const HOOKS = 106;
+export const FOYER_CD = 107;
+export const HEDGE_MAZE = 108;
+export const NORTH_NICHE = 109;
+export const VIOLET_CARD = 110;
+export const MATCHBOX = 111;
+export const STAIRS = 112;
+export const VERTICAL_MAP = 113;
+export const BAZOOKA = 114;
+export const PLANK = 115;
+export const CRAWL_SPACE_DOOR = 116;
+export const OAK_DOOR = 117;
+export const UPSTAIRS_HALL_WEST = 118;
+export const CLIFF = 119;
+export const FIRE_HYDRANT = 120;
+export const ROOF_2 = 121;
+export const FOYER = 122;
+export const FLASHLIGHT = 123;
+export const FIREPLACE_GLOBAL = 124;
+export const ON_POOL_2 = 125;
+export const AUNT = 126;
+export const RING = 127;
+export const BED = 128;
+export const SAND = 129;
+export const SHOVEL = 130;
+export const MAZE_HOLE = 131;
+export const GLOBAL_ROOM = 132;
+export const SLIDE_PROJECTOR = 133;
+export const PLANE = 134;
+export const LENS_CAP = 135;
+export const FINCH = 136;
+export const PEGS = 137;
+export const COMPARTMENT = 138;
+export const HIM = 139;
+export const CELLAR_CD = 140;
+export const GREEN_BUTTON = 141;
+export const TOUPEE = 142;
+export const HEART_OF_MAZE = 143;
+export const RED_CARD = 144;
+export const GUN = 145;
+export const GRATER = 146;
+export const ON_POOL_1 = 147;
+export const SACK_WINDOW = 148;
 export const PLAQUE = 149;
-export const CORPSE_LINE = 150;
-export const ROPE = 151;
-export const HOUSE = 152;
-export const SOUTH_JUNCTION = 153;
-export const BAZOOKA = 154;
-export const SOUTHEAST_JUNCTION = 155;
-export const SOUTHWEST_JUNCTION = 156;
-export const PATIO = 157;
-export const PATIO_DOOR = 158;
-export const GARDEN = 159;
-export const GARDEN_WALLS = 160;
-export const SOUTH_GARDEN = 161;
-export const EAST_GARDEN = 162;
-export const WEST_GARDEN = 163;
-export const NORTH_GARDEN = 164;
-export const ORCHIDS = 165;
-export const POND = 166;
-export const NORTHWEST_JUNCTION = 167;
-export const NORTHEAST_JUNCTION = 168;
-export const CANNON_EMPLACEMENT = 169;
-export const CLIFF = 170;
-export const LADDER = 171;
-export const HOOKS = 172;
-export const HATCH_HOLE = 173;
-export const CANNON_BALL = 174;
-export const PILE_OF_BALLS = 175;
-export const FUSE = 176;
-export const CANNON = 177;
-export const COMPARTMENT = 178;
-export const FRONT_PORCH = 179;
-export const DOOR_BELL = 180;
-export const MAILBOX = 181;
-export const OAK_DOOR = 182;
-export const SKIS = 183;
-export const TOP_LANDING = 184;
-export const UPPER_BEACH_STAIRS = 185;
+export const HEART_OF_MAZE_HOLE = 150;
+export const PORTABLE_WATER = 151;
+export const SAW = 152;
+export const BEDROOM_1 = 153;
+export const NOTE = 154;
+export const HATCH = 155;
+export const SOUTHEAST_JUNCTION = 156;
+export const THEM = 157;
+export const UPSTAIRS_CD = 158;
+export const DOG = 159;
+export const ENTRANCE_TO_MAZE = 160;
+export const BAG = 161;
+export const ATTIC_CD = 162;
+export const HERMAN = 163;
+export const FOYER_STAIRS = 164;
+export const SEAT = 165;
+export const CLOSET = 166;
+export const YOUR_FEET = 167;
+export const HORIZONTAL_MAP = 168;
+export const MENS_ROOM = 169;
+export const PERSIAN_RUG = 170;
+export const GREEN_MATCH = 171;
+export const CANNON = 172;
+export const RED_WAX = 173;
+export const DISPLAY_LIGHTS = 174;
+export const ATTIC_DOOR = 175;
+export const WHITE_BUTTON = 176;
+export const WATER = 177;
+export const ATTIC = 178;
+export const GROUND = 179;
+export const PROJECTION_SCREEN = 180;
+export const NEWSLETTER = 181;
+export const SOUTH_GARDEN = 182;
+export const NOT_HERE_OBJECT = 183;
+export const RED_CANDLE = 184;
+export const FRONT_PORCH = 185;
 export const GAP = 186;
-export const LOWER_BEACH_STAIRS = 187;
-export const BOTTOM_LANDING = 188;
-export const BEACH = 189;
-export const FIRE = 190;
-export const SAND = 191;
-export const INLET = 192;
-export const CLOSET = 193;
-export const PEG_5 = 194;
-export const PROP_VAULT = 195;
-export const CHUTE = 196;
-export const CLOSET_REF = 197;
-export const PEGS = 198;
-export const PEG_3 = 199;
-export const PEG_2 = 200;
-export const PEG_1 = 201;
-export const PEG_0 = 202;
-export const NOTE = 203;
-export const BUCKET = 204;
-export const SHAFT_BOTTOM = 205;
-export const CLOSET_TOP = 206;
-export const ATTIC_CD = 207;
-export const ATTIC = 208;
-export const TRUNK = 209;
-export const FIRE_HYDRANT = 210;
-export const ATTIC_DOOR = 211;
-export const AUNT = 212;
-export const HERMAN = 213;
-export const CLUB = 214;
-export const STICK = 215;
-export const GUN = 216;
-export const MOP = 217;
-export const BAG = 218;
-export const CLIPPERS = 219;
-export const SHEARS = 220;
-export const SWORD = 221;
-export const SAW = 222;
-export const GAME_ROOM = 223;
-export const TOKYO = 224;
-export const MONUMENT = 225;
-export const RING = 226;
-export const TANK = 227;
-export const PLANE = 228;
-export const DOG = 229;
-export const RED_BUTTON = 230;
-export const WHITE_BUTTON = 231;
-export const GREEN_BUTTON = 232;
-export const BLUE_BUTTON = 233;
-export const BLACK_BUTTON = 234;
-export const SHORT_HALL = 235;
-export const MENS_ROOM = 236;
-export const LADIES_ROOM = 237;
-export const ENTRANCE_TO_MAZE = 238;
-export const HEDGE_MAZE_OBJ = 239;
-export const HEDGE_MAZE = 240;
-export const HEART_OF_MAZE = 241;
-export const HEART_OF_MAZE_HOLE = 242;
-export const RUBBER_STAMP = 243;
-export const SHOVEL = 244;
+export const INTNUM = 187;
+export const SKIS = 188;
+export const BEDROOM_3 = 189;
+export const ROUND_POST = 190;
+export const FILM_PROJECTOR = 191;
+export const CRAWL_SPACE_NORTH = 192;
+export const CEILING = 193;
+export const MANTLE = 194;
+export const PHONE = 195;
+export const FILM_PROJECTOR_LENS = 196;
+export const DUMMY_OBJECT = 197;
+export const SLIDE_PROJECTOR_LENS = 198;
+export const SACK = 199;
+export const UNDERPASS_2 = 200;
+export const RED_BUTTON = 201;
+export const FIRST_SECRET_ROOM = 202;
+export const WALL_SAFE = 203;
+export const IN_POOL_2 = 204;
+export const BOTTOM_LANDING = 205;
+export const TANK = 206;
+export const PILE_OF_BALLS = 207;
+export const FUSE = 208;
+export const BEDROOM_2 = 209;
+export const FILM = 210;
+export const DINING_ROOM_TABLE = 211;
+export const SOUTH_NICHE = 212;
+export const TUNNEL = 213;
+export const BLUE_BUTTON = 214;
+export const SWORD = 215;
+export const HOPPER = 216;
+export const BRICK = 217;
+export const TOILET = 218;
+export const CANNON_EMPLACEMENT = 219;
+export const TRUNK = 220;
+export const CLIPPERS = 221;
+export const PIANO = 222;
+export const FIREPLACE = 223;
+export const PROJECTED_IMAGE = 224;
+export const MAILBOX = 225;
+export const SLIDE = 226;
+export const BS_SAFE = 227;
+export const DOOR_BELL = 228;
+export const RUBBER_STAMP = 229;
+export const CLOSET_TOP = 230;
+export const OUTSIDE_PARLOR = 231;
+export const UPSTAIRS_HALL_MIDDLE = 232;
+export const IN_POOL_1 = 233;
+export const SHORT_HALL = 234;
+export const LETTER = 235;
+export const ORANGE_CARD = 236;
+export const FIRE = 237;
+export const SCREENING_ROOM = 238;
+export const BOAT_DOCK = 239;
+export const WHITE_WAX = 240;
+export const GARDEN = 241;
+export const PSEUDO_OBJECT = 242;
+export const BUCK = 243;
+export const UPSTAIRS_BATHROOM = 244;
 
 // ---- Constants ----
 export const PS$OBJECT = 128;
@@ -562,36 +562,36 @@ export const V = {
 
 // ---- Properties (P?xxx) ----
 export const P = {
-  ACTION: 13,
+  ACTION: 11,
   ADJECTIVE: 18,
-  ADVFCN: 10,
+  ADVFCN: 5,
   CAPACITY: 14,
-  CARD_NUM: 3,
-  CONTFCN: 7,
-  DESCFCN: 11,
+  CARD_NUM: 7,
+  CONTFCN: 3,
+  DESCFCN: 6,
   DOWN: 22,
   EAST: 29,
-  FDESC: 9,
-  GENERIC: 5,
+  FDESC: 4,
+  GENERIC: 9,
   GLOBAL: 17,
   IN: 21,
-  LDESC: 8,
-  MATCH_LIFE: 1,
+  LDESC: 13,
+  MATCH_LIFE: 8,
   NE: 30,
   NORTH: 31,
   NW: 24,
   OUT: 20,
   PSEUDO: 16,
-  SDESC: 2,
+  SDESC: 1,
   SE: 28,
   SIZE: 15,
   SOUTH: 27,
   SW: 26,
   SYNONYM: 19,
-  TEXT: 4,
+  TEXT: 2,
   THINGS: 12,
   UP: 23,
-  VALUE: 6,
+  VALUE: 10,
   WEST: 25,
 };
 

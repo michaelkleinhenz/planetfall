@@ -5,42 +5,42 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
-export const RLANDBIT = 0;
-export const NDESCBIT = 1;
-export const CONTBIT = 2;
-export const SEARCHBIT = 3;
-export const TOOLBIT = 4;
-export const TOUCHBIT = 5;
-export const TAKEBIT = 6;
-export const READBIT = 7;
-export const OPENBIT = 8;
-export const SPELLBIT = 9;
-export const ONBIT = 10;
-export const LIGHTBIT = 11;
-export const VILLAIN = 12;
-export const VICBIT = 13;
-export const TRANSBIT = 14;
-export const SCROLLBIT = 15;
-export const BURNBIT = 16;
-export const VOWELBIT = 17;
-export const POINTBIT = 18;
-export const RMUNGBIT = 19;
-export const INVISIBLE = 20;
-export const SURFACEBIT = 21;
-export const TRYTAKEBIT = 22;
-export const TREASURE = 23;
+export const LOCKEDBIT = 1;
+export const TREASURE = 2;
+export const SCROLLBIT = 3;
+export const SPELLBIT = 4;
+export const VICTIM = 5;
+export const POINTBIT = 6;
+export const NDESCBIT = 7;
+export const ONBIT = 8;
+export const VOWELBIT = 9;
+export const TRANSBIT = 10;
+export const SEARCHBIT = 11;
+export const OPENBIT = 12;
+export const TRYTAKEBIT = 13;
+export const SURFACEBIT = 14;
+export const TOUCHBIT = 15;
+export const INVISIBLE = 16;
+export const RMUNGBIT = 17;
+export const READBIT = 18;
+export const TAKEBIT = 19;
+export const VICBIT = 20;
+export const CONTBIT = 21;
+export const LIGHTBIT = 22;
+export const TOOLBIT = 23;
 export const DOORBIT = 24;
-export const CLIMBBIT = 25;
-export const VEHBIT = 26;
-export const LOCKEDBIT = 27;
-export const WEAPONBIT = 28;
-export const VICTIM = 29;
-export const FLAMEBIT = 30;
+export const RLANDBIT = 25;
+export const CLIMBBIT = 26;
+export const BURNBIT = 28;
+export const VEHBIT = 29;
+export const WEAPONBIT = 30;
+export const VILLAIN = 31;
+export const FLAMEBIT = 0;
 
 // ---- Objects and rooms ----
 export const FOREST = 1;
@@ -64,7 +64,7 @@ export const HEATHER = 18;
 export const JUG = 19;
 export const LEGEND_BOOK = 20;
 export const ME = 21;
-export const COURTYARD_1 = 22;
+export const COURTYARD_3 = 22;
 export const MAP_ROOM = 23;
 export const FLY_SCROLL = 24;
 export const OPEN_SCROLL = 25;
@@ -81,12 +81,12 @@ export const ALTAR = 35;
 export const HASTE_SCROLL = 36;
 export const LONG_ROAD_SIGN = 37;
 export const TURRET = 38;
-export const GLOBAL_OBJECTS = 39;
+export const ROOMS = 39;
 export const DISPEL_SPELL = 40;
 export const BREAD = 41;
 export const WEST_FORK = 42;
 export const EAST_HALL = 43;
-export const GLOBAL_ADVENTURER = 44;
+export const ADVENTURER = 44;
 export const LONG_ROAD = 45;
 export const TERROR = 46;
 export const ENDLESS_STAIR = 47;
@@ -96,7 +96,7 @@ export const KRILL = 50;
 export const BENCHES = 51;
 export const POINT_R = 52;
 export const NEWT_SPELL = 53;
-export const NORTH_CELL = 54;
+export const TOWER_N = 54;
 export const PLAYER = 55;
 export const T_B = 56;
 export const DISTANT_CASTLE = 57;
@@ -118,7 +118,7 @@ export const HEAP = 72;
 export const LEGEND_TWO = 73;
 export const ROAD = 74;
 export const SKY = 75;
-export const ROOMS = 76;
+export const GLOBAL_OBJECTS = 76;
 export const WEST_HALL = 77;
 export const FLY_SPELL = 78;
 export const IT = 79;
@@ -129,7 +129,7 @@ export const BLACK_PASSAGE = 83;
 export const TALK_TO_ANIMALS_SPELL = 84;
 export const SHACK_OVEN = 85;
 export const POINT_M = 86;
-export const TOWER_N = 87;
+export const TOWER_S = 87;
 export const PEDESTAL = 88;
 export const SHADY_BROOK = 89;
 export const MACHINERY = 90;
@@ -139,9 +139,9 @@ export const OVEN = 93;
 export const BATTERED_LANTERN = 94;
 export const FOREST_1 = 95;
 export const SHACK_EAST = 96;
-export const ADVENTURER = 97;
+export const GLOBAL_ADVENTURER = 97;
 export const SEA_STUFF = 98;
-export const TOWER_S = 99;
+export const NORTH_CELL = 99;
 export const STATUE = 100;
 export const WEST_CASTLE = 101;
 export const TRAIL_HEAD = 102;
@@ -158,7 +158,7 @@ export const EGG = 112;
 export const SEA = 113;
 export const PORTRAIT_NICHE = 114;
 export const BEDPOST_BUTTON = 115;
-export const COURTYARD_3 = 116;
+export const COURTYARD_5 = 116;
 export const CHEAT_DEATH_SCROLL = 117;
 export const LILY_PAD = 118;
 export const T_D = 119;
@@ -204,7 +204,7 @@ export const SUMMON_SPELL = 158;
 export const TEMPLE_OBJ = 159;
 export const REAL_STAIR = 160;
 export const PURLOINED_ROOM = 161;
-export const COURTYARD_5 = 162;
+export const COURTYARD_1 = 162;
 export const T_E = 163;
 export const BEDROOM = 164;
 export const SHACK_OBJ = 165;
@@ -594,11 +594,11 @@ export const V = {
 export const P = {
   ACTION: 13,
   ADJECTIVE: 18,
-  ADVFCN: 5,
+  ADVFCN: 3,
   CAPACITY: 14,
-  CONTFCN: 3,
+  CONTFCN: 4,
   COUNT: 9,
-  DESCFCN: 4,
+  DESCFCN: 5,
   DOWN: 22,
   EAST: 29,
   FDESC: 11,

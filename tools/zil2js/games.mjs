@@ -44,6 +44,7 @@ export const GAMES = {
     srcDir: 'games/cutthroats',
     main: 'toa',
     objectOrder: { story: 'COMPILED/toa.z3' },
+    oldReturn: true,
     storyFile: 'COMPILED/toa.z3',
   },
   'deadline': {
@@ -79,6 +80,8 @@ export const GAMES = {
     srcDir: 'games/infidel',
     main: 'infidel',
     objectOrder: { story: 'COMPILED/infidel.z3' },
+    // Compiled with an older ZILCH: <RETURN value> leaves the loop.
+    oldReturn: true,
     storyFile: 'COMPILED/infidel.z3',
   },
   'leathergoddesses': {

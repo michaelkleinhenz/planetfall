@@ -5,42 +5,42 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
-export const NDESCBIT = 0;
-export const OPENBIT = 1;
+export const BURNBIT = 1;
 export const DOORBIT = 2;
-export const READBIT = 3;
-export const TRYTAKEBIT = 4;
-export const TAKEBIT = 5;
-export const CONTBIT = 6;
-export const TOOLBIT = 7;
-export const TOUCHBIT = 8;
-export const NARTICLEBIT = 9;
-export const ONBIT = 10;
-export const RLANDBIT = 11;
-export const WETBIT = 12;
-export const INDOORSBIT = 13;
-export const RMUNGBIT = 14;
-export const SURFACEBIT = 15;
-export const ACTORBIT = 16;
-export const TRANSBIT = 17;
-export const LOCKEDBIT = 18;
-export const WISHBIT = 19;
-export const VOWELBIT = 20;
-export const INVISIBLE = 21;
-export const SEARCHBIT = 22;
-export const WEARBIT = 23;
-export const FLAMEBIT = 24;
-export const WORNBIT = 25;
-export const THROWNBIT = 26;
-export const VEHBIT = 27;
-export const BURNBIT = 28;
-export const WEAPONBIT = 29;
-export const LIGHTBIT = 30;
+export const CONTBIT = 4;
+export const READBIT = 6;
+export const SEARCHBIT = 7;
+export const WETBIT = 8;
+export const WORNBIT = 9;
+export const THROWNBIT = 10;
+export const FLAMEBIT = 11;
+export const INDOORSBIT = 12;
+export const WISHBIT = 13;
+export const LOCKEDBIT = 14;
+export const TOOLBIT = 15;
+export const NDESCBIT = 16;
+export const TAKEBIT = 17;
+export const ACTORBIT = 18;
+export const RLANDBIT = 19;
+export const ONBIT = 20;
+export const VOWELBIT = 21;
+export const WEARBIT = 22;
+export const TRANSBIT = 23;
+export const VEHBIT = 24;
+export const OPENBIT = 25;
+export const TRYTAKEBIT = 26;
+export const SURFACEBIT = 27;
+export const TOUCHBIT = 28;
+export const INVISIBLE = 29;
+export const RMUNGBIT = 30;
+export const NARTICLEBIT = 31;
+export const WEAPONBIT = 0;
+export const LIGHTBIT = 3;
 
 // ---- Objects and rooms ----
 export const POLICE_DOOR = 1;
@@ -76,15 +76,15 @@ export const ART = 30;
 export const PANEL = 31;
 export const RAIN = 32;
 export const INTDIR = 33;
-export const DUMMY_OBJECT = 34;
+export const ROOMS = 34;
 export const PIRANHA = 35;
 export const RADIO = 36;
 export const CARTON = 37;
-export const C_OBJECT = 38;
+export const LOCAL_GLOBALS = 38;
 export const HER = 39;
 export const LIBRARY_DOOR = 40;
 export const HUMANOIDS = 41;
-export const SOUTH_GATE = 42;
+export const NORTH_GATE = 42;
 export const ENVELOPE = 43;
 export const ROTARY_SOUTH = 44;
 export const CELL = 45;
@@ -108,10 +108,10 @@ export const ROTARY_NORTH = 62;
 export const BRIDGE = 63;
 export const OPEN_GRAVE = 64;
 export const CANDLE = 65;
-export const TUNNEL_FORK = 66;
+export const UNDER_HILL = 66;
 export const GLOBBY = 67;
 export const TWILIGHT_GLEN = 68;
-export const TUNNEL_CORNER = 69;
+export const TUNNEL_FORK = 69;
 export const MOON = 70;
 export const ISLE = 71;
 export const SCULPTURE = 72;
@@ -130,7 +130,7 @@ export const WHARF = 84;
 export const STATUE = 85;
 export const VIDEO_ARCADE = 86;
 export const CHURCH_DOOR = 87;
-export const HIDDEN_HATCH = 88;
+export const HOLE = 88;
 export const GLASSES = 89;
 export const JAIL_CELL = 90;
 export const EXHIBITS = 91;
@@ -139,7 +139,7 @@ export const OPEN_ENVELOPE = 93;
 export const OUTSIDE_COTTAGE = 94;
 export const HILLTOP = 95;
 export const POSTER = 96;
-export const HOLE = 97;
+export const HIDDEN_HATCH = 97;
 export const ALEXIS = 98;
 export const POLICE_STATION = 99;
 export const TREE = 100;
@@ -181,7 +181,7 @@ export const HIM = 135;
 export const SCHEDULE = 136;
 export const LIBRARY = 137;
 export const LABORATORY = 138;
-export const UNDER_HILL = 139;
+export const UNDER_CELL = 139;
 export const STAR = 140;
 export const TORTURE_CHAMBER = 141;
 export const FOSSIL = 142;
@@ -254,7 +254,7 @@ export const CELL_DOOR = 208;
 export const DCASE = 209;
 export const MACHINE = 210;
 export const FREEDOM = 211;
-export const ROOMS = 212;
+export const DUMMY_OBJECT = 212;
 export const LAKE_SAND = 213;
 export const UMBRELLA = 214;
 export const DRAWBRIDGE = 215;
@@ -262,7 +262,7 @@ export const BABY = 216;
 export const PIT = 217;
 export const SHARKS = 218;
 export const PROTAGONIST = 219;
-export const UNDER_CELL = 220;
+export const TUNNEL_CORNER = 220;
 export const DUST = 221;
 export const CREEPY_CORNER = 222;
 export const RIVER = 223;
@@ -289,9 +289,9 @@ export const VAPORS = 243;
 export const GRAVE = 244;
 export const STEEP_TRAIL = 245;
 export const OUTSIDE_CEMETERY = 246;
-export const NORTH_GATE = 247;
+export const SOUTH_GATE = 247;
 export const RANSOM_LETTER = 248;
-export const LOCAL_GLOBALS = 249;
+export const C_OBJECT = 249;
 export const COIN = 250;
 export const LAKE = 251;
 export const CRANK = 252;
@@ -536,16 +536,16 @@ export const V = {
 export const P = {
   ACTION: 13,
   ADJECTIVE: 18,
-  ADVFCN: 6,
+  ADVFCN: 9,
   CAPACITY: 14,
-  CONTFCN: 8,
+  CONTFCN: 6,
   DESCFCN: 11,
   DOWN: 22,
   EAST: 29,
-  FDESC: 7,
+  FDESC: 8,
   GLOBAL: 17,
   IN: 21,
-  LDESC: 9,
+  LDESC: 7,
   LOC: 10,
   NE: 30,
   NORTH: 31,

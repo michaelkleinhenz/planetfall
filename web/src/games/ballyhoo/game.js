@@ -5,283 +5,283 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
-export const INVISIBLE = 0;
-export const TOUCHBIT = 1;
-export const SURFACEBIT = 2;
-export const TRYTAKEBIT = 3;
-export const OPENBIT = 4;
-export const SEARCHBIT = 5;
-export const TRANSBIT = 6;
-export const WEARBIT = 7;
-export const RMUNGBIT = 8;
-export const ONBIT = 9;
-export const LIGHTBIT = 10;
-export const RLANDBIT = 11;
-export const WORNBIT = 12;
-export const VEHBIT = 13;
-export const INDOORSBIT = 14;
-export const LOCKEDBIT = 15;
-export const EATBIT = 16;
-export const CAGEBIT = 17;
-export const CONTBIT = 18;
-export const PERSON = 19;
-export const VOWELBIT = 20;
-export const NDESCBIT = 21;
-export const DOORBIT = 22;
-export const ACTORBIT = 23;
-export const FEMALE = 24;
-export const NOA = 25;
-export const AIRBIT = 26;
-export const CLEARBIT = 27;
-export const REWEARBIT = 28;
-export const NARTICLEBIT = 29;
-export const TAKEBIT = 30;
+export const NARTICLEBIT = 1;
+export const WORNBIT = 2;
+export const CLEARBIT = 3;
+export const NOA = 4;
+export const FEMALE = 5;
+export const NDESCBIT = 6;
+export const VOWELBIT = 7;
+export const PERSON = 8;
+export const CAGEBIT = 9;
+export const LOCKEDBIT = 10;
+export const INDOORSBIT = 11;
+export const RMUNGBIT = 12;
+export const TRANSBIT = 13;
+export const SEARCHBIT = 14;
+export const OPENBIT = 15;
+export const TRYTAKEBIT = 16;
+export const SURFACEBIT = 17;
+export const TOUCHBIT = 18;
+export const INVISIBLE = 19;
+export const REWEARBIT = 20;
+export const WEARBIT = 21;
+export const TAKEBIT = 22;
+export const CONTBIT = 23;
+export const ONBIT = 24;
+export const EATBIT = 25;
+export const LIGHTBIT = 26;
+export const DOORBIT = 27;
+export const RLANDBIT = 28;
+export const AIRBIT = 29;
+export const VEHBIT = 30;
+export const ACTORBIT = 31;
 
 // ---- Objects and rooms ----
-export const DUMMY_OBJECT = 1;
-export const C_OBJECT = 2;
-export const X_OBJECT = 3;
-export const GLOBAL_OBJECTS = 4;
-export const LOCAL_GLOBALS = 5;
-export const ROOMS = 6;
-export const BACK = 7;
-export const INTDIR = 8;
-export const INTNUM = 9;
-export const GLOBAL_MONEY = 10;
-export const DOLLAR = 11;
-export const PSEUDO_OBJECT = 12;
-export const IT = 13;
-export const NOT_HERE_OBJECT = 14;
-export const LIGHT = 15;
-export const DARKNESS = 16;
-export const GROUND = 17;
-export const WALLS = 18;
-export const HOME = 19;
-export const CEILING = 20;
-export const CORNER = 21;
-export const EGRESS = 22;
-export const LADDER = 23;
-export const AIR = 24;
-export const HANDS = 25;
-export const MONKEY = 26;
-export const HEAD = 27;
-export const PROTAGONIST = 28;
-export const YOU = 29;
-export const ME = 30;
-export const GLOBAL_ROOM = 31;
-export const VOICES = 32;
-export const HIGH_VOICE = 33;
+export const PROP_ROOM = 1;
+export const HYP = 2;
+export const NET = 3;
+export const BACK_YARD = 4;
+export const JENNY = 5;
+export const AIR = 6;
+export const HERM = 7;
+export const BLACKJACK = 8;
+export const APE = 9;
+export const GLOBAL_WATER = 10;
+export const HANDS = 11;
+export const CAGE = 12;
+export const APE_ROOM = 13;
+export const KEY = 14;
+export const PARLOR = 15;
+export const WHIP = 16;
+export const SHORT = 17;
+export const DIAL = 18;
+export const WINDOW = 19;
+export const SOFA = 20;
+export const CLOSET_OBJECT = 21;
+export const BUTTON = 22;
+export const POLICE = 23;
+export const VOICES = 24;
+export const POKER = 25;
+export const BOOKS = 26;
+export const SCRAP = 27;
+export const MIDWAY = 28;
+export const ME = 29;
+export const ON_CAGE = 30;
+export const NIMROD = 31;
+export const SUNGLASSES = 32;
+export const HOME = 33;
 export const ROAR = 34;
-export const MIDWEST = 35;
-export const MEN = 36;
-export const APE = 37;
-export const APE_ROOM = 38;
-export const APE_DOOR = 39;
-export const COMPARTMENT = 40;
-export const TRAP_DOOR = 41;
-export const RIBBON = 42;
-export const CAGE = 43;
-export const ON_CAGE = 44;
-export const BULL_ROOM = 45;
-export const CLOSET = 46;
-export const CLOSET_OBJECT = 47;
-export const DRESS = 48;
-export const VEIL = 49;
-export const SHAWL = 50;
-export const ON_TENT = 51;
-export const PROD = 52;
-export const BURN_HOLE = 53;
-export const TENT = 54;
-export const BULL = 55;
-export const CHAIN = 56;
-export const NOOK = 57;
-export const PATH = 58;
-export const STRAW = 59;
-export const SAWDUST = 60;
-export const GLOBAL_SAWDUST = 61;
-export const ROUST_DOOR = 62;
-export const ROUST_ROOM = 63;
-export const KEY = 64;
-export const JIM = 65;
-export const JIM_GLOBAL = 66;
-export const MALCOM = 67;
-export const BROS = 68;
-export const GLORIA = 69;
-export const DUFFY = 70;
-export const HEADPHONES = 71;
-export const MUSIC = 72;
-export const PARLOR = 73;
-export const PARLOR_OBJECT = 74;
-export const CHANDELIER = 75;
-export const TICKET = 76;
-export const BLUE_BOX = 77;
-export const PINK_BOX = 78;
-export const HYP = 79;
-export const SOFA = 80;
-export const TUX = 81;
-export const FORTUNE = 82;
-export const MID = 83;
-export const MIDWAY = 84;
-export const MENAGERIE = 85;
-export const FRONT = 86;
-export const BLUE_DOOR = 87;
-export const FAT_WEST = 88;
-export const FAT_EAST = 89;
-export const FAT = 90;
-export const FAT_HAND = 91;
-export const RADIO = 92;
-export const WPDL = 93;
-export const DIAL = 94;
-export const STAIRCASE = 95;
-export const BOUDOIR = 96;
-export const HERM = 97;
-export const ANDREW = 98;
-export const ANDREW_CLOTHES = 99;
-export const JENNY = 100;
-export const JENNY_CLOTHES = 101;
-export const CASE = 102;
-export const MIDEAST = 103;
-export const CON = 104;
-export const SMOKE = 105;
-export const BLUE_ROOM = 106;
-export const DEALER = 107;
-export const TABLE = 108;
-export const BLACKJACK = 109;
-export const POKER = 110;
-export const KIESTER = 111;
-export const JUNK = 112;
-export const FLASK = 113;
-export const RAG = 114;
-export const CIRCUS = 115;
-export const UNDER_STANDS = 116;
-export const GARBAGE = 117;
-export const GRANDSTAND = 118;
-export const STANDS_ROOM = 119;
-export const JUNK_FOOD = 120;
-export const HAWKER = 121;
-export const CROWD = 122;
-export const BIGTOP = 123;
-export const CENTER_POLE = 124;
-export const RING_OBJECT = 125;
-export const POLE = 126;
-export const BALLOON = 127;
-export const HELIUM = 128;
-export const NET = 129;
-export const GLOBAL_NET = 130;
-export const WINGS = 131;
-export const RING = 132;
+export const LION_NAME = 35;
+export const HEADPHONES = 36;
+export const LION_CAGE = 37;
+export const GRATE = 38;
+export const CHEESE = 39;
+export const PANEL = 40;
+export const INTDIR = 41;
+export const TEAM = 42;
+export const ROOMS = 43;
+export const WARPED_DOOR = 44;
+export const PARLOR_OBJECT = 45;
+export const FLASK = 46;
+export const BURN_HOLE = 47;
+export const RADIO = 48;
+export const CHUTE = 49;
+export const LOCAL_GLOBALS = 50;
+export const HEAD = 51;
+export const TENT = 52;
+export const ON_TENT = 53;
+export const CHAIR = 54;
+export const MUSIC = 55;
+export const PLATFORM_1 = 56;
+export const CON_AREA = 57;
+export const LIGHT = 58;
+export const OFFICE = 59;
+export const DEAD_MOUSE = 60;
+export const MENAGERIE = 61;
+export const TIGHTROPE_ROOM = 62;
+export const ON_WAGON = 63;
+export const CHAIN = 64;
+export const BUCKET = 65;
+export const TAFT = 66;
+export const DARKNESS = 67;
+export const APE_DOOR = 68;
+export const JUNK_FOOD = 69;
+export const PLATFORM_2 = 70;
+export const BLUE_BOX = 71;
+export const TIGHTROPE_OBJECT = 72;
+export const EDDIE = 73;
+export const CHANDELIER = 74;
+export const JUNK = 75;
+export const GLOBAL_OBJECTS = 76;
+export const IT = 77;
+export const HAWKER = 78;
+export const CENTER_POLE = 79;
+export const LONG = 80;
+export const WINGS = 81;
+export const CURTAINS = 82;
+export const WALLS = 83;
+export const GIRL = 84;
+export const RIBBON = 85;
+export const CIRCUS = 86;
+export const MIDWEST = 87;
+export const SMOKE = 88;
+export const GLOBAL_SAWDUST = 89;
+export const FOUNTAIN = 90;
+export const FAT_EAST = 91;
+export const PSEUDO_TURNSTILE = 92;
+export const MASK = 93;
+export const WEST_CAMP = 94;
+export const TABLE = 95;
+export const STAND = 96;
+export const PROD = 97;
+export const JIM = 98;
+export const MOOSE = 99;
+export const OFFICE_DOOR = 100;
+export const LADDER = 101;
+export const MEAT = 102;
+export const DESK = 103;
+export const SHAWL = 104;
+export const MID = 105;
+export const DRESS = 106;
+export const FORTUNE = 107;
+export const BOUDOIR = 108;
+export const LOWER = 109;
+export const WAGON = 110;
+export const HIGH_VOICE = 111;
+export const BULL_ROOM = 112;
+export const JOEY = 113;
+export const ANDREW_CLOTHES = 114;
+export const UNIFORM = 115;
+export const DEALER = 116;
+export const ELSIE = 117;
+export const SWITCH = 118;
+export const COSTUME = 119;
+export const EGRESS = 120;
+export const NOOK = 121;
+export const TICKET = 122;
+export const CRAWL_SPACE = 123;
+export const DUMMY_OBJECT = 124;
+export const BANNER = 125;
+export const WHIMPER = 126;
+export const MONKEY = 127;
+export const MIRROR = 128;
+export const POLE = 129;
+export const FENCE = 130;
+export const RING = 131;
+export const CORNER = 132;
 export const STOOL = 133;
-export const PLATFORM_1 = 134;
-export const PLATFORM_2 = 135;
-export const TIGHTROPE_ROOM = 136;
-export const TIGHTROPE_OBJECT = 137;
-export const GUY_WIRES = 138;
-export const PLATFORM = 139;
-export const LEFT_HANGING = 140;
-export const DEN = 141;
-export const LION_CAGE = 142;
-export const STAND = 143;
-export const NIMROD = 144;
-export const ELSIE = 145;
-export const LION_NAME = 146;
-export const MEAT = 147;
-export const BUCKET = 148;
-export const WATER = 149;
-export const WHIP = 150;
-export const LION_DOOR = 151;
-export const CON_AREA = 152;
-export const BANNER = 153;
-export const LONG = 154;
-export const SHORT = 155;
-export const GRANOLA = 156;
-export const BANANA = 157;
-export const JERRY = 158;
-export const TEAM = 159;
-export const CON_STAND = 160;
-export const CONCESSIONAIRE = 161;
-export const FOUNTAIN = 162;
-export const BUTTON = 163;
-export const GLOBAL_WATER = 164;
-export const BACK_YARD = 165;
-export const CHUTE = 166;
-export const GRATE = 167;
-export const BESIDE_BIGTOP = 168;
-export const NEAR_WAGON = 169;
-export const ON_WAGON = 170;
-export const WAGON = 171;
-export const CRANK = 172;
-export const PANEL = 173;
-export const OFFICE = 174;
-export const SHEET = 175;
-export const PHONE = 176;
-export const POLICE = 177;
-export const FENCE = 178;
-export const EDDIE = 179;
-export const OFFICE_DOOR = 180;
-export const OFFICE_OBJECT = 181;
-export const DESK = 182;
-export const CHAIR = 183;
-export const DESK_ON_WAGON = 184;
-export const DEGREE = 185;
-export const BOOKS = 186;
-export const BURNED_CAGE = 187;
-export const GUARD = 188;
-export const SUNGLASSES = 189;
-export const TURNSTILE = 190;
-export const PSEUDO_TURNSTILE = 191;
-export const SLOT = 192;
-export const PROP_ROOM = 193;
-export const TRAP = 194;
-export const CHEESE = 195;
+export const HELIUM = 134;
+export const GLOBAL_ROOM = 135;
+export const COMPARTMENT = 136;
+export const MALCOM = 137;
+export const TUX = 138;
+export const RING_OBJECT = 139;
+export const FAT_HAND = 140;
+export const BULL = 141;
+export const CON_STAND = 142;
+export const TAMER_SIGN = 143;
+export const CAMP = 144;
+export const PLATFORM = 145;
+export const MUNRAB = 146;
+export const CROWBAR = 147;
+export const NEAR_WAGON = 148;
+export const ROUST_DOOR = 149;
+export const FAT_WEST = 150;
+export const GANG = 151;
+export const GLOBAL_MONEY = 152;
+export const DICK = 153;
+export const TRAP = 154;
+export const COAT = 155;
+export const GLORIA = 156;
+export const CLOWN_ALLEY = 157;
+export const NOTE = 158;
+export const BIGTOP = 159;
+export const SLOT = 160;
+export const DUFFY = 161;
+export const JERRY = 162;
+export const GRANOLA = 163;
+export const LION_DOOR = 164;
+export const BALLOON = 165;
+export const TAMER_TRAILER = 166;
+export const OFFICE_OBJECT = 167;
+export const CROWD = 168;
+export const BROS = 169;
+export const DEN = 170;
+export const CLOWN_TRAILER = 171;
+export const DEGREE = 172;
+export const CAR = 173;
+export const YOU = 174;
+export const MEN = 175;
+export const SHEET = 176;
+export const STAIRCASE = 177;
+export const CLOSET = 178;
+export const BACK = 179;
+export const FLOWER = 180;
+export const CONCESSIONAIRE = 181;
+export const STANDS_ROOM = 182;
+export const GLOBAL_NET = 183;
+export const TRADE_CARD = 184;
+export const UPPER = 185;
+export const DOLLAR = 186;
+export const WATER = 187;
+export const GROUND = 188;
+export const NOT_HERE_OBJECT = 189;
+export const JIM_GLOBAL = 190;
+export const STRAW = 191;
+export const ROUST_ROOM = 192;
+export const INTNUM = 193;
+export const MIDEAST = 194;
+export const GARBAGE = 195;
 export const MOUSE = 196;
-export const DEAD_MOUSE = 197;
-export const MASK = 198;
-export const SUIT = 199;
-export const CAR = 200;
-export const SWITCH = 201;
-export const TAFT = 202;
-export const MUNRAB = 203;
-export const GANG = 204;
-export const DICK = 205;
-export const COAT = 206;
-export const TRADE_CARD = 207;
-export const NOTE = 208;
-export const WEST_CAMP = 209;
+export const WPDL = 197;
+export const BURNED_CAGE = 198;
+export const ASH = 199;
+export const ANDREW = 200;
+export const EAST_CAMP = 201;
+export const CEILING = 202;
+export const PHONE = 203;
+export const C_OBJECT = 204;
+export const FAT = 205;
+export const UNDER_STANDS = 206;
+export const GUARD = 207;
+export const SUIT = 208;
+export const BANANA = 209;
 export const CANVAS = 210;
-export const EAST_CAMP = 211;
-export const TAMER = 212;
-export const TAMER_ROOM = 213;
-export const MOOSE = 214;
-export const CRAWL_SPACE = 215;
-export const WINDOW = 216;
-export const CURTAINS = 217;
-export const TAMER_TRAILER = 218;
-export const TAMER_SIGN = 219;
-export const CAMP = 220;
-export const TAMER_DOOR = 221;
-export const CROWBAR = 222;
-export const GIRL = 223;
-export const WHIMPER = 224;
-export const BAGGAGE_COMPARTMENT = 225;
-export const THUMB = 226;
-export const UNIFORM = 227;
-export const FLOWER = 228;
-export const JOEY = 229;
-export const CLOWN_ALLEY = 230;
-export const CLOWN_TRAILER = 231;
-export const TRAY = 232;
-export const ASH = 233;
-export const SCRAP = 234;
-export const COSTUME = 235;
-export const MIRROR = 236;
-export const UPPER = 237;
-export const LOWER = 238;
-export const WARPED_DOOR = 239;
+export const PROTAGONIST = 211;
+export const BLUE_DOOR = 212;
+export const BAGGAGE_COMPARTMENT = 213;
+export const TRAY = 214;
+export const SAWDUST = 215;
+export const CASE = 216;
+export const GRANDSTAND = 217;
+export const TAMER = 218;
+export const THUMB = 219;
+export const GUY_WIRES = 220;
+export const RAG = 221;
+export const VEIL = 222;
+export const FRONT = 223;
+export const CON = 224;
+export const LEFT_HANGING = 225;
+export const TAMER_ROOM = 226;
+export const KIESTER = 227;
+export const JENNY_CLOTHES = 228;
+export const PATH = 229;
+export const BESIDE_BIGTOP = 230;
+export const PINK_BOX = 231;
+export const BLUE_ROOM = 232;
+export const TRAP_DOOR = 233;
+export const DESK_ON_WAGON = 234;
+export const TURNSTILE = 235;
+export const X_OBJECT = 236;
+export const CRANK = 237;
+export const PSEUDO_OBJECT = 238;
+export const TAMER_DOOR = 239;
 
 // ---- Constants ----
 export const PS$OBJECT = 128;
@@ -563,32 +563,32 @@ export const V = {
 
 // ---- Properties (P?xxx) ----
 export const P = {
-  ACTION: 9,
+  ACTION: 13,
   ADJECTIVE: 18,
-  ADJECTVIE: 4,
+  ADJECTVIE: 10,
   CAPACITY: 14,
-  CONTFCN: 5,
-  DESCFCN: 13,
+  CONTFCN: 7,
+  DESCFCN: 12,
   DOWN: 22,
   EAST: 29,
-  FDESC: 12,
-  GENERIC: 7,
+  FDESC: 8,
+  GENERIC: 11,
   GLOBAL: 17,
-  GROUND_LOC: 6,
+  GROUND_LOC: 9,
   IN: 21,
-  LDESC: 11,
+  LDESC: 6,
   NE: 30,
   NORTH: 31,
   NW: 24,
   OUT: 20,
   PSEUDO: 16,
-  SDESC: 8,
+  SDESC: 4,
   SE: 28,
   SIZE: 15,
   SOUTH: 27,
   SW: 26,
   SYNONYM: 19,
-  TEXT: 10,
+  TEXT: 5,
   UP: 23,
   WEST: 25,
 };
@@ -2122,7 +2122,8 @@ async function GWIM(gbit, lbit, prep) {
           tell(" ");
         }
       }
-      tell(D(obj), "]\n");
+      await DPRINT(obj);
+      tell("]\n");
       return obj;
     } else {
       return false;
@@ -2286,11 +2287,14 @@ async function CLEAN_TALK$(word) {
     g.CURSE_C = g.CURSE_C + 1;
     if (g.HERE == APE_ROOM) {
       if (await DIRTY_WORD$(word)) {
-        tell(D(APE), " takes it as an insult. He");
+        await DPRINT(APE);
+        tell(" takes it as an insult. He");
       } else if (await LIGHT_WEIGHT$(word)) {
-        tell("No respecter of nuance in language, ", D(APE));
+        tell("No respecter of nuance in language, ");
+        await DPRINT(APE);
       } else {
-        tell("No time for that. ", D(APE));
+        tell("No time for that. ");
+        await DPRINT(APE);
       }
       await LUGGAGE();
       return true;
@@ -2516,7 +2520,7 @@ async function WHICH_PRINT(tlen, len, tbl) {
     if (!(hasFlag(obj, NARTICLEBIT))) {
       tell("the ");
     }
-    tell(D(obj));
+    await DPRINT(obj);
     if (len == 2) {
       if (!(rlen == 2)) {
         tell(",");
@@ -2775,7 +2779,8 @@ async function LIT$(rm, rmbit = true) {
 async function PRSO_PRINT() {
   let ptr = 0;
   if (g.P_MERGED || eq(get(ptr = get(g.P_ITBL, P_NC1), 0), W.IT)) {
-    tell(" ", D(g.PRSO));
+    tell(" ");
+    await DPRINT(g.PRSO);
     return true;
   } else {
     return await BUFFER_PRINT(ptr, get(g.P_ITBL, P_NC1L), false);
@@ -2785,7 +2790,8 @@ async function PRSO_PRINT() {
 async function PRSI_PRINT() {
   let ptr = 0;
   if (g.P_MERGED || eq(get(ptr = get(g.P_ITBL, P_NC2), 0), W.IT)) {
-    tell(" ", D(g.PRSO));
+    tell(" ");
+    await DPRINT(g.PRSO);
     return true;
   } else {
     return await BUFFER_PRINT(ptr, get(g.P_ITBL, P_NC2L), false);
@@ -3270,7 +3276,8 @@ async function V_CLAP() {
     await PERFORM(V.RUB, g.PRSO);
     return true;
   } else if (g.END_GAME && (loc(JIM) == g.HERE)) {
-    tell("The ", D(JIM));
+    tell("The ");
+    await DPRINT(JIM);
     if (hasFlag(JIM, RMUNGBIT)) {
       clearFlag(JIM, RMUNGBIT);
       tell(" snaps out of his trance with a shake of his head.");
@@ -3458,7 +3465,9 @@ async function V_DISEMBARK() {
       g.CLOCK_WAIT = true;
       g.AWAITING_REPLY = 1;
       enable(await QUEUE(I_REPLY.id, 2));
-      tell("You hear an inner voice whisper, \"Do I really want to forfeit my position in the ", D(g.PRSO), "?\" To which you answer:\n");
+      tell("You hear an inner voice whisper, \"Do I really want to forfeit my position in the ");
+      await DPRINT(g.PRSO);
+      tell("?\" To which you answer:\n");
       return true;
     } else {
       tell("You get ");
@@ -3467,7 +3476,9 @@ async function V_DISEMBARK() {
       } else {
         tell("out");
       }
-      tell(" of the ", D(g.PRSO), ".\n");
+      tell(" of the ");
+      await DPRINT(g.PRSO);
+      tell(".\n");
       return move(g.WINNER, g.HERE);
     }
   }
@@ -3526,7 +3537,8 @@ async function V_EMPTY() {
             if (!(hasFlag(obj, NARTICLEBIT))) {
               tell("The ");
             }
-            tell(D(obj), ": ");
+            await DPRINT(obj);
+            tell(": ");
             await PERFORM(V.TAKE, obj, g.PRSO);
             obj = nxt;
           } else {
@@ -3624,7 +3636,9 @@ async function V_FEED() {
     food = CHEESE;
   }
   if (food) {
-    tell("(the ", D(food), ")\n");
+    tell("(the ");
+    await DPRINT(food);
+    tell(")\n");
     await PERFORM(V.GIVE, food, g.PRSO);
     return true;
   } else {
@@ -3661,7 +3675,11 @@ async function V_FILL() {
       return true;
     } else {
       move(WATER, BUCKET);
-      tell("A good measure of ", D(WATER), " gurgles into the ", D(BUCKET), ".\n");
+      tell("A good measure of ");
+      await DPRINT(WATER);
+      tell(" gurgles into the ");
+      await DPRINT(BUCKET);
+      tell(".\n");
       return true;
     }
   } else if (g.PRSI == WATER) {
@@ -3756,7 +3774,9 @@ async function WHICH_WAY() {
 
 async function I_FOLLOW() {
   if ((g.FOLLOW_FLAG == 4) && (g.HERE == EAST_CAMP)) {
-    tell("The ", D(CURTAINS), "s part slightly and are quickly drawn back.\n");
+    tell("The ");
+    await DPRINT(CURTAINS);
+    tell("s part slightly and are quickly drawn back.\n");
   }
   g.FOLLOW_FLAG = false;
   return false;
@@ -3904,7 +3924,9 @@ async function V_KILL() {
       await PERFORM(V.TAKE, TRAP);
       return true;
     } else {
-      tell("\"SNAP!\" The ", D(TRAP), " does a back flip.\n");
+      tell("\"SNAP!\" The ");
+      await DPRINT(TRAP);
+      tell(" does a back flip.\n");
       return true;
     }
   } else if (hasFlag(g.PRSO, ACTORBIT) && !(g.PRSO == FAT || g.PRSO == TAFT || g.PRSO == THUMB)) {
@@ -3991,7 +4013,11 @@ async function V_LEAN() {
         await FALL_DOWN();
         return true;
       } else if (prob(40)) {
-        tell("Overly cautious, you don't put enough of ", D(ME), " in that ", D(INTDIR), ".\n");
+        tell("Overly cautious, you don't put enough of ");
+        await DPRINT(ME);
+        tell(" in that ");
+        await DPRINT(INTDIR);
+        tell(".\n");
         return true;
       } else {
         tell("You overcompensate, and are now");
@@ -4060,7 +4086,9 @@ async function PRE_LOCK() {
   if (g.PRSI == KEY) {
     return false;
   } else {
-    tell("The ", D(g.PRSO), " cannot be ");
+    tell("The ");
+    await DPRINT(g.PRSO);
+    tell(" cannot be ");
     if (isVerb(V.UNLOCK)) {
       tell("un");
     }
@@ -4068,7 +4096,8 @@ async function PRE_LOCK() {
     if (g.PRSI) {
       await ARTICLE(g.PRSI, true);
     } else {
-      tell(" ", D(HANDS));
+      tell(" ");
+      await DPRINT(HANDS);
     }
     tell(S(g.PERIOD));
   }
@@ -4079,7 +4108,9 @@ async function V_LOCK() {
   let $1;
   if (hasFlag(g.PRSO, DOORBIT) || (g.PRSO == KIESTER || g.PRSO == BAGGAGE_COMPARTMENT || g.PRSO == DESK)) {
     if (hasFlag(g.PRSO, OPENBIT)) {
-      tell("But the ", D(g.PRSO), " is open.\n");
+      tell("But the ");
+      await DPRINT(g.PRSO);
+      tell(" is open.\n");
       return true;
     } else if (hasFlag(g.PRSO, LOCKEDBIT)) {
       tell("It already is.\n");
@@ -4089,7 +4120,9 @@ async function V_LOCK() {
       return true;
     } else {
       setFlag(g.PRSO, LOCKEDBIT);
-      tell("Okay, the ", D(g.PRSO), " is now locked.\n");
+      tell("Okay, the ");
+      await DPRINT(g.PRSO);
+      tell(" is now locked.\n");
       return true;
     }
   } else {
@@ -4127,7 +4160,9 @@ async function V_LOOK_DOWN() {
     return true;
   } else if (g.HERE == TIGHTROPE_ROOM || g.HERE == PLATFORM_1 || g.HERE == PLATFORM_2) {
     if (g.APE_LOC == 2 || g.APE_LOC == 3) {
-      tell("Without looking down, you're confident the net is properly positioned under the girl and not ", D(ME), ". It's the kind of confidence that makes your knees buckle.");
+      tell("Without looking down, you're confident the net is properly positioned under the girl and not ");
+      await DPRINT(ME);
+      tell(". It's the kind of confidence that makes your knees buckle.");
     } else {
       tell("First lesson of a wire walker: NEVER look down. ");
       if (loc(NET) == RING) {
@@ -4237,7 +4272,11 @@ async function V_LOOK_UNDER() {
     }
   } else if ((g.PRSO == STRAW) && (g.HERE == APE_ROOM) && !(hasFlag(TRAP_DOOR, OPENBIT))) {
     clearFlag(TRAP_DOOR, INVISIBLE);
-    tell("Under the coarse layer of ", D(STRAW), " the outline of a ", D(TRAP_DOOR), " is visible.\n");
+    tell("Under the coarse layer of ");
+    await DPRINT(STRAW);
+    tell(" the outline of a ");
+    await DPRINT(TRAP_DOOR);
+    tell(" is visible.\n");
     return true;
   } else {
     tell("There's nothing eye-catching under");
@@ -4247,7 +4286,8 @@ async function V_LOOK_UNDER() {
     } else if ((g.HERE == APE_ROOM) && (g.PRSO == STRAW)) {
       tell(" except the ");
       await OPEN_CLOSED(TRAP_DOOR);
-      tell(" ", D(TRAP_DOOR));
+      tell(" ");
+      await DPRINT(TRAP_DOOR);
     }
     tell(S(g.PERIOD));
     return true;
@@ -4268,10 +4308,14 @@ async function V_LOOK_UP() {
       }
       return crlf();
     } else if ((g.HERE == RING) && !g.END_GAME) {
-      tell(S(g.YOU_SEE), " the supporting apparatus for the ", D(TIGHTROPE_OBJECT), ".\n");
+      tell(S(g.YOU_SEE), " the supporting apparatus for the ");
+      await DPRINT(TIGHTROPE_OBJECT);
+      tell(".\n");
       return true;
     } else if (g.HERE == UNDER_STANDS) {
-      tell("From here the ", D(GRANDSTAND), " resembles a huge venetian blind, letting in broad panels of hazy light.\n");
+      tell("From here the ");
+      await DPRINT(GRANDSTAND);
+      tell(" resembles a huge venetian blind, letting in broad panels of hazy light.\n");
       return true;
     } else if ((g.HERE == RING || g.HERE == PLATFORM_1 || g.HERE == TIGHTROPE_ROOM) && g.APE_LOC) {
       await TELL_APE();
@@ -4280,7 +4324,9 @@ async function V_LOOK_UP() {
       tell(S(getProp(BALLOON, P.FDESC)), "\n");
       return true;
     } else if ((g.HERE == BULL_ROOM) && !(hasFlag(BURN_HOLE, INVISIBLE))) {
-      tell(S(g.YOU_SEE), " ", D(BURN_HOLE), "s.\n");
+      tell(S(g.YOU_SEE), " ");
+      await DPRINT(BURN_HOLE);
+      tell("s.\n");
       return true;
     } else {
       await PERFORM(V.EXAMINE, CEILING);
@@ -4331,7 +4377,9 @@ async function V_NO() {
     await PERFORM(V.WAIT);
     return true;
   } else if (g.AWAITING_REPLY == 2) {
-    tell("Contain ", D(ME), ".\n");
+    tell("Contain ");
+    await DPRINT(ME);
+    tell(".\n");
     return true;
   } else if (g.AWAITING_REPLY == 3) {
     tell("You should start.\n");
@@ -4351,7 +4399,9 @@ async function V_NO() {
     clearFlag(PROTAGONIST, RMUNGBIT);
     return crlf();
   } else if (g.AWAITING_REPLY == 7) {
-    tell("Quit your ", D(GRANDSTAND), "ing.\n");
+    tell("Quit your ");
+    await DPRINT(GRANDSTAND);
+    tell("ing.\n");
     return true;
   } else if ((g.AWAITING_REPLY == 8) && (loc(CON) == g.HERE)) {
     await PERFORM(V.ASK_ABOUT, CON, FLASK);
@@ -4409,7 +4459,9 @@ async function V_OPEN() {
     } else if (!(hasFlag(g.PRSO, LOCKEDBIT))) {
       if (!(hasFlag(g.PRSO, OPENBIT))) {
         setFlag(g.PRSO, OPENBIT);
-        tell("The ", D(g.PRSO), " ");
+        tell("The ");
+        await DPRINT(g.PRSO);
+        tell(" ");
         if (g.PRSO == BLUE_DOOR || g.PRSO == CURTAINS) {
           tell("slides");
         } else if (g.PRSO == LION_DOOR || g.PRSO == ROUST_DOOR || g.PRSO == APE_DOOR) {
@@ -4424,7 +4476,9 @@ async function V_OPEN() {
         return true;
       }
     } else {
-      tell("The ", D(g.PRSO), " is locked.\n");
+      tell("The ");
+      await DPRINT(g.PRSO);
+      tell(" is locked.\n");
       return true;
     }
   } else {
@@ -4467,7 +4521,9 @@ async function V_PHONE() {
       return true;
     }
   } else if (g.PRSO == HOME) {
-    tell("E.T. quit this ", D(CIRCUS), " long ago.\n");
+    tell("E.T. quit this ");
+    await DPRINT(CIRCUS);
+    tell(" long ago.\n");
     return true;
   } else if (g.PRSO == INTNUM) {
     if ((g.P_EXCHANGE == 0) && (g.P_NUMBER == 0)) {
@@ -4493,7 +4549,9 @@ async function V_PHONE_WITH() {
   if (!(g.PRSI == PHONE)) {
     tell("You can't use");
     await ARTICLE(g.PRSI);
-    tell(" as a ", D(PHONE), ".\n");
+    tell(" as a ");
+    await DPRINT(PHONE);
+    tell(".\n");
     return true;
   } else {
     await PERFORM(V.PHONE, g.PRSO);
@@ -4616,7 +4674,9 @@ async function V_PUT() {
       } else {
         tell("in");
       }
-      tell(" the ", D(g.PRSI), " for");
+      tell(" the ");
+      await DPRINT(g.PRSI);
+      tell(" for");
       await ARTICLE(g.PRSO, true);
       tell(S(g.PERIOD));
       return true;
@@ -4647,7 +4707,9 @@ async function V_PUT_ON() {
     tell(" stays your mischievous hand.\n");
     return true;
   } else if (hasFlag(g.PRSO, WEARBIT) && hasFlag(g.PRSI, ACTORBIT)) {
-    tell("The ", D(g.PRSO), " isn't");
+    tell("The ");
+    await DPRINT(g.PRSO);
+    tell(" isn't");
     await ARTICLE(g.PRSI, true);
     tell("'s style.\n");
     return true;
@@ -5338,10 +5400,14 @@ async function V_UNLOCK() {
       return await CANT_LOCK();
     } else if (hasFlag(g.PRSO, LOCKEDBIT)) {
       clearFlag(g.PRSO, LOCKEDBIT);
-      tell("The ", D(g.PRSO), " is now unlocked.\n");
+      tell("The ");
+      await DPRINT(g.PRSO);
+      tell(" is now unlocked.\n");
       return true;
     } else {
-      tell("But the ", D(g.PRSO), " isn't locked.\n");
+      tell("But the ");
+      await DPRINT(g.PRSO);
+      tell(" isn't locked.\n");
       return true;
     }
   } else {
@@ -5353,7 +5419,9 @@ async function V_UNLOCK() {
 }
 
 async function CANT_LOCK() {
-  tell("However many times you flip over the key, jiggle the lock, and cajole the ", D(g.PRSO), ", you can't make the key fit the lock.\n");
+  tell("However many times you flip over the key, jiggle the lock, and cajole the ");
+  await DPRINT(g.PRSO);
+  tell(", you can't make the key fit the lock.\n");
   return true;
 }
 
@@ -5373,7 +5441,9 @@ async function V_VAULT() {
   } else if ((g.PRSI == POLE) || (!g.PRSI && (await HELD$(POLE)) && !(await HELD$(g.PRSO)) && !(hasFlag(g.PRSO, TAKEBIT)))) {
     tell("You carefully mark off the steps leading up to");
     await ARTICLE(g.PRSO, true);
-    tell(" but, right before the approach, you're psyched out by the image of ", D(ME), " in a full body-cast.\n");
+    tell(" but, right before the approach, you're psyched out by the image of ");
+    await DPRINT(ME);
+    tell(" in a full body-cast.\n");
     return true;
   } else {
     return await V_COUNT();
@@ -5415,7 +5485,9 @@ async function V_WALK() {
         g.P_IT_OBJECT = obj;
         return M_FATAL;
       } else {
-        tell("The ", D(obj), " is closed.\n");
+        tell("The ");
+        await DPRINT(obj);
+        tell(" is closed.\n");
         g.P_IT_OBJECT = obj;
         return M_FATAL;
       }
@@ -5642,7 +5714,9 @@ async function V_YES() {
   let veh = 0;
   veh = loc(PROTAGONIST);
   if (g.AWAITING_REPLY == 1) {
-    tell("You nonchalantly walk away from the ", D(veh), ".\n");
+    tell("You nonchalantly walk away from the ");
+    await DPRINT(veh);
+    tell(".\n");
     return move(PROTAGONIST, g.HERE);
   } else if (g.AWAITING_REPLY == 2) {
     tell("A most wholesome decision.\n");
@@ -5654,7 +5728,9 @@ async function V_YES() {
     tell("That's really beneath you.\n");
     return true;
   } else if (g.AWAITING_REPLY == 5) {
-    tell("Alright, that's the last ", D(STRAW), ".\n");
+    tell("Alright, that's the last ");
+    await DPRINT(STRAW);
+    tell(".\n");
     await TELL_FINISH();
     await read(g.P_INBUF, g.P_LEXV);
     tell("Well, not quite the LAST straw. Please resume play.\n");
@@ -5794,7 +5870,9 @@ async function IDROP() {
     if ((loc(NET) == RING) || (loc(NET) == MUNRAB)) {
       tell(", luckily for the sake of whoever may later dive into the net,");
     }
-    tell(" to the ", D(GROUND), " below.\n");
+    tell(" to the ");
+    await DPRINT(GROUND);
+    tell(" below.\n");
     return true;
   } else if (!(loc(g.PRSO) == g.WINNER) && hasFlag(loc(g.PRSO), CONTBIT) && !(hasFlag(loc(g.PRSO), OPENBIT))) {
     tell("Impossible because");
@@ -5807,7 +5885,9 @@ async function IDROP() {
   } else if (hasFlag(g.PRSO, WORNBIT)) {
     return await REMOVE_FIRST();
   } else if ((g.PRSO == MONKEY) && !(isVerb(V.SHOW))) {
-    tell(S(g.NOT_HOLDING), " the ", D(MONKEY), ".\n");
+    tell(S(g.NOT_HOLDING), " the ");
+    await DPRINT(MONKEY);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -5817,7 +5897,8 @@ async function IDROP() {
 async function REMOVE_FIRST(obj = false) {
   tell("You'll have to remove ");
   if (obj) {
-    tell("the ", D(obj));
+    tell("the ");
+    await DPRINT(obj);
   } else {
     tell("it");
   }
@@ -5875,7 +5956,7 @@ async function DESCRIBE_ROOM(look$ = false) {
   }
   if (loc(g.HERE) == ROOMS) {
     if (!(g.HERE == TIGHTROPE_ROOM) && !(g.VERBOSITY == 0)) {
-      tell(D(g.HERE));
+      await DPRINT(g.HERE);
     }
     av = loc(g.WINNER);
     if (!(hasFlag(av, VEHBIT)) && !g.HIDING && !(g.HERE == TIGHTROPE_ROOM)) {
@@ -5884,7 +5965,9 @@ async function DESCRIBE_ROOM(look$ = false) {
   }
   if (look$ || (g.VERBOSITY == 1 || g.VERBOSITY == 2)) {
     if (g.HIDING) {
-      tell(", hiding behind the ", D(TAFT), "\n");
+      tell(", hiding behind the ");
+      await DPRINT(TAFT);
+      tell("\n");
     } else if (hasFlag(av, VEHBIT)) {
       if (av == LONG || av == SHORT) {
         tell(", ", S(g.TAIL_END), " a ");
@@ -5893,7 +5976,7 @@ async function DESCRIBE_ROOM(look$ = false) {
       } else {
         tell(", on the ");
       }
-      tell(D(av));
+      await DPRINT(av);
       crlf();
     }
     if (v$ && (await apply(getProp(g.HERE, P.ACTION), M_LOOK))) {
@@ -6056,10 +6139,13 @@ async function DESCRIBE_OBJECTS(thing = false) {
           tell(" (being worn)");
         }
         if ((obj == MONKEY) && (await HELD$(MONKEY))) {
-          tell(" on ", D(BACK));
+          tell(" on ");
+          await DPRINT(BACK);
         }
         if ((obj == BUCKET) && (loc(WATER) == BUCKET)) {
-          tell(" (filled with ", D(WATER), ")");
+          tell(" (filled with ");
+          await DPRINT(WATER);
+          tell(")");
         } else if ((await SEE_INSIDE$(obj)) && (await SEE_ANYTHING_IN$(obj))) {
           move(obj, X_OBJECT);
         }
@@ -6153,7 +6239,9 @@ async function GOTO(rm, v$ = true) {
 async function JIGS_UP(num, desc) {
   tell(S(desc));
   await TELL_DIED();
-  tell("Well not quite died. The doctors do what they can, but as the debts rise and the prognosis dips you take the only avenue left -- and sell ", D(ME), " to the circus.\n\nAs \"The Human ", S(get(g.FREAKS, num)), ",\" you enjoy top billing as a popular midway attraction, garnering fame to rival that of nineteenth century oddity John Merrick.\n\nStill, as the fingers of the Great Unwashed poke at your benumbed hide, you contemplate how this fate might have been thwarted.");
+  tell("Well not quite died. The doctors do what they can, but as the debts rise and the prognosis dips you take the only avenue left -- and sell ");
+  await DPRINT(ME);
+  tell(" to the circus.\n\nAs \"The Human ", S(get(g.FREAKS, num)), ",\" you enjoy top billing as a popular midway attraction, garnering fame to rival that of nineteenth century oddity John Merrick.\n\nStill, as the fingers of the Great Unwashed poke at your benumbed hide, you contemplate how this fate might have been thwarted.");
   crlf();
   return await FINISH();
 }
@@ -6354,7 +6442,8 @@ async function ARTICLE(obj, the = false) {
     if (the) {
       tell(" the");
     } else if (hasFlag(obj, NOA)) {
-      tell(" ", D(obj));
+      tell(" ");
+      await DPRINT(obj);
       return true;
     } else if (hasFlag(obj, VOWELBIT)) {
       tell(" an");
@@ -6362,7 +6451,8 @@ async function ARTICLE(obj, the = false) {
       tell(" a");
     }
   }
-  tell(" ", D(obj));
+  tell(" ");
+  await DPRINT(obj);
   return true;
 }
 
@@ -6616,7 +6706,9 @@ async function WALLS_F() {
 
 async function TELL_WIMPER() {
   g.GIRL_CRIED = true;
-  tell("You can hear a faint whimper coming from the ", D(CRAWL_SPACE), ".\n");
+  tell("You can hear a faint whimper coming from the ");
+  await DPRINT(CRAWL_SPACE);
+  tell(".\n");
   return true;
 }
 
@@ -6641,7 +6733,9 @@ async function CORNER_F() {
       await PERFORM(V.WALK_TO, POKER);
       return true;
     } else {
-      tell("You're close enough to the ", D(CORNER), " already.\n");
+      tell("You're close enough to the ");
+      await DPRINT(CORNER);
+      tell(" already.\n");
       return true;
     }
   } else {
@@ -6731,7 +6825,9 @@ async function LADDER_F() {
 async function CLIMB$() {
   let x = 0, to_ground$ = true, ground = false;
   if (g.END_GAME && (g.HERE == RING) && !(loc(PROTAGONIST) == STAND)) {
-    tell("The rope ", D(LADDER), ", which is tangled around its platform, dangles down a couple of feet out of your reach.\n");
+    tell("The rope ");
+    await DPRINT(LADDER);
+    tell(", which is tangled around its platform, dangles down a couple of feet out of your reach.\n");
     return true;
   } else if (await CANT_CLIMB$()) {
     x = first(PROTAGONIST);
@@ -6748,7 +6844,9 @@ async function CLIMB$() {
       to_ground$ = false;
       move(x, g.HERE);
     }
-    tell("Trying to grip the ", D(LADDER), ", you fumble away");
+    tell("Trying to grip the ");
+    await DPRINT(LADDER);
+    tell(", you fumble away");
     await ARTICLE(x, true);
     if (to_ground$) {
       tell(" and it falls to the ground below");
@@ -6758,14 +6856,22 @@ async function CLIMB$() {
   } else if ((g.APE_LOC == 1) && (g.HERE == RING)) {
     g.APE_LOC = 2;
     clearFlag(PLATFORM_1, TOUCHBIT);
-    tell("As you hoist ", D(ME), " onto the ", D(LADDER), ", the platform buckles with the addition of your weight. ", D(APE), " is spooked, and ");
+    tell("As you hoist ");
+    await DPRINT(ME);
+    tell(" onto the ");
+    await DPRINT(LADDER);
+    tell(", the platform buckles with the addition of your weight. ");
+    await DPRINT(APE);
+    tell(" is spooked, and ");
     if (!(loc(NET) == MUNRAB)) {
       tell("loses his bundle which falls tragically in front of your horrified face to the ground below.");
       return await FINISH();
     } else {
       tell("clambers up into the supporting apparatus as you board the platform.\n\n");
       if (eq(await META_LOC(RADIO), PLATFORM_1) && hasFlag(RADIO, ONBIT) && (g.STATION == 1170)) {
-        tell("In his distress, ", D(APE), " must not have noticed the radio playing.\n\n");
+        tell("In his distress, ");
+        await DPRINT(APE);
+        tell(" must not have noticed the radio playing.\n\n");
       }
       await GOTO(PLATFORM_1);
       return true;
@@ -6824,7 +6930,9 @@ async function TELL_CLIMBING() {
     await MUNRAB_ENTERS_OFFICE(true);
     return true;
   } else {
-    tell("You grasp the ", D(LADDER), " firmly and climb ");
+    tell("You grasp the ");
+    await DPRINT(LADDER);
+    tell(" firmly and climb ");
     if (g.P_WALK_DIR == P.UP) {
       tell("up");
     } else {
@@ -6884,24 +6992,36 @@ async function HANDS_F() {
 
 async function MONKEY_F() {
   if ((loc(MONKEY) == DICK) && (loc(DICK) == g.HERE)) {
-    tell("Obviously, the ", D(DICK), " doesn't ACTUALLY have a ", D(MONKEY), " on his back. This is merely a metaphor indicating \"obsession\" or \"addiction\"; in the detective's case, the latter.\n");
+    tell("Obviously, the ");
+    await DPRINT(DICK);
+    tell(" doesn't ACTUALLY have a ");
+    await DPRINT(MONKEY);
+    tell(" on his back. This is merely a metaphor indicating \"obsession\" or \"addiction\"; in the detective's case, the latter.\n");
     return true;
   } else if (loc(MONKEY) == PROTAGONIST) {
     if (isVerb(V.EXAMINE)) {
-      tell("\"Obsessed\" though you may be, that is no metaphorical ", D(MONKEY), ". It's high-strung, ill-mannered and foul-smelling.\n");
+      tell("\"Obsessed\" though you may be, that is no metaphorical ");
+      await DPRINT(MONKEY);
+      tell(". It's high-strung, ill-mannered and foul-smelling.\n");
       return true;
     } else if ((await HURT$(MONKEY)) || isVerb(V.TAKE, V.REMOVE, V.FOLLOW, V.MOVE)) {
       tell("The animal darts over to your opposite shoulder, piercing your ear with a shriek.\n");
       return true;
     } else if (isVerb(V.RUB)) {
-      tell("He snaps his primate choppers at ", D(HANDS), " and you flinch.\n");
+      tell("He snaps his primate choppers at ");
+      await DPRINT(HANDS);
+      tell(" and you flinch.\n");
       return true;
     } else if (isVerb(V.GIVE, V.SHOW) && (g.PRSI == MONKEY)) {
       if (g.PRSO == BANANA) {
         if (hasFlag(BANANA, RMUNGBIT)) {
           move(BANANA, MONKEY);
           setFlag(BANANA, NDESCBIT);
-          tell("The human-like hand of the ", D(MONKEY), " grasps it and chomps away while clinging ever more tightly onto ", D(BACK), ".\n");
+          tell("The human-like hand of the ");
+          await DPRINT(MONKEY);
+          tell(" grasps it and chomps away while clinging ever more tightly onto ");
+          await DPRINT(BACK);
+          tell(".\n");
           return true;
         } else {
           return await NOT_INTERESTED();
@@ -6942,11 +7062,15 @@ async function PROTAGONIST_F() {
 async function PROTAGONIST_HACK_F() {
   if (hasFlag(MASK, WORNBIT)) {
     if (!(g.WINNER == PROTAGONIST) || isVerb(V.ASK_ABOUT, V.TELL, V.TELL_ABOUT, V.HELLO, V.REPLY)) {
-      tell("The ", D(MASK), " muffles your words.\n");
+      tell("The ");
+      await DPRINT(MASK);
+      tell(" muffles your words.\n");
       g.P_IT_OBJECT = MASK;
       return await STOP();
     } else if (isVerb(V.INHALE, V.KISS) && g.PRSO) {
-      tell("The ", D(MASK), " is in the way.\n");
+      tell("The ");
+      await DPRINT(MASK);
+      tell(" is in the way.\n");
       g.P_IT_OBJECT = MASK;
       return await STOP();
     } else {
@@ -7098,7 +7222,9 @@ async function HIGH_VOICE_F() {
         return true;
       }
     } else if (actor = await FIND_IN(g.HERE, PERSON)) {
-      tell("Hardly amused, ", D(actor), " ignores your performance.\n");
+      tell("Hardly amused, ");
+      await DPRINT(actor);
+      tell(" ignores your performance.\n");
       return true;
     } else if (actor = await FIND_IN(g.HERE, ACTORBIT)) {
       await PERFORM(V.TELL, actor);
@@ -7187,16 +7313,20 @@ async function TELL_WITHIN_REACH() {
 }
 
 async function NOT_INTERESTED() {
-  tell("The ", D(g.PRSI), " doesn't seem interested in the ", D(g.PRSO), ".\n");
+  tell("The ");
+  await DPRINT(g.PRSI);
+  tell(" doesn't seem interested in the ");
+  await DPRINT(g.PRSO);
+  tell(".\n");
   return true;
 }
 
 async function TELL_CLOSELY_SPACED(prso$ = false) {
   tell("The bars of the ");
   if (prso$) {
-    tell(D(g.PRSO));
+    await DPRINT(g.PRSO);
   } else if (g.PRSI) {
-    tell(D(g.PRSI));
+    await DPRINT(g.PRSI);
   } else {
     tell("thing");
   }
@@ -7280,7 +7410,9 @@ async function OUT_OF_FIRST(vehicle) {
   } else {
     tell("out");
   }
-  tell(" of the ", D(vehicle), " first.\n");
+  tell(" of the ");
+  await DPRINT(vehicle);
+  tell(" first.\n");
   return true;
 }
 
@@ -7463,7 +7595,9 @@ async function PLAY_HAND(bet) {
       await TELL_CARD(tmp);
       g.YOUR_COUNT = g.YOUR_COUNT + (await CARD_VALUE(tmp));
       if ((g.YOUR_COUNT > 21) && !(await ACE_CHECK())) {
-        tell(" which puts you over 21, and the ", D(DEALER), " rakes in your bet.\n");
+        tell(" which puts you over 21, and the ");
+        await DPRINT(DEALER);
+        tell(" rakes in your bet.\n");
         val = 0 - bet;
         break loop1;
       } else {
@@ -7586,7 +7720,11 @@ async function ALREADY_GONE(hnd) {
 
 async function MIDWEST_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("To the west is the ", D(TURNSTILE), " exit from the midway, which continues east. The side of the ", D(BIGTOP), " borders on the north. ");
+    tell("To the west is the ");
+    await DPRINT(TURNSTILE);
+    tell(" exit from the midway, which continues east. The side of the ");
+    await DPRINT(BIGTOP);
+    tell(" borders on the north. ");
     return await TELL_BANNER();
   } else if (rarg == M_ENTER) {
     if (!(hasFlag(MIDWEST, TOUCHBIT))) {
@@ -7604,7 +7742,11 @@ async function MIDWEST_F(rarg) {
 async function TELL_FRONT(mid$ = false) {
   tell("Your eyes soak in the lavishly painted sideshow fronts ");
   if (mid$) {
-    tell("-- ", D(ANDREW), " ", D(JENNY), "'s to the south and Rimshaw's to");
+    tell("-- ");
+    await DPRINT(ANDREW);
+    tell(" ");
+    await DPRINT(JENNY);
+    tell("'s to the south and Rimshaw's to");
   } else {
     tell("which line the midway along");
   }
@@ -7613,7 +7755,9 @@ async function TELL_FRONT(mid$ = false) {
 }
 
 async function TELL_BANNER(north$ = false) {
-  tell("A soiled, ", D(BANNER), " beckons ");
+  tell("A soiled, ");
+  await DPRINT(BANNER);
+  tell(" beckons ");
   if (north$) {
     tell("north");
   } else {
@@ -7647,7 +7791,9 @@ async function MEN_F(rarg) {
 }
 
 async function I_CHAINS() {
-  tell("\nThe slow-moving sound of ", D(CHAIN), "s from inside the tent is heard.\n");
+  tell("\nThe slow-moving sound of ");
+  await DPRINT(CHAIN);
+  tell("s from inside the tent is heard.\n");
   return false;
 }
 
@@ -7659,7 +7805,9 @@ async function APE_ENTER() {
       return APE_ROOM;
     }
   } else {
-    tell("The ", D(APE_DOOR), " is ");
+    tell("The ");
+    await DPRINT(APE_DOOR);
+    tell(" is ");
     await OPEN_CLOSED(APE_DOOR);
     tell(S(g.PERIOD));
     return false;
@@ -7669,7 +7817,9 @@ async function APE_ENTER() {
 async function BULL_ENTER() {
   let foo = MEN;
   if ((g.HERE == MEN) && (loc(BULL) == g.HERE)) {
-    tell("With upraised tusks and flailing trunk, the ", D(BULL), " backs you off.\n");
+    tell("With upraised tusks and flailing trunk, the ");
+    await DPRINT(BULL);
+    tell(" backs you off.\n");
     return false;
   } else {
     tell("Mindful of where you step, you walk ");
@@ -7696,7 +7846,9 @@ async function FENCE_EXIT() {
       return NEAR_WAGON;
     }
   } else {
-    tell("A ", D(FENCE), " stops you.\n");
+    tell("A ");
+    await DPRINT(FENCE);
+    tell(" stops you.\n");
     return false;
   }
 }
@@ -7706,7 +7858,8 @@ async function APE_F() {
     tell("He seems off in another world with his music.\n");
     return await STOP();
   } else if (isVerb(V.EXAMINE)) {
-    tell(D(APE), " appears as a huge ball of dark fur with a thumping breastplate and a crinkled mug, both high-gloss black. ");
+    await DPRINT(APE);
+    tell(" appears as a huge ball of dark fur with a thumping breastplate and a crinkled mug, both high-gloss black. ");
     if (g.HERE == APE_ROOM) {
       tell("He's looking down at you quizzically.");
     } else if (loc(GIRL) == APE) {
@@ -7717,7 +7870,8 @@ async function APE_F() {
     if (g.HERE == MEN) {
       tell("The ape seems wearied by the familiar attention you're paying him.\n");
     } else if (!g.END_GAME) {
-      tell(D(APE), " stares at you through his deep-set jaundiced eyes.\n");
+      await DPRINT(APE);
+      tell(" stares at you through his deep-set jaundiced eyes.\n");
     } else {
       tell("You're not close enough for meaningful communication.\n");
     }
@@ -7725,7 +7879,9 @@ async function APE_F() {
   } else if (!(g.HERE == APE_ROOM) && (await TOUCHING$(APE))) {
     return await CANT_REACH(APE);
   } else if (isVerb(V.RUB) && !g.PRSI) {
-    tell("The hair is coarse and bristly against the palm of ", D(HANDS), ". The gorilla is too puzzled by your intrusion, however, to enjoy such a creature comfort.\n");
+    tell("The hair is coarse and bristly against the palm of ");
+    await DPRINT(HANDS);
+    tell(". The gorilla is too puzzled by your intrusion, however, to enjoy such a creature comfort.\n");
     return true;
   } else if (isVerb(V.PUT_ON) && (g.PRSO == HEADPHONES)) {
     await PERFORM(V.GIVE, HEADPHONES, APE);
@@ -7741,7 +7897,8 @@ async function APE_F() {
       return true;
     } else if ((g.PRSO == RADIO) && hasFlag(RADIO, ONBIT)) {
       g.APE_C = 4;
-      tell(D(APE), " looks expectantly at the device, but as it rests in his hairy clutches the static-emission from the radio quickly grates on his sensitive nerves. He shoves it back to you, then really begins to give you static.\n");
+      await DPRINT(APE);
+      tell(" looks expectantly at the device, but as it rests in his hairy clutches the static-emission from the radio quickly grates on his sensitive nerves. He shoves it back to you, then really begins to give you static.\n");
       return true;
     } else if ((g.PRSO == HEADPHONES) && (await RUNNING$(I_RUN.id)) && (g.KNOB_SET == V.PLAY)) {
       if (eq(get(g.TAPE_TABLE, g.ON_TAPE), 2)) {
@@ -7749,18 +7906,27 @@ async function APE_F() {
         move(HEADPHONES, APE);
         setFlag(APE, RMUNGBIT);
         enable(await QUEUE(I_MOVE_DICK.id, 1));
-        tell("From the looks of him -- an undeniable lowbrow. But now ", D(APE), ", true to his name, displays a quite highbrow taste in music. He ushers the headphones over to the ", D(CORNER), " of his ", D(CAGE), ", his savage breast to soothe.");
+        tell("From the looks of him -- an undeniable lowbrow. But now ");
+        await DPRINT(APE);
+        tell(", true to his name, displays a quite highbrow taste in music. He ushers the headphones over to the ");
+        await DPRINT(CORNER);
+        tell(" of his ");
+        await DPRINT(CAGE);
+        tell(", his savage breast to soothe.");
       } else if (await RUNNING$(I_RUN.id)) {
-        tell(D(APE), " refuses to have anything to do with the headphones.");
+        await DPRINT(APE);
+        tell(" refuses to have anything to do with the headphones.");
       }
       return crlf();
     } else if (g.PRSO == BALLOON) {
       await BALLOON_FLIGHT();
-      tell(D(APE), " just scratches his head.\n");
+      await DPRINT(APE);
+      tell(" just scratches his head.\n");
       return true;
     } else {
       move(g.PRSO, g.HERE);
-      tell(D(APE), " holds");
+      await DPRINT(APE);
+      tell(" holds");
       await ARTICLE(g.PRSO, true);
       tell(" limply in his massive hand for a moment then lets it drop");
       if (g.PRSO == MEAT) {
@@ -7770,7 +7936,10 @@ async function APE_F() {
       return true;
     }
   } else if (await HURT$(APE)) {
-    tell("In the face of your attack, ", D(APE), " simply scrunches his nose in curiosity. This has the effect of withering the fierce expression on your face and botching your follow-through. With the playfulness that is characteristic of the great apes, ", D(APE));
+    tell("In the face of your attack, ");
+    await DPRINT(APE);
+    tell(" simply scrunches his nose in curiosity. This has the effect of withering the fierce expression on your face and botching your follow-through. With the playfulness that is characteristic of the great apes, ");
+    await DPRINT(APE);
     await LUGGAGE();
     return true;
   } else if ((g.FOLLOW_FLAG == 9) && isVerb(V.FOLLOW)) {
@@ -7794,11 +7963,17 @@ async function I_APE() {
       setFlag(HEADPHONES, INVISIBLE);
       disable(await INT(I_RUN.id));
       if (g.HERE == APE_ROOM || g.HERE == MEN) {
-        tell("\n", D(APE), " suddenly lets out a primal, deafening scream that rattles the bars of his cage. You can hear the ", D(HEADPHONES), " being reduced to dust in the ape's tense grip. ");
+        tell("\n");
+        await DPRINT(APE);
+        tell(" suddenly lets out a primal, deafening scream that rattles the bars of his cage. You can hear the ");
+        await DPRINT(HEADPHONES);
+        tell(" being reduced to dust in the ape's tense grip. ");
         if (g.HERE == APE_ROOM) {
           return await APE_DEATH();
         } else {
-          tell("With that volcanic emotional response to the end of his listening pleasure, ", D(APE), " settles back down onto the straw.\n");
+          tell("With that volcanic emotional response to the end of his listening pleasure, ");
+          await DPRINT(APE);
+          tell(" settles back down onto the straw.\n");
           return true;
         }
       } else {
@@ -7814,7 +7989,8 @@ async function I_APE() {
     }
     if (g.APE_C == 1) {
       move(APE, g.HERE);
-      tell(D(APE), " gets up from his doldrums and stares down at you");
+      await DPRINT(APE);
+      tell(" gets up from his doldrums and stares down at you");
       if (hasFlag(SUIT, WORNBIT)) {
         tell(". If apes could laugh, this one would -- at the sight of you standing there expectantly in your hairy suit. Instead the gorilla is bewildered, and starts");
       } else {
@@ -7825,9 +8001,12 @@ async function I_APE() {
       $1 = await PICK_ONE(g.APES);
       tell(S($1));
     } else if (g.APE_C == 5) {
-      tell(D(APE), " bellows out a roar that backs you toward the cage door.");
+      await DPRINT(APE);
+      tell(" bellows out a roar that backs you toward the cage door.");
     } else if (g.APE_C == 6) {
-      tell("Agitated by your presence, ", D(APE), " appears on the verge of attack.");
+      tell("Agitated by your presence, ");
+      await DPRINT(APE);
+      tell(" appears on the verge of attack.");
     } else if (g.APE_C == 7) {
       await APE_DEATH();
     }
@@ -7853,16 +8032,26 @@ async function APE_ROOM_F(rarg) {
     } else {
       tell("closed");
     }
-    tell(" ", D(APE_DOOR), " is east");
+    tell(" ");
+    await DPRINT(APE_DOOR);
+    tell(" is east");
     if (!(hasFlag(TRAP_DOOR, INVISIBLE))) {
-      tell(" and a ", D(TRAP_DOOR), " here is ");
+      tell(" and a ");
+      await DPRINT(TRAP_DOOR);
+      tell(" here is ");
       await OPEN_CLOSED(TRAP_DOOR);
     }
     tell(".");
     if ((loc(APE) == g.HERE) && !(g.P_WALK_DIR == P.IN || g.P_WALK_DIR == P.WEST)) {
-      tell("\n\n", D(APE), " is ");
+      tell("\n\n");
+      await DPRINT(APE);
+      tell(" is ");
       if (hasFlag(APE, RMUNGBIT)) {
-        tell("slumped over in the ", D(CORNER), " of his cage listening to the ", D(HEADPHONES), ".");
+        tell("slumped over in the ");
+        await DPRINT(CORNER);
+        tell(" of his cage listening to the ");
+        await DPRINT(HEADPHONES);
+        tell(".");
       } else {
         tell("staring at you with deep-set, jaundiced eyes.");
       }
@@ -7872,7 +8061,9 @@ async function APE_ROOM_F(rarg) {
     move(APE, APE_ROOM);
     return enable(await QUEUE(I_APE.id, -1));
   } else if ((rarg == M_END) && eq(get(g.TAPE_TABLE, g.ON_TAPE), 2) && (await HELD$(HEADPHONES)) && (await RUNNING$(I_RUN.id)) && (g.KNOB_SET == V.PLAY)) {
-    tell("\nMahler snatches away the ", D(HEADPHONES), ".\n\n");
+    tell("\nMahler snatches away the ");
+    await DPRINT(HEADPHONES);
+    tell(".\n\n");
     await PERFORM(V.GIVE, HEADPHONES, APE);
     return true;
   } else {
@@ -7893,7 +8084,9 @@ async function COMPARTMENT_F() {
         move(RIBBON, COMPARTMENT);
       }
       await PRINT_CONTENTS(COMPARTMENT);
-      tell(" in the ", D(COMPARTMENT), ".\n");
+      tell(" in the ");
+      await DPRINT(COMPARTMENT);
+      tell(".\n");
       if (!(hasFlag(RIBBON, TOUCHBIT))) {
         move(RIBBON, g.HERE);
       }
@@ -7908,10 +8101,16 @@ async function COMPARTMENT_F() {
     }
   } else if (g.HERE == MEN) {
     if (isVerb(V.LOOK_INSIDE, V.OPEN, V.CLOSE, V.PUT, V.THROUGH, V.BOARD, V.ENTER)) {
-      tell(S(g.YOU_SEE), " no openings to the ", D(COMPARTMENT), ".\n");
+      tell(S(g.YOU_SEE), " no openings to the ");
+      await DPRINT(COMPARTMENT);
+      tell(".\n");
       return true;
     } else if (isVerb(V.KNOCK) && !(hasFlag(TRAP_DOOR, RMUNGBIT))) {
-      tell("You detect a brief sound of movement in return, but can't tell if it's coming from ", D(APE), " or from inside the ", D(COMPARTMENT), ".\n");
+      tell("You detect a brief sound of movement in return, but can't tell if it's coming from ");
+      await DPRINT(APE);
+      tell(" or from inside the ");
+      await DPRINT(COMPARTMENT);
+      tell(".\n");
       return true;
     } else {
       return false;
@@ -7928,7 +8127,11 @@ async function TRAP_DOOR_F() {
     if (hasFlag(APE, RMUNGBIT) || !(loc(APE) == g.HERE)) {
       setFlag(TRAP_DOOR, OPENBIT);
       setFlag(TRAP_DOOR, RMUNGBIT);
-      tell("As the ", D(TRAP_DOOR), " hinges upward, you can see a ", D(COMPARTMENT), " that is empty");
+      tell("As the ");
+      await DPRINT(TRAP_DOOR);
+      tell(" hinges upward, you can see a ");
+      await DPRINT(COMPARTMENT);
+      tell(" that is empty");
       if (hasFlag(RIBBON, INVISIBLE) && !(hasFlag(RIBBON, TOUCHBIT))) {
         clearFlag(RIBBON, INVISIBLE);
         tell(" but for a small red ribbon");
@@ -7936,7 +8139,13 @@ async function TRAP_DOOR_F() {
       tell(S(g.PERIOD));
       return true;
     } else {
-      tell("Bulky and difficult to grip, the ", D(TRAP_DOOR), " resists the labored attempt of ", D(HANDS), "s which are especially sweat-drenched with ", D(APE), " hovering over you.\n");
+      tell("Bulky and difficult to grip, the ");
+      await DPRINT(TRAP_DOOR);
+      tell(" resists the labored attempt of ");
+      await DPRINT(HANDS);
+      tell("s which are especially sweat-drenched with ");
+      await DPRINT(APE);
+      tell(" hovering over you.\n");
       return true;
     }
   } else if (isVerb(V.CLOSE, V.LOWER) && hasFlag(TRAP_DOOR, OPENBIT)) {
@@ -7944,7 +8153,9 @@ async function TRAP_DOOR_F() {
       setFlag(RIBBON, INVISIBLE);
     }
     clearFlag(TRAP_DOOR, OPENBIT);
-    tell("It lowers over the ", D(COMPARTMENT), ".\n");
+    tell("It lowers over the ");
+    await DPRINT(COMPARTMENT);
+    tell(".\n");
     return true;
   } else if (isVerb(V.LOOK_INSIDE) && hasFlag(TRAP_DOOR, OPENBIT)) {
     await PERFORM(V.LOOK_INSIDE, COMPARTMENT);
@@ -7974,7 +8185,9 @@ async function CAGE_F() {
     tell("Several of the vertical bars are bent to either side.\n");
     return true;
   } else if (isVerb(V.EXAMINE) && (g.HERE == NOOK)) {
-    tell("It's not as high as ", D(APE), "'s cage.\n");
+    tell("It's not as high as ");
+    await DPRINT(APE);
+    tell("'s cage.\n");
     return true;
   } else if (isVerb(V.PUT_ON) && (g.PRSI == CAGE)) {
     if (g.HERE == ON_CAGE) {
@@ -8013,7 +8226,11 @@ async function CAGE_F() {
       if (g.HERE == MEN) {
         tell("Peering into the cage, you observe ");
         if (hasFlag(APE, RMUNGBIT)) {
-          tell(D(APE), " hunched in the ", D(CORNER), " listening to the ", D(HEADPHONES));
+          await DPRINT(APE);
+          tell(" hunched in the ");
+          await DPRINT(CORNER);
+          tell(" listening to the ");
+          await DPRINT(HEADPHONES);
         } else if (loc(APE) == g.HERE) {
           tell("a gargantuan and thoroughly bored gorilla sitting on a helter-skelter bed of straw");
         } else {
@@ -8022,7 +8239,9 @@ async function CAGE_F() {
       } else {
         tell("The confines of the cage are so darkly shaded that you cannot distinguish anything inside");
         if (hasFlag(KEY, TRYTAKEBIT)) {
-          tell(", except for a hoop key ring hanging against the far ", D(WALLS), " which happens to be illuminated by a spot of soft light");
+          tell(", except for a hoop key ring hanging against the far ");
+          await DPRINT(WALLS);
+          tell(" which happens to be illuminated by a spot of soft light");
         }
       }
       tell(S(g.PERIOD));
@@ -8038,7 +8257,8 @@ async function CAGE_F() {
     } else if ((getProp(g.PRSO, P.SIZE) > 25) && !(g.PRSO == POLE)) {
       return await TELL_CLOSELY_SPACED();
     } else if ((g.HERE == MEN) && (loc(APE) == MEN)) {
-      tell(D(APE), " completely ignores");
+      await DPRINT(APE);
+      tell(" completely ignores");
       await ARTICLE(g.PRSO, true);
       tell(", as he would anything from this distance, so you withdraw it.\n");
       return true;
@@ -8061,7 +8281,9 @@ async function CAGE_F() {
     return true;
   } else if (isVerb(V.LOOK_UNDER)) {
     if ((g.HERE == MEN) || ((g.HERE == APE_ROOM) && hasFlag(APE_DOOR, OPENBIT))) {
-      tell("Below the surface of the cage floor there appears to be a rectangular ", D(COMPARTMENT), " of sorts.\n");
+      tell("Below the surface of the cage floor there appears to be a rectangular ");
+      await DPRINT(COMPARTMENT);
+      tell(" of sorts.\n");
       return true;
     } else if (g.HERE == APE_ROOM) {
       await PERFORM(V.EXAMINE, APE_DOOR);
@@ -8132,7 +8354,11 @@ async function UP_DOWN_CAGE() {
   }
   tell("You ");
   if (g.HERE == NOOK) {
-    tell("hoist ", D(ME), " up and onto the ", D(CAGE), ".\n\n");
+    tell("hoist ");
+    await DPRINT(ME);
+    tell(" up and onto the ");
+    await DPRINT(CAGE);
+    tell(".\n\n");
     return ON_CAGE;
   } else {
     if (!g.DIED) {
@@ -8140,7 +8366,9 @@ async function UP_DOWN_CAGE() {
     } else {
       tell("clamber");
     }
-    tell(" down from the ", D(CAGE), ".\n");
+    tell(" down from the ");
+    await DPRINT(CAGE);
+    tell(".\n");
     if (!g.DIED) {
       enable(await QUEUE(I_DEMISE.id, 2));
       g.DIED = true;
@@ -8157,7 +8385,9 @@ async function UP_DOWN_CAGE() {
 
 async function BULL_ROOM_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("The ", D(GROUND), " here is covered with matted-down sawdust that emits a strong earthy smell. By all evidence, this tent used to house an elephant.\n");
+    tell("The ");
+    await DPRINT(GROUND);
+    tell(" here is covered with matted-down sawdust that emits a strong earthy smell. By all evidence, this tent used to house an elephant.\n");
     return true;
   } else {
     return false;
@@ -8174,9 +8404,11 @@ async function CLOSET_F(rarg) {
       } else {
         tell("is");
         if (hasFlag(DRESS, NDESCBIT)) {
-          tell(" a ", D(DRESS));
+          tell(" a ");
+          await DPRINT(DRESS);
         } else {
-          tell(" a ", D(SHAWL));
+          tell(" a ");
+          await DPRINT(SHAWL);
         }
       }
     }
@@ -8224,7 +8456,9 @@ async function DRESS_F() {
       tell("out of");
       clearFlag(DRESS, WORNBIT);
     }
-    tell(" the ", D(DRESS), ".\n");
+    tell(" the ");
+    await DPRINT(DRESS);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -8248,7 +8482,9 @@ async function VEIL_F() {
 }
 
 async function WONT_FIT_OVER(obj) {
-  tell("It won't fit over the ", D(obj), ".\n");
+  tell("It won't fit over the ");
+  await DPRINT(obj);
+  tell(".\n");
   return true;
 }
 
@@ -8264,7 +8500,9 @@ async function ON_TENT_F(rarg) {
   if (rarg == M_LOOK) {
     tell("You are standing unsteadily on top of a gabled tent. ");
     if (!(await RUNNING$(I_POKE.id))) {
-      tell("On one edge of the tent a rope ", D(LADDER), " drops down.");
+      tell("On one edge of the tent a rope ");
+      await DPRINT(LADDER);
+      tell(" drops down.");
     }
     return crlf();
   } else if (rarg == M_BEG) {
@@ -8272,7 +8510,9 @@ async function ON_TENT_F(rarg) {
       await PERFORM(V.WALK_AROUND);
       return true;
     } else if (isVerb(V.WALK_AROUND)) {
-      tell("With lousy footing and a lousy sense of ", D(INTDIR), " up here, you take a few wobbly steps.\n");
+      tell("With lousy footing and a lousy sense of ");
+      await DPRINT(INTDIR);
+      tell(" up here, you take a few wobbly steps.\n");
       g.NOT_MOVED_C = 0;
       return true;
     } else {
@@ -8315,11 +8555,15 @@ async function I_POKE() {
     move(PROD, LOCAL_GLOBALS);
     await TELL_PROD_WITHDRAW();
   } else if ((g.POKE_C == 1 || g.POKE_C == 3 || g.POKE_C == 6) || (g.POKE_C == 8 || g.POKE_C == 11)) {
-    tell("You can hear, from inside the tent, what sounds like a ladder being moved across the ", D(GROUND), ", then the plod of footsteps coming nearer and louder.");
+    tell("You can hear, from inside the tent, what sounds like a ladder being moved across the ");
+    await DPRINT(GROUND);
+    tell(", then the plod of footsteps coming nearer and louder.");
   } else if (g.POKE_C == 17) {
     tell("Still in your death-grip, the prod pivots dangerously close to your forearm, and you feel its electronic heat.");
   } else if (g.POKE_C == 18) {
-    tell("The ", D(PROD), " slips a bit in your sweaty grip.");
+    tell("The ");
+    await DPRINT(PROD);
+    tell(" slips a bit in your sweaty grip.");
   } else if (g.POKE_C == 19) {
     (await JIGS_UP(3, "The prod is violently thrust into your stomach!"));
     return true;
@@ -8349,7 +8593,13 @@ async function PROD_F() {
     g.WON_ON_TENT = true;
     disable(await INT(I_POKE.id));
     enable(await QUEUE(I_MOVE_DICK.id, 10));
-    tell("Sounds of awkward footwork and cursing come from inside the tent as your opponent struggles with you and finally gets the shaft. There is a shriek of bloodcurdling terror as he takes the ", D(PROD), ", which sears loudly through the ", D(CANVAS), ", down with him.\n\nMoments later, you hear someone helping the victim, who is groaning in pain, out of the tent. The ", D(LADDER), " is also dragged out.\n");
+    tell("Sounds of awkward footwork and cursing come from inside the tent as your opponent struggles with you and finally gets the shaft. There is a shriek of bloodcurdling terror as he takes the ");
+    await DPRINT(PROD);
+    tell(", which sears loudly through the ");
+    await DPRINT(CANVAS);
+    tell(", down with him.\n\nMoments later, you hear someone helping the victim, who is groaning in pain, out of the tent. The ");
+    await DPRINT(LADDER);
+    tell(" is also dragged out.\n");
     return true;
   } else if (isVerb(V.DROP, V.GIVE, V.PUT, V.PUT_ON, V.THROW, V.THROW_OFF) || ((await TOUCHING$(PROD)) && (await IS_NOUN$(W.STUNNER)))) {
     g.POKE_C = 18;
@@ -8455,7 +8705,9 @@ async function BULL_F() {
     tell("Behind two soulful eyes, gleaming white tusks, and lush palm-like ears stands the huge gray elephantine bulk that is Hannibal of the Jungle.\n");
     return true;
   } else if (await TALKING_TO$(BULL)) {
-    tell("The ", D(BULL), " merely eyes you passively.\n");
+    tell("The ");
+    await DPRINT(BULL);
+    tell(" merely eyes you passively.\n");
     return await STOP();
   } else if (isVerb(V.UNLOCK)) {
     return await CANT_REACH(CHAIN);
@@ -8472,20 +8724,38 @@ async function BULL_F() {
       return crlf();
     } else if ((g.PRSO == DEAD_MOUSE) && !(hasFlag(DEAD_MOUSE, RMUNGBIT))) {
       setFlag(DEAD_MOUSE, RMUNGBIT);
-      tell("The old bromide about ", D(BULL), "s being afraid of mice is in fact, you suddenly recall, based on the big pachyderms' fear of losing their balance by stepping on little squishy things like people or scampering rodents. (Hence Gloria Golotov's fearlessness tonight while lying under Hannibal's mighty hoof.)\n\nGlumly, you poke the ", D(DEAD_MOUSE), "'s cold, soft belly and realize it lacks the pizzazz to get Hannibal to dancing.\n");
+      tell("The old bromide about ");
+      await DPRINT(BULL);
+      tell("s being afraid of mice is in fact, you suddenly recall, based on the big pachyderms' fear of losing their balance by stepping on little squishy things like people or scampering rodents. (Hence Gloria Golotov's fearlessness tonight while lying under Hannibal's mighty hoof.)\n\nGlumly, you poke the ");
+      await DPRINT(DEAD_MOUSE);
+      tell("'s cold, soft belly and realize it lacks the pizzazz to get Hannibal to dancing.\n");
       return true;
     } else if (g.PRSO == MOUSE) {
       if (!(loc(MOUSE) == PROTAGONIST)) {
-        tell(S(g.NOT_HOLDING), " the ", D(MOUSE), ".\n");
+        tell(S(g.NOT_HOLDING), " the ");
+        await DPRINT(MOUSE);
+        tell(".\n");
         return true;
       } else if (hasFlag(BULL, RMUNGBIT)) {
         move(MOUSE, LOCAL_GLOBALS);
         enable(await QUEUE(I_BULL.id, 2));
-        tell("A humid stream of air from the ", D(BULL), "'s trunk blasts your face. The ", D(MOUSE), " wriggles from your grip and scurries across the ", D(SAWDUST), " under Hannibal.\n");
+        tell("A humid stream of air from the ");
+        await DPRINT(BULL);
+        tell("'s trunk blasts your face. The ");
+        await DPRINT(MOUSE);
+        tell(" wriggles from your grip and scurries across the ");
+        await DPRINT(SAWDUST);
+        tell(" under Hannibal.\n");
         return true;
       } else {
         setFlag(BULL, RMUNGBIT);
-        tell("The mouse itself is in a fright. It squirms across the back of ", D(HANDS), ", and then dangles once again from your grip.\n\nWide-eyed, the bull ", D(BULL), " takes one giant lumbering step backward. Its ", D(CHAIN), "s jingle as the bull begins rocking with slow-motion nervousness from side to side.\n");
+        tell("The mouse itself is in a fright. It squirms across the back of ");
+        await DPRINT(HANDS);
+        tell(", and then dangles once again from your grip.\n\nWide-eyed, the bull ");
+        await DPRINT(BULL);
+        tell(" takes one giant lumbering step backward. Its ");
+        await DPRINT(CHAIN);
+        tell("s jingle as the bull begins rocking with slow-motion nervousness from side to side.\n");
         return true;
       }
     } else if ((g.PRSO == WATER) || ((g.PRSO == BUCKET) && (loc(WATER) == BUCKET))) {
@@ -8495,10 +8765,15 @@ async function BULL_F() {
       }
       move(WATER, LOCAL_GLOBALS);
       enable(await QUEUE(I_BULL.id, 2));
-      tell("Hannibal eagerly snakes his thick trunk over to the ", D(BUCKET), " and with a quick snort siphons out all of the ", D(WATER), ".\n");
+      tell("Hannibal eagerly snakes his thick trunk over to the ");
+      await DPRINT(BUCKET);
+      tell(" and with a quick snort siphons out all of the ");
+      await DPRINT(WATER);
+      tell(".\n");
       return true;
     } else {
-      tell("With its lazy trunk, the bull grasps the ", D(g.PRSO));
+      tell("With its lazy trunk, the bull grasps the ");
+      await DPRINT(g.PRSO);
       if (await TRAP_SET$()) {
         setFlag(TRAP, RMUNGBIT);
         tell(" which snaps down hard, barely tickling the thick skin of the pachyderm, who");
@@ -8508,7 +8783,8 @@ async function BULL_F() {
       tell(" flings it ");
       if (prob(50) || (g.PRSO == TRAP)) {
         move(g.PRSO, g.HERE);
-        tell("in your ", D(INTDIR));
+        tell("in your ");
+        await DPRINT(INTDIR);
       } else {
         move(g.PRSO, BULL_ROOM);
         tell("behind itself");
@@ -8517,7 +8793,9 @@ async function BULL_F() {
       return true;
     }
   } else if (isVerb(V.RUB)) {
-    tell("You can feel the warm, slobbery end of the ", D(BULL), "'s trunk against your cheek.\n");
+    tell("You can feel the warm, slobbery end of the ");
+    await DPRINT(BULL);
+    tell("'s trunk against your cheek.\n");
     return true;
   } else if (isVerb(V.LOOK_BEHIND)) {
     await DO_WALK(P.EAST);
@@ -8539,7 +8817,9 @@ async function I_BULL() {
       clearFlag(NEAR_WAGON, TOUCHBIT);
       enable(await QUEUE(I_FOLLOW.id, 2));
       g.FOLLOW_FLAG = 12;
-      tell("\nLoudly trumpeting its frustration, Hannibal of the Jungle thunders out of the tent, shearing its ", D(CHAIN), " with a dull thud. The raging bull stampedes ");
+      tell("\nLoudly trumpeting its frustration, Hannibal of the Jungle thunders out of the tent, shearing its ");
+      await DPRINT(CHAIN);
+      tell(" with a dull thud. The raging bull stampedes ");
       if (g.HERE == APE_ROOM) {
         tell("past you and ");
       }
@@ -8548,9 +8828,17 @@ async function I_BULL() {
     return true;
   } else if (g.HERE == MEN) {
     if (prob(50)) {
-      tell("\nSpouting point-blank from the ", D(BULL), "'s trunk, a blast of warm ", D(WATER), " sprays you in the face.");
+      tell("\nSpouting point-blank from the ");
+      await DPRINT(BULL);
+      tell("'s trunk, a blast of warm ");
+      await DPRINT(WATER);
+      tell(" sprays you in the face.");
     } else {
-      tell("\nThe ", D(BULL), " lazily draws its trunk upward, ejecting the ", D(WATER), " across its broad back.");
+      tell("\nThe ");
+      await DPRINT(BULL);
+      tell(" lazily draws its trunk upward, ejecting the ");
+      await DPRINT(WATER);
+      tell(" across its broad back.");
     }
     crlf();
     return true;
@@ -8582,7 +8870,9 @@ async function I_THUMB() {
     if (!(hasFlag(THUMB, RMUNGBIT))) {
       move(THUMB, g.HERE);
       setFlag(THUMB, RMUNGBIT);
-      tell("\nFor an instant you can hear the treading of light feet on the ground. The figure of ", D(THUMB), " appears out of the darkness, flailing his small arms and babbling up at you in his native tongue. He then pauses a moment to think.\n");
+      tell("\nFor an instant you can hear the treading of light feet on the ground. The figure of ");
+      await DPRINT(THUMB);
+      tell(" appears out of the darkness, flailing his small arms and babbling up at you in his native tongue. He then pauses a moment to think.\n");
       return true;
     } else {
       disable(await INT(I_THUMB.id));
@@ -8603,7 +8893,9 @@ async function CHAIN_F() {
   } else if ((await TOUCHING$(CHAIN)) && (loc(BULL) == g.HERE)) {
     return await CANT_REACH(CHAIN);
   } else if (isVerb(V.TAKE, V.TIE)) {
-    tell("You barely manage to budge the ", D(CHAIN), ".\n");
+    tell("You barely manage to budge the ");
+    await DPRINT(CHAIN);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -8612,7 +8904,13 @@ async function CHAIN_F() {
 
 async function NOOK_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("You are standing outside of the elephant ", D(TENT), ". Along its side wall to the north sits a ", D(CAGE), " with ", D(STRAW), " poking out of it. The menagerie is northwest of here.\n\nFacing you on the east side there is a big old plywood sideshow front, faded beyond recognition. It serves as the barrier wall of an enclosed structure behind the elephant tent.\n");
+    tell("You are standing outside of the elephant ");
+    await DPRINT(TENT);
+    tell(". Along its side wall to the north sits a ");
+    await DPRINT(CAGE);
+    tell(" with ");
+    await DPRINT(STRAW);
+    tell(" poking out of it. The menagerie is northwest of here.\n\nFacing you on the east side there is a big old plywood sideshow front, faded beyond recognition. It serves as the barrier wall of an enclosed structure behind the elephant tent.\n");
     return true;
   } else if ((rarg == M_BEG) && (await ENABLED$(I_DEMISE.id)) && isVerb(V.RESTORE, V.QUIT, V.RESTART)) {
     tell("Not so fast.\n");
@@ -8638,7 +8936,9 @@ async function BLUE_DOOR_ENTER() {
     tell(S(g.CANT_GO), "\n");
     return false;
   } else if (!(hasFlag(BLUE_DOOR, OPENBIT))) {
-    tell("The ", D(BLUE_DOOR), " is closed.\n");
+    tell("The ");
+    await DPRINT(BLUE_DOOR);
+    tell(" is closed.\n");
     return false;
   } else {
     return BLUE_ROOM;
@@ -8720,7 +9020,9 @@ async function REAL_KEY_F() {
     }
     return await CANT_REACH(KEY);
   } else if (isVerb(V.EXAMINE)) {
-    tell("The ", D(KEY), " is attached to a hoop ring.\n");
+    tell("The ");
+    await DPRINT(KEY);
+    tell(" is attached to a hoop ring.\n");
     return true;
   } else if (isVerb(V.PUT) && !(await IDROP())) {
     if ((g.PRSO == POLE) && hasFlag(KEY, TRYTAKEBIT)) {
@@ -8746,7 +9048,13 @@ async function TAKE_WITH_POLE$() {
       g.SCORE = g.SCORE + 10;
     }
     setFlag(g.PRSO, TOUCHBIT);
-    tell("Using the ", D(POLE), ", you fish the hoop ring off the ", D(WALLS), ". It slides down the raised pole and jingles into ", D(HANDS), ".\n");
+    tell("Using the ");
+    await DPRINT(POLE);
+    tell(", you fish the hoop ring off the ");
+    await DPRINT(WALLS);
+    tell(". It slides down the raised pole and jingles into ");
+    await DPRINT(HANDS);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -8756,7 +9064,8 @@ async function TAKE_WITH_POLE$() {
 async function JIM_F() {
   if (JIM == g.WINNER) {
     if (hasFlag(JIM, RMUNGBIT) && !(isVerb(V.HELLO))) {
-      tell("The ", D(JIM));
+      tell("The ");
+      await DPRINT(JIM);
       if ((isVerb(V.FIND, V.TAKE, V.WHERE) && (g.PRSO == NET || g.PRSO == GLOBAL_NET)) || (isVerb(V.PUT_UNDER) && (g.PRSO == NET || g.PRSO == GLOBAL_NET) && (g.PRSI == TIGHTROPE_OBJECT))) {
         g.FOLLOW_FLAG = 5;
         g.SCORE = g.SCORE + 10;
@@ -8777,7 +9086,9 @@ async function JIM_F() {
       return true;
     }
   } else if (isVerb(V.ASK_ABOUT) && (g.PRSO == JIM)) {
-    tell("The ", D(JIM), ", alas, doesn't relate well to strangers. He ignores you.\n");
+    tell("The ");
+    await DPRINT(JIM);
+    tell(", alas, doesn't relate well to strangers. He ignores you.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     if (hasFlag(JIM, RMUNGBIT)) {
@@ -8795,7 +9106,9 @@ async function JIM_F() {
 }
 
 async function JIM_DESCFCN(x = 0) {
-  tell("A ", D(JIM), " stands nearby.");
+  tell("A ");
+  await DPRINT(JIM);
+  tell(" stands nearby.");
   return true;
 }
 
@@ -8826,7 +9139,10 @@ async function DUFFY_F() {
 async function HEADPHONES_F() {
   let num = 0;
   if ((loc(HEADPHONES) == APE) && !(isVerb(V.TAKE)) && (isVerb(V.EXAMINE, V.REWIND, V.PLAY, V.ADVANCE, V.LAMP_OFF, V.RECORD, V.LAMP_ON) || (await TOUCHING$(HEADPHONES)))) {
-    tell(D(APE), " has the ", D(HEADPHONES), ".\n");
+    await DPRINT(APE);
+    tell(" has the ");
+    await DPRINT(HEADPHONES);
+    tell(".\n");
     return true;
   }
   if (isVerb(V.LAMP_OFF, V.EJECT, V.PLAY, V.REWIND, V.ADVANCE) && (g.KNOB_SET == V.RECORD)) {
@@ -8834,7 +9150,9 @@ async function HEADPHONES_F() {
   }
   if (isVerb(V.EXAMINE, V.READ)) {
     num = g.ON_TAPE * 62;
-    tell("It's a nice ", D(HEADPHONES), " with a built-in cassette player which contains a tape, which is now ");
+    tell("It's a nice ");
+    await DPRINT(HEADPHONES);
+    tell(" with a built-in cassette player which contains a tape, which is now ");
     if (g.KNOB_SET == V.PLAY) {
       tell("playing");
     } else if (g.KNOB_SET == V.ADVANCE) {
@@ -8902,7 +9220,8 @@ async function HEADPHONES_F() {
     tell("The headphones, seemingly tailored for a pinhead, fit you like a vise. And since they can be listened to without being worn, you remove them.\n");
     return true;
   } else if (isVerb(V.TAKE) && (loc(HEADPHONES) == APE) && hasFlag(APE, RMUNGBIT)) {
-    tell(D(APE), " has a fit as you snatch away the source of his listening pleasure. ");
+    await DPRINT(APE);
+    tell(" has a fit as you snatch away the source of his listening pleasure. ");
     return await APE_DEATH();
   } else if (isVerb(V.LISTEN)) {
     if (loc(HEADPHONES) == APE) {
@@ -9119,10 +9438,18 @@ async function PARLOR_F(rarg) {
   } else if ((rarg == M_BEG) && (loc(HYP) == g.HERE)) {
     if (isVerb(V.EXAMINE) && (g.PRSO == SOFA || g.PRSO == CHANDELIER) && !(hasFlag(g.PRSO, RMUNGBIT))) {
       setFlag(g.PRSO, RMUNGBIT);
-      tell("Before you can fix your gaze upon the ", D(g.PRSO), ", ", D(HYP), " speaks, \"You are wondering about the ", D(g.PRSO), ". But I can assure you, there is nothing at all ");
+      tell("Before you can fix your gaze upon the ");
+      await DPRINT(g.PRSO);
+      tell(", ");
+      await DPRINT(HYP);
+      tell(" speaks, \"You are wondering about the ");
+      await DPRINT(g.PRSO);
+      tell(". But I can assure you, there is nothing at all ");
       $1 = await PICK_ONE(g.YAWNS);
       tell(S($1));
-      tell(" about it. Observe for ", D(ME), ".\" Rimshaw gestures in a grand manner toward");
+      tell(" about it. Observe for ");
+      await DPRINT(ME);
+      tell(".\" Rimshaw gestures in a grand manner toward");
       await ARTICLE(g.PRSO, true);
       tell(". Amazing.\n");
       return true;
@@ -9137,7 +9464,8 @@ async function PARLOR_F(rarg) {
 }
 
 async function HYP_HAND_BACK() {
-  tell(D(HYP), " is also Rimshaw the Immaculate. He hands");
+  await DPRINT(HYP);
+  tell(" is also Rimshaw the Immaculate. He hands");
   await ARTICLE(g.PRSO, true);
   tell(" back to you.\n");
   return true;
@@ -9155,7 +9483,9 @@ async function TICKET_F() {
     await PERFORM(V.PUT_UNDER, g.PRSO, BLUE_DOOR);
     return true;
   } else if (isVerb(V.TAKE) && (loc(TICKET) == DEALER)) {
-    tell("The ", D(DEALER), " yanks it back.\n");
+    tell("The ");
+    await DPRINT(DEALER);
+    tell(" yanks it back.\n");
     return true;
   } else {
     return false;
@@ -9178,7 +9508,9 @@ async function BOX_F() {
       return true;
     } else {
       setFlag(g.PRSO, RMUNGBIT);
-      tell("You perforate the ", D(g.PRSO), ".\n");
+      tell("You perforate the ");
+      await DPRINT(g.PRSO);
+      tell(".\n");
       return true;
     }
   } else if (isVerb(V.DROP, V.THROW, V.PUT, V.GIVE) && (g.PRSO == BLUE_BOX || g.PRSO == PINK_BOX)) {
@@ -9206,7 +9538,9 @@ async function HYP_F() {
     return false;
   } else if (!(hasFlag(HYP, RMUNGBIT)) && !(isVerb(V.ASK_ABOUT)) && ((await TALKING_TO$(HYP)) || (isVerb(V.GIVE, V.SHOW, V.THROW) && (g.PRSO == TICKET)))) {
     setFlag(HYP, RMUNGBIT);
-    tell("Rimshaw steps nearer, speaking in a very spiritual tone, \"I can tell immediately that you ", D(ME), " possess great powers of transcendence. It is your eyes which bespeak your affinity with those mysterious energies that choose to remain unseen.");
+    tell("Rimshaw steps nearer, speaking in a very spiritual tone, \"I can tell immediately that you ");
+    await DPRINT(ME);
+    tell(" possess great powers of transcendence. It is your eyes which bespeak your affinity with those mysterious energies that choose to remain unseen.");
     if (isVerb(V.GIVE, V.SHOW, V.THROW) && (g.PRSO == TICKET)) {
       tell("\"\n\n");
       return await TELL_WHAT_NOW();
@@ -9239,9 +9573,12 @@ async function HYP_F() {
         return true;
       } else {
         if (!(eq(loc(PROTAGONIST), SOFA))) {
-          tell("You settle into the tufted ", D(SOFA), " and ");
+          tell("You settle into the tufted ");
+          await DPRINT(SOFA);
+          tell(" and ");
         }
-        tell(D(HYP), " approaches you purposefully. Poised in front of you, the hypnotist points both of his hands' tension-filled fingers at you and commands, \"RE-LAX!!! Now count backward slowly from 100.\"\n\n");
+        await DPRINT(HYP);
+        tell(" approaches you purposefully. Poised in front of you, the hypnotist points both of his hands' tension-filled fingers at you and commands, \"RE-LAX!!! Now count backward slowly from 100.\"\n\n");
         g.P_CONT = false;
         tell("With transcendental calm you begin mouthing the words one hundred, ninety-nine, ninety-eight ...");
         return await DREAM();
@@ -9252,7 +9589,8 @@ async function HYP_F() {
       } else {
         g.DREAM_C = g.DREAM_C + 1;
         setFlag(HEAD, RMUNGBIT);
-        tell(D(HYP), " places his fingertips on top of your skull and begins going carefully over its hills and valleys, pausing occasionally for comment. \"Intelligence: I ascertain you play Infocom games. Personally I enjoyed \"Enchanter\" ... Romance: A ");
+        await DPRINT(HYP);
+        tell(" places his fingertips on top of your skull and begins going carefully over its hills and valleys, pausing occasionally for comment. \"Intelligence: I ascertain you play Infocom games. Personally I enjoyed \"Enchanter\" ... Romance: A ");
         if (hasFlag(PINK_BOX, RMUNGBIT)) {
           tell("tall handsome stranger");
         } else {
@@ -9267,7 +9605,10 @@ async function HYP_F() {
       } else {
         setFlag(HANDS, RMUNGBIT);
         g.DREAM_C = g.DREAM_C + 1;
-        tell(D(HYP), " takes ", D(HANDS), " and studies the palm lines with the intensity of a cartographer, finally saying in a dramatic whisper, \"Tonight you have an appointment with destiny.\"\n");
+        await DPRINT(HYP);
+        tell(" takes ");
+        await DPRINT(HANDS);
+        tell(" and studies the palm lines with the intensity of a cartographer, finally saying in a dramatic whisper, \"Tonight you have an appointment with destiny.\"\n");
         return true;
       }
     } else {
@@ -9293,7 +9634,10 @@ async function HYP_F() {
       return true;
     } else if ((g.PRSO == HEADPHONES) && !g.TAPE_SHOW) {
       g.TAPE_SHOW = true;
-      tell(D(HYP), " begins to lose his composure, regains it again quickly, does a slow burn, stomps around the ", D(PARLOR_OBJECT), " a bit, then reassumes his previous lordly manner.\n");
+      await DPRINT(HYP);
+      tell(" begins to lose his composure, regains it again quickly, does a slow burn, stomps around the ");
+      await DPRINT(PARLOR_OBJECT);
+      tell(" a bit, then reassumes his previous lordly manner.\n");
       return true;
     } else if (!(hasFlag(MASK, WORNBIT))) {
       await PERFORM(V.ASK_ABOUT, HYP, g.PRSO);
@@ -9307,7 +9651,8 @@ async function HYP_F() {
     g.WINNER = PROTAGONIST;
     return true;
   } else if (isVerb(V.ASK_ABOUT) && (g.PRSO == HYP)) {
-    tell(D(HYP), " draws his hand to his forehead, closes his eyes, meditates a moment, then offers, \"About");
+    await DPRINT(HYP);
+    tell(" draws his hand to his forehead, closes his eyes, meditates a moment, then offers, \"About");
     if ((loc(g.PRSI) == ROOMS) || (g.PRSI == HYP)) {
       tell(" that");
     } else {
@@ -9424,7 +9769,9 @@ async function WAKE_UP(forced$ = false) {
   if (isVerb(V.ALARM)) {
     tell("You suddenly drift back to reality ...");
     if (!g.WON_STANDS) {
-      tell(" ", D(HYP), " looks disappointed at your limited progress under hypnosis");
+      tell(" ");
+      await DPRINT(HYP);
+      tell(" looks disappointed at your limited progress under hypnosis");
       if (g.DREAM_C < 4) {
         tell(" but he seems willing to try again");
       }
@@ -9492,7 +9839,8 @@ async function MID_F(rarg) {
 
 async function FRONT_F() {
   if (isVerb(V.EXAMINE, V.READ)) {
-    tell("The ", D(FRONT));
+    tell("The ");
+    await DPRINT(FRONT);
     if (g.HERE == MIDWEST) {
       tell(" heralding the charms of Tina is");
     } else if (g.HERE == NOOK || g.HERE == MIDEAST) {
@@ -9514,7 +9862,9 @@ async function FRONT_F() {
       return true;
     }
   } else if (isVerb(V.LOOK_BEHIND) && (g.HERE == NOOK)) {
-    tell("You can't. The ", D(FRONT), " serves as a barrier to an enclosed area.\n");
+    tell("You can't. The ");
+    await DPRINT(FRONT);
+    tell(" serves as a barrier to an enclosed area.\n");
     return true;
   } else if (isVerb(V.THROUGH, V.ENTER, V.WALK_TO)) {
     if (g.HERE == MID) {
@@ -9568,7 +9918,9 @@ async function I_BLUE_DOOR() {
     if (!(isVerb(V.CLOSE) && (g.PRSO == BLUE_DOOR))) {
       crlf();
     }
-    tell("The spring-loaded ", D(BLUE_DOOR), " slides shut.\n");
+    tell("The spring-loaded ");
+    await DPRINT(BLUE_DOOR);
+    tell(" slides shut.\n");
     return true;
   } else {
     return false;
@@ -9632,7 +9984,9 @@ async function WIN_BLUE_DOOR(and$ = false) {
   if (and$) {
     tell(" and ");
   }
-  tell("moments later a ", D(BLUE_DOOR), " in the old sideshow front slides open.\n");
+  tell("moments later a ");
+  await DPRINT(BLUE_DOOR);
+  tell(" in the old sideshow front slides open.\n");
   return true;
 }
 
@@ -9643,7 +9997,9 @@ async function FAT_ROOM_F(rarg) {
     } else {
       tell("T");
     }
-    tell("he ", D(FAT), " sits (though no chair is visible) breathtakingly to the ");
+    tell("he ");
+    await DPRINT(FAT);
+    tell(" sits (though no chair is visible) breathtakingly to the ");
     if (g.HERE == FAT_WEST) {
       tell("east");
     } else {
@@ -9666,12 +10022,16 @@ async function FAT_ROOM_F(rarg) {
 async function AROUND_FAT() {
   g.HANDOUT = false;
   if (await HELD$(FAT_HAND)) {
-    tell("Not while you're holding the ", D(FAT_HAND), "!\n");
+    tell("Not while you're holding the ");
+    await DPRINT(FAT_HAND);
+    tell("!\n");
     return false;
   } else if (g.P_WALK_DIR == P.SOUTH || g.P_WALK_DIR == P.OUT) {
     return MIDEAST;
   } else if (((g.P_WALK_DIR == P.EAST) && (g.HERE == FAT_WEST)) || ((g.P_WALK_DIR == P.WEST) && (g.HERE == FAT_EAST))) {
-    tell("The ", D(FAT), "'s in the way.\n");
+    tell("The ");
+    await DPRINT(FAT);
+    tell("'s in the way.\n");
     return false;
   } else {
     tell("It's a long haul, the scenery changing little. Eventually you arrive at ...\n\n");
@@ -9720,7 +10080,9 @@ async function FAT_F() {
     }
     return await STOP();
   } else if (await HURT$(FAT)) {
-    tell("The ", D(FAT), " is unaffected by your malice.\n");
+    tell("The ");
+    await DPRINT(FAT);
+    tell(" is unaffected by your malice.\n");
     return true;
   } else if (isVerb(V.BOARD, V.CLIMB_ON, V.CLIMB_UP, V.CLIMB_FOO)) {
     tell("The slope is too steep.\n");
@@ -9729,11 +10091,17 @@ async function FAT_F() {
     tell("There's no smell.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("The ", D(FAT), " is wearing a ", D(BIGTOP), ", and the expression on her face is sad and distant, almost Rushmorean. ");
+    tell("The ");
+    await DPRINT(FAT);
+    tell(" is wearing a ");
+    await DPRINT(BIGTOP);
+    tell(", and the expression on her face is sad and distant, almost Rushmorean. ");
     if (!(hasFlag(RADIO, NDESCBIT)) && (loc(RADIO) == FAT)) {
       tell("She appears to be holding a small radio up to her ear.");
     } else if (g.HANDOUT) {
-      tell("The ", D(FAT_HAND), " is reached out.");
+      tell("The ");
+      await DPRINT(FAT_HAND);
+      tell(" is reached out.");
     }
     return crlf();
   } else if (isVerb(V.GIVE, V.SHOW) && (g.PRSI == FAT)) {
@@ -9743,10 +10111,16 @@ async function FAT_F() {
     } else if (g.PRSO == GRANOLA) {
       move(GRANOLA, LOCAL_GLOBALS);
       setFlag(GRANOLA, RMUNGBIT);
-      tell("Tina is quick to confiscate the ", D(GRANOLA), " from ", D(HANDS), " and grinds it up without hesitation. Turning her far-away gaze slowly in your direction, she seems to notice you for the first time this evening.\n");
+      tell("Tina is quick to confiscate the ");
+      await DPRINT(GRANOLA);
+      tell(" from ");
+      await DPRINT(HANDS);
+      tell(" and grinds it up without hesitation. Turning her far-away gaze slowly in your direction, she seems to notice you for the first time this evening.\n");
       return true;
     } else if (hasFlag(g.PRSO, EATBIT)) {
-      tell("The ", D(g.PRSO), " is obviously not part of her usual diet, since she ignores it.\n");
+      tell("The ");
+      await DPRINT(g.PRSO);
+      tell(" is obviously not part of her usual diet, since she ignores it.\n");
       return true;
     } else {
       return false;
@@ -9756,7 +10130,9 @@ async function FAT_F() {
       await PERFORM(V.KISS, FAT_HAND);
       return true;
     } else if (hasFlag(BLUE_BOX, RMUNGBIT)) {
-      tell("The ", D(FAT), " is far too distant for your affection.\n");
+      tell("The ");
+      await DPRINT(FAT);
+      tell(" is far too distant for your affection.\n");
       return true;
     } else {
       return false;
@@ -9785,7 +10161,9 @@ async function FAT_HAND_F() {
       move(FAT_HAND, PROTAGONIST);
       clearFlag(FAT_HAND, NDESCBIT);
       g.HANDOUT = false;
-      tell("As you take hold, the ", D(FAT_HAND), " becomes relaxed, its full weight now residing in your arms like a sandbag and making your knees buckle.\n");
+      tell("As you take hold, the ");
+      await DPRINT(FAT_HAND);
+      tell(" becomes relaxed, its full weight now residing in your arms like a sandbag and making your knees buckle.\n");
       return true;
     } else {
       await CANT_REACH(FAT_HAND);
@@ -9806,7 +10184,9 @@ async function FAT_HAND_F() {
     return true;
   } else if (isVerb(V.SHAKE)) {
     if (await HELD$(FAT_HAND)) {
-      tell("Though unable to budge the ", D(FAT_HAND), ", your friendly intentions are nevertheless understood. ");
+      tell("Though unable to budge the ");
+      await DPRINT(FAT_HAND);
+      tell(", your friendly intentions are nevertheless understood. ");
       await WIN_FAT();
       return true;
     } else if (g.HANDOUT) {
@@ -9819,7 +10199,9 @@ async function FAT_HAND_F() {
         return false;
       }
     } else {
-      tell(S(g.NOT_HOLDING), " ", D(FAT_HAND), ".\n");
+      tell(S(g.NOT_HOLDING), " ");
+      await DPRINT(FAT_HAND);
+      tell(".\n");
       return true;
     }
   } else if (isVerb(V.KISS)) {
@@ -9853,7 +10235,9 @@ async function WIN_FAT() {
   setFlag(FAT_HAND, NDESCBIT);
   enable(await QUEUE(I_RADIO.id, -1));
   move(FAT_HAND, g.HERE);
-  tell("The ", D(FAT), " appears quite taken by your kindnesses. She clasps both her hands up to her chins, and stares ahead in teary silence.\n");
+  tell("The ");
+  await DPRINT(FAT);
+  tell(" appears quite taken by your kindnesses. She clasps both her hands up to her chins, and stares ahead in teary silence.\n");
   return true;
 }
 
@@ -9870,7 +10254,11 @@ async function RADIO_F() {
     return true;
   } else if ((await TOUCHING$(RADIO)) && (loc(RADIO) == FAT)) {
     setFlag(RADIO, NDESCBIT);
-    tell("The ", D(FAT), " casually passes the ", D(RADIO), " over to her opposite hand.\n");
+    tell("The ");
+    await DPRINT(FAT);
+    tell(" casually passes the ");
+    await DPRINT(RADIO);
+    tell(" over to her opposite hand.\n");
     return true;
   } else if (isVerb(V.EXAMINE) && !(loc(RADIO) == FAT)) {
     tell("The AM dial is ");
@@ -9897,7 +10285,9 @@ async function RADIO_F() {
     if (!(hasFlag(RADIO, ONBIT))) {
       setFlag(RADIO, ONBIT);
       enable(await QUEUE(I_RADIO.id, -1));
-      tell("The ", D(DIAL), " bursts forth in a circle of light.\n");
+      tell("The ");
+      await DPRINT(DIAL);
+      tell(" bursts forth in a circle of light.\n");
       return true;
     } else {
       tell("It is.\n");
@@ -9907,7 +10297,9 @@ async function RADIO_F() {
     if (hasFlag(RADIO, ONBIT)) {
       disable(await INT(I_RADIO.id));
       clearFlag(RADIO, ONBIT);
-      tell("The ", D(DIAL), " flickers and grows dark.\n");
+      tell("The ");
+      await DPRINT(DIAL);
+      tell(" flickers and grows dark.\n");
       return true;
     } else {
       tell("It's already off.\n");
@@ -10033,9 +10425,12 @@ async function STAIRCASE_F() {
 
 async function UP_STAIRS() {
   if (loc(ANDREW) == g.HERE) {
-    tell(D(ANDREW));
+    await DPRINT(ANDREW);
     if (!(hasFlag(STAIRCASE, RMUNGBIT))) {
-      tell(" goose-steps to a position in front of the ", D(STAIRCASE), ", dragging Jenny's high heel across the ground. There ", D(ANDREW));
+      tell(" goose-steps to a position in front of the ");
+      await DPRINT(STAIRCASE);
+      tell(", dragging Jenny's high heel across the ground. There ");
+      await DPRINT(ANDREW);
     } else {
       setFlag(STAIRCASE, RMUNGBIT);
     }
@@ -10044,7 +10439,11 @@ async function UP_STAIRS() {
   } else if (hasFlag(CLOSET, TOUCHBIT) && (g.HERE == CLOSET)) {
     tell("You come out of the closet");
   } else {
-    tell("With a bizarre twist, the ", D(STAIRCASE), " leads up over the ", D(WALLS), " and then down");
+    tell("With a bizarre twist, the ");
+    await DPRINT(STAIRCASE);
+    tell(" leads up over the ");
+    await DPRINT(WALLS);
+    tell(" and then down");
   }
   tell(S(g.PERIOD));
   crlf();
@@ -10057,7 +10456,9 @@ async function UP_STAIRS() {
 
 async function BOUDOIR_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This is a cozy little drawing room where guests are received. On the gloomy west side of the room, a ", D(STAIRCASE), " leads upward.\n");
+    tell("This is a cozy little drawing room where guests are received. On the gloomy west side of the room, a ");
+    await DPRINT(STAIRCASE);
+    tell(" leads upward.\n");
     return true;
   } else {
     return false;
@@ -10107,13 +10508,15 @@ async function ANDREW_F() {
     }
   } else if (isVerb(V.EXAMINE)) {
     enable(await QUEUE(I_TURNSTILE.id, 2));
-    tell(D(ANDREW), "'s wearing an army boot, combat fatigues with a black leather shoulder holster, and a pith helmet. He sneers at you, his handlebar mustache nearly poking his eye. \"What are you staring at!\"\n");
+    await DPRINT(ANDREW);
+    tell("'s wearing an army boot, combat fatigues with a black leather shoulder holster, and a pith helmet. He sneers at you, his handlebar mustache nearly poking his eye. \"What are you staring at!\"\n");
     return true;
   } else if (await SPILL_BEANS$()) {
     return M_FATAL;
   } else if (isVerb(V.ASK_ABOUT) && (g.PRSO == ANDREW)) {
     if (g.PRSI == JENNY) {
-      tell(D(ANDREW), " turns sarcastic. \"My 'better' half -- ugh! Well ... can't live with 'er, can't live without 'er.\"\n");
+      await DPRINT(ANDREW);
+      tell(" turns sarcastic. \"My 'better' half -- ugh! Well ... can't live with 'er, can't live without 'er.\"\n");
       return true;
     } else {
       return false;
@@ -10131,10 +10534,13 @@ async function ANDREW_CLOTHES_F() {
       await V_DIG();
       return true;
     }
-    tell(D(ANDREW), " snaps his half body into a martial arts fighting pose, which puts you off.\n");
+    await DPRINT(ANDREW);
+    tell(" snaps his half body into a martial arts fighting pose, which puts you off.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("The overall effect of ", D(ANDREW_CLOTHES), " is unmistakable: He's dressed to kill.\n");
+    tell("The overall effect of ");
+    await DPRINT(ANDREW_CLOTHES);
+    tell(" is unmistakable: He's dressed to kill.\n");
     return true;
   } else {
     return false;
@@ -10186,7 +10592,8 @@ async function JENNY_CLOTHES_F() {
       await V_DIG();
       return true;
     }
-    tell(D(JENNY), " flicks her feather boa into your face, tickling your nose. \"Quit that, honey.\"\n");
+    await DPRINT(JENNY);
+    tell(" flicks her feather boa into your face, tickling your nose. \"Quit that, honey.\"\n");
     return true;
   } else if (isVerb(V.RAISE, V.LOOK_UNDER)) {
     return await NOT_PEEP();
@@ -10212,7 +10619,9 @@ async function SPILL_BEANS$() {
     if (await HELD$(CASE)) {
       move(CASE, ANDREW);
       setFlag(CASE, INVISIBLE);
-      tell("Andrew impulsively snatches the ", D(CASE), " from you. \n\n");
+      tell("Andrew impulsively snatches the ");
+      await DPRINT(CASE);
+      tell(" from you. \n\n");
     }
     tell("\"Aha!\" squeals Jenny, as she seems to recollect more details of Andrew's dirty dealings. \"And you're supposed to meet later on with your fellow thugs at Katz's trailer, the big brute. Well you can just forget about it, Andrew!\"\n\nThere ensues a hurly-burly struggle between the opposing personalities trapped within the one body. Jenny chases Andrew out of the sideshow amid shrieks of rage which echo down the midway.\n");
     return true;
@@ -10227,7 +10636,11 @@ async function CASE_F() {
     return true;
   } else if (g.GUARD_FELT_CASE && (loc(ANDREW) == g.HERE) && !(hasFlag(CASE, RMUNGBIT)) && ((isVerb(V.SHOW, V.GIVE) && (g.PRSI == ANDREW || g.PRSI == JENNY || g.PRSI == HERM)) || (isVerb(V.TELL_ABOUT, V.ASK_ABOUT) && (g.PRSI == CASE) && (g.PRSO == ANDREW || g.PRSO == JENNY || g.PRSO == HERM)))) {
     setFlag(CASE, RMUNGBIT);
-    tell("As ", D(ANDREW), " realizes you know him to be the owner of the ", D(CASE), ", his eye gets wide, and then, behind his distinguished exterior, he begins to turn shades of purple.\n");
+    tell("As ");
+    await DPRINT(ANDREW);
+    tell(" realizes you know him to be the owner of the ");
+    await DPRINT(CASE);
+    tell(", his eye gets wide, and then, behind his distinguished exterior, he begins to turn shades of purple.\n");
     return true;
   } else {
     return false;
@@ -10247,11 +10660,17 @@ async function I_DRUNK() {
   g.DRUNK_COUNTER = g.DRUNK_COUNTER + 1;
   clearFlag(VOICES, INVISIBLE);
   if ((g.DRUNK_COUNTER == 3) && (g.HERE == MIDWEST)) {
-    tell("\nThe ", D(DICK), " examines the label of the flask that he's holding then takes a slug.\n");
+    tell("\nThe ");
+    await DPRINT(DICK);
+    tell(" examines the label of the flask that he's holding then takes a slug.\n");
   } else if ((g.DRUNK_COUNTER == 5) && (g.HERE == MIDWEST)) {
     enable(await QUEUE(I_FOLLOW.id, 2));
     g.FOLLOW_FLAG = 11;
-    tell("\nThe pitchman gives the ", D(DICK), " a final slap on the back and leads him through the ", D(TURNSTILE), ".\n");
+    tell("\nThe pitchman gives the ");
+    await DPRINT(DICK);
+    tell(" a final slap on the back and leads him through the ");
+    await DPRINT(TURNSTILE);
+    tell(".\n");
   }
   if (!(g.HERE == MIDWEST) || (g.FOLLOW_FLAG == 11)) {
     move(CON, LOCAL_GLOBALS);
@@ -10289,7 +10708,9 @@ async function CON_F() {
     return true;
   } else if (isVerb(V.EXAMINE)) {
     if (g.HERE == MIDWEST) {
-      tell("He's all smiles and solicitude toward the ", D(DICK), ".\n");
+      tell("He's all smiles and solicitude toward the ");
+      await DPRINT(DICK);
+      tell(".\n");
       return true;
     } else {
       return false;
@@ -10309,7 +10730,9 @@ async function CON_F() {
       }
       g.AWAITING_REPLY = 8;
       enable(await QUEUE(I_REPLY.id, 2));
-      tell(" \"But have you asked me about ", D(FLASK), "?\"\n");
+      tell(" \"But have you asked me about ");
+      await DPRINT(FLASK);
+      tell("?\"\n");
       return true;
     }
   } else if (isVerb(V.FOLLOW)) {
@@ -10327,10 +10750,15 @@ async function CON_F() {
 
 async function CON_DESC(x = 0) {
   if (g.HERE == MIDWEST) {
-    tell("Next to the ", D(BIGTOP), ", the ", D(DICK), " is talking to a pitchman who's carrying an open trunk that's strapped to his upper body.");
+    tell("Next to the ");
+    await DPRINT(BIGTOP);
+    tell(", the ");
+    await DPRINT(DICK);
+    tell(" is talking to a pitchman who's carrying an open trunk that's strapped to his upper body.");
     return true;
   } else {
-    tell(D(CON), " is here.");
+    await DPRINT(CON);
+    tell(" is here.");
     return true;
   }
 }
@@ -10360,7 +10788,13 @@ async function BLUE_ROOM_F(rarg) {
     tell("As you enter, a blue haze of smoke stings your eyeballs.\n\n");
     return true;
   } else if (rarg == M_LOOK) {
-    tell("In the far ", D(CORNER), " of this tented enclosure a thick, undulating cloud of smoke hovers over a ", D(POKER), ". Straight across from you a tight-jawed dealer stands over a ", D(TABLE), " covered with a green floor-length tablecloth.\n");
+    tell("In the far ");
+    await DPRINT(CORNER);
+    tell(" of this tented enclosure a thick, undulating cloud of smoke hovers over a ");
+    await DPRINT(POKER);
+    tell(". Straight across from you a tight-jawed dealer stands over a ");
+    await DPRINT(TABLE);
+    tell(" covered with a green floor-length tablecloth.\n");
     return true;
   } else if (rarg == M_BEG) {
     if (!(g.BLUE_ROOM_ENTER_NUMBER == 1) && !(hasFlag(DEALER, RMUNGBIT))) {
@@ -10399,7 +10833,9 @@ async function BLUE_ROOM_F(rarg) {
         tell("You can't bet more than you have.\n");
         await STOP();
       } else if ((g.POCKET_CHANGE > 30326) && (g.BLUE_ROOM_ENTER_NUMBER == 2)) {
-        tell("The ", D(DEALER), " examines your winnings.");
+        tell("The ");
+        await DPRINT(DEALER);
+        tell(" examines your winnings.");
         await EIGHTY_SIX();
       } else if (25 > g.P_AMOUNT) {
         tell("\"The minimum bet is 25 cents.\"\n");
@@ -10408,7 +10844,9 @@ async function BLUE_ROOM_F(rarg) {
         tell("\"No bets over 2 dollars. House rules.\"\n");
       } else {
         if (!g.BET_ONCE) {
-          tell("The ", D(DEALER), " shuffles the four decks and breathes a sigh.\n");
+          tell("The ");
+          await DPRINT(DEALER);
+          tell(" shuffles the four decks and breathes a sigh.\n");
         }
         g.BET_ONCE = true;
         if ((g.BLUE_ROOM_ENTER_NUMBER == 2) || (g.HELPED_THUMB && ((g.POCKET_CHANGE > 23000) || (g.POCKET_CHANGE < 401)))) {
@@ -10430,7 +10868,13 @@ async function BLUE_ROOM_F(rarg) {
 
 async function KICKED_OUT_FIRST_TIME() {
   if (g.HERE == BLUE_ROOM) {
-    tell("\n", D(CON), " suddenly emerges from the cloud of smoke in the ", D(CORNER), " and whispers something to the ", D(DEALER), ". ");
+    tell("\n");
+    await DPRINT(CON);
+    tell(" suddenly emerges from the cloud of smoke in the ");
+    await DPRINT(CORNER);
+    tell(" and whispers something to the ");
+    await DPRINT(DEALER);
+    tell(". ");
     return await EIGHTY_SIX();
   } else {
     return false;
@@ -10442,7 +10886,9 @@ async function EIGHTY_SIX() {
   disable(await INT(I_CHASE.id));
   clearFlag(BLUE_DOOR, OPENBIT);
   disable(await INT(I_BLUE_DOOR.id));
-  tell("The ", D(DEALER), " summarily eighty-sixes you from the room.\n\n");
+  tell("The ");
+  await DPRINT(DEALER);
+  tell(" summarily eighty-sixes you from the room.\n\n");
   return await GOTO(NOOK);
 }
 
@@ -10461,7 +10907,11 @@ async function I_CHASE() {
   }
   g.CHASE_C = g.CHASE_C + 1;
   if (g.CHASE_C == 1) {
-    tell("You notice a different dealer standing behind the ", D(TABLE), ". He is scrutinizing ", D(TICKET), ".");
+    tell("You notice a different dealer standing behind the ");
+    await DPRINT(TABLE);
+    tell(". He is scrutinizing ");
+    await DPRINT(TICKET);
+    tell(".");
     if (await JOKE_TIME$(g.DEALER_JOKE)) {
       g.DEALER_JOKE = true;
       tell(" He glances at you and gives off a look that says, \"I've just about seen it all now.\"");
@@ -10470,12 +10920,18 @@ async function I_CHASE() {
   } else if (g.CHASE_C == 2) {
     move(BLACKJACK, LOCAL_GLOBALS);
     move(DEALER, LOCAL_GLOBALS);
-    tell("\nThe ", D(DEALER), " gathers up the cards and disappears into the ", D(SMOKE), ".\n");
+    tell("\nThe ");
+    await DPRINT(DEALER);
+    tell(" gathers up the cards and disappears into the ");
+    await DPRINT(SMOKE);
+    tell(".\n");
     return true;
   } else if (g.CHASE_C == 3) {
     move(CON, g.HERE);
     move(DEALER, g.HERE);
-    tell("\nYou see the dealer approaching with ", D(CON), ".\n");
+    tell("\nYou see the dealer approaching with ");
+    await DPRINT(CON);
+    tell(".\n");
     return true;
   } else if (g.CHASE_C == 4) {
     move(CON, LOCAL_GLOBALS);
@@ -10488,9 +10944,16 @@ async function I_CHASE() {
       return false;
     } else if (await HELD$(KIESTER)) {
       move(KIESTER, LOCAL_GLOBALS);
-      tell("Scuffling with you over the ", D(KIESTER), ", they manage to wrestle it away. ", D(CON), " shouts \"Hey Rube!\" then");
+      tell("Scuffling with you over the ");
+      await DPRINT(KIESTER);
+      tell(", they manage to wrestle it away. ");
+      await DPRINT(CON);
+      tell(" shouts \"Hey Rube!\" then");
     } else {
-      tell(D(CON), " grabs the ", D(KIESTER), ",");
+      await DPRINT(CON);
+      tell(" grabs the ");
+      await DPRINT(KIESTER);
+      tell(",");
       move(KIESTER, LOCAL_GLOBALS);
     }
     if (hasFlag(BLUE_DOOR, OPENBIT)) {
@@ -10549,14 +11012,16 @@ async function DEALER_F() {
 }
 
 async function WALK_INTO_CON() {
-  tell("As you approach, ", D(CON));
+  tell("As you approach, ");
+  await DPRINT(CON);
   if (!(loc(CON) == g.HERE)) {
     tell(" appears and");
   }
   tell(" intercepts you");
   if (await HELD$(KIESTER)) {
     move(KIESTER, LOCAL_GLOBALS);
-    tell(", snatching away the ", D(KIESTER));
+    tell(", snatching away the ");
+    await DPRINT(KIESTER);
   }
   tell(". ");
   return true;
@@ -10571,7 +11036,9 @@ async function TABLE_F() {
       move(KIESTER, g.HERE);
       clearFlag(KIESTER, OPENBIT);
       setFlag(KIESTER, LOCKEDBIT);
-      tell(S(g.YOU_SEE), " what appears to be a suitcase under the ", D(TABLE), ".\n");
+      tell(S(g.YOU_SEE), " what appears to be a suitcase under the ");
+      await DPRINT(TABLE);
+      tell(".\n");
       return true;
     } else {
       await V_LOOK_UNDER();
@@ -10606,7 +11073,9 @@ async function BLACKJACK_F() {
     tell("Four decks are being used. They look clean.\n");
     return true;
   } else if (isVerb(V.TAKE)) {
-    tell("The dealer stays ", D(HANDS), ".\n");
+    tell("The dealer stays ");
+    await DPRINT(HANDS);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -10616,7 +11085,13 @@ async function BLACKJACK_F() {
 async function POKER_F() {
   if (isVerb(V.WALK_TO, V.PLAY, V.THROUGH) && (g.HERE == BLUE_ROOM)) {
     if (loc(DEALER) == g.HERE) {
-      tell("The ", D(DEALER), " bars your way, indicating the ", D(POKER), "'s private. Considering the lack of oxygen at the table and the probability of marked cards, you wouldn't have survived long in the ", D(POKER), " anyway.\n");
+      tell("The ");
+      await DPRINT(DEALER);
+      tell(" bars your way, indicating the ");
+      await DPRINT(POKER);
+      tell("'s private. Considering the lack of oxygen at the table and the probability of marked cards, you wouldn't have survived long in the ");
+      await DPRINT(POKER);
+      tell(" anyway.\n");
       return true;
     } else {
       await WALK_INTO_CON();
@@ -10630,7 +11105,9 @@ async function POKER_F() {
 async function KIESTER_F() {
   if (isVerb(V.TAKE, V.OPEN, V.CLOSE, V.PUT)) {
     if (loc(KIESTER) == CON) {
-      tell("The ", D(JUNK), " klinks together as Billy nonchalantly pushes you away.\n");
+      tell("The ");
+      await DPRINT(JUNK);
+      tell(" klinks together as Billy nonchalantly pushes you away.\n");
       return true;
     } else if (!(hasFlag(KIESTER, TOUCHBIT)) && isVerb(V.TAKE)) {
       clearFlag(KIESTER, TRYTAKEBIT);
@@ -10664,7 +11141,15 @@ async function FLASK_F() {
     return true;
   } else if ((loc(DICK) == MIDWEST) && !g.DICK_DRUNK) {
     if (isVerb(V.DRINK_FROM, V.DRINK, V.TAKE, V.READ, V.MOVE)) {
-      tell("You're interfering with the hospitality that ", D(CON), " is paying the ", D(DICK), ". Billy shoves you away, and his ", D(JUNK), " clinks together in his ", D(KIESTER), ".\n");
+      tell("You're interfering with the hospitality that ");
+      await DPRINT(CON);
+      tell(" is paying the ");
+      await DPRINT(DICK);
+      tell(". Billy shoves you away, and his ");
+      await DPRINT(JUNK);
+      tell(" clinks together in his ");
+      await DPRINT(KIESTER);
+      tell(".\n");
       return true;
     } else if (isVerb(V.BUY)) {
       tell("\"I'm sorry, we're fresh out,\" the pitchman ");
@@ -10674,14 +11159,18 @@ async function FLASK_F() {
       return false;
     }
   } else if (isVerb(V.READ)) {
-    tell("It's the usual ballyhoo for ", D(FLASK), ".\n");
+    tell("It's the usual ballyhoo for ");
+    await DPRINT(FLASK);
+    tell(".\n");
     return true;
   } else if (isVerb(V.DRINK_FROM, V.DRINK, V.TAKE, V.READ, V.MOVE)) {
     if (loc(FLASK) == JOEY) {
       await TAKE_FLASK_RAG();
       return true;
     } else if (loc(FLASK) == DICK) {
-      tell("The ", D(DICK), ", being dead drunk, has a rigor mortis grip on it.\n");
+      tell("The ");
+      await DPRINT(DICK);
+      tell(", being dead drunk, has a rigor mortis grip on it.\n");
       return true;
     } else {
       return false;
@@ -10722,7 +11211,13 @@ async function CIRCUS_F() {
 
 async function UNDER_STANDS_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("You're standing between the underside of the ", D(GRANDSTAND), " and the side wall of the ", D(BIGTOP), ". Not unexpectedly, the ", D(GROUND), " here is strewn with garbage. The only exit is ");
+    tell("You're standing between the underside of the ");
+    await DPRINT(GRANDSTAND);
+    tell(" and the side wall of the ");
+    await DPRINT(BIGTOP);
+    tell(". Not unexpectedly, the ");
+    await DPRINT(GROUND);
+    tell(" here is strewn with garbage. The only exit is ");
     if (g.WON_STANDS) {
       tell("back under the tent");
     } else {
@@ -10749,7 +11244,9 @@ async function EXIT_UNDER_STANDS() {
     await PERFORM(V.CRAWL_UNDER, BIGTOP);
     return false;
   } else {
-    tell("You bump into the side wall of the ", D(BIGTOP), ".\n");
+    tell("You bump into the side wall of the ");
+    await DPRINT(BIGTOP);
+    tell(".\n");
     return false;
   }
 }
@@ -10768,12 +11265,16 @@ async function GARBAGE_F() {
       move(TICKET, g.HERE);
       g.P_IT_OBJECT = TICKET;
       g.SCORE = g.SCORE + 10;
-      tell("Your foray into ", D(GARBAGE), " reclamation pays off, as you turn up the unmarked ticket of some luckless circus-goer.\n");
+      tell("Your foray into ");
+      await DPRINT(GARBAGE);
+      tell(" reclamation pays off, as you turn up the unmarked ticket of some luckless circus-goer.\n");
       return true;
     } else if ((loc(GRANOLA) == LOCAL_GLOBALS) && !(hasFlag(GRANOLA, RMUNGBIT)) && g.WON_STANDS) {
       g.P_IT_OBJECT = GRANOLA;
       move(GRANOLA, g.HERE);
-      tell("Recalling the precise trajectory of your fallen ", D(GRANOLA), ", you uncover it after a brief excavation.\n");
+      tell("Recalling the precise trajectory of your fallen ");
+      await DPRINT(GRANOLA);
+      tell(", you uncover it after a brief excavation.\n");
       return true;
     } else if (isVerb(V.EXAMINE)) {
       return false;
@@ -10838,7 +11339,9 @@ async function STANDS_ROOM_F(rarg) {
       tell("You're in the \"blues,\" sitting", S(g.HIGH_ABOVE), ". ");
     }
     if (!(isVerb(V.WALK)) && !(g.TLOC == 12)) {
-      tell("You know the exit from the ", D(GRANDSTAND), " to be vaguely eastward and down. ");
+      tell("You know the exit from the ");
+      await DPRINT(GRANDSTAND);
+      tell(" to be vaguely eastward and down. ");
     }
     tell("All around you the crowd is in a state of pandemonium");
     if (!g.SIT_IN_STANDS) {
@@ -10861,7 +11364,13 @@ async function STANDS_ROOM_F(rarg) {
     if (hasFlag(HAWKER, RMUNGBIT) && (g.TLOC == g.LOST_MONEY_LOC)) {
       g.WON_STANDS = true;
       g.SCORE = g.SCORE + 10;
-      tell("\nA man in the audience suddenly hails you, tossing the ", D(GRANOLA), " in your ", D(INTDIR), ". It glances off ", D(HEAD), ", falls through the stands and right before it hits the ground, in a cold sweat you ");
+      tell("\nA man in the audience suddenly hails you, tossing the ");
+      await DPRINT(GRANOLA);
+      tell(" in your ");
+      await DPRINT(INTDIR);
+      tell(". It glances off ");
+      await DPRINT(HEAD);
+      tell(", falls through the stands and right before it hits the ground, in a cold sweat you ");
       return await WAKE_UP();
     } else if ((g.TLOC == 12) && (g.POCKET_CHANGE == 1841)) {
       tell("\nSuddenly a hawker appears at the end of the row and you flag him down. ");
@@ -10921,7 +11430,8 @@ async function I_STANDS() {
     }
     g.FOLLOW_FLAG = 17;
     enable(await QUEUE(I_FOLLOW.id, 2));
-    tell("ward, the hawker disappears into the ", D(CROWD));
+    tell("ward, the hawker disappears into the ");
+    await DPRINT(CROWD);
     if (isVerb(V.WALK_TO, V.FOLLOW)) {
       tell(" before you can reach him");
     }
@@ -10942,7 +11452,9 @@ async function I_STANDS() {
   } else if ((g.STANDS_C == 5) || ((g.STANDS_C > 5) && prob(25) && (g.HERE == STANDS_ROOM) && !(g.STANDS_C == 11 || g.STANDS_C == 12 || g.STANDS_C == 13))) {
     setFlag(HAWKER, NDESCBIT);
     move(HAWKER, g.HERE);
-    tell("\nA ", D(HAWKER), " appears at the ");
+    tell("\nA ");
+    await DPRINT(HAWKER);
+    tell(" appears at the ");
     if ((g.TLOC == 1 || g.TLOC == 2 || g.TLOC == 3) || (g.TLOC == 7 || g.TLOC == 8 || g.TLOC == 9)) {
       tell("west");
     } else {
@@ -10967,7 +11479,9 @@ async function JUNK_FOOD_F() {
       await PERFORM(V.TELL, HAWKER);
       return true;
     } else if (g.HERE == STANDS_ROOM) {
-      tell("The ", D(HAWKER), "'s nowhere in sight.\n");
+      tell("The ");
+      await DPRINT(HAWKER);
+      tell("'s nowhere in sight.\n");
       return true;
     } else if ((g.HERE == WINGS) && (loc(HAWKER) == g.HERE)) {
       if (hasFlag(HAWKER, RMUNGBIT)) {
@@ -10992,7 +11506,9 @@ async function JUNK_FOOD_F() {
     } else {
       await PRSI_PRINT();
     }
-    tell(" is ground into the ", D(HAWKER), "'s uniform.\n");
+    tell(" is ground into the ");
+    await DPRINT(HAWKER);
+    tell("'s uniform.\n");
     return true;
   } else {
     return false;
@@ -11031,7 +11547,9 @@ async function HAWKER_F() {
         tell("Exhausted, he ignores you.\n");
       } else {
         setFlag(HAWKER, RMUNGBIT);
-        tell("\"Hey, you're the one I passed the granola bar to in the ", D(GRANDSTAND), ". ");
+        tell("\"Hey, you're the one I passed the granola bar to in the ");
+        await DPRINT(GRANDSTAND);
+        tell(". ");
         if (!g.ORDERED_GRANOLA) {
           tell("I know that's not what you ordered, but that's all I had left. ");
         }
@@ -11059,7 +11577,9 @@ async function CROWD_F() {
   } else if (((g.HERE == WINGS) && !(hasFlag(CON_AREA, TOUCHBIT))) || ((g.HERE == CON_AREA) && (await RUNNING$(I_BOOST.id)))) {
     return await CROWD_GONE();
   } else if (await TALKING_TO$(CROWD)) {
-    tell("You have neither the voice nor the talent to capture the ", D(CROWD), "'s attention.\n");
+    tell("You have neither the voice nor the talent to capture the ");
+    await DPRINT(CROWD);
+    tell("'s attention.\n");
     return await STOP();
   } else if (await PAY_HAWKER$()) {
     if (g.FOLLOW_FLAG == 99) {
@@ -11082,7 +11602,9 @@ async function CROWD_F() {
 }
 
 async function CROWD_GONE() {
-  tell("The ", D(CROWD), "'s gone ");
+  tell("The ");
+  await DPRINT(CROWD);
+  tell("'s gone ");
   if (g.HERE == CON_AREA) {
     tell("east");
   } else {
@@ -11216,7 +11738,9 @@ async function PLOW_F(up$ = false) {
       crlf();
       clearFlag(MONKEY, NDESCBIT);
       move(MONKEY, PROTAGONIST);
-      tell("As you exhale a sigh of relief, a smallish and hairy animal inexplicably plops down upon you from the upper reaches of the ", D(BIGTOP), ".\n");
+      tell("As you exhale a sigh of relief, a smallish and hairy animal inexplicably plops down upon you from the upper reaches of the ");
+      await DPRINT(BIGTOP);
+      tell(".\n");
       return false;
     } else {
       return WINGS;
@@ -11231,7 +11755,8 @@ async function PLOW_F(up$ = false) {
 async function BIGTOP_F() {
   if (isVerb(V.CRAWL_UNDER, V.BOARD)) {
     if ((g.HERE == MIDWEST) || ((g.HERE == UNDER_STANDS) && hasFlag(BIGTOP, RMUNGBIT))) {
-      tell("You creep under the side wall of the ", D(BIGTOP));
+      tell("You creep under the side wall of the ");
+      await DPRINT(BIGTOP);
       if (g.HERE == UNDER_STANDS) {
         tell(", right where you crawled in before");
       }
@@ -11294,7 +11819,9 @@ async function CENTER_POLE_F() {
   } else if ((await TOUCHING$(CENTER_POLE)) && !(g.HERE == RING)) {
     return await CANT_REACH(CENTER_POLE);
   } else if (isVerb(V.CLIMB_FOO, V.CLIMB_UP, V.CLIMB_ON)) {
-    tell("You barely get off the ", D(GROUND), " before you slide back down.\n");
+    tell("You barely get off the ");
+    await DPRINT(GROUND);
+    tell(" before you slide back down.\n");
     return true;
   } else {
     return false;
@@ -11330,11 +11857,15 @@ async function BALLOON_F() {
     return crlf();
   } else if (isVerb(V.UNTIE, V.OPEN)) {
     if (!(await HELD$(BALLOON))) {
-      tell(S(g.NOT_HOLDING), " the ", D(BALLOON), ".\n");
+      tell(S(g.NOT_HOLDING), " the ");
+      await DPRINT(BALLOON);
+      tell(".\n");
       return true;
     } else if (!(hasFlag(BALLOON, OPENBIT))) {
       setFlag(BALLOON, OPENBIT);
-      tell("You untie the end of the ", D(BALLOON), ", holding it closed.\n");
+      tell("You untie the end of the ");
+      await DPRINT(BALLOON);
+      tell(", holding it closed.\n");
       return true;
     } else if (isVerb(V.OPEN) && hasFlag(BALLOON, OPENBIT)) {
       setFlag(BALLOON, OPENBIT);
@@ -11347,7 +11878,9 @@ async function BALLOON_F() {
   } else if (isVerb(V.TIE, V.CLOSE) && !g.PRSI) {
     if (hasFlag(BALLOON, OPENBIT)) {
       clearFlag(BALLOON, OPENBIT);
-      tell("Okay, the ", D(BALLOON), " is once again tied closed.\n");
+      tell("Okay, the ");
+      await DPRINT(BALLOON);
+      tell(" is once again tied closed.\n");
       return true;
     } else {
       tell("It is.\n");
@@ -11370,12 +11903,16 @@ async function BALLOON_FLIGHT() {
   setFlag(BALLOON, TOUCHBIT);
   move(BALLOON, LOCAL_GLOBALS);
   if (!(hasFlag(BALLOON, OPENBIT)) && !(await HURT$(BALLOON))) {
-    tell("The ", D(BALLOON), " flies up and ");
+    tell("The ");
+    await DPRINT(BALLOON);
+    tell(" flies up and ");
     if (!(hasFlag(g.HERE, INDOORSBIT))) {
       tell("disappears into the night sky.");
       return true;
     } else {
-      tell("gets punctured on the ", D(CEILING), ". ");
+      tell("gets punctured on the ");
+      await DPRINT(CEILING);
+      tell(". ");
     }
   }
   tell("With helium spitting out of it, the fink zips wildly through the air and disappears. ");
@@ -11388,12 +11925,16 @@ async function HELIUM_F() {
       move(BALLOON, LOCAL_GLOBALS);
       move(HELIUM, LOCAL_GLOBALS);
       enable(await QUEUE(I_HELIUM.id, 2));
-      tell("The ", D(BALLOON), " shrinks rapidly before your eyes as your chest expands and tightens ... then it slips from your grasp! ");
+      tell("The ");
+      await DPRINT(BALLOON);
+      tell(" shrinks rapidly before your eyes as your chest expands and tightens ... then it slips from your grasp! ");
       await BALLOON_FLIGHT();
       tell("You manage to momentarily hold the helium in your lungs.\n");
       return putProp(PROTAGONIST, P.ACTION, PROTAGONIST_HACK_F.id);
     } else {
-      tell("But the ", D(BALLOON), " is tied closed.\n");
+      tell("But the ");
+      await DPRINT(BALLOON);
+      tell(" is tied closed.\n");
       return true;
     }
   } else if (isVerb(V.DROP)) {
@@ -11419,7 +11960,9 @@ async function NET_F(rarg = false) {
     } else if (isVerb(V.WALK)) {
       return await OUT_OF_FIRST(NET);
     } else if (isVerb(V.LEAP)) {
-      tell("After bouncing about the net a while you appreciate that much more the talent of the ", D(BROS), " Brothers.\n");
+      tell("After bouncing about the net a while you appreciate that much more the talent of the ");
+      await DPRINT(BROS);
+      tell(" Brothers.\n");
       return true;
     } else {
       return false;
@@ -11430,7 +11973,10 @@ async function NET_F(rarg = false) {
     tell(S(g.BASKET_CASE), "\n");
     return true;
   } else if (isVerb(V.TAKE) && (loc(NET) == MUNRAB)) {
-    tell(D(MUNRAB), " looks flustered then yanks the coarsely woven net out of ", D(HANDS), ". \"I'm in charge here!\"\n");
+    await DPRINT(MUNRAB);
+    tell(" looks flustered then yanks the coarsely woven net out of ");
+    await DPRINT(HANDS);
+    tell(". \"I'm in charge here!\"\n");
     return true;
   } else if ((await TOUCHING$(NET)) && (loc(NET) == GLOBAL_OBJECTS)) {
     return await CANT_SEE(NET);
@@ -11438,7 +11984,9 @@ async function NET_F(rarg = false) {
     return await CANT_OPEN();
   } else if (isVerb(V.DISEMBARK, V.CLIMB_DOWN) && eq(loc(PROTAGONIST), NET)) {
     move(PROTAGONIST, g.HERE);
-    tell("You climb out of the ", D(NET), " with a bounce in your step.\n");
+    tell("You climb out of the ");
+    await DPRINT(NET);
+    tell(" with a bounce in your step.\n");
     return true;
   } else {
     return false;
@@ -11478,7 +12026,9 @@ async function WINGS_F(rarg) {
     move(HAWKER, WINGS);
     return move(JUNK_FOOD, HAWKER);
   } else if (rarg == M_LOOK) {
-    tell("The ", D(BIGTOP), " can be entered to the north and exited to the south. ");
+    tell("The ");
+    await DPRINT(BIGTOP);
+    tell(" can be entered to the north and exited to the south. ");
     if (g.WON_STANDS || ((g.MEET_COUNTER == 10) && !g.DREAMING)) {
       crlf();
       crlf();
@@ -11502,7 +12052,11 @@ async function WINGS_F(rarg) {
     g.P_IT_OBJECT = JIM;
     move(NET, LOCAL_GLOBALS);
     clearFlag(RING, TOUCHBIT);
-    tell("\nA roustabout who is wearing a ", D(HEADPHONES), " and carrying a large net over his shoulder passes you and exits the ", D(BIGTOP), ".\n");
+    tell("\nA roustabout who is wearing a ");
+    await DPRINT(HEADPHONES);
+    tell(" and carrying a large net over his shoulder passes you and exits the ");
+    await DPRINT(BIGTOP);
+    tell(".\n");
     return true;
   } else if ((rarg == M_END) && (await MONKEY_ACTS$())) {
     return false;
@@ -11544,7 +12098,11 @@ async function STANDS_ENTER() {
 }
 
 async function MONKEY_DIRECTION() {
-  tell("Agitated by your choice of ", D(INTDIR), ", the ", D(MONKEY), " steers you away from it.\n");
+  tell("Agitated by your choice of ");
+  await DPRINT(INTDIR);
+  tell(", the ");
+  await DPRINT(MONKEY);
+  tell(" steers you away from it.\n");
   return true;
 }
 
@@ -11563,14 +12121,19 @@ async function RING_F(rarg) {
       } else {
         tell("appears deathly quiet without its circus atmosphere. Also missing is its ");
       }
-      tell(D(NET), ". A rope ladder dangles to within a foot of the ", D(GROUND), ".");
+      await DPRINT(NET);
+      tell(". A rope ladder dangles to within a foot of the ");
+      await DPRINT(GROUND);
+      tell(".");
     } else {
       tell(". ");
       await TANGLED_ROPE();
     }
     crlf();
     crlf();
-    tell("Just west lies the entrance to a large, round cage that completely encircles the second of the two rings. To the south the ", D(BIGTOP), "'s vaulted wing leads out into the open air. The arena's rickety grandstands rise steeply north and east.");
+    tell("Just west lies the entrance to a large, round cage that completely encircles the second of the two rings. To the south the ");
+    await DPRINT(BIGTOP);
+    tell("'s vaulted wing leads out into the open air. The arena's rickety grandstands rise steeply north and east.");
     if (g.END_GAME) {
       await TELL_APE();
     }
@@ -11595,7 +12158,9 @@ async function RING_F(rarg) {
     if (loc(MEAT) == DEN) {
       move(MEAT, LOCAL_GLOBALS);
       await MOVE_LIONS(RING);
-      tell(S(g.EXIT_DEN), "s together finish off the meat and settle back on the ", D(SAWDUST), ".\n\n");
+      tell(S(g.EXIT_DEN), "s together finish off the meat and settle back on the ");
+      await DPRINT(SAWDUST);
+      tell(".\n\n");
       g.ELSIE_COUNTER = 0;
       return true;
     } else if ((g.P_WALK_DIR == P.EAST || g.P_WALK_DIR == P.OUT) && (loc(ELSIE) == DEN) && !(loc(MEAT) == DEN)) {
@@ -11631,7 +12196,9 @@ async function RING_F(rarg) {
 
 async function WING_EXIT() {
   if (await HELD$(STAND)) {
-    tell("The ", D(STAND), " is too bulky to be carried that distance.\n");
+    tell("The ");
+    await DPRINT(STAND);
+    tell(" is too bulky to be carried that distance.\n");
     return false;
   } else {
     return WINGS;
@@ -11641,7 +12208,8 @@ async function WING_EXIT() {
 async function TANGLED_ROPE(touching$ = false) {
   tell("The rope ladder");
   if (g.HERE == RING) {
-    tell(" above ", D(HEAD));
+    tell(" above ");
+    await DPRINT(HEAD);
   }
   tell(" has been tangled around the platform from which it hangs.");
   if (touching$) {
@@ -11657,11 +12225,15 @@ async function TELL_APE() {
     crlf();
   }
   if (g.APE_LOC == 1) {
-    tell("Craning your neck upward, you see ", D(APE), " standing on the platform above the rope ", D(LADDER));
+    tell("Craning your neck upward, you see ");
+    await DPRINT(APE);
+    tell(" standing on the platform above the rope ");
+    await DPRINT(LADDER);
   } else if (g.APE_LOC == 2) {
     tell("The shadowy form of the great ape is ensconced among the guy wires above the tightrope");
   } else {
-    tell(D(APE), " stands ");
+    await DPRINT(APE);
+    tell(" stands ");
     if (g.HERE == TIGHTROPE_ROOM || g.HERE == PLATFORM_1) {
       tell("across from you ");
     }
@@ -11673,7 +12245,9 @@ async function TELL_APE() {
 
 async function STOOL_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("One leg of the ", D(STOOL), " is shorter than the other two.\n");
+    tell("One leg of the ");
+    await DPRINT(STOOL);
+    tell(" is shorter than the other two.\n");
     return true;
   } else if (isVerb(V.BOARD, V.STAND_ON)) {
     tell("It's too rickety to support your weight.\n");
@@ -11732,7 +12306,9 @@ async function PLATFORM_ROOM_DESC() {
   }
   tell(" to the opposite platform");
   if (g.APE_LOC == 3) {
-    tell(" where the attention of everyone in the ", D(BIGTOP), " is focused");
+    tell(" where the attention of everyone in the ");
+    await DPRINT(BIGTOP);
+    tell(" is focused");
   }
   tell(".");
   return true;
@@ -11749,7 +12325,9 @@ async function TIGHTROPE_ROOM_F(rarg) {
       $1 = await PICK_ONE(g.DANGERS);
       tell(S($1));
     }
-    tell(S(g.HIGH_ABOVE), ", ", S(get(g.ROPES, g.ON_ROPE)), " across the ", D(TIGHTROPE_OBJECT), ".");
+    tell(S(g.HIGH_ABOVE), ", ", S(get(g.ROPES, g.ON_ROPE)), " across the ");
+    await DPRINT(TIGHTROPE_OBJECT);
+    tell(".");
     if (g.END_GAME) {
       await TELL_APE();
     }
@@ -11798,7 +12376,9 @@ async function GUY_WIRES_F() {
   } else if (isVerb(V.CLIMB_UP, V.CLIMB_FOO, V.SHAKE, V.CLIMB_ON, V.MOVE)) {
     if (g.APE_LOC == 2) {
       g.APE_LOC = 3;
-      tell("You're not very good at aping ", D(APE), " in this respect, but the vibrations of your attempt serve to flush him from his perch among the guy wires and onto the opposite platform.");
+      tell("You're not very good at aping ");
+      await DPRINT(APE);
+      tell(" in this respect, but the vibrations of your attempt serve to flush him from his perch among the guy wires and onto the opposite platform.");
       if (eq(await META_LOC(RADIO), PLATFORM_2)) {
         tell(" \"Crunch!\"");
       }
@@ -11877,7 +12457,10 @@ async function PLATFORM_F() {
 
 async function PLATFORM_EXIT_F() {
   if (g.APE_LOC == 2) {
-    tell(D(APE), ", perched above you, is restless enough to make the ", D(TIGHTROPE_OBJECT), " too herky-jerky to walk across.\n");
+    await DPRINT(APE);
+    tell(", perched above you, is restless enough to make the ");
+    await DPRINT(TIGHTROPE_OBJECT);
+    tell(" too herky-jerky to walk across.\n");
     return false;
   } else if (hasFlag(SUIT, WORNBIT) || hasFlag(DRESS, WORNBIT)) {
     tell("You're not dressed for wire-walking.\n");
@@ -11919,7 +12502,8 @@ async function I_TREMBLE() {
     }
     return true;
   } else if (g.TREMBLE_C == 1) {
-    tell("You find ", D(ME));
+    tell("You find ");
+    await DPRINT(ME);
     await LEANING();
     if (prob(50)) {
       return await LEAN(true);
@@ -11984,7 +12568,9 @@ async function FALL_DOWN() {
     g.HERE = RING;
     await ROB(PROTAGONIST, RING);
     move(PROTAGONIST, NET);
-    tell("... deeply into the ", D(NET), ", which heaves you high into the air ... then  catches you back down.\n");
+    tell("... deeply into the ");
+    await DPRINT(NET);
+    tell(", which heaves you high into the air ... then  catches you back down.\n");
     return true;
   }
 }
@@ -12034,14 +12620,24 @@ async function ACROSS_ROPE() {
     }
     if ((g.APE_LOC == 3) && g.HEADING_EAST$) {
       if (g.ON_ROPE == 2) {
-        tell(". ", D(APE), " lets out an aggressive scream that echoes throughout the ", D(BIGTOP), ".");
+        tell(". ");
+        await DPRINT(APE);
+        tell(" lets out an aggressive scream that echoes throughout the ");
+        await DPRINT(BIGTOP);
+        tell(".");
       } else if (g.ON_ROPE == 3) {
         tell(". The gorilla raps his knuckles against his mighty chest. You can feel the vibration on your toes.");
       } else if (g.ON_ROPE == 4) {
         if ((await HELD$(RADIO)) && (g.STATION == 1170) && hasFlag(RADIO, ONBIT) && g.CALLED_STATION) {
-          tell(". As the heavenly music drifts to within earshot of ", D(APE), ", the beast is becalmed, and he loosens his grip on the girl.");
+          tell(". As the heavenly music drifts to within earshot of ");
+          await DPRINT(APE);
+          tell(", the beast is becalmed, and he loosens his grip on the girl.");
         } else {
-          tell(". ", D(APE), " appears determined to bring down the ", D(BIGTOP), " if you take one more step.");
+          tell(". ");
+          await DPRINT(APE);
+          tell(" appears determined to bring down the ");
+          await DPRINT(BIGTOP);
+          tell(" if you take one more step.");
         }
       } else if (g.ON_ROPE == 5) {
         if ((await HELD$(RADIO)) && (g.STATION == 1170) && hasFlag(RADIO, ONBIT) && g.CALLED_STATION) {
@@ -12055,7 +12651,13 @@ async function ACROSS_ROPE() {
           move(MUNRAB, LEFT_HANGING);
           g.END_GAME_C = 0;
           move(TIGHTROPE_OBJECT, LEFT_HANGING);
-          tell(". You are now almost close enough to reach out and touch ", D(APE), ", and the effect of the music is to utterly relax the great ape. He lets loose the girl like a rag doll ... falling ... falling ... falling ... deep into the safety of the net!\n\nThe cheers of joy and relief from the group encircling the net interrupt ", D(APE), "'s listening pleasure. With a stomp, he bounces you off your perch and on your way down, you catch the wire with ", D(HANDS), ", thus saving two lives in the same move. You dangle here as the crowd below continues their self-congratulation and rejoicing.\n\n");
+          tell(". You are now almost close enough to reach out and touch ");
+          await DPRINT(APE);
+          tell(", and the effect of the music is to utterly relax the great ape. He lets loose the girl like a rag doll ... falling ... falling ... falling ... deep into the safety of the net!\n\nThe cheers of joy and relief from the group encircling the net interrupt ");
+          await DPRINT(APE);
+          tell("'s listening pleasure. With a stomp, he bounces you off your perch and on your way down, you catch the wire with ");
+          await DPRINT(HANDS);
+          tell(", thus saving two lives in the same move. You dangle here as the crowd below continues their self-congratulation and rejoicing.\n\n");
           setFlag(MUNRAB, NDESCBIT);
           setFlag(THUMB, NDESCBIT);
           g.POCKET_CHANGE = 0;
@@ -12126,7 +12728,9 @@ async function PLATFORM_RETURN() {
 
 async function DEN_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("Here inside the round cage you stand in a dingy indoor twilight, surrounded by a panorama of closely spaced bars. The ", D(LION_DOOR), " that you're still keeping an eye on is to the east.\n\nBuilt into the southern side of the round cage there is a square grate which ");
+    tell("Here inside the round cage you stand in a dingy indoor twilight, surrounded by a panorama of closely spaced bars. The ");
+    await DPRINT(LION_DOOR);
+    tell(" that you're still keeping an eye on is to the east.\n\nBuilt into the southern side of the round cage there is a square grate which ");
     if (hasFlag(GRATE, OPENBIT)) {
       tell("is raised, revealing");
     } else {
@@ -12136,9 +12740,13 @@ async function DEN_F(rarg) {
     if ((loc(STAND) == DEN) && hasFlag(STAND, NDESCBIT)) {
       crlf();
       if (hasFlag(LION_CAGE, RMUNGBIT) && !(hasFlag(CASE, TOUCHBIT))) {
-        tell("The ", D(STAND), " is", S(g.LION_STAND_MOVED));
+        tell("The ");
+        await DPRINT(STAND);
+        tell(" is", S(g.LION_STAND_MOVED));
       } else {
-        tell("A ", D(STAND), " sits here.");
+        tell("A ");
+        await DPRINT(STAND);
+        tell(" sits here.");
       }
       return crlf();
     } else {
@@ -12168,7 +12776,9 @@ async function DEN_F(rarg) {
 
 async function GRATE_ENTER() {
   if (!(hasFlag(GRATE, OPENBIT))) {
-    tell("The ", D(GRATE), " is lowered over the passage.\n");
+    tell("The ");
+    await DPRINT(GRATE);
+    tell(" is lowered over the passage.\n");
     return false;
   } else if ((loc(NIMROD) == g.HERE) && !(hasFlag(GRATE, OPENBIT))) {
     await PERFORM(V.OPEN, GRATE);
@@ -12206,7 +12816,11 @@ async function I_LION() {
     await MOVE_LIONS(CHUTE);
     enable(await QUEUE(I_LION.id, -1));
     if (g.HERE == BESIDE_BIGTOP) {
-      tell("\nYou see the pair of hungry cats slink into the chute from the ", D(BIGTOP), " and pounce on the ", D(MEAT), ".\n");
+      tell("\nYou see the pair of hungry cats slink into the chute from the ");
+      await DPRINT(BIGTOP);
+      tell(" and pounce on the ");
+      await DPRINT(MEAT);
+      tell(".\n");
       return true;
     } else {
       return false;
@@ -12219,14 +12833,18 @@ async function I_LION() {
         if (g.ELSIE_COUNTER == 0) {
           tell("The lions continue mauling their");
         } else {
-          tell("The ", D(NIMROD), " keeps mauling his");
+          tell("The ");
+          await DPRINT(NIMROD);
+          tell(" keeps mauling his");
         }
         tell(" dinner and watching you.\n");
         return true;
       } else if (g.ELSIE_COUNTER == 0) {
         tell("Both lions continue");
       } else {
-        tell("The ", D(NIMROD), " keeps");
+        tell("The ");
+        await DPRINT(NIMROD);
+        tell(" keeps");
         elsie_stop = true;
       }
       tell(" pacing nervously back and forth around the den, never letting you out of ");
@@ -12237,11 +12855,14 @@ async function I_LION() {
       }
       tell(" sight.");
       if (elsie_stop && isVerb(V.LOOK)) {
-        tell(" The ", D(ELSIE), " remains bogged down ");
+        tell(" The ");
+        await DPRINT(ELSIE);
+        tell(" remains bogged down ");
         if (g.ELSIE_COUNTER < 3) {
           tell("in front of the grate");
         } else {
-          tell("off to one side of the ", D(LION_CAGE));
+          tell("off to one side of the ");
+          await DPRINT(LION_CAGE);
         }
         tell(".");
       }
@@ -12264,10 +12885,15 @@ async function LION_CAGE_F() {
       if (loc(ELSIE) == RING) {
         tell(S(g.YOU_SEE), " a pair of sleepyheaded lions resting on their haunches in the sawdust.");
       } else {
-        tell("The ", D(LION_CAGE), " is still, and void of life.");
+        tell("The ");
+        await DPRINT(LION_CAGE);
+        tell(" is still, and void of life.");
       }
       if (hasFlag(STAND, NDESCBIT)) {
-        tell(" There is an enclosed ", D(STAND), " in the ", D(LION_CAGE));
+        tell(" There is an enclosed ");
+        await DPRINT(STAND);
+        tell(" in the ");
+        await DPRINT(LION_CAGE);
         if (!(hasFlag(MIDWEST, TOUCHBIT))) {
           setFlag(LION_CAGE, RMUNGBIT);
           clearFlag(DEN, TOUCHBIT);
@@ -12354,7 +12980,9 @@ async function STAND_F(rarg = false) {
   } else if (isVerb(V.OPEN, V.CLOSE)) {
     return await CANT_OPEN();
   } else if (isVerb(V.EXAMINE)) {
-    tell("The ", D(STAND), " is a red three-foot-high, cylindrical pedestal. ");
+    tell("The ");
+    await DPRINT(STAND);
+    tell(" is a red three-foot-high, cylindrical pedestal. ");
     if (first(STAND)) {
       await PERFORM(V.LOOK_ON, STAND);
       return true;
@@ -12390,7 +13018,11 @@ async function STAND_F(rarg = false) {
       setFlag(CASE, TOUCHBIT);
       move(CASE, PROTAGONIST);
       g.SCORE = g.SCORE + 10;
-      tell("You tilt up the ", D(STAND), " and see a ", D(CASE), ", which you pick up.\n");
+      tell("You tilt up the ");
+      await DPRINT(STAND);
+      tell(" and see a ");
+      await DPRINT(CASE);
+      tell(", which you pick up.\n");
       return true;
     }
   } else if (isVerb(V.PUT) && (g.PRSI == STAND)) {
@@ -12428,7 +13060,9 @@ async function NIMROD_F() {
     await TALK_TO_LION();
     return await STOP();
   } else if (isVerb(V.SEARCH, V.RUB, V.PUSH)) {
-    tell("As ", D(HANDS), " approaches, the lion backs you away with a head-bobbing roar.\n");
+    tell("As ");
+    await DPRINT(HANDS);
+    tell(" approaches, the lion backs you away with a head-bobbing roar.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     if ((loc(MEAT) == DEN) || (g.HERE == RING) || ((loc(NIMROD) == CHUTE) && (g.ELSIE_COUNTER < 7))) {
@@ -12463,7 +13097,8 @@ async function NIMROD_F() {
     if (await WHIP_HOLD()) {
       return true;
     } else {
-      tell("Following the whip's backlash, the ", D(NIMROD));
+      tell("Following the whip's backlash, the ");
+      await DPRINT(NIMROD);
       (await JIGS_UP(5, " makes a powerful leap toward you, its full weight bowling you over."));
       return true;
     }
@@ -12479,9 +13114,9 @@ async function FEED_LION(to_nimrod$ = false) {
   g.ELSIE_COUNTER = 0;
   tell("The ");
   if (to_nimrod$) {
-    tell(D(NIMROD));
+    await DPRINT(NIMROD);
   } else {
-    tell(D(ELSIE));
+    await DPRINT(ELSIE);
   }
   enable(await QUEUE(I_LION.id, 2));
   tell(" jaunts over to the meat and pounces on it, and now the other beast joins in on the feast, each lion occasionally peering up at you.\n");
@@ -12500,7 +13135,9 @@ async function ELSIE_F() {
     await TALK_TO_LION();
     return await STOP();
   } else if (isVerb(V.RUB, V.SEARCH, V.PUSH)) {
-    tell("An ominous, deep-sounding purr from the ", D(ELSIE), " keeps you away.\n");
+    tell("An ominous, deep-sounding purr from the ");
+    await DPRINT(ELSIE);
+    tell(" keeps you away.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     if ((!(g.ELSIE_COUNTER == 0) && (g.HERE == DEN)) || (g.HERE == RING)) {
@@ -12532,13 +13169,19 @@ async function ELSIE_F() {
     } else {
       g.ELSIE_COUNTER = g.ELSIE_COUNTER + 1;
       if (g.ELSIE_COUNTER == 1) {
-        tell("As the whip cracks just inches above the ", D(ELSIE), "'s hide, the puzzled animal scratches to a halt in front of the grate. Leaning back on its haunches, the lion flexes its forepaws.\n");
+        tell("As the whip cracks just inches above the ");
+        await DPRINT(ELSIE);
+        tell("'s hide, the puzzled animal scratches to a halt in front of the grate. Leaning back on its haunches, the lion flexes its forepaws.\n");
         return true;
       } else if (g.ELSIE_COUNTER == 2) {
         tell("\"Snap!\" The lion performs an obedient roll-over, flecking its hide with sawdust.\n");
         return true;
       } else if (g.ELSIE_COUNTER == 3) {
-        tell("The ", D(ELSIE), " cowers, does a couple of nervous pirouettes, then jaunts off to the side of the ", D(LION_CAGE), " where it hunkers down and lets out a huge yawn.\n");
+        tell("The ");
+        await DPRINT(ELSIE);
+        tell(" cowers, does a couple of nervous pirouettes, then jaunts off to the side of the ");
+        await DPRINT(LION_CAGE);
+        tell(" where it hunkers down and lets out a huge yawn.\n");
         return true;
       } else {
         return await BLIND_SIDE();
@@ -12563,7 +13206,13 @@ async function LION_NAME_F() {
     } else {
       tell("B");
     }
-    tell("ecause you were outside the ", D(BIGTOP), " stuck waiting in line when the lions were introduced, you're not certain who is who. You'll have to refer to each as the ", D(NIMROD), " or the ", D(ELSIE), ".\n");
+    tell("ecause you were outside the ");
+    await DPRINT(BIGTOP);
+    tell(" stuck waiting in line when the lions were introduced, you're not certain who is who. You'll have to refer to each as the ");
+    await DPRINT(NIMROD);
+    tell(" or the ");
+    await DPRINT(ELSIE);
+    tell(".\n");
     return await STOP();
   }
 }
@@ -12573,7 +13222,9 @@ async function MEAT_F() {
     tell("You'd");
     return await TELL_WITHDRAW_STUMP(true);
   } else if (isVerb(V.EAT)) {
-    tell("Just looking at the ", D(MEAT), " makes you lose your appetite, if not your lunch.\n");
+    tell("Just looking at the ");
+    await DPRINT(MEAT);
+    tell(" makes you lose your appetite, if not your lunch.\n");
     return true;
   } else if (isVerb(V.DROP, V.THROW) && (g.PRSO == MEAT) && (g.HERE == DEN) && (loc(NIMROD) == g.HERE)) {
     if (g.PRSI) {
@@ -12619,7 +13270,8 @@ async function BUCKET_F() {
     } else {
       tell("contains");
       if (full$) {
-        tell(" a limpid pool of ", D(WATER));
+        tell(" a limpid pool of ");
+        await DPRINT(WATER);
       } else {
         await PRINT_CONTENTS(BUCKET);
       }
@@ -12665,7 +13317,9 @@ async function EMPTY_BUCKET() {
       return true;
     } else {
       if (next(obj)) {
-        tell("The contents of the ", D(BUCKET), " fall");
+        tell("The contents of the ");
+        await DPRINT(BUCKET);
+        tell(" fall");
       } else {
         tell("Okay,");
         await ARTICLE(obj, true);
@@ -12720,7 +13374,9 @@ async function WATER_F() {
           tell(" sidesteps your splashing. ");
         }
       }
-      tell("The ", D(WATER), " explodes into a zillion sparkling droplets that immediately evaporate");
+      tell("The ");
+      await DPRINT(WATER);
+      tell(" explodes into a zillion sparkling droplets that immediately evaporate");
       tell(S(g.PERIOD));
       return true;
     }
@@ -12760,17 +13416,29 @@ async function LION_DOOR_F() {
 
 async function CON_AREA_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This area of matted-down crabgrass lies between the vaulted ", D(BIGTOP), " entrance to the north and the enticements of the midway to the east, where a ", D(BANNER), " hangs crookedly above a ", D(TURNSTILE), ". There is a ", D(FOUNTAIN), " near the side wall of the tent. ");
+    tell("This area of matted-down crabgrass lies between the vaulted ");
+    await DPRINT(BIGTOP);
+    tell(" entrance to the north and the enticements of the midway to the east, where a ");
+    await DPRINT(BANNER);
+    tell(" hangs crookedly above a ");
+    await DPRINT(TURNSTILE);
+    tell(". There is a ");
+    await DPRINT(FOUNTAIN);
+    tell(" near the side wall of the tent. ");
     if (!g.DREAMING) {
       tell("You can enter the night to the west and south.");
     } else {
       tell("\n\nStretching away from a small concession stand ");
       if (loc(SHORT) == g.HERE) {
-        tell("are a ", D(SHORT), " and");
+        tell("are a ");
+        await DPRINT(SHORT);
+        tell(" and");
       } else {
         tell("is");
       }
-      tell(" a ", D(LONG), " of suckers.");
+      tell(" a ");
+      await DPRINT(LONG);
+      tell(" of suckers.");
     }
     return crlf();
   } else if (rarg == M_ENTER) {
@@ -12811,7 +13479,11 @@ async function CON_AREA_F(rarg) {
 async function MONKEY_ACTS$() {
   let $1;
   if ((loc(MONKEY) == PROTAGONIST) && prob(60)) {
-    tell("\nThe ", D(MONKEY), " on ", D(BACK), " ");
+    tell("\nThe ");
+    await DPRINT(MONKEY);
+    tell(" on ");
+    await DPRINT(BACK);
+    tell(" ");
     $1 = await PICK_ONE(g.MONKEYS);
     tell(S($1));
     tell(S(g.PERIOD));
@@ -12855,7 +13527,11 @@ async function LONG_F(rarg = false) {
     } else if (isVerb(V.WALK)) {
       return await OUT_OF_FIRST(LONG);
     } else if ((loc(SHORT) == CON_AREA) && !(loc(TEAM) == CON_AREA) && isVerb(V.WAIT)) {
-      tell("Time itself, let alone the ", D(LONG), ", has ", D(GROUND), " to an agonizing halt.\n");
+      tell("Time itself, let alone the ");
+      await DPRINT(LONG);
+      tell(", has ");
+      await DPRINT(GROUND);
+      tell(" to an agonizing halt.\n");
       g.CLOCK_WAIT = true;
       return true;
     } else {
@@ -12901,7 +13577,9 @@ async function LINES_F() {
 async function GET_OUT_OF_LINE$(line) {
   if (isVerb(V.DISEMBARK) && (g.P_PRSA_WORD == W.GET) && (await IS_NOUN$(W.LINE)) && (get(g.P_ADJW, 0) == 0) && !(hasFlag(SHORT, RMUNGBIT))) {
     setFlag(SHORT, RMUNGBIT);
-    tell("You begin ranting and raving and throwing a tantrum and all of those things attendant upon someone getting way out of line. You feel better, but it doesn't advance the ", D(line), ".\n");
+    tell("You begin ranting and raving and throwing a tantrum and all of those things attendant upon someone getting way out of line. You feel better, but it doesn't advance the ");
+    await DPRINT(line);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -12934,7 +13612,9 @@ async function I_BAD_LUCK() {
     move(SHORT, CON_AREA);
     g.LINE_COUNTER = 1;
     enable(await QUEUE(I_BAD_LUCK.id, -1));
-    tell("\nRight next to the ", D(LONG), " a much shorter line begins to form.\n");
+    tell("\nRight next to the ");
+    await DPRINT(LONG);
+    tell(" a much shorter line begins to form.\n");
     return true;
   } else if ((g.LINE_COUNTER == 1) && (loc(PROTAGONIST) == SHORT)) {
     return g.LINE_COUNTER = 2;
@@ -12960,7 +13640,9 @@ async function I_BAD_LUCK() {
     tell(" the ", S(get(g.PLAYERS, g.PLAYER_NUM)), ".\n");
     if ((g.PLAYER_NUM == 5) && !(hasFlag(CON_STAND, RMUNGBIT))) {
       setFlag(CON_STAND, RMUNGBIT);
-      tell("\nOut of the ", D(CORNER), " of your eye, you see the line you first entered suddenly kicking into gear and really begin moving.\n");
+      tell("\nOut of the ");
+      await DPRINT(CORNER);
+      tell(" of your eye, you see the line you first entered suddenly kicking into gear and really begin moving.\n");
     }
     return true;
   } else if ((loc(PROTAGONIST) == g.HERE) && (g.LINE_COUNTER == 4)) {
@@ -12997,7 +13679,11 @@ async function ENTER_LINE(win$ = false) {
     move(PROTAGONIST, g.HERE);
     move(BANANA, PROTAGONIST);
     g.POCKET_CHANGE = g.POCKET_CHANGE - 375;
-    tell("the ", D(SHORT), ". Steaming to the front of the line, you get a ", D(BANANA), " pushed at you and are whisked to the side before you can even count your change.");
+    tell("the ");
+    await DPRINT(SHORT);
+    tell(". Steaming to the front of the line, you get a ");
+    await DPRINT(BANANA);
+    tell(" pushed at you and are whisked to the side before you can even count your change.");
   } else {
     tell("your chosen line, bunching in ahead of you and making it the longer of the two.");
   }
@@ -13028,7 +13714,9 @@ async function GEN_BAR() {
 
 async function BANANA_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("The ", D(BANANA), " is ");
+    tell("The ");
+    await DPRINT(BANANA);
+    tell(" is ");
     if (!(hasFlag(BANANA, RMUNGBIT))) {
       tell("entirely ");
     }
@@ -13039,7 +13727,11 @@ async function BANANA_F() {
     return true;
   } else if (isVerb(V.MUNG, V.REMOVE, V.TASTE) || (isVerb(V.TAKE) && g.PRSI)) {
     setFlag(BANANA, RMUNGBIT);
-    tell("As the ", D(MONKEY), " on ", D(BACK), " catches a whiff of the tangy fruit beneath the chocolate, you feel its primal heart begin to race and, on the back of your neck, its warm breath quicken.\n");
+    tell("As the ");
+    await DPRINT(MONKEY);
+    tell(" on ");
+    await DPRINT(BACK);
+    tell(" catches a whiff of the tangy fruit beneath the chocolate, you feel its primal heart begin to race and, on the back of your neck, its warm breath quicken.\n");
     if (!(await HELD$(BANANA))) {
       crlf();
       move(BANANA, PROTAGONIST);
@@ -13058,7 +13750,11 @@ async function BANANA_F() {
   } else if (isVerb(V.DROP, V.THROW) && hasFlag(BANANA, RMUNGBIT)) {
     move(MONKEY, LOCAL_GLOBALS);
     move(BANANA, LOCAL_GLOBALS);
-    tell("Following its jungle appetite, the ", D(MONKEY), " dismounts ", D(BACK), ", pounces on the banana, and saunters away with it.\n");
+    tell("Following its jungle appetite, the ");
+    await DPRINT(MONKEY);
+    tell(" dismounts ");
+    await DPRINT(BACK);
+    tell(", pounces on the banana, and saunters away with it.\n");
     return true;
   } else {
     return false;
@@ -13158,7 +13854,9 @@ async function CON_STAND_F() {
 
 async function CONCESSIONAIRE_F() {
   if ((await TALKING_TO$(CONCESSIONAIRE)) || isVerb(V.BUY)) {
-    tell("You're not close enough to the ", D(CONCESSIONAIRE), ".\n");
+    tell("You're not close enough to the ");
+    await DPRINT(CONCESSIONAIRE);
+    tell(".\n");
     return await STOP();
   } else if (isVerb(V.WALK_TO) && (g.HERE == CON_AREA) && g.DREAMING) {
     await PERFORM(V.WALK_TO, CON_STAND);
@@ -13170,7 +13868,9 @@ async function CONCESSIONAIRE_F() {
 
 async function FOUNTAIN_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("It's your standard ", D(FOUNTAIN), ", with a button next to the spout.\n");
+    tell("It's your standard ");
+    await DPRINT(FOUNTAIN);
+    tell(", with a button next to the spout.\n");
     return true;
   } else if (isVerb(V.DRINK_FROM)) {
     await PERFORM(V.PUSH, BUTTON);
@@ -13220,7 +13920,9 @@ async function GLOBAL_WATER_F() {
 
 async function BACK_YARD_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("You're standing in front of the ", D(TURNSTILE), " entrance to a fenced-in area, which is south. To the west stands a droopy tent, and the field continues north and east.\n");
+    tell("You're standing in front of the ");
+    await DPRINT(TURNSTILE);
+    tell(" entrance to a fenced-in area, which is south. To the west stands a droopy tent, and the field continues north and east.\n");
     return true;
   } else if ((rarg == M_ENTER) && (g.CLOWN_EXIT_COUNTER == 0) && !(await RUNNING$(I_BOOST.id)) && !(hasFlag(BURNED_CAGE, RMUNGBIT))) {
     setFlag(BURNED_CAGE, RMUNGBIT);
@@ -13243,7 +13945,9 @@ async function BACK_YARD_F(rarg) {
     return true;
   } else if ((rarg == M_END) && (loc(GIRL) == PROTAGONIST) && !g.GUARD_KNEW) {
     g.GUARD_KNEW = true;
-    tell("\n", S(g.GUARD_CALLS), "\"Nice going, towner. It just shows you what can be accomplished when you start out the evening with a little ", D(HELIUM), ", eh?\n");
+    tell("\n", S(g.GUARD_CALLS), "\"Nice going, towner. It just shows you what can be accomplished when you start out the evening with a little ");
+    await DPRINT(HELIUM);
+    tell(", eh?\n");
     return true;
   } else {
     return false;
@@ -13269,17 +13973,27 @@ async function I_CLOWN_EXIT() {
     if (!g.HELPED_THUMB) {
       g.CLOWN_EXIT_COUNTER = 7;
     }
-    tell("\nThe tall clown, whom you now recognize as Chuckles, barks a hello into the cage. You hear an electronic buzz from the ", D(TURNSTILE), " and Chuckles passes through.");
+    tell("\nThe tall clown, whom you now recognize as Chuckles, barks a hello into the cage. You hear an electronic buzz from the ");
+    await DPRINT(TURNSTILE);
+    tell(" and Chuckles passes through.");
   } else if ((g.CLOWN_EXIT_COUNTER == 3) && not_holding) {
-    tell("\n", D(THUMB), " performs an impromptu handstand.");
+    tell("\n");
+    await DPRINT(THUMB);
+    tell(" performs an impromptu handstand.");
   } else if ((g.CLOWN_EXIT_COUNTER == 4) && not_holding) {
-    tell("\n", D(THUMB), " belts out a few verses of a Russian folk song in his high-pitched, squeaky voice while standing on his head.");
+    tell("\n");
+    await DPRINT(THUMB);
+    tell(" belts out a few verses of a Russian folk song in his high-pitched, squeaky voice while standing on his head.");
   } else if ((g.CLOWN_EXIT_COUNTER == 5) && not_holding) {
     tell("\nThe midget performer does several cartwheels in a figure-eight pattern around the grass field.");
   } else if ((g.CLOWN_EXIT_COUNTER == 6) && not_holding) {
-    tell("\nIn front of you, ", D(THUMB), " terminates his acrobatics on one knee with a grand gesture of his small arms.");
+    tell("\nIn front of you, ");
+    await DPRINT(THUMB);
+    tell(" terminates his acrobatics on one knee with a grand gesture of his small arms.");
   } else if ((g.CLOWN_EXIT_COUNTER == 7) && not_holding) {
-    tell("\n", D(THUMB), " is pausing to rest.");
+    tell("\n");
+    await DPRINT(THUMB);
+    tell(" is pausing to rest.");
   } else if (g.CLOWN_EXIT_COUNTER == 8) {
     disable(await INT(I_CLOWN_EXIT.id));
     if (g.HERE == BACK_YARD) {
@@ -13288,7 +14002,12 @@ async function I_CLOWN_EXIT() {
       } else {
         crlf();
       }
-      tell(D(THUMB), ", in his squeaky and high-pitched voice, says \"Hello Harry\" toward the ", D(BURNED_CAGE), ". You hear a buzzing sound from the ", D(TURNSTILE), " as the midget reaches up to its lowest rung and passes through ...\n");
+      await DPRINT(THUMB);
+      tell(", in his squeaky and high-pitched voice, says \"Hello Harry\" toward the ");
+      await DPRINT(BURNED_CAGE);
+      tell(". You hear a buzzing sound from the ");
+      await DPRINT(TURNSTILE);
+      tell(" as the midget reaches up to its lowest rung and passes through ...\n");
     }
     g.THUMB_THRU = true;
     disable(await INT(I_TURNSTILE.id));
@@ -13307,16 +14026,20 @@ async function I_CLOWN_EXIT() {
 }
 
 async function CHUTE_DESC(x = 0) {
-  tell("About waist-high, a barred passage for wild animals extends several yards out from the ", D(BIGTOP));
+  tell("About waist-high, a barred passage for wild animals extends several yards out from the ");
+  await DPRINT(BIGTOP);
   if (loc(NIMROD) == CHUTE) {
     if (!(loc(MEAT) == CHUTE)) {
-      tell(". The ", D(CHUTE), " is being patrolled by two large ");
+      tell(". The ");
+      await DPRINT(CHUTE);
+      tell(" is being patrolled by two large ");
       if (!(hasFlag(GRATE, OPENBIT))) {
         tell("and bewildered ");
       }
       tell("cats");
     } else if (loc(MEAT) == CHUTE) {
-      tell(". Inside the chute, Nimrod and Elsie are loudly digging their chops into the ", D(MEAT));
+      tell(". Inside the chute, Nimrod and Elsie are loudly digging their chops into the ");
+      await DPRINT(MEAT);
     }
   }
   tell(".");
@@ -13334,7 +14057,8 @@ async function CHUTE_F(rarg = false) {
       } else {
         tell("strolling the length of");
       }
-      tell(" the ", D(CHUTE));
+      tell(" the ");
+      await DPRINT(CHUTE);
       await MOVE_LIONS(DUMMY_OBJECT);
       if (loc(MEAT) == CHUTE) {
         move(MEAT, DUMMY_OBJECT);
@@ -13355,10 +14079,14 @@ async function CHUTE_F(rarg = false) {
   } else if (isVerb(V.BOARD, V.THROUGH, V.ENTER)) {
     return await TELL_CLOSELY_SPACED(true);
   } else if (isVerb(V.FOLLOW)) {
-    tell("It leads right into the ", D(BIGTOP), ".\n");
+    tell("It leads right into the ");
+    await DPRINT(BIGTOP);
+    tell(".\n");
     return true;
   } else if (isVerb(V.OPEN, V.CLOSE)) {
-    tell("The rusty grate is inside the ", D(BIGTOP), ".\n");
+    tell("The rusty grate is inside the ");
+    await DPRINT(BIGTOP);
+    tell(".\n");
     return true;
   } else if (isVerb(V.WALK_AROUND)) {
     await PERFORM(V.LOOK_BEHIND, CHUTE);
@@ -13375,7 +14103,9 @@ async function CHUTE_F(rarg = false) {
       move(g.PRSO, CHUTE);
       tell("You slip");
       await ARTICLE(g.PRSO, true);
-      tell(" into the ", D(CHUTE), ".\n");
+      tell(" into the ");
+      await DPRINT(CHUTE);
+      tell(".\n");
       return true;
     }
   } else if (isVerb(V.REACH_IN) && (loc(NIMROD) == CHUTE)) {
@@ -13389,7 +14119,9 @@ async function CHUTE_F(rarg = false) {
 async function IN_CHUTE() {
   if (isVerb(V.TAKE, V.MOVE, V.RUB) && (g.HERE == BESIDE_BIGTOP)) {
     if (loc(ELSIE) == CHUTE) {
-      tell("If you reached into the ", D(CHUTE), " you'd");
+      tell("If you reached into the ");
+      await DPRINT(CHUTE);
+      tell(" you'd");
       return await TELL_WITHDRAW_STUMP(true);
     } else if (isVerb(V.TAKE) && (g.PRSO == MEAT) && hasFlag(GRATE, OPENBIT)) {
       return await CANT_REACH(MEAT);
@@ -13402,7 +14134,8 @@ async function IN_CHUTE() {
 }
 
 async function TELL_WITHDRAW_STUMP(prso$ = false) {
-  tell(" likely withdraw a stump instead of ", D(HANDS));
+  tell(" likely withdraw a stump instead of ");
+  await DPRINT(HANDS);
   if (prso$) {
     tell(" or");
     await ARTICLE(g.PRSO, true);
@@ -13428,7 +14161,9 @@ async function GRATE_F() {
       crlf();
       return true;
     } else {
-      tell("The ", D(GRATE), " is closed.\n");
+      tell("The ");
+      await DPRINT(GRATE);
+      tell(" is closed.\n");
       return true;
     }
   } else if ((!(hasFlag(GRATE, OPENBIT)) && isVerb(V.OPEN, V.RAISE, V.PUSH)) || (hasFlag(GRATE, OPENBIT) && isVerb(V.CLOSE, V.LOWER, V.PUSH))) {
@@ -13449,13 +14184,21 @@ async function GRATE_F() {
       tell("Like sentries on guard, the pacing lions prevent this.\n");
       return true;
     } else if (g.ELSIE_COUNTER < 3) {
-      tell("The ", D(ELSIE), " is blocking access to the ", D(GRATE), ".\n");
+      tell("The ");
+      await DPRINT(ELSIE);
+      tell(" is blocking access to the ");
+      await DPRINT(GRATE);
+      tell(".\n");
       return true;
     } else if (!(await HELD$(STOOL))) {
-      tell("You're unable to get close enough without the ", D(NIMROD), " getting too close to you.\n");
+      tell("You're unable to get close enough without the ");
+      await DPRINT(NIMROD);
+      tell(" getting too close to you.\n");
       return true;
     } else {
-      tell("Using the stool as a barrier against the ", D(NIMROD), ", you're able to reach it. ");
+      tell("Using the stool as a barrier against the ");
+      await DPRINT(NIMROD);
+      tell(", you're able to reach it. ");
       return await OPEN_GRATE();
     }
   } else if (isVerb(V.LOOK_INSIDE, V.EXAMINE)) {
@@ -13465,7 +14208,9 @@ async function GRATE_F() {
     } else {
       tell("closed");
     }
-    tell(" ", D(GRATE), " leads to a passage going away from the round cage. ", S(g.YOU_SEE), " that it is empty up to the point where it extends outside of the big top.\n");
+    tell(" ");
+    await DPRINT(GRATE);
+    tell(" leads to a passage going away from the round cage. ", S(g.YOU_SEE), " that it is empty up to the point where it extends outside of the big top.\n");
     return true;
   } else if (((await TOUCHING$(GRATE)) || isVerb(V.WALK_TO, V.BOARD, V.THROUGH)) && (loc(ELSIE) == g.HERE) && !(g.ELSIE_COUNTER == 3) && !(loc(MEAT) == g.HERE)) {
     tell("You can't get over to the grate.\n");
@@ -13488,11 +14233,14 @@ async function OPEN_GRATE(eating_meat$ = false) {
     if (g.ELSIE_COUNTER == 0) {
       tell("lions rotate");
     } else {
-      tell(D(NIMROD), " rotates");
+      await DPRINT(NIMROD);
+      tell(" rotates");
     }
     tell(" around the lump of meat, continuing to feed while watching you. ");
   }
-  tell("The ", D(GRATE), " slides ");
+  tell("The ");
+  await DPRINT(GRATE);
+  tell(" slides ");
   if (isVerb(V.OPEN, V.RAISE)) {
     setFlag(GRATE, OPENBIT);
     tell("up, jamming into place. ");
@@ -13502,14 +14250,18 @@ async function OPEN_GRATE(eating_meat$ = false) {
     return crlf();
   } else {
     clearFlag(GRATE, OPENBIT);
-    tell("down to the ", D(GROUND), ".\n");
+    tell("down to the ");
+    await DPRINT(GROUND);
+    tell(".\n");
     return true;
   }
 }
 
 async function BESIDE_BIGTOP_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("You're standing next to the ", D(BIGTOP), ", which is gently flapping in the warm breeze.\n");
+    tell("You're standing next to the ");
+    await DPRINT(BIGTOP);
+    tell(", which is gently flapping in the warm breeze.\n");
     return true;
   } else {
     return false;
@@ -13526,7 +14278,8 @@ async function NEAR_WAGON_F(rarg) {
     }
     tell(" to the east");
     if (hasFlag(LADDER, RMUNGBIT)) {
-      tell(". Attached to the rear of the trailer is a step", D(LADDER));
+      tell(". Attached to the rear of the trailer is a step");
+      await DPRINT(LADDER);
     }
     tell(". In dark panorama, the field continues north and west -- and south, where a large banner has been erected.\n");
     if (hasFlag(LADDER, RMUNGBIT)) {
@@ -13554,7 +14307,9 @@ async function NEAR_WAGON_F(rarg) {
 
 async function NOTICE_LADDER() {
   setFlag(LADDER, RMUNGBIT);
-  tell("ou come to the ", D(WAGON), " and notice a stepladder attached to its rear.\n\n");
+  tell("ou come to the ");
+  await DPRINT(WAGON);
+  tell(" and notice a stepladder attached to its rear.\n\n");
   return true;
 }
 
@@ -13563,7 +14318,9 @@ async function EGRESS_EXIT() {
   if (g.EGRESS_C == 1) {
     g.AWAITING_REPLY = 10;
     enable(await QUEUE(I_ARGUMENT.id, 2));
-    tell("Are you sure you're mentally and otherwise prepared to meet up with an ", D(EGRESS), "?\n");
+    tell("Are you sure you're mentally and otherwise prepared to meet up with an ");
+    await DPRINT(EGRESS);
+    tell("?\n");
     return false;
   } else if (g.EGRESS_C == 2) {
     g.AWAITING_REPLY = 11;
@@ -13574,7 +14331,9 @@ async function EGRESS_EXIT() {
     disable(await INT(I_ARGUMENT.id));
     g.AWAITING_REPLY = 12;
     enable(await QUEUE(I_REPLY.id, 2));
-    tell("Alright, so you know all about ", D(EGRESS), "es. But do you really want to leave the circus in all of its mystery and all of its pageantry behind?\n");
+    tell("Alright, so you know all about ");
+    await DPRINT(EGRESS);
+    tell("es. But do you really want to leave the circus in all of its mystery and all of its pageantry behind?\n");
     return false;
   } else if (g.EGRESS_C > 3) {
     disable(await INT(I_ARGUMENT.id));
@@ -13607,7 +14366,8 @@ async function TELL_BULL_HOLE() {
 
 async function ON_WAGON_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("You are on the wagon, a condition in which you're not likely to find the detective. The aluminum roofing gives way slightly underfoot. You observe a ", D(PANEL));
+    tell("You are on the wagon, a condition in which you're not likely to find the detective. The aluminum roofing gives way slightly underfoot. You observe a ");
+    await DPRINT(PANEL);
     if (hasFlag(PANEL, OPENBIT)) {
       tell(", which is open");
     }
@@ -13621,7 +14381,8 @@ async function ON_WAGON_F(rarg) {
       return false;
     }
   } else if ((rarg == M_BEG) && (loc(MUNRAB) == g.HERE) && hasFlag(PANEL, OPENBIT) && ((isVerb(V.LEAP) && !g.PRSO) || (isVerb(V.LEAP, V.KICK, V.KILL) && (g.PRSO == WAGON)))) {
-    tell(D(MUNRAB), " must have pretty bad hearing, since he doesn't seem to notice the noise coming from the roof.\n");
+    await DPRINT(MUNRAB);
+    tell(" must have pretty bad hearing, since he doesn't seem to notice the noise coming from the roof.\n");
     return true;
   } else {
     return false;
@@ -13630,10 +14391,13 @@ async function ON_WAGON_F(rarg) {
 
 async function IN_PANEL() {
   if (!(hasFlag(PANEL, OPENBIT))) {
-    tell("The ", D(PANEL), " is closed.\n");
+    tell("The ");
+    await DPRINT(PANEL);
+    tell(" is closed.\n");
     return false;
   } else if (loc(MUNRAB) == ON_WAGON) {
-    tell("Aghast by your dropping in on him like this, ", D(MUNRAB));
+    tell("Aghast by your dropping in on him like this, ");
+    await DPRINT(MUNRAB);
     (await JIGS_UP(3, " grabs the nearest weapon-like object, which happens to be a gold-plated letter opener, and goes for the throat."));
     return false;
   } else {
@@ -13644,14 +14408,17 @@ async function IN_PANEL() {
 
 async function WAGON_F() {
   if (isVerb(V.EXAMINE, V.READ) && (g.HERE == NEAR_WAGON)) {
-    tell("The familiar logo for \"The Travelling Circus That Time Forgot, Inc.\" is emblazoned across the long side of the ", D(WAGON));
+    tell("The familiar logo for \"The Travelling Circus That Time Forgot, Inc.\" is emblazoned across the long side of the ");
+    await DPRINT(WAGON);
     if (await IS_NOUN$(W.LOGO)) {
       tell(S(g.PERIOD));
       return true;
     }
     tell(". The ");
     await OPEN_CLOSED(OFFICE_DOOR);
-    tell(" ", D(OFFICE_DOOR), " is at the east");
+    tell(" ");
+    await DPRINT(OFFICE_DOOR);
+    tell(" is at the east");
     if (hasFlag(LADDER, RMUNGBIT)) {
       tell(", and there's");
       await TELL_LADDER();
@@ -13679,7 +14446,9 @@ async function WAGON_F() {
       tell("You see");
       await TELL_LADDER();
     } else {
-      tell("A ", D(FENCE), " prevents this");
+      tell("A ");
+      await DPRINT(FENCE);
+      tell(" prevents this");
     }
     tell(S(g.PERIOD));
     return true;
@@ -13733,9 +14502,13 @@ async function CRANK_F() {
   if (isVerb(V.SET) && !g.PRSI) {
     tell("The crank is rotated ");
     if (hasFlag(PANEL, RMUNGBIT)) {
-      tell("but the ", D(PANEL), " doesn't open.");
+      tell("but the ");
+      await DPRINT(PANEL);
+      tell(" doesn't open.");
     } else {
-      tell("and the ", D(PANEL), " gradually slides ");
+      tell("and the ");
+      await DPRINT(PANEL);
+      tell(" gradually slides ");
       if (hasFlag(PANEL, OPENBIT)) {
         clearFlag(PANEL, OPENBIT);
         tell("closed.");
@@ -13760,7 +14533,9 @@ async function PANEL_F() {
     } else {
       tell(S(g.YOU_SEE));
       if (loc(MUNRAB) == ON_WAGON) {
-        tell(" the top view of ", D(MUNRAB), "'s schlock of silvery blow-dried hair. He is busy at his desk.");
+        tell(" the top view of ");
+        await DPRINT(MUNRAB);
+        tell("'s schlock of silvery blow-dried hair. He is busy at his desk.");
       } else {
         tell(" an unoccupied office.");
       }
@@ -13782,13 +14557,23 @@ async function PANEL_F() {
 
 async function OFFICE_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("This is ", D(MUNRAB), "'s plush inner sanctum, containing all the furnishings of the well-appointed, modern office -- including a shiny, expansive ", D(DESK), ". Along one ", D(WALLS), ", below some framed sheepskin, runs a ", D(BOOKS), ".\n\nThe ");
+    tell("This is ");
+    await DPRINT(MUNRAB);
+    tell("'s plush inner sanctum, containing all the furnishings of the well-appointed, modern office -- including a shiny, expansive ");
+    await DPRINT(DESK);
+    tell(". Along one ");
+    await DPRINT(WALLS);
+    tell(", below some framed sheepskin, runs a ");
+    await DPRINT(BOOKS);
+    tell(".\n\nThe ");
     if (hasFlag(OFFICE_DOOR, OPENBIT)) {
       tell("open");
     } else {
       tell("closed");
     }
-    tell(" ", D(OFFICE_DOOR), " on the west wall appears lockable without a key.\n");
+    tell(" ");
+    await DPRINT(OFFICE_DOOR);
+    tell(" on the west wall appears lockable without a key.\n");
     return true;
   } else if ((rarg == M_ENTER) && !(hasFlag(OFFICE, TOUCHBIT))) {
     g.SCORE = g.SCORE + 10;
@@ -13837,7 +14622,9 @@ async function FENCE_F() {
   } else if (isVerb(V.EXAMINE) && !(loc(BULL) == MEN) && (g.HERE == MEN || g.HERE == NEAR_WAGON)) {
     return await TELL_BULL_HOLE();
   } else if (isVerb(V.CLIMB_UP, V.CLIMB_FOO, V.CLIMB_ON, V.CLIMB_OVER)) {
-    tell("Though hastily constructed, the ", D(FENCE), " succeeds as a barrier.\n");
+    tell("Though hastily constructed, the ");
+    await DPRINT(FENCE);
+    tell(" succeeds as a barrier.\n");
     return true;
   } else if (isVerb(V.THROUGH, V.WALK_TO, V.ENTER)) {
     if (g.HERE == MEN) {
@@ -13875,7 +14662,9 @@ async function EDDIE_F() {
       if (!g.WON_JOEY && (await JOEY_SCARED$())) {
         return M_FATAL;
       }
-      tell("To your words ", D(JOEY), " responds not.\n");
+      tell("To your words ");
+      await DPRINT(JOEY);
+      tell(" responds not.\n");
       return await STOP();
     } else {
       g.JOEY_NAME_KNOWN = true;
@@ -13883,7 +14672,10 @@ async function EDDIE_F() {
       if (!g.WON_JOEY && (await JOEY_SCARED$())) {
         return M_FATAL;
       }
-      tell(D(JOEY), " snorts at the sound of the name and continues wiping the ", D(TAMER_TRAILER), ".\n");
+      await DPRINT(JOEY);
+      tell(" snorts at the sound of the name and continues wiping the ");
+      await DPRINT(TAMER_TRAILER);
+      tell(".\n");
       return await STOP();
     }
   } else {
@@ -13911,7 +14703,9 @@ async function MEMOS_F() {
     tell("This reveals nothing new.\n");
     return true;
   } else if (isVerb(V.READ, V.EXAMINE)) {
-    tell("The handwriting is frantic and mostly illegible. From what you can make out, the memos, all dated before today, contain threats and expressions of rage from ", D(MUNRAB), " toward most of his circus employees.\n");
+    tell("The handwriting is frantic and mostly illegible. From what you can make out, the memos, all dated before today, contain threats and expressions of rage from ");
+    await DPRINT(MUNRAB);
+    tell(" toward most of his circus employees.\n");
     return true;
   } else if (isVerb(V.TAKE)) {
     enable(await QUEUE(I_REPLY.id, 2));
@@ -13930,7 +14724,9 @@ async function I_OFFICE() {
   }
   g.OFFICE_C = g.OFFICE_C + 1;
   if (g.OFFICE_C == 1) {
-    tell("\nBelow you, the ", D(OFFICE_DOOR), " swings open and then closed.\n");
+    tell("\nBelow you, the ");
+    await DPRINT(OFFICE_DOOR);
+    tell(" swings open and then closed.\n");
     return true;
   } else if (g.OFFICE_C == 4) {
     if (g.HERE == OFFICE) {
@@ -13975,13 +14771,20 @@ async function MUNRAB_ENTERS_OFFICE(down_ladder$ = false) {
   clearFlag(DESK, RMUNGBIT);
   setFlag(PANEL, RMUNGBIT);
   if (down_ladder$) {
-    tell(D(MUNRAB), " reappears out of the darkness and quickly enters the ", D(WAGON), " just as you scramble down the ladder.\n\n");
+    await DPRINT(MUNRAB);
+    tell(" reappears out of the darkness and quickly enters the ");
+    await DPRINT(WAGON);
+    tell(" just as you scramble down the ladder.\n\n");
     clearFlag(PANEL, OPENBIT);
     return true;
   } else {
-    tell("\nYou can hear someone, presumably ", D(MUNRAB), ", barge into the office");
+    tell("\nYou can hear someone, presumably ");
+    await DPRINT(MUNRAB);
+    tell(", barge into the office");
     if (hasFlag(PANEL, OPENBIT)) {
-      tell(". By remote control he slides the ", D(PANEL), " closed");
+      tell(". By remote control he slides the ");
+      await DPRINT(PANEL);
+      tell(" closed");
     }
     clearFlag(PANEL, OPENBIT);
     tell(S(g.PERIOD));
@@ -13990,7 +14793,9 @@ async function MUNRAB_ENTERS_OFFICE(down_ladder$ = false) {
 }
 
 async function BARGE_OFFICE() {
-  tell("\n", D(MUNRAB), " suddenly barges into the office; he's shakily gripping a small caliber pistol. ");
+  tell("\n");
+  await DPRINT(MUNRAB);
+  tell(" suddenly barges into the office; he's shakily gripping a small caliber pistol. ");
   return (await JIGS_UP(5, "A shot rings out."));
 }
 
@@ -14012,12 +14817,15 @@ async function OFFICE_DOOR_F() {
         clearFlag(OFFICE_DOOR, LOCKEDBIT);
         move(MUNRAB, LOCAL_GLOBALS);
         enable(await QUEUE(I_OFFICE.id, -1));
-        tell("Below you ", D(MUNRAB), " very cautiously steps outside and begins poking around, closing the door behind him. He wanders into the darkness.\n");
+        tell("Below you ");
+        await DPRINT(MUNRAB);
+        tell(" very cautiously steps outside and begins poking around, closing the door behind him. He wanders into the darkness.\n");
         return true;
       } else if (!(hasFlag(OFFICE_DOOR, RMUNGBIT))) {
         setFlag(OFFICE_DOOR, RMUNGBIT);
         enable(await QUEUE(I_OFFICE.id, 4));
-        tell(D(MUNRAB), " pops his head out of his office, scowls at you for a moment, then withdraws, shutting the door.\n");
+        await DPRINT(MUNRAB);
+        tell(" pops his head out of his office, scowls at you for a moment, then withdraws, shutting the door.\n");
         return true;
       } else {
         return false;
@@ -14093,7 +14901,9 @@ async function DESK_F() {
       return await V_DIG();
     } else {
       setFlag(DESK, RMUNGBIT);
-      tell("With all your weight behind it, the desk screeches across the floor to a position under the ", D(PANEL), ".\n");
+      tell("With all your weight behind it, the desk screeches across the floor to a position under the ");
+      await DPRINT(PANEL);
+      tell(".\n");
       return true;
     }
   } else {
@@ -14109,7 +14919,9 @@ async function CHAIR_F(rarg = false) {
   } else if (isVerb(V.PUT_ON) && (g.PRSI == CHAIR)) {
     return await V_DIG();
   } else if (((g.PRSO == CHAIR) && isVerb(V.MOVE, V.PUSH)) || (isVerb(V.PUT_UNDER) && (g.PRSI == PANEL))) {
-    tell("You wouldn't be", S(g.NOT_REACH), " from the ", D(CHAIR), ".\n");
+    tell("You wouldn't be", S(g.NOT_REACH), " from the ");
+    await DPRINT(CHAIR);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -14129,9 +14941,13 @@ async function DESK_ON_WAGON_F() {
 }
 
 async function STARTLE_MUNRAB() {
-  tell("You hesitate, fearful of startling a man who's experiencing the kind of pressure that ", D(MUNRAB), " is under. ");
+  tell("You hesitate, fearful of startling a man who's experiencing the kind of pressure that ");
+  await DPRINT(MUNRAB);
+  tell(" is under. ");
   if (hasFlag(DESK_ON_WAGON, RMUNGBIT)) {
-    tell("There must be another way of getting him out from behind his desk and drawing him out of the ", D(WAGON), ".");
+    tell("There must be another way of getting him out from behind his desk and drawing him out of the ");
+    await DPRINT(WAGON);
+    tell(".");
   }
   crlf();
   setFlag(DESK_ON_WAGON, RMUNGBIT);
@@ -14171,7 +14987,9 @@ async function BURNED_CAGE_F() {
     tell("The fire-damaged cage, perhaps once the home of some big jungle cat, has been converted into some kind of vertical booth.\n");
     return true;
   } else if (isVerb(V.OPEN, V.ENTER, V.BOARD, V.THROUGH)) {
-    tell("Your attempt merely rattles the cage, and the ", D(GUARD), " growls at you to back off.\n");
+    tell("Your attempt merely rattles the cage, and the ");
+    await DPRINT(GUARD);
+    tell(" growls at you to back off.\n");
     return true;
   } else {
     return false;
@@ -14183,7 +15001,13 @@ async function GUARD_F() {
     g.SCORE = g.SCORE + 10;
     g.SPEAK_HELIUM = true;
     enable(await QUEUE(I_TURNSTILE.id, 2));
-    tell("The sound of your high-pitched, lighter-than-air voice is startling to ", D(ME), ", but very familiar to the ", D(GUARD), ". You can hear an electromechanical buzzing sound from the ", D(TURNSTILE), ".\n");
+    tell("The sound of your high-pitched, lighter-than-air voice is startling to ");
+    await DPRINT(ME);
+    tell(", but very familiar to the ");
+    await DPRINT(GUARD);
+    tell(". You can hear an electromechanical buzzing sound from the ");
+    await DPRINT(TURNSTILE);
+    tell(".\n");
     return await STOP();
   } else if (GUARD == g.WINNER) {
     if (isVerb(V.TELL_ABOUT) && (g.PRSO == ME)) {
@@ -14225,14 +15049,20 @@ async function GUARD_F() {
   } else if (await HURT$(GUARD)) {
     return (await JIGS_UP(5, "You are suddenly skewered by a white cane honed to needle-sharpness."));
   } else if (isVerb(V.EXAMINE)) {
-    tell(S(g.YOU_SEE), " the shadowy outline of a man who's wearing a dark ", D(SUNGLASSES), ".\n");
+    tell(S(g.YOU_SEE), " the shadowy outline of a man who's wearing a dark ");
+    await DPRINT(SUNGLASSES);
+    tell(".\n");
     return true;
   } else if (isVerb(V.GIVE) && (g.PRSI == GUARD)) {
     if (g.PRSO == WHIP) {
       await PERFORM(V.ASK_ABOUT, GUARD, WHIP);
       return true;
     } else if (g.PRSO == GIRL || g.PRSO == THUMB) {
-      tell("The ", D(GUARD), " refuses ", D(g.PRSO), ".\n");
+      tell("The ");
+      await DPRINT(GUARD);
+      tell(" refuses ");
+      await DPRINT(g.PRSO);
+      tell(".\n");
       return true;
     } else if (await TRAP_SET$()) {
       tell("Harry must've smelled a rat, since he rejects your offer out of hand, thereby putting a damper on your sadistic glee.\n");
@@ -14243,7 +15073,9 @@ async function GUARD_F() {
       tell(", the guard moves his hands gently over it and says, ");
       if (g.PRSO == CASE) {
         g.GUARD_FELT_CASE = true;
-        tell("\"Oh, that's Andrew's ", D(CASE), ". He's one to steal a smoke now and then; behind Jenny's back, of course. She'd kill him if she ever found out.\"\n");
+        tell("\"Oh, that's Andrew's ");
+        await DPRINT(CASE);
+        tell(". He's one to steal a smoke now and then; behind Jenny's back, of course. She'd kill him if she ever found out.\"\n");
         return true;
       } else {
         tell("\"Feels like");
@@ -14259,12 +15091,16 @@ async function GUARD_F() {
       }
     }
   } else if (isVerb(V.SHOW) && !(g.PRSO == MUSIC || g.PRSO == RADIO || g.PRSO == HEADPHONES) && (g.PRSI == GUARD)) {
-    tell("Not surprisingly, the ", D(GUARD), " is oblivious to");
+    tell("Not surprisingly, the ");
+    await DPRINT(GUARD);
+    tell(" is oblivious to");
     await ARTICLE(g.PRSO, true);
     tell(S(g.PERIOD));
     return true;
   } else if (isVerb(V.THANK)) {
-    tell("The ", D(GUARD), " nods slowly.\n");
+    tell("The ");
+    await DPRINT(GUARD);
+    tell(" nods slowly.\n");
     return true;
   } else if (isVerb(V.HELLO)) {
     tell("\"Well, good evening to you.\"\n");
@@ -14272,29 +15108,41 @@ async function GUARD_F() {
   } else if (isVerb(V.ASK_ABOUT) && (g.PRSO == GUARD)) {
     if (g.PRSI == GIRL) {
       if (hasFlag(PROTAGONIST, RMUNGBIT)) {
-        tell("The ", D(GUARD), " remains silent.\n");
+        tell("The ");
+        await DPRINT(GUARD);
+        tell(" remains silent.\n");
       } else {
         enable(await QUEUE(I_DID.id, 2));
         g.AWAITING_REPLY = 6;
         tell("\"But you already asked me about her, right?\"\n");
       }
     } else if (g.PRSI == FAT) {
-      tell("\"Well, she's tried various diets, but then ", D(MUNRAB), " orders our ", D(JIM), " to increase the frequency of her feedings.\n");
+      tell("\"Well, she's tried various diets, but then ");
+      await DPRINT(MUNRAB);
+      tell(" orders our ");
+      await DPRINT(JIM);
+      tell(" to increase the frequency of her feedings.\n");
     } else if (g.PRSI == HYP) {
-      tell("\"", D(HYP), "? Harrumph. Don't waste your money.\"\n");
+      tell("\"");
+      await DPRINT(HYP);
+      tell("? Harrumph. Don't waste your money.\"\n");
     } else if (g.PRSI == THUMB) {
       tell("\"A very popular attraction, small but charismatic.\"\n");
     } else if (g.PRSI == TAMER) {
       tell("\"Nothing but a glory hog, and always just one step ahead of the ASPCA.\"\n");
     } else if ((g.PRSI == JOEY) && !(hasFlag(JOEY, RMUNGBIT))) {
       setFlag(JOEY, RMUNGBIT);
-      tell("\"A very accomplished performer, takes a lot of pride in his craft. Until...\" The ", D(GUARD), " stops himself.\n");
+      tell("\"A very accomplished performer, takes a lot of pride in his craft. Until...\" The ");
+      await DPRINT(GUARD);
+      tell(" stops himself.\n");
     } else if (g.PRSI == CIRCUS || g.PRSI == MUNRAB) {
       if (hasFlag(CIRCUS, RMUNGBIT)) {
         tell("\"I've given my opinion.\"\n");
       } else {
         setFlag(CIRCUS, RMUNGBIT);
-        tell("He suddenly blurts out, \"Well I can tell you this is one circus that's headed for the barn. It's that doggone ", D(MUNRAB), " and his vainglorious dreams. They're not panning out for him, and the more he puts the squeeze on all of us, the more dangerous this lot becomes.\"\n");
+        tell("He suddenly blurts out, \"Well I can tell you this is one circus that's headed for the barn. It's that doggone ");
+        await DPRINT(MUNRAB);
+        tell(" and his vainglorious dreams. They're not panning out for him, and the more he puts the squeeze on all of us, the more dangerous this lot becomes.\"\n");
       }
     } else if (g.PRSI == HERM || g.PRSI == ANDREW || g.PRSI == JENNY) {
       if (!(hasFlag(HERM, RMUNGBIT))) {
@@ -14306,10 +15154,18 @@ async function GUARD_F() {
         }
         tell(" ... er, they ... uh, whatever it is -- bizarre is all I can say. You'd swear they were two different people.\"\n");
       } else {
-        tell("\"", D(ANDREW), "'s always considered ", D(JENNY), " a thorn in his side. Of course, ", D(JENNY), "'s always trying to keep him on the straight and narrow. Which is cherry pie, considering this is the circus life and all.\"\n");
+        tell("\"");
+        await DPRINT(ANDREW);
+        tell("'s always considered ");
+        await DPRINT(JENNY);
+        tell(" a thorn in his side. Of course, ");
+        await DPRINT(JENNY);
+        tell("'s always trying to keep him on the straight and narrow. Which is cherry pie, considering this is the circus life and all.\"\n");
       }
     } else if (g.PRSI == JIM || g.PRSI == JIM_GLOBAL) {
-      tell("\"Yea, sad story. Just another guy who fell out the social safety net, if you will, and landed in the circus. And not on his feet either. So ", D(MUNRAB), " overworks him, has him living in a cage. That's the life here, that's the circus life for the most.\"\n");
+      tell("\"Yea, sad story. Just another guy who fell out the social safety net, if you will, and landed in the circus. And not on his feet either. So ");
+      await DPRINT(MUNRAB);
+      tell(" overworks him, has him living in a cage. That's the life here, that's the circus life for the most.\"\n");
     } else if (g.PRSI == BURNED_CAGE) {
       tell("\"It's home.\"\n");
     } else if (g.PRSI == EDDIE) {
@@ -14317,12 +15173,18 @@ async function GUARD_F() {
         tell("You don't know anyone by that name.\n");
       } else {
         setFlag(EDDIE, RMUNGBIT);
-        tell("\"That's ", D(JOEY), "'s real name.\"\n");
+        tell("\"That's ");
+        await DPRINT(JOEY);
+        tell("'s real name.\"\n");
       }
     } else if (g.PRSI == BULL) {
-      tell("\"Very funny. Asking someone in my condition to describe an ", D(BULL), ".\"\n");
+      tell("\"Very funny. Asking someone in my condition to describe an ");
+      await DPRINT(BULL);
+      tell(".\"\n");
     } else if (g.PRSI == APE) {
-      tell("\"", D(APE), "? I used to work with him. You know you could practically put him to sleep with soft music. That's how he got his name. Along with his mean streak too, of course. In fact I used to play the violin for him at night after all the towners would go home. That was the old days.\"\n");
+      tell("\"");
+      await DPRINT(APE);
+      tell("? I used to work with him. You know you could practically put him to sleep with soft music. That's how he got his name. Along with his mean streak too, of course. In fact I used to play the violin for him at night after all the towners would go home. That was the old days.\"\n");
     } else if (g.PRSI == CON) {
       tell("\"He used to sell Amway. Then he joined on here as a Monday Man, which is where he got his name. All that was before Munrab, of course.\"\n");
     } else if (g.PRSI == LION_NAME || g.PRSI == ELSIE || g.PRSI == NIMROD || g.PRSI == WHIP || g.PRSI == GUARD || g.PRSI == SUNGLASSES) {
@@ -14360,7 +15222,11 @@ async function TURNSTILE_F() {
   if (isVerb(V.EXAMINE)) {
     tell("It's the fish skeleton type, with three sets of horizontal ribs extending from a vertical spine.");
     if (g.HERE == CON_AREA) {
-      tell(" Built into the ", D(TURNSTILE), " is a ", D(SLOT), ".");
+      tell(" Built into the ");
+      await DPRINT(TURNSTILE);
+      tell(" is a ");
+      await DPRINT(SLOT);
+      tell(".");
     }
     return crlf();
   } else if (isVerb(V.PUT) && (g.PRSO == TICKET)) {
@@ -14371,7 +15237,9 @@ async function TURNSTILE_F() {
       return (await CANT_SEE(false, "the slot"));
     }
   } else if (isVerb(V.CLIMB_OVER, V.CLIMB_ON, V.CLIMB_UP, V.CLIMB_FOO, V.LEAP)) {
-    tell("You cannot scale the ", D(TURNSTILE), ".\n");
+    tell("You cannot scale the ");
+    await DPRINT(TURNSTILE);
+    tell(".\n");
     return true;
   } else if (isVerb(V.OPEN, V.SET, V.PUSH, V.THROUGH, V.WALK_TO, V.MOVE)) {
     if (g.HERE == EAST_CAMP) {
@@ -14397,16 +15265,22 @@ async function PSEUDO_TURNSTILE_DESC(x = 0) {
 
 async function SLOT_F() {
   if (g.HERE == MIDWEST) {
-    tell("The slot's on the other side of the ", D(TURNSTILE), ".\n");
+    tell("The slot's on the other side of the ");
+    await DPRINT(TURNSTILE);
+    tell(".\n");
     return true;
   } else if (isVerb(V.PUT) && (g.PRSI == SLOT)) {
     if (g.PRSO == PINK_BOX || g.PRSO == BLUE_BOX) {
       return false;
     } else if (g.PRSO == TICKET) {
-      tell("You feed ", D(TICKET), " into the slot ");
+      tell("You feed ");
+      await DPRINT(TICKET);
+      tell(" into the slot ");
       if (hasFlag(BLUE_BOX, RMUNGBIT) || hasFlag(PINK_BOX, RMUNGBIT)) {
         enable(await QUEUE(I_TURNSTILE.id, 2));
-        tell("and hear all kinds of internal computations being made, then the ticket rolls out into ", D(HANDS), ".\n");
+        tell("and hear all kinds of internal computations being made, then the ticket rolls out into ");
+        await DPRINT(HANDS);
+        tell(".\n");
         return true;
       } else {
         tell("but it's immediately rejected. Perhaps you didn't follow the directions on the ticket.\n");
@@ -14419,7 +15293,9 @@ async function SLOT_F() {
       return true;
     }
   } else if (isVerb(V.EXAMINE)) {
-    tell("The ", D(SLOT), " is a few inches long.\n");
+    tell("The ");
+    await DPRINT(SLOT);
+    tell(" is a few inches long.\n");
     return true;
   } else if (isVerb(V.LOOK_INSIDE)) {
     tell("It's dark.\n");
@@ -14434,7 +15310,9 @@ async function SLOT_F() {
 async function I_TURNSTILE() {
   disable(await INT(I_TURNSTILE.id));
   if (g.HERE == BACK_YARD || g.HERE == CON_AREA) {
-    tell("\nThe ", D(TURNSTILE), " goes \"click.\"\n");
+    tell("\nThe ");
+    await DPRINT(TURNSTILE);
+    tell(" goes \"click.\"\n");
   }
   return false;
 }
@@ -14444,7 +15322,9 @@ async function TURNSTILE_EXIT() {
     if (!(hasFlag(CANVAS, RMUNGBIT)) && (g.HERE == EAST_CAMP)) {
       if (!(hasFlag(PSEUDO_TURNSTILE, RMUNGBIT))) {
         setFlag(PSEUDO_TURNSTILE, RMUNGBIT);
-        tell("The image of a burning bridge suddenly pops into your mind as you veer away from the ", D(TURNSTILE), ".\n");
+        tell("The image of a burning bridge suddenly pops into your mind as you veer away from the ");
+        await DPRINT(TURNSTILE);
+        tell(".\n");
         return false;
       }
     }
@@ -14459,16 +15339,20 @@ async function TURNSTILE_EXIT() {
       return MIDWEST;
     }
   } else {
-    tell("The ", D(TURNSTILE), " won't budge.\n");
+    tell("The ");
+    await DPRINT(TURNSTILE);
+    tell(" won't budge.\n");
     return false;
   }
 }
 
 async function TELL_PASS_TURNSTILE() {
-  tell("You pass through the creaky ", D(TURNSTILE));
+  tell("You pass through the creaky ");
+  await DPRINT(TURNSTILE);
   if ((await RUNNING$(I_CLOWN_EXIT.id)) && !(loc(THUMB) == CLOWN_ALLEY)) {
     g.CLOWN_EXIT_COUNTER = 7;
-    tell(" right behind a scrambling ", D(THUMB));
+    tell(" right behind a scrambling ");
+    await DPRINT(THUMB);
   }
   tell(".\n\n");
   return true;
@@ -14481,7 +15365,9 @@ async function PROP_ROOM_F(rarg) {
     }
     if (!(hasFlag(MOUSE, TOUCHBIT)) && hasFlag(TRAP, TOUCHBIT) && (loc(CHEESE) == PROP_ROOM)) {
       move(CHEESE, LOCAL_GLOBALS);
-      tell("You immediately notice that the ", D(CHEESE), " you left here is gone.\n\n");
+      tell("You immediately notice that the ");
+      await DPRINT(CHEESE);
+      tell(" you left here is gone.\n\n");
       return false;
     } else if ((loc(TRAP) == PROP_ROOM) && hasFlag(TRAP, TOUCHBIT) && !(hasFlag(MOUSE, TOUCHBIT))) {
       move(MOUSE, PROP_ROOM);
@@ -14514,7 +15400,9 @@ async function PROP_ROOM_F(rarg) {
   } else if (rarg == M_LOOK) {
     tell("This dimly lighted tent houses a ragtag collection of outrageous props and wacky devices, including a midget automobile that's garaged in here.");
     if (hasFlag(CANVAS, RMUNGBIT)) {
-      tell(" To the shadowy south is where you passed through the pleats of the ", D(CANVAS), ".");
+      tell(" To the shadowy south is where you passed through the pleats of the ");
+      await DPRINT(CANVAS);
+      tell(".");
     }
     return crlf();
   } else if (rarg == M_BEG) {
@@ -14556,7 +15444,10 @@ async function TELL_PASS_CANVAS() {
   if ((g.MEET_COUNTER == 10) && (loc(TRAP) == LOCAL_GLOBALS)) {
     move(TRAP, PROP_ROOM);
     enable(await QUEUE(I_HYP.id, 1));
-    tell("You make your way through the pleats, and just inside the tent you notice a small ", D(TRAP), " on the ", D(GROUND));
+    tell("You make your way through the pleats, and just inside the tent you notice a small ");
+    await DPRINT(TRAP);
+    tell(" on the ");
+    await DPRINT(GROUND);
   } else {
     tell("The rough-hewn canvas is abrasive as you pass through");
   }
@@ -14584,7 +15475,9 @@ async function EXIT_PROP_ROOM() {
 
 async function TRAP_F() {
   if (isVerb(V.EXAMINE, V.LOOK_INSIDE) && hasFlag(TRAP, TOUCHBIT)) {
-    tell("The ", D(TRAP), " is");
+    tell("The ");
+    await DPRINT(TRAP);
+    tell(" is");
     if (hasFlag(TRAP, RMUNGBIT)) {
       tell(" not");
     }
@@ -14592,7 +15485,9 @@ async function TRAP_F() {
     if (loc(CHEESE) == TRAP) {
       tell("; there is a bit of cheese in the trap");
     } else if (loc(MOUSE) == TRAP) {
-      tell(". A ", D(DEAD_MOUSE), " rests under the bar");
+      tell(". A ");
+      await DPRINT(DEAD_MOUSE);
+      tell(" rests under the bar");
     }
     tell(S(g.PERIOD));
     return true;
@@ -14609,7 +15504,9 @@ async function TRAP_F() {
     return true;
   } else if ((isVerb(V.OPEN) && !g.PRSI) || (isVerb(V.SET) && !g.PRSI)) {
     if (loc(MOUSE) == TRAP) {
-      tell("A ", D(DEAD_MOUSE), " is in it!\n");
+      tell("A ");
+      await DPRINT(DEAD_MOUSE);
+      tell(" is in it!\n");
       return true;
     } else if (hasFlag(TRAP, RMUNGBIT)) {
       clearFlag(TRAP, RMUNGBIT);
@@ -14621,7 +15518,9 @@ async function TRAP_F() {
   } else if (isVerb(V.PUT, V.PUT_ON) && (g.PRSO == CHEESE)) {
     if (hasFlag(TRAP, RMUNGBIT)) {
       move(CHEESE, TRAP);
-      tell("The ", D(CHEESE), " is now clamped into the trap.\n");
+      tell("The ");
+      await DPRINT(CHEESE);
+      tell(" is now clamped into the trap.\n");
       return true;
     } else {
       await RASH_ACT();
@@ -14629,7 +15528,9 @@ async function TRAP_F() {
     }
   } else if (isVerb(V.TAKE) && hasFlag(TRAP, TOUCHBIT) && !(hasFlag(TRAP, RMUNGBIT))) {
     if (eq(await ITAKE(), true)) {
-      tell("With great care you pick up the loaded ", D(TRAP), ".\n");
+      tell("With great care you pick up the loaded ");
+      await DPRINT(TRAP);
+      tell(".\n");
     }
     return true;
   } else if ((await TOUCHING$(TRAP)) && !(hasFlag(TRAP, RMUNGBIT)) && !(isVerb(V.PUT_ON))) {
@@ -14645,7 +15546,9 @@ async function TRAP_F() {
       clearFlag(TRAP, NDESCBIT);
       move(TRAP, PROTAGONIST);
       move(CHEESE, TRAP);
-      tell(S(g.INSTANT), "between the realization that you've caused ", D(ME), " excruciating Pain and the actual onslaught of such Pain, during which time most people speak with exclamation points and ... well, say things like ...\n");
+      tell(S(g.INSTANT), "between the realization that you've caused ");
+      await DPRINT(ME);
+      tell(" excruciating Pain and the actual onslaught of such Pain, during which time most people speak with exclamation points and ... well, say things like ...\n");
       return M_FATAL;
     } else {
       return await BACKFLIP();
@@ -14678,16 +15581,20 @@ async function BACKFLIP() {
   setFlag(TRAP, RMUNGBIT);
   tell("\"Snap!\" The ");
   if (g.PRSO == TRAP) {
-    tell(D(g.PRSO));
+    await DPRINT(g.PRSO);
     if (isVerb(V.PUT)) {
-      tell(" touches the side of the ", D(g.PRSI), " and");
+      tell(" touches the side of the ");
+      await DPRINT(g.PRSI);
+      tell(" and");
     }
   } else {
-    tell(D(g.PRSI));
+    await DPRINT(g.PRSI);
   }
   tell(" does a backflip ");
   if (await HELD$(TRAP)) {
-    tell("out of ", D(HANDS), "s and ");
+    tell("out of ");
+    await DPRINT(HANDS);
+    tell("s and ");
   }
   tell("into the air.\n");
   return move(TRAP, g.HERE);
@@ -14717,7 +15624,9 @@ async function CHEESE_F() {
     return true;
   } else if (isVerb(V.EAT)) {
     move(CHEESE, LOCAL_GLOBALS);
-    tell("Your nose twitches as you nibble away the ", D(CHEESE), ".\n");
+    tell("Your nose twitches as you nibble away the ");
+    await DPRINT(CHEESE);
+    tell(".\n");
     return true;
   } else if (isVerb(V.SMELL)) {
     tell("Camembert, 1979.\n");
@@ -14729,7 +15638,13 @@ async function CHEESE_F() {
 
 async function MOUSE_DESC(x = 0) {
   if (hasFlag(TRAP, NDESCBIT)) {
-    tell("Over in the ", D(CORNER), ", a ", D(MOUSE), " gnaws timidly at the ", D(TRAP), ".");
+    tell("Over in the ");
+    await DPRINT(CORNER);
+    tell(", a ");
+    await DPRINT(MOUSE);
+    tell(" gnaws timidly at the ");
+    await DPRINT(TRAP);
+    tell(".");
     return true;
   } else {
     tell("You can hear the faint scurryings of a rodent somewhere in the tent.");
@@ -14743,7 +15658,9 @@ async function MOUSE_F() {
     return await CANT_SEE(MOUSE);
   } else if (isVerb(V.EXAMINE)) {
     if (loc(MOUSE) == PROTAGONIST) {
-      tell("The ", D(MOUSE), " calms for a moment, twitches its bewhiskered snout at you, then continues swimming its forepaws silently into the air.\n");
+      tell("The ");
+      await DPRINT(MOUSE);
+      tell(" calms for a moment, twitches its bewhiskered snout at you, then continues swimming its forepaws silently into the air.\n");
       return true;
     } else if ((loc(MOUSE) == BUCKET) && g.MOUSE_PISSED) {
       tell("It keeps", S(g.TREADMILL), ". That noise is getting to you.\n");
@@ -14771,7 +15688,9 @@ async function MOUSE_F() {
       await PERFORM(V.RUB, MOUSE);
       return true;
     } else if (x = first(BUCKET)) {
-      tell("Tumbling out of your ", D(BUCKET), " come");
+      tell("Tumbling out of your ");
+      await DPRINT(BUCKET);
+      tell(" come");
       if (!(next(x))) {
         tell("s");
       }
@@ -14786,14 +15705,20 @@ async function MOUSE_F() {
     setFlag(MOUSE, TOUCHBIT);
     g.SCORE = g.SCORE + 10;
     move(MOUSE, BUCKET);
-    tell("You can almost hear the tramplings of the world beating a path to your door as, with a deft swoop of the ", D(BUCKET), ", you capture the ", D(MOUSE), ". It immediately begins", S(g.TREADMILL), ".\n");
+    tell("You can almost hear the tramplings of the world beating a path to your door as, with a deft swoop of the ");
+    await DPRINT(BUCKET);
+    tell(", you capture the ");
+    await DPRINT(MOUSE);
+    tell(". It immediately begins", S(g.TREADMILL), ".\n");
     return true;
   } else if (hasFlag(TRAP, NDESCBIT) && (await DISTURB$(MOUSE)) && !(await HELD$(MOUSE))) {
     clearFlag(TRAP, NDESCBIT);
     move(MOUSE, LOCAL_GLOBALS);
     tell("By fits and starts the mouse ");
     if (isVerb(V.TAKE)) {
-      tell("eludes ", D(HANDS), " and ");
+      tell("eludes ");
+      await DPRINT(HANDS);
+      tell(" and ");
     }
     tell("makes an exit.\n");
     return true;
@@ -14801,7 +15726,9 @@ async function MOUSE_F() {
     move(MOUSE, LOCAL_GLOBALS);
     return await SCAMPER(true);
   } else if (isVerb(V.RUB)) {
-    tell("It nips at ", D(HANDS), ".\n");
+    tell("It nips at ");
+    await DPRINT(HANDS);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -14822,9 +15749,13 @@ async function GEN_MOUSE_F() {
 async function SCAMPER(handed$ = false) {
   tell("The mouse ");
   if (handed$) {
-    tell("scampers out of ", D(HANDS), ", ");
+    tell("scampers out of ");
+    await DPRINT(HANDS);
+    tell(", ");
   }
-  tell("hits the ", D(GROUND), " running and darts out of sight.\n");
+  tell("hits the ");
+  await DPRINT(GROUND);
+  tell(" running and darts out of sight.\n");
   return true;
 }
 
@@ -14840,7 +15771,9 @@ async function MASK_F() {
     }
     putProp(PROTAGONIST, P.ACTION, PROTAGONIST_HACK_F.id);
     setFlag(MASK, WORNBIT);
-    tell("You put on the ", D(MASK), ".\n");
+    tell("You put on the ");
+    await DPRINT(MASK);
+    tell(".\n");
     return true;
   } else if (isVerb(V.LOOK_INSIDE) && hasFlag(MASK, WORNBIT)) {
     tell(S(g.YOU_ARE), "\n");
@@ -14877,10 +15810,14 @@ async function SUIT_F() {
       clearFlag(SUIT, WORNBIT);
       tell("out of");
     }
-    tell(" the heavy, itchy ", D(SUIT), ".\n");
+    tell(" the heavy, itchy ");
+    await DPRINT(SUIT);
+    tell(".\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("It's a 3-H ", D(SUIT), " -- heavy, hairy and headless.\n");
+    tell("It's a 3-H ");
+    await DPRINT(SUIT);
+    tell(" -- heavy, hairy and headless.\n");
     return true;
   } else {
     return false;
@@ -14925,10 +15862,14 @@ async function SWITCH_F() {
       return true;
     } else if (!(hasFlag(SWITCH, RMUNGBIT))) {
       setFlag(SWITCH, RMUNGBIT);
-      tell("The ", D(CAR), " chugs violently for a couple of seconds, lets out a big bang, then dies.\n");
+      tell("The ");
+      await DPRINT(CAR);
+      tell(" chugs violently for a couple of seconds, lets out a big bang, then dies.\n");
       return true;
     } else if (prob(35)) {
-      tell("The ", D(CAR), " backfires loudly and comically.\n");
+      tell("The ");
+      await DPRINT(CAR);
+      tell(" backfires loudly and comically.\n");
       return true;
     } else {
       tell("Nothing happens.\n");
@@ -14959,7 +15900,9 @@ async function TAFT_DESC(x = 0) {
 
 async function TAFT_F() {
   if (isVerb(V.EXAMINE) && !(await HELD$(TAFT))) {
-    tell("The imposing ", D(TAFT), " stands quite still.\n");
+    tell("The imposing ");
+    await DPRINT(TAFT);
+    tell(" stands quite still.\n");
     return true;
   } else if ((await TALKING_TO$(TAFT)) || isVerb(V.WHIP)) {
     tell("He remains silent, unimpeachably frozen.\n");
@@ -15024,13 +15967,19 @@ async function I_MEET() {
       crlf();
       await HIDE_BEHIND_TAFT(true);
     }
-    tell("\nFrom behind the ", D(TAFT), " you hear footsteps enter the tent, a pause, then hushed conversation.\n");
+    tell("\nFrom behind the ");
+    await DPRINT(TAFT);
+    tell(" you hear footsteps enter the tent, a pause, then hushed conversation.\n");
     return true;
   } else if (g.MEET_COUNTER == 8) {
     if (!(isVerb(V.LISTEN) && (g.PRSO == VOICES))) {
       crlf();
     }
-    tell("\"So, Munrab, what is it? Why have you called me here?\"\n  \n\"Listen, Detective, I've had a terrible day in your lousy little town, so let me be brief. Receipts have been down all month, tonight's ", D(CON_STAND), " sales were especially small, the towners were tightfisted, they nearly leveled my grandstand, and on top of that somebody's kidnapped my daughter, Chelsea. That's where you come in. Here's the most recent picture of her -- a pretty good likeness in my opinion.\"\n\n\"", D(MUNRAB), ", why are we whispering?\"\n");
+    tell("\"So, Munrab, what is it? Why have you called me here?\"\n  \n\"Listen, Detective, I've had a terrible day in your lousy little town, so let me be brief. Receipts have been down all month, tonight's ");
+    await DPRINT(CON_STAND);
+    tell(" sales were especially small, the towners were tightfisted, they nearly leveled my grandstand, and on top of that somebody's kidnapped my daughter, Chelsea. That's where you come in. Here's the most recent picture of her -- a pretty good likeness in my opinion.\"\n\n\"");
+    await DPRINT(MUNRAB);
+    tell(", why are we whispering?\"\n");
     return true;
   } else if (g.MEET_COUNTER == 9) {
     return await END_MEETING();
@@ -15048,9 +15997,16 @@ async function END_MEETING() {
     if (!(isVerb(V.LISTEN) && (g.PRSO == VOICES))) {
       crlf();
     }
-    tell("\"I don't know, because it's a mystery I guess. Anyhow, it's not because I suspect any of my own people here on the lot.\" There's a pause. \"I've got a pretty loyal crew here. Sure, I work the guys a fair amount, but hey, no one joins the circus expecting a holiday.\"\n\nLacking all passion and professionalism, the detective replies, \"I'll suspect who you want me to suspect. You're paying the bill.\"\n\n\"Here, see, the language of this ransom note clearly shows that it's not an inside job. Detective, I don't know what kind of crazies are running loose in this town, but I'm afraid harm might come to my daughter if the police were to show up. God knows this circus doesn't need that kind of publicity, anyway. So I'm relying on you and you alone.\"\n\n\"I'd better hold on to that note, Munrab.\"\n\n\"Alright, then get going.\"\n\nYou can hear ", D(MUNRAB), " and the ", D(DICK), " ");
+    tell("\"I don't know, because it's a mystery I guess. Anyhow, it's not because I suspect any of my own people here on the lot.\" There's a pause. \"I've got a pretty loyal crew here. Sure, I work the guys a fair amount, but hey, no one joins the circus expecting a holiday.\"\n\nLacking all passion and professionalism, the detective replies, \"I'll suspect who you want me to suspect. You're paying the bill.\"\n\n\"Here, see, the language of this ransom note clearly shows that it's not an inside job. Detective, I don't know what kind of crazies are running loose in this town, but I'm afraid harm might come to my daughter if the police were to show up. God knows this circus doesn't need that kind of publicity, anyway. So I'm relying on you and you alone.\"\n\n\"I'd better hold on to that note, Munrab.\"\n\n\"Alright, then get going.\"\n\nYou can hear ");
+    await DPRINT(MUNRAB);
+    tell(" and the ");
+    await DPRINT(DICK);
+    tell(" ");
   } else {
-    tell(D(MUNRAB), " and the ", D(DICK), " notice you and they ");
+    await DPRINT(MUNRAB);
+    tell(" and the ");
+    await DPRINT(DICK);
+    tell(" notice you and they ");
   }
   tell("hustle out of the tent");
   move(MUNRAB, ON_WAGON);
@@ -15092,7 +16048,9 @@ async function MUNRAB_F() {
     return true;
   } else if (g.END_GAME && (await TALKING_TO$(MUNRAB))) {
     if (hasFlag(MUNRAB, RMUNGBIT)) {
-      tell("Completely distraught, ", D(MUNRAB), " is now incommunicado.\n");
+      tell("Completely distraught, ");
+      await DPRINT(MUNRAB);
+      tell(" is now incommunicado.\n");
     } else {
       setFlag(MUNRAB, RMUNGBIT);
       tell("\"Hey you, you're gonna pay for this! And do you know the replacement cost of a tightrope apparatus!\"\n");
@@ -15115,20 +16073,37 @@ async function MUNRAB_F() {
 
 async function MUNRAB_DESC(x = 0) {
   if ((loc(NET) == MUNRAB) && (g.HERE == RING)) {
-    tell("The ", D(NET), " is being held by the motley circle of ", D(MUNRAB), ", the ", D(JIM), ", ");
+    tell("The ");
+    await DPRINT(NET);
+    tell(" is being held by the motley circle of ");
+    await DPRINT(MUNRAB);
+    tell(", the ");
+    await DPRINT(JIM);
+    tell(", ");
     if (g.GANG_HERE) {
       await TELL_GROUP();
     }
-    tell("and ", D(THUMB));
+    tell("and ");
+    await DPRINT(THUMB);
   } else {
-    tell(D(MUNRAB), ", pacing pitifully back and forth across the ring, is a complete wreck");
+    await DPRINT(MUNRAB);
+    tell(", pacing pitifully back and forth across the ring, is a complete wreck");
   }
   tell(".");
   return true;
 }
 
 async function TELL_GROUP() {
-  tell(D(HERM), ", ", D(JOEY), ", ", D(HYP), ", ", D(CON), ", ", D(TAMER), " ");
+  await DPRINT(HERM);
+  tell(", ");
+  await DPRINT(JOEY);
+  tell(", ");
+  await DPRINT(HYP);
+  tell(", ");
+  await DPRINT(CON);
+  tell(", ");
+  await DPRINT(TAMER);
+  tell(" ");
   return true;
 }
 
@@ -15137,9 +16112,15 @@ async function GANG_F() {
     await PERFORM(V.TELL, CON);
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("There's ", D(MUNRAB), ", the ", D(JIM), ", ");
+    tell("There's ");
+    await DPRINT(MUNRAB);
+    tell(", the ");
+    await DPRINT(JIM);
+    tell(", ");
     await TELL_GROUP();
-    tell("and ", D(THUMB), ".\n");
+    tell("and ");
+    await DPRINT(THUMB);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -15181,7 +16162,9 @@ async function DICK_F() {
       g.WINNER = DICK;
       return true;
     } else {
-      tell("The ", D(DICK), " appears unable to respond.\n");
+      tell("The ");
+      await DPRINT(DICK);
+      tell(" appears unable to respond.\n");
       return true;
     }
   } else if ((g.HERE == PROP_ROOM) && (await TOUCHING$(DICK))) {
@@ -15190,23 +16173,35 @@ async function DICK_F() {
     await PERFORM(V.ASK_ABOUT, DICK, COAT);
     return true;
   } else if (isVerb(V.SHOW, V.GIVE) && (g.PRSO == RIBBON || g.PRSO == SCRAP || g.PRSO == CASE)) {
-    tell("Not surprisingly, the ", D(g.PRSO), " doesn't ring a bell for the ", D(DICK), ".\n");
+    tell("Not surprisingly, the ");
+    await DPRINT(g.PRSO);
+    tell(" doesn't ring a bell for the ");
+    await DPRINT(DICK);
+    tell(".\n");
     return true;
   } else if (g.DICK_DRUNK && (await HURT$(DICK))) {
     tell("You're beating a dead-drunk horse.\n");
     return true;
   } else if (isVerb(V.ASK_ABOUT, V.ASK_FOR, V.TELL_ABOUT, V.HELLO) && (g.PRSO == DICK)) {
     if (hasFlag(DICK, RMUNGBIT)) {
-      tell("You're having about as much luck as Rimshaw trying to communicate with the dead, even though the ", D(DICK), " still lives on.\n");
+      tell("You're having about as much luck as Rimshaw trying to communicate with the dead, even though the ");
+      await DPRINT(DICK);
+      tell(" still lives on.\n");
       return true;
     } else if ((g.PRSI == TRADE_CARD || g.PRSI == NOTE || g.PRSI == GIRL || g.PRSI == MUNRAB || g.PRSI == CON) && (loc(NOTE) == GLOBAL_OBJECTS)) {
       return await GET_NOTE();
     } else if (g.DICK_UNRESPONSIVE) {
-      tell("Just his attempting to think or speak or move is obviously causing the ", D(DICK), " great pain.\n");
+      tell("Just his attempting to think or speak or move is obviously causing the ");
+      await DPRINT(DICK);
+      tell(" great pain.\n");
       return true;
     } else {
       g.DICK_UNRESPONSIVE = true;
-      tell("As his jawbone pivots open for speech, some monstrous pain seems to ricochet off the plates of the ", D(DICK), "'s skull. He settles back into the ", D(SAWDUST), ".\n");
+      tell("As his jawbone pivots open for speech, some monstrous pain seems to ricochet off the plates of the ");
+      await DPRINT(DICK);
+      tell("'s skull. He settles back into the ");
+      await DPRINT(SAWDUST);
+      tell(".\n");
       return true;
     }
   } else if (isVerb(V.LISTEN) && (g.HERE == MIDWEST) && !g.DICK_DRUNK) {
@@ -15223,7 +16218,9 @@ async function DICK_F() {
       clearFlag(DICK, RMUNGBIT);
       move(WATER, LOCAL_GLOBALS);
       move(FLASK, LOCAL_GLOBALS);
-      tell("The cool wave of water breaks upon the ", D(DICK), "'s face with a \"whooosh.\" He comes up for air, wide-eyed and woken-up.\n\nGlancing down at the flask of Dr. Nostrum's, he heaves it against the turnstile, and it explodes into a cloud of acrid smoke surrounded by twinkling flying shards of glass. Lucky no one got hurt.\n");
+      tell("The cool wave of water breaks upon the ");
+      await DPRINT(DICK);
+      tell("'s face with a \"whooosh.\" He comes up for air, wide-eyed and woken-up.\n\nGlancing down at the flask of Dr. Nostrum's, he heaves it against the turnstile, and it explodes into a cloud of acrid smoke surrounded by twinkling flying shards of glass. Lucky no one got hurt.\n");
       return true;
     } else if (g.DICK_DRUNK) {
       tell("He's already soaked.\n");
@@ -15232,14 +16229,18 @@ async function DICK_F() {
       return false;
     }
   } else if (isVerb(V.ALARM, V.SHAKE, V.RAISE) && g.DICK_DRUNK) {
-    tell("Making fists around the coat's lapel, you give a yank, but the ", D(DICK), "'s ");
+    tell("Making fists around the coat's lapel, you give a yank, but the ");
+    await DPRINT(DICK);
+    tell("'s ");
     if (hasFlag(DICK, RMUNGBIT)) {
       tell("overheated ");
     }
     tell("skull merely falls to his opposite shoulder.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
-    tell("Wearing a ", D(COAT), " and ");
+    tell("Wearing a ");
+    await DPRINT(COAT);
+    tell(" and ");
     if (!g.DICK_DRUNK && (g.HERE == MIDWEST)) {
       tell("cradling a flask of Dr. Nostrum's in his hands,");
     } else if (g.HERE == PROP_ROOM) {
@@ -15251,12 +16252,16 @@ async function DICK_F() {
       } else {
         tell("looking downtrodden");
       }
-      tell(", the ", D(DICK), " continues to breathe, but that's about all.");
+      tell(", the ");
+      await DPRINT(DICK);
+      tell(" continues to breathe, but that's about all.");
       if (hasFlag(DICK, RMUNGBIT)) {
         tell(" His face is damp with fever.");
       }
     } else {
-      tell(" he appears to have some kind of ", D(MONKEY), " on his back.");
+      tell(" he appears to have some kind of ");
+      await DPRINT(MONKEY);
+      tell(" on his back.");
     }
     return crlf();
   } else if (isVerb(V.FOLLOW)) {
@@ -15278,16 +16283,34 @@ async function GET_NOTE() {
   move(TRADE_CARD, g.HERE);
   move(NOTE, g.HERE);
   g.P_IT_OBJECT = TRADE_CARD;
-  tell("With much pain, slowness, and remorse, the ", D(DICK), " retrieves what looks to be a ", D(NOTE), " and a ", D(TRADE_CARD), " out of the inner lining of his ", D(COAT), " and lays them on the ", D(SAWDUST), ".\n");
+  tell("With much pain, slowness, and remorse, the ");
+  await DPRINT(DICK);
+  tell(" retrieves what looks to be a ");
+  await DPRINT(NOTE);
+  tell(" and a ");
+  await DPRINT(TRADE_CARD);
+  tell(" out of the inner lining of his ");
+  await DPRINT(COAT);
+  tell(" and lays them on the ");
+  await DPRINT(SAWDUST);
+  tell(".\n");
   return true;
 }
 
 async function DICK_DESC(x = 0) {
   if (g.DICK_DRUNK) {
-    tell("Over next to the ", D(BIGTOP), ", you can see the rumpled form of the ", D(DICK), " lying in the ", D(SAWDUST), ".");
+    tell("Over next to the ");
+    await DPRINT(BIGTOP);
+    tell(", you can see the rumpled form of the ");
+    await DPRINT(DICK);
+    tell(" lying in the ");
+    await DPRINT(SAWDUST);
+    tell(".");
     return true;
   } else {
-    tell("The ", D(DICK), " is here.");
+    tell("The ");
+    await DPRINT(DICK);
+    tell(" is here.");
     return true;
   }
 }
@@ -15295,7 +16318,9 @@ async function DICK_DESC(x = 0) {
 async function COAT_F() {
   let $1;
   if (isVerb(V.LOOK_INSIDE, V.SEARCH, V.SEARCH_OBJECT_FOR, V.OPEN) && (g.HERE == MIDWEST) && g.DICK_DRUNK) {
-    tell("You're unable to search the coat thoroughly, since the ", D(DICK), " is wearing it.\n");
+    tell("You're unable to search the coat thoroughly, since the ");
+    await DPRINT(DICK);
+    tell(" is wearing it.\n");
     return true;
   } else if ((g.HERE == PROP_ROOM) && ((await TOUCHING$(COAT)) || isVerb(V.LOOK_INSIDE))) {
     return await CANT_REACH(DICK);
@@ -15330,10 +16355,16 @@ async function TRADE_CARD_F() {
     tell("It's out of your sight.\n");
     return true;
   } else if (isVerb(V.COMPARE) && (GIRL == g.PRSO || GIRL == g.PRSI)) {
-    tell("The girl depicted on the ", D(TRADE_CARD), " indeed appears as an idealized portrait of ", D(GIRL), ".\n");
+    tell("The girl depicted on the ");
+    await DPRINT(TRADE_CARD);
+    tell(" indeed appears as an idealized portrait of ");
+    await DPRINT(GIRL);
+    tell(".\n");
     return true;
   } else if (isVerb(V.COMPARE) && (RIBBON == g.PRSO || RIBBON == g.PRSI)) {
-    tell("It looks like the same ", D(RIBBON), ".\n");
+    tell("It looks like the same ");
+    await DPRINT(RIBBON);
+    tell(".\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     return await IN_PACKAGE(TRADE_CARD);
@@ -15391,9 +16422,11 @@ async function CANT_WALK$() {
 
 async function DONT_WALK(person) {
   if (person == THUMB) {
-    tell(D(THUMB), " gets restless in your arms");
+    await DPRINT(THUMB);
+    tell(" gets restless in your arms");
   } else {
-    tell(D(GIRL), " looks afraid");
+    await DPRINT(GIRL);
+    tell(" looks afraid");
   }
   tell(" when you start that way so you stop.\n");
   return true;
@@ -15407,7 +16440,9 @@ async function CANVAS_F() {
     } else if (!(hasFlag(CANVAS, RMUNGBIT)) && (g.HERE == PROP_ROOM)) {
       return false;
     } else {
-      tell("The ", D(CANVAS), " is deeply shadowed by its many pleats.\n");
+      tell("The ");
+      await DPRINT(CANVAS);
+      tell(" is deeply shadowed by its many pleats.\n");
       return true;
     }
   } else if ((g.HERE == WEST_CAMP) && isVerb(V.OPEN, V.RUB, V.RAISE, V.LOOK_UNDER, V.LOOK_INSIDE, V.MOVE)) {
@@ -15426,7 +16461,9 @@ async function CANVAS_F() {
         return await GOTO(WEST_CAMP);
       }
     } else {
-      tell("This side of the tent is too dark and shadowy to make out the confines of the ", D(CANVAS), ".\n");
+      tell("This side of the tent is too dark and shadowy to make out the confines of the ");
+      await DPRINT(CANVAS);
+      tell(".\n");
       return true;
     }
   } else {
@@ -15439,14 +16476,18 @@ async function GEN_TENT() {
 }
 
 async function TENT_BOUND() {
-  tell("The ", D(g.PRSO), " appears securely bound here.\n");
+  tell("The ");
+  await DPRINT(g.PRSO);
+  tell(" appears securely bound here.\n");
   return true;
 }
 
 async function EAST_CAMP_F(rarg) {
   if (rarg == M_LOOK) {
     await CAMP_DESC();
-    tell("\nAt the eastern end of the camp sits one lone ", D(TAMER_TRAILER), ".\n");
+    tell("\nAt the eastern end of the camp sits one lone ");
+    await DPRINT(TAMER_TRAILER);
+    tell(".\n");
     return true;
   } else if (rarg == M_BEG) {
     if (await CANT_WALK$()) {
@@ -15493,17 +16534,22 @@ async function TAMER_ROOM_F(rarg) {
     if (hasFlag(MOOSE, NDESCBIT)) {
       tell("The head of a moose, for example, hangs as a trophy against");
     } else {
-      tell("There's an opening to a ", D(CRAWL_SPACE), " in");
+      tell("There's an opening to a ");
+      await DPRINT(CRAWL_SPACE);
+      tell(" in");
     }
     tell(" one wall. Against the west wall the door stands ");
     await OPEN_CLOSED(TAMER_DOOR);
-    tell(" and a gaily decorated ", D(CURTAINS));
+    tell(" and a gaily decorated ");
+    await DPRINT(CURTAINS);
     if (hasFlag(CURTAINS, OPENBIT)) {
       tell(" is open at");
     } else {
       tell(" covers");
     }
-    tell(" the ", D(WINDOW), ".\n");
+    tell(" the ");
+    await DPRINT(WINDOW);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -15519,10 +16565,16 @@ async function MOOSE_F() {
   if (isVerb(V.MOVE, V.PUSH, V.TAKE, V.LOOK_BEHIND) && hasFlag(MOOSE, NDESCBIT)) {
     clearFlag(MOOSE, NDESCBIT);
     clearFlag(CRAWL_SPACE, INVISIBLE);
-    tell("The ", D(MOOSE), " drops to the floor with a loud thud, revealing an opening, about one foot square, to a ", D(CRAWL_SPACE), ".\n");
+    tell("The ");
+    await DPRINT(MOOSE);
+    tell(" drops to the floor with a loud thud, revealing an opening, about one foot square, to a ");
+    await DPRINT(CRAWL_SPACE);
+    tell(".\n");
     return true;
   } else if (isVerb(V.PUT, V.PUT_ON) && (g.PRSI == WALLS) && (g.HERE == TAMER_ROOM)) {
-    tell("It won't reattach to the ", D(WALLS), ".\n");
+    tell("It won't reattach to the ");
+    await DPRINT(WALLS);
+    tell(".\n");
     return true;
   } else if (isVerb(V.DRINK)) {
     tell("It's very very dry, undrinkably so.\n");
@@ -15557,7 +16609,9 @@ async function CRAWL_SPACE_F() {
       move(g.PRSO, CRAWL_SPACE);
       if (g.PRSO == THUMB) {
         enable(await QUEUE(I_TAMER.id, 3));
-        tell("A wide-eyed ", D(THUMB), " goes easily through the opening and");
+        tell("A wide-eyed ");
+        await DPRINT(THUMB);
+        tell(" goes easily through the opening and");
       } else {
         tell("As you release");
         await ARTICLE(g.PRSO, true);
@@ -15596,7 +16650,11 @@ async function WINDOW_F() {
         tell(" the performers' camp.");
       }
     } else {
-      tell("The ", D(CURTAINS), "s are drawn over the ", D(WINDOW), ".");
+      tell("The ");
+      await DPRINT(CURTAINS);
+      tell("s are drawn over the ");
+      await DPRINT(WINDOW);
+      tell(".");
     }
     return crlf();
   } else {
@@ -15606,7 +16664,9 @@ async function WINDOW_F() {
 
 async function CURTAINS_F() {
   if ((await TOUCHING$(CURTAINS)) && (g.HERE == EAST_CAMP)) {
-    tell("The ", D(CURTAINS), "s are inside the trailer, hence unreachable.\n");
+    tell("The ");
+    await DPRINT(CURTAINS);
+    tell("s are inside the trailer, hence unreachable.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     tell("The ");
@@ -15615,7 +16675,8 @@ async function CURTAINS_F() {
     } else {
       tell("closed ");
     }
-    tell(D(CURTAINS), " is decorated with little Wild West scenes: cowboys mowing down buffalo, gunfights, and the like.\n");
+    await DPRINT(CURTAINS);
+    tell(" is decorated with little Wild West scenes: cowboys mowing down buffalo, gunfights, and the like.\n");
     return true;
   } else {
     return false;
@@ -15625,19 +16686,24 @@ async function CURTAINS_F() {
 async function TAMER_TRAILER_F() {
   if (isVerb(V.EXAMINE)) {
     if (g.HERE == EAST_CAMP) {
-      tell("The ", D(TAMER_TRAILER), " with its chalky aluminum siding has all the charm of a generic beer can. In contrast, a garishly painted sign hangs over both the door, which is");
+      tell("The ");
+      await DPRINT(TAMER_TRAILER);
+      tell(" with its chalky aluminum siding has all the charm of a generic beer can. In contrast, a garishly painted sign hangs over both the door, which is");
       if (hasFlag(TAMER_DOOR, OPENBIT)) {
         tell(" open");
       } else {
         tell(" closed");
       }
-      tell(", and a window. Built into the side of the ", D(TAMER_TRAILER), " is ");
+      tell(", and a window. Built into the side of the ");
+      await DPRINT(TAMER_TRAILER);
+      tell(" is ");
       if (hasFlag(BAGGAGE_COMPARTMENT, OPENBIT)) {
         tell("an open ");
       } else {
         tell("some kind of baggage ");
       }
-      tell(D(BAGGAGE_COMPARTMENT), ".");
+      await DPRINT(BAGGAGE_COMPARTMENT);
+      tell(".");
       return crlf();
     } else {
       return await V_LOOK();
@@ -15670,7 +16736,9 @@ async function TAMER_TRAILER_F() {
 async function TAMER_SIGN_F() {
   if (isVerb(V.READ, V.EXAMINE)) {
     await FIXED_FONT_ON();
-    tell("               Home Of\n  ", D(TAMER), "\n\n     KATZENJAMMER OF THE BIG CATS\n");
+    tell("               Home Of\n  ");
+    await DPRINT(TAMER);
+    tell("\n\n     KATZENJAMMER OF THE BIG CATS\n");
     return await FIXED_FONT_OFF();
   } else {
     return false;
@@ -15679,17 +16747,26 @@ async function TAMER_SIGN_F() {
 
 async function TAMER_DOOR_F() {
   if ((await TOUCHING$(TAMER_DOOR)) && (loc(JOEY) == g.HERE)) {
-    tell(D(JOEY), " shields the ", D(TAMER_TRAILER), " from you. \"Keep away. The liquid hasn't dried yet.\"\n");
+    await DPRINT(JOEY);
+    tell(" shields the ");
+    await DPRINT(TAMER_TRAILER);
+    tell(" from you. \"Keep away. The liquid hasn't dried yet.\"\n");
     return true;
   } else if (isVerb(V.CLOSE, V.LOOK_BEHIND) && (g.HERE == TAMER_ROOM) && (loc(CROWBAR) == LOCAL_GLOBALS)) {
     clearFlag(TAMER_DOOR, OPENBIT);
     move(CROWBAR, g.HERE);
     g.P_IT_OBJECT = CROWBAR;
-    tell("As the ", D(TAMER_DOOR), " is closed, you notice a ", D(CROWBAR), " leaning against the wall, where it looks more like a weapon than a tool.\n");
+    tell("As the ");
+    await DPRINT(TAMER_DOOR);
+    tell(" is closed, you notice a ");
+    await DPRINT(CROWBAR);
+    tell(" leaning against the wall, where it looks more like a weapon than a tool.\n");
     return true;
   } else if (isVerb(V.KNOCK)) {
     if ((loc(TAMER) == TAMER_ROOM) && g.WON_JOEY) {
-      tell(S(g.YOU_SEE), " the ", D(CURTAINS), "s part slightly and then ");
+      tell(S(g.YOU_SEE), " the ");
+      await DPRINT(CURTAINS);
+      tell("s part slightly and then ");
       if (hasFlag(VEIL, WORNBIT) && hasFlag(DRESS, WORNBIT) && hasFlag(SHAWL, WORNBIT)) {
         setFlag(CURTAINS, OPENBIT);
         setFlag(TAMER_DOOR, OPENBIT);
@@ -15698,7 +16775,15 @@ async function TAMER_DOOR_F() {
         setFlag(TAMER, NDESCBIT);
         move(TAMER, g.HERE);
         enable(await QUEUE(I_TAMER.id, 1));
-        tell("you hear through the window a hushed voice with a thick German accent.\n  \n\"Andrew, where is Eddie?! And Willie! We must talk over what to do. I go now and bring back them, and the ", D(JIM), " too. You be guarding in here, when I will come back.\"\n\nThe ", D(TAMER_DOOR), " swings inward, and out of the ", D(TAMER_TRAILER), " steps the robust personage of the ", D(TAMER), ".\n");
+        tell("you hear through the window a hushed voice with a thick German accent.\n  \n\"Andrew, where is Eddie?! And Willie! We must talk over what to do. I go now and bring back them, and the ");
+        await DPRINT(JIM);
+        tell(" too. You be guarding in here, when I will come back.\"\n\nThe ");
+        await DPRINT(TAMER_DOOR);
+        tell(" swings inward, and out of the ");
+        await DPRINT(TAMER_TRAILER);
+        tell(" steps the robust personage of the ");
+        await DPRINT(TAMER);
+        tell(".\n");
         return true;
       } else {
         setFlag(TAMER_DOOR, RMUNGBIT);
@@ -15718,7 +16803,9 @@ async function I_END_GAME() {
   g.END_GAME_C = g.END_GAME_C + 1;
   if (g.HERE == LEFT_HANGING) {
     if (g.END_GAME_C == 2) {
-      tell("\nDown below, oblivious of your plight, all of the circus folk are making noises of mutual forgiveness and reconciliation in the new spirit of togetherness brought on by the dramatic, emotionally charged rescue of ", D(MUNRAB), "'s daughter.\n");
+      tell("\nDown below, oblivious of your plight, all of the circus folk are making noises of mutual forgiveness and reconciliation in the new spirit of togetherness brought on by the dramatic, emotionally charged rescue of ");
+      await DPRINT(MUNRAB);
+      tell("'s daughter.\n");
       return true;
     } else if (g.END_GAME_C == 3) {
       tell("\nYou can feel your grip loosen as the crowd below continues its orgy of feeling.\n");
@@ -15726,7 +16813,9 @@ async function I_END_GAME() {
     } else if (g.END_GAME_C == 4) {
       tell("Your sweaty hands slip off the wire.");
       await CARRIAGE_RETURNS(14);
-      tell("The story of your evening's heroic deeds must have just been passed among the circus people below, because you feel the sudden pressure of your shoulders sinking deeply into the ", D(NET), " and with a rousing chorus of \"Hip hip hooray!\" you are flung back high into the air, where you view the smiling upturned faces of your circle of boosters.\n\nYou float back down and on the second blast-off -- \"Hip hip hooray!\" -- you pass out, not so much from the acceleration as from the sheer exhilaration of having saved The Traveling Circus That Time Forgot, Inc.\n");
+      tell("The story of your evening's heroic deeds must have just been passed among the circus people below, because you feel the sudden pressure of your shoulders sinking deeply into the ");
+      await DPRINT(NET);
+      tell(" and with a rousing chorus of \"Hip hip hooray!\" you are flung back high into the air, where you view the smiling upturned faces of your circle of boosters.\n\nYou float back down and on the second blast-off -- \"Hip hip hooray!\" -- you pass out, not so much from the acceleration as from the sheer exhilaration of having saved The Traveling Circus That Time Forgot, Inc.\n");
       return await FINISH();
     } else {
       return false;
@@ -15739,7 +16828,15 @@ async function I_END_GAME() {
     setFlag(THUMB, NDESCBIT);
     setFlag(JIM, NDESCBIT);
     if (g.HERE == RING) {
-      tell("\nThe ", D(JIM), " comes sprinting through the wings with the ", D(NET), " slung over his shoulder and the midget ", D(THUMB), " in tow. ", D(MUNRAB), " and his two employees each grab part of the net, and they try to position it directly under the imperiled little girl.\n");
+      tell("\nThe ");
+      await DPRINT(JIM);
+      tell(" comes sprinting through the wings with the ");
+      await DPRINT(NET);
+      tell(" slung over his shoulder and the midget ");
+      await DPRINT(THUMB);
+      tell(" in tow. ");
+      await DPRINT(MUNRAB);
+      tell(" and his two employees each grab part of the net, and they try to position it directly under the imperiled little girl.\n");
       return true;
     } else {
       return false;
@@ -15764,7 +16861,9 @@ async function I_END_GAME() {
     return true;
   } else if ((loc(NET) == MUNRAB) && (g.HERE == RING)) {
     enable(await QUEUE(I_END_GAME.id, -1));
-    tell("\nMunrab & Company, their faces anxiously upturned, are pulling the ", D(NET), "  every which way, kicking sawdust from one end of the ring to the other.\n");
+    tell("\nMunrab & Company, their faces anxiously upturned, are pulling the ");
+    await DPRINT(NET);
+    tell("  every which way, kicking sawdust from one end of the ring to the other.\n");
     return true;
   } else {
     return false;
@@ -15790,7 +16889,9 @@ async function I_TAMER() {
         move(GIRL, CRAWL_SPACE);
         tell("\nThe girl drops out of view");
         if (g.TAMER_C == 3) {
-          tell("; you hear foot-stomping from inside the ", D(CRAWL_SPACE), " and then a long silence");
+          tell("; you hear foot-stomping from inside the ");
+          await DPRINT(CRAWL_SPACE);
+          tell(" and then a long silence");
         }
         tell(S(g.PERIOD));
       } else if (g.TAMER_C == 2) {
@@ -15805,13 +16906,21 @@ async function I_TAMER() {
         enable(await QUEUE(I_FOLLOW.id, 2));
         g.FOLLOW_FLAG = 16;
         clearFlag(CURTAINS, OPENBIT);
-        tell("\n", D(TAMER), ", with a confused look on his face, stares at you as if he'd never seen a sideshow freak in his life.");
+        tell("\n");
+        await DPRINT(TAMER);
+        tell(", with a confused look on his face, stares at you as if he'd never seen a sideshow freak in his life.");
         if (hasFlag(VEIL, WORNBIT)) {
           tell(" He peels back your veil,");
         } else {
           tell(" He");
         }
-        tell(" shoves you to the ", D(GROUND), ", and steps up into the ", D(TAMER_TRAILER), ". You bring ", D(ME), " to your feet.\n");
+        tell(" shoves you to the ");
+        await DPRINT(GROUND);
+        tell(", and steps up into the ");
+        await DPRINT(TAMER_TRAILER);
+        tell(". You bring ");
+        await DPRINT(ME);
+        tell(" to your feet.\n");
         return true;
       } else {
         return false;
@@ -15827,7 +16936,9 @@ async function TELL_BOOST_GIRL(again$ = false) {
   if (again$) {
     tell("\nOnce again ");
   }
-  tell("you can hear the strained voice of ", D(THUMB), " cursing in Russian as he gives a boost to his human cargo. ");
+  tell("you can hear the strained voice of ");
+  await DPRINT(THUMB);
+  tell(" cursing in Russian as he gives a boost to his human cargo. ");
   if (again$) {
     tell("\nThe girl is held precariously up to the opening.\n");
     return true;
@@ -15839,7 +16950,9 @@ async function TELL_BOOST_GIRL(again$ = false) {
 
 async function GIRL_F() {
   if (isVerb(V.LISTEN) && (loc(GIRL) == LOCAL_GLOBALS) && g.GIRL_CRIED) {
-    tell("You don't hear the ", D(WHIMPER), " now.\n");
+    tell("You don't hear the ");
+    await DPRINT(WHIMPER);
+    tell(" now.\n");
     return true;
   } else if (isVerb(V.EXAMINE)) {
     tell("She looks exhausted, but also somehow strengthened by her travails this evening.\n");
@@ -15864,7 +16977,13 @@ async function GIRL_F() {
     clearFlag(GIRL, RMUNGBIT);
     clearFlag(APE_DOOR, OPENBIT);
     setFlag(APE_DOOR, LOCKEDBIT);
-    tell("You hoist the girl from out of the ", D(CRAWL_SPACE), ". ", D(THUMB), ", exhilarated by the rescue, climbs out of the opening unassisted, and then exits the ", D(TAMER_TRAILER), ".\n");
+    tell("You hoist the girl from out of the ");
+    await DPRINT(CRAWL_SPACE);
+    tell(". ");
+    await DPRINT(THUMB);
+    tell(", exhilarated by the rescue, climbs out of the opening unassisted, and then exits the ");
+    await DPRINT(TAMER_TRAILER);
+    tell(".\n");
     return true;
   } else if (isVerb(V.GIVE, V.SHOW) && (g.PRSO == TRADE_CARD)) {
     tell("\"That's me,\" she says.\n");
@@ -15878,9 +16997,12 @@ async function GIRL_F() {
     tell(S(g.PERIOD));
     return true;
   } else if ((isVerb(V.GIVE, V.PUT_ON) && (g.PRSI == GIRL)) || (isVerb(V.TIE) && (g.PRSO == RIBBON))) {
-    tell("Understandably, ", D(GIRL), " is reluctant to accept gifts from strangers");
+    tell("Understandably, ");
+    await DPRINT(GIRL);
+    tell(" is reluctant to accept gifts from strangers");
     if (g.PRSO == RIBBON) {
-      tell(", even her own ", D(RIBBON));
+      tell(", even her own ");
+      await DPRINT(RIBBON);
     }
     tell(S(g.PERIOD));
     return true;
@@ -15905,7 +17027,13 @@ async function I_GIRL() {
     enable(await QUEUE(I_FOLLOW.id, 2));
     g.P_IT_OBJECT = MUNRAB;
     g.FOLLOW_FLAG = 8;
-    tell("\nAs you approach the ", D(WAGON), ", ", D(MUNRAB), " steps down from inside his office and, as his eyes fall upon the figure of you carrying the only bit of preciousness in his life, it's as if he were jolted by an ", D(PROD), ". For an instant, his confused mind appears to be sending him strong fight-or-flight messages, for suddenly he dashes off through the hole in the fence.\n");
+    tell("\nAs you approach the ");
+    await DPRINT(WAGON);
+    tell(", ");
+    await DPRINT(MUNRAB);
+    tell(" steps down from inside his office and, as his eyes fall upon the figure of you carrying the only bit of preciousness in his life, it's as if he were jolted by an ");
+    await DPRINT(PROD);
+    tell(". For an instant, his confused mind appears to be sending him strong fight-or-flight messages, for suddenly he dashes off through the hole in the fence.\n");
     return true;
   } else if (loc(MUNRAB) == MEN) {
     if (g.HERE == NEAR_WAGON) {
@@ -15928,9 +17056,19 @@ async function I_GIRL() {
     clearFlag(CLOWN_ALLEY, TOUCHBIT);
     setFlag(GIRL, NDESCBIT);
     setFlag(APE, NDESCBIT);
-    tell("\n", D(MUNRAB), ", standing here desperate and alone in the middle of the menagerie, is calling out in every direction for the detective.\n\nThe sotted sleuth comes staggering in from the midway, and ", D(MUNRAB), ", pointing confidently at you, delivers the order, \"There is the perpetrator. Shoot ");
+    tell("\n");
+    await DPRINT(MUNRAB);
+    tell(", standing here desperate and alone in the middle of the menagerie, is calling out in every direction for the detective.\n\nThe sotted sleuth comes staggering in from the midway, and ");
+    await DPRINT(MUNRAB);
+    tell(", pointing confidently at you, delivers the order, \"There is the perpetrator. Shoot ");
     (await MAN_OR_WOMAN("him", "her"));
-    tell(".\" As the ", D(DICK), " stumbles toward you, your ears are pierced by ", D(GIRL), " screaming at the top of her lungs, and then by the screech of bending metal. Suddenly, you're blindsided by a wall of bristly animal fur which knocks you to the ground. You get up dazed, and see ", D(MUNRAB), " chasing a giant ape to the north while the detective slinks away through the hole in the fence.\n");
+    tell(".\" As the ");
+    await DPRINT(DICK);
+    tell(" stumbles toward you, your ears are pierced by ");
+    await DPRINT(GIRL);
+    tell(" screaming at the top of her lungs, and then by the screech of bending metal. Suddenly, you're blindsided by a wall of bristly animal fur which knocks you to the ground. You get up dazed, and see ");
+    await DPRINT(MUNRAB);
+    tell(" chasing a giant ape to the north while the detective slinks away through the hole in the fence.\n");
     return true;
   } else {
     return false;
@@ -16024,7 +17162,15 @@ async function THUMB_F() {
     }
   } else if (g.HERE == BLUE_ROOM) {
     if (await DISTURB$(THUMB)) {
-      tell("Curious, the ", D(DEALER), " peeks under the ", D(TABLE), " and flushes ", D(THUMB), ", who sprints through the ", D(BLUE_DOOR), ". ");
+      tell("Curious, the ");
+      await DPRINT(DEALER);
+      tell(" peeks under the ");
+      await DPRINT(TABLE);
+      tell(" and flushes ");
+      await DPRINT(THUMB);
+      tell(", who sprints through the ");
+      await DPRINT(BLUE_DOOR);
+      tell(". ");
       return await EIGHTY_SIX();
     } else if (isVerb(V.EXAMINE)) {
       if (hasFlag(TABLE, RMUNGBIT) && (g.HERE == BLUE_ROOM)) {
@@ -16097,7 +17243,11 @@ async function THUMB_DESCFCN(x = 0) {
     tell("Sitting on an upper bunk, with his arms folded and legs swinging, is Comrade Thumb.");
     return true;
   } else if (hasFlag(CROWBAR, TOUCHBIT)) {
-    tell("Lying perfectly still in the ", D(UPPER), ", yet with his eyes wide open, is ", D(THUMB), ".");
+    tell("Lying perfectly still in the ");
+    await DPRINT(UPPER);
+    tell(", yet with his eyes wide open, is ");
+    await DPRINT(THUMB);
+    tell(".");
     return true;
   } else {
     tell("Comrade Thumb is here.");
@@ -16106,7 +17256,10 @@ async function THUMB_DESCFCN(x = 0) {
 }
 
 async function THUMB_DRINKS() {
-  tell(D(THUMB), " slurps his fill of ", D(WATER), ". He then plops down, gives you a quick salute,");
+  await DPRINT(THUMB);
+  tell(" slurps his fill of ");
+  await DPRINT(WATER);
+  tell(". He then plops down, gives you a quick salute,");
   return true;
 }
 
@@ -16120,7 +17273,7 @@ async function UNIFORM_F() {
 
 async function KIND_OF_PERFORMER(person = false) {
   if (person) {
-    tell(D(person));
+    await DPRINT(person);
   } else {
     tell("Tina");
   }
@@ -16139,7 +17292,9 @@ async function FLOWER_F() {
       tell("T");
     }
     setFlag(FLOWER, RMUNGBIT);
-    tell("he daisy spritzes some water in your face, and ", D(THUMB), "'s cherubic face lets out a squeal of delight.\n");
+    tell("he daisy spritzes some water in your face, and ");
+    await DPRINT(THUMB);
+    tell("'s cherubic face lets out a squeal of delight.\n");
     return true;
   } else {
     return false;
@@ -16154,13 +17309,17 @@ async function I_BOOST() {
     if (g.HERE == CON_AREA) {
       crlf();
       if (g.BOOST_COUNTER == 1) {
-        tell("The last of the crowd just now trickles eastward through the ", D(TURNSTILE), ".\n\nA midget decked out in a Russian general's uniform is standing before");
+        tell("The last of the crowd just now trickles eastward through the ");
+        await DPRINT(TURNSTILE);
+        tell(".\n\nA midget decked out in a Russian general's uniform is standing before");
       } else if (g.BOOST_COUNTER == 2) {
         tell("The little general gets up on his tiptoes in front of");
       } else if (g.BOOST_COUNTER == 3) {
         tell("Attempting to do a pull-up, Comrade Thumb manages to sprawl himself onto");
       } else if (g.BOOST_COUNTER == 4) {
-        tell("Straining his neck to reach the spout, the midget gropes for the button, loses his grip and plops to the ", D(GROUND), " before");
+        tell("Straining his neck to reach the spout, the midget gropes for the button, loses his grip and plops to the ");
+        await DPRINT(GROUND);
+        tell(" before");
       } else if (g.BOOST_COUNTER == 5) {
         tell("The midget looks up at you sadly, then at");
       } else if (g.BOOST_COUNTER == 6) {
@@ -16168,7 +17327,9 @@ async function I_BOOST() {
         await BOOST_EXIT();
         return false;
       }
-      tell(" the ", D(FOUNTAIN), ".\n");
+      tell(" the ");
+      await DPRINT(FOUNTAIN);
+      tell(".\n");
       return true;
     } else {
       return false;
@@ -16195,11 +17356,15 @@ async function JOEY_DESC(x = 0) {
   } else if (g.HERE == BACK_YARD) {
     tell("A tall and lanky clown in baggy pants trudges out of the ");
     if (g.P_WALK_DIR == P.EAST) {
-      tell(D(DARKNESS));
+      await DPRINT(DARKNESS);
     } else {
       tell("tent");
     }
-    tell(" and toward the ", D(TURNSTILE), ". ", D(THUMB), " follows behind.");
+    tell(" and toward the ");
+    await DPRINT(TURNSTILE);
+    tell(". ");
+    await DPRINT(THUMB);
+    tell(" follows behind.");
     return true;
   } else if (g.HERE == EAST_CAMP) {
     tell("Chuckles is standing, out of costume, in front of the aluminum trailer.");
@@ -16207,7 +17372,9 @@ async function JOEY_DESC(x = 0) {
       tell(" As you approach, ");
       if (await JOKE_TIME$(g.JOEY_JOKE)) {
         g.JOEY_JOKE = true;
-        tell("he glances at you and says, \"Pick up an application at the ", D(WAGON), ", not here.\"");
+        tell("he glances at you and says, \"Pick up an application at the ");
+        await DPRINT(WAGON);
+        tell(", not here.\"");
         return true;
       } else {
         tell("he begins polishing away at it.");
@@ -16292,7 +17459,10 @@ async function JOEY_F() {
     } else if ((g.PRSO == SCRAP) && !(hasFlag(SCRAP, RMUNGBIT))) {
       setFlag(SCRAP, RMUNGBIT);
       g.SCARE_NUMBER = g.SCARE_NUMBER + 1;
-      tell(D(JOEY), " looks skeptically at the ", D(SCRAP), " while listening to you tell where you found it. ");
+      await DPRINT(JOEY);
+      tell(" looks skeptically at the ");
+      await DPRINT(SCRAP);
+      tell(" while listening to you tell where you found it. ");
       if (await JOEY_SCARED$(true)) {
         return M_FATAL;
       } else if (hasFlag(NOTE, RMUNGBIT)) {
@@ -16305,24 +17475,32 @@ async function JOEY_F() {
     } else if ((g.PRSO == NOTE) && !(hasFlag(NOTE, RMUNGBIT))) {
       setFlag(NOTE, RMUNGBIT);
       g.SCARE_NUMBER = g.SCARE_NUMBER + 1;
-      tell("He reads the ", D(NOTE), ", silently mouthing the words. ");
+      tell("He reads the ");
+      await DPRINT(NOTE);
+      tell(", silently mouthing the words. ");
       if (await JOEY_SCARED$(true)) {
         return M_FATAL;
       } else if (hasFlag(SCRAP, RMUNGBIT)) {
         await CHERRY_PIE();
         await ELBOW_GREASE();
       } else {
-        tell("He deadpans, \"Fascinating. Don't let the ", D(DICK), " find you with that.\"\n");
+        tell("He deadpans, \"Fascinating. Don't let the ");
+        await DPRINT(DICK);
+        tell(" find you with that.\"\n");
       }
       return true;
     } else if ((g.PRSO == SHEET) && !(hasFlag(SHEET, RMUNGBIT))) {
       setFlag(SHEET, RMUNGBIT);
       g.SCARE_NUMBER = g.SCARE_NUMBER + 1;
-      tell("Chuckles's eyes dart between the various numbers in the multiple columns on the ", D(SHEET), ". ");
+      tell("Chuckles's eyes dart between the various numbers in the multiple columns on the ");
+      await DPRINT(SHEET);
+      tell(". ");
       if (await JOEY_SCARED$(true)) {
         return M_FATAL;
       } else if (g.JOEY_NAME_KNOWN) {
-        tell("\"So what? It's tough all over. I don't hold any grudge against ", D(MUNRAB), ". Hell, I'm just a clown, a happy clown.\" ");
+        tell("\"So what? It's tough all over. I don't hold any grudge against ");
+        await DPRINT(MUNRAB);
+        tell(". Hell, I'm just a clown, a happy clown.\" ");
         return await ELBOW_GREASE();
       } else {
         tell("\"I don't know anyone by that name.\"\n");
@@ -16340,7 +17518,9 @@ async function JOEY_F() {
 }
 
 async function HATE_TO_SEE() {
-  tell("\"I'd hate to be caught red-handed holding that ", D(RIBBON), " if I were you.\" ");
+  tell("\"I'd hate to be caught red-handed holding that ");
+  await DPRINT(RIBBON);
+  tell(" if I were you.\" ");
   return true;
 }
 
@@ -16353,13 +17533,19 @@ async function I_JOEY() {
       false /* stray atom OH in original source */;
       g.FOLLOW_FLAG = 4;
       enable(await QUEUE(I_FOLLOW.id, 2));
-      tell(" the ", D(TAMER_TRAILER), ".\n");
+      tell(" the ");
+      await DPRINT(TAMER_TRAILER);
+      tell(".\n");
       return true;
     } else {
       return false;
     }
   } else if ((g.HERE == EAST_CAMP) && (g.WIPE_C == 2 || g.WIPE_C == 4 || g.WIPE_C == 6) && !(isVerb(V.SHOW, V.GIVE) && (g.PRSI == JOEY))) {
-    tell("\n", D(JOEY), " dribbles a little Dr. Nostrum's onto his rag and continues wiping away at the ", D(TAMER_TRAILER), ".\n");
+    tell("\n");
+    await DPRINT(JOEY);
+    tell(" dribbles a little Dr. Nostrum's onto his rag and continues wiping away at the ");
+    await DPRINT(TAMER_TRAILER);
+    tell(".\n");
     return true;
   } else {
     return false;
@@ -16367,13 +17553,15 @@ async function I_JOEY() {
 }
 
 async function ELBOW_GREASE() {
-  tell(D(JOEY));
+  await DPRINT(JOEY);
   if (g.SCARE_NUMBER == 2) {
     tell(", unable to mask his concern,");
   } else if (g.SCARE_NUMBER == 3) {
     tell(", looking unclownly and perturbed,");
   } else if (g.SCARE_NUMBER == 4) {
-    tell(" does a slow burn as he continues cleaning the ", D(TAMER_TRAILER), ".\n");
+    tell(" does a slow burn as he continues cleaning the ");
+    await DPRINT(TAMER_TRAILER);
+    tell(".\n");
     return true;
   }
   tell(" applies extra elbow grease to his cleaning.\n");
@@ -16404,7 +17592,8 @@ async function TELL_SCREWS(string) {
   if (g.WON_JOEY) {
     tell("Looking like a clown with a hotfoot, ");
   }
-  tell(D(JOEY), " suddenly screws the cap onto the flask of Dr. Nostrum's and ", S(string));
+  await DPRINT(JOEY);
+  tell(" suddenly screws the cap onto the flask of Dr. Nostrum's and ", S(string));
   return true;
 }
 
@@ -16415,7 +17604,9 @@ async function CHERRY_PIE() {
 
 async function CLOWN_ALLEY_F(rarg) {
   if (rarg == M_LOOK) {
-    tell("The gut of the trailer exposes the underside of circus life -- grungy costumes strewn about, crooked and cracked mirrors, the musty odor of fresh makeup mingled with clown sweat infusing the air.\n\nAgainst the wall is a row of cramped-looking bunks, and running from the floor to one ", D(UPPER), " is a small ladder. ");
+    tell("The gut of the trailer exposes the underside of circus life -- grungy costumes strewn about, crooked and cracked mirrors, the musty odor of fresh makeup mingled with clown sweat infusing the air.\n\nAgainst the wall is a row of cramped-looking bunks, and running from the floor to one ");
+    await DPRINT(UPPER);
+    tell(" is a small ladder. ");
     if (first(UPPER) || first(LOWER)) {
       tell(S(g.YOU_SEE));
       if (first(LOWER)) {
@@ -16455,11 +17646,13 @@ async function CLOWN_ALLEY_F(rarg) {
 
 async function PRINT_BUNKS(b1, b2) {
   await PRINT_CONTENTS(b1);
-  tell(" sitting on the ", D(b1));
+  tell(" sitting on the ");
+  await DPRINT(b1);
   if (first(b2)) {
     tell(", and");
     await PRINT_CONTENTS(b2);
-    tell(" on the ", D(b2));
+    tell(" on the ");
+    await DPRINT(b2);
   }
   tell(".");
   return true;
@@ -16467,11 +17660,16 @@ async function PRINT_BUNKS(b1, b2) {
 
 async function EXIT_CLOWN_ALLEY() {
   if (!(hasFlag(WARPED_DOOR, OPENBIT))) {
-    tell("The ", D(WARPED_DOOR), " is closed.\n");
+    tell("The ");
+    await DPRINT(WARPED_DOOR);
+    tell(" is closed.\n");
     return false;
   } else if ((await RUNNING$(I_CLOWN_ALLEY.id)) && (await HELD$(TRAY))) {
     move(TRAY, LOCAL_GLOBALS);
-    tell(D(JOEY), " notices a little squirreliness on your part, confronts you, grabs the ", D(TRAY), ", and throws you out.\n\n");
+    await DPRINT(JOEY);
+    tell(" notices a little squirreliness on your part, confronts you, grabs the ");
+    await DPRINT(TRAY);
+    tell(", and throws you out.\n\n");
     return WEST_CAMP;
   } else {
     return WEST_CAMP;
@@ -16523,7 +17721,9 @@ async function I_CLOWN_ALLEY() {
     clearFlag(WARPED_DOOR, OPENBIT);
     setFlag(WARPED_DOOR, LOCKEDBIT);
     if (g.HERE == WEST_CAMP) {
-      tell("\nThe ", D(WARPED_DOOR), " is slammed shut.\n");
+      tell("\nThe ");
+      await DPRINT(WARPED_DOOR);
+      tell(" is slammed shut.\n");
       return true;
     } else {
       return false;
@@ -16537,7 +17737,9 @@ async function I_CLOWN_ALLEY() {
       }
       tell("\"");
     } else if ((g.CLOWN_COUNTER == 3) && !g.HELPED_THUMB) {
-      tell("\n", D(THUMB), " mutters something in Russian to Chuckles.\n\n");
+      tell("\n");
+      await DPRINT(THUMB);
+      tell(" mutters something in Russian to Chuckles.\n\n");
       await PERFORM(V.RUB, JOEY);
       return true;
     } else if (g.CLOWN_COUNTER == 4) {
@@ -16574,15 +17776,22 @@ async function UNMASK() {
   if (!(hasFlag(MASK, WORNBIT)) || (await HELD$(TRAY))) {
     tell("Snatching away the ");
     if (!(hasFlag(MASK, WORNBIT)) && (await HELD$(TRAY))) {
-      tell(D(MASK), " and the ", D(TRAY), ", ");
+      await DPRINT(MASK);
+      tell(" and the ");
+      await DPRINT(TRAY);
+      tell(", ");
     } else if (await HELD$(TRAY)) {
-      tell(D(TRAY), ", ");
+      await DPRINT(TRAY);
+      tell(", ");
     } else {
-      tell(D(MASK), ", ");
+      await DPRINT(MASK);
+      tell(", ");
     }
   }
   move(TRAY, LOCAL_GLOBALS);
-  tell("Chuckles seizes you by the scruff of your neck, and the irate clown hustles you out of the ", D(CLOWN_TRAILER), ".\n\n");
+  tell("Chuckles seizes you by the scruff of your neck, and the irate clown hustles you out of the ");
+  await DPRINT(CLOWN_TRAILER);
+  tell(".\n\n");
   clearFlag(MASK, WORNBIT);
   move(MASK, LOCAL_GLOBALS);
   return await GOTO(WEST_CAMP);
@@ -16610,7 +17819,11 @@ async function ASH_F() {
     } else {
       setFlag(ASH, RMUNGBIT);
       move(SCRAP, TRAY);
-      tell("In disturbing the ", D(ASH), ", a ", D(SCRAP), " is revealed.\n");
+      tell("In disturbing the ");
+      await DPRINT(ASH);
+      tell(", a ");
+      await DPRINT(SCRAP);
+      tell(" is revealed.\n");
       return true;
     }
   } else if (isVerb(V.EMPTY, V.DROP, V.POUR)) {
@@ -16618,7 +17831,9 @@ async function ASH_F() {
     tell("The ashes swirl through the air and disappear");
     if ((hasFlag(ASH, RMUNGBIT) && (loc(SCRAP) == TRAY)) || !(hasFlag(ASH, RMUNGBIT))) {
       move(SCRAP, g.HERE);
-      tell(" as a tiny ", D(SCRAP), " floats down");
+      tell(" as a tiny ");
+      await DPRINT(SCRAP);
+      tell(" floats down");
     }
     tell(S(g.PERIOD));
     return true;
@@ -16629,10 +17844,16 @@ async function ASH_F() {
 
 async function SCRAP_F() {
   if (isVerb(V.EXAMINE)) {
-    tell("The ", D(SCRAP), " is about an inch square.\n");
+    tell("The ");
+    await DPRINT(SCRAP);
+    tell(" is about an inch square.\n");
     return true;
   } else if (isVerb(V.COMPARE) && (NOTE == g.PRSO || NOTE == g.PRSI)) {
-    tell("The \"M\" on the ", D(SCRAP), " looks like it was cut from the the same newspaper as the letters on the ", D(NOTE), ".\n");
+    tell("The \"M\" on the ");
+    await DPRINT(SCRAP);
+    tell(" looks like it was cut from the the same newspaper as the letters on the ");
+    await DPRINT(NOTE);
+    tell(".\n");
     return true;
   } else if (isVerb(V.READ)) {
     tell("There's a paragraph of yak trivia on one side, and the letter \"M\" in 48-point type on the other.\n");
@@ -16654,7 +17875,9 @@ async function COSTUME_F() {
 async function MIRROR_F() {
   if (isVerb(V.LOOK_INSIDE)) {
     if (hasFlag(MASK, WORNBIT)) {
-      tell(S(g.YOU_SEE), " your beady eyes through the ", D(MASK), ".\n");
+      tell(S(g.YOU_SEE), " your beady eyes through the ");
+      await DPRINT(MASK);
+      tell(".\n");
       return true;
     } else {
       await PERFORM(V.EXAMINE, ME);
@@ -16667,7 +17890,8 @@ async function MIRROR_F() {
 
 async function BUNK_F() {
   if (isVerb(V.EXAMINE, V.LOOK_INSIDE) && (g.PRSO == UPPER) && (loc(THUMB) == g.HERE)) {
-    tell(D(THUMB), " is there. ");
+    await DPRINT(THUMB);
+    tell(" is there. ");
     if (first(UPPER)) {
       return false;
     }
@@ -16702,7 +17926,11 @@ async function WARPED_DOOR_F() {
       setFlag(WARPED_DOOR, OPENBIT);
       clearFlag(WARPED_DOOR, LOCKEDBIT);
       clearFlag(CLOWN_ALLEY, TOUCHBIT);
-      tell("You wedge the ", D(CROWBAR), " between the frame and the door then give it a yank. The ", D(WARPED_DOOR), " pops open.\n");
+      tell("You wedge the ");
+      await DPRINT(CROWBAR);
+      tell(" between the frame and the door then give it a yank. The ");
+      await DPRINT(WARPED_DOOR);
+      tell(" pops open.\n");
       return true;
     } else {
       tell(S(g.IT_LOOKS_LIKE));
@@ -16711,7 +17939,9 @@ async function WARPED_DOOR_F() {
       return true;
     }
   } else if (isVerb(V.OPEN, V.PICK) && !g.WARPED_DOOR_BROKEN && !g.PRSI && (await HELD$(CROWBAR))) {
-    tell("(with the ", D(CROWBAR), ")\n");
+    tell("(with the ");
+    await DPRINT(CROWBAR);
+    tell(")\n");
     await PERFORM(V.OPEN, WARPED_DOOR, CROWBAR);
     return true;
   } else if (isVerb(V.CLOSE) && g.WARPED_DOOR_BROKEN) {
@@ -16727,7 +17957,9 @@ async function WARPED_DOOR_F() {
     if (g.UNMASKED$ || hasFlag(WARPED_DOOR, RMUNGBIT) || (g.HERE == CLOWN_ALLEY) || !(g.CLOWN_COUNTER == 25)) {
       return false;
     } else {
-      tell("Chuckles pops his head out from behind the ", D(WARPED_DOOR), " and ");
+      tell("Chuckles pops his head out from behind the ");
+      await DPRINT(WARPED_DOOR);
+      tell(" and ");
       if (hasFlag(MASK, WORNBIT) && !(hasFlag(SHAWL, WORNBIT)) && !(hasFlag(DRESS, WORNBIT))) {
         g.SCORE = g.SCORE + 10;
         g.CLOWN_COUNTER = 0;

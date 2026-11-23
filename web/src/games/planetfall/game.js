@@ -5,41 +5,41 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
-export const FLOYDBIT = 0;
-export const ONBIT = 1;
-export const RLANDBIT = 2;
-export const ACIDBIT = 3;
-export const TAKEBIT = 4;
-export const MUNGBIT = 5;
-export const WEARBIT = 6;
-export const WORNBIT = 7;
-export const VOWELBIT = 8;
-export const NDESCBIT = 9;
-export const TOOLBIT = 10;
-export const INVISIBLE = 11;
-export const TRYTAKEBIT = 12;
-export const READBIT = 13;
-export const DOORBIT = 14;
-export const OPENBIT = 15;
-export const FOODBIT = 16;
-export const CONTBIT = 17;
-export const SEARCHBIT = 18;
-export const TRANSBIT = 19;
-export const LIGHTBIT = 20;
-export const ACTORBIT = 21;
-export const TOUCHBIT = 22;
-export const SURFACEBIT = 23;
-export const MUNGEDBIT = 24;
-export const SCRAMBLEDBIT = 25;
-export const RWATERBIT = 26;
-export const CLIMBBIT = 27;
-export const VEHBIT = 28;
-export const RMUNGBIT = 29;
+export const FLOYDBIT = 2;
+export const RWATERBIT = 3;
+export const ACIDBIT = 4;
+export const ONBIT = 5;
+export const RLANDBIT = 6;
+export const VOWELBIT = 7;
+export const NDESCBIT = 8;
+export const TRANSBIT = 9;
+export const SEARCHBIT = 10;
+export const OPENBIT = 11;
+export const WORNBIT = 12;
+export const TOUCHBIT = 13;
+export const SURFACEBIT = 14;
+export const MUNGBIT = 15;
+export const TRYTAKEBIT = 16;
+export const MUNGEDBIT = 17;
+export const SCRAMBLEDBIT = 18;
+export const INVISIBLE = 19;
+export const TOOLBIT = 20;
+export const LIGHTBIT = 21;
+export const WEARBIT = 22;
+export const READBIT = 23;
+export const CONTBIT = 24;
+export const TAKEBIT = 25;
+export const DOORBIT = 26;
+export const FOODBIT = 27;
+export const CLIMBBIT = 29;
+export const VEHBIT = 30;
+export const ACTORBIT = 31;
+export const RMUNGBIT = 0;
 
 // ---- Objects and rooms ----
 export const DORM_B = 1;
