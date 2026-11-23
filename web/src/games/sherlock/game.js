@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  copyTable, inTable, printTable, readChar, restoreUndo, s16, saveUndo, shift,
+  copyTable, inTable, printTable, readChar, restoreUndo, s16, saveUndo, shift, wordText,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -4652,7 +4652,7 @@ async function RT_SEE_ANYTHING_IN$(thing) {
 
 async function RT_CANT_TOUCH_MSG(obj, clsd, in_out) {
   await RT_CYOU_MSG();
-  tell("cannot ", S(g.GL_P_PRSA_WORD), " ");
+  tell("cannot ", wordText(g.GL_P_PRSA_WORD), " ");
   await RT_THEO_PRINT(obj);
   if (!(clsd == 0)) {
     tell(" because ");
@@ -6148,7 +6148,7 @@ async function PRE_CALL() {
   } else if (eq(get(GL_P_NAMW, 0), W.CAB)) {
     if (hasFlag(g.GL_PLACE_CUR, FL_INDOORS)) {
       await RT_CYOU_MSG();
-      tell("can't ", S(g.GL_P_PRSA_WORD), " a cab while indoors.\n");
+      tell("can't ", wordText(g.GL_P_PRSA_WORD), " a cab while indoors.\n");
       return true;
     } else if (g.GL_PLACE_CUR == loc(TH_GROWLER_CAB) || g.GL_PLACE_CUR == loc(TH_HANSOM_CAB)) {
       tell(S(K_CAB_HERE_MSG), "\n");
@@ -6161,7 +6161,7 @@ async function PRE_CALL() {
         (await RT_CYOU_MSG("shout", "shouts"));
         tell("for a few moments");
       }
-      tell(", but nothing happens. Apparently that isn't how Victorians ", S(g.GL_P_PRSA_WORD), " cabs.\n");
+      tell(", but nothing happens. Apparently that isn't how Victorians ", wordText(g.GL_P_PRSA_WORD), " cabs.\n");
       return true;
     }
   } else if (!(hasFlag(g.GL_PRSO, FL_ALIVE)) || !(await RT_VISIBLE$(g.GL_PRSO))) {
@@ -6678,7 +6678,7 @@ async function V_BURN_WITH() {
     }
   } else {
     await RT_CYOU_MSG();
-    tell("can't ", S(g.GL_P_PRSA_WORD), " ");
+    tell("can't ", wordText(g.GL_P_PRSA_WORD), " ");
     await RT_THEO_PRINT();
     tell(".\n");
     return true;
@@ -7437,7 +7437,7 @@ async function V_GUESS() {
 async function V_HAGGLE() {
   if (!(hasFlag(g.GL_PRSO, FL_PERSON))) {
     await RT_CYOU_MSG();
-    tell("cannot ", S(g.GL_P_PRSA_WORD), " with ");
+    tell("cannot ", wordText(g.GL_P_PRSA_WORD), " with ");
     await RT_A_PRINT();
     tell(".\n");
   } else if (g.GL_PRSO == CH_HOLMES) {
@@ -7976,7 +7976,7 @@ async function V_LAMP_ON(off$ = false) {
   if (g.GL_P_PRSA_WORD == W.EXTINGUISH) {
     tell("extinguish");
   } else {
-    tell(S(g.GL_P_PRSA_WORD));
+    tell(wordText(g.GL_P_PRSA_WORD));
   }
   tell(" that");
   if (off$ && (g.GL_P_PRSA_WORD == W.CLOSE || g.GL_P_PRSA_WORD == W.SHUT || g.GL_P_PRSA_WORD == W.TURN)) {
@@ -8067,7 +8067,7 @@ async function V_ECHO() {
     tell("But it's not even fourth down!\n");
     return true;
   } else if (g.GL_P_PRSA_WORD == W.HUM || g.GL_P_PRSA_WORD == W.WHISTLE || g.GL_P_PRSA_WORD == W.SING) {
-    tell("You ", S(g.GL_P_PRSA_WORD), " tunelessly for a few moments until you remember that you're tone deaf and know next to nothing about music.\n");
+    tell("You ", wordText(g.GL_P_PRSA_WORD), " tunelessly for a few moments until you remember that you're tone deaf and know next to nothing about music.\n");
     return true;
   } else if (g.GL_P_PRSA_WORD == W.ECHO) {
     tell("ECHO...Echo...echo....\n");
@@ -8142,7 +8142,7 @@ async function V_OPEN_WITH() {
     return true;
   }
   await RT_CYOU_MSG();
-  tell("cannot ", S(g.GL_P_PRSA_WORD), " ");
+  tell("cannot ", wordText(g.GL_P_PRSA_WORD), " ");
   await RT_THEO_PRINT();
   tell(" with ");
   await RT_THEI_PRINT();
@@ -16756,7 +16756,7 @@ async function RT_AC_TH_COTTON_BALLS(context = false) {
     } else if (g.GL_PRSA == V.DROP || g.GL_PRSA == V.THROW || g.GL_PRSA == V.THROW_OVER) {
       if (hasFlag(g.GL_PRSO, FL_WORN)) {
         await RT_CYOU_MSG();
-        tell("cannot ", S(g.GL_P_PRSA_WORD), " ");
+        tell("cannot ", wordText(g.GL_P_PRSA_WORD), " ");
         await RT_THEO_PRINT();
         tell(" while");
         (await RT_YOU_MSG("are", "is"));
@@ -16851,7 +16851,7 @@ async function RT_AC_TH_STETHOSCOPE(context = false) {
     } else if (g.GL_PRSA == V.DROP || g.GL_PRSA == V.THROW || g.GL_PRSA == V.THROW_OVER) {
       if (hasFlag(TH_STETHOSCOPE, FL_WORN)) {
         await RT_CYOU_MSG();
-        tell("cannot ", S(g.GL_P_PRSA_WORD), " ");
+        tell("cannot ", wordText(g.GL_P_PRSA_WORD), " ");
         await RT_THEO_PRINT();
         tell(" while");
         (await RT_YOU_MSG("are", "is"));
@@ -19525,7 +19525,7 @@ async function RT_AC_TH_CAB_WHISTLE() {
       return await RT_BLOW_WHISTLE();
     } else {
       await RT_CYOU_MSG();
-      tell("can't ", S(g.GL_P_PRSA_WORD), " ");
+      tell("can't ", wordText(g.GL_P_PRSA_WORD), " ");
       await RT_A_PRINT();
       tell(" with ");
       await RT_THEI_PRINT();
@@ -20593,7 +20593,7 @@ async function RT_AC_TH_TORCH(context = false) {
       return put(getPropAddr(TH_WAX_AX, P.ADJECTIVE), 0, W.MELTED);
     } else if (!(hasFlag(g.GL_PRSO, FL_BURNABLE))) {
       await RT_CYOU_MSG();
-      tell("cannot ", S(g.GL_P_PRSA_WORD), " ");
+      tell("cannot ", wordText(g.GL_P_PRSA_WORD), " ");
       await RT_THEO_PRINT();
       tell(" with ");
       await RT_THEI_PRINT();
@@ -21689,7 +21689,7 @@ async function RT_AC_TH_SAFETY_DEPOSIT_BOX(context = false) {
     if (g.GL_PRSA == V.UNLOCK || g.GL_PRSA == V.OPEN || g.GL_PRSA == V.OPEN_WITH) {
       if (!(g.GL_PRSI == false || g.GL_PRSI == TH_BOX_KEY)) {
         await RT_CYOU_MSG();
-        tell("can't ", S(g.GL_P_PRSA_WORD), " ");
+        tell("can't ", wordText(g.GL_P_PRSA_WORD), " ");
         await RT_THEO_PRINT();
         tell(" with ");
         await RT_THEI_PRINT();
@@ -21784,7 +21784,7 @@ async function RT_AC_TH_DIAL(context = false) {
   } else if (g.GL_NOW_PRSI$ == 0) {
     if ((g.GL_PRSA == V.TUNE_TO) && !(g.GL_PRSI == false || g.GL_PRSI == TH_LEFT || g.GL_PRSI == TH_RIGHT)) {
       await RT_CYOU_MSG();
-      tell("can't ", S(g.GL_P_PRSA_WORD), " ");
+      tell("can't ", wordText(g.GL_P_PRSA_WORD), " ");
       await RT_THEO_PRINT(TH_DIAL);
       tell(" to ");
       await RT_THEI_PRINT();
@@ -23868,14 +23868,14 @@ async function RT_PROCESS_BOAT_ON_THAMES() {
   } else if (g.GL_PRSA == V.ROW || g.GL_PRSA == V.PADDLE || g.GL_PRSA == V.PADDLE_WITH) {
     if (((g.GL_PRSO == false || g.GL_PRSO == ROOMS || g.GL_PRSO == TH_BOAT) && (g.GL_PRSI == false)) || ((g.GL_PRSA == V.PADDLE_WITH) && (g.GL_PRSI == false))) {
       await RT_ALARM_CLR(RT_I_MOVE_DOWNSTREAM.id);
-      tell("[Please specify a direction to ", S(g.GL_P_PRSA_WORD), ".]\n");
+      tell("[Please specify a direction to ", wordText(g.GL_P_PRSA_WORD), ".]\n");
       return true;
     } else if ((g.GL_PRSO == LG_UP_DOWN_STREAM) || ((g.GL_PRSO == TH_INTDIR) && (g.GL_P_DIRECTION == P.WEST || g.GL_P_DIRECTION == P.EAST)) || ((g.GL_PRSO == TH_BOAT) && (g.GL_PRSI == TH_INTDIR))) {
       up$ = ((g.GL_PRSO == LG_UP_DOWN_STREAM) && eq(getProp(g.GL_PRSO, P.OBJ_NOUN), W.UPSTREAM)) || (g.GL_P_DIRECTION == P.WEST);
       await RT_ALARM_CLR(RT_I_MOVE_DOWNSTREAM.id);
       if (!(loc(TH_ANCHOR) == TH_BOAT)) {
         await RT_CYOU_MSG();
-        tell("can ", S(g.GL_P_PRSA_WORD), " like blue blazes, but the anchor is restraining the boat.\n");
+        tell("can ", wordText(g.GL_P_PRSA_WORD), " like blue blazes, but the anchor is restraining the boat.\n");
       } else if ((g.GL_PRSA == V.ROW) && !(loc(TH_OAR_2) == TH_OAR_LOCK)) {
         if (loc(TH_OAR_1) == TH_BOAT) {
           (await RT_CYOU_MSG("pull", "pulls"));
@@ -23913,7 +23913,7 @@ async function RT_PROCESS_BOAT_ON_THAMES() {
       return true;
     } else {
       await RT_ALARM_CLR(RT_I_MOVE_DOWNSTREAM.id);
-      tell("I don't recognize the direction you are asking me to ", S(g.GL_P_PRSA_WORD), ".\n");
+      tell("I don't recognize the direction you are asking me to ", wordText(g.GL_P_PRSA_WORD), ".\n");
       return true;
     }
   } else if (g.GL_PRSA == V.STAND || g.GL_PRSA == V.STAND_ON) {
@@ -23977,7 +23977,7 @@ async function RT_I_MOVE_DOWNSTREAM() {
 }
 
 async function RT_MOVE_UPSTREAM() {
-  tell("Fighting against the current, you ", S(g.GL_P_PRSA_WORD), " upstream. ");
+  tell("Fighting against the current, you ", wordText(g.GL_P_PRSA_WORD), " upstream. ");
   g.GL_NOW_LIT$ = await RT_IS_LIT$();
   if (loc(TH_BOAT) == RM_THAMES_ONE) {
     tell("\n\nAs you proceed you find yourself among the flotilla of warships that have come for the celebration of the Jubilee. You quickly decide that it's too dangerous here so you turn back and head downstream.");

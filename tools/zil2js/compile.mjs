@@ -1974,7 +1974,8 @@ class RoutineCompiler {
           const x = e.arg ? args[++i] : null;
           const form = this.c.expandNode ? this.c.expandNode(substLval(e.template, 'X', x)) : substLval(e.template, 'X', x);
           const h = form.items?.[0]?.v;
-          const simple = { PRINTD: 'D', PRINTN: 'N', PRINTC: 'C', PRINT: 'S', PRINTB: 'S' }[h];
+          const simple = { PRINTD: 'D', PRINTN: 'N', PRINTC: 'C', PRINT: 'S', PRINTB: 'wordText' }[h];
+          if (simple === 'wordText') this.c.usedHelpers.add('wordText');
           if (h === 'CRLF') { parts.push('"\\n"'); continue; }
           if (simple && form.items.length === 2 && this.isExpr(form.items[1]) && !this.mayPrint(form.items[1])) {
             parts.push(`${simple}(${stripParens(this.ex(form.items[1]))})`);

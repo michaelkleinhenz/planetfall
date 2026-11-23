@@ -84,7 +84,8 @@ export function resetState() {
     mem[0x11] &= 0x57;
     mem[0x20] = 25; mem[0x21] = 80;
     if (V >= 5) { mem[0x22] = 0; mem[0x23] = 80; mem[0x24] = 0; mem[0x25] = 25; mem[0x26] = 1; mem[0x27] = 1; }
-    mem[0x32] = 1; mem[0x33] = 2;
+    mem[0x32] = 1; mem[0x33] = 2; // Interpreter number and version: DECSystem-20, A.
+    mem[0x1e] = 1; mem[0x1f] = 65;
   }
 }
 
@@ -296,6 +297,8 @@ export function printC(c) { return tell(C(c)); }
 export function printS(x) { return tell(S(x)); }
 /** Print a dictionary word. */
 export function printB(addr) { return tell(decodeText(mem, Number(addr), 2).text); }
+/** The text of a dictionary word (TELL B word). */
+export function wordText(addr) { return decodeText(mem, Number(addr) & 0xffff, 2).text; }
 
 // ---------------------------------------------------------------------------
 // Misc primitives

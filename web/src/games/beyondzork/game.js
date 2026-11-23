@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  copyTable, encodeWord, inTable, printTable, readChar, restoreUndo, s16, saveUndo, setColor, setFont, tokenize,
+  copyTable, encodeWord, inTable, printTable, readChar, restoreUndo, s16, saveUndo, setColor, setFont, tokenize, wordText,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -2195,9 +2195,9 @@ async function REFRESH_STATS$() {
   }
   tell(C(SP));
   if (s16(cnt) > s16(1)) {
-    tell(S(W.ARE));
+    tell(wordText(W.ARE));
   } else {
-    tell(S(W.IS));
+    tell(wordText(W.IS));
   }
   tell(" back to normal.]\n");
   highlight(H_NORMAL);
@@ -3727,11 +3727,11 @@ async function PRINTCA(o = g.PRSO) {
 
 async function DESCRIBE_LANTERN(obj) {
   if (hasFlag(obj, MUNGED)) {
-    tell(S(W.BROKEN), C(SP));
+    tell(wordText(W.BROKEN), C(SP));
   } else if (hasFlag(obj, LIGHTED)) {
-    tell(S(W.LIGHTED), C(SP));
+    tell(wordText(W.LIGHTED), C(SP));
   } else if (!(hasFlag(obj, MAPPED))) {
-    tell(S(W.RUSTY), C(SP));
+    tell(wordText(W.RUSTY), C(SP));
   }
   printD(obj);
   return true;
@@ -3749,7 +3749,7 @@ async function DESCRIBE_SHILL(obj) {
     printD(obj);
     return true;
   }
-  tell("piece of ", S(W.DRIFTWOOD));
+  tell("piece of ", wordText(W.DRIFTWOOD));
   return true;
 }
 
@@ -3786,7 +3786,7 @@ async function DESCRIBE_DAGGER(obj) {
     tell(S(g.STHE));
   }
   if (hasFlag(obj, MUNGED)) {
-    tell(S(W.RUSTY), C(SP));
+    tell(wordText(W.RUSTY), C(SP));
   }
   printD(obj);
   return true;
@@ -3918,9 +3918,9 @@ async function DESCRIBE_HELM(obj) {
 
 async function DESCRIBE_HORSE(obj) {
   if (hasFlag(HORSE, LIVING)) {
-    tell(S(W.GRAY));
+    tell(wordText(W.GRAY));
   } else {
-    tell(S(W.DEAD));
+    tell(wordText(W.DEAD));
   }
   tell(C(SP), D(HORSE));
   return true;
@@ -3941,7 +3941,7 @@ async function DESCRIBE_KEYS(obj) {
   if (!(await SEE_COLOR$())) {
     word = W.GRAY;
   }
-  tell(S(word), C(SP));
+  tell(wordText(word), C(SP));
   printD(obj);
   return true;
 }
@@ -3968,11 +3968,11 @@ async function DESCRIBE_CLOAK(obj) {
 
 async function DESCRIBE_PARASOL(obj) {
   if (hasFlag(obj, MUNGED)) {
-    tell(S(W.BROKEN));
+    tell(wordText(W.BROKEN));
   } else if (hasFlag(obj, OPENED)) {
-    tell(S(W.OPEN));
+    tell(wordText(W.OPEN));
   } else {
-    tell(S(W.CLOSED));
+    tell(wordText(W.CLOSED));
   }
   printC(SP);
   printD(obj);
@@ -4046,7 +4046,7 @@ async function DESCRIBE_SCABBARD(obj) {
 }
 
 async function DESCRIBE_DIAMOND(obj) {
-  tell(S(W.SNOWFLAKE));
+  tell(wordText(W.SNOWFLAKE));
   return true;
 }
 
@@ -4569,9 +4569,9 @@ async function UPDATE_STAT(delta, stat = ENDURANCE, update_max = false) {
       tell(" just went ");
       if (s16(delta) < s16(0)) {
         x = S_BOOP;
-        tell(S(W.DOWN));
+        tell(wordText(W.DOWN));
       } else {
-        tell(S(W.UP));
+        tell(wordText(W.UP));
       }
     }
     if (!(newrank == 0)) {
@@ -4745,7 +4745,7 @@ async function DONT_HAVE_WAND$(obj, w_) {
     tell(" to direct its power.\n");
     return true;
   } else if (obj == w_) {
-    tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+    tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
     await THE_PRINT(w_);
     tell(" at itself.\n");
     return true;
@@ -4772,13 +4772,13 @@ async function CANT_REACH_WHILE_IN$(obj1, obj2) {
     await CANT_REACH(obj1);
     tell(" while you're ");
     if (obj2 == ARCH) {
-      tell(S(W.UNDER));
+      tell(wordText(W.UNDER));
     } else if (obj2 == DACT) {
-      tell(S(W.ON));
+      tell(wordText(W.ON));
     } else if (obj2 == BUSH) {
-      tell(S(W.BEHIND));
+      tell(wordText(W.BEHIND));
     } else {
-      tell(S(W.IN));
+      tell(wordText(W.IN));
     }
     tell(C(SP));
     await THE_PRINT(obj2);
@@ -4858,10 +4858,10 @@ async function PLAIN_ROOM$(rm = g.HERE) {
 
 async function GROUND_WORD() {
   if (hasFlag(g.HERE, INDOORS)) {
-    tell(S(W.FLOOR));
+    tell(wordText(W.FLOOR));
     return false;
   }
-  tell(S(W.GROUND));
+  tell(wordText(W.GROUND));
   return false;
 }
 
@@ -5285,7 +5285,7 @@ async function DARKFIGHT$() {
 async function PRACTICE$(wrd) {
   if (g.PRSO == 0) {
     if (g.LAST_MONSTER == 0) {
-      tell("You practice ", S(wrd), "ing ");
+      tell("You practice ", wordText(wrd), "ing ");
       if (g.LIT$ == 0) {
         tell("in the dark ");
       }
@@ -5470,11 +5470,11 @@ async function HIT_MONSTER(mode = NORMAL_ATTACK) {
   }
   tell(S(g.CYOU));
   if (g.PRSI == FEET) {
-    tell(S(W.KICK));
+    tell(wordText(W.KICK));
   } else if ((g.PRSI == HANDS) || prob(50)) {
-    tell(S(W.SWING));
+    tell(wordText(W.SWING));
   } else {
-    tell(S(W.STRIKE));
+    tell(wordText(W.STRIKE));
   }
   if (g.LIT$ == 0) {
     tell(" at the darkness, with no effect.\n");
@@ -5557,11 +5557,11 @@ async function DIAGNOSE_MONSTER(obj = g.PRSO) {
   }
   tell(" appears to be ");
   if (hasFlag(obj, SLEEPING)) {
-    tell(S(W.STUNNED), ", ");
+    tell(wordText(W.STUNNED), ", ");
     if (mend == max) {
-      tell(S(W.BUT));
+      tell(wordText(W.BUT));
     } else {
-      tell(S(W.AND));
+      tell(wordText(W.AND));
     }
     tell(", ");
   }
@@ -5737,13 +5737,13 @@ async function FIND_IN$(obj, bit) {
 async function ON_IN(obj = g.PRSO) {
   printC(SP);
   if (obj == BUSH) {
-    tell(S(W.BEHIND));
+    tell(wordText(W.BEHIND));
   } else if (obj == ARCH) {
-    tell(S(W.UNDER));
+    tell(wordText(W.UNDER));
   } else if (hasFlag(obj, CONTAINER) || hasFlag(obj, PLACE)) {
-    tell(S(W.IN));
+    tell(wordText(W.IN));
   } else {
-    tell(S(W.ON));
+    tell(wordText(W.ON));
   }
   tell(C(SP));
   await THE_PRINT(obj);
@@ -5785,19 +5785,19 @@ async function IGNORANT(who, obj) {
 
 async function PRONOUN(obj, it = 0) {
   if (hasFlag(obj, PLURAL)) {
-    tell(S(W.THEM));
+    tell(wordText(W.THEM));
     return true;
   } else if (hasFlag(obj, FEMALE)) {
-    tell(S(W.HER));
+    tell(wordText(W.HER));
     return true;
   } else if (hasFlag(obj, PERSON)) {
-    tell(S(W.HIM));
+    tell(wordText(W.HIM));
     return true;
   } else if (arguments.length > 1) {
-    tell(S(W.IT));
+    tell(wordText(W.IT));
     return true;
   } else {
-    tell(S(W.THAT));
+    tell(wordText(W.THAT));
     return true;
   }
 }
@@ -6416,7 +6416,7 @@ async function FAKE_ORPHAN() {
   await BE_SPECIFIC();
   tmp = get(g.P_OTBL, P_VERBN);
   if (tmp == 0) {
-    tell(S(W.TELL));
+    tell(wordText(W.TELL));
   } else if (getb(g.P_VTBL, 2) == 0) {
     printB(get(tmp, 0));
   } else {
@@ -6678,7 +6678,7 @@ async function BUZZER_WORD$(word) {
   if (!(await SEE_COLOR$())) {
     len = get(COLOR_WORDS, 0);
     if (tbl = inTable(word, COLOR_WORDS + 2, len)) {
-      tell(S(g.DONT), "see the color ", S(word), " here; or any other colors, for that matter.\n");
+      tell(S(g.DONT), "see the color ", wordText(word), " here; or any other colors, for that matter.\n");
       return true;
     }
   }
@@ -6686,7 +6686,7 @@ async function BUZZER_WORD$(word) {
   loop1: for (;;) {
     tbl = get(MAGIC_WORDS, len);
     if ((word == get(tbl, 0)) && (get(tbl, 2) == 0)) {
-      tell("[This story won't recognize the word \"", S(word), ".\"]\n");
+      tell("[This story won't recognize the word \"", wordText(word), ".\"]\n");
       return true;
     }
     if (--len < 2) {
@@ -6695,7 +6695,7 @@ async function BUZZER_WORD$(word) {
   }
   if ((word == W.QUIETLY || word == W.SLOWLY || word == W.CAREFULLY) || (word == W.CLOSELY || word == W.QUICKLY || word == W.RAPIDLY)) {
     await NYMPH_APPEARS();
-    tell("Adverbs (such as \"", S(word), "\") aren't needed");
+    tell("Adverbs (such as \"", wordText(word), "\") aren't needed");
     await TO_COMPLETE();
     return true;
   }
@@ -7068,7 +7068,7 @@ async function VERB_PRINT() {
   let tmp = 0, x = 0;
   tmp = get(g.P_ITBL, P_VERBN);
   if (tmp == 0) {
-    tell(S(W.TELL));
+    tell(wordText(W.TELL));
     return true;
   } else if (getb(g.P_VTBL, 2) == 0) {
     return printB(get(tmp, 0));
@@ -7632,7 +7632,7 @@ async function WHICH_PRINT(tlen, len, tbl) {
   if (!(g.P_OFLAG == 0) || !(g.P_MERGED == 0) || !(g.P_AND == 0)) {
     printC(SP);
     if (!(g.P_LASTADJ == 0)) {
-      tell(S(g.P_LASTADJ), C(SP));
+      tell(wordText(g.P_LASTADJ), C(SP));
     }
     printB(g.P_NAM);
   } else if (tbl == g.P_PRSO) {
@@ -7913,7 +7913,7 @@ async function MANY_CHECK() {
     tell(S(g.CANT), "refer to more than one object at a time with \"");
     tmp = get(g.P_ITBL, P_VERBN);
     if (tmp == 0) {
-      tell(S(W.TELL));
+      tell(wordText(W.TELL));
     } else if (!(g.P_OFLAG == 0) || !(g.P_MERGED == 0)) {
       printB(get(tmp, 0));
     } else {
@@ -8045,9 +8045,9 @@ async function OUT_OF_LOC(l) {
   } else if (hasFlag(l, CONTAINER)) {
     tell("out of");
   } else if (hasFlag(l, SURFACE)) {
-    tell(S(W.OFF));
+    tell(wordText(W.OFF));
   } else {
-    tell(S(W.FROM));
+    tell(wordText(W.FROM));
   }
   tell(C(SP));
   await THE_PRINT(l);
@@ -8062,13 +8062,13 @@ async function SAY_WHERE(l) {
     tell("in front of you");
     return true;
   } else if (l == MCASE || l == BCASE || l == WCASE) {
-    tell(S(W.IN));
+    tell(wordText(W.IN));
   } else if (hasFlag(l, SURFACE)) {
-    tell(S(W.ON));
+    tell(wordText(W.ON));
   } else if (hasFlag(l, CONTAINER)) {
-    tell(S(W.IN));
+    tell(wordText(W.IN));
   } else {
-    tell(S(W.WITH));
+    tell(wordText(W.WITH));
   }
   tell(C(SP));
   await THE_PRINT(l);
@@ -8125,11 +8125,11 @@ async function NOT_HERE_OBJECT_F() {
   }
   tell(S(g.CANT));
   if (isVerb(V.LISTEN)) {
-    tell(S(W.HEAR));
+    tell(wordText(W.HEAR));
   } else if (isVerb(V.SMELL)) {
-    tell(S(W.SMELL));
+    tell(wordText(W.SMELL));
   } else {
-    tell(S(W.SEE));
+    tell(wordText(W.SEE));
   }
   len = get(CAPS, 0);
   if (!(len = inTable(g.P_XNAM, CAPS + 2, len))) {
@@ -8176,10 +8176,10 @@ async function NOT_HERE_PRINT(prso$ = false) {
   let x = 0;
   if (!(g.P_OFLAG == 0) || !(g.P_MERGED == 0)) {
     if (!(g.P_XADJ == 0)) {
-      tell(C(SP), S(g.P_XADJ));
+      tell(C(SP), wordText(g.P_XADJ));
     }
     if (!(g.P_XNAM == 0)) {
-      tell(C(SP), S(g.P_XNAM));
+      tell(C(SP), wordText(g.P_XNAM));
     }
     return false;
   } else if (!(prso$ == 0)) {
@@ -8514,7 +8514,7 @@ async function TABLE_WALK(wrd) {
   if (wrd == W.AROUND) {
     tell("walk ");
   }
-  tell(S(wrd), "\n");
+  tell(wordText(wrd), "\n");
   dirOut(D_TABLE_OFF);
   putb(g.AUX_TABLE, 1, get(g.AUX_TABLE, 0));
   return false;
@@ -8628,7 +8628,7 @@ async function ITS_CLOSED(obj = g.PRSO) {
   await THIS_IS_IT(obj);
   await CTHE_PRINT(obj);
   await IS_ARE(obj);
-  tell(S(W.CLOSED), S(g.PERIOD));
+  tell(wordText(W.CLOSED), S(g.PERIOD));
   return true;
 }
 
@@ -8986,7 +8986,7 @@ async function NEXT_SKY() {
   if (idir == d1 || idir == d2 || idir == d3) {
     clearFlag(BREEZE, SEEN);
     await CTHE_PRINT(DACT);
-    tell(" banks smoothly to the ", S(get(DIR_NAMES, idir)), S(g.PERIOD));
+    tell(" banks smoothly to the ", wordText(get(DIR_NAMES, idir)), S(g.PERIOD));
     await FLYOVER(data);
     return true;
   }
@@ -9029,7 +9029,7 @@ async function DO_CROSSWIND(idir, d2) {
     return M_FATAL;
   }
   await CTHE_PRINT(DACT);
-  tell(" banks to the ", S(get(DIR_NAMES, idir)), ", but a strong crosswind blows him off course.\n");
+  tell(" banks to the ", wordText(get(DIR_NAMES, idir)), ", but a strong crosswind blows him off course.\n");
   await FLYOVER(data);
   return true;
 }
@@ -9102,7 +9102,7 @@ async function NEXT_APLANE() {
       return M_FATAL;
     } else if (g.IMPSAY == 0) {
       await KERBLAM();
-      tell("A bolt of ", S(W.LIGHTNING), " blocks your path.\n");
+      tell("A bolt of ", wordText(W.LIGHTNING), " blocks your path.\n");
       return M_FATAL;
     }
   }
@@ -9282,9 +9282,9 @@ async function PRE_TAKE() {
     await THIS_IS_IT(g.PRSO);
     tell(S(g.ALREADY));
     if (hasFlag(g.PRSO, WORN)) {
-      tell(S(W.WEAR));
+      tell(wordText(W.WEAR));
     } else {
-      tell(S(W.HOLD));
+      tell(wordText(W.HOLD));
     }
     tell("ing ");
     await THE_PRINT();
@@ -9371,11 +9371,11 @@ async function V_TAKE() {
   }
   tell(S(g.CYOU));
   if (g.P_PRSA_WORD == W.GRAB || g.P_PRSA_WORD == W.SEIZE || g.P_PRSA_WORD == W.SNATCH) {
-    tell(S(g.P_PRSA_WORD));
+    tell(wordText(g.P_PRSA_WORD));
   } else if (prob(50)) {
     tell("pick up");
   } else {
-    tell(S(W.TAKE));
+    tell(wordText(W.TAKE));
   }
   tell(C(SP));
   await THE_PRINT();
@@ -9763,7 +9763,7 @@ async function FALLS(obj = g.PRSO, v_ = true) {
   if (g.HERE == ON_BRIDGE) {
     await VANISH(obj);
     if (!(v_ == 0)) {
-      tell("slip", S(s_), S(W.BETWEEN), " the ropes and ");
+      tell("slip", S(s_), wordText(W.BETWEEN), " the ropes and ");
     }
     tell("fall", S(s_), "out of sight.\n");
     return true;
@@ -10168,7 +10168,7 @@ async function V_CLEAN_OFF() {
     await IMPOSSIBLE();
     return true;
   }
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.SON));
   await THEI_PRINT();
@@ -10196,7 +10196,7 @@ async function V_CLIMB_ON() {
     await PERFORM(V.ENTER, g.PRSO);
     return true;
   }
-  tell(S(g.CANT), S(g.P_PRSA_WORD), " onto that.\n");
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), " onto that.\n");
   return true;
 }
 
@@ -10227,7 +10227,7 @@ async function V_OPEN_WITH() {
     (await ITS_ALREADY("open"));
     return true;
   }
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.WITH));
   await THEI_PRINT();
@@ -10373,7 +10373,7 @@ async function V_CUT() {
 }
 
 async function V_RIP() {
-  tell(S(g.IMPOSSIBLY), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.IMPOSSIBLY), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   if (!(g.PRSI == HANDS)) {
     tell(S(g.WITH));
@@ -10652,7 +10652,7 @@ async function V_FILL() {
     await PERFORM(V.FILL_FROM, g.PRSO, POOL);
     return true;
   }
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.PERIOD));
   return true;
@@ -10676,7 +10676,7 @@ async function V_SUBMERGE() {
     await PERFORM(V.PUT_UNDER, g.PRSO, POOL);
     return true;
   }
-  tell(S(g.NOTHING), "here in which to ", S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.NOTHING), "here in which to ", wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.PERIOD));
   return true;
@@ -11214,7 +11214,7 @@ async function THING_WONT_LOCK(thing, closed_thing, un$ = false) {
 }
 
 async function V_UNTIE() {
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await PRINTA();
   tell(S(g.PERIOD));
   return true;
@@ -11360,7 +11360,7 @@ async function V_LOOK_OUTSIDE() {
     } else {
       tell(S(g.ALREADY));
     }
-    tell(S(W.OUTSIDE), S(g.PERIOD));
+    tell(wordText(W.OUTSIDE), S(g.PERIOD));
     return true;
   } else if (hasFlag(g.PRSO, DOORLIKE)) {
     if (hasFlag(g.PRSO, OPENED)) {
@@ -11449,7 +11449,7 @@ async function V_MOVE() {
     tell(S(g.PERIOD));
     return true;
   }
-  tell(S(g.IMPOSSIBLY), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.IMPOSSIBLY), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.PERIOD));
   return true;
@@ -11530,7 +11530,7 @@ async function V_POINT_AT() {
     await V_POINT();
     return true;
   }
-  tell(S(g.CYOU), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CYOU), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(" at ");
   await THEI_PRINT();
@@ -11539,7 +11539,7 @@ async function V_POINT_AT() {
 }
 
 async function V_POP() {
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await PRINTA();
   tell(S(g.PERIOD));
   return true;
@@ -11572,7 +11572,7 @@ async function V_POUR_FROM() {
     await PERFORM(V.DROP, g.PRSO);
     return true;
   } else if (!(hasFlag(g.PRSI, CONTAINER)) && !(hasFlag(g.PRSI, SURFACE))) {
-    tell(S(g.CANT), S(g.P_PRSA_WORD), " things from ");
+    tell(S(g.CANT), wordText(g.P_PRSA_WORD), " things from ");
     await PRINTA(g.PRSI);
     tell(S(g.PERIOD));
     return true;
@@ -11955,7 +11955,7 @@ async function NO_ROOM_IN(obj) {
 }
 
 async function V_PLUG_IN() {
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await O_INTO_I();
   return true;
 }
@@ -12047,7 +12047,7 @@ async function V_REACH_IN() {
   }
   await THIS_IS_IT(obj);
   await REACH_INTO_PRSO();
-  tell(" and feel ", S(W.SOMETHING), S(g.PERIOD));
+  tell(" and feel ", wordText(W.SOMETHING), S(g.PERIOD));
   return true;
 }
 
@@ -12184,7 +12184,7 @@ async function V_TOUCH_TO() {
   if (await SPARK_TO$()) {
     return true;
   }
-  tell(S(g.CYOU), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CYOU), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(" against ");
   await THEI_PRINT();
@@ -12194,7 +12194,7 @@ async function V_TOUCH_TO() {
 
 async function V_SCRATCH() {
   if (!(await SPARK$(false))) {
-    tell(S(g.CYOU), S(g.P_PRSA_WORD), " your fingers across ");
+    tell(S(g.CYOU), wordText(g.P_PRSA_WORD), " your fingers across ");
     await THE_PRINT();
     await BUT_NOTHING_HAPPENS();
   }
@@ -12220,7 +12220,7 @@ async function BUT_FIND_NOTHING() {
 }
 
 async function V_PEEL() {
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.PERIOD));
   return true;
@@ -12236,7 +12236,7 @@ async function V_SCRAPE_ON() {
     await PERFORM(V.KICK, g.PRSI);
     return true;
   }
-  tell(S(g.CYOU), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CYOU), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   if (!(g.PRSI == false || g.PRSI == HANDS)) {
     tell(S(g.SON));
@@ -12302,7 +12302,7 @@ async function V_SFIRE_AT() {
 }
 
 async function V_FIRE_AT() {
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(" at anything.\n");
   return true;
@@ -12327,7 +12327,7 @@ async function V_SIT() {
 }
 
 async function NO_PLACE_TO_PRSA() {
-  tell("There's no place to ", S(g.P_PRSA_WORD), " here.\n");
+  tell("There's no place to ", wordText(g.P_PRSA_WORD), " here.\n");
   return true;
 }
 
@@ -12451,7 +12451,7 @@ async function V_SWIM() {
     await NO_PLACE_TO_PRSA();
     return true;
   } else if ((g.PRSO == INTDIR) && !(g.P_DIRECTION == 0) && (g.WINNER == PLAYER)) {
-    tell(S(g.CANT), S(g.P_PRSA_WORD), " that way from here.\n");
+    tell(S(g.CANT), wordText(g.P_PRSA_WORD), " that way from here.\n");
     return true;
   }
   await IMPOSSIBLE();
@@ -12646,7 +12646,7 @@ async function V_YELL() {
 
 async function V_LAUGH() {
   if (g.PRSO == ROOMS) {
-    tell("There's a place for people who ", S(g.P_PRSA_WORD), " without reason.\n");
+    tell("There's a place for people who ", wordText(g.P_PRSA_WORD), " without reason.\n");
     return true;
   } else if (g.P_PRSA_WORD == W.INSULT || g.P_PRSA_WORD == W.OFFEND) {
     if (hasFlag(g.PRSO, MONSTER)) {
@@ -12765,7 +12765,7 @@ async function V_NAME(obj = g.PRSO) {
   if ((obj == BFLY) && hasFlag(BFLY, MUNGED)) {
     printS("caterpillar");
   } else if ((obj == PHASE) && !(g.HERE == APLANE)) {
-    tell(S(W.OUTLINE));
+    tell(wordText(W.OUTLINE));
   } else {
     printD(obj);
   }
@@ -12840,9 +12840,9 @@ async function V_REQUEST() {
   await THE_PRINT();
   tell(". Just take ");
   if (hasFlag(g.PRSO, PLURAL)) {
-    tell(S(W.THEM));
+    tell(wordText(W.THEM));
   } else {
-    tell(S(W.IT));
+    tell(wordText(W.IT));
   }
   if (hasFlag(l, SURFACE) || hasFlag(l, CONTAINER)) {
     await OUT_OF_LOC(l);
@@ -13172,12 +13172,12 @@ async function V_WIND() {
 async function YOU_CLIMB_UP(nocr = 0) {
   tell(S(g.CYOU));
   if (prob(33)) {
-    tell(S(W.ASCEND));
+    tell(wordText(W.ASCEND));
   } else {
     if (prob(50)) {
-      tell(S(W.CLAMBER));
+      tell(wordText(W.CLAMBER));
     } else {
-      tell(S(W.CLIMB));
+      tell(wordText(W.CLIMB));
     }
     tell(" up");
   }
@@ -13301,7 +13301,7 @@ async function V_SWRAP() {
 }
 
 async function V_WRAP_AROUND() {
-  tell(S(g.IMPOSSIBLY), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.IMPOSSIBLY), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(" around ");
   await THEI_PRINT();
@@ -13311,7 +13311,7 @@ async function V_WRAP_AROUND() {
 
 async function V_DRESS() {
   if (g.PRSO == ROOMS || g.PRSO == ME) {
-    tell("Try putting ", S(W.SOMETHING), " on.\n");
+    tell("Try putting ", wordText(W.SOMETHING), " on.\n");
     return true;
   } else if (hasFlag(g.PRSO, PERSON)) {
     await CTHE_PRINT();
@@ -13361,7 +13361,7 @@ async function V_UNDRESS() {
     await INAPPROPRIATE();
     return true;
   }
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await PRINTA();
   tell(S(g.PERIOD));
   return true;
@@ -13380,7 +13380,7 @@ async function V_HANG() {
     await PERFORM(V.HANG_ON, g.PRSO, x);
     return true;
   }
-  tell(S(g.NOTHING), "here on which to ", S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.NOTHING), "here on which to ", wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   tell(S(g.PERIOD));
   return true;
@@ -13389,12 +13389,12 @@ async function V_HANG() {
 async function V_HANG_ON() {
   await CTHEI_PRINT();
   await IS_ARE(g.PRSI);
-  tell("hardly suitable for ", S(g.P_PRSA_WORD), "ing things.\n");
+  tell("hardly suitable for ", wordText(g.P_PRSA_WORD), "ing things.\n");
   return true;
 }
 
 async function V_LURK() {
-  tell("Leave the ", S(g.P_PRSA_WORD), "ing to the grues.\n");
+  tell("Leave the ", wordText(g.P_PRSA_WORD), "ing to the grues.\n");
   return true;
 }
 
@@ -13418,7 +13418,7 @@ async function V_MAGIC() {
 }
 
 async function V_ERASE_WITH() {
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await THE_PRINT();
   if (!(g.PRSI == HANDS)) {
     tell(S(g.WITH));
@@ -13429,7 +13429,7 @@ async function V_ERASE_WITH() {
 }
 
 async function V_WRITE_ON() {
-  tell("It would be difficult to ", S(g.P_PRSA_WORD), C(SP));
+  tell("It would be difficult to ", wordText(g.P_PRSA_WORD), C(SP));
   await PRINTA();
   tell(S(g.SON));
   await THEI_PRINT();
@@ -13439,7 +13439,7 @@ async function V_WRITE_ON() {
 
 async function V_WRITE_WITH() {
   await NOT_LIKELY(g.PRSI);
-  tell(" could ", S(g.P_PRSA_WORD), " anything on ");
+  tell(" could ", wordText(g.P_PRSA_WORD), " anything on ");
   await THE_PRINT();
   tell(S(g.PERIOD));
   return true;
@@ -13938,7 +13938,7 @@ async function V_ZOOM() {
     wrd = W.IN;
   }
   g.SAME_COORDS = false;
-  tell("[Zooming ", S(wrd), ".]\n");
+  tell("[Zooming ", wordText(wrd), ".]\n");
   await NEW_MAP();
   await SHOW_MAP();
   return true;
@@ -14197,7 +14197,7 @@ async function V_DIAGNOSE() {
     tell(" looking well.\n");
     return true;
   }
-  tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+  tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
   await PRINTA();
   tell(S(g.PERIOD));
   return true;
@@ -15104,7 +15104,7 @@ async function I_CRAB() {
   if (!(dir == 0)) {
     tell(S(g.TAB));
     if (g.LIT$ == 0) {
-      tell(S(g.YOU_HEAR), S(W.SOMETHING));
+      tell(S(g.YOU_HEAR), wordText(W.SOMETHING));
       if (hasFlag(CRAB, SEEN)) {
         tell(" else");
       }
@@ -15126,7 +15126,7 @@ async function I_CRAB() {
 }
 
 async function PASSAGE(dir) {
-  tell("in from the ", S(dir), " passage!\n");
+  tell("in from the ", wordText(dir), " passage!\n");
   return true;
 }
 
@@ -15138,7 +15138,7 @@ async function I_RAT() {
     if (s16(getProp(RAT, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       if (g.LIT$ == 0) {
-        tell(S(g.YOU_HEAR), S(W.SOMETHING), " retreat");
+        tell(S(g.YOU_HEAR), wordText(W.SOMETHING), " retreat");
       } else {
         tell("Mortally wounded, ");
         await THE_PRINT(RAT);
@@ -15188,7 +15188,7 @@ async function I_RAT() {
   if (!(dir == 0)) {
     tell(S(g.TAB));
     if (g.LIT$ == 0) {
-      tell(S(g.YOU_HEAR), S(W.SOMETHING), " scurry ");
+      tell(S(g.YOU_HEAR), wordText(W.SOMETHING), " scurry ");
     } else {
       if (hasFlag(RAT, SEEN)) {
         tell(S(g.XTHE));
@@ -15488,7 +15488,7 @@ async function I_SPIDER() {
       tell(S(g.XA));
     }
     await DPRINT(SPIDER);
-    tell(" crawls in from the ", S(dir), " passage!\n");
+    tell(" crawls in from the ", wordText(dir), " passage!\n");
     return true;
   }
   return false;
@@ -15599,7 +15599,7 @@ async function I_WORM() {
     tell(S(g.TAB));
     await CTHE_PRINT(WORM);
     printS(" reappears from the ");
-    tell(S(dir), "!\n");
+    tell(wordText(dir), "!\n");
     await TOPPLED$(WORM);
     return true;
   }
@@ -15661,7 +15661,7 @@ async function CHARGING$(obj) {
       tell(S(g.XA));
     }
     await DPRINT(obj);
-    tell(" charges in from the ", S(dir), "!\n");
+    tell(" charges in from the ", wordText(dir), "!\n");
     await TOPPLED$(obj);
     return true;
   } else {
@@ -15775,7 +15775,7 @@ async function I_PUPP() {
     tell(S(g.TAB));
     if (hasFlag(PUPP, SEEN)) {
       await CTHE_PRINT(PUPP);
-      tell(" swings in from the ", S(dir), S(g.PERIOD));
+      tell(" swings in from the ", wordText(dir), S(g.PERIOD));
       return true;
     }
     setFlag(PUPP, SEEN);
@@ -15826,7 +15826,7 @@ async function I_DEAD() {
     if (hasFlag(DEAD, SEEN)) {
       await CTHE_PRINT(DEAD);
       printS(" reappears from the ");
-      tell(S(dir));
+      tell(wordText(dir));
     } else {
       setFlag(DEAD, SEEN);
       tell("With a fearful battle cry, ");
@@ -15885,7 +15885,7 @@ async function I_GHOUL() {
     if (hasFlag(GHOUL, SEEN)) {
       await CTHE_PRINT(GHOUL);
       printS(" reappears from the ");
-      tell(S(dir));
+      tell(wordText(dir));
     } else {
       setFlag(GHOUL, SEEN);
       tell("Without warning, ");
@@ -16004,7 +16004,7 @@ async function MOVE_SUCKERS(obj, nxt = 0) {
   if (!(dir == 0)) {
     tell(S(g.TAB));
     if (g.LIT$ == 0) {
-      tell(S(g.YOU_HEAR), S(W.SOMETHING), " stalk into the passage.\n");
+      tell(S(g.YOU_HEAR), wordText(W.SOMETHING), " stalk into the passage.\n");
       return true;
     } else if (hasFlag(obj, SEEN)) {
       tell(S(g.XTHE));
@@ -16013,7 +16013,7 @@ async function MOVE_SUCKERS(obj, nxt = 0) {
       tell(S(g.XA));
     }
     await DPRINT(obj);
-    tell(" stalks in from the ", S(dir), " passage.\n");
+    tell(" stalks in from the ", wordText(dir), " passage.\n");
     return true;
   }
   x = getProp(loc(obj), P.MIRROR_OBJ);
@@ -16454,7 +16454,7 @@ async function GONDOLA_GONE(wrd) {
   g.NEW_DBOX = g.NEW_DBOX | SHOWING_ROOM;
   tell(S(g.TAB));
   await CTHE_PRINT(GONDOLA);
-  tell(" disappears to the ", S(wrd), S(g.PERIOD));
+  tell(" disappears to the ", wordText(wrd), S(g.PERIOD));
   return true;
 }
 
@@ -16462,7 +16462,7 @@ async function TURNS(wrd) {
   g.NEW_DBOX = g.NEW_DBOX | SHOWING_ROOM;
   tell(S(g.TAB));
   await CTHE_PRINT(GONDOLA);
-  tell(" turns and glides ", S(wrd), ", away from ");
+  tell(" turns and glides ", wordText(wrd), ", away from ");
   await THE_PRINT(SUPPORT);
   tell(S(g.PERIOD));
   return true;
@@ -16478,7 +16478,7 @@ async function VIEWGLIDE(rm, wrd) {
     tell("overhead.\n");
     return true;
   }
-  tell("from the ", S(wrd), S(g.PERIOD));
+  tell("from the ", wordText(wrd), S(g.PERIOD));
   return true;
 }
 
@@ -17130,7 +17130,7 @@ async function I_MINX() {
         if (loc(TRUFFLE) == l) {
           g.NEW_DBOX = g.NEW_DBOX | 3;
           remove(TRUFFLE);
-          tell(" is eating ", S(W.SOMETHING));
+          tell(" is eating ", wordText(W.SOMETHING));
         } else {
           tell(" moves restlessly");
         }
@@ -17180,7 +17180,7 @@ async function I_MINX() {
           move(MINX, nl);
           await MINXTAB();
           if (g.LIT$ == 0) {
-            tell(S(g.YOU_HEAR), S(W.SOMETHING), " moving ");
+            tell(S(g.YOU_HEAR), wordText(W.SOMETHING), " moving ");
           } else {
             g.NEW_DBOX = g.NEW_DBOX | SHOWING_ROOM;
             await CTHE_PRINT(MINX);
@@ -17282,13 +17282,13 @@ async function SAY_LEAP() {
   let x = 0;
   x = random(100);
   if (s16(x) < s16(33)) {
-    tell(S(W.LEAP));
+    tell(wordText(W.LEAP));
     return true;
   } else if (s16(x) < s16(67)) {
-    tell(S(W.BOUND));
+    tell(wordText(W.BOUND));
     return true;
   }
-  tell(S(W.JUMP));
+  tell(wordText(W.JUMP));
   return true;
 }
 
@@ -17671,7 +17671,7 @@ async function TURN_GURDY_LEFT() {
         g.OLD_HERE = false;
         g.P_WALK_DIR = false;
         clearFlag(g.HERE, SEEN);
-        tell(S(W.GRAY));
+        tell(wordText(W.GRAY));
       } else {
         tell("normal");
       }
@@ -17808,7 +17808,7 @@ async function TURN_GURDY$(wrd, str) {
   }
   tell("You turn the crank on ");
   await THE_PRINT(GURDY);
-  tell(" to the ", S(wrd), ", and watch as ");
+  tell(" to the ", wordText(wrd), ", and watch as ");
   if (hasFlag(GURDY, OPENED)) {
     tell("wraiths of soft ", S(str), " light escape from the open box, dispersing with no effect.\n");
     return true;
@@ -17947,7 +17947,7 @@ async function I_TWISTER() {
       x = W.WINDOW;
       printS("outside ");
     }
-    tell("draws your eyes to the ", S(x), ", where a dark, boiling thundercloud is racing across the fields", S(g.PTAB));
+    tell("draws your eyes to the ", wordText(x), ", where a dark, boiling thundercloud is racing across the fields", S(g.PTAB));
     await KERBLAM();
     tell("Lightning heralds the approach of a deadly funnel!\n");
     return true;
@@ -18390,11 +18390,11 @@ async function I_DORN() {
     }
     await CTHE_PRINT(DORN);
     if (dir == W.UP || dir == W.DOWN) {
-      tell(" clambers ", S(dir), " the steps.\n");
+      tell(" clambers ", wordText(dir), " the steps.\n");
       return true;
     }
     printS(" reappears from the ");
-    tell(S(dir), S(g.PERIOD));
+    tell(wordText(dir), S(g.PERIOD));
     return true;
   }
   return false;
@@ -18731,9 +18731,9 @@ async function I_IMPS() {
     }
     tell(S(g.PTAB), "\"That's ");
     if (hasFlag(PLAYER, FEMALE)) {
-      tell(S(W.HER));
+      tell(wordText(W.HER));
     } else {
-      tell(S(W.HIM));
+      tell(wordText(W.HIM));
     }
     tell(",\" agrees one of the others.\n");
     return true;
@@ -18774,7 +18774,7 @@ async function I_IMPS_TAKE() {
       tell("(something unintelligible)");
     } else {
       x = setFont(F_NEWFONT);
-      tell(S(W.REMOVE));
+      tell(wordText(W.REMOVE));
       x = setFont(F_DEFAULT);
     }
     tell(" you.\"\n", S(g.TAB), "The other Implementors are enjoying this exchange.\n");
@@ -19023,7 +19023,7 @@ async function BFLY_FLIES(dir = 0) {
   await CTHE_PRINT(BFLY);
   tell(" flutters away");
   if (arguments.length > 0) {
-    tell(" to the ", S(get(DIR_NAMES, dir)));
+    tell(" to the ", wordText(get(DIR_NAMES, dir)));
   }
   printS(g.PERIOD);
   return true;
@@ -19049,7 +19049,7 @@ async function BFLY_ARRIVES(dir = 0) {
     if (s16(dir) > s16(I_NW)) {
       dir = dir - 8;
     }
-    tell(" from the ", S(get(DIR_NAMES, dir)));
+    tell(" from the ", wordText(get(DIR_NAMES, dir)));
   }
   printS(g.PERIOD);
   return true;
@@ -19130,7 +19130,7 @@ async function I_CLERIC() {
       if (hasFlag(PLAYER, FEMALE)) {
         x = W.DAME;
       }
-      tell(S(x));
+      tell(wordText(x));
       if (await SEE_ANYTHING_IN$(PLAYER)) {
         tell(S(g.WITH));
         await PRINTA(first(PLAYER));
@@ -19142,7 +19142,7 @@ async function I_CLERIC() {
       if (hasFlag(PLAYER, FEMALE)) {
         x = W.MISS;
       }
-      tell(S(x), ", and join us in our hour of need.\"\n");
+      tell(wordText(x), ", and join us in our hour of need.\"\n");
       return true;
     }
     tell(", and bows his head in sorrow.\n");
@@ -19597,7 +19597,7 @@ async function I_STRANGLE() {
   await UPDATE_STAT(0 - x);
   tell("The choking fingers drain your endurance to its limit. As your consciousness sinks into oblivion, you feel ");
   await THE_PRINT(SKELETON);
-  tell(" draping ", S(W.SOMETHING), " around your neck");
+  tell(" draping ", wordText(W.SOMETHING), " around your neck");
   await JIGS_UP();
   return true;
 }
@@ -19654,7 +19654,7 @@ async function I_GRUE() {
         await CTHE_PRINT(GRUE);
         tell(" retreats");
       } else {
-        tell(S(g.YOU_HEAR), S(W.SOMETHING), " retreat");
+        tell(S(g.YOU_HEAR), wordText(W.SOMETHING), " retreat");
       }
       tell(" into the darkness.\n");
       await UPDATE_STAT(getProp(GRUE, P.VALUE), EXPERIENCE, true);
@@ -20011,9 +20011,9 @@ async function I_XTREES() {
     await SAY_XTREES();
     tell(" shuffle nervously at the edge of the ");
     if (await GLOBAL_IN$(SNOW, g.HERE)) {
-      tell(S(W.CLEARING));
+      tell(wordText(W.CLEARING));
     } else {
-      tell(S(W.LAVA));
+      tell(wordText(W.LAVA));
     }
     tell(". They");
     printS(" seem unwilling to approach you.\n");
@@ -20097,7 +20097,7 @@ async function XTREES_APPEAR() {
   } else if (g.HERE == ON_TRAIL) {
     x = W.EAST;
   }
-  tell(S(x), ", where a solid wall of ", D(XTREES), " has completely choked the trail.\n");
+  tell(wordText(x), ", where a solid wall of ", D(XTREES), " has completely choked the trail.\n");
   return true;
 }
 
@@ -20386,10 +20386,10 @@ async function DEAF_SALT() {
 
 async function BOY_GIRL() {
   if (hasFlag(PLAYER, FEMALE)) {
-    tell(S(W.GIRL));
+    tell(wordText(W.GIRL));
     return true;
   }
-  tell(S(W.BOY));
+  tell(wordText(W.BOY));
   return true;
 }
 
@@ -21211,9 +21211,9 @@ async function ASK_OWOMAN_FOR(obj) {
     if (await VISIBLE$(obj)) {
       tell("\"I see ");
       if (hasFlag(obj, PLURAL)) {
-        tell(S(W.SOME));
+        tell(wordText(W.SOME));
       } else {
-        tell(S(W.ONE));
+        tell(wordText(W.ONE));
       }
       tell(" there ");
       await SAY_WHERE(l);
@@ -21673,7 +21673,7 @@ async function MINX_EATS_TRUFFLE() {
   await CTHE_PRINT(MINX);
   if (!(hasFlag(TRUFFLE, SEEN))) {
     setFlag(TRUFFLE, SEEN);
-    tell(" looks up at you as she sniffs the ", S(W.TRUFFLE), ". \"Minx?\" she mews, thumping her tail imploringly. When you don't object, she");
+    tell(" looks up at you as she sniffs the ", wordText(W.TRUFFLE), ". \"Minx?\" she mews, thumping her tail imploringly. When you don't object, she");
   }
   tell(" pops the delicacy into her mouth, licks her paws clean and purrs with contentment.\n");
   return true;
@@ -21841,9 +21841,9 @@ async function ASK_MAYOR_FOR(obj) {
     if (await VISIBLE$(obj)) {
       tell("\"I notice ");
       if (hasFlag(obj, PLURAL)) {
-        tell(S(W.SOME));
+        tell(wordText(W.SOME));
       } else {
-        tell(S(W.ONE));
+        tell(wordText(W.ONE));
       }
       tell(" there ");
       await SAY_WHERE(l);
@@ -22034,9 +22034,9 @@ async function INSULTED$(obj) {
     await HAND_PRONOUN(obj);
     tell(" hands. \"Don't call ");
     if (obj == FCROWD) {
-      tell(S(W.US));
+      tell(wordText(W.US));
     } else {
-      tell(S(W.ME));
+      tell(wordText(W.ME));
     }
     tell(" that!\"\n");
     return true;
@@ -22272,7 +22272,7 @@ async function MISSING_F() {
 }
 
 async function DESCRIBE_QUEEN(obj) {
-  tell("furry ", S(W.CREATURE));
+  tell("furry ", wordText(W.CREATURE));
   return true;
 }
 
@@ -23208,9 +23208,9 @@ async function GRINDER_F(context = false) {
       tell("your ");
     }
     if (isVerb(V.KICK) || (g.PRSI == FEET)) {
-      tell(S(W.FOOT));
+      tell(wordText(W.FOOT));
     } else if (g.PRSI == false || g.PRSI == HANDS) {
-      tell(S(W.BLOW));
+      tell(wordText(W.BLOW));
     } else {
       await DPRINT(g.PRSI);
     }
@@ -23558,7 +23558,7 @@ async function BLAST_SUCKER(obj) {
 }
 
 async function DESCRIBE_WIGHT(obj) {
-  tell(S(W.SNOWDRIFT));
+  tell(wordText(W.SNOWDRIFT));
   return true;
 }
 
@@ -23637,7 +23637,7 @@ async function SHAPE_F(context = false) {
         }
       }
       await PRINTCA(SHAPE);
-      tell(" is stretched across the ", S(get(DIR_NAMES, 0 - (x - P.NORTH))), " plane.");
+      tell(" is stretched across the ", wordText(get(DIR_NAMES, 0 - (x - P.NORTH))), " plane.");
       return true;
     }
     return false;
@@ -23907,7 +23907,7 @@ async function MENTION_MOOR_EXIT() {
   if (wrd == 0) {
     return false;
   }
-  tell(S(g.TAB), "The mist thins out a bit to the ", S(wrd), S(g.PERIOD));
+  tell(S(g.TAB), "The mist thins out a bit to the ", wordText(wrd), S(g.PERIOD));
   return true;
 }
 
@@ -24087,7 +24087,7 @@ async function IN_PUB_F(context = false) {
       if (g.P_WALK_DIR == P.WEST || g.P_WALK_DIR == P.IN) {
         tell(D(KITCHEN));
       } else {
-        tell(S(W.EXIT));
+        tell(wordText(W.EXIT));
       }
       tell(S(g.PTAB));
       (await ITALICIZE("Thwack"));
@@ -24320,7 +24320,7 @@ async function SKEL_ROOM_F(context = false) {
     if (x == 0) {
       tell("do that");
     } else {
-      tell(S(x));
+      tell(wordText(x));
     }
     tell(" while you're being strangled to death.\n");
     return M_FATAL;
@@ -24563,7 +24563,7 @@ async function FOREST_EDGE_F(context = false) {
       tell("An avalanche of lava has consumed the upward trail, ending here in a ");
       if (!(g.MAGMA_TIMER == 0)) {
         await GLOW_COLOR();
-        tell(S(W.POOL));
+        tell(wordText(W.POOL));
       } else {
         tell("dark, steaming crust");
       }
@@ -24667,7 +24667,7 @@ async function SAY_TREES() {
   if (hasFlag(XTREES, TOUCHED)) {
     tell(D(XTREES));
   } else {
-    tell(S(W.TREES));
+    tell(wordText(W.TREES));
   }
   return true;
 }
@@ -24679,12 +24679,12 @@ async function MENTION_GLYPH$() {
     await PRINTCA(GLYPH);
     tell(" is inscribed in the ");
     if (await GLOBAL_IN$(g.HERE, SNOW)) {
-      tell(S(W.SNOW));
+      tell(wordText(W.SNOW));
     } else if (g.MAGMA_TIMER == 0) {
       tell("hardened crust");
     } else {
       await GLOW_COLOR();
-      tell(S(W.LAVA));
+      tell(wordText(W.LAVA));
     }
     tell(" at your feet.\n");
   }
@@ -25183,7 +25183,7 @@ async function SAY_EXIT() {
     tbl = getProp(g.HERE, getb(PDIR_LIST, dir));
     if (tbl == 0) {
     } else if (eq(get(tbl, XTYPE) & 65280, CONNECT)) {
-      tell(S(get(DIR_NAMES, dir)));
+      tell(wordText(get(DIR_NAMES, dir)));
       return false;
     }
   }
@@ -25741,7 +25741,7 @@ async function OVER_JUNGLE_F(context = false) {
     } else if (g.GON == 13 || g.GON == 14) {
       x = W.NORTH;
     }
-    tell(S(g.CYOUR), D(GONDOLA), " is gliding ", S(x), ", high over the lush jungles and sparkling rivers of Miznia. ");
+    tell(S(g.CYOUR), D(GONDOLA), " is gliding ", wordText(x), ", high over the lush jungles and sparkling rivers of Miznia. ");
     if (g.GON == 4) {
       await RECEDING(DOCK);
       return true;
@@ -25783,7 +25783,7 @@ async function AT_FALLS_F(context = false) {
   if (context == M_LOOK) {
     tell("A dazzling cascade roars down from a ledge overhead, fed by the snowy peaks rising to the south");
     if (hasFlag(IN_THRIFF, MUNGED)) {
-      tell(". The trail leading ", S(W.SOUTHWEST), " is choked with ", D(XTREES));
+      tell(". The trail leading ", wordText(W.SOUTHWEST), " is choked with ", D(XTREES));
     }
     printS(g.PERIOD);
     return true;
@@ -25803,7 +25803,7 @@ async function IN_PASTURE_F(context = false) {
   if (context == M_LOOK) {
     tell("This windswept pasture is dotted with ancient oaks. A snowy trail winds upward");
     if (hasFlag(IN_THRIFF, MUNGED)) {
-      tell(", and a solid wall of ", D(XTREES), " lies to the ", S(W.SOUTHEAST));
+      tell(", and a solid wall of ", D(XTREES), " lies to the ", wordText(W.SOUTHEAST));
     }
     tell(S(g.PERIOD));
     await MENTION_GLYPH$();
@@ -25887,7 +25887,7 @@ async function CANT_ENTER_WALL() {
     if (g.P_WALK_DIR == false || g.P_WALK_DIR == P.IN) {
       x = W.IN;
     }
-    tell(S(x), S(g.PERIOD));
+    tell(wordText(x), S(g.PERIOD));
     return false;
   }
   x = getProp(g.HERE, P.EXIT_STR);
@@ -25971,7 +25971,7 @@ async function NOTE_WALL(obj, wrd) {
   if (!(hasFlag(obj, OPENED))) {
     tell("dead-end ");
   }
-  tell("passage grows wider as it bends ", S(wrd), ", ending at a flat wall of rock");
+  tell("passage grows wider as it bends ", wordText(wrd), ", ending at a flat wall of rock");
   if (hasFlag(obj, SEEN)) {
     tell(". ");
     if (hasFlag(obj, OPENED)) {
@@ -25981,10 +25981,10 @@ async function NOTE_WALL(obj, wrd) {
       } else {
         tell("can be seen beyond ");
       }
-      tell("an ", S(W.OPENING));
+      tell("an ", wordText(W.OPENING));
     } else {
       printS("A doorlike ");
-      tell(S(W.OUTLINE), " is visible");
+      tell(wordText(W.OUTLINE), " is visible");
     }
     tell(" therein");
   }
@@ -26027,7 +26027,7 @@ async function NE_WALL_F(context = false) {
     if (hasFlag(NWALL, SEEN)) {
       tell(". ");
       await SEE_DOORLIKE(NWALL);
-      tell(S(W.WALL));
+      tell(wordText(W.WALL));
     }
     tell(S(g.PERIOD));
     return true;
@@ -26115,7 +26115,7 @@ async function MENTION_BEAM$() {
       return false;
     }
     printS("  A beam of sunlight ");
-    tell("shines in from the ", S(get(DIR_NAMES, dir)));
+    tell("shines in from the ", wordText(get(DIR_NAMES, dir)));
     dir = dir + 4;
     if (s16(dir) > s16(I_NW)) {
       dir = dir - 8;
@@ -26123,7 +26123,7 @@ async function MENTION_BEAM$() {
     tbl = getProp(g.HERE, getb(PDIR_LIST, dir));
     if (tbl == 0) {
     } else if (eq(get(tbl, XTYPE) & 65280, CONNECT)) {
-      tell(", and disappears to the ", S(get(DIR_NAMES, dir)));
+      tell(", and disappears to the ", wordText(get(DIR_NAMES, dir)));
     }
     tell(S(g.PERIOD));
     return true;
@@ -26186,7 +26186,7 @@ async function ENTER_CITY() {
 }
 
 async function SEE_FIELDS(wrd) {
-  tell("Gray fields extend to the ", S(wrd));
+  tell("Gray fields extend to the ", wordText(wrd));
   printS(" as far as you can see");
   tell(", under ");
   printS("a sky black with thunderclouds");
@@ -26197,7 +26197,7 @@ async function ENTER_PLAIN$() {
   let x = 0, y = 0, l = 0, ll = 0;
   l = loc(GOBLET);
   await KERBLAM();
-  tell("Forks of ", S(W.LIGHTNING), " dance across your path");
+  tell("Forks of ", wordText(W.LIGHTNING), " dance across your path");
   if (!(hasFlag(ROSE_ROOM, LOCATION))) {
     tell(", and the clouds boom with laughter");
   }
@@ -26576,7 +26576,7 @@ async function NGURTH_F(context = false) {
       wrd = W.NORTH;
       (x = "outskirts of Gurth City");
     }
-    tell(", meandering across the hills towards the ", S(wrd), "ernmost ", S(x), S(g.PERIOD));
+    tell(", meandering across the hills towards the ", wordText(wrd), "ernmost ", S(x), S(g.PERIOD));
     return true;
   } else if (context == M_EXIT) {
     if (g.P_WALK_DIR == P.SOUTH) {
@@ -26762,7 +26762,7 @@ async function SFORD_F(context = false) {
 }
 
 async function SEE_BRIDGE(wrd) {
-  tell("You're shivering on the ", S(wrd), " edge of a broad chasm. Clammy mists chill the air, and ");
+  tell("You're shivering on the ", wordText(wrd), " edge of a broad chasm. Clammy mists chill the air, and ");
   await THE_PRINT(GROUND);
   tell(" trembles with the roar of a cataract", S(g.PTAB), "Your heart sinks as you inspect the crude rope bridge spanning the chasm. A notice hangs near ");
   await THE_PRINT(ZBRIDGE);
@@ -26773,7 +26773,7 @@ async function SEE_BRIDGE(wrd) {
 async function NFORD_F(context = false) {
   if (context == M_LOOK) {
     await SEE_BRIDGE(W.NORTH);
-    tell(S(g.TAB), "The ruins of an ancient city lie not far to the ", S(W.NORTHEAST), S(g.PERIOD));
+    tell(S(g.TAB), "The ruins of an ancient city lie not far to the ", wordText(W.NORTHEAST), S(g.PERIOD));
     return true;
   } else if (context == M_EXIT) {
     if (g.P_WALK_DIR == P.SOUTH) {
@@ -26933,7 +26933,7 @@ async function ARCH1_F(context = false) {
 
 async function ARCH2_F(context = false) {
   if (context == M_LOOK) {
-    tell("The perimeter of this grassy ", S(W.CLEARING), " is dotted with primitive huts.\n");
+    tell("The perimeter of this grassy ", wordText(W.CLEARING), " is dotted with primitive huts.\n");
     return true;
   }
   return await HANDLE_ARCH_ROOMS$(context);
@@ -27176,9 +27176,9 @@ async function TIMESHIFT() {
     tell("The merest effort of will is enough to slide you ");
   }
   if (g.P_WALK_DIR == P.NORTH) {
-    tell(S(W.FOR));
+    tell(wordText(W.FOR));
   } else {
-    tell(S(W.BACK));
+    tell(wordText(W.BACK));
   }
   tell("ward through ");
   await THE_PRINT(LIGHTSHOW);
@@ -27241,9 +27241,9 @@ async function IN_FROON_F(context = false) {
   if (context == M_LOOK) {
     tell("Lullabies sing of places such as this. Songbirds swoop and glide between rows of dainty cottages; a rainbow of flowers lines the sun-dappled street, filling the air with a gentle fragrance", S(g.PTAB), S(g.XTHE));
     if (hasFlag(FARM_DOOR, OPENED)) {
-      tell(S(W.OPEN));
+      tell(wordText(W.OPEN));
     } else {
-      tell(S(W.CLOSED));
+      tell(wordText(W.CLOSED));
     }
     tell(C(SP), D(FARMHOUSE), " leans askew upon the roadside. Beneath it, you notice what appears to be the heel of ");
     await PRINTA(BOOT);
@@ -27442,7 +27442,7 @@ async function RD1_F(context = false) {
         break loop1;
       }
     }
-    tell("A boulevard of cracked marble leads ", S(get(DIR_NAMES, dir)), " beneath the shadows of a crumbling aqueduct.\n");
+    tell("A boulevard of cracked marble leads ", wordText(get(DIR_NAMES, dir)), " beneath the shadows of a crumbling aqueduct.\n");
     return true;
   } else {
     return false;
@@ -28277,9 +28277,9 @@ async function SUN_F() {
     if (g.HERE == XROADS || g.HERE == ON_PIKE) {
       tell(", except to the ");
       if (g.HERE == ON_PIKE) {
-        tell(S(W.WEST));
+        tell(wordText(W.WEST));
       } else {
-        tell(S(W.EAST));
+        tell(wordText(W.EAST));
       }
     }
     printS(g.PERIOD);
@@ -28451,7 +28451,7 @@ async function CELLAR_DOOR_F() {
 }
 
 async function ITS_MUNGED(wrd) {
-  tell("Little remains of the ", S(wrd), S(g.PERIOD));
+  tell("Little remains of the ", wordText(wrd), S(g.PERIOD));
   return true;
 }
 
@@ -28460,9 +28460,9 @@ async function CRASH_CELLAR_DOOR(obj = HANDS) {
   (await ITALICIZE("Wham"));
   tell("! Your ");
   if (obj == false || obj == HANDS || obj == ME) {
-    tell(S(W.FIST));
+    tell(wordText(W.FIST));
   } else if (obj == FEET) {
-    tell(S(W.FOOT));
+    tell(wordText(W.FOOT));
   } else {
     await DPRINT(obj);
   }
@@ -28835,7 +28835,7 @@ async function LANTERN_F() {
 }
 
 async function ITS_SWITCHED(wrd) {
-  tell("It's already switched ", S(wrd), S(g.PERIOD));
+  tell("It's already switched ", wordText(wrd), S(g.PERIOD));
   return true;
 }
 
@@ -28943,7 +28943,7 @@ async function SHILL_F() {
     return true;
   } else if (isVerb(V.TAKE) && !(hasFlag(g.PRSO, TOUCHED))) {
     if (await ITAKE()) {
-      tell(S(g.XTHE), S(W.DRIFTWOOD), " begins to float out of reach as you bend over the side of the wharf. You strain your arm lower towards the water, lower... got it!\n");
+      tell(S(g.XTHE), wordText(W.DRIFTWOOD), " begins to float out of reach as you bend over the side of the wharf. You strain your arm lower towards the water, lower... got it!\n");
       await GET_SHILL();
     }
     return true;
@@ -28996,7 +28996,7 @@ async function DAGGER_F() {
   } else if (isVerb(V.EXAMINE, V.LOOK_ON)) {
     tell("It's a very basic ", D(g.PRSO), " with a ");
     if (hasFlag(g.PRSO, MUNGED)) {
-      tell(S(W.RUSTY));
+      tell(wordText(W.RUSTY));
     } else {
       tell("razor-sharp");
     }
@@ -29099,18 +29099,18 @@ async function BOTTLE_F() {
     }
     tell("A pale ");
     if (!(c_ == 0)) {
-      tell(S(W.RED));
+      tell(wordText(W.RED));
     } else {
-      tell(S(W.GRAY));
+      tell(wordText(W.GRAY));
     }
     tell(" liquid swishes around inside. You can see right through it.\n");
     return true;
   } else if (isVerb(V.SHAKE, V.SPIN)) {
     tell(S(g.XTHE));
     if (!(c_ == 0)) {
-      tell(S(W.RED));
+      tell(wordText(W.RED));
     } else {
-      tell(S(W.GRAY));
+      tell(wordText(W.GRAY));
     }
     tell(" liquid in ");
     await THE_PRINT();
@@ -29244,9 +29244,9 @@ async function AMULET_F() {
         tell("a shiny star.\n");
         return true;
       } else if (g.AMULET_STARS == 2) {
-        tell(S(W.TWO));
+        tell(wordText(W.TWO));
       } else {
-        tell(S(W.THREE));
+        tell(wordText(W.THREE));
       }
       tell(" shiny stars");
     }
@@ -29322,19 +29322,19 @@ async function READ_RUNES() {
 
 async function SAY_RED() {
   if (await SEE_COLOR$()) {
-    tell(S(W.RED));
+    tell(wordText(W.RED));
     return false;
   }
-  tell(S(W.GRAY));
+  tell(wordText(W.GRAY));
   return false;
 }
 
 async function SAY_GREEN() {
   if (await SEE_COLOR$()) {
-    tell(S(W.GREEN));
+    tell(wordText(W.GREEN));
     return false;
   }
-  tell(S(W.GRAY));
+  tell(wordText(W.GRAY));
   return false;
 }
 
@@ -29591,7 +29591,7 @@ async function GONDOLA_F(context = false) {
     if ((g.HERE == AT_DOCK) && (g.GON == 0 || g.GON == 1 || g.GON == 14)) {
       tell("\"Wait yer turn, ");
       if (hasFlag(PLAYER, FEMALE)) {
-        tell(S(W.LADY));
+        tell(wordText(W.LADY));
       } else {
         tell("buddy");
       }
@@ -29738,12 +29738,12 @@ async function ZBRIDGE_F() {
     await DPRINT(g.PRSO);
     tell(" leads ");
     if (g.HERE == ON_BRIDGE || g.HERE == SFORD) {
-      tell(S(W.NORTH));
+      tell(wordText(W.NORTH));
       if (g.HERE == ON_BRIDGE) {
-        tell(S(g.AND), S(W.SOUTH));
+        tell(S(g.AND), wordText(W.SOUTH));
       }
     } else {
-      tell(S(W.SOUTH));
+      tell(wordText(W.SOUTH));
     }
     tell(" across the roaring water.\n");
     return true;
@@ -29791,7 +29791,7 @@ async function SWALL_F() {
     return M_FATAL;
   } else if (await NOUN_USED$(W.OUTLINE)) {
     if (hasFlag(SWALL, OPENED)) {
-      tell(S(g.XTHE), S(W.OUTLINE), " is now an ", S(W.OPENING), S(g.PERIOD));
+      tell(S(g.XTHE), wordText(W.OUTLINE), " is now an ", wordText(W.OPENING), S(g.PERIOD));
       return M_FATAL;
     } else if (!(hasFlag(SWALL, SEEN))) {
       await NONE_HERE(W.OUTLINE);
@@ -29807,9 +29807,9 @@ async function SWALL_F() {
     if (hasFlag(g.PRSO, SEEN)) {
       await SEE_DOORLIKE(g.PRSO);
       if (g.HERE == SE_CAVE) {
-        tell(S(W.SOUTHEAST), C(SP));
+        tell(wordText(W.SOUTHEAST), C(SP));
       }
-      tell(S(W.WALL), S(g.PERIOD));
+      tell(wordText(W.WALL), S(g.PERIOD));
       return true;
     }
     await SEAMLESS_WALL();
@@ -29860,7 +29860,7 @@ async function WALLPUSH() {
 }
 
 async function NONE_HERE(wrd) {
-  tell(S(g.DONT), "see any ", S(wrd), "s here.\n");
+  tell(S(g.DONT), "see any ", wordText(wrd), "s here.\n");
   return true;
 }
 
@@ -29906,7 +29906,7 @@ async function NWALL_F() {
     return M_FATAL;
   } else if (await NOUN_USED$(W.OUTLINE)) {
     if (hasFlag(NWALL, OPENED)) {
-      tell(S(g.XTHE), S(W.OUTLINE), " is now an ", S(W.OPENING), S(g.PERIOD));
+      tell(S(g.XTHE), wordText(W.OUTLINE), " is now an ", wordText(W.OPENING), S(g.PERIOD));
       return M_FATAL;
     } else if (!(hasFlag(NWALL, SEEN))) {
       await NONE_HERE(W.OUTLINE);
@@ -29922,9 +29922,9 @@ async function NWALL_F() {
     if (hasFlag(NWALL, SEEN)) {
       await SEE_DOORLIKE(g.PRSO);
       if (g.HERE == NE_CAVE) {
-        tell(S(W.NORTHWEST), C(SP));
+        tell(wordText(W.NORTHWEST), C(SP));
       }
-      tell(S(W.WALL), S(g.PERIOD));
+      tell(wordText(W.WALL), S(g.PERIOD));
       return true;
     }
     await SEAMLESS_WALL();
@@ -29967,9 +29967,9 @@ async function NWALL_F() {
 async function SEE_DOORLIKE(obj) {
   printS("A doorlike ");
   if (hasFlag(obj, OPENED)) {
-    tell(S(W.OPENING));
+    tell(wordText(W.OPENING));
   } else {
-    tell(S(W.OUTLINE));
+    tell(wordText(W.OUTLINE));
   }
   printS(" is visible in the ");
   return false;
@@ -30058,7 +30058,7 @@ async function MAGICK_DOOR_F() {
 }
 
 async function TINKLES(wrd) {
-  tell("As you ", S(wrd), C(SP));
+  tell("As you ", wordText(wrd), C(SP));
   await THE_PRINT();
   tell(", a concealed bell tinkles merrily.\n");
   return true;
@@ -30087,7 +30087,7 @@ async function LAMPHOUSE_F() {
       x = W.BUT;
       tell("You sift");
     }
-    tell(" through the debris, ", S(x), " discover ");
+    tell(" through the debris, ", wordText(x), " discover ");
     await CONTENTS();
     printS(g.PERIOD);
     g.P_IT_OBJECT = LAMPHOUSE;
@@ -30213,9 +30213,9 @@ async function CHEST_F(context = false) {
   } else if (isVerb(V.EXAMINE, V.LOOK_ON)) {
     tell("The oak chest is compact and sturdy, probably the craft of Antharian dwarves. No latch or keyhole is visible, but a brass plate is affixed to the top of the ");
     if (hasFlag(g.PRSO, OPENED)) {
-      tell(S(W.OPEN));
+      tell(wordText(W.OPEN));
     } else {
-      tell(S(W.CLOSED));
+      tell(wordText(W.CLOSED));
     }
     tell(" lid.\n");
     return true;
@@ -30541,7 +30541,7 @@ async function THRONE_F() {
     }
     tell(" through the material in ");
     await THE_PRINT();
-    tell(", ", S(x), " discover ");
+    tell(", ", wordText(x), " discover ");
     await CONTENTS();
     printS(g.PERIOD);
     g.P_IT_OBJECT = g.PRSO;
@@ -30634,7 +30634,7 @@ async function DO_TELE(obj, w_) {
     await SAFE_VEHICLE_EXIT();
     await CARRIAGE_RETURNS();
     await GOTO(rm);
-    tell(S(g.TAB), S(g.XTHE), S(W.LANDSCAPE), " stops reeling");
+    tell(S(g.TAB), S(g.XTHE), wordText(W.LANDSCAPE), " stops reeling");
   } else if (hasFlag(obj, MONSTER)) {
     if (!(obj == DUST || obj == WIGHT)) {
       setFlag(obj, SLEEPING);
@@ -30902,7 +30902,7 @@ async function DO_IO(obj, w_) {
     if (!(x == 0)) {
       tell("; but you catch a glimpse of some");
       if (x == 1) {
-        tell(S(W.THING));
+        tell(wordText(W.THING));
       } else {
         tell(" things");
       }
@@ -30977,7 +30977,7 @@ async function DO_LEV(obj, w_) {
     tell("! ");
     printS("Sweat breaks out on your forehead as you ");
     printS("guide the heavy burden over the ");
-    tell(S(W.MUD));
+    tell(wordText(W.MUD));
     printS(" and safely down to the ground.\n");
     await UPDATE_STAT(s_, STRENGTH);
     tell(S(g.TAB), "The ungainly creature nuzzles you with his muddy snout, and bats his eyelashes with joy and gratitude. Then he ");
@@ -31095,7 +31095,7 @@ async function DO_LEV(obj, w_) {
       tell("her glare of annoyance prompt");
     } else {
       if (hasFlag(obj, FEMALE)) {
-        tell(S(W.HER));
+        tell(wordText(W.HER));
       } else if (hasFlag(obj, MONSTER)) {
         tell("its");
       } else {
@@ -31109,11 +31109,11 @@ async function DO_LEV(obj, w_) {
     }
     tell("s you to set ");
     if (hasFlag(obj, FEMALE)) {
-      tell(S(W.HER));
+      tell(wordText(W.HER));
     } else if (hasFlag(obj, MONSTER)) {
-      tell(S(W.IT));
+      tell(wordText(W.IT));
     } else {
-      tell(S(W.HIM));
+      tell(wordText(W.HIM));
     }
     tell(" down at once.\n");
     await UPDATE_STAT(s_, STRENGTH);
@@ -31549,7 +31549,7 @@ async function MIRROR6_F(context = false) {
 async function NOTE_MIRROR(obj, wrd) {
   tell(" is suspended in midair");
   if (!(loc(QUEEN) == g.HERE)) {
-    tell(", facing ", S(wrd));
+    tell(", facing ", wordText(wrd));
     await BEAM_DETAILS(obj);
   }
   return false;
@@ -31565,7 +31565,7 @@ async function BEAM_DETAILS(obj) {
     return false;
   }
   dir = getProp(obj, P.MIRROR_DIR);
-  tell(". Sunlight from the ", S(get(DIR_NAMES, sdir)), " exit is ");
+  tell(". Sunlight from the ", wordText(get(DIR_NAMES, sdir)), " exit is ");
   if (sdir == dir) {
     tell("shining directly onto the mirror's face");
     return true;
@@ -31623,7 +31623,7 @@ async function BEAM_DETAILS(obj) {
 }
 
 async function REFLECT_TO(dir) {
-  tell("reflected ", S(get(DIR_NAMES, dir)));
+  tell("reflected ", wordText(get(DIR_NAMES, dir)));
   dir = getProp(g.HERE, getb(PDIR_LIST, dir));
   if (dir == 0) {
   } else if (eq(get(dir, XTYPE) & 65280, CONNECT)) {
@@ -31645,7 +31645,7 @@ async function HANDLE_MIRRORS$(obj, context) {
   } else if (!(context == 0)) {
     return false;
   } else if (await NOUN_USED$(W.BUBBLES)) {
-    tell("There's only one ", S(W.BUBBLE), " here.\n");
+    tell("There's only one ", wordText(W.BUBBLE), " here.\n");
     return M_FATAL;
   } else if (!(g.NOW_PRSI$ == 0)) {
     return false;
@@ -31696,7 +31696,7 @@ async function HANDLE_MIRRORS$(obj, context) {
     g.NEW_DBOX = g.NEW_DBOX | SHOWING_ROOM;
     putProp(g.PRSO, P.MIRROR_DIR, x);
     await CTHE_PRINT();
-    tell(" spins randomly around, slows and stops. It's now facing ", S(get(DIR_NAMES, x)), S(g.PERIOD));
+    tell(" spins randomly around, slows and stops. It's now facing ", wordText(get(DIR_NAMES, x)), S(g.PERIOD));
     if (eq(getProp(g.HERE, P.MIRROR_OBJ), obj)) {
       await REFLECTIONS();
     }
@@ -31750,7 +31750,7 @@ async function NEW_MIRROR_DIR(dir) {
   putProp(g.PRSO, P.MIRROR_DIR, dir);
   tell("You carefully rotate ");
   await THE_PRINT();
-  tell(" until it faces ", S(get(DIR_NAMES, dir)), S(g.PERIOD));
+  tell(" until it faces ", wordText(get(DIR_NAMES, dir)), S(g.PERIOD));
   if (eq(getProp(g.HERE, P.MIRROR_OBJ), g.PRSO)) {
     await REFLECTIONS();
     return true;
@@ -31781,7 +31781,7 @@ async function SUNBEAM_F() {
     return false;
   } else if (isVerb(V.EXAMINE)) {
     await CTHE_PRINT();
-    tell(" is coming from the ", S(get(DIR_NAMES, dir)), S(g.PERIOD));
+    tell(" is coming from the ", wordText(get(DIR_NAMES, dir)), S(g.PERIOD));
     return true;
   } else if (isVerb(V.WALK_TO, V.FOLLOW)) {
     await DO_WALK(getb(PDIR_LIST, dir));
@@ -31896,9 +31896,9 @@ async function JAR_F(context = false) {
   } else if (isVerb(V.EXAMINE, V.LOOK_ON)) {
     tell(S(g.XTHE));
     if (hasFlag(g.PRSO, OPENED)) {
-      tell(S(W.OPEN));
+      tell(wordText(W.OPEN));
     } else {
-      tell(S(W.CLOSED));
+      tell(wordText(W.CLOSED));
     }
     tell(" jar appears to have been carved from a solid block of crystal.\n");
     return true;
@@ -31919,7 +31919,7 @@ async function JAR_F(context = false) {
     return true;
   } else if (isVerb(V.DRINK, V.TASTE, V.KISS, V.SMELL)) {
     if (!(await NOUN_USED$(W.LIQUID, W.SOAP, W.CONTENTS))) {
-      tell("[the ", S(W.LIQUID), S(g.BRACKET));
+      tell("[the ", wordText(W.LIQUID), S(g.BRACKET));
     }
     if (!(hasFlag(g.PRSO, OPENED))) {
       await ITS_CLOSED();
@@ -32023,7 +32023,7 @@ async function CIRCLET_F() {
     return true;
   } else if (!(b == 0)) {
     await PCLEAR();
-    tell(S(g.CANT), "see any ", S(W.BUBBLES), " here.\n");
+    tell(S(g.CANT), "see any ", wordText(W.BUBBLES), " here.\n");
     return M_FATAL;
   }
   if (!(g.NOW_PRSI$ == 0)) {
@@ -32034,7 +32034,7 @@ async function CIRCLET_F() {
     }
     return false;
   } else if (isVerb(V.SWING)) {
-    tell(S(g.CYOU), S(g.P_PRSA_WORD), S(g.STHE));
+    tell(S(g.CYOU), wordText(g.P_PRSA_WORD), S(g.STHE));
     if (await EMPTY_CIRCLET$()) {
       return true;
     }
@@ -32223,7 +32223,7 @@ async function REFLECTIONS() {
         break loop2;
       } else if (angle == xdir) {
         if (g.HERE == rm) {
-          tell(S(g.TAB), "A sunbeam is reflected ", S(get(DIR_NAMES, xdir)), S(g.PERIOD));
+          tell(S(g.TAB), "A sunbeam is reflected ", wordText(get(DIR_NAMES, xdir)), S(g.PERIOD));
         }
         break loop2;
       }
@@ -32290,7 +32290,7 @@ async function REFLECTIONS() {
 
 async function SAY_BEAM(from, to) {
   printS("  A beam of sunlight ");
-  tell("is reflected ", S(get(DIR_NAMES, from)), S(g.STO), S(get(DIR_NAMES, to)));
+  tell("is reflected ", wordText(get(DIR_NAMES, from)), S(g.STO), wordText(get(DIR_NAMES, to)));
   if ((g.HERE == IN_LAIR) && (to == I_SE) && (loc(URGRUE) == IN_LAIR)) {
     await KILL_URGRUE();
     return true;
@@ -32300,7 +32300,7 @@ async function SAY_BEAM(from, to) {
 }
 
 async function MENTION_GLIMMER(dir) {
-  tell(S(g.TAB), S(g.XTHE), S(get(DIR_NAMES, dir)), " edge of the mirror gleams.\n");
+  tell(S(g.TAB), S(g.XTHE), wordText(get(DIR_NAMES, dir)), " edge of the mirror gleams.\n");
   return true;
 }
 
@@ -32868,9 +32868,9 @@ async function TRENCH_F(context = false) {
       }
       tell(S(g.CANT));
       if (x = inTable(g.PRSA, SEEVERBS, NSVERBS)) {
-        tell(S(W.SEE));
+        tell(wordText(W.SEE));
       } else if (x = inTable(g.PRSA, TOUCHVERBS, NTOUCHES)) {
-        tell(S(W.REACH));
+        tell(wordText(W.REACH));
       } else {
         tell("do that to");
       }
@@ -32906,7 +32906,7 @@ async function TRENCH_F(context = false) {
       tell(". ");
       await PRINTCA(HORSE);
       printS(" is lying across ");
-      tell(S(W.IT));
+      tell(wordText(W.IT));
     } else if (await SEE_ANYTHING_IN$()) {
       tell(". ");
       printS("Peering inside, you see ");
@@ -33363,7 +33363,7 @@ async function FARMHOUSE_F(context = false) {
         tell("wide open.");
         return true;
       }
-      tell(S(W.CLOSED), C(PER));
+      tell(wordText(W.CLOSED), C(PER));
       return true;
     }
     return false;
@@ -33425,7 +33425,7 @@ async function SCARE1_F(context = false) {
       if (hasFlag(g.HERE, SEEN)) {
         wrd = await RAG_COLOR_WORD$(SCARE1);
       }
-      tell("A weatherbeaten ", D(SCARE1), " stands in a patch of dead corn, its ", S(wrd), " rags flapping in the wind.");
+      tell("A weatherbeaten ", D(SCARE1), " stands in a patch of dead corn, its ", wordText(wrd), " rags flapping in the wind.");
       return true;
     }
     return false;
@@ -33441,7 +33441,7 @@ async function SCARE2_F(context = false) {
       if (hasFlag(g.HERE, SEEN)) {
         wrd = await RAG_COLOR_WORD$(SCARE2);
       }
-      tell(S(g.XTHE), S(wrd), " rags of another ", D(SCARE2), " flap uselessly in a dead patch of corn.");
+      tell(S(g.XTHE), wordText(wrd), " rags of another ", D(SCARE2), " flap uselessly in a dead patch of corn.");
       return true;
     }
     return false;
@@ -33457,7 +33457,7 @@ async function SCARE3_F(context = false) {
       if (hasFlag(g.HERE, SEEN)) {
         wrd = await RAG_COLOR_WORD$(SCARE3);
       }
-      tell("A patch of corn is flourishing nearby, presided over by a third ", D(SCARE3), S(g.SIN), S(wrd), " rags.");
+      tell("A patch of corn is flourishing nearby, presided over by a third ", D(SCARE3), S(g.SIN), wordText(wrd), " rags.");
       return true;
     }
     return false;
@@ -33490,7 +33490,7 @@ async function HANDLE_SCARES$(obj) {
       if (!(hasFlag(obj, SEEN)) && hasFlag(g.HERE, SEEN)) {
         wrd = await RAG_COLOR_WORD$(obj);
       }
-      tell(S(g.XTHE), S(wrd), " rags on ");
+      tell(S(g.XTHE), wordText(wrd), " rags on ");
       await THE_PRINT();
       tell(" are tattered and useless.\n");
       return true;
@@ -33579,7 +33579,7 @@ async function HANDLE_SCARES$(obj) {
     if (!(hasFlag(obj, SEEN)) && hasFlag(g.HERE, SEEN)) {
       wrd = await RAG_COLOR_WORD$(obj);
     }
-    tell("Considering the stormy climate hereabouts, it's remarkable that this ", D(g.PRSO), " is still standing. Threadbare ", S(wrd), " rags hang from the wooden limbs, flapping");
+    tell("Considering the stormy climate hereabouts, it's remarkable that this ", D(g.PRSO), " is still standing. Threadbare ", wordText(wrd), " rags hang from the wooden limbs, flapping");
     printS(" in the steady wind.\n");
     return true;
   } else if (isVerb(V.LISTEN)) {
@@ -33705,14 +33705,14 @@ async function HANDLE_KEYS$(obj) {
     return false;
   } else if (isVerb(V.EXAMINE, V.LOOK_ON, V.READ)) {
     if (!(isVerb(V.READ))) {
-      tell("This is actually a cheap piece of styrofoam, cut into the shape of a giant key, spray painted ", S(word), " and sprinkled with bits of glitter. ");
+      tell("This is actually a cheap piece of styrofoam, cut into the shape of a giant key, spray painted ", wordText(word), " and sprinkled with bits of glitter. ");
     }
     tell("The words ");
     (await ITALICIZE("City of Froon"));
     tell(" are scrawled in crayon across the front.\n");
     return true;
   } else if (isVerb(V.SMELL)) {
-    tell("It smells like ", S(word), " paint.\n");
+    tell("It smells like ", wordText(word), " paint.\n");
     return true;
   } else if (hasFlag(g.PRSO, TOUCHED)) {
     return false;
@@ -33900,9 +33900,9 @@ async function GURDY_F() {
     (await FROBOZZ("Breadbox"));
     tell(" breadbox, and made of brightly painted wood. There's a big dial up front, and a crank jutting from the side, just below the ");
     if (hasFlag(g.PRSO, OPENED)) {
-      tell(S(W.OPEN));
+      tell(wordText(W.OPEN));
     } else {
-      tell(S(W.CLOSED));
+      tell(wordText(W.CLOSED));
     }
     tell(" lid.\n");
     return true;
@@ -34277,7 +34277,7 @@ async function TURN_DIAL() {
       await HOW_TO_CLICK();
       return true;
     } else if (s16(g.P_NUMBER) > s16(6)) {
-      tell("There are only six ", S(W.PAINTINGS), S(g.SON));
+      tell("There are only six ", wordText(W.PAINTINGS), S(g.SON));
       await THE_PRINT(GURDY);
       tell(S(g.PERIOD));
       return true;
@@ -34912,7 +34912,7 @@ async function DACT_F(context = false) {
     if (isVerb(V.PUT_ON, V.THROW_OVER, V.PUT)) {
       setFlag(DACT, SEEN);
       g.NEW_DBOX = g.NEW_DBOX | SHOWING_ALL;
-      tell(S(g.CYOU), S(g.P_PRSA_WORD), C(SP));
+      tell(S(g.CYOU), wordText(g.P_PRSA_WORD), C(SP));
       await THE_PRINT();
       tell(" onto ");
       await THEI_PRINT();
@@ -34964,9 +34964,9 @@ async function DACT_F(context = false) {
     await CTHE_PRINT();
     tell(" appears to be ");
     if (hasFlag(g.PRSO, SLEEPING)) {
-      tell(S(W.SLEEPING));
+      tell(wordText(W.SLEEPING));
     } else if (hasFlag(g.PRSO, MUNGED)) {
-      tell(S(W.WOUNDED));
+      tell(wordText(W.WOUNDED));
     } else {
       tell("watching you");
     }
@@ -35134,7 +35134,7 @@ async function ARROW_F() {
   if (!(g.NOW_PRSI$ == 0)) {
     return false;
   } else if (isVerb(V.EXAMINE, V.LOOK_ON)) {
-    tell("A crude design. Looks like ", S(W.SOMETHING), " you'd find in a museum.\n");
+    tell("A crude design. Looks like ", wordText(W.SOMETHING), " you'd find in a museum.\n");
     return true;
   } else if (isVerb(V.FIRE_AT)) {
     tell(S(g.DONT), "have a bow.\n");
@@ -35240,7 +35240,7 @@ async function WEEDS_F() {
     }
     return false;
   } else if (isVerb(V.LOOK_INSIDE, V.SEARCH, V.LOOK_UNDER)) {
-    tell("Aside from the ", S(W.BILLBOARD), S(g.LYOU_SEE));
+    tell("Aside from the ", wordText(W.BILLBOARD), S(g.LYOU_SEE));
     await CONTENTS();
     g.P_IT_OBJECT = g.PRSO;
     tell(" among the weeds.\n");
@@ -35550,7 +35550,7 @@ async function ROSE_F() {
       return true;
     }
     setFlag(BREEZE, SEEN);
-    tell("is tilted to the ", S(get(DIR_NAMES, g.WINDIR)), S(g.PERIOD));
+    tell("is tilted to the ", wordText(get(DIR_NAMES, g.WINDIR)), S(g.PERIOD));
     if (!(hasFlag(g.PRSO, IDENTIFIED))) {
       setFlag(g.PRSO, IDENTIFIED);
       tell(S(g.TAB));
@@ -35588,19 +35588,19 @@ async function ROSE_F() {
             tell(" springs up again.\n");
             return true;
           }
-          tell(" droops back to the ", S(get(DIR_NAMES, g.WINDIR)), S(g.PERIOD));
+          tell(" droops back to the ", wordText(get(DIR_NAMES, g.WINDIR)), S(g.PERIOD));
           return true;
         }
       } else {
-        tell(S(g.CANT), S(g.P_PRSA_WORD), C(SP));
+        tell(S(g.CANT), wordText(g.P_PRSA_WORD), C(SP));
         await THE_PRINT();
         tell(" that way.\n");
         return true;
       }
     }
-    tell(S(g.CYOU), S(g.P_PRSA_WORD), C(SP));
+    tell(S(g.CYOU), wordText(g.P_PRSA_WORD), C(SP));
     await THE_PRINT();
-    tell("'s stem to the ", S(wrd));
+    tell("'s stem to the ", wordText(wrd));
     if (!(nodroop == 0)) {
       tell(", but it springs upright again.\n");
       return true;
@@ -35792,7 +35792,7 @@ async function ONION_F() {
       await HOW_TO_MOVE_ONION();
       return true;
     }
-    tell("You'd have a hard time ", S(g.P_PRSA_WORD), "ing that ", D(ONION));
+    tell("You'd have a hard time ", wordText(g.P_PRSA_WORD), "ing that ", D(ONION));
     await ON_IN(g.PRSI);
     tell(S(g.PERIOD));
     return true;
@@ -35887,7 +35887,7 @@ async function ROLL_ONION(dir) {
   }
   if (((g.HERE == NE_WALL) && (dir == P.SE || dir == P.IN) && hasFlag(NE_WALL, OPENED)) || ((g.HERE == SE_WALL) && (dir == P.SW || dir == P.IN) && hasFlag(SE_WALL, OPENED))) {
     await CTHE_PRINT(ONION);
-    tell(" won't fit through the ", S(W.OPENING), S(g.PERIOD));
+    tell(" won't fit through the ", wordText(W.OPENING), S(g.PERIOD));
     return true;
   } else if (g.HERE == IN_KITCHEN) {
     if (dir == P.DOWN || dir == P.IN) {
@@ -36185,7 +36185,7 @@ async function STALL_F(context = false) {
       tell("wide open.\n");
       return true;
     }
-    tell(S(W.CLOSED));
+    tell(wordText(W.CLOSED));
     if (hasFlag(g.PRSO, LOCKED)) {
       tell(" and locked");
     }
@@ -36701,7 +36701,7 @@ async function HANDLE_ARMOR$(obj) {
   if (!(g.NOW_PRSI$ == 0)) {
     if (isVerb(V.PUT, V.EMPTY_INTO, V.PUT_UNDER, V.PUT_BEHIND)) {
       await CTHEI_PRINT();
-      tell(" has no pockets in which to ", S(g.P_PRSA_WORD), " things.\n");
+      tell(" has no pockets in which to ", wordText(g.P_PRSA_WORD), " things.\n");
       return true;
     } else if (isVerb(V.PUT_ON, V.THROW, V.THROW_OVER)) {
       await NO_GOOD_SURFACE();
@@ -37515,9 +37515,9 @@ async function PEWSLIDE(x = 0) {
   }
   tell("You slide quietly ");
   if (arguments.length > 0) {
-    tell(S(W.OFF));
+    tell(wordText(W.OFF));
   } else {
-    tell(S(W.INTO));
+    tell(wordText(W.INTO));
   }
   tell(C(SP));
   await THE_PRINT(PEW);
@@ -37816,7 +37816,7 @@ async function RELIQUARY_F(context = false) {
     return false;
   } else if (isVerb(V.EXAMINE, V.LOOK_ON)) {
     await LEATHER();
-    tell(S(W.FOLDER));
+    tell(wordText(W.FOLDER));
     if (hasFlag(g.PRSO, OPENED)) {
       tell(". Its metal clasp is open.\n");
       return true;
@@ -38008,7 +38008,7 @@ async function TRUFFLE_F() {
       tell("getting a bit runny. Still edible, though.\n");
       return true;
     }
-    tell("dark ", S(wrd), " in color, ");
+    tell("dark ", wordText(wrd), " in color, ");
     if (!(fresh == 0)) {
       tell("and looks fresh from the harvest.\n");
       return true;
@@ -38170,7 +38170,7 @@ async function DO_THORNS(dest) {
   if (loc(PLAYER) == BUSH) {
     tell("out of");
   } else {
-    tell(S(W.BEHIND));
+    tell(wordText(W.BEHIND));
   }
   tell(" the thorns.\n");
   move(PLAYER, dest);
@@ -38795,7 +38795,7 @@ async function GLASS_F() {
     }
     tell(S(g.DONT), "need ");
     await THEI_PRINT();
-    tell(S(g.STO), S(g.P_PRSA_WORD), C(SP));
+    tell(S(g.STO), wordText(g.P_PRSA_WORD), C(SP));
     await THE_PRINT();
     tell(S(g.PERIOD));
     return true;
@@ -39577,7 +39577,7 @@ async function DO_GATE(obj = g.PRSO) {
     if (hasFlag(g.HERE, INDOORS)) {
       tell("walls, floor and ", D(CEILING));
     } else {
-      tell("sky and ", S(W.LANDSCAPE));
+      tell("sky and ", wordText(W.LANDSCAPE));
     }
     tell(" begin to warp like a funhouse mirror", S(g.PTAB));
   }
@@ -39747,7 +39747,7 @@ async function CREVICE_F() {
     if (g.HERE == TOWER_BASE) {
       x = W.EAST;
     }
-    tell(S(x), "ward.\n");
+    tell(wordText(x), "ward.\n");
     return true;
   } else if (x = inTable(g.PRSA, E_VERBS, ENTER_VERBS)) {
     x = P.WEST;
@@ -40207,7 +40207,7 @@ async function BROOK_F() {
     await CTHE_PRINT();
     tell(" meanders ");
     if (g.HERE == AT_BRINE) {
-      tell(S(W.NORTHWEST), S(g.PERIOD));
+      tell(wordText(W.NORTHWEST), S(g.PERIOD));
       return true;
     }
     tell("west, into a deep forest.\n");
@@ -40423,7 +40423,7 @@ async function HANDLE_HEMI$(obj, other, wrd) {
           await IMPOSSIBLE();
           return true;
         }
-        tell(S(g.XTHE), S(wrd), S(g.SON));
+        tell(S(g.XTHE), wordText(wrd), S(g.SON));
         await THE_PRINT(obj);
         tell(" is much too tiny.\n");
         return true;
@@ -40433,7 +40433,7 @@ async function HANDLE_HEMI$(obj, other, wrd) {
       }
       return false;
     } else if (x = inTable(g.PRSA, MOVEVERBS, NMVERBS)) {
-      tell(S(g.XTHE), S(wrd), S(g.SON));
+      tell(S(g.XTHE), wordText(wrd), S(g.SON));
       await THE_PRINT(obj);
       printS(" cannot be moved.\n");
       return true;
@@ -40470,15 +40470,15 @@ async function HANDLE_HEMI$(obj, other, wrd) {
   } else if (isVerb(V.EXAMINE)) {
     tell("This curious artifact is wide as your palm, and fashioned of some ");
     if (obj == LHEMI) {
-      tell(S(W.WHITE));
+      tell(wordText(W.WHITE));
     } else {
-      tell(S(W.BLACK));
+      tell(wordText(W.BLACK));
     }
     tell(" crystalline substance. A tiny ");
     if (obj == LHEMI) {
-      tell(S(W.HOLE));
+      tell(wordText(W.HOLE));
     } else {
-      tell(S(W.PEG));
+      tell(wordText(W.PEG));
     }
     tell(" is set in the middle of its flat side.\n");
     return true;
@@ -40752,7 +40752,7 @@ async function PARCEL_F() {
     await THE_PRINT(PARCEL);
     tell(" disappear in a puff as you open it, leaving the contents");
     if (x == PLAYER || x == g.HERE || x == loc(PLAYER)) {
-      tell(C(SP), S(W.BEHIND));
+      tell(C(SP), wordText(W.BEHIND));
     } else {
       await ON_IN(x);
     }
@@ -40802,7 +40802,7 @@ async function BRIDGE_F() {
     if (g.HERE == AT_BRINE) {
       x = W.NORTHEAST;
     }
-    tell(S(x), S(g.PERIOD));
+    tell(wordText(x), S(g.PERIOD));
     return true;
   } else if (isVerb(V.LOOK_UNDER, V.LOOK_BEHIND, V.SEARCH)) {
     await CANT_SEE_MUCH();
@@ -40964,7 +40964,7 @@ async function HANDLE_POTION$(int) {
     tell(S(g.PERQ));
     return true;
   } else if (isVerb(V.LOOK_INSIDE, V.SEARCH)) {
-    tell(S(g.XTHE), S(get(getPropAddr(g.PRSO, P.ADJECTIVE), 1)), " liquid ");
+    tell(S(g.XTHE), wordText(get(getPropAddr(g.PRSO, P.ADJECTIVE), 1)), " liquid ");
     if (hasFlag(g.PRSO, MUNGED)) {
       tell("swirls with potency.\n");
       return true;
@@ -41060,7 +41060,7 @@ async function CAKE_F(context = false) {
 }
 
 async function JUST_LIKE(wrd) {
-  tell("It ", S(wrd), "s just like the ones your aunt used to make. Bleah.\n");
+  tell("It ", wordText(wrd), "s just like the ones your aunt used to make. Bleah.\n");
   return true;
 }
 
@@ -41209,7 +41209,7 @@ async function BE_SPECIFIC() {
 }
 
 async function TO_DO_THING_USE(str1, str2) {
-  tell("[To ", S(str1), C(SP), S(W.SOMETHING), ", use the command: ", S(str2), " THING.]\n");
+  tell("[To ", S(str1), C(SP), wordText(W.SOMETHING), ", use the command: ", S(str2), " THING.]\n");
   return true;
 }
 
@@ -41570,11 +41570,11 @@ async function CANT_SEE_ANY(thing = NOT_HERE_OBJECT, string$ = false) {
   await THIS_IS_IT(NOT_HERE_OBJECT);
   tell(S(g.CANT));
   if (isVerb(V.LISTEN)) {
-    tell(S(W.HEAR));
+    tell(wordText(W.HEAR));
   } else if (isVerb(V.SMELL)) {
-    tell(S(W.SMELL));
+    tell(wordText(W.SMELL));
   } else {
-    tell(S(W.SEE));
+    tell(wordText(W.SEE));
   }
   tell(C(SP));
   if (!(string$ == 0)) {
@@ -41782,7 +41782,7 @@ async function STANDING(x = 0) {
   if (eq(loc(PLAYER), SADDLE, PEW)) {
     tell("sitt");
   } else {
-    tell(S(W.STAND));
+    tell(wordText(W.STAND));
   }
   tell("ing");
   if (!(arguments.length > 0)) {
