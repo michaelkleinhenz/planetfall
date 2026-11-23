@@ -149,6 +149,7 @@ export function playIntro(meta, { t, lang = 'en' }) {
 
     let fx = null;
     const ready = () => {
+      if (img.naturalWidth) tilt.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
       root.style.setProperty('--glow-1', 'rgb(242 193 78)');
       const pal = paletteOf(img);
       pal.forEach((c, i) => root.style.setProperty(`--glow-${i + 1}`, c));
