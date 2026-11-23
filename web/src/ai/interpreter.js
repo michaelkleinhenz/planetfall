@@ -119,7 +119,7 @@ export async function interpret({ apiKey, model, input, language, scene, history
         `PLAYER INPUT: ${input}`,
     },
   ];
-  const raw = await chat({ apiKey, model, messages, signal });
+  const raw = await chat({ apiKey, model, messages, signal, maxTokens: 1000 });
   try {
     return parseJson(raw);
   } catch {

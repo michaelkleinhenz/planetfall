@@ -104,8 +104,10 @@ export async function getHint({ apiKey, model, language, level, history, signal 
     `GAME VARIABLES USED BY THE CODE BELOW:\n${vars.join('\n') || '(none)'}\n\n` +
     `GAME CODE FOR THIS SITUATION:\n${code}`;
   const text = await chat({
-    apiKey, model, signal, temperature: 0.3, maxTokens: 300,
+    apiKey, model, signal, temperature: 0.3, maxTokens: 1200,
     messages: [{ role: 'system', content: SYSTEM(language), cache: true }, { role: 'user', content: user }],
   });
-  return text.trim().replace(/^["“]|["”]$/g, '');
+  const hint = text.trim().replace(/^["“]|["”]$/g, '');
+  if (!hint) throw new Error('the model returned an empty answer');
+  return hint;
 }

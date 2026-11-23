@@ -50,7 +50,21 @@ function prepareMessages(model, messages) {
 /** Running token totals for this page session (also logged to the console). */
 export const usageStats = { requests: 0, promptTokens: 0, cachedTokens: 0, completionTokens: 0, cost: 0 };
 
-export async function chat({ apiKey, model, messages, temperature = 0, maxTokens = 400, signal }) {
+/**
+ * One chat completion. Models that reason before answering spend part of the
+ * token budget on hidden reasoning; if the answer comes back cut off or empty,
+ * the request is repeated once with a much larger budget.
+ */
+export async function chat(opts) {
+  const first = await chatOnce(opts);
+  if (first.complete) return first.content;
+  const maxTokens = Math.min(8000, Math.max(2000, (opts.maxTokens ?? 1000) * 4));
+  console.debug('[openrouter] answer cut off or empty; retrying with', maxTokens, 'tokens');
+  const second = await chatOnce({ ...opts, maxTokens });
+  return second.content || first.content;
+}
+
+async function chatOnce({ apiKey, model, messages, temperature = 0, maxTokens = 1000, signal }) {
   const res = await fetch(`${API}/chat/completions`, {
     method: 'POST',
     signal,
@@ -85,5 +99,8 @@ export async function chat({ apiKey, model, messages, temperature = 0, maxTokens
     console.debug('[openrouter]', model, `prompt ${u.prompt_tokens} (cached ${u.prompt_tokens_details?.cached_tokens || 0}),`,
       `completion ${u.completion_tokens}, cost $${(u.cost || 0).toFixed(5)} | session $${usageStats.cost.toFixed(4)}`);
   }
-  return data.choices?.[0]?.message?.content ?? '';
+  const choice = data.choices?.[0];
+  const content = choice?.message?.content ?? '';
+  const finish = choice?.finish_reason || choice?.native_finish_reason || '';
+  return { content, complete: !!content.trim() && finish !== 'length' && finish !== 'max_tokens' };
 }

@@ -56,7 +56,7 @@ export async function translate({ apiKey, model, language, text, signal }) {
   const key = `${language}\u0000${text}`;
   if (c.has(key)) return c.get(key);
   const ask = (extra = '') => limited(() => chat({
-    apiKey, model, signal, maxTokens: Math.min(4000, 200 + text.length * 2),
+    apiKey, model, signal, maxTokens: Math.min(4000, 600 + text.length * 2),
     messages: [{ role: 'system', content: SYSTEM(language), cache: true }, { role: 'user', content: wrap(language, text) + extra }],
   })).then(clean);
   let out = await ask();
