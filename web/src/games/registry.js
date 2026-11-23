@@ -51,6 +51,7 @@ export const GAMES = {
   },
   'zork2': {
     id: 'zork2',
+    cover: 'img/covers/zork2.jpg',
     title: "Zork II",
     subtitle: "The Wizard of Frobozz",
     year: 1981,
@@ -66,6 +67,7 @@ export const GAMES = {
   },
   'zork3': {
     id: 'zork3',
+    cover: 'img/covers/zork3.jpg',
     title: "Zork III",
     subtitle: "The Dungeon Master",
     year: 1982,
@@ -81,6 +83,7 @@ export const GAMES = {
   },
   'enchanter': {
     id: 'enchanter',
+    cover: 'img/covers/enchanter.jpg',
     title: "Enchanter",
     year: 1983,
     author: "Marc Blank & Dave Lebling",
@@ -95,6 +98,7 @@ export const GAMES = {
   },
   'sorcerer': {
     id: 'sorcerer',
+    cover: 'img/covers/sorcerer.jpg',
     title: "Sorcerer",
     year: 1984,
     author: "Steve Meretzky",
@@ -109,6 +113,7 @@ export const GAMES = {
   },
   'spellbreaker': {
     id: 'spellbreaker',
+    cover: 'img/covers/spellbreaker.jpg',
     title: "Spellbreaker",
     year: 1985,
     author: "Dave Lebling",
@@ -123,6 +128,7 @@ export const GAMES = {
   },
   'hitchhikersguide': {
     id: 'hitchhikersguide',
+    cover: 'img/covers/hitchhikersguide.jpg',
     title: "The Hitchhiker's Guide to the Galaxy",
     year: 1984,
     author: "Douglas Adams & Steve Meretzky",
@@ -137,6 +143,7 @@ export const GAMES = {
   },
   'starcross': {
     id: 'starcross',
+    cover: 'img/covers/starcross.jpg',
     title: "Starcross",
     year: 1982,
     author: "Dave Lebling",
@@ -150,6 +157,7 @@ export const GAMES = {
   },
   'suspended': {
     id: 'suspended',
+    cover: 'img/covers/suspended.jpg',
     title: "Suspended",
     year: 1983,
     author: "Michael Berlyn",
@@ -164,6 +172,7 @@ export const GAMES = {
   },
   'deadline': {
     id: 'deadline',
+    cover: 'img/covers/deadline.jpg',
     title: "Deadline",
     year: 1982,
     author: "Marc Blank",
@@ -178,6 +187,7 @@ export const GAMES = {
   },
   'witness': {
     id: 'witness',
+    cover: 'img/covers/witness.jpg',
     title: "The Witness",
     year: 1983,
     author: "Stu Galley",
@@ -192,6 +202,7 @@ export const GAMES = {
   },
   'suspect': {
     id: 'suspect',
+    cover: 'img/covers/suspect.jpg',
     title: "Suspect",
     year: 1984,
     author: "Dave Lebling",
@@ -206,6 +217,7 @@ export const GAMES = {
   },
   'infidel': {
     id: 'infidel',
+    cover: 'img/covers/infidel.jpg',
     title: "Infidel",
     year: 1983,
     author: "Michael Berlyn & Patricia Fogleman",
@@ -220,6 +232,7 @@ export const GAMES = {
   },
   'cutthroats': {
     id: 'cutthroats',
+    cover: 'img/covers/cutthroats.jpg',
     title: "Cutthroats",
     year: 1984,
     author: "Michael Berlyn & Jerry Wolper",
@@ -234,6 +247,7 @@ export const GAMES = {
   },
   'seastalker': {
     id: 'seastalker',
+    cover: 'img/covers/seastalker.jpg',
     title: "Seastalker",
     year: 1984,
     author: "Stu Galley & Jim Lawrence",
@@ -248,6 +262,7 @@ export const GAMES = {
   },
   'wishbringer': {
     id: 'wishbringer',
+    cover: 'img/covers/wishbringer.jpg',
     title: "Wishbringer",
     subtitle: "The Magick Stone of Dreams",
     year: 1985,
@@ -263,6 +278,7 @@ export const GAMES = {
   },
   'ballyhoo': {
     id: 'ballyhoo',
+    cover: 'img/covers/ballyhoo.jpg',
     title: "Ballyhoo",
     year: 1986,
     author: "Jeff O'Neill",
@@ -277,6 +293,7 @@ export const GAMES = {
   },
   'hollywoodhijinx': {
     id: 'hollywoodhijinx',
+    cover: 'img/covers/hollywoodhijinx.jpg',
     title: "Hollywood Hijinx",
     year: 1986,
     author: "Dave Anderson & Liz Cyr-Jones",
@@ -291,6 +308,7 @@ export const GAMES = {
   },
   'leathergoddesses': {
     id: 'leathergoddesses',
+    cover: 'img/covers/leathergoddesses.jpg',
     title: "Leather Goddesses of Phobos",
     year: 1986,
     author: "Steve Meretzky",
@@ -305,6 +323,7 @@ export const GAMES = {
   },
   'lurkinghorror': {
     id: 'lurkinghorror',
+    cover: 'img/covers/lurkinghorror.jpg',
     title: "The Lurking Horror",
     year: 1987,
     author: "Dave Lebling",
@@ -319,6 +338,7 @@ export const GAMES = {
   },
   'stationfall': {
     id: 'stationfall',
+    cover: 'img/covers/stationfall.jpg',
     title: "Stationfall",
     year: 1987,
     author: "Steve Meretzky",
@@ -333,6 +353,7 @@ export const GAMES = {
   },
   'moonmist': {
     id: 'moonmist',
+    cover: 'img/covers/moonmist.jpg',
     title: "Moonmist",
     year: 1986,
     author: "Stu Galley & Jim Lawrence",
@@ -347,6 +368,7 @@ export const GAMES = {
   },
   'plunderedhearts': {
     id: 'plunderedhearts',
+    cover: 'img/covers/plunderedhearts.jpg',
     title: "Plundered Hearts",
     year: 1987,
     author: "Amy Briggs",
@@ -389,6 +411,7 @@ export const GAMES = {
   },
   'infocom-sampler': {
     id: 'infocom-sampler',
+    cover: 'img/covers/infocom-sampler.jpg',
     title: "Infocom Sampler",
     year: 1984,
     author: "Infocom",
