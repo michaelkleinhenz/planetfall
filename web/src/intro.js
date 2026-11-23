@@ -15,7 +15,7 @@ function el(tag, cls, text) {
 }
 
 /** A few vivid colours from the image (falls back to warm golds). */
-function paletteOf(img) {
+export function paletteOf(img) {
   const fallback = ['#f2c14e', '#f29e4c', '#fff3c4'];
   try {
     const c = document.createElement('canvas');

@@ -694,3 +694,67 @@ body.intro-leaving .transcript { animation: story-rise 1.2s .3s both cubic-bezie
   .intro.out .intro-card { transform: none !important; }
   body.intro-leaving .transcript { animation: none; }
 }
+
+/* ---------- header: the title cut from the box cover ---------- */
+/* Light theme: the art a little darker, with a dark outline; dark theme: lighter, with a glowing one. */
+.brand.has-cover {
+  --cover-glow: var(--accent); --cover-glow-2: var(--accent); gap: 12px; min-width: 0;
+  --cover-lift: rgba(30, 18, 4, .22); --cover-edge: rgba(40, 24, 6, .55);
+}
+:root[data-theme="dark"] .brand.has-cover { --cover-lift: rgba(255, 250, 235, .3); --cover-edge: color-mix(in srgb, var(--cover-glow) 75%, white); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand.has-cover { --cover-lift: rgba(255, 250, 235, .3); --cover-edge: color-mix(in srgb, var(--cover-glow) 75%, white); }
+}
+/* outer: the glow */
+.brand.has-cover .title {
+  display: block; min-width: 0; max-width: min(46vw, 520px);
+  font: 900 21px/1.05 var(--ui-font); letter-spacing: .1em;
+  /* a crisp edge around the letters, then the glow */
+  filter: drop-shadow(0 0 .5px var(--cover-edge)) drop-shadow(0 0 .5px var(--cover-edge))
+          drop-shadow(0 0 9px color-mix(in srgb, var(--cover-glow) 50%, transparent))
+          drop-shadow(0 1px 1px rgba(0, 0, 0, .3));
+  transition: filter .35s ease;
+}
+.brand.has-cover:hover .title {
+  filter: drop-shadow(0 0 .5px var(--cover-edge)) drop-shadow(0 0 .5px var(--cover-edge))
+          drop-shadow(0 0 14px color-mix(in srgb, var(--cover-glow) 85%, transparent))
+          drop-shadow(0 0 3px color-mix(in srgb, var(--cover-glow-2) 70%, transparent));
+}
+/* inner: letters filled with the cover art, drifting slowly */
+.title-fill {
+  position: relative; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 2px;
+  color: transparent;
+  background-image: linear-gradient(var(--cover-lift), var(--cover-lift)), var(--cover-img);
+  background-size: 100% 100%, 240% auto;
+  background-position: 0 0, 10% 25%;
+  -webkit-background-clip: text; background-clip: text;
+  animation: title-pan 24s ease-in-out infinite alternate, title-in 1.3s cubic-bezier(.2, .8, .2, 1) both;
+}
+/* a light sweep across the letters */
+.title-fill::after {
+  content: attr(data-text); position: absolute; inset: 0; padding: inherit; overflow: hidden; text-overflow: ellipsis;
+  color: transparent; -webkit-text-stroke: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .95) 48%, color-mix(in srgb, var(--cover-glow-2) 70%, white) 52%, transparent 62%);
+  background-size: 260% 100%; background-position: 130% 0;
+  -webkit-background-clip: text; background-clip: text;
+  animation: title-shine 6.5s 1.4s ease-in-out infinite;
+}
+.brand.has-cover:hover .title-fill::after { animation-duration: 1.6s; animation-delay: 0s; }
+@keyframes title-pan {
+  0% { background-position: 0 0, 8% 18%; }
+  50% { background-position: 0 0, 55% 62%; }
+  100% { background-position: 0 0, 96% 38%; }
+}
+@keyframes title-shine { 0%, 55% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+@keyframes title-in {
+  from { clip-path: inset(0 100% 0 0); letter-spacing: .4em; }
+  to { clip-path: inset(0 0 0 0); }
+}
+@media (max-width: 700px) {
+  .brand.has-cover { gap: 9px; }
+  .brand.has-cover .title { font-size: 13.5px; letter-spacing: .03em; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-fill { animation: none; }
+  .title-fill::after { display: none; }
+}

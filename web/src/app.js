@@ -8,7 +8,7 @@ import { interpret, isParserError } from './ai/interpreter.js';
 import { currentScene, actionContext, currentRoom as roomObject } from './ai/scene.js';
 import { Automap, drawMap } from './automap.js';
 import { DebugLog, downloadJSON, BUILD, REPORT_README } from './debug.js';
-import { playIntro } from './intro.js';
+import { playIntro, paletteOf } from './intro.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
@@ -815,6 +815,32 @@ els.slots.addEventListener('close', () => {
 });
 
 // ---------------------------------------------------------------------------
+// Header: the game's name in letters cut from its box cover
+// ---------------------------------------------------------------------------
+
+function coverTitle(meta) {
+  const brand = $('home');
+  const title = $('game-title');
+  // The glow (a filter) stays on the outer element: on the element with the
+  // animated cover fill it would make Chrome draw a box around the text.
+  const fill = document.createElement('span');
+  fill.className = 'title-fill';
+  fill.textContent = title.textContent;
+  fill.dataset.text = title.textContent;
+  title.replaceChildren(fill);
+  brand.style.setProperty('--cover-img', `url("${meta.cover}")`);
+  brand.classList.add('has-cover');
+  // Glow in the cover's own most vivid colour.
+  const img = new Image();
+  img.addEventListener('load', () => {
+    const [c1, c2] = paletteOf(img);
+    brand.style.setProperty('--cover-glow', c1);
+    brand.style.setProperty('--cover-glow-2', c2 ?? c1);
+  }, { once: true });
+  img.src = meta.cover;
+}
+
+// ---------------------------------------------------------------------------
 // Debug report (Settings: "Report a problem")
 // ---------------------------------------------------------------------------
 
@@ -1225,6 +1251,7 @@ async function boot() {
   await loadGame(meta);
   document.title = `${meta.title} AI`;
   $('game-title').textContent = meta.title.toUpperCase();
+  if (meta.cover) coverTitle(meta);
   $('emblem').innerHTML = emblem(meta.id);
   // The game's box contents (manual, maps, feelies) in the Infocom Gallery.
   if (meta.gallery) { $('btn-gallery').href = meta.gallery; $('btn-gallery').hidden = false; }
@@ -1269,7 +1296,14 @@ async function boot() {
     updateMode();
   }
   setInputEnabled(true);
-  if (intro) intro.then(() => els.input.focus({ preventScroll: true }));
+  if (intro) {
+    intro.then(() => {
+      els.input.focus({ preventScroll: true });
+      // Replay the header title's reveal, which ran hidden behind the title sequence.
+      const fill = document.querySelector('.title-fill');
+      if (fill) { fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = ''; }
+    });
+  }
   else els.input.focus({ preventScroll: true });
   updatePageSpace();
   renderActions();
