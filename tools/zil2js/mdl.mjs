@@ -143,7 +143,7 @@ export class MDL {
       case 'quote': return node.v;
       case 'lval': return this.lookup(env, node.v.v.replace(/:.*$/, ''));
       case 'gval': return this.gval(node.v.v);
-      case 'list': return { ...node, items: this.evalItems(node.items, env) };
+      case 'list': return { ...node, items: this.evalItems(node.items, env).map(toNode) };
       case 'macro': return this.eval(node.v, env);
       case 'seg': return this.eval(node.v, env);
       case 'form': return this.evalForm(node, env);
@@ -325,7 +325,7 @@ function nth(x, k) {
   if (!x) return null;
   if (x.t === 'str') return { t: 'char', v: x.v[k - 1] };
   const v = (x.items || [])[k - 1];
-  return v === undefined ? null : (v.t === 'form' && !v.items.length ? null : v);
+  return v == null ? null : (v.t === 'form' && !v.items.length ? null : v);
 }
 function typeOf(x) {
   if (x === null) return 'FALSE';

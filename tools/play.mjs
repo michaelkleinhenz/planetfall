@@ -11,7 +11,12 @@ const args = process.argv.slice(2);
 let gameId = 'planetfall';
 const gi = args.indexOf('--game');
 if (gi >= 0) { gameId = args[gi + 1]; args.splice(gi, 2); }
-await loadGame(GAMES[gameId]);
+// Games compiled but not (yet) listed in the registry can still be played here.
+await loadGame(GAMES[gameId] ?? {
+  id: gameId,
+  title: gameId,
+  load: () => Promise.all([import(`../web/src/games/${gameId}/game.js`), import(`../web/src/games/${gameId}/story-data.js`)]),
+});
 
 const file = args[0];
 const seed = args[1] ? Number(args[1]) : 12345;

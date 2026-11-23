@@ -1719,7 +1719,7 @@ async function ACLAUSE_WIN(adj) {
   put(g.P_CCTBL, CC_DBPTR, g.P_ACLAUSE);
   put(g.P_CCTBL, CC_DEPTR, g.P_ACLAUSE + 1);
   await CLAUSE_COPY(g.P_OTBL, g.P_OTBL, adj);
-  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2);
+  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2, true);
   g.P_ACLAUSE = false;
   return true;
 }
@@ -1730,7 +1730,7 @@ async function NCLAUSE_WIN() {
   put(g.P_CCTBL, CC_DBPTR, g.P_ACLAUSE);
   put(g.P_CCTBL, CC_DEPTR, g.P_ACLAUSE + 1);
   await CLAUSE_COPY(g.P_ITBL, g.P_OTBL);
-  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2);
+  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2, true);
   g.P_ACLAUSE = false;
   return true;
 }

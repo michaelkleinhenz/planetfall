@@ -3671,7 +3671,7 @@ async function ACLAUSE_WIN(adj) {
   put(g.P_ITBL, P_VERB, get(g.P_OTBL, P_VERB));
   g.P_CCSRC = g.P_OTBL;
   await CLAUSE_COPY(g.P_ACLAUSE, g.P_ACLAUSE + 1, adj);
-  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2);
+  !(eq(get(g.P_OTBL, P_NC2), 0)) && (g.P_NCN = 2, true);
   g.P_ACLAUSE = false;
   return true;
 }

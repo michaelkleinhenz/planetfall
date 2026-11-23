@@ -138,6 +138,7 @@ function topLevelForms() {
       return;
     }
     if (node.t === 'quote') return visit(node.v, file);
+    if (node.t === 'list') { node.items.forEach((n) => visit(n, file)); return; }
     if (node.t !== 'form') return;
     const head = node.items[0]?.v;
     if (head === 'PROG') { node.items.slice(2).forEach((n) => visit(n, file)); return; }
@@ -289,6 +290,7 @@ function readStoryFile() {
     names.push(d[pt] ? decodeStory(d, pt + 1) : '');
   }
   return {
+    data: d,
     release: w(2),
     serial: String.fromCharCode(...d.slice(18, 24)),
     objectNames: names,
@@ -316,13 +318,16 @@ const JS_RESERVED = new Set(('break case catch class const continue debugger def
 // ---------------------------------------------------------------------------
 
 /** Convert a ZIL string literal to the text the game prints. */
+// The character that stands for a line break in strings (<SETG CRLF-CHARACTER !\~>).
+let CRLF_CHAR = '|';
+
 function zilText(s) {
   // "|" is a line break; a source line break directly after "|" is dropped;
   // any other source line break becomes a space.
   let out = '';
   for (let i = 0; i < s.length; i++) {
     const c = s[i];
-    if (c === '|') {
+    if (c === CRLF_CHAR) {
       out += '\n';
       if (s[i + 1] === '\r') i++;
       if (s[i + 1] === '\n') i++;
@@ -354,6 +359,7 @@ class Compiler {
     this.directions = [];
     this.propdefs = new Map();
     this.flags = new Map();
+    this.bitSynonyms = new Map();
     this.props = new Map();
     this.strings = [null];        // id -> text
     this.stringIds = new Map();
@@ -378,7 +384,8 @@ class Compiler {
       const head = f.items[0]?.v;
       const it = f.items;
       switch (head) {
-        case 'ROUTINE': this.routines.set(it[1].v, f); break;
+        // A trailing ! (MDL's empty-oblist trailer) is not part of the name.
+        case 'ROUTINE': this.routines.set(it[1].v.replace(/!$/, ''), f); break;
         case 'OBJECT': case 'ROOM':
           if (this.objIndex.has(it[1].v)) throw new Error('duplicate object ' + it[1].v);
           this.objIndex.set(it[1].v, this.objects.length + 1);
@@ -387,6 +394,7 @@ class Compiler {
         case 'GLOBAL': this.globals.set(it[1].v.replace(/:.*$/, ''), it[2]); break;
         case 'CONSTANT': this.constants.set(it[1].v, it[2]); break;
         case 'SETG':
+          if (it[1].v === 'CRLF-CHARACTER' && it[2]?.t === 'char') CRLF_CHAR = it[2].v;
           // <SETG ROOM? ,HERE?>: an alias for a compile-time function.
           if (it[2]?.t === 'gval' && this.mdl.has(it[2].v.v)) {
             this.mdl.defs.set(it[1].v, this.mdl.defs.get(it[2].v.v));
@@ -397,10 +405,12 @@ class Compiler {
           if (!this.constants.has(it[1].v)) this.constants.set(it[1].v, it[2]);
           break;
         case 'SYNTAX': this.syntaxes.push(it.slice(1)); break;
-        case 'SYNONYM': this.synonymDirs.push(it.slice(1).map((a) => a.v)); break;
+        case 'SYNONYM': case 'VERB-SYNONYM': case 'PREP-SYNONYM': case 'ADJ-SYNONYM': case 'DIR-SYNONYM': this.synonymDirs.push(it.slice(1).map((a) => a.v)); break;
         case 'BUZZ': this.buzz.push(...it.slice(1).map((a) => a.v)); break;
         case 'DIRECTIONS': this.directions.push(...it.slice(1).map((a) => a.v)); break;
         case 'PROPDEF': this.propdefs.set(it[1].v, it[2].v); break;
+        case 'TELL-TOKENS': this.tellTokens = parseTellTokens(it.slice(1)); break;
+        case 'BIT-SYNONYM': for (const a of it.slice(2)) if (a.t === 'atom') this.bitSynonyms.set(a.v, it[1].v); break;
         case 'DEFMAC': case 'DEFINE':
           this.mdl.define(f);
           break;
@@ -423,6 +433,36 @@ class Compiler {
   isConstantDecl() { return false; }
 
   /**
+   * Later ZILCH versions stored a verb's syntaxes in reverse source order.
+   * Look for the syntax lists in the original story file to tell which.
+   */
+  inferSyntaxOrder() {
+    const d = this.story?.data;
+    if (!d) return 'source';
+    const key = (s) => `${s.objs & 3},${s.prep1 ? 1 : 0},${s.prep2 ? 1 : 0},${s.fwim1 ? 1 : 0},${s.fwim2 ? 1 : 0}`;
+    let fwd = 0, rev = 0;
+    for (const list of this.verbSyntax.values()) {
+      if (list.length < 2) continue;
+      const f = list.map(key).join(';');
+      const r = [...list].reverse().map(key).join(';');
+      if (f === r) continue;
+      for (let p = 64; p < d.length - 8 * list.length; p++) {
+        if (d[p] !== list.length) continue;
+        const ks = [];
+        for (let k = 0; k < list.length; k++) {
+          const e = p + 1 + 8 * k;
+          ks.push(`${d[e] & 3},${d[e + 1] ? 1 : 0},${d[e + 2] ? 1 : 0},${d[e + 3] ? 1 : 0},${d[e + 4] ? 1 : 0}`);
+        }
+        const k = ks.join(';');
+        if (k === f) fwd++;
+        else if (k === r) rev++;
+      }
+    }
+    if (process.env.ZDEBUG) console.error('syntax order votes', { fwd, rev });
+    return rev > fwd ? 'reverse' : 'source';
+  }
+
+  /**
    * Expand uses of the game's own DEFMACs and compile-time DEFINEs everywhere
    * (routines, objects, globals, constants). Macros the compiler implements
    * itself are left alone, as are names that are also routines.
@@ -434,7 +474,7 @@ class Compiler {
       if (node.t === 'form' && node.items.length && node.items[0].t === 'atom' && expandable(node.items[0].v)) {
         if (depth > 50) throw new Error('macro expansion too deep: ' + show(node));
         let r;
-        try { r = this.mdl.expand(node); } catch (e) { throw new Error(`expanding ${show(node).slice(0, 120)}: ${e.message}`); }
+        try { r = this.mdl.expand(node); } catch (e) { if (process.env.ZDEBUG) console.error(e.stack); throw new Error(`expanding ${show(node).slice(0, 120)}: ${e.message}`); }
         if (r === null) return { t: 'form', items: [] };
         if (r.t === 'atom' && r.v === 'T') return r;
         return walk(r, depth + 1);
@@ -562,6 +602,7 @@ class Compiler {
   }
 
   flag(name) {
+    if (this.bitSynonyms.has(name)) name = this.bitSynonyms.get(name);
     if (!this.flags.has(name)) {
       this.flags.set(name, this.flags.size);
       if (this.flags.size > 32) throw new Error('too many flags');
@@ -764,6 +805,7 @@ class Compiler {
     if (this.objIndex.has(name)) return this.objIndex.get(name);
     if (this.routines.has(name)) return this.routineId(name);
     if (this.flags.has(name)) return this.flags.get(name);
+    if (this.bitSynonyms.has(name) && this.flags.has(this.bitSynonyms.get(name))) return this.flags.get(this.bitSynonyms.get(name));
     if (this.constants.has(name)) {
       this.constValues ??= new Map();
       if (!this.constValues.has(name)) {
@@ -946,6 +988,9 @@ class Compiler {
     // Syntax tables
     this.align();
     const verbs = [...this.verbSyntax.keys()].sort((a, b) => b - a);
+    if ((CFG.syntaxOrder ?? this.inferSyntaxOrder()) === 'reverse') {
+      for (const list of this.verbSyntax.values()) list.reverse();
+    }
     const vtblEntries = new Map();
     for (const act of verbs) {
       const list = this.verbSyntax.get(act);
@@ -1058,7 +1103,9 @@ class Compiler {
   }
 
   propBytes(pname, p, o) {
-    const vals = p.items.slice(1);
+    let vals = p.items.slice(1);
+    // (LDESC "text" CR): a stray CR after a string is ignored.
+    if (vals.length > 1 && vals[0].t === 'str' && vals.slice(1).every((v) => v.t === 'atom' && v.v === 'CR')) vals = [vals[0]];
     const w = (v) => [(v >> 8) & 255, v & 255];
     if (this.directions.includes(pname) && !(vals.length === 1 && vals[0].t === 'num')) {
       // Exits
@@ -1441,6 +1488,26 @@ class RoutineCompiler {
       const a = args[i];
       if (a.t === 'str') { parts.push(JSON.stringify(zilText(a.v))); continue; }
       if (a.t === 'atom' && (a.v === 'CR' || a.v === 'CRLF')) { parts.push('"\\n"'); continue; }
+      // The game's own TELL-TOKENS definitions.
+      const custom = a.t === 'atom' && this.c.tellTokens?.filter((e) => e.tokens.includes(a.v));
+      if (custom?.length) {
+        const next = args[i + 1];
+        const e = custom.find((e) => !e.arg || e.arg === '*' || (next?.t === 'gval' && next.v.v === e.arg));
+        if (e) {
+          const x = e.arg ? args[++i] : null;
+          const form = substLval(e.template, 'X', x);
+          const h = form.items?.[0]?.v;
+          const simple = { PRINTD: 'D', PRINTN: 'N', PRINTC: 'C', PRINT: 'S', PRINTB: 'S' }[h];
+          if (h === 'CRLF') { parts.push('"\\n"'); continue; }
+          if (simple && form.items.length === 2 && this.isExpr(form.items[1]) && !this.mayPrint(form.items[1])) {
+            parts.push(`${simple}(${stripParens(this.ex(form.items[1]))})`);
+            continue;
+          }
+          flush();
+          out.push(...this.stmt(form, { k: 'void' }));
+          continue;
+        }
+      }
       if (a.t === 'atom' && TELL_TOKENS[a.v]) {
         const x = args[++i];
         const fn = TELL_TOKENS[a.v];
@@ -1473,6 +1540,20 @@ class RoutineCompiler {
     flush();
     if (mode.k !== 'void') out.push(...this.emitValue('true', mode));
     return out;
+  }
+
+  /**
+   * An operand of AND/OR. ZILCH compiled <SET X constant> there as a store
+   * that always succeeds, even when the constant is 0 or false (Hollywood
+   * Hijinx's parser depends on <AND <WT? ...> <SET VAL 0>> being true).
+   */
+  condOperand(a) {
+    const it = a.t === 'form' ? a.items : [];
+    if ((it[0]?.v === 'SET' || it[0]?.v === 'SETG') && it.length === 3
+        && (it[2].t === 'num' || (it[2].t === 'form' && !it[2].items.length))) {
+      return `(${stripParens(this.ex(a))}, true)`;
+    }
+    return this.ex(a);
   }
 
   mayPrint(node) {
@@ -1518,6 +1599,7 @@ class RoutineCompiler {
     const c = this.c;
     if (c.globals.has(name)) return `g.${jsName(name)}`;
     if (c.objIndex.has(name) || c.flags.has(name)) return jsName(name);
+    if (c.bitSynonyms.has(name) && c.flags.has(c.bitSynonyms.get(name))) return `${jsName(c.bitSynonyms.get(name))} /* ${name} */`;
     if (c.routines.has(name)) return `${jsName(name)}.id`;
     if (c.constants.has(name)) return jsName(name);
     const m = /^(P|W|A|PR|ACT|V)\?(.*)$/.exec(name);
@@ -1527,6 +1609,7 @@ class RoutineCompiler {
       return `${m[1]}.${jsName(m[2])}`;
     }
     if (name === 'LOW-DIRECTION') return 'LOW_DIRECTION';
+    if (name === 'SERIAL') return '0 /* ZILCH serial (unused) */';
     throw new Error(`${this.name}: unknown global ,${name}`);
   }
 
@@ -1584,13 +1667,13 @@ class RoutineCompiler {
       case '0?': case 'ZERO?': return `(${A(0)} == 0)`;
       case '1?': return `(${A(0)} == 1)`;
       case 'NOT': return `!${wrap(A(0))}`;
-      case 'AND': return args.length === 1 ? A(0) : `(${args.map((a) => this.ex(a)).join(' && ')})`;
-      case 'OR': return args.length === 1 ? A(0) : `(${args.map((a) => this.ex(a)).join(' || ')})`;
+      case 'AND': return args.length === 1 ? A(0) : `(${args.map((a) => this.condOperand(a)).join(' && ')})`;
+      case 'OR': return args.length === 1 ? A(0) : `(${args.map((a) => this.condOperand(a)).join(' || ')})`;
       case '+': return `(${args.map((a) => this.ex(a)).join(' + ')})`;
       case '-': return args.length === 1 ? `(-${A(0)})` : `(${args.map((a) => this.ex(a)).join(' - ')})`;
       case '*': return `(${args.map((a) => this.ex(a)).join(' * ')})`;
-      case 'BAND': return `(${A(0)} & ${A(1)})`;
-      case 'BOR': return `(${A(0)} | ${A(1)})`;
+      case 'BAND': case 'ANDB': return `(${A(0)} & ${A(1)})`;
+      case 'BOR': case 'ORB': return `(${A(0)} | ${A(1)})`;
       case 'IN?': return `(loc(${stripParens(A(0))}) == ${A(1)})`;
       case 'REST': return args.length === 1 ? `(${A(0)} + 1)` : `(${A(0)} + ${A(1)})`;
       case 'BACK': return args.length === 1 ? `(${A(0)} - 1)` : `(${A(0)} - ${A(1)})`;
@@ -1618,6 +1701,8 @@ class RoutineCompiler {
       case 'ABS': return `Math.abs(${stripParens(A(0))})`;
       case 'CRLF': return 'crlf()';
       case 'SET': case 'SETG': return `(${this.varRef(args[0], h === 'SETG')} = ${stripParens(A(1))})`;
+      case 'INC': return `(++${this.varRef(args[0])})`;
+      case 'DEC': return `(--${this.varRef(args[0])})`;
       case 'DLESS?': return `(--${this.varRef(args[0])} < ${A(1)})`;
       case 'IGRTR?': return `(++${this.varRef(args[0])} > ${A(1)})`;
       case 'APPLY': return `(await apply(${all().join(', ')}))`;
@@ -1656,6 +1741,35 @@ const NATIVE_MACROS = new Set(['TELL', 'VERB?', 'PRSO?', 'PRSI?', 'ROOM?', 'HERE
   'OPENABLE?', 'ABS', 'RFATAL', 'BSET', 'BCLEAR', 'BSET?', 'FLAMING?', 'MULTIFROB', 'MULTIBITS']);
 
 const MACRO_LIKE = new Set(['VERB?', 'PRSO?', 'PRSI?', 'ROOM?', 'HERE?', 'WINNER?', 'PROB', 'OPENABLE?', 'FLAMING?', 'ABS']);
+
+/**
+ * <TELL-TOKENS (CRLF CR) <CRLF>  D * <DPRINT .X>  T ,PRSO <TPRINT-PRSO> ...>:
+ * each entry is a token (or list of tokens), what follows it in a TELL
+ * ("*" any value, bound to .X; ",NAME" exactly that global; nothing), and the
+ * form to print it with.
+ */
+function parseTellTokens(items) {
+  const out = [];
+  for (let i = 0; i < items.length;) {
+    const spec = items[i++];
+    const tokens = spec.t === 'list' ? spec.items.map((a) => a.v) : [spec.v];
+    let arg = null;
+    const n = items[i];
+    if (n?.t === 'atom' && /^\*(:|$)/.test(n.v)) { arg = '*'; i++; }
+    else if (n?.t === 'gval') { arg = n.v.v; i++; }
+    const template = items[i++];
+    out.push({ tokens, arg, template });
+  }
+  return out;
+}
+
+/** Replace .NAME in a form by a node. */
+function substLval(node, name, value) {
+  if (!node || typeof node !== 'object') return node;
+  if (node.t === 'lval' && node.v.v === name) return value;
+  if (node.items) return { ...node, items: node.items.map((x) => substLval(x, name, value)) };
+  return node;
+}
 
 const TELL_TOKENS = { D: 'D', DESC: 'D', OBJ: 'D', O: 'D', N: 'N', NUM: 'N', C: 'C', CHR: 'C', CHAR: 'C', A: 'A', AN: 'A' };
 
@@ -1704,6 +1818,7 @@ export function compileAll(gameId = 'planetfall') {
   GAME_ID = gameId;
   if (!GAMES[gameId]) throw new Error('unknown game ' + gameId);
   warnings.length = 0;
+  CRLF_CHAR = '|';
   CFG = inferConfig({ ...GAMES[gameId] });
   const c = new Compiler();
   c.story = readStoryFile();
