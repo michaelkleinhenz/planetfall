@@ -1999,7 +1999,8 @@ function rewriteMapLoop(node) {
   const F = (...items) => ({ t: 'form', items });
   const [head, spec, ...rest] = node.items;
   let end = [];
-  if (rest[0]?.t === 'list' && rest[0].items[0]?.v === 'END') end = rest.shift().items.slice(1);
+  // (END ...) or, in the older form, just a list of forms to run at the end
+  if (rest[0]?.t === 'list') { const l = rest.shift().items; end = l[0]?.t === 'atom' && l[0].v === 'END' ? l.slice(1) : l; }
   const vars = spec.items;
   if (head.v === 'DO') {
     // <DO (V start end [step]) [(END ...)] body...>
