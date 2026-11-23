@@ -80,9 +80,12 @@ Microsoft). All others are shared by historicalsource for education and research
 - **Immersive mode (optional, per game):** switched on in the settings for the game you
   are playing. Where the game has nothing to say ("You see nothing special about it" for
   the posters The Lurking Horror's terminal room mentions), the AI adds a few sentences of
-  atmosphere in the game's voice, consistent with what the game described. It never
-  invents objects, exits or clues; the text is set apart and marked ✦, and the same thing
-  is described the same way each time.
+  atmosphere in the game's voice, consistent with what the game described. Like the hints,
+  it reads the game code for the current situation: when the thing you look at really
+  connects to a next step, it may slip in one subtle, true detail that turns your attention
+  the right way (never the solution, never a false lead). It never invents objects or
+  exits; the text is set apart and marked ✦, and the same thing is described the same way
+  each time.
 - **English or German:** German switches the whole interface. With the AI on, the
   story is translated as you play (tap a passage for the original English), and you can
   type in German.

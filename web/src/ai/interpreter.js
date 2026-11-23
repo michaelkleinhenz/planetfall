@@ -94,7 +94,12 @@ function parseJson(text) {
   let obj;
   try { obj = JSON.parse(text.slice(start, end + 1)); } catch { throw new Error('The AI did not return valid JSON.'); }
   const commands = Array.isArray(obj.commands) ? obj.commands.map(String).map((c) => c.trim()).filter(Boolean).slice(0, 6) : [];
-  return { commands, reply: typeof obj.reply === 'string' ? obj.reply.trim() : '' };
+  return {
+    commands,
+    reply: typeof obj.reply === 'string' ? obj.reply.trim() : '',
+    // Immersive mode: scenery the parser has no word for, to be described.
+    describe: typeof obj.describe === 'string' ? obj.describe.trim() : '',
+  };
 }
 
 /**

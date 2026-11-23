@@ -655,7 +655,14 @@ async function aiTurn(text) {
     if (res.restarted || res.ended || /RESTART, RESTORE, or QUIT|\(Y is affirmative\)|Please answer YES or NO/.test(res.text)) break;
     if (parserError) break;
   }
-  if (!result.commands.length && !result.reply) entry.steps.push({ narration: t('cantMap') });
+  // Immersive mode: scenery the game has no word for is described by the AI.
+  let described = false;
+  if (result.describe && !result.commands.length && immersiveOn()) {
+    const before = entry.steps.length;
+    node = await addAtmosphere(entry, node, { input: text, command: `examine ${result.describe}`, output: '', force: true });
+    described = entry.steps.length > before;
+  }
+  if (!result.commands.length && !result.reply && !described) entry.steps.push({ narration: t('cantMap') });
   node = rerender(node, entry);
   await translateEntry(entry, node);
   // Immersive mode: atmosphere where the game's last answer was a stock phrase.
@@ -678,8 +685,8 @@ const atmosphereOf = (entry) => entry.steps?.find((st) => st.immersive)?.narrati
  * special about the posters."), add the AI's description. The same thing in the
  * same room is described the same way every time (cached per game).
  */
-async function addAtmosphere(entry, node, { input, command, output }) {
-  if (!immersiveOn() || !command || !needsAtmosphere(output) || gameEnded) return node;
+async function addAtmosphere(entry, node, { input, command, output, force = false }) {
+  if (!immersiveOn() || !command || gameEnded || (!force && !needsAtmosphere(output))) return node;
   const room = els.room.textContent || '';
   const key = `${settings.language}|${room}|${command.toLowerCase().replace(/\s+/g, ' ').trim()}`;
   const cache = store.get(K('immersion'), {});
