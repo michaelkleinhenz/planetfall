@@ -478,7 +478,7 @@ class Compiler {
     if (this.mdl.has('TELL') && !this.routines.has('TELL')) {
       try {
         const probe = show(this.mdl.expand({ t: 'form', items: [{ t: 'atom', v: 'TELL' }, { t: 'atom', v: 'D' }, { t: 'gval', v: { t: 'atom', v: 'X' } }] }));
-        this.gameTell = !/<PRINTD /.test(probe);
+        this.gameTell = !!probe;
         // ... or one with extra tokens such as PRSO (Deadline)
         if (!this.gameTell) {
           try {
@@ -491,6 +491,12 @@ class Compiler {
     const expandable = (h) => h && this.mdl.has(h) && (!NATIVE_MACROS.has(h) || (h === 'TELL' && this.gameTell)) && !this.routines.has(h);
     const walk = (node, depth = 0) => {
       if (!node || typeof node !== 'object' || !node.t) return node;
+      // <VOC "WORD" PART> written directly in tables: a dictionary word
+      if (node.t === 'form' && node.items[0]?.v === 'VOC' && (node.items[1]?.t === 'str' || node.items[1]?.t === 'atom')) {
+        const v = { t: 'vocab', word: node.items[1].v, part: node.items[2]?.v || 'NOUN' };
+        this.mdl.vocab.push(v);
+        return v;
+      }
       if (node.t === 'form' && ['MAP-CONTENTS', 'MAP-DIRECTIONS', 'DO'].includes(node.items[0]?.v) && !this.mdl.has(node.items[0].v)
           && !this.routines.has(node.items[0].v) && node.items[1]?.t === 'list') {
         return walk(rewriteMapLoop(node), depth + 1);
@@ -880,9 +886,13 @@ class Compiler {
 
   /** Resolve a constant-ish node (used in tables, properties, global initial values). */
   staticValue(node, ctx = 'value') {
+    if (typeof node === 'number') return node;
     if (node.t === 'form' && node.items[0]?.v === 'STRING') node = this.mdl.eval(node, new Map());
+    // <GLOBAL X <SETG X-ATOM 420>>: the value, also kept as a compile-time constant
+    if (node.t === 'form' && node.items[0]?.v === 'SETG' && node.items.length === 3) return this.staticValue(node.items[2], ctx);
     switch (node.t) {
       case 'num': return node.v;
+      case 'char': return node.v.charCodeAt(0);
       case 'str': return this.stringId(zilText(node.v));
       case 'form':
         if (node.items.length === 0) return 0;
@@ -906,7 +916,7 @@ class Compiler {
       }
       case 'vocab': return this.wordAddr(node.word.toUpperCase());
     }
-    throw new Error('cannot evaluate statically: ' + show(node));
+    throw new Error('cannot evaluate statically: ' + show(node) + ' ' + JSON.stringify(node).slice(0, 200));
   }
 
   atomValue(name) {
@@ -1301,6 +1311,7 @@ const SIMPLE_HELPERS = {
   RANDOM: 'random', PRINTD: 'printD', PRINTB: 'printB', PRINTC: 'printC', PRINTN: 'printN',
   PRINT: 'printS', PRINTI: 'print', VALUE: 'globalValue', BTST: 'btst', VERIFY: 'verify',
   DIROUT: 'dirOut', DIRIN: 'dirIn', '/': 'div', MOD: 'mod',
+  SPLIT: 'splitWindow', SCREEN: 'setWindow', SOUND: 'sound',
 };
 const ASYNC_HELPERS = { READ: 'read', SAVE: 'save', RESTORE: 'restore', RESTART: 'restart', QUIT: 'quit' };
 
@@ -1766,6 +1777,7 @@ class RoutineCompiler {
       case 'jsraw': return node.v;
       case 'vocab': return `${this.c.wordAddr(node.word.toUpperCase())} /* word "${node.word.toLowerCase()}" */`;
       case 'num': return node.v < 0 ? `(${node.v})` : String(node.v);
+      case 'char': return `${node.v.charCodeAt(0)} /* ${JSON.stringify(node.v)} */`;
       case 'str': return JSON.stringify(zilText(node.v));
       case 'lval': {
         const n = node.v.v;
@@ -1808,7 +1820,7 @@ class RoutineCompiler {
     // A game routine with a macro-like name (e.g. Planetfall's HERE?) is a call.
     if (MACRO_LIKE.has(h) && this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
     switch (h) {
-      case 'EQUAL?': case '==?': {
+      case 'EQUAL?': case '==?': case '=?': {
         const first = args[0];
         const rest = args.slice(1).map((a) => this.ex(a));
         if (this.isSimple(first)) {
@@ -1820,6 +1832,19 @@ class RoutineCompiler {
       case 'N==?': return `(${A(0)} != ${A(1)})`;
       case 'L?': return `(${A(0)} < ${A(1)})`;
       case 'G?': return `(${A(0)} > ${A(1)})`;
+      case 'LOWCORE': case 'LOWCORE-TABLE': {
+        // Header words by name (later ZILCH)
+        const offs = { ZVERSION: 0, ZORKID: 2, ENDLOD: 4, START: 6, VOCAB: 8, OBJECT: 10, GLOBALS: 12, PURBOT: 14,
+          FLAGS: 16, SERIAL: 18, FWORDS: 24, PLENTH: 26, PCHKSM: 28, INTWRD: 30, SCRWRD: 32 };
+        const off = offs[args[0].v];
+        if (off === undefined) throw new Error(`${this.name}: unknown LOWCORE field ${show(args[0])}`);
+        if (h === 'LOWCORE-TABLE') {
+          // <LOWCORE-TABLE SERIAL 6 PRINTC>: call a routine on each byte
+          const fn = args[2].v === 'PRINTC' ? '(c) => printC(c)' : jsName(args[2].v);
+          return `(await (async () => { for (let i = 0; i < ${A(1)}; i++) await (${fn})(getb(${off}, i)); return true; })())`;
+        }
+        return args.length > 1 ? `put(0, ${off / 2}, ${stripParens(A(1))})` : `get(0, ${off / 2})`;
+      }
       case 'RARG?': {
         // <RARG? LOOK ENTER>: the routine's RARG is M-LOOK or M-ENTER (later ZILCH)
         const r = this.varRef({ t: 'atom', v: 'RARG' });
@@ -2020,7 +2045,7 @@ const RUNTIME_NAMES = new Set([
   'getprop', 'putprop', 'getpropaddr', 'propsize', 'nextprop', 'get', 'put', 'getb', 'putb', 'random', 'prob', 'isverb',
   'enable', 'disable', 'apply', 'globalvalue', 'btst', 'verify', 'dirout', 'dirin', 'div', 'mod', 'read', 'save',
   'restore', 'restart', 'quit', 'printd', 'printb', 'printc', 'printn', 'prints', 'd', 'n', 'c', 's', 'v', 'p', 'w',
-  'a', 'pr', 'act',
+  'a', 'pr', 'act', 'sound',
 ]);
 
 function stripParens(s) {
@@ -2084,7 +2109,7 @@ function emit({ c, code }) {
   lines.push(`import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 `);

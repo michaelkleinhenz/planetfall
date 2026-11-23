@@ -5,7 +5,7 @@
 import {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
-  enable, disable, apply, globalValue, setVarIndirect, btst, verify, dirOut, dirIn, div, mod,
+  enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
 } from '../../engine/runtime.js';
 
@@ -6050,9 +6050,9 @@ async function SOUNDS(n_, op = S_START, vol = 8) {
       put(g.SOUND_FLAG, 1, 0);
     }
     if (op == S_START) {
-      return false;
+      return sound(n_, op, vol);
     } else {
-      return false;
+      return sound(n_, op);
     }
   } else {
     return false;

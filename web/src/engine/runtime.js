@@ -207,9 +207,21 @@ export function objectName(o) {
 
 export function tell(...parts) {
   const text = parts.join('');
-  if (text) io.output(text, { fixed: fixedFont });
+  if (!text) return true;
+  // Text for the upper window (v3 split screen, e.g. Seastalker's sonar)
+  // goes to the front end's upper-window handler, if it has one.
+  if (currentWindow === 1) { io.upper?.(text); return true; }
+  io.output(text, { fixed: fixedFont });
   return true;
 }
+
+// v3 split screen: SPLIT sets the size of the upper window, SCREEN selects
+// the window that output goes to.
+let currentWindow = 0;
+export function splitWindow(lines) { io.split?.(Number(lines)); if (!lines) currentWindow = 0; return true; }
+export function setWindow(w) { currentWindow = Number(w); io.window?.(currentWindow); return true; }
+/** SOUND (Lurking Horror's beeps and effects): not played. */
+export function sound() { return true; }
 export function print(s) { return tell(s); }
 export function crlf() { return tell('\n'); }
 

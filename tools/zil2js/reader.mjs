@@ -109,7 +109,7 @@ export function readZil(text, file = '?') {
     }
     const a = readAtomText();
     if (a === '') err(`unexpected character ${JSON.stringify(c)}`);
-    if (/^-?[0-9]+$/.test(a)) return { t: 'num', v: parseInt(a, 10), line: startLine };
+    if (/^[-+]?[0-9]+$/.test(a)) return { t: 'num', v: parseInt(a, 10), line: startLine };
     return { t: 'atom', v: a, line: startLine };
   }
 
