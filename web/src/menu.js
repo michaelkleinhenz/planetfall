@@ -5,10 +5,7 @@ import { GAMES } from './games/registry.js';
 import { store, gameKey, downloadBackup, inspectBackup, restoreBackup } from './storage.js';
 import { t, getLanguage } from './i18n.js';
 
-const ICONS = {
-  planetfall: '<svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="15" fill="var(--accent)"/><ellipse cx="32" cy="34" rx="27" ry="7" fill="none" stroke="var(--accent-2)" stroke-width="3"/></svg>',
-  zork1: '<svg viewBox="0 0 64 64" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round"><path d="M12 30 32 14l20 16"/><path d="M17 27v23h30V27"/><path d="M28 50V38h8v12" stroke="var(--accent-2)"/></svg>',
-};
+import { emblem } from './emblems.js';
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -30,9 +27,15 @@ export function renderMenu({ openSettings }) {
     const save = store.get(gameKey(meta.id, 'autosave'), null);
     const named = Object.keys(store.get(gameKey(meta.id, 'saves'), {})).length;
     const card = el('article', 'game-card');
-    const icon = el('div', 'gc-icon');
-    icon.innerHTML = ICONS[meta.id] || '';
-    const body = el('div');
+    card.dataset.game = meta.id;
+    // A generated cover panel (original artwork, not the box art).
+    const cover = el('a', 'gc-cover');
+    cover.href = gameUrl(meta.id);
+    cover.setAttribute('aria-label', meta.title);
+    const art = el('span', 'gc-emblem');
+    art.innerHTML = emblem(meta.id);
+    cover.append(el('span', 'gc-stars'), art, el('span', 'gc-cover-title', meta.title), el('span', 'gc-cover-year', String(meta.year)));
+    const body = el('div', 'gc-body');
     body.append(el('h3', null, meta.title));
     body.append(el('div', 'gc-sub', `${meta.subtitle ? meta.subtitle + ' · ' : ''}${meta.author}, ${meta.year}`));
     body.append(el('p', 'gc-blurb', meta.blurb[getLanguage()] || meta.blurb.en));
@@ -56,7 +59,8 @@ export function renderMenu({ openSettings }) {
       actions.append(fresh);
     }
     actions.append(el('span', 'gc-license', `${t('menuLicense')}: ${meta.license}`));
-    card.append(icon, body, actions);
+    body.append(actions);
+    card.append(cover, body);
     cards.append(card);
   }
 

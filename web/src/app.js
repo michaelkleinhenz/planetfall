@@ -11,6 +11,7 @@ import { getHint } from './ai/hints.js';
 import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
 import { store, gameKey, migrateLegacyKeys } from './storage.js';
 import { renderMenu } from './menu.js';
+import { emblem } from './emblems.js';
 import { GAMES } from './games/registry.js';
 import { loadGame, current } from './engine/current.js';
 
@@ -227,7 +228,8 @@ function renderEntry(entry, animate = true) {
       }
       turn.append(note);
     } else if (step.note) turn.append(el('div', `ai-note${step.error ? ' error' : ''}`, step.note));
-    if (step.command && settings.showCommands && entry.viaAI) {
+    const sameAsTyped = step.command && step.command.trim().toLowerCase() === String(entry.input ?? '').trim().toLowerCase();
+    if (step.command && settings.showCommands && entry.viaAI && !sameAsTyped) {
       const wrap = el('div', 'interp');
       wrap.append(el('span', `chip${step.parserError ? ' error' : ''}`, step.command));
       turn.append(wrap);
@@ -737,7 +739,8 @@ function updateMode() {
   els.badge.classList.toggle('ai', ai);
   els.badge.title = ai ? t('badgeTitleAi', { model: settings.model })
     : settings.apiKey ? t('badgeTitleClassicKey') : t('badgeTitleClassicNoKey');
-  els.input.placeholder = ai ? t('placeholderAi') : t('placeholderClassic');
+  const example = current.meta?.example?.[settings.language] ?? current.meta?.example?.en;
+  els.input.placeholder = ai ? (example ? t('placeholderAiGame', { example }) : t('placeholderAi')) : t('placeholderClassic');
   els.hint.replaceChildren();
   if (ai) {
     els.hint.append(targetLanguage() ? t('hintAiTranslated') : t('hintAi'));
@@ -928,6 +931,8 @@ async function boot() {
   await loadGame(meta);
   document.title = `${meta.title} AI`;
   $('game-title').textContent = meta.title.toUpperCase();
+  $('emblem').innerHTML = emblem(meta.id);
+  document.body.dataset.game = meta.id;
   const second = $('status-second-label');
   second.dataset.i18n = meta.statusSecond === 'time' ? 'time' : 'moves';
   second.textContent = t(second.dataset.i18n);

@@ -16,6 +16,7 @@ export const GAMES = {
     },
     // The status line's second number: Planetfall shows the time of day.
     statusSecond: 'time',
+    example: { en: 'grab the brush and head up the stairs', de: 'nimm die Bürste und geh die Treppe hoch' },
     // First line of the title/copyright block (opening text and VERSION).
     bannerTitle: 'PLANETFALL',
     maxScore: 80,
@@ -37,6 +38,7 @@ export const GAMES = {
       de: 'Westlich eines weißen Hauses beginnt das Große Unterirdische Reich: neunzehn Schätze, ein Troll, ein Dieb – und ein lauernder Grue.',
     },
     statusSecond: 'moves',
+    example: { en: 'open the mailbox and read what is inside', de: 'öffne den Briefkasten und lies, was drin ist' },
     bannerTitle: 'ZORK I: The Great Underground Empire',
     maxScore: 350,
     names: 'Zork, Great Underground Empire, Flood Control Dam #3, Frigid River, Aragain Falls, Hades',

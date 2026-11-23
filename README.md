@@ -81,6 +81,9 @@ directly to openrouter.ai, never to GitHub or any other server.
 | AI interpreter | `web/src/ai/` | Builds a scene description from the live game state (location, inventory, visible objects with their nouns and adjectives) plus the recent transcript. It asks the model for JSON `{commands, reply}`. If the original parser rejects a command, it gives the model one chance to rephrase, which is safe because parser errors take no game time. |
 | Web app | `web/index.html`, `web/src/app.js` | The browser front end. |
 
+Fonts are self-hosted (no requests to font services): Literata, Inter and JetBrains Mono,
+under the SIL Open Font License (`web/fonts/LICENSE-*.txt`).
+
 ### Faithfulness
 
 The translation keeps the original ZILCH compiler's semantics: for example `<RETURN value>`
