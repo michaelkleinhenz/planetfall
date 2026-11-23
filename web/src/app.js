@@ -1042,7 +1042,59 @@ function objectLabel(label) {
   return label;
 }
 
+// The action bar scrolls sideways: by touch on phones; with a mouse also by the
+// wheel and by dragging. The edges fade where more buttons are hidden.
+function updateActionFade() {
+  const bar = els.actions;
+  const left = bar.scrollLeft > 2;
+  const right = bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 2;
+  if (left || right) bar.dataset.more = left && right ? 'both' : left ? 'left' : 'right';
+  else delete bar.dataset.more;
+}
+els.actions.addEventListener('scroll', updateActionFade, { passive: true });
+window.addEventListener('resize', updateActionFade);
+els.actions.addEventListener('wheel', (e) => {
+  const bar = els.actions;
+  if (bar.scrollWidth <= bar.clientWidth || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  e.preventDefault();
+  bar.scrollLeft += e.deltaY;
+}, { passive: false });
+{
+  let drag = null;
+  let dragged = false;
+  // A drag is not a click on the button it started on.
+  els.actions.addEventListener('click', (ev) => { if (dragged) { ev.stopPropagation(); ev.preventDefault(); } }, { capture: true });
+  els.actions.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag = { x: e.clientX, left: els.actions.scrollLeft, moved: false, id: e.pointerId };
+  });
+  els.actions.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 5) {
+      drag.moved = true;
+      els.actions.setPointerCapture(drag.id);
+      els.actions.classList.add('dragging');
+    }
+    if (drag.moved) els.actions.scrollLeft = drag.left - dx;
+  });
+  const end = () => {
+    if (drag?.moved) {
+      dragged = true;
+      setTimeout(() => { dragged = false; els.actions.classList.remove('dragging'); });
+    }
+    drag = null;
+  };
+  els.actions.addEventListener('pointerup', end);
+  els.actions.addEventListener('pointercancel', end);
+}
+
 function renderActions() {
+  renderActionButtons();
+  updateActionFade();
+}
+
+function renderActionButtons() {
   const bar = els.actions;
   bar.replaceChildren();
   const last = transcriptLog[transcriptLog.length - 1];
