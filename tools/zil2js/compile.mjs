@@ -423,6 +423,9 @@ class Compiler {
           warn('ignored top-level form ' + head);
       }
     }
+    // Exit-type constants that later ZILCH predefined (Planetfall defines them itself).
+    const exitConsts = { REXIT: 0, UEXIT: 1, NEXIT: 2, FEXIT: 3, CEXIT: 4, DEXIT: 5, NEXITSTR: 0, FEXITFCN: 0, CEXITFLAG: 1, CEXITSTR: 1, DEXITOBJ: 1, DEXITSTR: 1 };
+    for (const [k, v] of Object.entries(exitConsts)) if (!this.constants.has(k) && !this.globals.has(k)) this.constants.set(k, { t: 'num', v });
     this.expandUserMacros();
     this.numberObjects();
     // Globals declared with GLOBAL override same-named top-level SETG constants.
@@ -488,6 +491,10 @@ class Compiler {
     const expandable = (h) => h && this.mdl.has(h) && (!NATIVE_MACROS.has(h) || (h === 'TELL' && this.gameTell)) && !this.routines.has(h);
     const walk = (node, depth = 0) => {
       if (!node || typeof node !== 'object' || !node.t) return node;
+      if (node.t === 'form' && ['MAP-CONTENTS', 'MAP-DIRECTIONS', 'DO'].includes(node.items[0]?.v) && !this.mdl.has(node.items[0].v)
+          && !this.routines.has(node.items[0].v) && node.items[1]?.t === 'list') {
+        return walk(rewriteMapLoop(node), depth + 1);
+      }
       if (node.t === 'form' && !node.native && node.items.length && node.items[0].t === 'atom' && expandable(node.items[0].v)) {
         if (depth > 50) throw new Error('macro expansion too deep: ' + show(node));
         let r;
@@ -873,6 +880,7 @@ class Compiler {
 
   /** Resolve a constant-ish node (used in tables, properties, global initial values). */
   staticValue(node, ctx = 'value') {
+    if (node.t === 'form' && node.items[0]?.v === 'STRING') node = this.mdl.eval(node, new Map());
     switch (node.t) {
       case 'num': return node.v;
       case 'str': return this.stringId(zilText(node.v));
@@ -890,7 +898,12 @@ class Compiler {
         if (node.v === 'T') return 1;
         return this.atomValue(node.v);
       case 'quote': return this.staticValue(node.v, ctx);
-      case 'macro': return this.staticValue(evalCompileTime(node.v), ctx);
+      case 'macro': {
+        let r = evalCompileTime(node.v);
+        // %<STRING "..." <COND ...> "..."> and the like: the MDL interpreter
+        if (r && r.t === 'form' && ['STRING', 'COND', 'AND', 'OR'].includes(r.items[0]?.v)) r = this.mdl.eval(r, new Map());
+        return this.staticValue(r, ctx);
+      }
       case 'vocab': return this.wordAddr(node.word.toUpperCase());
     }
     throw new Error('cannot evaluate statically: ' + show(node));
@@ -929,7 +942,11 @@ class Compiler {
       case 'A': if (this.adjNums.has(name)) return this.adjNums.get(name); break;
       case 'PR': if (this.prepNums.has(name)) return this.prepNums.get(name); break;
       case 'ACT': if (this.actNums.has(name)) return this.actNums.get(name); break;
-      case 'V': if (this.actions.has(name)) return this.actions.get(name).num; break;
+      case 'V':
+        if (this.actions.has(name)) return this.actions.get(name).num;
+        // An action no syntax uses any more (e.g. V?DIG in The Lurking Horror)
+        warn(`unknown action V?${name} (never matches)`);
+        return 255;
     }
     throw new Error(`unknown ${prefix}?${name}`);
   }
@@ -1214,7 +1231,8 @@ class Compiler {
   }
 
   propBytes(pname, p, o) {
-    let vals = p.items.slice(1);
+    // <STRING "..." <COND ...>> computed at compile time
+    let vals = p.items.slice(1).map((v) => (v.t === 'form' && v.items[0]?.v === 'STRING' ? this.mdl.eval(v, new Map()) : v));
     // (LDESC "text" CR): a stray CR after a string is ignored.
     if (vals.length > 1 && vals[0].t === 'str' && vals.slice(1).every((v) => v.t === 'atom' && v.v === 'CR')) vals = [vals[0]];
     const w = (v) => [(v >> 8) & 255, v & 255];
@@ -1316,7 +1334,7 @@ class RoutineCompiler {
     const aux = [];
     let mode = 'req';
     for (const a of argList) {
-      if (a.t === 'str') { mode = a.v === 'OPTIONAL' ? 'opt' : a.v === 'AUX' || a.v === 'EXTRA' ? 'aux' : mode; continue; }
+      if (a.t === 'str') { mode = a.v === 'OPTIONAL' || a.v === 'OPT' ? 'opt' : a.v === 'AUX' || a.v === 'EXTRA' ? 'aux' : mode; continue; }
       const nm = a.t === 'list' ? a.items[0].v : a.v;
       const init = a.t === 'list' ? a.items[1] : null;
       const js = this.localName(nm);
@@ -1334,6 +1352,7 @@ class RoutineCompiler {
     if (process.env.ZIL2JS_COVERAGE) out.push(`globalThis.__cov?.(${JSON.stringify(this.name)});`);
     const decl = [];
     for (const a of aux) decl.push(`${a.js} = ${a.init ? this.ex(a.init) : 0}`);
+    for (const js of this.loopLocals ?? []) if (!aux.some((a) => a.js === js) && !params.some((p) => p.js === js)) decl.push(`${js} = 0`);
     if (decl.length) out.push(`  let ${decl.join(', ')};`);
     if (this.tmpCount) out.push(`  let ${Array.from({ length: this.tmpCount }, (_, i) => `$${i + 1}`).join(', ')};`);
     if (this.usesRestart) {
@@ -1459,6 +1478,8 @@ class RoutineCompiler {
       for (const b of bindings.items) {
         const nm = b.t === 'list' ? b.items[0].v : b.v;
         const js = this.localName(nm);
+        // A loop variable the routine does not declare itself
+        if (!this.locals.has(nm)) (this.loopLocals ??= new Set()).add(js);
         this.locals.set(nm, js);
         out.push(`${js} = ${b.t === 'list' ? this.ex(b.items[1]) : 0};`);
       }
@@ -1799,6 +1820,11 @@ class RoutineCompiler {
       case 'N==?': return `(${A(0)} != ${A(1)})`;
       case 'L?': return `(${A(0)} < ${A(1)})`;
       case 'G?': return `(${A(0)} > ${A(1)})`;
+      case 'RARG?': {
+        // <RARG? LOOK ENTER>: the routine's RARG is M-LOOK or M-ENTER (later ZILCH)
+        const r = this.varRef({ t: 'atom', v: 'RARG' });
+        return `(${args.map((x) => `${r} == ${this.gval('M-' + x.v)}`).join(' || ')})`;
+      }
       case 'VALUE':
         // <VALUE NAME>: the variable called NAME (local first, then global).
         if (args[0].t === 'atom') return this.varRef(args[0]);
@@ -1934,6 +1960,48 @@ function tellFromExpansion(r) {
     else args.push({ t: 'tellcall', v: f });
   }
   return { t: 'form', native: true, items: args };
+}
+
+/**
+ * The later ZILCH loops over an object's contents or a room's exits:
+ *   <MAP-CONTENTS (V [NEXT] container) [(END ...)] body...>
+ *   <MAP-DIRECTIONS (DIR PT room) [(END ...)] body...>
+ * rewritten as PROG/REPEAT.
+ */
+function rewriteMapLoop(node) {
+  const A = (v) => ({ t: 'atom', v });
+  const L = (v) => ({ t: 'lval', v: A(v) });
+  const F = (...items) => ({ t: 'form', items });
+  const [head, spec, ...rest] = node.items;
+  let end = [];
+  if (rest[0]?.t === 'list' && rest[0].items[0]?.v === 'END') end = rest.shift().items.slice(1);
+  const vars = spec.items;
+  if (head.v === 'DO') {
+    // <DO (V start end [step]) [(END ...)] body...>
+    const [v, start, last, stepNode] = vars;
+    let step = stepNode?.t === 'num' ? stepNode.v : 1;
+    if (!stepNode && start.t === 'num' && last.t === 'num' && start.v > last.v) step = -1;
+    const done = F(A(step < 0 ? 'L?' : 'G?'), L(v.v), last);
+    const stop = F(A('COND'), { t: 'list', items: [done, ...end, F(A('RETURN'))] });
+    const inc = stepNode && stepNode.t !== 'num' ? stepNode : { t: 'num', v: step };
+    return F(A('PROG'), { t: 'list', items: [A(v.v)] }, F(A('SET'), A(v.v), start),
+      F(A('REPEAT'), { t: 'list', items: [] }, stop, ...rest, F(A('SET'), A(v.v), F(A('+'), L(v.v), inc))));
+  }
+  const exit = F(A('COND'), { t: 'list', items: [F(A('NOT'), L(vars[0].v)), ...end, F(A('RETURN'))] });
+  if (head.v === 'MAP-CONTENTS') {
+    const [v, nxt] = vars.length === 3 ? [vars[0].v, vars[1].v] : [vars[0].v, null];
+    const container = vars[vars.length - 1];
+    const loop = [exit];
+    if (nxt) loop.push(F(A('SET'), A(nxt), F(A('NEXT?'), L(v))));
+    loop.push(...rest);
+    loop.push(F(A('SET'), A(v), nxt ? L(nxt) : F(A('NEXT?'), L(v))));
+    return F(A('PROG'), { t: 'list', items: vars.slice(0, -1).map((x) => A(x.v)) }, F(A('SET'), A(v), F(A('FIRST?'), container)), F(A('REPEAT'), { t: 'list', items: [] }, ...loop));
+  }
+  const [d, p, room] = [vars[0].v, vars[1].v, vars[2]];
+  const lowDir = { t: 'gval', v: A('LOW-DIRECTION') };
+  const stop = F(A('COND'), { t: 'list', items: [F(A('L?'), F(A('SET'), A(d), F(A('-'), L(d), { t: 'num', v: 1 })), lowDir), ...end, F(A('RETURN'))] });
+  const step = F(A('COND'), { t: 'list', items: [F(A('SET'), A(p), F(A('GETPT'), room, L(d))), ...rest] });
+  return F(A('PROG'), { t: 'list', items: [A(d), A(p)] }, F(A('SET'), A(d), { t: 'num', v: 32 }), F(A('REPEAT'), { t: 'list', items: [] }, stop, step));
 }
 
 /** Replace .NAME in a form by a node. */

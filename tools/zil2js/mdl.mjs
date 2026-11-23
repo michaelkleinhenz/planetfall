@@ -163,6 +163,7 @@ export class MDL {
     if (head.t !== 'atom') throw new Error(`MDL: bad form ${show(node)}`);
     const h = clean(head.v);
     if (SPECIAL.has(h)) return this.special(h, args, env, node);
+    if (h === 'MULTIFROB') return this.multifrob(...this.evalItems(args, env));
     if (this.defs.has(h)) return this.invoke(this.defs.get(h), args, env, this.defs.get(h).macro);
     if (BUILTINS.has(h)) return this.builtin(h, args, env);
     // A ZIL form that is just data (e.g. <TABLE ...> inside generated code).
@@ -248,6 +249,24 @@ export class MDL {
       case 'MAPLEAVE': throw new MapStop(args.length ? this.eval(args[0], env) : T, true);
     }
     throw new Error(`MDL: unhandled special ${h}`);
+  }
+
+  /**
+   * <MULTIFROB ',PRSA (TAKE DROP)> -> <EQUAL? ,PRSA ,V?TAKE ,V?DROP>, the
+   * helper behind VERB?, PRSO?, RARG? and friends. (Games define it with list
+   * surgery this interpreter does not model, so it is built in.)
+   */
+  multifrob(x, atms) {
+    const what = x?.t === 'gval' ? 'gval:' + x.v.v : x?.t === 'lval' ? 'lval:' + x.v.v : '';
+    const vals = (atms?.items || []).map((a) => {
+      if (a.t !== 'atom') return a;
+      let name = a.v;
+      if (what === 'gval:PRSA') name = 'V?' + name;
+      else if (what === 'lval:RARG' && !/^M-/.test(name)) name = 'M-' + name;
+      return { t: 'gval', v: atom(name) };
+    });
+    if (!vals.length) throw new Error('MDL: MULTIFROB without values');
+    return { t: 'form', items: [atom('EQUAL?'), x, ...vals] };
   }
 
   builtin(h, rawArgs, env) {
