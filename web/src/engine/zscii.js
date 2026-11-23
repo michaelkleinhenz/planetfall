@@ -1,4 +1,4 @@
-// Z-machine version 3 text encoding helpers (shared by the compiler and the runtime).
+// Z-machine text encoding helpers (shared by the compiler and the runtime).
 //
 // Used for object short names and dictionary words, which the original game code
 // manipulates directly as bytes (e.g. the parser copies a dictionary word into the
@@ -42,15 +42,19 @@ export function encodeText(text) {
   return packZchars(toZchars(text));
 }
 
-/** Dictionary key for a word: first 6 z-chars of the lowercase word, packed into 4 bytes. */
-export function dictBytes(word) {
-  const z = toZchars(word.toLowerCase()).slice(0, 6);
-  while (z.length < 6) z.push(5);
+/**
+ * Dictionary key for a word: the first 6 z-chars of the lowercase word packed
+ * into 4 bytes (version 3), or the first 9 into 6 bytes (version 4 and later).
+ */
+export function dictBytes(word, version = 3) {
+  const n = version <= 3 ? 6 : 9;
+  const z = toZchars(word.toLowerCase()).slice(0, n);
+  while (z.length < n) z.push(5);
   return packZchars(z);
 }
 
-export function dictKey(word) {
-  return dictBytes(word).map((b) => b.toString(16).padStart(2, '0')).join('');
+export function dictKey(word, version = 3) {
+  return dictBytes(word, version).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 /** Decode packed Z-text starting at addr in a byte array. Returns {text, end}. */

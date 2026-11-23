@@ -7,7 +7,7 @@
 // the primitive operations the translated code calls (hasFlag, move, getProp,
 // tell, read, ...).  Game state = memory bytes + global variables + RNG state.
 
-import { decodeText, dictKey } from './zscii.js';
+import { decodeText, dictKey, dictBytes } from './zscii.js';
 
 // ---------------------------------------------------------------------------
 // State
@@ -61,19 +61,31 @@ export function resetState() {
   mem = base64ToBytes(story.MEMORY_BASE64);
   for (const k of Object.keys(g)) delete g[k];
   Object.assign(g, story.INITIAL_GLOBALS);
+  V = story.LAYOUT.version ?? 3;
   dictionary = new Map();
   const { dictionary: start, dictionaryCount, entryLength } = story.LAYOUT;
+  const keyLen = V <= 3 ? 4 : 6;
   for (let i = 0; i < dictionaryCount; i++) {
     const a = start + i * entryLength;
-    const key = Array.from(mem.slice(a, a + 4), (b) => b.toString(16).padStart(2, '0')).join('');
+    const key = Array.from(mem.slice(a, a + keyLen), (b) => b.toString(16).padStart(2, '0')).join('');
     dictionary.set(key, a);
   }
   fixedFont = false;
+  screenOut = true; tableOut.length = 0; currentWindow = 0;
   if (!rngSeeded) rngState = (Math.random() * 0x7fffffff) | 1;
   // Header Flags 1 as a v3 interpreter without a status window reports it
   // (like the reference interpreter): games then print what they would have
   // drawn in the upper window inline (Suspended, Seastalker, Deadline).
-  mem[1] = (mem[1] & 0x8f) | 0x10 | 0x40;
+  if (V <= 3) mem[1] = (mem[1] & 0x8f) | 0x10 | 0x40;
+  else {
+    // Version 4+: bold, italic and fixed-width text are available; an 80-column
+    // screen (games centre text with it); Z-machine standard 1.2.
+    mem[1] = 0x1c;
+    mem[0x11] &= 0x57;
+    mem[0x20] = 25; mem[0x21] = 80;
+    if (V >= 5) { mem[0x22] = 0; mem[0x23] = 80; mem[0x24] = 0; mem[0x25] = 25; mem[0x26] = 1; mem[0x27] = 1; }
+    mem[0x32] = 1; mem[0x33] = 2;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -104,7 +116,17 @@ function headerFlagsChanged() {
 // Objects
 // ---------------------------------------------------------------------------
 
-function objAddr(o) { return story.LAYOUT.objTable + (o - 1) * 9; }
+// Version 3: 9-byte objects (32 attributes, byte links); version 4+: 14-byte
+// objects (48 attributes, word links) and 63 properties with longer values.
+let V = 3;
+function objAddr(o) { return story.LAYOUT.objTable + (o - 1) * (V <= 3 ? 9 : 14); }
+function link(o, k) { const a = objAddr(o); return V <= 3 ? mem[a + 4 + k] : (mem[a + 6 + 2 * k] << 8) | mem[a + 7 + 2 * k]; }
+function setLink(o, k, v) {
+  const a = objAddr(o);
+  if (V <= 3) mem[a + 4 + k] = v;
+  else { mem[a + 6 + 2 * k] = v >> 8; mem[a + 7 + 2 * k] = v & 255; }
+}
+const PARENT = 0, SIBLING = 1, CHILD = 2;
 
 export function hasFlag(o, f) {
   if (!o) return false;
@@ -112,54 +134,56 @@ export function hasFlag(o, f) {
 }
 export function setFlag(o, f) { if (o) mem[objAddr(o) + (f >> 3)] |= 0x80 >> (f & 7); return true; }
 export function clearFlag(o, f) { if (o) mem[objAddr(o) + (f >> 3)] &= ~(0x80 >> (f & 7)); return true; }
-export function loc(o) { return o ? mem[objAddr(o) + 4] : 0; }
-export function first(o) { return o ? mem[objAddr(o) + 6] : 0; }
-export function next(o) { return o ? mem[objAddr(o) + 5] : 0; }
+export function loc(o) { return o ? link(o, PARENT) : 0; }
+export function first(o) { return o ? link(o, CHILD) : 0; }
+export function next(o) { return o ? link(o, SIBLING) : 0; }
 
 export function remove(o) {
   if (!o) return true;
-  const a = objAddr(o);
-  const parent = mem[a + 4];
+  const parent = link(o, PARENT);
   if (parent) {
-    const pa = objAddr(parent);
-    if (mem[pa + 6] === o) {
-      mem[pa + 6] = mem[a + 5];
+    if (link(parent, CHILD) === o) {
+      setLink(parent, CHILD, link(o, SIBLING));
     } else {
-      let c = mem[pa + 6];
+      let c = link(parent, CHILD);
       while (c) {
-        const ca = objAddr(c);
-        if (mem[ca + 5] === o) { mem[ca + 5] = mem[a + 5]; break; }
-        c = mem[ca + 5];
+        if (link(c, SIBLING) === o) { setLink(c, SIBLING, link(o, SIBLING)); break; }
+        c = link(c, SIBLING);
       }
     }
   }
-  mem[a + 4] = 0; mem[a + 5] = 0;
+  setLink(o, PARENT, 0); setLink(o, SIBLING, 0);
   return true;
 }
 
 export function move(o, dest) {
   remove(o);
-  const a = objAddr(o), da = objAddr(dest);
-  mem[a + 4] = dest;
-  mem[a + 5] = mem[da + 6];
-  mem[da + 6] = o;
+  setLink(o, PARENT, dest);
+  setLink(o, SIBLING, link(dest, CHILD));
+  setLink(dest, CHILD, o);
   return true;
 }
 
-function propTable(o) { return (mem[objAddr(o) + 7] << 8) | mem[objAddr(o) + 8]; }
+function propTable(o) { const a = objAddr(o) + (V <= 3 ? 7 : 12); return (mem[a] << 8) | mem[a + 1]; }
+
+/** A property entry at a: its number, data length and header length. */
+function propEntry(a) {
+  const sb = mem[a];
+  if (V <= 3) return { num: sb & 31, len: (sb >> 5) + 1, head: 1 };
+  if (sb & 0x80) return { num: sb & 63, len: (mem[a + 1] & 63) || 64, head: 2 };
+  return { num: sb & 63, len: sb & 0x40 ? 2 : 1, head: 1 };
+}
 
 export function getPropAddr(o, p) {
   if (!o) return 0;
   let a = propTable(o);
   a += 1 + 2 * mem[a];
   for (;;) {
-    const sb = mem[a];
-    if (sb === 0) return 0;
-    const num = sb & 31;
-    const len = (sb >> 5) + 1;
-    if (num === p) return a + 1;
-    if (num < p) return 0;
-    a += 1 + len;
+    if (mem[a] === 0) return 0;
+    const e = propEntry(a);
+    if (e.num === p) return a + e.head;
+    if (e.num < p) return 0;
+    a += e.head + e.len;
   }
 }
 
@@ -169,19 +193,21 @@ export function nextProp(o, p) {
   a += 1 + 2 * mem[a];
   if (p) {
     for (;;) {
-      const sb = mem[a];
-      if (sb === 0) return 0;
-      const num = sb & 31;
-      a += 2 + (sb >> 5);
-      if (num === p) break;
+      if (mem[a] === 0) return 0;
+      const e = propEntry(a);
+      a += e.head + e.len;
+      if (e.num === p) break;
     }
   }
-  return mem[a] & 31;
+  return mem[a] === 0 ? 0 : propEntry(a).num;
 }
 
 export function propSize(addr) {
   if (!addr) return 0;
-  return (mem[addr - 1] >> 5) + 1;
+  const b = mem[addr - 1];
+  if (V <= 3) return (b >> 5) + 1;
+  if (b & 0x80) return (b & 63) || 64;
+  return b & 0x40 ? 2 : 1;
 }
 
 export function getProp(o, p) {
@@ -212,11 +238,13 @@ export function objectName(o) {
 export function tell(...parts) {
   const text = parts.join('');
   if (!text) return true;
-  if (tableOut) {
-    for (const ch of text) putb(tableOut.addr + 2, tableOut.len++, ch === '\n' ? 13 : ch.charCodeAt(0));
-    put(tableOut.addr, 0, tableOut.len);
+  if (tableOut.length) {
+    const t = tableOut[tableOut.length - 1];
+    for (const ch of text) putb(t.addr + 2, t.len++, ch === '\n' ? 13 : ch.charCodeAt(0));
+    put(t.addr, 0, t.len);
     return true;
   }
+  if (!screenOut) return true;
   // Text for the upper window (v3 split screen, e.g. Seastalker's sonar)
   // goes to the front end's upper-window handler, if it has one.
   if (currentWindow === 1) { io.upper?.(text); return true; }
@@ -231,7 +259,12 @@ export function splitWindow(lines) { io.split?.(Number(lines)); if (!lines) curr
 export function setWindow(w) { currentWindow = Number(w); io.window?.(currentWindow); return true; }
 // Screen control used by a few games' status lines (Suspended): the upper
 // window is handled by the front end, so these only pass the request on.
-export function cursorSet(line, col) { io.cursor?.(Number(line), Number(col)); return true; }
+const cursorPos = { line: 1, col: 1 };
+export function cursorSet(line, col) {
+  cursorPos.line = Number(line); cursorPos.col = Number(col);
+  io.cursor?.(Number(line), Number(col));
+  return true;
+}
 export function highlight(style) { io.highlight?.(Number(style)); return true; }
 export function bufOut() { return true; }
 export function clearScreen(w) { io.clear?.(Number(w)); return true; }
@@ -269,17 +302,101 @@ export function btst(a, b) { return (a & b) === b; }
 export function div(a, b) { return Math.trunc(a / b); }
 export function mod(a, b) { return a % b; }
 export function verify() { return true; }
-// DIROUT: output stream 3 (to a table: a word count, then the characters)
-// is the only one that matters here; transcript and command recording are
-// not supported. Suspended uses <DIROUT 1 table> for the same thing.
-let tableOut = null;
+// DIROUT n [table]: output streams. 1 = screen (-1 turns it off), 3 = a table
+// (a word count, then the characters; these nest), 2 (transcript) and 4
+// (command recording) are not supported. Suspended (v3) uses <DIROUT 1 table>
+// for a table.
+const tableOut = [];
+let screenOut = true;
 export function dirOut(n, table) {
   n = Number(n);
-  if (table && n > 0 && n !== 2 && n !== 4) { tableOut = { addr: Number(table), len: 0 }; put(tableOut.addr, 0, 0); }
-  else if (tableOut && (n === 0 || n === -3 || n === -1)) tableOut = null;
+  if (n === 3 || (V <= 3 && table && n === 1)) {
+    const t = { addr: Number(table), len: 0 };
+    put(t.addr, 0, 0);
+    tableOut.push(t);
+  } else if (n === -3 || (V <= 3 && tableOut.length && (n === 0 || n === -1))) {
+    tableOut.pop();
+  } else if (n === 1) screenOut = true;
+  else if (n === -1) screenOut = false;
   return true;
 }
 export function dirIn() { return true; }
+
+// ---------------------------------------------------------------------------
+// Version 4 and 5 operations
+// ---------------------------------------------------------------------------
+
+/** INTBL? value table length [form]: address of the entry holding value, or 0. */
+export function inTable(value, table, len, form = 0x82) {
+  value = Number(value) & 0xffff; table = Number(table); len = Number(len); form = Number(form);
+  const words = (form & 0x80) !== 0;
+  const size = form & 0x7f || (words ? 2 : 1);
+  for (let i = 0, a = table; i < len; i++, a += size) {
+    const v = words ? ((mem[a] << 8) | mem[a + 1]) : mem[a];
+    if (v === value) return a;
+  }
+  return 0;
+}
+
+/** COPYT from to size: copy (or, with to = 0, clear) a table. */
+export function copyTable(from, to, size) {
+  from = Number(from); to = Number(to); size = Number(size);
+  if (!to) { mem.fill(0, from, from + Math.abs(size)); return true; }
+  if (size < 0) { for (let i = 0; i < -size; i++) mem[to + i] = mem[from + i]; return true; }
+  mem.copyWithin(to, from, from + size);
+  return true;
+}
+
+/** PRINTT table width [height skip]: print a block of characters. */
+export function printTable(table, width, height = 1, skip = 0) {
+  table = Number(table); width = Number(width); height = Number(height); skip = Number(skip);
+  const rows = [];
+  for (let r = 0, a = table; r < height; r++, a += width + skip) {
+    let row = '';
+    for (let c = 0; c < width; c++) row += String.fromCharCode(mem[a + c]);
+    rows.push(row);
+  }
+  return tell(rows.join('\n'));
+}
+
+/** ZWSTR text length from coded: dictionary encoding of a word in a text buffer. */
+export function encodeWord(text, len, from, coded) {
+  let word = '';
+  for (let i = 0; i < Number(len); i++) word += String.fromCharCode(mem[Number(text) + Number(from) + i]);
+  dictBytes(word, V).forEach((b, i) => { mem[Number(coded) + i] = b; });
+  return true;
+}
+
+export function shift(n, places) {
+  n = Number(n); places = Number(places);
+  return places >= 0 ? (n << places) & 0xffff : n >> -places;
+}
+export function isOriginal() { return true; }
+export function checkUnicode() { return 3; }
+export function printUnicode(c) { return tell(String.fromCharCode(Number(c))); }
+export function eraseLine() { io.eraseLine?.(); return true; }
+/** CURGET table: the cursor position (the front end has no real cursor: line 1, column 1). */
+export function cursorGet(table) { put(table, 0, cursorPos.line); put(table, 1, cursorPos.col); return true; }
+export function setColor(fg, bg) { io.color?.(Number(fg), Number(bg)); return true; }
+let currentFont = 1;
+export function setFont(f) { const old = currentFont; if (Number(f)) currentFont = Number(f); return old; }
+// Mouse, picture and window operations of later games: nothing to do here.
+export function mouseInfo() { return true; }
+export function mouseLimit() { return true; }
+export function winPos() { return true; }
+export function winSize() { return true; }
+export function winAttr() { return true; }
+export function winGet() { return 0; }
+export function winPut() { return true; }
+export function margin() { return true; }
+export function picInfo() { return 0; }
+export function display() { return true; }
+export function displayClear() { return true; }
+export function menu() { return 0; }
+const userStack = [];
+export function xpush(v) { userStack.push(v); return true; }
+export function pop() { return userStack.pop() ?? 0; }
+export function fstack(n) { for (let i = 0; i < Number(n); i++) userStack.pop(); return true; }
 export function isVerb(...actions) { return actions.some((a) => g.PRSA == a); }
 export function enable(int) { return put(int, 0, 1); }
 export function disable(int) { return put(int, 0, 0); }
@@ -332,10 +449,29 @@ export async function read(inbuf, lexv) {
     throw new RestoreSignal(line.notice ?? '');
   }
   const max = mem[inbuf];
-  line = String(line).toLowerCase().replace(/[^\x20-\x7e]/g, ' ').slice(0, max - 1);
-  for (let i = 0; i < line.length; i++) mem[inbuf + 1 + i] = line.charCodeAt(i);
-  mem[inbuf + 1 + line.length] = 0;
-  // tokenize
+  line = String(line).toLowerCase().replace(/[^\x20-\x7e]/g, ' ');
+  if (V <= 4) {
+    // Text from byte 1, ended by a zero byte.
+    line = line.slice(0, max - 1);
+    for (let i = 0; i < line.length; i++) mem[inbuf + 1 + i] = line.charCodeAt(i);
+    mem[inbuf + 1 + line.length] = 0;
+  } else {
+    // Version 5: byte 1 holds the length, the text follows from byte 2.
+    line = line.slice(0, max);
+    mem[inbuf + 1] = line.length;
+    for (let i = 0; i < line.length; i++) mem[inbuf + 2 + i] = line.charCodeAt(i);
+  }
+  if (lexv) tokenize(inbuf, lexv);
+  return V >= 5 ? 13 : true;
+}
+
+/** Split the text in a read buffer into words and look them up (also LEX). */
+export function tokenize(inbuf, lexv, dict = 0, keepUnknown = false) {
+  inbuf = Number(inbuf); lexv = Number(lexv);
+  const start = V <= 4 ? 1 : 2;
+  let line = '';
+  if (V <= 4) { for (let i = inbuf + 1; mem[i]; i++) line += String.fromCharCode(mem[i]); }
+  else { for (let i = 0; i < mem[inbuf + 1]; i++) line += String.fromCharCode(mem[inbuf + 2 + i]); }
   const tokens = [];
   let i = 0;
   while (i < line.length) {
@@ -347,18 +483,34 @@ export async function read(inbuf, lexv) {
     tokens.push({ text: line.slice(i, j), pos: i });
     i = j;
   }
-  const capacity = Math.min(mem[lexv] || 59, 29);
+  const capacity = Math.min(mem[lexv] || 59, 59);
   const count = Math.min(tokens.length, capacity);
   mem[lexv + 1] = count;
   for (let k = 0; k < count; k++) {
     const t = tokens[k];
-    const addr = dictionary.get(dictKey(t.text)) || 0;
+    const addr = dictionary.get(dictKey(t.text, V)) || 0;
     const e = lexv + 2 + 4 * k;
+    if (!addr && keepUnknown) continue;
     mem[e] = addr >> 8; mem[e + 1] = addr & 255;
     mem[e + 2] = t.text.length;
-    mem[e + 3] = t.pos + 1;
+    mem[e + 3] = t.pos + start;
   }
   return true;
+}
+
+/**
+ * INPUT: one key press. The front end supplies lines, so this takes the
+ * first character of the next line (Return for an empty one).
+ */
+export async function readChar() {
+  io.status?.({ room: objectName(g.HERE), score: g.SCORE, moves: g.MOVES });
+  const line = io.inputChar ? await io.inputChar() : await io.input();
+  if (line && typeof line === 'object') {
+    loadSnapshot(line.snapshot);
+    throw new RestoreSignal(line.notice ?? '');
+  }
+  const t = String(line ?? '');
+  return t.length ? t.charCodeAt(0) : 13;
 }
 
 // ---------------------------------------------------------------------------
@@ -390,6 +542,16 @@ export async function restore() {
   const s = await io.restore();
   if (!s) return false;
   loadSnapshot(s);
+  throw new RestoreSignal();
+}
+
+// Undo inside the game (ISAVE / IRESTORE, e.g. Beyond Zork's UNDO command).
+let undoSnapshot = null;
+export async function saveUndo() { undoSnapshot = snapshot(); return 1; }
+export async function restoreUndo() {
+  if (!undoSnapshot) return 0;
+  loadSnapshot(undoSnapshot);
+  undoSnapshot = null;
   throw new RestoreSignal();
 }
 
@@ -433,5 +595,5 @@ export const inspect = {
   children(o) { const out = []; for (let c = first(o); c; c = next(c)) out.push(c); return out; },
   pseudoWord(propAddr, i) { return wordTexts(rw(propAddr + 4 * i) & 0xffff)[0]; },
   hasFlag, loc, getPropAddr, propSize,
-  isKnownWord(w) { return dictionary.has(dictKey(w)); },
+  isKnownWord(w) { return dictionary.has(dictKey(w, V)); },
 };

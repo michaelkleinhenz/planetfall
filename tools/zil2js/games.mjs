@@ -198,4 +198,55 @@ export const GAMES = {
     srcDir: 'games/stationfall',
     main: 's6',
   },
+  // Version 4 (EZIP) and version 5 (XZIP) games
+  'amfv': { title: 'A Mind Forever Voyaging', srcDir: 'games/amfv', main: 's5', objectOrder: { story: 'COMPILED/s5.z4' }, storyFile: 'COMPILED/s5.z4' },
+  'trinity': { title: 'Trinity', srcDir: 'games/trinity', main: 'trinity', objectOrder: { story: 'COMPILED/tr.z4' }, storyFile: 'COMPILED/tr.z4' },
+  'bureaucracy': { title: 'Bureaucracy', srcDir: 'games/bureaucracy', main: 'b', objectOrder: { story: 'COMPILED/b.z4' }, storyFile: 'COMPILED/b.z4' },
+  'nordandbert': {
+    title: "Nord and Bert Couldn't Make Head or Tail of It",
+    srcDir: 'games/nordandbert',
+    main: 'j3',
+    objectOrder: { story: 'COMPILED/j3.z4' },
+    storyFile: 'COMPILED/j3.z4',
+    // The archive lacks the file with PICK-NEXT, PICK-ONE and DPRINT (TELLS.ZIL
+    // replaced MISC.ZIL without them). PICK-NEXT as in Trinity, PICK-ONE from the
+    // game's older MISC.ZIL, DPRINT without MISC.ZIL's Leather Goddesses leftovers.
+    fixups: {
+      tells: (t) => t + `
+<ROUTINE PICK-NEXT (TBL "AUX" CNT STR)
+	 <SET CNT <GET .TBL 1>>
+	 <SET STR <GET .TBL .CNT>>
+	 <INC CNT>
+	 <COND (<G? .CNT <GET .TBL 0>>
+		<SET CNT 2>)>
+	 <PUT .TBL 1 .CNT>
+	 <RETURN .STR>>
+
+<ROUTINE PICK-ONE (TBL "AUX" LENGTH CNT RND MSG RFROB)
+	 <SET LENGTH <GET .TBL 0>>
+	 <SET CNT <GET .TBL 1>>
+	 <SET LENGTH <- .LENGTH 1>>
+	 <SET TBL <REST .TBL 2>>
+	 <SET RFROB <REST .TBL <* .CNT 2>>>
+	 <SET RND <RANDOM <- .LENGTH .CNT>>>
+	 <SET MSG <GET .RFROB .RND>>
+	 <PUT .RFROB .RND <GET .RFROB 1>>
+	 <PUT .RFROB 1 .MSG>
+	 <SET CNT <+ .CNT 1>>
+	 <COND (<==? .CNT .LENGTH>
+		<SET CNT 0>)>
+	 <PUT .TBL 0 .CNT>
+	 .MSG>
+
+<ROUTINE DPRINT (OBJ)
+	 <COND (<GETP .OBJ ,P?SDESC>
+		<TELL <GETP .OBJ ,P?SDESC>>)
+	       (T
+		<PRINTD .OBJ>)>>
+`,
+    },
+  },
+  'beyondzork': { title: 'Beyond Zork', srcDir: 'games/beyondzork', main: 'z', objectOrder: { story: 'COMPILED/z.z5' }, storyFile: 'COMPILED/z.z5' },
+  'borderzone': { title: 'Border Zone', srcDir: 'games/borderzone', main: 'spy', objectOrder: { story: 'COMPILED/spy.z5' }, storyFile: 'COMPILED/spy.z5' },
+  'sherlock': { title: 'Sherlock: The Riddle of the Crown Jewels', srcDir: 'games/sherlock', main: 'gamesound' },
 };

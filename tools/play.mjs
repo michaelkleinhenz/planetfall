@@ -41,6 +41,14 @@ const io = {
     rl ??= readline.createInterface({ input: process.stdin });
     return new Promise((res) => rl.once('line', res));
   },
+  // A single key press: the next line, not echoed (as in the original).
+  inputChar: async () => {
+    if (lines) {
+      if (!lines.length || (lines.length === 1 && lines[0] === '')) process.exit(0);
+      return lines.shift();
+    }
+    return io.input();
+  },
   save: async (s) => { saved = s; return true; },
   restore: async () => saved,
   ended: async () => process.exit(0),

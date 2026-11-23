@@ -92,6 +92,7 @@ function evalCompileTime(node) {
           return rest.some((b) => b === a);
         }
         case 'N==?': case 'N=?': return evalCompileTime(args[0]) !== evalCompileTime(args[1]);
+        case 'LENGTH': { const v = args[0]; return v.t === 'str' ? v.v.length : (v.items || []).length; }
         case '+': return args.reduce((a, n) => a + Number(evalCompileTime(n)), 0);
         case '*': return args.reduce((a, n) => a * Number(evalCompileTime(n)), 1);
         case '-': return args.length === 1 ? -evalCompileTime(args[0]) : args.slice(1).reduce((a, n) => a - Number(evalCompileTime(n)), Number(evalCompileTime(args[0])));
@@ -169,7 +170,7 @@ function topLevelForms() {
 }
 
 /** Decode Z-text from a story file, expanding abbreviations (z-chars 1-3). */
-function decodeStory(d, addr, depth = 0) {
+export function decodeStory(d, addr, depth = 0) {
   const A = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', ' \n0123456789.,!?_#\'"/\\-:()'];
   const abbr = (d[0x18] << 8) | d[0x19];
   let out = '', alph = 0, esc = -1, hi = 0, ab = -1;
@@ -240,6 +241,15 @@ function inferConfig(cfg) {
       }
     }
   }
+  // <VERSION EZIP> etc. in the main file
+  if (!cfg.version) {
+    const m = cfg.main && /<VERSION\s+(ZIP|EZIP|XZIP|YZIP)/.exec(sourceText(cfg.main + '.zil') || '');
+    cfg.version = m ? { ZIP: 3, EZIP: 4, XZIP: 5, YZIP: 6 }[m[1]] : 3;
+    // The original story file says best.
+    const sf = cfg.storyFile && path.join(ROOT, cfg.srcDir, cfg.storyFile);
+    if (sf && fs.existsSync(sf)) cfg.version = fs.readFileSync(sf)[0];
+  }
+  ZV = cfg.version;
   if (!cfg.prob) {
     // <DEFMAC PROB ...>: Zork-style <G? base <RANDOM 100>> means random < n;
     // Planetfall-style <NOT <L? base <RANDOM 100>>> means random <= n.
@@ -279,14 +289,17 @@ function readStoryFile() {
   if (!fs.existsSync(file)) return null;
   const d = fs.readFileSync(file);
   const w = (a) => (d[a] << 8) | d[a + 1];
-  if (d[0] !== 3) throw new Error(`${CFG.storyFile}: only version-3 story files are supported`);
-  const objTable = w(0x0a) + 62;
+  if (d[0] !== ZV) throw new Error(`${CFG.storyFile}: a version-${d[0]} story file for a version-${ZV} game`);
+  const objTable = w(0x0a) + 2 * MAX_PROP();
+  const size = OBJ_SIZE();
+  const parentOf = (a) => (ZV <= 3 ? d[a + 4] : w(a + 6));
+  const propsOf = (a) => w(a + (ZV <= 3 ? 7 : 12));
   const names = [];
   // The object table ends where the first property table begins.
   let firstProp = Infinity;
-  for (let n = 1; objTable + (n - 1) * 9 < firstProp; n++) {
-    const a = objTable + (n - 1) * 9;
-    const pt = w(a + 7);
+  for (let n = 1; objTable + (n - 1) * size < firstProp; n++) {
+    const a = objTable + (n - 1) * size;
+    const pt = propsOf(a);
     firstProp = Math.min(firstProp, pt);
     names.push(d[pt] ? decodeStory(d, pt + 1) : '');
   }
@@ -295,7 +308,7 @@ function readStoryFile() {
     release: w(2),
     serial: String.fromCharCode(...d.slice(18, 24)),
     objectNames: names,
-    parents: names.map((_, i) => d[objTable + i * 9 + 4]),
+    parents: names.map((_, i) => parentOf(objTable + i * size)),
   };
 }
 
@@ -319,6 +332,13 @@ const JS_RESERVED = new Set(('break case catch class const continue debugger def
 // ---------------------------------------------------------------------------
 
 /** Convert a ZIL string literal to the text the game prints. */
+// Z-machine version of the game being compiled (3: ZIP, 4: EZIP, 5: XZIP).
+let ZV = 3;
+const OBJ_SIZE = () => (ZV <= 3 ? 9 : 14);
+const MAX_PROP = () => (ZV <= 3 ? 31 : 63);
+const MAX_FLAGS = () => (ZV <= 3 ? 32 : 48);
+const DICT_KEY = () => (ZV <= 3 ? 4 : 6);
+
 // The character that stands for a line break in strings (<SETG CRLF-CHARACTER !\~>).
 let CRLF_CHAR = '|';
 
@@ -326,12 +346,18 @@ function zilText(s) {
   // "|" is a line break; a source line break directly after "|" is dropped;
   // any other source line break becomes a space.
   let out = '';
+  // (see below: a leading indentation of several spaces loses one in version 4+)
+  if (ZV >= 4 && s.startsWith('  ')) s = s.slice(1);
   for (let i = 0; i < s.length; i++) {
     const c = s[i];
     if (c === CRLF_CHAR) {
       out += '\n';
       if (s[i + 1] === '\r') i++;
       if (s[i + 1] === '\n') i++;
+      // The version 4+ compiler shortened an indentation of several spaces at
+      // the start of a line by one (A Mind Forever Voyaging: "|    " is
+      // stored as a break and three spaces, " (PPCC)" and ":  Living" as written).
+      else if (ZV >= 4 && s[i + 1] === ' ' && s[i + 2] === ' ') i++;
     } else if (c === '\r') {
       continue;
     } else if (c === '\n') {
@@ -361,6 +387,7 @@ class Compiler {
     this.propdefs = new Map();
     this.flags = new Map();
     this.bitSynonyms = new Map();
+    this.usedHelpers = new Set();
     this.props = new Map();
     this.strings = [null];        // id -> text
     this.stringIds = new Map();
@@ -559,12 +586,12 @@ class Compiler {
   flagsFromStory() {
     if (!this.objectsMatchStory) return;
     const d = this.story.data;
-    const objTable = ((d[10] << 8) | d[11]) + 62;
+    const objTable = ((d[10] << 8) | d[11]) + 2 * MAX_PROP();
     const n = this.objects.length;
     const bitSets = [];
-    for (let b = 0; b < 32; b++) {
+    for (let b = 0; b < MAX_FLAGS(); b++) {
       const set = [];
-      for (let i = 0; i < n; i++) if (d[objTable + i * 9 + (b >> 3)] & (0x80 >> (b & 7))) set.push(i);
+      for (let i = 0; i < n; i++) if (d[objTable + i * OBJ_SIZE() + (b >> 3)] & (0x80 >> (b & 7))) set.push(i);
       bitSets.push(set.join(','));
     }
     const flagSets = new Map();
@@ -613,14 +640,20 @@ class Compiler {
     };
     const d = this.story.data;
     const w = (a) => (d[a] << 8) | d[a + 1];
-    const objTable = w(10) + 62;
+    const objTable = w(10) + 2 * MAX_PROP();
+    const size = OBJ_SIZE();
     const storySig = (i) => {
       let bits = 0;
-      for (let k = 0; k < 4; k++) for (let x = d[objTable + i * 9 + k]; x; x &= x - 1) bits++;
-      let p = w(objTable + i * 9 + 7);
+      for (let k = 0; k < size - (ZV <= 3 ? 5 : 8); k++) for (let x = d[objTable + i * size + k]; x; x &= x - 1) bits++;
+      let p = w(objTable + i * size + (ZV <= 3 ? 7 : 12));
       p += 1 + 2 * d[p];
       let props = 0;
-      while (d[p]) { props++; p += 1 + (d[p] >> 5) + 1; }
+      while (d[p]) {
+        props++;
+        if (ZV <= 3) p += 1 + (d[p] >> 5) + 1;
+        else if (d[p] & 0x80) p += 2 + ((d[p + 1] & 63) || 64);
+        else p += 1 + (d[p] & 0x40 ? 2 : 1);
+      }
       return `${bits}/${props}`;
     };
     const sourceSig = (o) => {
@@ -682,7 +715,7 @@ class Compiler {
     }
     this.flagsFromStory();
     // Properties: directions take the highest numbers.
-    let pn = 31;
+    let pn = MAX_PROP();
     for (const d of this.directions) this.props.set(d, pn--);
     this.lowDirection = pn + 1;
     this.constants.set('LOW-DIRECTION', { t: 'num', v: this.lowDirection });
@@ -713,7 +746,7 @@ class Compiler {
     if (this.bitSynonyms.has(name)) name = this.bitSynonyms.get(name);
     if (!this.flags.has(name)) {
       this.flags.set(name, this.flagNext ? this.flagNext() : this.flags.size);
-      if (this.flags.size > 32) throw new Error('too many flags');
+      if (this.flags.size > MAX_FLAGS()) throw new Error('too many flags');
     }
     return this.flags.get(name);
   }
@@ -764,7 +797,7 @@ class Compiler {
     const byName = new Map(); // source word name -> entry
     const entry = (name) => {
       const text = name === 'PERIOD' ? '.' : name === 'COMMA' ? ',' : name === 'QUOTE' ? '"' : name.toLowerCase();
-      const key = dictKey(text);
+      const key = dictKey(text, ZV);
       let e = words.get(key);
       if (!e) {
         e = { key, text, names: new Set(), object: false, parts: {} , order: [] };
@@ -826,7 +859,8 @@ class Compiler {
       for (const p of o.props) {
         if (p.items[0].v === 'ADJECTIVE') {
           for (const a of p.items.slice(1)) {
-            if (!this.adjNums.has(a.v)) this.adjNums.set(a.v, adj--);
+            // Version 4+: adjectives have no numbers (objects list their words).
+            if (!this.adjNums.has(a.v)) this.adjNums.set(a.v, ZV >= 4 ? 0 : adj--);
           }
         }
       }
@@ -858,7 +892,7 @@ class Compiler {
       const name = v.word.toUpperCase();
       const part = String(v.part).toUpperCase();
       if (part === 'ADJECTIVE' || part === 'ADJ') {
-        if (!this.adjNums.has(name)) this.adjNums.set(name, adj--);
+        if (!this.adjNums.has(name)) this.adjNums.set(name, ZV >= 4 ? 0 : adj--);
         setPart(entry(name), 'adj', this.adjNums.get(name));
       } else if (part === 'BUZZ') {
         setPart(entry(name), 'buzz', 1);
@@ -1076,7 +1110,7 @@ class Compiler {
   buildMemory() {
     // Header (64 bytes)
     for (let i = 0; i < 64; i++) this.byte(0);
-    this.mem[0] = 3;                 // version
+    this.mem[0] = ZV;                // version
     const release = this.story?.release ?? 1;
     const serial = this.story?.serial ?? '000000';
     this.mem[2] = release >> 8; this.mem[3] = release & 255;
@@ -1100,7 +1134,7 @@ class Compiler {
     const entries = [...this.vocab.words.values()].sort((a, b) => (a.key < b.key ? -1 : 1));
     for (const e of entries) {
       e.addr = this.here();
-      for (let i = 0; i < 7; i++) this.byte(0);
+      for (let i = 0; i < DICT_KEY() + 3; i++) this.byte(0);
     }
     this.dictEntries = entries;
 
@@ -1161,33 +1195,35 @@ class Compiler {
 
     // Fill in dictionary entries
     for (const e of entries) {
-      const bytes = dictBytes(e.text);
+      const bytes = dictBytes(e.text, ZV);
       let ps = 0;
       const PSBIT = { object: 128, verb: 64, adj: 32, dir: 16, prep: 8, buzz: 4 };
       const P1 = { object: 0, verb: 1, adj: 2, dir: 3, prep: 0, buzz: 0 };
       if (e.object) ps |= 128;
       for (const p of e.order) ps |= PSBIT[p];
-      const valued = e.order;
+      // Version 4+: adjectives carry no value byte.
+      const valued = ZV >= 4 ? e.order.filter((p) => p !== 'adj') : e.order;
       const v1 = valued[0], v2 = valued[1];
       if (valued.length > 2) warn(`word ${e.text} has too many parts of speech: ${valued}`);
       if (v1) ps |= P1[v1];
       const a = e.addr;
       bytes.forEach((x, i) => { this.mem[a + i] = x; });
-      this.mem[a + 4] = ps;
-      this.mem[a + 5] = v1 ? e.parts[v1] : 0;
-      this.mem[a + 6] = v2 ? e.parts[v2] : 0;
+      const k = DICT_KEY();
+      this.mem[a + k] = ps;
+      this.mem[a + k + 1] = v1 ? e.parts[v1] : 0;
+      this.mem[a + k + 2] = v2 ? e.parts[v2] : 0;
     }
 
     // Objects
     this.align();
     this.propDefaults = this.here();
-    for (let p = 1; p <= 31; p++) {
+    for (let p = 1; p <= MAX_PROP(); p++) {
       const name = [...this.props].find(([, n]) => n === p)?.[0];
       this.word(name && this.propdefs.has(name) ? this.propdefs.get(name) : 0);
     }
     this.objTable = this.here();
-    const objs = this.objects.map((o, i) => ({ ...o, num: i + 1, attrs: 0, parent: 0, sibling: 0, child: 0 }));
-    for (const o of objs) for (let i = 0; i < 9; i++) this.byte(0);
+    const objs = this.objects.map((o, i) => ({ ...o, num: i + 1, attrs: [0, 0, 0, 0, 0, 0], parent: 0, sibling: 0, child: 0 }));
+    for (const o of objs) for (let i = 0; i < OBJ_SIZE(); i++) this.byte(0);
     // Tree: each object is inserted as the first child of its container.
     for (const so of this.sourceObjects) {
       const o = objs[this.objIndex.get(so.name) - 1];
@@ -1200,7 +1236,7 @@ class Compiler {
           o.sibling = parent.child;
           parent.child = o.num;
         }
-        if (pname === 'FLAGS') for (const f of p.items.slice(1)) o.attrs |= (1 << (31 - this.flag(f.v))) >>> 0;
+        if (pname === 'FLAGS') for (const f of p.items.slice(1)) { const b = this.flag(f.v); o.attrs[b >> 3] |= 0x80 >> (b & 7); }
       }
     }
     // Property values first (they may allocate tables), then the property tables.
@@ -1224,20 +1260,28 @@ class Compiler {
       const plist = o.plist;
       plist.sort((a, b) => b.num - a.num);
       for (const p of plist) {
-        if (p.bytes.length < 1 || p.bytes.length > 8) throw new Error(`bad property size ${o.name} ${p.num}`);
-        this.byte(32 * (p.bytes.length - 1) + p.num);
+        const n = p.bytes.length;
+        if (n < 1 || n > (ZV <= 3 ? 8 : 64)) throw new Error(`bad property size ${o.name} ${p.num}`);
+        if (ZV <= 3) this.byte(32 * (n - 1) + p.num);
+        else if (n <= 2) this.byte(p.num | (n === 2 ? 0x40 : 0));
+        else { this.byte(0x80 | p.num); this.byte(0x80 | (n & 63)); }
         p.bytes.forEach((b) => this.byte(b));
       }
       this.byte(0);
     }
     for (const o of objs) {
-      const a = this.objTable + (o.num - 1) * 9;
-      this.mem[a] = o.attrs >>> 24; this.mem[a + 1] = (o.attrs >>> 16) & 255;
-      this.mem[a + 2] = (o.attrs >>> 8) & 255; this.mem[a + 3] = o.attrs & 255;
-      this.mem[a + 4] = o.parent; this.mem[a + 5] = o.sibling; this.mem[a + 6] = o.child;
-      this.mem[a + 7] = o.propAddr >> 8; this.mem[a + 8] = o.propAddr & 255;
+      const a = this.objTable + (o.num - 1) * OBJ_SIZE();
+      const nAttr = ZV <= 3 ? 4 : 6;
+      for (let k = 0; k < nAttr; k++) this.mem[a + k] = o.attrs[k];
+      if (ZV <= 3) {
+        this.mem[a + 4] = o.parent; this.mem[a + 5] = o.sibling; this.mem[a + 6] = o.child;
+      } else {
+        [o.parent, o.sibling, o.child].forEach((v, k) => { this.mem[a + 6 + 2 * k] = v >> 8; this.mem[a + 7 + 2 * k] = v & 255; });
+      }
+      const pa = a + (ZV <= 3 ? 7 : 12);
+      this.mem[pa] = o.propAddr >> 8; this.mem[pa + 1] = o.propAddr & 255;
     }
-    if (objs.length > 255) throw new Error('too many objects');
+    if (ZV <= 3 && objs.length > 255) throw new Error('too many objects');
   }
 
   propBytes(pname, p, o) {
@@ -1248,23 +1292,30 @@ class Compiler {
     const w = (v) => [(v >> 8) & 255, v & 255];
     if ((this.directions.includes(pname) || (vals[0]?.t === 'atom' && (vals[0].v === 'TO' || vals[0].v === 'PER'))) && !(vals.length === 1 && vals[0].t === 'num')) {
       // Exits
-      if (vals[0].t === 'str') return w(this.stringId(zilText(vals[0].v)));                 // NEXIT
-      if (vals[0].v === 'PER') return [...w(this.routineId(vals[1].v)), 0];                 // FEXIT
-      if (vals[0].v === 'SORRY') return w(this.stringId(zilText(vals[1].v)));
+      // Version 4+ (EZIP): rooms and objects are words, and each exit type has
+      // its own size (UEXIT 2, NEXIT 3, FEXIT 4, CEXIT 5, DEXIT 6).
+      const big = ZV >= 4;
+      const obj = (v) => (big ? w(v) : [v]);
+      if (vals[0].t === 'str') return big ? [...w(this.stringId(zilText(vals[0].v))), 0] : w(this.stringId(zilText(vals[0].v))); // NEXIT
+      if (vals[0].v === 'PER') return [...w(this.routineId(vals[1].v)), 0, ...(big ? [0] : [])]; // FEXIT
+      if (vals[0].v === 'SORRY') return big ? [...w(this.stringId(zilText(vals[1].v))), 0] : w(this.stringId(zilText(vals[1].v)));
       if (vals[0].v !== 'TO') throw new Error('bad exit ' + show(p));
       const room = this.objIndex.get(vals[1].v);
-      if (vals.length === 2) return [room];                                                 // UEXIT
+      if (vals.length === 2) return obj(room);                                              // UEXIT
       if (vals[2].v !== 'IF') throw new Error('bad exit ' + show(p));
       const elseStr = vals.findIndex((v) => v.t === 'atom' && v.v === 'ELSE');
       const str = elseStr >= 0 ? this.stringId(zilText(vals[elseStr + 1].v)) : 0;
       if (vals[4] && vals[4].v === 'IS') {                                                  // DEXIT
-        return [room, this.objIndex.get(vals[3].v), ...w(str), 0];
+        return big ? [...w(room), ...w(this.objIndex.get(vals[3].v)), ...w(str)] : [room, this.objIndex.get(vals[3].v), ...w(str), 0];
       }
-      return [room, this.globalNumber(vals[3].v), ...w(str)];                               // CEXIT
+      return big ? [...w(room), ...w(str), this.globalNumber(vals[3].v)] : [room, this.globalNumber(vals[3].v), ...w(str)]; // CEXIT
     }
     switch (pname) {
       case 'SYNONYM': return vals.flatMap((a) => w(this.wordAddr(a.v)));
-      case 'ADJECTIVE': return vals.map((a) => this.vocab.byName.get(a.v).parts.adj);
+      case 'ADJECTIVE':
+        // Version 4+: the adjectives' dictionary words; version 3: their numbers.
+        if (ZV >= 4) return vals.flatMap((a) => w(this.wordAddr(a.v)));
+        return vals.map((a) => this.vocab.byName.get(a.v).parts.adj);
       case 'GLOBAL': return vals.map((a) => this.objIndex.get(a.v));
       case 'PSEUDO': {
         const out = [];
@@ -1314,9 +1365,25 @@ const SIMPLE_HELPERS = {
   PRINT: 'printS', PRINTI: 'print', VALUE: 'globalValue', BTST: 'btst', VERIFY: 'verify',
   DIROUT: 'dirOut', DIRIN: 'dirIn', '/': 'div', MOD: 'mod',
   SPLIT: 'splitWindow', SCREEN: 'setWindow', SOUND: 'sound',
+  'INTBL?': 'inTable', COPYT: 'copyTable', ERASE: 'eraseLine', CURGET: 'cursorGet', COLOR: 'setColor', FONT: 'setFont',
+  PRINTT: 'printTable', LEX: 'tokenize', ZWSTR: 'encodeWord', SHIFT: 'shift', ASHIFT: 'shift', 'ORIGINAL?': 'isOriginal',
+  'MOUSE-INFO': 'mouseInfo', 'MOUSE-LIMIT': 'mouseLimit', 'WINPOS': 'winPos', 'WINSIZE': 'winSize', 'WINATTR': 'winAttr',
+  'WINGET': 'winGet', 'WINPUT': 'winPut', MARGIN: 'margin', 'PICINF': 'picInfo', DISPLAY: 'display', DCLEAR: 'displayClear',
+  'CHECKU': 'checkUnicode', PRINTU: 'printUnicode', XPUSH: 'xpush', 'FSTACK': 'fstack', 'POP': 'pop', 'MENU': 'menu',
   CURSET: 'cursorSet', HLIGHT: 'highlight', BUFOUT: 'bufOut', CLEAR: 'clearScreen',
 };
-const ASYNC_HELPERS = { READ: 'read', SAVE: 'save', RESTORE: 'restore', RESTART: 'restart', QUIT: 'quit' };
+const BASE_IMPORTS = new Set(`g tell print crlf eq hasFlag setFlag clearFlag move remove loc first next getProp putProp getPropAddr
+  propSize nextProp get put getb putb random prob isVerb enable disable apply globalValue setVarIndirect splitWindow setWindow sound
+  cursorSet highlight bufOut clearScreen btst verify dirOut dirIn div mod read save restore restart quit printD printB printC printN
+  printS D N C S`.split(/\s+/));
+/** Runtime functions beyond the basic set that the game's code uses (later Z-machine versions). */
+function extraImports(c) {
+  const extra = [...c.usedHelpers].filter((n) => !BASE_IMPORTS.has(n)).sort();
+  return extra.length ? `\n  ${extra.join(', ')},` : '';
+}
+
+const ASYNC_HELPERS = { READ: 'read', SAVE: 'save', RESTORE: 'restore', RESTART: 'restart', QUIT: 'quit',
+  INPUT: 'readChar', ISAVE: 'saveUndo', IRESTORE: 'restoreUndo' };
 
 class RoutineCompiler {
   constructor(c, name, form) {
@@ -1923,8 +1990,8 @@ class RoutineCompiler {
       case 'USL': return 'true';
       case 'ASCII': return args[0].t === 'char' ? String(args[0].v.charCodeAt(0)) : A(0);
     }
-    if (SIMPLE_HELPERS[h]) return `${SIMPLE_HELPERS[h]}(${all().join(', ')})`;
-    if (ASYNC_HELPERS[h]) return `(await ${ASYNC_HELPERS[h]}(${all().join(', ')}))`;
+    if (SIMPLE_HELPERS[h]) { this.c.usedHelpers.add(SIMPLE_HELPERS[h]); return `${SIMPLE_HELPERS[h]}(${all().join(', ')})`; }
+    if (ASYNC_HELPERS[h]) { this.c.usedHelpers.add(ASYNC_HELPERS[h]); return `(await ${ASYNC_HELPERS[h]}(${all().join(', ')}))`; }
     if (this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
     if (/^[A-Z][A-Z0-9-]*[A-Z0-9?]$/.test(h) && !this.c.mdl.has(h)) {
       // A routine the sources call but never define (left out of this release).
@@ -2121,7 +2188,7 @@ function emit({ c, code }) {
   g, tell, print, crlf, eq, hasFlag, setFlag, clearFlag, move, remove, loc, first, next,
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
-  read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
+  read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,${extraImports(c)}
 } from '../../engine/runtime.js';
 `);
   // Constants
@@ -2190,7 +2257,7 @@ function emit({ c, code }) {
     `export const LAYOUT = ${JSON.stringify({
       propDefaults: c.propDefaults, objTable: c.objTable, objectCount: c.objects.length,
       stringBase: STRING_BASE, routineBase: ROUTINE_BASE,
-      dictionary: c.dictStart, dictionaryCount: c.dictEntries.length, entryLength: 7,
+      dictionary: c.dictStart, dictionaryCount: c.dictEntries.length, entryLength: DICT_KEY() + 3, version: ZV,
       objectNames: c.objects.map((o) => o.name), rooms: c.objects.filter((o) => o.room).map((o) => o.name),
       flags: Object.fromEntries(c.flags), props: Object.fromEntries(c.props),
     })};`,

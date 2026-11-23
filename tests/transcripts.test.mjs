@@ -34,6 +34,10 @@ function play(commands) {
         if (m) { random(-Number(m[1])); return ''; }
         return l;
       },
+      inputChar: async () => {
+        if (!lines.length) { resolve(out); return new Promise(() => {}); }
+        return lines.shift();
+      },
       save: async (s) => { saved = s; return true; },
       restore: async () => saved,
       ended: async () => { resolve(out); return new Promise(() => {}); },
