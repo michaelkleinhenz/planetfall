@@ -31,6 +31,13 @@ folder is the original release used as the reference in the transcript tests.
 | `plunderedhearts/` | Plundered Hearts | r26 | None: shared for education and research |
 | `stationfall/` | Stationfall | — | None: shared for education and research |
 | `lurkinghorror/` | The Lurking Horror | r221 | None: shared for education and research |
+| `amfv/` | A Mind Forever Voyaging | r77 | None: shared for education and research |
+| `trinity/` | Trinity | r15 | None: shared for education and research |
+| `bureaucracy/` | Bureaucracy | r160 | None: shared for education and research |
+| `nordandbert/` | Nord and Bert Couldn't Make Head or Tail of It | r20 | None: shared for education and research |
+| `beyondzork/` | Beyond Zork | r60 | None: shared for education and research |
+| `borderzone/` | Border Zone | r9 | None: shared for education and research |
+| `sherlock/` | Sherlock: The Riddle of the Crown Jewels | — | None: shared for education and research |
 
 Each folder's `SOURCE-COMMIT` (where present) names the commit of the historicalsource
 repository it was copied from.

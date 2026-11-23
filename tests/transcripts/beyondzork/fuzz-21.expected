@@ -1,613 +1,942 @@
-Is this a VT220?
+Copyright (C)TIME Infocom, Inc. All rights reserved.
 
-[Please type YES or NO.] >#random 42
+Do you want to begin a new game, restore a saved game, or quit?
 
-[Please type YES or NO.] >begin
+[Type BEGIN, RESTORE or QUIT.] >#random 42
+[Type BEGIN, RESTORE or QUIT.] >begin
 
-[Please type YES or NO.] >@seed 42
+"Our doom is sealed."
+  Y'Gael turned away from the window overlooking the Great Sea. "The Guildmaster nears the end of his final quest," she said softly. "When he succeeds, for succeed he will, our powers shall cease to be."
+  The silence was unbroken for a long minute. Then a tiny voice near the door peeped, "Forever?"
+  "No." The old woman leaned forward on her staff. "The Age of Science will endure long; no one in this room can hope to outlive it. But our knowledge need not die with us -- if we act at once to preserve our priceless heritage."
+  "Wherein lies your hope, Y'Gael?" demanded a salamander in the front row. "What Magick is proof against the death of Magick itself?"
+  Y'Gael's dry chuckle stilled the murmur of the crowd. "You forget your own history, Gustar. Are you not author of the definitive scroll on the Coconut of Quendor?"
+  A tumult of amphibious croaks and squeals drowned out Gustar's retort. Y'Gael hobbled over to a table laden with mystical artifacts, selected a small stone and raised it high.
+  "The Coconut is our only hope," she cried, her eyes shining in the stone's violet aura. "Its seed embodies the essence of our wisdom. Its shell is impervious to the ravages of Time. We must reclaim it from the Implementors, and hide it away before its secrets are forgotten!"
+  The shrill voice of a newt rose above the cheering. "And who will steal this Coconut from the Implementors?" he scoffed. "You, Y'Gael?"
+  The violet aura faded at his words. "Not I, Orkan," replied Y'Gael, shaking the lifeless stone and replacing it with a sigh. "The fabric of Magick is unravelling. We dare not rely on its protection. Another champion must be sought; an innocent unskilled in the lore of enchantment, who cannot know the price of failure, or recognize the face of death."
+  Orkan's squeak was skeptical. "Suppose your champion succeeds in this hopeless quest. What will become of the Coconut?"
+  Y'Gael turned to face the sea once more. "It will await the coming of a better age," she replied, her voice trembling with emotion. "An age beyond Magick, beyond Science ..."
 
-[Please type YES or NO.] >look
+Use the ↑ and ↓ keys to highlight your selection.
 
-[Please type YES or NO.] >north
+Type [RETURN] to continue. >
 
-[Please type YES or NO.] >drink oak
+Press any key to begin the story. >
+Hilltop
 
-[Please type YES or NO.] >talk to oak
+>
+You can't drink that.
 
-[Please type YES or NO.] >read tree
+>
+It isn't likely that the oak tree would respond.
 
-[Please type YES or NO.] >east
+>
+How can you read an oak tree?
 
-[Please type YES or NO.] >drink oak
+>
+You amble down the hill.
 
-[Please type YES or NO.] >touch oak
+Cove
 
-[Please type YES or NO.] >drink tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >smell oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >empty oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >eat tree
+>
+You can't smell any oak here.
 
-[Please type YES or NO.] >up
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+Hilltop
 
-[Please type YES or NO.] >east
+>
+You amble down the hill.
 
-[Please type YES or NO.] >turn off oak
+Cove
 
-[Please type YES or NO.] >empty tree
+>
+Wharf
 
-[Please type YES or NO.] >south
+>
+There's no exit that way.
 
-[Please type YES or NO.] >put oak in tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >push tree
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >throw oak at roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >listen to tree
+>
+You're not holding that.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >east
+>
+You can't hear any tree here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >take tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >put roots in roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn off oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >up
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >take tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >slide oak through oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >smell tree
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >shake roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't smell any tree here.
 
-[Please type YES or NO.] >turn off oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn on tree
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >south
+>
+There's no exit that way.
 
-[Please type YES or NO.] >read roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >turn off oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >eat tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >show roots to oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >kiss roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >close oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >north
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >drop oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >eat roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >kiss roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >shake oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >remove roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >read tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >search oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >look under roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >north
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >slide tree through tree
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >slide oak through roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >climb oak
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >show tree to roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn off oak
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >look in roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >close roots
+>
+You're not holding that.
 
-[Please type YES or NO.] >shake tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >shake roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >up
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >south
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >throw roots at roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >put roots in oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >examine tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >jump
+>
+You're not holding that.
 
-[Please type YES or NO.] >kiss roots
+>
+You're not holding that.
 
-[Please type YES or NO.] >jump
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+There's no point in doing that.
+  A movement draws your eye to the water, where a piece of driftw is bobbing on the waves.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+That would be pointless.
 
-[Please type YES or NO.] >remove tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >talk to tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >climb tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >put oak in roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >eat oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >jump
+>
+You're not holding that.
 
-[Please type YES or NO.] >shake oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >shake roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >listen to roots
+>
+That's a pointless thing to do.
+  The old sailor dabs a bit more paint onto the canvas.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >look in roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >jump
+>
+You can't hear any roots here.
 
-[Please type YES or NO.] >look
+>
+There's no exit that way.
 
-[Please type YES or NO.] >open oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no point in doing that.
+  The piece of driftw is beginning to float away.
 
-[Please type YES or NO.] >north
+>
+Wharf
+  The old sailor eyes his work critically.
 
-[Please type YES or NO.] >open roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >kiss oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >read oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn off tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >north
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >drink roots
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >give oak to oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >north
+>
+There's no exit that way.
 
-[Please type YES or NO.] >look in oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >wear roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >search roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >push tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >hit oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >wear oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >look under oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >push tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >slide oak through oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >wear roots
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >close oak
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >hit tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >push roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >push tree
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >put roots in tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >pick up roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >empty oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >up
+>
+You're not holding that.
 
-[Please type YES or NO.] >south
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >give tree to oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >remove tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >empty tree
+>
+You're not holding that.
 
-[Please type YES or NO.] >search roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >up
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >shake tree
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >listen to oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >take oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >examine roots
+>
+You can't hear any oak here.
 
-[Please type YES or NO.] >diagnose
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >climb tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >give roots to roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >slide oak through roots
+>
+A medical nymph appears on your keyboard. "Please use the STATUS command to monitor your health. Bye!"
+  She disappears with a wink.
 
-[Please type YES or NO.] >move oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >empty tree
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >drop tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >slide oak through oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >slide oak through oak
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >look
+>
+There's no exit that way.
 
-[Please type YES or NO.] >close tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >drop tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >open oak
+>
+Wharf
+  The piece of driftw slowly floats out of sight.
 
-[Please type YES or NO.] >touch oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >close oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >smell roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >search roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >drink roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >south
+>
+You can't smell any roots here.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >move oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >look
+>
+There's no exit that way.
 
-[Please type YES or NO.] >wear tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >south
+>
+There's no exit that way.
 
-[Please type YES or NO.] >jump
+>
+Wharf
 
-[Please type YES or NO.] >show tree to roots
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >south
+>
+There's no exit that way.
 
-[Please type YES or NO.] >look in roots
+>
+That would be pointless.
 
-[Please type YES or NO.] >east
+>
+You're not holding that.
 
-[Please type YES or NO.] >take tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >touch oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >pick up oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >put oak in tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >show oak to oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >pick up tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >look under oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >look in roots
+>
+You're not holding that.
 
-[Please type YES or NO.] >throw roots at oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >examine oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn off oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >drink oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >hit tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >move oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >climb tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >turn on roots
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >up
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >listen to oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >search tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't hear any oak here.
 
-[Please type YES or NO.] >examine roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >search oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >examine oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >take oak
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >look under roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >diagnose
+>
+There's no exit that way.
 
-[Please type YES or NO.] >look
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn on oak
+>
+A medical nymph appears on your keyboard. "Please use the STATUS command to monitor your health. Bye!"
+  She disappears with a wink.
 
-[Please type YES or NO.] >drink oak
+>
+Wharf
 
-[Please type YES or NO.] >jump
+>
+There's no exit that way.
 
-[Please type YES or NO.] >take tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >turn on oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >turn off oak
+>
+That's a pointless thing to do.
+  You feel the wind changing direction.
 
-[Please type YES or NO.] >show oak to oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >slide tree through tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >shake tree
+>
+You're not holding that.
 
-[Please type YES or NO.] >examine oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >up
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >talk to oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >throw roots at tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >show oak to roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >shake tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >take oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >talk to oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >smell roots
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >north
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't smell any roots here.
 
-[Please type YES or NO.] >climb tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >wear tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >south
+>
+There's no exit that way.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >north
+>
+There's no exit that way.
 
-[Please type YES or NO.] >drink oak
+>
+There's no exit that way.
 
-[Please type YES or NO.] >kiss roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >jump
+>
+There's no exit that way.
 
-[Please type YES or NO.] >put oak in roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no point in doing that.
 
-[Please type YES or NO.] >eat oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn on tree
+>
+There's no exit that way.
 
-[Please type YES or NO.] >take roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >show tree to roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >talk to oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >push tree
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >put tree in tree
+>
+You're not holding that.
 
-[Please type YES or NO.] >open oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >east
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >push oak
+>
+You're not holding that.
 
-[Please type YES or NO.] >touch tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >take roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >close oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >turn on oak
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >examine roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >listen to tree
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >slide roots through oak
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >turn on tree
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+You can't hear any tree here.
 
-[Please type YES or NO.] >close roots
+>
+[Please try to express that another way.]
 
-[Please type YES or NO.] >diagnose
+>
+You can't see any tree here.
 
-[Please type YES or NO.] >shake roots
+>
+There's no exit that way.
 
-[Please type YES or NO.] >north
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >move oak
+>
+A medical nymph appears on your keyboard. "Please use the STATUS command to monitor your health. Bye!"
+  She disappears with a wink.
 
-[Please type YES or NO.] >eat roots
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >east
+>
+There's no exit that way.
 
-[Please type YES or NO.] >turn off roots
+>
+You can't see any oak here.
 
-[Please type YES or NO.] >show tree to tree
+>
+You can't see any roots here.
 
-[Please type YES or NO.] >look
+>
+There's no exit that way.
 
-[Please type YES or NO.] >
+>
+You can't see any roots here.
+
+>
+You're not holding that.
+
+>
+Wharf
+  The wind changes direction again.
+
+>

@@ -876,6 +876,14 @@ function renderActions() {
       actButton(t('act_no'), 'answer', () => runAction('no', t('act_no'))));
     return;
   }
+  // The game reads single keys (menus, forms): cursor keys and Return, for
+  // devices without a keyboard.
+  if (session.waitingForKey) {
+    bar.append(actButton('↑', 'answer', () => handleInput(String.fromCharCode(129))),
+      actButton('↓', 'answer', () => handleInput(String.fromCharCode(130))),
+      actButton(t('act_return'), 'answer', () => handleInput('')));
+    return;
+  }
 
   const ctx = actionContext();
   if (actionTarget) {
@@ -988,8 +996,8 @@ async function boot() {
   const second = $('status-second-label');
   second.dataset.i18n = meta.statusSecond === 'time' ? 'time' : 'moves';
   second.textContent = t(second.dataset.i18n);
-  // Games that draw their own status line: only the room is shown here.
-  if (meta.ownStatus) { els.score.closest('.stat').hidden = true; els.time.closest('.stat').hidden = true; }
+  // Games that draw their own status line (upper window): none of it is shown here.
+  if (meta.ownStatus) { els.score.closest('.stat').hidden = true; els.time.closest('.stat').hidden = true; els.room.style.visibility = 'hidden'; }
   // Time games have no score: only the clock is shown.
   if (meta.clock) els.score.closest('.stat').hidden = true;
   updateMode();

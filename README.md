@@ -9,8 +9,8 @@ Infocom's.
 
 **Play:** https://michaelkleinhenz.github.io/planetfall/
 
-All 24 Infocom games whose ZIL source is public and that ran on version 3 of the
-Z-machine are included (the demos, Mini-Zork I and II and the Sampler, are left out):
+All 31 Infocom text games whose ZIL source is public and that ran on versions 3 to 5 of
+the Z-machine are included (the demos, Mini-Zork I and II and the Sampler, are left out):
 
 | Game | Year | Author | Source | Compared with | Result |
 |---|---|---|---|---|---|
@@ -38,16 +38,28 @@ Z-machine are included (the demos, Mini-Zork I and II and the Sampler, are left 
 | Plundered Hearts | 1987 | Amy Briggs | `games/plunderedhearts/` | r26 | identical |
 | Stationfall | 1987 | Steve Meretzky | `games/stationfall/` | — | no original story file in the archive |
 | The Lurking Horror | 1987 | Dave Lebling | `games/lurkinghorror/` | r221 | identical |
+| A Mind Forever Voyaging | 1985 | Steve Meretzky | `games/amfv/` | r77 | identical except the indentation of one list |
+| Trinity | 1986 | Brian Moriarty | `games/trinity/` | r15 | identical except one line about the bird woman |
+| Bureaucracy | 1987 | Douglas Adams & Michael Bywater | `games/bureaucracy/` | r160 | not compared: the reference interpreter can't show the licence form |
+| Nord and Bert Couldn't Make Head or Tail of It | 1987 | Jeff O'Neill | `games/nordandbert/` | r20 | identical |
+| Beyond Zork: The Coconut of Quendor | 1987 | Brian Moriarty | `games/beyondzork/` | r60 | not compared: the reference interpreter stops at the character setup |
+| Border Zone | 1987 | Marc Blank | `games/borderzone/` | r9 | identical |
+| Sherlock: The Riddle of the Crown Jewels | 1987 | Bob Bates | `games/sherlock/` | — | no original story file in the archive |
 
 "Compared with" is the original release in the source archive; "identical" means a
 300–600 command random play-through gives exactly the same transcript in the original
 and the translation (see *Faithfulness*). Where the archived source is a later revision
 than the only surviving story file, the differences are that revision's changes.
 
-Not included yet: the games written for later versions of the Z-machine (A Mind Forever
-Voyaging, Trinity, Bureaucracy, Border Zone, Sherlock, Nord and Bert, Beyond Zork, the
-Solid Gold editions, and the graphical Zork Zero, Shōgun, Journey and Arthur), and the
-original mainframe Zork, which is written in MDL rather than ZIL.
+Not included: the Solid Gold editions (re-releases of games above), the graphical
+version 6 games (Zork Zero, Shōgun, Journey and Arthur), and the original mainframe Zork,
+which is written in MDL rather than ZIL.
+
+The version 4 and 5 games draw in an upper window: status lines, Bureaucracy's forms,
+Beyond Zork's room box, map and character sheet. The app shows it as a panel above the
+transcript; Beyond Zork's graphics font becomes Unicode box and block characters, and the
+arrow keys work in its menus. Border Zone's real-time clock is not used: the AI may take a
+few seconds per command, so time passes per turn, as in interpreters without timer support.
 
 Licenses: only the Zork I, II and III sources are under an open license (MIT, © 2025
 Microsoft). All others are shared by historicalsource for education and research and are
@@ -124,7 +136,7 @@ walkthrough plus random play from several checkpoints for Planetfall and Zork I 
 11,000 commands), and 300–600 commands of random play for every other game (results in
 the table above). Both sides seed the random number generator the same way, through the
 games' own `#random` command or directly in the interpreter. `npm test` replays all
-recorded runs (about 18,000 commands) against the recorded transcripts.
+recorded runs (about 20,000 commands) against the recorded transcripts.
 
 The compiler reproduces the details of the original ZILCH compiler these comparisons
 turned up, among them:
@@ -136,6 +148,9 @@ turned up, among them:
   interpreter at compile time;
 - later compiler features: compact syntax tables, TELL-TOKENS, MAP-CONTENTS, DO loops,
   LOWCORE, BIT-SYNONYM and the like.
+- the version 4/5 data formats (14-byte objects, 9-letter dictionary words, compact
+  vocabularies) and MDL-ZIL, the Lisp-like dialect Bureaucracy is written in (DEFINE,
+  DEFSTRUCT, DEFINE-GLOBALS and compile-time code that builds its forms).
 
 Random play covers a part of each game. The rest went through the same compiler but hasn't
 been compared transcript by transcript.

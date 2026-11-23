@@ -84,8 +84,9 @@ export function resetState() {
     mem[0x11] &= 0x57;
     mem[0x20] = 25; mem[0x21] = 80;
     if (V >= 5) { mem[0x22] = 0; mem[0x23] = 80; mem[0x24] = 0; mem[0x25] = 25; mem[0x26] = 1; mem[0x27] = 1; }
-    mem[0x32] = 1; mem[0x33] = 2; // Interpreter number and version: DECSystem-20, A.
-    mem[0x1e] = 1; mem[0x1f] = 65;
+    mem[0x32] = 1; mem[0x33] = 2;
+    // Interpreter number and version: Amiga (no game special-cases it), A.
+    mem[0x1e] = 4; mem[0x1f] = 65;
   }
 }
 
