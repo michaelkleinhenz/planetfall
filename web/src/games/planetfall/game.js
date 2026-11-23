@@ -390,6 +390,7 @@ export const SERIAL = 0;
 export const D_RECORD_ON = 4;
 export const D_RECORD_OFF = -4;
 export const NEW_VOC$ = 1;
+export const LAST_OBJECT = 255;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

@@ -413,6 +413,7 @@ export const V_BEST_ADV = 2;
 export const V_PROB = 3;
 export const V_MSGS = 4;
 export const ZORK_NUMBER = 1;
+export const LAST_OBJECT = 250;
 export const LOW_DIRECTION = 19;
 
 // ---- Actions (V?xxx) ----

@@ -385,6 +385,7 @@ class Compiler {
     this.dgFields = new Map();
     this.structFields = new Map();
     this.structDefaults = new Map();
+    this.propSpecs = new Map();
     this.props = new Map();
     this.strings = [null];        // id -> text
     this.stringIds = new Map();
@@ -487,6 +488,11 @@ class Compiler {
         case 'PROPDEF': this.propdefs.set(it[1].v, it[2].v); break;
         case 'TELL-TOKENS': this.tellTokens = parseTellTokens(it.slice(1)); break;
         case 'SETG20': this.mdl.eval(f, new Map()); break;
+        // <PUTPROP THINGS PROPSPEC PSEUDO>: the property's values go through a
+        // compile-time function (DIRECTIONS PROPSPEC!-IZILCH is the built-in exit format).
+        case 'PUTPROP':
+          if (it[2]?.v === 'PROPSPEC' && it[3]?.t === 'atom' && !/IZILCH/.test(it[3].v)) this.propSpecs.set(it[1].v, it[3].v);
+          break;
         // <LONG-WORDS?>: the compiler builds LONG-WORD-TABLE, the full text of
         // dictionary words longer than the dictionary keeps.
         case 'LONG-WORDS?': this.constants.set('LONG-WORD-TABLE', { t: 'longwords' }); break;
@@ -654,6 +660,13 @@ class Compiler {
     };
     for (const [name, form] of this.routines) this.routines.set(name, walk(form));
     for (const o of this.objects) o.props = o.props.map((p) => walk(p));
+    // Properties with a PROPSPEC function are evaluated now (they may create words).
+    for (const o of this.objects) {
+      for (const p of o.props) {
+        const fn = this.propSpecs.get(p.items?.[0]?.v);
+        if (fn) p.specResult = this.mdl.callValue({ t: 'closure', def: this.mdl.defs.get(fn) }, [p], new Map());
+      }
+    }
     for (const [name, init] of this.globals) if (init) this.globals.set(name, walk(init));
     for (const [name, v] of this.constants) if (v && typeof v === 'object') this.constants.set(name, walk(v));
   }
@@ -686,6 +699,8 @@ class Compiler {
     this.objects = order.map((n) => byName.get(n));
     this.objIndex = new Map(this.objects.map((o, i) => [o.name, i + 1]));
     this.objectsMatchStory = !!this.story && this.story.objectNames.length === this.objects.length;
+    // ,LAST-OBJECT: the highest object number (the compiler defined it)
+    if (!this.constants.has('LAST-OBJECT') && !this.globals.has('LAST-OBJECT')) this.constants.set('LAST-OBJECT', { t: 'num', v: this.objects.length });
   }
 
   /**
@@ -863,8 +878,9 @@ class Compiler {
   }
 
   isExit(p) {
-    // (IN ROOMS) is a location; (IN TO X) / (IN "msg") / (IN PER F) are exits.
-    return p.items.length !== 2 || p.items[1].t === 'str';
+    // (IN ROOMS) is a location; (IN TO X) / (IN "msg") / (IN PER F) are exits,
+    // and so are Beyond Zork's (IN 0) and (IN <TO X>).
+    return p.items.length !== 2 || p.items[1].t !== 'atom';
   }
 
   referencedPrefixed(prefix) {
@@ -1179,7 +1195,7 @@ class Compiler {
       // <ITABLE [NONE|BYTE|WORD] count [(flags)] [element pattern...]>
       let spec = 'NONE';
       if (args[0].t === 'atom') { spec = args[0].v; args = args.slice(1); }
-      const count = args[0].v;
+      const count = this.staticValue(args[0]); // a number or a named constant
       args = args.slice(1);
       if (spec === 'BYTE') { byteMode = true; lengthPrefix = true; }
       if (spec === 'WORD') lengthPrefix = true;
@@ -1272,8 +1288,19 @@ class Compiler {
     // Vocabulary entries are placed later, but their addresses are needed by
     // tables (W?FOO), so reserve the dictionary space up front.
     this.align();
-    this.dictStart = this.here();
     const entries = [...this.vocab.words.values()].sort((a, b) => (a.key < b.key ? -1 : 1));
+    if (ZV >= 4) {
+      // The standard dictionary header (games like Beyond Zork read and copy it):
+      // separators, entry length, number of entries. ,VOCAB is its address.
+      this.vocabAddr = this.here();
+      const seps = ['.', ',', '"'];
+      this.byte(seps.length); seps.forEach((c) => this.byte(c.charCodeAt(0)));
+      this.byte(DICT_KEY() + 3);
+      this.word(entries.length);
+      this.mem[8] = this.vocabAddr >> 8; this.mem[9] = this.vocabAddr & 255;
+      this.constants.set('VOCAB', { t: 'num', v: this.vocabAddr });
+    }
+    this.dictStart = this.here();
     for (const e of entries) {
       e.addr = this.here();
       for (let i = 0; i < DICT_KEY() + 3; i++) this.byte(0);
@@ -1427,12 +1454,19 @@ class Compiler {
   }
 
   propBytes(pname, p, o) {
+    if (p.specResult) {
+      // (<> value ...) from the game's PROPSPEC function: the values, as words
+      const vals = (p.specResult.items || []).slice(1);
+      return vals.flatMap((v) => { const x = this.staticValue(v); return [(x >> 8) & 255, x & 255]; });
+    }
     // <STRING "..." <COND ...>> computed at compile time
     let vals = p.items.slice(1).map((v) => (v.t === 'form' && v.items[0]?.v === 'STRING' ? this.mdl.eval(v, new Map()) : v));
     // (LDESC "text" CR): a stray CR after a string is ignored.
     if (vals.length > 1 && vals[0].t === 'str' && vals.slice(1).every((v) => v.t === 'atom' && v.v === 'CR')) vals = [vals[0]];
     const w = (v) => [(v >> 8) & 255, v & 255];
-    if ((this.directions.includes(pname) || (vals[0]?.t === 'atom' && (vals[0].v === 'TO' || vals[0].v === 'PER'))) && !(vals.length === 1 && vals[0].t === 'num')) {
+    // (Beyond Zork's exits are tables built by macros: <TO ROOM>, <SORRY "...">.)
+    if ((this.directions.includes(pname) || (vals[0]?.t === 'atom' && (vals[0].v === 'TO' || vals[0].v === 'PER')))
+        && !(vals.length === 1 && (vals[0].t === 'num' || vals[0].t === 'form'))) {
       // Exits
       // Version 4+ (EZIP): rooms and objects are words, and each exit type has
       // its own size (UEXIT 2, NEXIT 3, FEXIT 4, CEXIT 5, DEXIT 6).
@@ -1567,7 +1601,7 @@ class RoutineCompiler {
       const js = this.localName(nm);
       this.locals.set(nm, js);
       if (mode === 'aux') aux.push({ js, init });
-      else params.push({ js, init, opt: mode === 'opt' });
+      else { (this.paramIndex ??= new Map()).set(nm, params.length); params.push({ js, init, opt: mode === 'opt' }); }
     }
     this.body = it.slice(3);
     const bodyLines = this.block(this.body, { k: 'ret' });
@@ -2098,6 +2132,12 @@ class RoutineCompiler {
       }
       case '__never__':
         break;
+      case 'ASSIGNED?': {
+        // Was this optional argument passed? (version 5: check_arg_count)
+        const i = this.paramIndex?.get(args[0].v);
+        if (i === undefined) throw new Error(`${this.name}: ASSIGNED? of ${show(args[0])}, not a parameter`);
+        return `(arguments.length > ${i})`;
+      }
       case 'RARG?': {
         // <RARG? LOOK ENTER>: the routine's RARG is M-LOOK or M-ENTER (later ZILCH)
         const r = this.varRef({ t: 'atom', v: 'RARG' });

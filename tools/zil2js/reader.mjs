@@ -92,6 +92,8 @@ export function readZil(text, file = '?') {
       i++;
       const type = readAtomText();
       const val = readOne();
+      // #2 101: a number in binary (#8 for octal)
+      if ((type === '2' || type === '8') && val.t === 'num') return { t: 'num', v: parseInt(String(val.v), Number(type)), line: startLine };
       return { t: 'hash', type, v: val, line: startLine };
     }
     if (c === '!') {
