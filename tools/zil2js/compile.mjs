@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { readZil, show } from './reader.mjs';
 import { encodeText, dictBytes, dictKey, decodeText } from '../../web/src/engine/zscii.js';
 import { GAMES } from './games.mjs';
+import { MDL } from './mdl.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, '../..');
@@ -36,6 +37,21 @@ function warn(msg) { warnings.push(msg); }
 
 const isNode = (x) => x && typeof x === 'object' && typeof x.t === 'string';
 
+// Numeric CONSTANTs and SETGs seen anywhere at top level (including those nested
+// in GLOBAL initialisers), for compile-time expressions like %<- ,A ,B>.
+const COMPILE_CONSTANTS = new Map();
+function collectCompileConstants(nodes) {
+  const visit = (n, top) => {
+    if (!isNode(n) || n.t !== 'form') return;
+    const it = n.items;
+    const h = it[0]?.v;
+    if ((h === 'CONSTANT' || h === 'SETG') && it[1]?.t === 'atom' && it[2]?.t === 'num') COMPILE_CONSTANTS.set(it[1].v, it[2].v);
+    if (top && (h === 'GLOBAL' || h === 'CONSTANT')) it.slice(2).forEach((x) => visit(x, false));
+    if (!top && h === 'SETG') return;
+  };
+  nodes.forEach((n) => visit(n, true));
+}
+
 /**
  * Evaluate the small subset of MDL used in compile-time conditionals (%<...>):
  * COND, GASSIGNED?, ==?/=?/EQUAL?, NOT, AND, OR, global values of the game's
@@ -52,7 +68,8 @@ function evalCompileTime(node) {
     case 'gval': {
       const name = node.v.v;
       if (name in CFG.values) return CFG.values[name];
-      throw new Error('Unknown compile-time value ,' + name);
+      if (COMPILE_CONSTANTS.has(name)) return COMPILE_CONSTANTS.get(name);
+      return false; // unassigned at compile time
     }
     case 'macro': return evalCompileTime(node.v);
     case 'form': {
@@ -75,6 +92,11 @@ function evalCompileTime(node) {
           return rest.some((b) => b === a);
         }
         case 'N==?': case 'N=?': return evalCompileTime(args[0]) !== evalCompileTime(args[1]);
+        case '+': return args.reduce((a, n) => a + Number(evalCompileTime(n)), 0);
+        case '*': return args.reduce((a, n) => a * Number(evalCompileTime(n)), 1);
+        case '-': return args.length === 1 ? -evalCompileTime(args[0]) : args.slice(1).reduce((a, n) => a - Number(evalCompileTime(n)), Number(evalCompileTime(args[0])));
+        case '/': return args.slice(1).reduce((a, n) => Math.trunc(a / Number(evalCompileTime(n))), Number(evalCompileTime(args[0])));
+        case 'SETG': { const v = evalCompileTime(args[1]); if (typeof v === 'number') CFG.values[args[0].v] = v; return v; }
       }
       // Any other form: code to be compiled as-is.
       return node;
@@ -130,14 +152,18 @@ function topLevelForms() {
     expanded.file = file;
     out.push(expanded);
   };
+  const parsed = [];
   for (const f of CFG.files) {
     const dir = path.join(ROOT, CFG.srcDir);
     const name = fs.readdirSync(dir).find((n) => n.toLowerCase() === f.toLowerCase() + '.zil');
     if (!name) throw new Error(`${GAME_ID}: missing source file ${f}.zil`);
     let text = fs.readFileSync(path.join(dir, name), 'latin1');
     if (CFG.fixups?.[f]) text = CFG.fixups[f](text);
-    for (const node of readZil(text, name)) visit(node, f);
+    parsed.push([f, readZil(text, name)]);
   }
+  COMPILE_CONSTANTS.clear();
+  parsed.forEach(([, nodes]) => collectCompileConstants(nodes));
+  for (const [f, nodes] of parsed) for (const node of nodes) visit(node, f);
   return out;
 }
 
@@ -167,6 +193,81 @@ function decodeStory(d, addr, depth = 0) {
     if (w & 0x8000) break;
   }
   return out;
+}
+
+// ---------------------------------------------------------------------------
+// Inferring per-game settings from the sources and the original story file
+// ---------------------------------------------------------------------------
+
+const sourceText = (name) => {
+  const dir = path.join(ROOT, CFG.srcDir);
+  const file = fs.readdirSync(dir).find((n) => n.toLowerCase() === name.toLowerCase());
+  return file ? fs.readFileSync(path.join(dir, file), 'latin1') : null;
+};
+
+/**
+ * Fill in what a game's configuration leaves out:
+ *  - files: the files the main .zil inserts (INSERT-FILE / IFILE), then the main file;
+ *  - values: compile-time settings the main file sets with <SETG NAME number>;
+ *  - prob: the semantics of the game's own PROB macro.
+ */
+function inferConfig(cfg) {
+  CFG = cfg;
+  cfg.assigned ??= ['PREDGEN', 'ZILCH'];
+  cfg.fixups ??= {};
+  if (!cfg.files && cfg.main) {
+    const main = sourceText(cfg.main + '.zil');
+    if (!main) throw new Error(`${GAME_ID}: main file ${cfg.main}.zil not found`);
+    const files = [];
+    for (const node of readZil(main, cfg.main)) {
+      if (node.t !== 'form') continue;
+      const h = node.items[0]?.v;
+      if ((h === 'INSERT-FILE' || h === 'IFILE') && node.items[1]?.t === 'str') {
+        const f = node.items[1].v.toLowerCase();
+        if (sourceText(f + '.zil') && !files.includes(f)) files.push(f);
+      }
+    }
+    cfg.files = [...files, cfg.main];
+  }
+  if (!cfg.values) {
+    cfg.values = {};
+    if (cfg.main) {
+      for (const node of readZil(sourceText(cfg.main + '.zil'), cfg.main)) {
+        const it = node.t === 'form' ? node.items : [];
+        if (it[0]?.v === 'SETG' && it[1]?.t === 'atom' && it[2]?.t === 'num') cfg.values[it[1].v] = it[2].v;
+      }
+    }
+  }
+  if (!cfg.prob) {
+    // <DEFMAC PROB ...>: Zork-style <G? base <RANDOM 100>> means random < n;
+    // Planetfall-style <NOT <L? base <RANDOM 100>>> means random <= n.
+    cfg.prob = 'le';
+    for (const f of cfg.files) {
+      const t = sourceText(f + '.zil') || '';
+      const m = /<DEFMAC\s+PROB\b[\s\S]*?(?=\n<)/.exec(t);
+      if (m) { cfg.prob = /G\?\s+\.BASE/.test(m[0]) && !/NOT/.test(m[0]) ? 'lt' : 'le'; break; }
+    }
+  }
+  return cfg;
+}
+
+/** Later ZILCH versions store 1 as the value byte of a noun; detect it in the story file. */
+function inferNounValue() {
+  const file = CFG.storyFile && path.join(ROOT, CFG.srcDir, CFG.storyFile);
+  if (!file || !fs.existsSync(file)) return CFG.nounValueDefault;
+  const d = fs.readFileSync(file);
+  const w = (a) => (d[a] << 8) | d[a + 1];
+  const dict = w(8);
+  const n = d[dict];
+  const len = d[dict + 1 + n];
+  const count = w(dict + 2 + n);
+  const start = dict + 4 + n;
+  let ones = 0, zeros = 0;
+  for (let i = 0; i < count; i++) {
+    const a = start + i * len;
+    if (d[a + 4] === 0x80) (d[a + 5] === 1 ? ones++ : zeros++);
+  }
+  return ones > zeros ? 1 : undefined;
 }
 
 /** Read the original story file (object names, release, serial) if the game has one. */
@@ -264,6 +365,9 @@ class Compiler {
   // ---------------- collection ----------------
 
   collect(forms) {
+    this.mdl = new MDL({ onWarn: warn });
+    for (const [k, v] of Object.entries(CFG.values)) this.mdl.globals.set(k, typeof v === 'number' ? { t: 'num', v } : v);
+    for (const [k, v] of COMPILE_CONSTANTS) if (!this.mdl.globals.has(k)) this.mdl.globals.set(k, { t: 'num', v });
     // Built-in constants defined by the ZIL compiler itself.
     const builtins = {
       'PS?OBJECT': 128, 'PS?VERB': 64, 'PS?ADJECTIVE': 32, 'PS?DIRECTION': 16, 'PS?PREPOSITION': 8,
@@ -280,9 +384,15 @@ class Compiler {
           this.objIndex.set(it[1].v, this.objects.length + 1);
           this.objects.push({ name: it[1].v, room: head === 'ROOM', props: it.slice(2) });
           break;
-        case 'GLOBAL': this.globals.set(it[1].v, it[2]); break;
+        case 'GLOBAL': this.globals.set(it[1].v.replace(/:.*$/, ''), it[2]); break;
         case 'CONSTANT': this.constants.set(it[1].v, it[2]); break;
         case 'SETG':
+          // <SETG ROOM? ,HERE?>: an alias for a compile-time function.
+          if (it[2]?.t === 'gval' && this.mdl.has(it[2].v.v)) {
+            this.mdl.defs.set(it[1].v, this.mdl.defs.get(it[2].v.v));
+            break;
+          }
+          if (it[2]?.t === 'num' || it[2]?.t === 'atom' || it[2]?.t === 'str') this.mdl.globals.set(it[1].v, it[2]);
           // Top-level SETGs are compile-time constants unless declared as GLOBALs.
           if (!this.constants.has(it[1].v)) this.constants.set(it[1].v, it[2]);
           break;
@@ -291,7 +401,10 @@ class Compiler {
         case 'BUZZ': this.buzz.push(...it.slice(1).map((a) => a.v)); break;
         case 'DIRECTIONS': this.directions.push(...it.slice(1).map((a) => a.v)); break;
         case 'PROPDEF': this.propdefs.set(it[1].v, it[2].v); break;
-        case 'DEFMAC': case 'DEFINE': case 'VERSION': case 'FREQUENT-WORDS?': case 'OR': case 'PRINC':
+        case 'DEFMAC': case 'DEFINE':
+          this.mdl.define(f);
+          break;
+        case 'VERSION': case 'FREQUENT-WORDS?': case 'OR': case 'PRINC':
         case 'GC': case 'BLOAT': case 'IFILE': case 'ENDLOAD': case 'GDECL': case 'SET': case 'COND':
         case 'ID': case 'IMAGE': case 'INSERT-FILE': case 'SNAME': case 'PRINC':
           break;
@@ -299,6 +412,7 @@ class Compiler {
           warn('ignored top-level form ' + head);
       }
     }
+    this.expandUserMacros();
     this.numberObjects();
     // Globals declared with GLOBAL override same-named top-level SETG constants.
     for (const g of this.globals.keys()) {
@@ -307,6 +421,33 @@ class Compiler {
   }
 
   isConstantDecl() { return false; }
+
+  /**
+   * Expand uses of the game's own DEFMACs and compile-time DEFINEs everywhere
+   * (routines, objects, globals, constants). Macros the compiler implements
+   * itself are left alone, as are names that are also routines.
+   */
+  expandUserMacros() {
+    const expandable = (h) => h && this.mdl.has(h) && !NATIVE_MACROS.has(h) && !this.routines.has(h);
+    const walk = (node, depth = 0) => {
+      if (!node || typeof node !== 'object' || !node.t) return node;
+      if (node.t === 'form' && node.items.length && node.items[0].t === 'atom' && expandable(node.items[0].v)) {
+        if (depth > 50) throw new Error('macro expansion too deep: ' + show(node));
+        let r;
+        try { r = this.mdl.expand(node); } catch (e) { throw new Error(`expanding ${show(node).slice(0, 120)}: ${e.message}`); }
+        if (r === null) return { t: 'form', items: [] };
+        if (r.t === 'atom' && r.v === 'T') return r;
+        return walk(r, depth + 1);
+      }
+      if (node.items) return { ...node, items: node.items.map((x) => walk(x, depth)) };
+      if (node.v && typeof node.v === 'object' && node.v.t) return { ...node, v: walk(node.v, depth) };
+      return node;
+    };
+    for (const [name, form] of this.routines) this.routines.set(name, walk(form));
+    for (const o of this.objects) o.props = o.props.map((p) => walk(p));
+    for (const [name, init] of this.globals) if (init) this.globals.set(name, walk(init));
+    for (const [name, v] of this.constants) if (v && typeof v === 'object') this.constants.set(name, walk(v));
+  }
 
   // Object numbers are observable: the game compares PRSO (which holds a
   // direction's property number after a WALK) with object constants such as
@@ -459,8 +600,11 @@ class Compiler {
     return this.stringIds.get(text);
   }
 
-  routineId(name) {
-    if (!this.routines.has(name)) throw new Error('unknown routine ' + name);
+  routineId(name, { optional = false } = {}) {
+    if (!this.routines.has(name)) {
+      if (optional) { warn(`routine ${name} is referenced but not defined (treated as doing nothing)`); return 0; }
+      throw new Error('unknown routine ' + name);
+    }
     return this.routineIds.get(name);
   }
 
@@ -560,6 +704,19 @@ class Compiler {
       const e = entry(alias);
       for (const part of c.order) setPart(e, part, c.parts[part]);
     }
+    // Words created at compile time with VOC (e.g. by PSEUDO tables)
+    for (const v of this.mdl.vocab) {
+      const name = v.word.toUpperCase();
+      const part = String(v.part).toUpperCase();
+      if (part === 'ADJECTIVE' || part === 'ADJ') {
+        if (!this.adjNums.has(name)) this.adjNums.set(name, adj--);
+        setPart(entry(name), 'adj', this.adjNums.get(name));
+      } else if (part === 'BUZZ') {
+        setPart(entry(name), 'buzz', 1);
+      } else {
+        noun(entry(name));
+      }
+    }
     // Words referenced from code (W?FOO)
     for (const w of this.referencedPrefixed('W?')) if (!byName.has(w)) entry(w);
     if (CFG.nounValue) for (const e of words.values()) if (e.object) noun(e);
@@ -587,6 +744,9 @@ class Compiler {
         if (node.items.length === 0) return 0;
         if (['TABLE', 'LTABLE', 'ITABLE', 'PTABLE', 'PLTABLE'].includes(node.items[0].v)) return this.table(node);
         if (node.items[0].v === '+') return node.items.slice(1).reduce((a, n) => a + this.staticValue(n), 0);
+        if (node.items[0].v === '*') return node.items.slice(1).reduce((a, n) => a * this.staticValue(n), 1);
+        if (node.items[0].v === '/') return node.items.slice(2).reduce((a, n) => Math.trunc(a / this.staticValue(n)), this.staticValue(node.items[1]));
+        if (node.items[0].v === 'ASCII') return node.items[1].t === 'char' ? node.items[1].v.charCodeAt(0) : this.staticValue(node.items[1]);
         if (node.items[0].v === '-') return this.staticValue(node.items[1]) - node.items.slice(2).reduce((a, n) => a + this.staticValue(n), 0);
         break;
       case 'gval': return this.atomValue(node.v.v);
@@ -595,6 +755,7 @@ class Compiler {
         return this.atomValue(node.v);
       case 'quote': return this.staticValue(node.v, ctx);
       case 'macro': return this.staticValue(evalCompileTime(node.v), ctx);
+      case 'vocab': return this.wordAddr(node.word.toUpperCase());
     }
     throw new Error('cannot evaluate statically: ' + show(node));
   }
@@ -660,9 +821,13 @@ class Compiler {
       }
     };
     // Elements may be marked #BYTE / #WORD individually.
-    const element = (a) => (a.t === 'hash'
-      ? { v: this.staticValue(a.v), byte: a.type === 'BYTE' }
-      : { v: this.staticValue(a), byte: byteMode });
+    const element = (a) => {
+      if (a.t === 'hash') return { v: this.staticValue(a.v), byte: a.type === 'BYTE' };
+      if (a.t === 'form' && (a.items[0]?.v === 'BYTE' || a.items[0]?.v === 'WORD') && a.items.length === 2) {
+        return { v: this.staticValue(a.items[1]), byte: a.items[0].v === 'BYTE' };
+      }
+      return { v: this.staticValue(a), byte: byteMode };
+    };
     const put = (e) => (e.byte ? this.byte(e.v) : this.word(e.v));
 
     if (kind === 'ITABLE') {
@@ -795,9 +960,9 @@ class Compiler {
     const vtbl = this.here();
     for (let act = 255; act >= Math.min(...verbs); act--) this.word(vtblEntries.get(act) || 0);
     const atbl = this.here();
-    for (const [, a] of this.actions) this.word(this.routineId(a.routine));
+    for (const [, a] of this.actions) this.word(this.routineId(a.routine, { optional: true }));
     const patbl = this.here();
-    for (const [, a] of this.actions) this.word(a.pre ? this.routineId(a.pre) : 0);
+    for (const [, a] of this.actions) this.word(a.pre ? this.routineId(a.pre, { optional: true }) : 0);
     const prtbl = this.here();
     const preps = [...this.prepNums].reverse();
     this.word(preps.length);
@@ -847,6 +1012,7 @@ class Compiler {
         const pname = p.items[0].v;
         if (pname === 'IN' && !this.isExit(p) || pname === 'LOC') {
           const parent = objs[this.objIndex.get(p.items[1].v) - 1];
+          if (!parent) { warn(`object ${o.name} is in unknown object ${p.items[1].v}; left without a location`); continue; }
           o.parent = parent.num;
           o.sibling = parent.child;
           parent.child = o.num;
@@ -860,7 +1026,9 @@ class Compiler {
       for (const p of o.props) {
         const pname = p.items[0].v;
         if (pname === 'DESC' || pname === 'FLAGS' || (pname === 'IN' && !this.isExit(p))) continue;
-        o.plist.push({ num: this.props.get(pname), bytes: this.propBytes(pname, p, o) });
+        let bytes;
+        try { bytes = this.propBytes(pname, p, o); } catch (e) { throw new Error(`object ${o.name}, property ${show(p)}: ${e.message}`); }
+        o.plist.push({ num: this.props.get(pname), bytes });
       }
     }
     for (const o of objs) {
@@ -892,7 +1060,7 @@ class Compiler {
   propBytes(pname, p, o) {
     const vals = p.items.slice(1);
     const w = (v) => [(v >> 8) & 255, v & 255];
-    if (this.directions.includes(pname)) {
+    if (this.directions.includes(pname) && !(vals.length === 1 && vals[0].t === 'num')) {
       // Exits
       if (vals[0].t === 'str') return w(this.stringId(zilText(vals[0].v)));                 // NEXIT
       if (vals[0].v === 'PER') return [...w(this.routineId(vals[1].v)), 0];                 // FEXIT
@@ -920,7 +1088,8 @@ class Compiler {
         return out;
       }
       default:
-        if (vals.length !== 1) throw new Error(`property ${pname} of ${o.name} has ${vals.length} values`);
+        // Several values: one word each (as ZILCH stored them).
+        if (vals.length !== 1) return vals.flatMap((v) => w(this.staticValue(v)));
         return w(this.staticValue(vals[0]));
     }
   }
@@ -1364,6 +1533,7 @@ class RoutineCompiler {
   ex(node) {
     switch (node.t) {
       case 'jsraw': return node.v;
+      case 'vocab': return `${this.c.wordAddr(node.word.toUpperCase())} /* word "${node.word.toLowerCase()}" */`;
       case 'num': return node.v < 0 ? `(${node.v})` : String(node.v);
       case 'str': return JSON.stringify(zilText(node.v));
       case 'lval': {
@@ -1396,6 +1566,8 @@ class RoutineCompiler {
     const all = () => args.map((a) => stripParens(this.ex(a)));
     if (head.t !== 'atom') throw new Error(`${this.name}: bad form ${show(node)}`);
     const h = head.v;
+    // A game routine with a macro-like name (e.g. Planetfall's HERE?) is a call.
+    if (MACRO_LIKE.has(h) && this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
     switch (h) {
       case 'EQUAL?': case '==?': {
         const first = args[0];
@@ -1426,8 +1598,8 @@ class RoutineCompiler {
         if (args.length > 1) return `(await ZPROB(${stripParens(A(0))}))`;
         return CFG.prob === 'lt' ? `(${A(0)} > random(100))` : `prob(${stripParens(A(0))})`;
       case 'VERB?': return `isVerb(${args.map((a) => `V.${jsName(a.v)}`).join(', ')})`;
-      case 'PRSO?': case 'PRSI?': case 'ROOM?': {
-        const v = { 'PRSO?': 'g.PRSO', 'PRSI?': 'g.PRSI', 'ROOM?': 'g.HERE' }[h];
+      case 'PRSO?': case 'PRSI?': case 'ROOM?': case 'HERE?': case 'WINNER?': {
+        const v = { 'PRSO?': 'g.PRSO', 'PRSI?': 'g.PRSI', 'ROOM?': 'g.HERE', 'HERE?': 'g.HERE', 'WINNER?': 'g.WINNER' }[h];
         return `(${args.map((a) => `${v} == ${this.ex(a.t === 'atom' ? { t: 'gval', v: a } : a)}`).join(' || ')})`;
       }
       case 'BSET': case 'BCLEAR': {
@@ -1455,6 +1627,7 @@ class RoutineCompiler {
         return `${addr} /* static table */`;
       }
       case 'USL': return 'true';
+      case 'ASCII': return args[0].t === 'char' ? String(args[0].v.charCodeAt(0)) : A(0);
     }
     if (SIMPLE_HELPERS[h]) return `${SIMPLE_HELPERS[h]}(${all().join(', ')})`;
     if (ASYNC_HELPERS[h]) return `(await ${ASYNC_HELPERS[h]}(${all().join(', ')}))`;
@@ -1477,6 +1650,12 @@ class RoutineCompiler {
     return build(0);
   }
 }
+
+// Macros the compiler implements natively (game definitions of these are ignored).
+const NATIVE_MACROS = new Set(['TELL', 'VERB?', 'PRSO?', 'PRSI?', 'ROOM?', 'HERE?', 'WINNER?', 'PROB', 'ENABLE', 'DISABLE',
+  'OPENABLE?', 'ABS', 'RFATAL', 'BSET', 'BCLEAR', 'BSET?', 'FLAMING?', 'MULTIFROB', 'MULTIBITS']);
+
+const MACRO_LIKE = new Set(['VERB?', 'PRSO?', 'PRSI?', 'ROOM?', 'HERE?', 'WINNER?', 'PROB', 'OPENABLE?', 'FLAMING?', 'ABS']);
 
 const TELL_TOKENS = { D: 'D', DESC: 'D', OBJ: 'D', O: 'D', N: 'N', NUM: 'N', C: 'C', CHR: 'C', CHAR: 'C', A: 'A', AN: 'A' };
 
@@ -1523,11 +1702,12 @@ function mergeStrings(parts) {
 
 export function compileAll(gameId = 'planetfall') {
   GAME_ID = gameId;
-  CFG = GAMES[gameId];
-  if (!CFG) throw new Error('unknown game ' + gameId);
+  if (!GAMES[gameId]) throw new Error('unknown game ' + gameId);
   warnings.length = 0;
+  CFG = inferConfig({ ...GAMES[gameId] });
   const c = new Compiler();
   c.story = readStoryFile();
+  if (CFG.nounValue === undefined) CFG.nounValue = inferNounValue();
   c.usedPrefixed = new Set();
   c.collect(topLevelForms());
   c.number();
