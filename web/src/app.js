@@ -1,5 +1,6 @@
 // Planetfall AI — browser front end.
-// Wires the translated game (engine/) to the page and to the AI interpreter (ai/).
+// Shows the main menu, or wires the selected translated game (engine/,
+// games/) to the page and to the AI interpreter (ai/).
 
 import { GameSession } from './engine/session.js';
 import { interpret, isParserError } from './ai/interpreter.js';
@@ -8,6 +9,10 @@ import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
 import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
+import { store, gameKey, migrateLegacyKeys } from './storage.js';
+import { renderMenu } from './menu.js';
+import { GAMES } from './games/registry.js';
+import { loadGame, current } from './engine/current.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -25,15 +30,15 @@ const els = {
 // Persistence (all local to this browser)
 // ---------------------------------------------------------------------------
 
-const store = {
-  get(key, fallback) {
-    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
-  },
-  set(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; }
-  },
-  remove(key) { try { localStorage.removeItem(key); } catch { /* ignore */ } },
-};
+migrateLegacyKeys();
+
+// The game is chosen with ?game=<id>; without it the main menu is shown.
+const GAME_ID = (() => {
+  const id = new URLSearchParams(location.search).get('game');
+  return id && GAMES[id] ? id : null;
+})();
+/** Storage key for the current game's data. */
+const K = (name) => gameKey(GAME_ID, name);
 
 const settings = Object.assign(
   { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: 'en' },
@@ -163,7 +168,7 @@ const BANNER_END = /^Release \d+ \/ Serial number \d+$/;
 
 function findBanner(text) {
   const lines = text.split('\n');
-  const start = lines.indexOf('PLANETFALL');
+  const start = lines.indexOf(current.meta?.bannerTitle);
   if (start < 0) return null;
   for (let end = start + 1; end < Math.min(lines.length, start + 8); end++) {
     if (BANNER_END.test(lines[end])) return { start, end };
@@ -260,7 +265,7 @@ function showThinking(turnNode) {
 let busy = false;
 let undoStack = [];
 let aiHistory = []; // {input, commands, output}
-let commandHistory = store.get('pf.cmdhistory', []);
+let commandHistory = GAME_ID ? store.get(K('cmdhistory'), []) : [];
 let historyPos = -1;
 let gameEnded = false;
 
@@ -303,7 +308,10 @@ function startFresh(res) {
 function autosave() {
   const snap = session.currentSnapshot();
   if (!snap) return;
-  store.set('pf.autosave', { snapshot: snap, transcript: transcriptLog.slice(-120), aiHistory: aiHistory.slice(-12) });
+  store.set(K('autosave'), {
+    snapshot: snap, transcript: transcriptLog.slice(-120), aiHistory: aiHistory.slice(-12),
+    meta: { room: els.room.textContent, score: Number(els.score.textContent) || 0, moves: Number(els.time.textContent) || 0, date: Date.now() },
+  });
 }
 
 /**
@@ -580,7 +588,7 @@ let slotsMode = 'save';
 let slotsSelected = null;
 let slotsSnapshot = null;
 
-function listSaves() { return store.get('pf.saves', {}); }
+function listSaves() { return store.get(K('saves'), {}); }
 
 function openSlots(mode, snap) {
   slotsMode = mode;
@@ -609,7 +617,7 @@ function drawSlots() {
     del.title = t('delete');
     del.addEventListener('click', (e) => {
       e.stopPropagation();
-      const s = listSaves(); delete s[name]; store.set('pf.saves', s); drawSlots();
+      const s = listSaves(); delete s[name]; store.set(K('saves'), s); drawSlots();
     });
     b.append(del);
     b.addEventListener('click', () => { slotsSelected = name; els.slotName.value = name; drawSlots(); });
@@ -628,7 +636,7 @@ els.slots.addEventListener('close', () => {
     if (!ok || !name) return resolve(false);
     const saves = listSaves();
     saves[name] = { snapshot: slotsSnapshot, date: Date.now(), room: currentRoom };
-    resolve(store.set('pf.saves', saves));
+    resolve(store.set(K('saves'), saves));
   } else {
     const saves = listSaves();
     resolve(ok && slotsSelected && saves[slotsSelected] ? saves[slotsSelected].snapshot : null);
@@ -659,6 +667,19 @@ async function openSettings() {
 
 els.settings.addEventListener('close', async () => {
   if (els.settings.returnValue !== 'ok') return;
+  if (!GAME_ID) {
+    settings.apiKey = els.setKey.value.trim();
+    settings.model = els.setModel.value.trim();
+    settings.aiEnabled = els.setAi.checked;
+    settings.showCommands = els.setShow.checked;
+    settings.language = normalizeLanguage(els.setLang.value);
+    if (settings.apiKey && !settings.model) settings.model = await pickDefaultModel();
+    saveSettings();
+    setLanguage(settings.language);
+    applyStatic();
+    renderMenu({ openSettings });
+    return;
+  }
   const prevTarget = targetLanguage();
   settings.apiKey = els.setKey.value.trim();
   settings.model = els.setModel.value.trim();
@@ -857,7 +878,7 @@ els.form.addEventListener('submit', (e) => {
   if (v.trim()) {
     commandHistory.push(v);
     commandHistory = commandHistory.slice(-100);
-    store.set('pf.cmdhistory', commandHistory);
+    store.set(K('cmdhistory'), commandHistory);
   }
   historyPos = -1;
   els.input.value = '';
@@ -899,9 +920,20 @@ els.badge.addEventListener('click', () => {
 
 async function boot() {
   applyStatic();
+  if (!GAME_ID) {
+    renderMenu({ openSettings });
+    return;
+  }
+  const meta = GAMES[GAME_ID];
+  await loadGame(meta);
+  document.title = `${meta.title} AI`;
+  $('game-title').textContent = meta.title.toUpperCase();
+  const second = $('status-second-label');
+  second.dataset.i18n = meta.statusSecond === 'time' ? 'time' : 'moves';
+  second.textContent = t(second.dataset.i18n);
   updateMode();
   const opening = await session.start();
-  const saved = store.get('pf.autosave', null);
+  const saved = store.get(K('autosave'), null);
   if (saved?.snapshot) {
     try {
       transcriptLog = saved.transcript || [];
@@ -910,7 +942,7 @@ async function boot() {
       await session.load(saved.snapshot);
       addEntry({ system: t('welcomeBack') });
     } catch {
-      store.remove('pf.autosave');
+      store.remove(K('autosave'));
       transcriptLog = [];
       els.transcript.replaceChildren();
       addEntry({ steps: [{ segments: opening.segments }] });

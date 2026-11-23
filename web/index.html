@@ -4,25 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
   <title>Planetfall AI</title>
-  <meta name="description" content="Infocom's 1983 classic Planetfall, translated to JavaScript, with an AI command interpreter.">
+  <meta name="description" content="Infocom classics (Planetfall, Zork I) translated from their original source to JavaScript, with an AI command interpreter.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='36' r='18' fill='%23e8a33d'/%3E%3Cellipse cx='32' cy='36' rx='29' ry='7' fill='none' stroke='%237fd1c7' stroke-width='3'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">
+    <a class="brand" href="./" id="home" data-i18n-title="menuBack" title="All games">
       <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
         <circle cx="32" cy="34" r="17" class="logo-planet"/>
         <ellipse cx="32" cy="34" rx="28" ry="7" class="logo-ring"/>
       </svg>
-      <span class="title">PLANETFALL</span>
-    </div>
+      <span class="title" id="game-title">PLANETFALL AI</span>
+    </a>
     <div class="status" aria-live="polite">
       <span id="status-room" class="status-room">—</span>
       <span class="status-sep">·</span>
       <span><span data-i18n="score">Score</span> <b id="status-score">0</b></span>
       <span class="status-sep">·</span>
-      <span><span data-i18n="time">Time</span> <b id="status-time">0</b></span>
+      <span><span id="status-second-label" data-i18n="time">Time</span> <b id="status-time">0</b></span>
     </div>
     <nav class="actions">
       <button id="btn-hint" class="icon-btn" title="Hint" aria-label="Hint" data-keep-focus data-i18n-title="hintTitle" data-i18n-aria="hintTitle">
@@ -42,6 +42,27 @@
       </button>
     </nav>
   </header>
+
+  <main id="menu" class="menu" hidden>
+    <section class="menu-hero">
+      <h1 data-i18n="menuTitle"></h1>
+      <p data-i18n="menuIntro"></p>
+    </section>
+    <h2 class="menu-h" data-i18n="menuGames"></h2>
+    <div id="game-cards" class="game-cards"></div>
+    <section class="menu-data">
+      <h2 class="menu-h" data-i18n="dataTitle"></h2>
+      <p class="muted" data-i18n="dataText"></p>
+      <label class="check small-check"><input id="backup-key" type="checkbox"> <span data-i18n="dataIncludeKey"></span></label>
+      <div class="menu-data-actions">
+        <button id="backup" class="btn primary" type="button" data-i18n="dataBackup"></button>
+        <button id="restore" class="btn ghost" type="button" data-i18n="dataRestore"></button>
+        <button id="menu-settings" class="btn ghost" type="button" data-i18n="menuSettings"></button>
+        <input id="restore-file" type="file" accept="application/json,.json" hidden>
+      </div>
+      <p id="data-status" class="muted small" role="status"></p>
+    </section>
+  </main>
 
   <main id="transcript" class="transcript" aria-live="polite"></main>
 

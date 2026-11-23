@@ -25,6 +25,7 @@ export const GAMES = {
   },
   zork1: {
     title: 'Zork I',
+    licenseNotice: 'Zork I source: MIT License, Copyright (c) 2025 Microsoft. See LICENSE in this directory.',
     srcDir: 'games/zork1',
     files: ['gmacros', 'gsyntax', '1dungeon', 'gglobals', 'gclock', 'gmain', 'gparser', 'gverbs', '1actions', 'zork1'],
     fixups: {},

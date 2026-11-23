@@ -1,11 +1,17 @@
-# Planetfall AI — the 1983 classic in modern JavaScript, with an AI interpreter
+# Planetfall AI: Infocom classics in modern JavaScript, with an AI interpreter
 
-This fork adds a playable web version of Planetfall in which **an AI model replaces the
-original text parser's strict input requirements**. Type whatever you like ("grab the brush
-and head up the stairs", "ask Floyd to come along", typos, even other languages). The model
-translates it into commands in the game's own vocabulary, and **the original game logic and
-parser, translated to JavaScript, execute them**. Every line of story text, every puzzle and
-every riddle is Infocom's original.
+This fork adds a playable web version of **Planetfall** and **Zork I**. Pick the game from
+the main menu. In both, **an AI model replaces the original text parser's strict input
+requirements**. Type whatever you like ("grab the brush and head up the stairs", "ask
+Floyd to come along", typos, even German). The model translates it into commands in the
+game's own vocabulary, and **the original game logic and parser, translated to
+JavaScript from the original ZIL source, execute them**. Every line of story text, every
+puzzle and every riddle is Infocom's original.
+
+| Game | Source | License |
+|---|---|---|
+| Planetfall (1983) | this repository (root) | shared for education and research; not an open license |
+| Zork I (1980) | `games/zork1/`, from [historicalsource/zork1](https://github.com/historicalsource/zork1) | MIT, (c) 2025 Microsoft (`games/zork1/LICENSE`) |
 
 ## Play
 
@@ -42,6 +48,9 @@ AI interpreter. Without a key, the game runs with the classic parser.
   as a cacheable prefix. Anthropic and Google models get an explicit cache breakpoint;
   OpenAI, DeepSeek and others cache identical prefixes automatically. Token usage,
   cached tokens and cost per request are logged to the browser console (`[openrouter]`).
+- **Your data stays in your browser:** settings, progress and saved games are kept in
+  localStorage, per game. The main menu can download a backup file of all of it (the
+  OpenRouter key only if you tick the box) and restore it, also in another browser.
 - Start a line with `>` to bypass the AI and talk to the original parser directly.
 - The UI also has undo (Ctrl+Z), named save slots, autosave/resume, and optionally shows
   the commands the AI sent to the game.
@@ -66,8 +75,8 @@ directly to openrouter.ai, never to GitHub or any other server.
 
 | Part | Location | What it does |
 |---|---|---|
-| ZIL → JS compiler | `tools/zil2js/` | Reads the original `.zil` sources and translates all 516 routines into readable async JavaScript. It also builds the game's data image: object tree, property tables, vocabulary and syntax tables. |
-| Generated game | `web/src/game/planetfall.js`, `story-data.js` | The translated game. Regenerate with `npm run build`. |
+| ZIL → JS compiler | `tools/zil2js/` (games configured in `games.mjs`) | Reads the original `.zil` sources and translates all 516 routines into readable async JavaScript. It also builds the game's data image: object tree, property tables, vocabulary and syntax tables. |
+| Generated games | `web/src/games/<game>/game.js`, `story-data.js` (registry: `web/src/games/registry.js`) | The translated game. Regenerate with `npm run build`. |
 | Runtime | `web/src/engine/` | The Z-machine-style primitives the code relies on (objects, properties, tables, text, tokenizer, save/restore, seeded RNG) and a session wrapper. |
 | AI interpreter | `web/src/ai/` | Builds a scene description from the live game state (location, inventory, visible objects with their nouns and adjectives) plus the recent transcript. It asks the model for JSON `{commands, reply}`. If the original parser rejects a command, it gives the model one chance to rephrase, which is safe because parser errors take no game time. |
 | Web app | `web/index.html`, `web/src/app.js` | The browser front end. |
