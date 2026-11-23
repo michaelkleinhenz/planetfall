@@ -1,0 +1,1225 @@
+open mailbox
+take leaflet
+read leaflet
+drop leaflet
+north
+north
+up
+take egg
+down
+south
+east
+open window
+west
+take all
+open sack
+west
+take lamp
+take sword
+move rug
+open trap door
+turn on lamp
+down
+north
+kill troll with sword
+put egg in food
+east
+se
+ne
+east
+turn on bottle
+pick up garlic
+east
+east
+examine garlic
+east
+put garlic in bag
+listen to bottle
+enter bottle
+east
+hit light
+throw light at garlic
+slide egg through garlic
+enter garlic
+close food
+pick up bottle
+east
+se
+ne
+east
+south
+north
+hit food
+eat red goo
+show bag to garlic
+close food
+close garlic
+enter bag
+listen to bag
+ne
+turn on food
+close bag
+listen to bag
+se
+ne
+enter bag
+se
+examine bag
+up
+examine nest
+close nest
+pick up nest
+turn on nest
+up
+up
+throw nest at nest
+close nest
+up
+close nest
+hit nest
+turn on nest
+listen to nest
+south
+show nest to nest
+close nest
+up
+enter nest
+turn on nest
+listen to nest
+up
+hit nest
+up
+enter nest
+up
+up
+up
+put nest in nest
+close nest
+up
+south
+up
+north
+up
+up
+close nest
+enter nest
+up
+turn on nest
+enter nest
+up
+put nest in nest
+up
+examine nest
+turn on nest
+examine nest
+up
+listen to nest
+enter nest
+up
+up
+examine nest
+up
+examine nest
+give nest to nest
+up
+put nest in nest
+examine nest
+put nest in nest
+up
+examine nest
+listen to nest
+up
+up
+diagnose
+up
+up
+enter nest
+take nest
+examine nest
+up
+up
+up
+examine nest
+up
+examine nest
+pick up nest
+up
+close nest
+pick up nest
+hit nest
+diagnose
+up
+examine nest
+south
+put nest in nest
+close nest
+pick up nest
+close nest
+turn on nest
+examine nest
+show nest to nest
+up
+listen to nest
+turn on nest
+north
+show nest to nest
+up
+south
+slide nest through nest
+listen to nest
+throw nest at nest
+up
+up
+up
+up
+up
+north
+down
+north
+south
+east
+east
+se
+pick up mountain
+diagnose
+enter mountain
+listen to mountain
+hit mountain
+put mountain in mountain
+enter mountain
+pick up mountain
+listen to mountain
+listen to mountain
+se
+slide mountain through mountain
+up
+examine mountain
+enter mountain
+examine mountain
+east
+close mountain
+ne
+close mountain
+turn on mountain
+slide mountain through mountain
+turn on mountain
+north
+east
+close mountain
+listen to mountain
+listen to mountain
+put mountain in mountain
+east
+se
+enter mountain
+hit mountain
+enter mountain
+pick up mountain
+up
+turn on mountain
+north
+north
+up
+east
+examine mountain
+close mountain
+hit mountain
+listen to mountain
+close mountain
+up
+slide mountain through mountain
+close mountain
+up
+turn on mountain
+close mountain
+ne
+hit mountain
+enter mountain
+listen to mountain
+pick up mountain
+examine mountain
+show mountain to mountain
+close mountain
+north
+east
+show mountain to mountain
+enter mountain
+slide mountain through mountain
+ne
+jump
+jump
+slide mountain through mountain
+put mountain in mountain
+pick up mountain
+up
+listen to mountain
+hit mountain
+se
+enter mountain
+enter mountain
+put mountain in mountain
+north
+up
+north
+north
+east
+listen to mountain
+ne
+pick up mountain
+close mountain
+look
+south
+south
+up
+up
+east
+east
+up
+sw
+se
+se
+ne
+ne
+se
+down
+up
+north
+down
+up
+ne
+south
+se
+east
+south
+up
+up
+se
+south
+east
+north
+up
+down
+up
+east
+up
+sw
+up
+down
+up
+down
+up
+east
+south
+south
+up
+ne
+se
+ne
+se
+down
+up
+se
+ne
+se
+sw
+se
+east
+up
+south
+down
+up
+se
+ne
+east
+up
+se
+north
+south
+se
+east
+up
+se
+sw
+down
+up
+sw
+down
+north
+south
+south
+up
+ne
+down
+up
+sw
+se
+ne
+ne
+up
+ne
+ne
+se
+east
+up
+down
+up
+down
+up
+ne
+up
+ne
+south
+east
+up
+se
+sw
+ne
+down
+up
+se
+ne
+se
+sw
+down
+up
+ne
+south
+east
+up
+se
+down
+up
+east
+up
+east
+south
+south
+up
+north
+ne
+south
+ne
+south
+ne
+sw
+se
+sw
+se
+se
+east
+up
+sw
+sw
+down
+up
+up
+up
+south
+sw
+sw
+down
+up
+se
+north
+se
+sw
+sw
+north
+north
+ne
+se
+north
+se
+up
+ne
+down
+up
+up
+east
+up
+down
+north
+up
+sw
+se
+up
+east
+north
+up
+se
+ne
+up
+east
+up
+south
+sw
+down
+up
+up
+down
+up
+south
+ne
+north
+east
+up
+down
+up
+se
+ne
+ne
+ne
+sw
+ne
+se
+down
+up
+up
+ne
+se
+north
+sw
+ne
+down
+up
+east
+up
+se
+se
+se
+se
+down
+up
+south
+east
+up
+down
+up
+north
+se
+east
+up
+ne
+east
+up
+sw
+se
+south
+down
+up
+sw
+east
+up
+east
+up
+sw
+ne
+sw
+down
+up
+se
+sw
+up
+sw
+ne
+se
+north
+sw
+se
+down
+up
+down
+up
+east
+up
+east
+up
+sw
+north
+se
+sw
+sw
+ne
+down
+up
+down
+up
+east
+up
+south
+sw
+sw
+east
+up
+down
+up
+east
+up
+down
+up
+sw
+east
+up
+down
+up
+east
+up
+east
+up
+up
+east
+up
+east
+up
+ne
+sw
+se
+sw
+north
+south
+up
+sw
+north
+up
+ne
+down
+up
+ne
+up
+ne
+up
+se
+north
+up
+se
+up
+ne
+se
+se
+east
+up
+ne
+se
+south
+ne
+ne
+east
+up
+down
+up
+east
+up
+east
+north
+up
+east
+up
+ne
+sw
+east
+up
+se
+south
+ne
+east
+up
+up
+down
+up
+east
+up
+ne
+se
+north
+se
+se
+sw
+north
+se
+ne
+se
+ne
+se
+east
+up
+up
+sw
+east
+up
+down
+up
+se
+south
+se
+down
+up
+ne
+down
+up
+south
+east
+up
+se
+east
+up
+ne
+north
+ne
+south
+down
+up
+south
+up
+sw
+ne
+sw
+up
+east
+up
+sw
+north
+east
+south
+up
+se
+east
+up
+sw
+up
+down
+up
+se
+east
+up
+down
+up
+ne
+up
+east
+south
+up
+se
+se
+north
+ne
+south
+up
+ne
+down
+up
+down
+up
+east
+up
+sw
+down
+up
+east
+up
+east
+up
+se
+sw
+sw
+ne
+ne
+ne
+ne
+ne
+sw
+south
+se
+se
+sw
+up
+east
+up
+se
+down
+up
+east
+up
+sw
+ne
+east
+up
+down
+up
+sw
+sw
+down
+up
+east
+up
+down
+up
+sw
+se
+sw
+down
+up
+down
+up
+north
+east
+up
+down
+up
+sw
+north
+north
+ne
+ne
+se
+ne
+ne
+down
+up
+sw
+se
+east
+up
+south
+sw
+sw
+east
+up
+sw
+east
+up
+sw
+down
+up
+sw
+sw
+south
+down
+up
+sw
+ne
+ne
+sw
+east
+up
+sw
+sw
+se
+down
+up
+down
+up
+sw
+se
+se
+north
+down
+up
+ne
+north
+east
+up
+down
+north
+north
+up
+ne
+down
+up
+down
+up
+down
+up
+down
+up
+sw
+se
+down
+up
+sw
+ne
+sw
+se
+down
+up
+south
+north
+east
+up
+down
+up
+down
+north
+up
+sw
+sw
+sw
+up
+east
+up
+se
+ne
+se
+down
+up
+ne
+up
+south
+sw
+ne
+east
+up
+down
+up
+north
+ne
+east
+south
+up
+down
+up
+ne
+down
+south
+up
+ne
+ne
+ne
+se
+se
+sw
+east
+up
+sw
+se
+down
+up
+down
+up
+se
+se
+east
+up
+sw
+east
+up
+sw
+east
+up
+east
+up
+down
+up
+sw
+south
+sw
+north
+east
+up
+sw
+east
+north
+up
+sw
+sw
+sw
+up
+sw
+up
+sw
+sw
+down
+up
+sw
+sw
+east
+up
+sw
+ne
+up
+up
+se
+sw
+ne
+ne
+east
+up
+se
+east
+up
+down
+up
+ne
+se
+ne
+ne
+south
+south
+sw
+ne
+ne
+sw
+se
+ne
+east
+up
+sw
+north
+up
+se
+down
+up
+east
+north
+up
+east
+up
+north
+down
+up
+up
+down
+up
+north
+se
+south
+south
+sw
+se
+se
+down
+up
+down
+up
+south
+east
+up
+south
+east
+up
+north
+sw
+se
+north
+down
+up
+ne
+ne
+ne
+ne
+south
+east
+south
+up
+north
+south
+up
+ne
+east
+south
+up
+up
+sw
+down
+up
+ne
+se
+se
+east
+up
+down
+south
+up
+up
+east
+north
+up
+down
+up
+south
+se
+down
+up
+sw
+se
+ne
+east
+south
+up
+down
+north
+up
+down
+up
+down
+up
+sw
+ne
+se
+sw
+sw
+up
+down
+up
+ne
+sw
+ne
+down
+up
+ne
+east
+up
+ne
+sw
+down
+up
+sw
+sw
+up
+south
+up
+ne
+ne
+east
+up
+se
+up
+down
+up
+sw
+down
+south
+up
+down
+up
+se
+se
+se
+south
+north
+sw
+down
+north
+up
+north
+se
+se
+sw
+east
+up
+down
+up
+ne
+se
+south
+se
+sw
+ne
+sw
+sw
+east
+up
+sw
+sw
+east
+up
+sw
+ne
+se
+sw
+sw
+down
+up
+up
+ne
+east
+up
+down
+south
+up
+east
+up
+south
+east
+up
+se
+ne
+up
+sw
+sw
+se
+ne
+south
+east
+up
+east
+up
+north
+ne
+east
+up
+south
+south
+up
+east
+up
+south
+down
+up
+sw
+se
+east
+up
+se
+east
+north
+up
+down
+up
+sw
+down
+up
+ne
+se
+sw
+sw
+east
+up
+east
+up
+se
+se
+ne
+down
+up
+up
+sw
+down
+up
+north
+ne
+ne
+ne
+south
+sw
+down
+up
+se
+east
+up
+ne
+se
+sw
+south
+ne
+east
+up
+down
+up
+sw
+se
+ne
+sw
+ne
+ne
+down
+look

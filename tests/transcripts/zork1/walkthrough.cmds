@@ -1,0 +1,50 @@
+open mailbox
+take leaflet
+read leaflet
+drop leaflet
+north
+north
+up
+take egg
+down
+south
+east
+open window
+west
+take all
+open sack
+west
+take lamp
+take sword
+move rug
+open trap door
+turn on lamp
+down
+north
+kill troll with sword
+kill troll with sword
+kill troll with sword
+east
+east
+east
+north
+look
+south
+west
+west
+west
+south
+east
+up
+take painting
+north
+east
+east
+down
+south
+east
+east
+look
+inventory
+score
+look

@@ -1,0 +1,1251 @@
+open mailbox
+take leaflet
+read leaflet
+drop leaflet
+north
+north
+up
+take egg
+down
+south
+east
+open window
+west
+take all
+open sack
+west
+take lamp
+take sword
+move rug
+open trap door
+turn on lamp
+down
+north
+kill troll with sword
+kill troll with sword
+kill troll with sword
+east
+east
+east
+north
+look
+south
+west
+west
+west
+south
+east
+up
+take painting
+north
+east
+east
+down
+south
+east
+east
+look
+inventory
+score
+look
+north
+put food in food
+turn on sword
+ne
+look
+turn on egg
+north
+slide bag through egg
+enter bag
+north
+enter sword
+throw food at sword
+south
+up
+hit bag
+close sword
+enter sword
+put sword in bag
+pick up bag
+enter bag
+close bag
+listen to bottle
+show thief to thief
+turn on thief
+examine thief
+close thief
+north
+examine food
+up
+close light
+north
+enter food
+south
+pick up bag
+south
+west
+close light
+throw light at bottle
+slide bag through bottle
+north
+ne
+ne
+ne
+east
+ne
+north
+east
+north
+se
+se
+north
+se
+se
+north
+north
+north
+ne
+up
+south
+up
+se
+up
+up
+se
+north
+up
+ne
+up
+ne
+north
+up
+ne
+east
+look
+close mountain
+north
+east
+give mountain to mountain
+close mountain
+slide mountain through mountain
+south
+south
+se
+up
+east
+hit bottle
+east
+up
+jump
+south
+north
+east
+enter bottle
+examine bottle
+close bottle
+listen to bottle
+sw
+examine bottle
+examine bottle
+put bottle in bottle
+turn on bottle
+close bottle
+ne
+sw
+pick up bottle
+se
+se
+north
+pick up bottle
+listen to bottle
+close bottle
+hit bottle
+down
+up
+ne
+examine bottle
+pick up bottle
+east
+up
+east
+close bottle
+turn on bottle
+north
+pick up bottle
+turn on bottle
+up
+turn on bottle
+examine bottle
+east
+examine bottle
+examine bottle
+enter bottle
+up
+pick up bottle
+enter bottle
+turn on bottle
+sw
+sw
+examine bottle
+se
+examine bottle
+put bottle on bottle
+listen to bottle
+turn on bottle
+east
+examine bottle
+pick up bottle
+hit bottle
+up
+listen to bottle
+ne
+hit bottle
+sw
+close bottle
+diagnose
+se
+east
+enter bottle
+up
+listen to bottle
+throw bottle at bottle
+down
+up
+ne
+sw
+down
+up
+ne
+down
+up
+ne
+ne
+sw
+down
+up
+south
+ne
+sw
+ne
+sw
+ne
+east
+up
+south
+east
+up
+east
+up
+se
+ne
+east
+up
+east
+up
+south
+ne
+up
+down
+up
+se
+sw
+east
+up
+sw
+down
+up
+sw
+sw
+ne
+east
+up
+ne
+sw
+ne
+up
+sw
+down
+up
+ne
+sw
+se
+ne
+sw
+ne
+ne
+se
+se
+south
+north
+north
+sw
+sw
+ne
+down
+up
+se
+east
+up
+se
+sw
+south
+east
+up
+se
+east
+up
+south
+sw
+east
+up
+ne
+down
+up
+se
+down
+up
+south
+up
+ne
+sw
+east
+up
+east
+up
+sw
+up
+sw
+north
+east
+up
+sw
+down
+up
+south
+sw
+east
+up
+south
+sw
+east
+south
+up
+east
+up
+se
+down
+up
+ne
+east
+up
+east
+up
+ne
+east
+up
+se
+up
+east
+up
+se
+down
+up
+south
+down
+up
+down
+up
+sw
+south
+down
+south
+up
+sw
+up
+down
+up
+ne
+ne
+down
+up
+east
+up
+up
+up
+ne
+ne
+down
+up
+ne
+sw
+east
+up
+se
+north
+ne
+ne
+sw
+east
+north
+up
+south
+se
+ne
+ne
+se
+up
+south
+down
+up
+east
+south
+up
+sw
+sw
+sw
+sw
+ne
+north
+south
+sw
+down
+up
+sw
+east
+up
+se
+east
+up
+east
+up
+se
+east
+up
+east
+up
+east
+north
+up
+se
+sw
+east
+up
+sw
+south
+north
+down
+up
+ne
+ne
+ne
+sw
+sw
+se
+north
+se
+sw
+sw
+south
+down
+up
+down
+up
+down
+up
+down
+up
+up
+ne
+ne
+down
+up
+up
+up
+down
+up
+se
+se
+sw
+sw
+north
+se
+ne
+se
+sw
+down
+up
+sw
+sw
+north
+sw
+sw
+se
+se
+north
+ne
+down
+up
+se
+ne
+sw
+ne
+down
+north
+up
+down
+up
+down
+up
+east
+up
+sw
+east
+up
+ne
+sw
+up
+down
+up
+sw
+se
+se
+sw
+se
+east
+up
+se
+east
+up
+sw
+sw
+east
+up
+sw
+se
+south
+east
+up
+east
+up
+se
+ne
+south
+up
+east
+up
+se
+sw
+south
+ne
+up
+down
+up
+down
+up
+east
+up
+north
+se
+down
+up
+ne
+se
+se
+down
+up
+ne
+east
+up
+se
+sw
+se
+ne
+ne
+down
+up
+south
+ne
+se
+down
+up
+se
+se
+se
+down
+up
+se
+down
+up
+down
+up
+sw
+south
+east
+up
+ne
+se
+south
+se
+down
+up
+east
+up
+down
+up
+sw
+east
+up
+sw
+se
+down
+south
+up
+down
+up
+sw
+down
+up
+down
+up
+ne
+down
+up
+down
+south
+up
+se
+sw
+south
+sw
+down
+up
+ne
+down
+up
+se
+ne
+sw
+sw
+up
+north
+sw
+ne
+east
+up
+sw
+up
+se
+se
+se
+up
+sw
+se
+sw
+north
+east
+north
+up
+north
+se
+south
+se
+east
+up
+north
+east
+up
+east
+up
+east
+up
+down
+up
+north
+down
+north
+north
+up
+up
+down
+up
+ne
+down
+south
+up
+se
+sw
+ne
+north
+south
+down
+up
+north
+ne
+se
+south
+sw
+sw
+east
+up
+east
+up
+ne
+ne
+sw
+se
+sw
+north
+ne
+up
+sw
+south
+sw
+up
+east
+up
+down
+up
+east
+up
+up
+south
+se
+up
+sw
+down
+south
+up
+east
+up
+se
+sw
+east
+up
+ne
+ne
+down
+up
+ne
+ne
+down
+up
+ne
+east
+up
+ne
+east
+up
+ne
+ne
+se
+up
+north
+sw
+down
+up
+south
+se
+ne
+sw
+sw
+sw
+sw
+down
+up
+ne
+east
+up
+east
+up
+ne
+down
+up
+sw
+east
+up
+se
+ne
+se
+up
+north
+up
+sw
+sw
+se
+south
+down
+south
+up
+ne
+ne
+down
+up
+east
+up
+north
+se
+ne
+sw
+north
+se
+ne
+se
+se
+se
+ne
+sw
+ne
+se
+up
+up
+sw
+down
+up
+ne
+ne
+se
+ne
+sw
+ne
+down
+up
+down
+up
+ne
+sw
+se
+south
+up
+north
+east
+south
+up
+se
+sw
+se
+ne
+east
+up
+east
+up
+east
+up
+se
+ne
+down
+up
+north
+down
+south
+north
+up
+sw
+south
+east
+up
+sw
+east
+up
+se
+east
+up
+sw
+sw
+down
+up
+north
+east
+up
+up
+ne
+up
+east
+up
+se
+sw
+down
+up
+sw
+sw
+south
+sw
+up
+sw
+south
+east
+up
+up
+down
+up
+down
+up
+east
+up
+east
+up
+se
+ne
+down
+up
+south
+down
+up
+ne
+up
+east
+up
+north
+up
+south
+ne
+down
+up
+sw
+se
+sw
+ne
+down
+up
+north
+south
+se
+down
+up
+se
+up
+ne
+up
+sw
+sw
+ne
+up
+up
+south
+ne
+east
+south
+up
+east
+up
+east
+up
+east
+up
+south
+se
+ne
+sw
+sw
+se
+sw
+east
+south
+up
+north
+ne
+down
+up
+se
+east
+up
+south
+east
+up
+down
+up
+down
+north
+down
+north
+south
+up
+listen to pot
+hit pot
+south
+examine gold
+turn on treasure
+ne
+ne
+ne
+ne
+give treasure to treasure
+enter gold
+up
+turn on treasure
+turn on pot
+ne
+examine gold
+pick up gold
+jump
+slide treasure through pot
+examine gold
+south
+slide treasure through gold
+listen to treasure
+enter gold
+hit pot
+listen to treasure
+ne
+ne
+listen to gold
+ne
+examine treasure
+slide gold through treasure
+close treasure
+ne
+hit gold
+ne
+listen to treasure
+ne
+ne
+ne
+up
+ne
+up
+ne
+ne
+ne
+hit treasure
+listen to gold
+close pot
+listen to gold
+ne
+close gold
+enter gold
+ne
+ne
+hit gold
+close pot
+ne
+ne
+hit pot
+look
+close gold
+pick up gold
+south
+ne
+look
+examine treasure
+ne
+examine gold
+north
+examine pot
+listen to gold
+ne
+ne
+smell pot
+ne
+ne
+ne
+diagnose
+ne
+enter pot
+examine pot
+enter pot
+ne
+ne
+jump
+close gold
+hit gold
+ne
+enter gold
+slide treasure through gold
+ne
+south
+listen to pot
+examine treasure
+slide gold through treasure
+throw gold at pot
+ne
+turn on pot
+close pot
+hit pot
+give pot to pot
+ne
+ne
+ne
+show treasure to pot
+ne
+listen to pot
+pick up pot
+examine gold
+pick up pot
+enter treasure
+enter treasure
+hit pot
+give pot to gold
+enter treasure
+ne
+pick up treasure
+ne
+ne
+hit pot
+south
+turn on pot
+examine pot
+give thief to thief
+ne
+ne
+put treasure in treasure
+enter gold
+look
+listen to treasure
+north
+hit pot
+examine treasure
+ne
+ne
+ne
+turn on pot
+close pot
+look
+pick up gold
+ne
+hit gold
+throw gold at pot
+listen to treasure
+hit gold
+look
+ne
+close treasure
+turn on pot
+close gold
+show pot to gold
+give gold to gold
+ne
+hit pot
+close pot
+pick up gold
+ne
+ne
+ne
+ne
+diagnose
+give pot to pot
+enter gold
+examine gold
+enter pot
+enter treasure
+give pot to pot
+ne
+enter gold
+ne
+pick up gold
+throw treasure at pot
+ne
+pick up treasure
+ne
+throw treasure at treasure
+listen to gold
+pick up gold
+ne
+push gold
+turn on treasure
+north
+diagnose
+ne
+south
+close pot
+ne
+ne
+look
+ne
+show gold to gold
+up
+turn on gold
+show gold to gold
+give pot to treasure
+south
+enter treasure
+ne
+examine gold
+ne
+hit pot
+give pot to treasure
+jump
+hit gold
+up
+listen to treasure
+ne
+diagnose
+ne
+listen to pot
+examine pot
+give treasure to gold
+south
+close treasure
+ne
+close pot
+hit gold
+ne
+ne
+ne
+close treasure
+listen to treasure
+throw pot at treasure
+ne
+close treasure
+pick up gold
+turn on pot
+pick up pot
+up
+enter pot
+examine treasure
+turn on pot
+enter treasure
+south
+turn on gold
+show treasure to gold
+ne
+pick up gold
+listen to gold
+close gold
+ne
+listen to treasure
+ne
+close gold
+listen to pot
+show treasure to treasure
+enter pot
+up
+ne
+hit gold
+listen to pot
+south
+turn on treasure
+enter pot
+examine gold
+close gold
+ne
+look
+listen to treasure
+south
+ne
+enter gold
+up
+turn on treasure
+pick up gold
+close pot
+jump
+hit pot
+ne
+listen to gold
+north
+enter pot
+jump
+hit pot
+close treasure
+ne
+close pot
+examine pot
+enter treasure
+enter treasure
+examine pot
+south
+enter pot
+close gold
+ne
+give pot to gold
+enter gold
+ne
+look

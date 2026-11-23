@@ -6,7 +6,8 @@ export function normalize(text) {
     .replace(/\r/g, '')
     .replace(/[ \t]+$/gm, '')
     .replace(/\b[1-9][0-9]{3}\b/g, 'TIME')
-    .replace(/^>PLANETFALL$/gm, '>\nPLANETFALL')
+    // After a restart the reference interpreter prints the banner on the prompt line.
+    .replace(/^>(PLANETFALL|ZORK I: The Great Underground Empire)$/gm, '>\n$1')
     .replace(/^>.*$/gm, '>')
     .replace(/\n{3,}/g, '\n\n')
     .trim() + '\n';

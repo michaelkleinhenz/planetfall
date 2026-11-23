@@ -1,0 +1,3860 @@
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) TIME, TIME, TIME, TIME, TIME, TIME Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 119 / Serial number 880429
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+There is a small mailbox here.
+
+>
+
+>
+Opening the small mailbox reveals a leaflet.
+
+>
+Taken.
+
+>
+"WELCOME TO ZORK!
+
+ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
+
+>
+Dropped.
+
+>
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+>
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+>
+Up a Tree
+You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.
+Beside you on the branch is a small bird's nest.
+In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile.
+
+>
+Taken.
+
+>
+Forest Path
+
+>
+North of House
+
+>
+Behind House
+You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar.
+
+>
+With great effort, you open the window far enough to allow entry.
+
+>
+Kitchen
+You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>
+glass bottle: Taken.
+brown sack: Taken.
+
+>
+Opening the brown sack reveals a clove of garlic, and a lunch.
+
+>
+Living Room
+You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
+Above the trophy case hangs an elvish sword of great antiquity.
+A battery-powered brass lantern is on the trophy case.
+
+>
+Taken.
+
+>
+Taken.
+
+>
+With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.
+
+>
+The door reluctantly opens to reveal a rickety staircase descending into darkness.
+
+>
+The brass lantern is now on.
+
+>
+The trap door crashes shut, and you hear someone barring it.
+
+Cellar
+You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
+Your sword is glowing with a faint blue glow.
+
+>
+The Troll Room
+This is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
+Your sword has begun to glow very brightly.
+
+>
+The troll is disarmed by a subtle feint past his guard.
+The troll, angered and humiliated, recovers his weapon. He appears to have an axe to grind with you.
+
+>
+The haft of your sword knocks out the troll.
+
+>
+The unconscious troll cannot defend himself: He dies.
+Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
+Your sword is no longer glowing.
+
+>
+East-West Passage
+This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
+
+>
+Round Room
+This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
+
+>
+Loud Room
+This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.
+On the ground is a large platinum bar.
+
+>
+north north ...
+
+>
+look look ...
+
+>
+south south ...
+
+>
+Round Room
+
+>
+East-West Passage
+
+>
+The Troll Room
+There is a bloody axe here.
+
+>
+Cellar
+
+>
+You can't go that way.
+
+>
+The trap door is closed.
+
+>
+You can't see any painting here!
+
+>
+Are you enjoying yourself?
+
+>
+I don't know the word "show".
+
+>
+You already have that!
+
+>
+The lunch makes no sound.
+
+>
+You can't give a sword to a glass bottle!
+
+>
+The glass bottle makes no sound.
+
+>
+The clove of garlic makes no sound.
+A seedy-looking individual with a large bag just wandered through the room. On the way through, he quietly abstracted some valuables from your possession, mumbling something about "Doing unto others before..."
+
+>
+I don't know the word "show".
+
+>
+The Troll Room
+There is a bloody axe here.
+
+>
+(with the sword)
+I've known strange people, but fighting a glass bottle?
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't do that.
+
+>
+You can't go that way.
+
+>
+East-West Passage
+
+>
+Chasm
+A chasm runs southwest to northeast and the path follows it. You are on the south side of the chasm, where a crack opens into a passage.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You must tell me how to do that to a sword.
+
+>
+Are you out of your mind?
+
+>
+The brown sack contains:
+  A clove of garlic
+  A lunch
+
+>
+You can't go that way.
+
+>
+East-West Passage
+
+>
+The sword makes no sound.
+
+>
+Chasm
+
+>
+You can't go that way.
+
+>
+East-West Passage
+
+>
+Chasm
+
+>
+You already have that!
+
+>
+East-West Passage
+
+>
+You can't be serious.
+
+>
+You can't go that way.
+
+>
+Chasm
+
+>
+The lunch makes no sound.
+
+>
+You can't do that.
+
+>
+The sword makes no sound.
+
+>
+You can't go that way.
+
+>
+This was not a very safe place to try jumping.
+Geronimo...
+
+    ****  You have died  ****
+
+Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+
+>
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+On the ground is a pile of leaves.
+
+>
+Forest
+This is a dimly lit forest, with large trees all around.
+
+>
+The forest becomes impenetrable to the north.
+You hear in the distance the chirping of a song bird.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+You can't go that way.
+You hear in the distance the chirping of a song bird.
+
+>
+You can't go that way.
+
+>
+Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+
+>
+There is no tree here suitable for climbing.
+
+>
+There is no tree here suitable for climbing.
+
+>
+You can't go that way.
+
+>
+Forest
+
+>
+You can't go that way.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+Forest
+The forest thins out, revealing impassable mountains.
+
+>
+There's nothing special about the mountain range.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+There's nothing special about the mountain range.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+You don't have the mountain range.
+
+>
+You don't have the mountain range.
+
+>
+The mountain range makes no sound.
+
+>
+Forest
+You hear in the distance the chirping of a song bird.
+
+>
+You can't go that way.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+Forest
+
+>
+The mountains are impassable.
+
+>
+The mountains are impassable.
+
+>
+The mountain range makes no sound.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+The mountains are impassable.
+
+>
+What do you want to hit the mountain with?
+
+>
+Forest
+
+>
+There is no tree here suitable for climbing.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+You hear in the distance the chirping of a song bird.
+
+>
+There is no tree here suitable for climbing.
+
+>
+You can't go that way.
+
+>
+Forest
+
+>
+What a concept!
+
+>
+There's nothing special about the mountain range.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+You can't go that way.
+
+>
+There's nothing special about the mountain range.
+
+>
+You can't go that way.
+
+>
+You must tell me how to do that to a mountain range.
+
+>
+Forest
+The forest thins out, revealing impassable mountains.
+
+>
+You can't go that way.
+
+>
+You are in perfect health.
+You can be killed by a serious wound.
+You have been killed once.
+
+>
+You don't have the mountain range.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+An interesting idea...
+
+>
+You can't turn that on.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+There's nothing special about the mountain range.
+
+>
+The mountains are impassable.
+
+>
+There's nothing special about the mountain range.
+
+>
+There's nothing special about the mountain range.
+
+>
+Forest
+
+>
+There is no tree here suitable for climbing.
+
+>
+You can't go that way.
+
+>
+There is no tree here suitable for climbing.
+
+>
+There is no tree here suitable for climbing.
+
+>
+Clearing
+
+>
+You can't go that way.
+
+>
+There is no tree here suitable for climbing.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+There is no tree here suitable for climbing.
+
+>
+Canyon View
+You are at the top of the Great Canyon on its west wall. From here there is a marvelous view of the canyon and parts of the Frigid River upstream. Across the canyon, the walls of the White Cliffs join the mighty ramparts of the Flathead Mountains to the east. Following the Canyon upstream to the north, Aragain Falls may be seen, complete with rainbow. The mighty Frigid River flows out from a great dark cavern. To the west and south can be seen an immense forest, stretching for miles around. A path leads northwest. It is possible to climb down into the canyon from here.
+There is a brown sack here.
+The brown sack contains:
+  A clove of garlic
+  A lunch
+There is a sword here.
+
+>
+A valiant attempt.
+
+>
+Rocky Ledge
+You are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible for you to enter. Below you is the canyon bottom. Above you is more cliff, which appears climbable.
+
+>
+You can't go that way.
+
+>
+Canyon View
+There is a brown sack here.
+The brown sack contains:
+  A clove of garlic
+  A lunch
+There is a sword here.
+
+>
+The brown sack contains:
+  A clove of garlic
+  A lunch
+
+>
+(with the sword)
+You don't have the sword.
+
+>
+(with the sword)
+You don't have the sword.
+
+>
+What a concept!
+
+>
+Closed.
+
+>
+(with the sword)
+You don't have the sword.
+
+>
+It is already closed.
+
+>
+You can't go that way.
+
+>
+If you wish to burn the brown sack, you should say so.
+
+>
+I don't know the word "show".
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a brown sack here.
+There is a sword here.
+
+>
+You can't go that way.
+
+>
+The brown sack makes no sound.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a brown sack here.
+There is a sword here.
+
+>
+You don't have the brown sack.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a brown sack here.
+There is a sword here.
+
+>
+You can't go that way.
+
+>
+Taken.
+
+>
+You don't have the sword.
+
+>
+(with the sword)
+You don't have the sword.
+
+>
+Canyon View
+You are at the top of the Great Canyon on its west wall. From here there is a marvelous view of the canyon and parts of the Frigid River upstream. Across the canyon, the walls of the White Cliffs join the mighty ramparts of the Flathead Mountains to the east. Following the Canyon upstream to the north, Aragain Falls may be seen, complete with rainbow. The mighty Frigid River flows out from a great dark cavern. To the west and south can be seen an immense forest, stretching for miles around. A path leads northwest. It is possible to climb down into the canyon from here.
+There is a sword here.
+
+>
+(with the sword)
+You don't have the sword.
+
+>
+You can't go that way.
+
+>
+I don't know the word "show".
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a sword here.
+
+>
+You don't have the sword.
+
+>
+Taken.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+I don't know the word "show".
+
+>
+You already have that!
+
+>
+Canyon View
+
+>
+That would involve quite a contortion!
+
+>
+You can't go that way.
+
+>
+You can't turn that on.
+
+>
+You can't go that way.
+
+>
+You already have that!
+
+>
+That sentence isn't one I recognize.
+
+>
+You must tell me how to do that to a sword.
+
+>
+I don't know the word "show".
+
+>
+There's nothing special about the sword.
+
+>
+Rocky Ledge
+
+>
+You can't turn that on.
+
+>
+Canyon View
+
+>
+There's nothing special about the sword.
+
+>
+That would involve quite a contortion!
+
+>
+You can't go that way.
+
+>
+There's nothing special about the sword.
+
+>
+I don't know the word "show".
+
+>
+You can't go that way.
+
+>
+Thrown.
+
+>
+The sword makes no sound.
+
+>
+I don't know the word "show".
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a sword here.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a sword here.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+If you wish to burn the brown sack, you should say so.
+
+>
+The brown sack makes no sound.
+
+>
+What do you want to hit the bag with?
+
+>
+You can't go that way.
+
+>
+The brown sack is closed.
+
+>
+If you wish to burn the brown sack, you should say so.
+
+>
+Canyon View
+There is a sword here.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+There is a sword here.
+
+>
+You can't go that way.
+
+>
+You don't have the sword.
+
+>
+An interesting idea...
+
+>
+You can't go that way.
+
+>
+You can't turn that on.
+
+>
+You can't turn that on.
+
+>
+You can't go that way.
+
+>
+There's nothing special about the sword.
+
+>
+Taken.
+
+>
+Nice view, lousy place to jump.
+
+    ****  You have died  ****
+
+Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
+
+Forest
+
+>
+You can't go that way.
+
+>
+Clearing
+On the ground is a pile of leaves.
+
+>
+What do you want to hit the leaves with?
+
+>
+You don't have the pile of leaves.
+
+>
+That sentence isn't one I recognize.
+
+>
+You must tell me how to do that to a pile of leaves.
+
+>
+You are in perfect health.
+You can be killed by a serious wound.
+You have been killed twice.
+
+>
+If you wish to burn the pile of leaves, you should say so.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+You must tell me how to do that to a pile of leaves.
+
+>
+Forest Path
+
+>
+Up a Tree
+Beside you on the branch is a small bird's nest.
+
+>
+Closed.
+
+>
+The bird's nest makes no sound.
+
+>
+The bird's nest is closed.
+You hear in the distance the chirping of a song bird.
+
+>
+That sentence isn't one I recognize.
+
+>
+It is already closed.
+
+>
+You cannot climb any higher.
+
+>
+What do you want to hit the nest with?
+
+>
+You cannot climb any higher.
+
+>
+The bird's nest makes no sound.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+You hear in the distance the chirping of a song bird.
+
+>
+You cannot climb any higher.
+
+>
+What do you want to hit the nest with?
+
+>
+The bird's nest makes no sound.
+You hear in the distance the chirping of a song bird.
+
+>
+It is already closed.
+
+>
+The bird's nest makes no sound.
+
+>
+You cannot climb any higher.
+
+>
+It is already closed.
+
+>
+A valiant attempt.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+What do you want to hit the nest with?
+
+>
+It is already closed.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+What do you want to hit the nest with?
+
+>
+Up a Tree
+You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.
+Beside you on the branch is a small bird's nest.
+
+>
+It is already closed.
+
+>
+Taken.
+You hear in the distance the chirping of a song bird.
+
+>
+You can't go that way.
+
+>
+You cannot climb any higher.
+
+>
+Up a Tree
+You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.
+
+>
+The bird's nest is closed.
+
+>
+You cannot climb any higher.
+
+>
+The bird's nest is closed.
+
+>
+You can't go that way.
+You hear in the distance the chirping of a song bird.
+
+>
+The bird's nest is closed.
+
+>
+The bird's nest makes no sound.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+You hear in the distance the chirping of a song bird.
+
+>
+It smells like a bird's nest.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+You hear in the distance the chirping of a song bird.
+
+>
+You are in perfect health.
+You can be killed by a serious wound.
+You have been killed twice.
+You hear in the distance the chirping of a song bird.
+
+>
+You cannot climb any higher.
+
+>
+That would involve quite a contortion!
+
+>
+The bird's nest is closed.
+
+>
+That would involve quite a contortion!
+
+>
+You cannot climb any higher.
+
+>
+You cannot climb any higher.
+You hear in the distance the chirping of a song bird.
+
+>
+In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.
+
+Forest Path
+
+>
+It is already closed.
+
+>
+What do you want to hit the nest with?
+
+>
+Forest
+
+>
+That would involve quite a contortion!
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't go that way.
+
+>
+Clearing
+
+>
+The bird's nest makes no sound.
+
+>
+The bird's nest is closed.
+
+>
+That sentence isn't one I recognize.
+
+>
+Thrown.
+
+>
+Forest
+
+>
+Clearing
+There is a bird's nest here.
+
+>
+Forest
+
+>
+The forest becomes impenetrable to the north.
+
+>
+You can't go that way.
+
+>
+There is no tree here suitable for climbing.
+
+>
+Forest
+
+>
+Forest
+You hear in the distance the chirping of a song bird.
+
+>
+You can't go that way.
+
+>
+The forest becomes impenetrable to the north.
+You hear in the distance the chirping of a song bird.
+
+>
+Forest
+
+>
+You can't go that way.
+
+>
+I don't know the word "show".
+
+>
+The mountains are impassable.
+
+>
+The mountains are impassable.
+
+>
+You can't go that way.
+
+>
+Forest
+You hear in the distance the chirping of a song bird.
+
+>
+Forest
+
+>
+You can't go that way.
+
+>
+The mountains are impassable.
+
+>
+The mountain range makes no sound.
+
+>
+That sentence isn't one I recognize.
+
+>
+You can't be serious.
+
+>
+Wheeeeeeeeee!!!!!
+
+>
+You must tell me how to do that to a mountain range.
+
+>
+An interesting idea...
+
+>
+You must tell me how to do that to a mountain range.
+
+>
+Forest
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Forest
+
+>
+There's nothing special about the mountain range.
+
+>
+You don't have the mountain range.
+
+>
+You can't go that way.
+
+>
+The mountains are impassable.
+
+>
+You don't have the mountain range.
+
+>
+You hit your head against the mountain range as you attempt this feat.
+
+>
+Forest
+The forest thins out, revealing impassable mountains.
+
+>
+The mountain range makes no sound.
+
+>
+Forest
+
+>
+You can't go that way.
+
+>
+The forest becomes impenetrable to the north.
+
+>
+You can't go that way.
+
+>
+There is no tree here suitable for climbing.
+
+>
+You can't go that way.
+
+>
+There is no tree here suitable for climbing.
+
+>
+Clearing
+There is a bird's nest here.
+
+>
+You don't have the bird's nest.
+
+>
+Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+There is a bird's nest here.
+
+>
+Taken.
+
+>
+You can't go that way.
+
+>
+What do you want to hit the nest with?
+
+>
+Thrown.
+
+>
+The bird's nest makes no sound.
+
+>
+What do you want to hit the nest with?
+
+>
+Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+There is a bird's nest here.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Storm-tossed trees block your way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Canyon View
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+You can't go that way.
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Rocky Ledge
+
+>
+Canyon View
+
+>
+Canyon View
+You are at the top of the Great Canyon on its west wall. From here there is a marvelous view of the canyon and parts of the Frigid River upstream. Across the canyon, the walls of the White Cliffs join the mighty ramparts of the Flathead Mountains to the east. Following the Canyon upstream to the north, Aragain Falls may be seen, complete with rainbow. The mighty Frigid River flows out from a great dark cavern. To the west and south can be seen an immense forest, stretching for miles around. A path leads northwest. It is possible to climb down into the canyon from here.
+
+>

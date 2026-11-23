@@ -20,7 +20,7 @@ const MAX_ROUTINE = 3500;   // characters per routine
 const MAX_CODE = 16000;     // characters of code per request
 
 function routineSource(id) {
-  const fn = G().ROUTINES[id];
+  const fn = G().ROUTINES[id - (G().ROUTINE_BASE ?? 0)];
   if (!fn) return null;
   let src = fn.toString();
   if (src.length > MAX_ROUTINE) src = src.slice(0, MAX_ROUTINE) + '\n  /* … truncated … */\n}';

@@ -222,7 +222,8 @@ export function C(c) { return String.fromCharCode(Number(c)); }
 /** A string value: either a literal or a string id from the story data. */
 export function S(x) {
   if (typeof x === 'string') return x;
-  if (typeof x === 'number' && story.STRINGS[x] != null) return story.STRINGS[x];
+  const i = typeof x === 'number' ? x - (story.LAYOUT.stringBase ?? 0) : -1;
+  if (i >= 0 && story.STRINGS[i] != null) return story.STRINGS[i];
   return `[missing string ${x}]`;
 }
 export function printD(o) { return tell(D(o)); }
@@ -250,7 +251,7 @@ export function globalValue(n) { return g[story.GLOBAL_NAMES[n - 16]]; }
 
 export async function apply(fn, ...args) {
   if (!fn) return false;
-  const f = routines[fn];
+  const f = routines[fn - (story.LAYOUT.routineBase ?? 0)];
   if (!f) throw new Error(`apply: no routine ${fn}`);
   return f(...args);
 }

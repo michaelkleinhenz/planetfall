@@ -325,7 +325,7 @@ export const M_ENTER = 2;
 export const M_LOOK = 3;
 export const M_FLASH = 4;
 export const M_OBJDESC = 5;
-export const SIBREAKS = 341;
+export const SIBREAKS = 8533;
 export const CC_SBPTR = 0;
 export const CC_SEPTR = 1;
 export const CC_DBPTR = 2;
@@ -6613,7 +6613,7 @@ async function CYCLOPS_FCN() {
     if (g.PRSO == LUNCH) {
       if (!(count < 0)) {
         await REMOVE_CAREFULLY(LUNCH);
-        tell("The cyclops says \"Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could drink the blood of that thing.\"  From the gleam in his eye, it could be surmised that you are \"that thing\".\n");
+        tell("The cyclops says \"Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could drink the blood of that thing.\" From the gleam in his eye, it could be surmised that you are \"that thing\".\n");
         g.CYCLOWRATH = await MIN(-1, -count);
       }
       return enable(await QUEUE(I_CYCLOPS.id, -1));
@@ -9152,20 +9152,20 @@ async function JIGS_UP(desc, player$ = false) {
       move(g.WINNER, g.HERE);
     }
     if (!(g.DEATHS < 2)) {
-      tell("You clearly are a suicidal maniac.  We don't allow psychotics in the cave, since they may harm other adventurers.  Your remains will be installed in the Land of the Living Dead, where your fellow adventurers may gloat over them.\n");
+      tell("You clearly are a suicidal maniac. We don't allow psychotics in the cave, since they may harm other adventurers. Your remains will be installed in the Land of the Living Dead, where your fellow adventurers may gloat over them.\n");
       return await FINISH();
     } else {
       g.DEATHS = g.DEATHS + 1;
       move(g.WINNER, g.HERE);
       if (hasFlag(SOUTH_TEMPLE, TOUCHBIT)) {
-        tell("As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry.  Your senses are disturbed.  The objects in the dungeon appear indistinct, bleached of color, even unreal.\n\n");
+        tell("As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.\n\n");
         g.DEAD = true;
         g.TROLL_FLAG = true;
         g.ALWAYS_LIT = true;
         putProp(g.WINNER, P.ACTION, DEAD_FUNCTION.id);
         await GOTO(ENTRANCE_TO_HADES);
       } else {
-        tell("Now, let's take a look here... Well, you probably deserve another chance.  I can't quite fix you up completely, but you can't have everything.\n\n");
+        tell("Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.\n\n");
         await GOTO(FOREST_1);
       }
       clearFlag(TRAP_DOOR, TOUCHBIT);
@@ -9736,5 +9736,6 @@ export const ROUTINES = [null,
   CHAIN_PSEUDO,
   TROLL_ROOM_F,
 ];
-ROUTINES.forEach((fn, id) => { if (fn) fn.id = id; });
+export const ROUTINE_BASE = 20480;
+ROUTINES.forEach((fn, i) => { if (fn) fn.id = ROUTINE_BASE + i; });
 export { GO as start, MAIN_LOOP as mainLoop };

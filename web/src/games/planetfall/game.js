@@ -329,7 +329,7 @@ export const C_INTLEN = 6;
 export const C_TICK = 1;
 export const C_RTN = 2;
 export const DEFAULT_MOVE = 20;
-export const SIBREAKS = 261;
+export const SIBREAKS = 8453;
 export const P_PHRLEN = 3;
 export const P_ORPHLEN = 7;
 export const P_RTLEN = 3;
@@ -11190,5 +11190,6 @@ export const ROUTINES = [null,
   STRIP_F,
   GRUE_F,
 ];
-ROUTINES.forEach((fn, id) => { if (fn) fn.id = id; });
+export const ROUTINE_BASE = 20480;
+ROUTINES.forEach((fn, i) => { if (fn) fn.id = ROUTINE_BASE + i; });
 export { GO as start, MAIN_LOOP as mainLoop };

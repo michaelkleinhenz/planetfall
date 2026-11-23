@@ -17,6 +17,12 @@ import { GAMES } from './games.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, '../..');
 
+// Values that refer to strings and routines (the Z-machine's packed addresses)
+// are numbered from these bases, so they never collide with small constants,
+// object numbers or table addresses that share a table with them.
+const STRING_BASE = 8192;
+const ROUTINE_BASE = 20480;
+
 // The game being compiled (set by compileAll).
 let CFG = null;
 let GAME_ID = null;
@@ -225,7 +231,9 @@ function zilText(s) {
       out += ' ';
     } else out += c;
   }
-  return out;
+  // The compiler that built these releases printed one space after a sentence
+  // even where the source has two (verified against the original story files).
+  return out.replace(/([.!?]["')]?) {2,}(?=\S)/g, '$1 ');
 }
 
 // ---------------------------------------------------------------------------
@@ -445,7 +453,7 @@ class Compiler {
 
   stringId(text) {
     if (!this.stringIds.has(text)) {
-      this.stringIds.set(text, this.strings.length);
+      this.stringIds.set(text, STRING_BASE + this.strings.length);
       this.strings.push(text);
     }
     return this.stringIds.get(text);
@@ -603,7 +611,9 @@ class Compiler {
       }
       return this.constValues.get(name);
     }
-    if (this.globals.has(name)) return this.globalNumber(name);
+    // A global named in a table or property stands for its (initial) value,
+    // e.g. the address of the table it holds.
+    if (this.globals.has(name)) return this.globalInitialValue(name);
     const m = /^(P|W|A|PR|ACT|V)\?(.*)$/.exec(name);
     if (m) return this.prefixedValue(m[1], m[2]);
     throw new Error('unknown atom ' + name);
@@ -619,6 +629,16 @@ class Compiler {
       case 'V': if (this.actions.has(name)) return this.actions.get(name).num; break;
     }
     throw new Error(`unknown ${prefix}?${name}`);
+  }
+
+  globalInitialValue(name) {
+    this.globalValues ??= new Map();
+    if (!this.globalValues.has(name)) {
+      const init = this.globals.get(name);
+      this.globalValues.set(name, 0); // guards against self-reference
+      this.globalValues.set(name, init == null ? 0 : this.staticValue(init));
+    }
+    return this.globalValues.get(name);
   }
 
   globalNumber(name) {
@@ -731,7 +751,7 @@ class Compiler {
 
     // Routine ids (1-based, in source order)
     let rid = 1;
-    for (const name of this.routines.keys()) this.routineIds.set(name, rid++);
+    for (const name of this.routines.keys()) this.routineIds.set(name, ROUTINE_BASE + rid++);
 
     // Global variable numbers (Z-machine numbering starts at 16).
     // HERE, SCORE and MOVES come first: they drive the status line.
@@ -754,7 +774,7 @@ class Compiler {
     this.globalInit = {};
     for (const name of this.globalOrder) {
       const init = this.globals.get(name);
-      this.globalInit[name] = init === undefined ? 0 : this.staticValue(init);
+      this.globalInit[name] = this.globalInitialValue(name);
     }
     // Static tables referenced inside routines are allocated during code generation.
 
@@ -1565,7 +1585,8 @@ function emit({ c, code }) {
   lines.push('export const ROUTINES = [null,');
   for (const name of c.routines.keys()) lines.push(`  ${jsName(name)},`);
   lines.push('];');
-  lines.push('ROUTINES.forEach((fn, id) => { if (fn) fn.id = id; });');
+  lines.push(`export const ROUTINE_BASE = ${ROUTINE_BASE};`);
+  lines.push('ROUTINES.forEach((fn, i) => { if (fn) fn.id = ROUTINE_BASE + i; });');
   lines.push(`export { GO as start, MAIN_LOOP as mainLoop };`);
   const OUT_DIR = path.join(ROOT, 'web/src/games', GAME_ID);
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -1596,6 +1617,7 @@ function emit({ c, code }) {
     `export const INITIAL_GLOBALS = ${JSON.stringify(Object.fromEntries(Object.entries(c.globalInit).map(([k, v]) => [jsName(k), v])))};`,
     `export const LAYOUT = ${JSON.stringify({
       propDefaults: c.propDefaults, objTable: c.objTable, objectCount: c.objects.length,
+      stringBase: STRING_BASE, routineBase: ROUTINE_BASE,
       dictionary: c.dictStart, dictionaryCount: c.dictEntries.length, entryLength: 7,
       objectNames: c.objects.map((o) => o.name), rooms: c.objects.filter((o) => o.room).map((o) => o.name),
       flags: Object.fromEntries(c.flags), props: Object.fromEntries(c.props),
