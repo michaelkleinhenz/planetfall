@@ -7,6 +7,8 @@
 export const GAMES = {
   planetfall: {
     id: 'planetfall',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/planetfall/planetfall.html',
     title: 'Planetfall',
     year: 1983,
     author: 'Steve Meretzky',
@@ -31,6 +33,8 @@ export const GAMES = {
   },
   zork1: {
     id: 'zork1',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/zork1/zork1.html',
     title: 'Zork I',
     subtitle: 'The Great Underground Empire',
     year: 1980,
@@ -51,6 +55,8 @@ export const GAMES = {
   },
   'zork2': {
     id: 'zork2',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/zork2/zork2.html',
     cover: 'img/covers/zork2.jpg',
     title: "Zork II",
     subtitle: "The Wizard of Frobozz",
@@ -67,6 +73,8 @@ export const GAMES = {
   },
   'zork3': {
     id: 'zork3',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/zork3/zork3.html',
     cover: 'img/covers/zork3.jpg',
     title: "Zork III",
     subtitle: "The Dungeon Master",
@@ -83,6 +91,8 @@ export const GAMES = {
   },
   'enchanter': {
     id: 'enchanter',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/enchanter/enchanter.html',
     cover: 'img/covers/enchanter.jpg',
     title: "Enchanter",
     year: 1983,
@@ -98,6 +108,8 @@ export const GAMES = {
   },
   'sorcerer': {
     id: 'sorcerer',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/sorcerer/sorcerer.html',
     cover: 'img/covers/sorcerer.jpg',
     title: "Sorcerer",
     year: 1984,
@@ -113,6 +125,8 @@ export const GAMES = {
   },
   'spellbreaker': {
     id: 'spellbreaker',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/spellbreaker/spellbreaker.html',
     cover: 'img/covers/spellbreaker.jpg',
     title: "Spellbreaker",
     year: 1985,
@@ -128,6 +142,8 @@ export const GAMES = {
   },
   'hitchhikersguide': {
     id: 'hitchhikersguide',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/hhgttg/hhgttg.html',
     cover: 'img/covers/hitchhikersguide.jpg',
     title: "The Hitchhiker's Guide to the Galaxy",
     year: 1984,
@@ -143,6 +159,8 @@ export const GAMES = {
   },
   'starcross': {
     id: 'starcross',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/starcross/starcross.html',
     cover: 'img/covers/starcross.jpg',
     title: "Starcross",
     year: 1982,
@@ -157,6 +175,8 @@ export const GAMES = {
   },
   'suspended': {
     id: 'suspended',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/suspended/suspended.html',
     cover: 'img/covers/suspended.jpg',
     title: "Suspended",
     year: 1983,
@@ -172,6 +192,10 @@ export const GAMES = {
   },
   'deadline': {
     id: 'deadline',
+    // A "time" game: the status line shows a clock (hours in SCORE, minutes in MOVES).
+    clock: true,
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/deadline/deadline.html',
     cover: 'img/covers/deadline.jpg',
     title: "Deadline",
     year: 1982,
@@ -187,6 +211,10 @@ export const GAMES = {
   },
   'witness': {
     id: 'witness',
+    // A "time" game: the status line shows a clock (hours in SCORE, minutes in MOVES).
+    clock: true,
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/witness/witness.html',
     cover: 'img/covers/witness.jpg',
     title: "The Witness",
     year: 1983,
@@ -202,6 +230,10 @@ export const GAMES = {
   },
   'suspect': {
     id: 'suspect',
+    // A "time" game: the status line shows a clock (hours in SCORE, minutes in MOVES).
+    clock: true,
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/suspect/suspect.html',
     cover: 'img/covers/suspect.jpg',
     title: "Suspect",
     year: 1984,
@@ -217,6 +249,8 @@ export const GAMES = {
   },
   'infidel': {
     id: 'infidel',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/infidel/infidel.html',
     cover: 'img/covers/infidel.jpg',
     title: "Infidel",
     year: 1983,
@@ -232,6 +266,10 @@ export const GAMES = {
   },
   'cutthroats': {
     id: 'cutthroats',
+    // A "time" game: the status line shows a clock (hours in SCORE, minutes in MOVES).
+    clock: true,
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/cutthroats/cutthroats.html',
     cover: 'img/covers/cutthroats.jpg',
     title: "Cutthroats",
     year: 1984,
@@ -247,6 +285,8 @@ export const GAMES = {
   },
   'seastalker': {
     id: 'seastalker',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/seastalker/seastalker.html',
     cover: 'img/covers/seastalker.jpg',
     title: "Seastalker",
     year: 1984,
@@ -262,6 +302,10 @@ export const GAMES = {
   },
   'wishbringer': {
     id: 'wishbringer',
+    // A "time" game: the status line shows a clock (hours in SCORE, minutes in MOVES).
+    clock: true,
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/wishbringer/wishbringer.html',
     cover: 'img/covers/wishbringer.jpg',
     title: "Wishbringer",
     subtitle: "The Magick Stone of Dreams",
@@ -278,6 +322,8 @@ export const GAMES = {
   },
   'ballyhoo': {
     id: 'ballyhoo',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/ballyhoo/ballyhoo.html',
     cover: 'img/covers/ballyhoo.jpg',
     title: "Ballyhoo",
     year: 1986,
@@ -293,6 +339,8 @@ export const GAMES = {
   },
   'hollywoodhijinx': {
     id: 'hollywoodhijinx',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/hollywood/hollywood.html',
     cover: 'img/covers/hollywoodhijinx.jpg',
     title: "Hollywood Hijinx",
     year: 1986,
@@ -308,6 +356,8 @@ export const GAMES = {
   },
   'leathergoddesses': {
     id: 'leathergoddesses',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/leather/leather.html',
     cover: 'img/covers/leathergoddesses.jpg',
     title: "Leather Goddesses of Phobos",
     year: 1986,
@@ -323,6 +373,8 @@ export const GAMES = {
   },
   'lurkinghorror': {
     id: 'lurkinghorror',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/lurking/lurking.html',
     cover: 'img/covers/lurkinghorror.jpg',
     title: "The Lurking Horror",
     year: 1987,
@@ -338,6 +390,8 @@ export const GAMES = {
   },
   'stationfall': {
     id: 'stationfall',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/stationfall/stationfall.html',
     cover: 'img/covers/stationfall.jpg',
     title: "Stationfall",
     year: 1987,
@@ -353,6 +407,10 @@ export const GAMES = {
   },
   'moonmist': {
     id: 'moonmist',
+    // A "time" game: the status line shows a clock (hours in SCORE, minutes in MOVES).
+    clock: true,
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/moonmist/moonmist.html',
     cover: 'img/covers/moonmist.jpg',
     title: "Moonmist",
     year: 1986,
@@ -368,6 +426,8 @@ export const GAMES = {
   },
   'plunderedhearts': {
     id: 'plunderedhearts',
+    // Box contents, manual and feelies (some are needed to play) in the Infocom Gallery.
+    gallery: 'https://gallery.guetech.org/plundered/plundered.html',
     cover: 'img/covers/plunderedhearts.jpg',
     title: "Plundered Hearts",
     year: 1987,

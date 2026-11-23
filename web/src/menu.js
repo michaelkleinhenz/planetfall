@@ -60,7 +60,7 @@ function gameCard(meta, save) {
   body.append(el('p', 'gc-blurb', meta.blurb[getLanguage()] || meta.blurb.en));
   if (save?.meta) {
     const date = new Date(save.meta.date).toLocaleDateString(getLanguage());
-    body.append(el('p', 'gc-progress', t('menuProgress', { room: save.meta.room || '—', score: save.meta.score ?? 0, date })
+    body.append(el('p', 'gc-progress', (save.meta.clock ? t('menuProgressClock', { room: save.meta.room || '—', clock: save.meta.clock, date }) : t('menuProgress', { room: save.meta.room || '—', score: save.meta.score ?? 0, date }))
       + (named ? ` · ${t('menuSaves', { n: named })}` : '')));
   }
   const actions = el('div', 'gc-actions');
@@ -76,6 +76,15 @@ function gameCard(meta, save) {
       location.href = gameUrl(meta.id);
     });
     actions.append(fresh);
+  }
+  if (meta.gallery) {
+    // Box contents, manual and feelies; some games need them to be played.
+    const gal = el('a', 'gc-gallery', t('menuGallery'));
+    gal.href = meta.gallery;
+    gal.target = '_blank';
+    gal.rel = 'noopener';
+    gal.title = t('galleryTitle');
+    actions.append(gal);
   }
   body.append(actions);
   body.append(el('p', 'gc-license', `${t('menuLicense')}: ${meta.license}`));

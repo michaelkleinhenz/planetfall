@@ -283,7 +283,7 @@ const session = new GameSession({
     els.room.textContent = room || '—';
     if (targetLanguage()) updateStatusRoom();
     els.score.textContent = score;
-    els.time.textContent = moves;
+    els.time.textContent = GAMES[GAME_ID]?.clock ? clockTime(score, moves) : moves;
   },
   onSave: (snap) => openSlots('save', snap),
   onRestore: () => openSlots('load'),
@@ -318,7 +318,7 @@ function autosave() {
   if (!snap) return;
   store.set(K('autosave'), {
     snapshot: snap, transcript: transcriptLog.slice(-120), aiHistory: aiHistory.slice(-12),
-    meta: { room: els.room.textContent, score: Number(els.score.textContent) || 0, moves: Number(els.time.textContent) || 0, date: Date.now() },
+    meta: { room: els.room.textContent, score: Number(els.score.textContent) || 0, moves: Number(els.time.textContent) || 0, clock: GAMES[GAME_ID]?.clock ? els.time.textContent : undefined, date: Date.now() },
   });
 }
 
@@ -927,6 +927,12 @@ els.badge.addEventListener('click', () => {
 // Boot
 // ---------------------------------------------------------------------------
 
+/** A time game's clock, as the original interpreters showed it ("8:05 am"). */
+function clockTime(h, m) {
+  h = Number(h) || 0;
+  return `${h % 12 || 12}:${String(Number(m) || 0).padStart(2, '0')} ${h < 12 ? 'am' : 'pm'}`;
+}
+
 async function boot() {
   applyStatic();
   if (!GAME_ID) {
@@ -938,10 +944,14 @@ async function boot() {
   document.title = `${meta.title} AI`;
   $('game-title').textContent = meta.title.toUpperCase();
   $('emblem').innerHTML = emblem(meta.id);
+  // The game's box contents (manual, maps, feelies) in the Infocom Gallery.
+  if (meta.gallery) { $('btn-gallery').href = meta.gallery; $('btn-gallery').hidden = false; }
   document.body.dataset.game = meta.id;
   const second = $('status-second-label');
   second.dataset.i18n = meta.statusSecond === 'time' ? 'time' : 'moves';
   second.textContent = t(second.dataset.i18n);
+  // Time games have no score: only the clock is shown.
+  if (meta.clock) els.score.closest('.stat').hidden = true;
   updateMode();
   const opening = await session.start();
   const saved = store.get(K('autosave'), null);

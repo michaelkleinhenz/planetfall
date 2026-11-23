@@ -77,6 +77,10 @@ Microsoft). All others are shared by historicalsource for education and research
 - **Built for phones:** the keyboard stays open, and each reply starts at the top of the
   screen. Long replies page with a "More" button instead of scrolling.
 - Undo, named save slots, autosave and resume, and a main menu to switch games.
+- **Manuals and feelies:** several games need items from their original package to be
+  played (maps, codes, documents). Each game links to its page in the
+  [Infocom Gallery](https://gallery.guetech.org/greybox.html), on the menu card and with
+  the 📖 button in the game's toolbar.
 - **Your data stays in your browser:** settings, progress and saves live in
   localStorage, per game, and nothing is sent to any server except your AI requests to
   OpenRouter. There are no cookies, analytics or third-party scripts. The menu can
