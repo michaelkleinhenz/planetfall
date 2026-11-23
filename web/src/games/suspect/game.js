@@ -428,6 +428,7 @@ export const LINES = 5;
 export const DETECTIVE_CONVINCED = 12;
 export const SERIAL = 0;
 export const ZSTR_ON = 0;
+export const LAST_OBJECT = 255;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

@@ -120,6 +120,23 @@ window.addEventListener('scroll', () => {
 window.addEventListener('resize', updatePageSpace);
 window.visualViewport?.addEventListener('resize', updatePageSpace);
 
+/** The game's upper window, as the game drew it (rows of characters). */
+function renderUpper(rows) {
+  const box = document.getElementById('upper-window');
+  if (!box) return;
+  if (!rows) { box.hidden = true; box.replaceChildren(); return; }
+  box.hidden = false;
+  const frag = document.createDocumentFragment();
+  rows.forEach((row, i) => {
+    let run = '', inv = false;
+    const flushRun = () => { if (!run) return; if (inv) frag.append(el('span', 'inv', run)); else frag.append(document.createTextNode(run)); run = ''; };
+    for (const c of row) { if (c.inv !== inv) { flushRun(); inv = c.inv; } run += c.ch; }
+    flushRun();
+    if (i < rows.length - 1) frag.append(document.createTextNode('\n'));
+  });
+  box.replaceChildren(frag);
+}
+
 function renderGameText(segments, container) {
   for (const seg of segments) {
     if (seg.fixed) {
@@ -285,6 +302,7 @@ const session = new GameSession({
     els.score.textContent = score;
     els.time.textContent = GAMES[GAME_ID]?.clock ? clockTime(score, moves) : moves;
   },
+  onUpper: (rows) => renderUpper(rows),
   onSave: (snap) => openSlots('save', snap),
   onRestore: () => openSlots('load'),
 });

@@ -5,8 +5,9 @@ import { runGame } from './game.js';
 import { snapshot as takeSnapshot } from './runtime.js';
 
 export class GameSession {
-  constructor({ onStatus, onSave, onRestore } = {}) {
+  constructor({ onStatus, onSave, onRestore, onUpper } = {}) {
     this.onStatus = onStatus || (() => {});
+    this.onUpper = onUpper || (() => {});
     this.onSave = onSave || (async () => false);
     this.onRestore = onRestore || (async () => null);
     this.segments = [];
@@ -15,6 +16,7 @@ export class GameSession {
     this.ended = false;
     this.endResolve = null;
     this.lastSnapshot = null;
+    this.upper = new UpperWindow();
   }
 
   /** Start the game; resolves with the opening text. */
@@ -30,9 +32,23 @@ export class GameSession {
         this.lastSnapshot = takeSnapshot();
         this.flush({ ended: false });
       }),
+      // A key press: the host sends a line, the runtime feeds it key by key.
+      inputChar: () => new Promise((resolve) => {
+        this.pendingInput = resolve;
+        this.lastSnapshot = takeSnapshot();
+        this.flush({ ended: false, keyInput: true });
+      }),
+      // The upper window (status lines, Bureaucracy's forms, Beyond Zork's map)
+      split: (n) => this.upper.split(n),
+      window: (w) => this.upper.select(w),
+      cursor: (l, c) => this.upper.moveTo(l, c),
+      upper: (text) => this.upper.write(text),
+      highlight: (style) => this.upper.style(style),
+      clear: (w) => this.upper.clear(w),
+      eraseLine: () => this.upper.eraseLine(),
       status: (s) => this.onStatus(s),
       // A new game begins: drop what the old game printed, and tell the host.
-      restarted: () => { this.segments = []; this.restartedFlag = true; },
+      restarted: () => { this.segments = []; this.restartedFlag = true; this.upper = new UpperWindow(); },
       save: (snap) => this.onSave(snap),
       restore: () => this.onRestore(),
       ended: () => new Promise((resolve) => {
@@ -62,7 +78,9 @@ export class GameSession {
     this.waiters = [];
     const restarted = !!this.restartedFlag;
     this.restartedFlag = false;
-    for (const w of waiters) w({ segments, text, restarted, ...extra });
+    const upper = this.upper.view();
+    this.onUpper(upper);
+    for (const w of waiters) w({ segments, text, restarted, upper, ...extra });
   }
 
   /** Send a command line (or a {snapshot} load request); resolves with the response. */
@@ -101,4 +119,53 @@ function cleanSegments(segments) {
     out[0].text = out[0].text.replace(/^\n+/, '');
   }
   return out.filter((s) => s.text.length);
+}
+
+/**
+ * The Z-machine's upper window as a grid of characters: games position the
+ * cursor and write into it (status lines, forms, maps). Reverse video is kept
+ * per character.
+ */
+export class UpperWindow {
+  constructor() { this.height = 0; this.rows = []; this.line = 1; this.col = 1; this.inverse = false; this.active = false; }
+  split(n) {
+    this.height = Math.max(0, Number(n) || 0);
+    this.rows.length = Math.min(this.rows.length, this.height);
+  }
+  select(w) {
+    this.active = Number(w) === 1;
+    if (this.active) { this.line = 1; this.col = 1; }
+  }
+  moveTo(l, c) { this.line = Math.max(1, l); this.col = Math.max(1, c); }
+  style(s) { this.inverse = (s & 1) === 1; if (s === 0) this.inverse = false; }
+  row(n) {
+    while (this.rows.length < n) this.rows.push([]);
+    return this.rows[n - 1];
+  }
+  write(text) {
+    for (const ch of text) {
+      if (ch === '\n') { this.line++; this.col = 1; continue; }
+      if (this.col > 120) continue;
+      const r = this.row(this.line);
+      while (r.length < this.col - 1) r.push({ ch: ' ', inv: false });
+      r[this.col - 1] = { ch, inv: this.inverse };
+      this.col++;
+    }
+  }
+  eraseLine() {
+    const r = this.row(this.line);
+    r.length = Math.min(r.length, this.col - 1);
+  }
+  clear(w) {
+    w = Number(w);
+    if (w === -1) { this.height = 0; this.rows = []; this.line = 1; this.col = 1; }
+    else if (w === -2 || w === 1) { this.rows = []; this.line = 1; this.col = 1; }
+  }
+  /** What the page shows: the visible rows, or null when there is nothing. */
+  view() {
+    const rows = this.rows.slice(0, this.height || this.rows.length);
+    const has = rows.some((r) => r.some((c) => c.ch !== ' ' || c.inv));
+    if (!this.height || !has) return null;
+    return rows.map((r) => r.map((c) => ({ ...c })));
+  }
 }

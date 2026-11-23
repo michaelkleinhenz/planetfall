@@ -35,6 +35,7 @@ function play(commands) {
         return l;
       },
       inputChar: async () => {
+        while (lines.length && /^@seed \d+$/.test(lines[0].trim())) random(-Number(lines.shift().trim().slice(6)));
         if (!lines.length) { resolve(out); return new Promise(() => {}); }
         return lines.shift();
       },

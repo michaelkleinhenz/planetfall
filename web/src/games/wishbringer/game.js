@@ -388,6 +388,7 @@ export const CEXITSTR = 1;
 export const DEXITOBJ = 1;
 export const DEXITSTR = 1;
 export const ZSTR_ON = 0;
+export const LAST_OBJECT = 253;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

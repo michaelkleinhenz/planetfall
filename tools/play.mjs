@@ -49,6 +49,8 @@ const io = {
   // A single key press: the next line, not echoed (as in the original).
   inputChar: async () => {
     if (lines) {
+      // "@seed N" lines seed the generator here too
+      while (lines.length && /^@seed \d+$/.test(lines[0].trim())) random(-Number(lines.shift().trim().slice(6)));
       if (!lines.length || (lines.length === 1 && lines[0] === '')) process.exit(0);
       return lines.shift();
     }

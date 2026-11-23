@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  inTable, readChar,
+  inTable, readChar, s16,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -781,7 +781,10 @@ export const RIMBAUD = 10;
 export const EMILY = 11;
 export const WHITMAN = 12;
 export const ZSTR_ON = 0;
+export const FATAL_VALUE = 2;
+export const M_ENTER = 2;
 export const LOW_DIRECTION = 52;
+export const VOCAB = 64;
 
 // ---- Actions (V?xxx) ----
 export const V = {
@@ -1056,250 +1059,250 @@ export const P = {
 
 // ---- Vocabulary words (W?xxx): dictionary addresses ----
 export const W = {
-  $: 136,
-  $: 145,
-  A: 172,
-  ACHERON: 235,
-  ADJUST: 289,
-  AFFIRMATIVE: 334,
-  AGAIN: 343,
-  ALEXIS: 451,
-  ALL: 460,
-  ALPHA: 478,
-  AN: 496,
-  AND: 514,
-  ARBORVITA: 631,
-  ARROW: 757,
-  AYE: 946,
-  BAG: 1018,
-  BATTERIES: 1153,
-  BATTERY: 1162,
-  BEAM: 1180,
-  BEES: 1261,
-  BIRD: 1468,
-  BIRDFEED: 1486,
-  BITE: 1522,
-  BOLT: 1729,
-  BOOK: 1801,
-  BOOT: 1819,
-  BOOTS: 1828,
-  BOTH: 1837,
-  BOTTOM: 1864,
-  BOY: 1936,
-  BRANCHES: 1972,
-  BREAD: 2008,
-  BROKEN: 2143,
-  BULB: 2260,
-  BURNED: 2341,
-  BUSTED: 2377,
-  BUT: 2386,
-  CATCH: 2674,
-  CHARON: 2872,
-  CHILD: 2935,
-  CLOCK: 3142,
-  COMMA: 127,
-  COVER: 3637,
-  COVERS: 3646,
-  CRANE: 3700,
-  CRAWL: 3718,
-  CREMATED: 3763,
-  CRUMBS: 3871,
-  DEAD: 4159,
-  DET: 4339,
-  DETONATOR: 4366,
-  DIAGRAM: 4411,
-  DIM: 4474,
-  DIVE: 4618,
-  DOC: 4636,
-  DOCTOR: 4645,
-  DOOR: 4699,
-  DOORS: 4708,
-  DOORWAYS: 4726,
-  DOWN: 4762,
-  DR: 4771,
-  DRIPPING: 4888,
-  DROWNED: 4933,
-  ELUGELAB: 5167,
-  ENGRAVING: 5248,
-  ENIWETOK: 5257,
-  EVERYTHING: 5374,
-  EXCEPT: 5401,
-  FEED: 5617,
-  FEEL: 5626,
-  FIFTH: 5707,
-  FIN: 5770,
-  FINGER: 5797,
-  FINGERS: 5806,
-  FIRST: 5824,
-  FISH: 5833,
-  FIVE: 5851,
-  FLIP: 5968,
-  FLIPPER: 5977,
-  FOOD: 6130,
-  FOUR: 6292,
-  FOURTH: 6310,
-  G: 6472,
-  GET: 6643,
-  GIRL: 6733,
-  GLOW: 6805,
-  GLOWING: 6814,
-  GLYPHS: 6832,
-  GND: 6841,
-  GO: 6868,
-  GOLDEN: 6904,
-  GRAB: 6922,
-  GROUND: 7093,
-  HAND: 7219,
-  HANDFUL: 7228,
-  HANDLE: 7237,
-  HEAD: 7363,
-  HELL: 7453,
-  HELLHOUND: 7462,
-  HER: 7489,
-  HIM: 7633,
-  HIROSHIMA: 7669,
-  HIS: 7678,
-  HOLD: 7723,
-  HOOK: 7804,
-  HYPOTENUSE: 8092,
-  ICE: 8137,
-  INCINERAT: 8272,
-  INDICATOR: 8290,
-  INF: 8299,
-  INFORMER: 8335,
-  INTERSECTING: 8461,
-  INTNUM: 8470,
-  IT: 8560,
-  J: 8587,
-  JOG: 8722,
-  JULIUS: 8758,
-  JUMP: 8776,
-  KID: 8848,
-  LAST: 9100,
-  LEAP: 9154,
-  LEAVES: 9181,
-  LEG: 9217,
-  LEGEND: 9226,
-  LEGS: 9235,
-  LEMMING: 9244,
-  LEMMINGS: 9253,
-  LIBRA: 9298,
-  LIGHT: 9352,
-  LINES: 9406,
-  LIQUID: 9433,
-  LOG: 9487,
-  LONG: 9523,
-  LOOSEN: 9541,
-  MARS: 9775,
-  ME: 9838,
-  MERCURY: 9901,
-  MISS: 10036,
-  MONEY: 10117,
-  MR: 10261,
-  MRS: 10270,
-  MURK: 10288,
-  N: 10360,
-  NAGASAKI: 10369,
-  NAME: 10387,
-  NAW: 10450,
-  NAY: 10459,
-  NE: 10468,
-  NEGATIVE: 10513,
-  NEPTUNE: 10522,
-  NO: 10621,
-  NOPE: 10639,
-  NW: 10801,
-  OF: 10873,
-  OK: 10918,
-  OKAY: 10927,
-  OMEGA: 10954,
-  ONE: 10981,
-  OOPS: 11008,
-  OPPENHEIM: 11053,
-  OPPIE: 11062,
-  ORIGAMI: 11107,
-  OUT: 11143,
-  PAIR: 11278,
-  PALM: 11305,
-  PAPER: 11368,
-  PARROT: 11413,
-  PARROT_S: 11422,
-  PEDESTAL: 11575,
-  PERIOD: 118,
-  PLEASE: 12016,
-  PLUS: 12070,
-  PLUTO: 12079,
-  POEM: 12133,
-  POETRY: 12142,
-  POINTER: 12160,
-  POS: 12286,
-  POSITIVE: 12295,
-  POSITIVELY: 12304,
-  PRY: 12502,
-  PUSH: 12565,
-  Q: 12601,
-  QUIT: 12682,
-  QUOTE: 163,
-  RATTLE: 12835,
-  RECESS: 12943,
-  RESTART: 13114,
-  RESTORE: 13123,
-  ROADRUNNER: 13303,
-  ROBERT: 13321,
-  ROOF: 13393,
-  ROUND: 13456,
-  RUN: 13537,
-  SACK: 13618,
-  SE: 13888,
-  SECOND: 13960,
-  SEIZE: 14005,
-  SEVEN: 14059,
-  SEVENTH: 14086,
-  SHADOW: 14140,
-  SHAFT: 14158,
-  SIT: 14617,
-  SIX: 14635,
-  SIXTH: 14653,
-  SNAKEBITE: 14986,
-  SNATCH: 15004,
-  SO: 15076,
-  STANZA: 15634,
-  STRAP: 15967,
-  STYX: 16075,
-  SUNLIGHT: 16138,
-  SURE: 16174,
-  SW: 16210,
-  SWITCH: 16345,
-  SYMBOLS: 16372,
-  TAKE: 16444,
-  THE: 16687,
-  THEM: 16696,
-  THEN: 16714,
-  THIRD: 16786,
-  THIRTY: 16804,
-  THREAD: 16849,
-  THREE: 16867,
-  TIME: 16993,
-  TITLE: 17038,
-  TO: 17047,
-  TOME: 17137,
-  TWO: 17551,
-  URINE: 17803,
-  VENOM: 17947,
-  VITAES: 18055,
-  VOLUME: 18082,
-  WAND: 18208,
-  WATER: 18298,
-  WATERY: 18334,
-  WET: 18424,
-  WING: 18721,
-  WINGS: 18730,
-  WOLF: 18829,
-  WOUND: 18928,
-  WRITING: 18982,
-  Y: 19009,
-  YES: 19045,
-  YUP: 19099,
+  $: 143,
+  $: 152,
+  A: 179,
+  ACHERON: 242,
+  ADJUST: 296,
+  AFFIRMATIVE: 341,
+  AGAIN: 350,
+  ALEXIS: 458,
+  ALL: 467,
+  ALPHA: 485,
+  AN: 503,
+  AND: 521,
+  ARBORVITA: 638,
+  ARROW: 764,
+  AYE: 953,
+  BAG: 1025,
+  BATTERIES: 1160,
+  BATTERY: 1169,
+  BEAM: 1187,
+  BEES: 1268,
+  BIRD: 1475,
+  BIRDFEED: 1493,
+  BITE: 1529,
+  BOLT: 1736,
+  BOOK: 1808,
+  BOOT: 1826,
+  BOOTS: 1835,
+  BOTH: 1844,
+  BOTTOM: 1871,
+  BOY: 1943,
+  BRANCHES: 1979,
+  BREAD: 2015,
+  BROKEN: 2150,
+  BULB: 2267,
+  BURNED: 2348,
+  BUSTED: 2384,
+  BUT: 2393,
+  CATCH: 2681,
+  CHARON: 2879,
+  CHILD: 2942,
+  CLOCK: 3149,
+  COMMA: 134,
+  COVER: 3644,
+  COVERS: 3653,
+  CRANE: 3707,
+  CRAWL: 3725,
+  CREMATED: 3770,
+  CRUMBS: 3878,
+  DEAD: 4166,
+  DET: 4346,
+  DETONATOR: 4373,
+  DIAGRAM: 4418,
+  DIM: 4481,
+  DIVE: 4625,
+  DOC: 4643,
+  DOCTOR: 4652,
+  DOOR: 4706,
+  DOORS: 4715,
+  DOORWAYS: 4733,
+  DOWN: 4769,
+  DR: 4778,
+  DRIPPING: 4895,
+  DROWNED: 4940,
+  ELUGELAB: 5174,
+  ENGRAVING: 5255,
+  ENIWETOK: 5264,
+  EVERYTHING: 5381,
+  EXCEPT: 5408,
+  FEED: 5624,
+  FEEL: 5633,
+  FIFTH: 5714,
+  FIN: 5777,
+  FINGER: 5804,
+  FINGERS: 5813,
+  FIRST: 5831,
+  FISH: 5840,
+  FIVE: 5858,
+  FLIP: 5975,
+  FLIPPER: 5984,
+  FOOD: 6137,
+  FOUR: 6299,
+  FOURTH: 6317,
+  G: 6479,
+  GET: 6650,
+  GIRL: 6740,
+  GLOW: 6812,
+  GLOWING: 6821,
+  GLYPHS: 6839,
+  GND: 6848,
+  GO: 6875,
+  GOLDEN: 6911,
+  GRAB: 6929,
+  GROUND: 7100,
+  HAND: 7226,
+  HANDFUL: 7235,
+  HANDLE: 7244,
+  HEAD: 7370,
+  HELL: 7460,
+  HELLHOUND: 7469,
+  HER: 7496,
+  HIM: 7640,
+  HIROSHIMA: 7676,
+  HIS: 7685,
+  HOLD: 7730,
+  HOOK: 7811,
+  HYPOTENUSE: 8099,
+  ICE: 8144,
+  INCINERAT: 8279,
+  INDICATOR: 8297,
+  INF: 8306,
+  INFORMER: 8342,
+  INTERSECTING: 8468,
+  INTNUM: 8477,
+  IT: 8567,
+  J: 8594,
+  JOG: 8729,
+  JULIUS: 8765,
+  JUMP: 8783,
+  KID: 8855,
+  LAST: 9107,
+  LEAP: 9161,
+  LEAVES: 9188,
+  LEG: 9224,
+  LEGEND: 9233,
+  LEGS: 9242,
+  LEMMING: 9251,
+  LEMMINGS: 9260,
+  LIBRA: 9305,
+  LIGHT: 9359,
+  LINES: 9413,
+  LIQUID: 9440,
+  LOG: 9494,
+  LONG: 9530,
+  LOOSEN: 9548,
+  MARS: 9782,
+  ME: 9845,
+  MERCURY: 9908,
+  MISS: 10043,
+  MONEY: 10124,
+  MR: 10268,
+  MRS: 10277,
+  MURK: 10295,
+  N: 10367,
+  NAGASAKI: 10376,
+  NAME: 10394,
+  NAW: 10457,
+  NAY: 10466,
+  NE: 10475,
+  NEGATIVE: 10520,
+  NEPTUNE: 10529,
+  NO: 10628,
+  NOPE: 10646,
+  NW: 10808,
+  OF: 10880,
+  OK: 10925,
+  OKAY: 10934,
+  OMEGA: 10961,
+  ONE: 10988,
+  OOPS: 11015,
+  OPPENHEIM: 11060,
+  OPPIE: 11069,
+  ORIGAMI: 11114,
+  OUT: 11150,
+  PAIR: 11285,
+  PALM: 11312,
+  PAPER: 11375,
+  PARROT: 11420,
+  PARROT_S: 11429,
+  PEDESTAL: 11582,
+  PERIOD: 125,
+  PLEASE: 12023,
+  PLUS: 12077,
+  PLUTO: 12086,
+  POEM: 12140,
+  POETRY: 12149,
+  POINTER: 12167,
+  POS: 12293,
+  POSITIVE: 12302,
+  POSITIVELY: 12311,
+  PRY: 12509,
+  PUSH: 12572,
+  Q: 12608,
+  QUIT: 12689,
+  QUOTE: 170,
+  RATTLE: 12842,
+  RECESS: 12950,
+  RESTART: 13121,
+  RESTORE: 13130,
+  ROADRUNNER: 13310,
+  ROBERT: 13328,
+  ROOF: 13400,
+  ROUND: 13463,
+  RUN: 13544,
+  SACK: 13625,
+  SE: 13895,
+  SECOND: 13967,
+  SEIZE: 14012,
+  SEVEN: 14066,
+  SEVENTH: 14093,
+  SHADOW: 14147,
+  SHAFT: 14165,
+  SIT: 14624,
+  SIX: 14642,
+  SIXTH: 14660,
+  SNAKEBITE: 14993,
+  SNATCH: 15011,
+  SO: 15083,
+  STANZA: 15641,
+  STRAP: 15974,
+  STYX: 16082,
+  SUNLIGHT: 16145,
+  SURE: 16181,
+  SW: 16217,
+  SWITCH: 16352,
+  SYMBOLS: 16379,
+  TAKE: 16451,
+  THE: 16694,
+  THEM: 16703,
+  THEN: 16721,
+  THIRD: 16793,
+  THIRTY: 16811,
+  THREAD: 16856,
+  THREE: 16874,
+  TIME: 17000,
+  TITLE: 17045,
+  TO: 17054,
+  TOME: 17144,
+  TWO: 17558,
+  URINE: 17810,
+  VENOM: 17954,
+  VITAES: 18062,
+  VOLUME: 18089,
+  WAND: 18215,
+  WATER: 18305,
+  WATERY: 18341,
+  WET: 18431,
+  WING: 18728,
+  WINGS: 18737,
+  WOLF: 18836,
+  WOUND: 18935,
+  WRITING: 18989,
+  Y: 19016,
+  YES: 19052,
+  YUP: 19106,
 };
 
 // ---- Adjective numbers (A?xxx) ----
@@ -1326,7 +1329,7 @@ async function GO() {
   restart: for (;;) {
     g.MIDSCREEN = div(getb(0, 33), 2);
     ++g.MIDSCREEN;
-    if (g.MIDSCREEN < 32) {
+    if (s16(g.MIDSCREEN) < s16(32)) {
       crlf();
       await TOO_NARROW();
       await quit();
@@ -1377,7 +1380,7 @@ async function MAIN_LOOP() {
     if (!(g.P_IT_OBJECT == 0) && (await ACCESSIBLE$(g.P_IT_OBJECT))) {
       tmp = false;
       loop1: for (;;) {
-        if ((cnt = cnt + 1) > icnt) {
+        if (s16(cnt = cnt + 1) > s16(icnt)) {
           break loop1;
         } else {
           if (eq(get(g.P_PRSI, cnt), IT)) {
@@ -1390,7 +1393,7 @@ async function MAIN_LOOP() {
       if (tmp == 0) {
         cnt = 0;
         loop2: for (;;) {
-          if ((cnt = cnt + 1) > ocnt) {
+          if (s16(cnt = cnt + 1) > s16(ocnt)) {
             break loop2;
           } else {
             if (eq(get(g.P_PRSO, cnt), IT)) {
@@ -1402,7 +1405,7 @@ async function MAIN_LOOP() {
       }
       cnt = 0;
     }
-    num = ocnt == 0 ? ocnt : (ocnt > 1 ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (icnt > 1 ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
+    num = ocnt == 0 ? ocnt : (s16(ocnt) > s16(1) ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (s16(icnt) > s16(1) ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
     if ((obj == 0) && (icnt == 1)) {
       obj = get(g.P_PRSI, 1);
     }
@@ -1432,13 +1435,13 @@ async function MAIN_LOOP() {
     } else {
       x = 0;
       g.P_MULT$ = false;
-      if (num > 1) {
+      if (s16(num) > s16(1)) {
         g.P_MULT$ = true;
       }
       tmp = false;
       loop3: for (;;) {
-        if ((cnt = cnt + 1) > num) {
-          if (x > 0) {
+        if (s16(cnt = cnt + 1) > s16(num)) {
+          if (s16(x) > s16(0)) {
             tell("[The ");
             if (!(x == num)) {
               tell("other ");
@@ -1464,7 +1467,7 @@ async function MAIN_LOOP() {
           } else {
             obj1 = get(g.P_PRSI, cnt);
           }
-          if ((num > 1) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
+          if ((s16(num) > s16(1)) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
             if (obj1 == NOT_HERE_OBJECT) {
               ++x;
               continue loop3;
@@ -1662,7 +1665,7 @@ async function DISPLAY_PLACE() {
 
 async function PRINT_SPACES(n_) {
   for (;;) {
-    if ((n_ = n_ - 1) < 0) {
+    if (s16(n_ = n_ - 1) < s16(0)) {
       return true;
     } else {
       printC(32);
@@ -1699,17 +1702,17 @@ async function SAY_HERE() {
 async function TELL_TIME() {
   let h = 0;
   tell(" says it's ");
-  h = g.HOURS > 12 ? (g.HOURS - 12) : (g.HOURS == 0 ? 12 : g.HOURS);
+  h = s16(g.HOURS) > s16(12) ? (g.HOURS - 12) : (g.HOURS == 0 ? 12 : g.HOURS);
   tell(N(h), ":");
-  if (g.MINUTES < 10) {
+  if (s16(g.MINUTES) < s16(10)) {
     tell("0");
   }
   tell(N(g.MINUTES), ":");
-  if (g.SECONDS < 10) {
+  if (s16(g.SECONDS) < s16(10)) {
     tell("0");
   }
   tell(N(g.SECONDS));
-  if (g.HOURS > 11) {
+  if (s16(g.HOURS) > s16(11)) {
     tell(" pm");
   } else {
     tell(" am");
@@ -2288,7 +2291,7 @@ async function POCKET_F() {
       } else if ((g.PRSO == BAG) || ((g.PRSO == EBAG || g.PRSO == SOGGY) && first(g.PRSO))) {
         (await YOUD_HAVE_TO("empty", g.PRSO));
         return true;
-      } else if (getProp(g.PRSO, P.SIZE) > 3) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         await CTHE_PRINT();
         tell(" is too big to fit in ", D(g.PRSI), S(g.PERIOD));
         return true;
@@ -2346,7 +2349,7 @@ async function ITALICIZE(str) {
   dirOut(D_TABLE_OFF);
   len = get(g.SL_TABLE, 0);
   ++len;
-  if (len < 2) {
+  if (s16(len) < s16(2)) {
     return true;
   } else if (getb(0, 1) & 8) {
     highlight(H_ITALIC);
@@ -2369,7 +2372,7 @@ async function ITALICIZE(str) {
   }
   loop2: for (;;) {
     char = getb(g.SL_TABLE, ptr);
-    if ((char > 96) && (char < 123)) {
+    if ((s16(char) > s16(96)) && (s16(char) < s16(123))) {
       char = char - 32;
     }
     printC(char);
@@ -2501,7 +2504,7 @@ async function GENERIC_DOOR_F(table) {
     return NOT_HERE_OBJECT;
   }
   len = get(table, 0);
-  if (len < 2) {
+  if (s16(len) < s16(2)) {
     return false;
   }
   if (isVerb(V.CLOSE, V.ENTER, V.WALK_TO, V.THROUGH, V.USE, V.CROSS, V.EXIT, V.FOLLOW, V.LOOK_INSIDE, V.LOOK_OUTSIDE, V.LOOK_BEHIND)) {
@@ -2577,7 +2580,7 @@ async function HANDLE_PLACE$(inside, n_ = false, e = false, s_ = false, w_ = fal
   } else if (await EXITING$()) {
     if (!(g.HERE == inside)) {
       await NOT_IN();
-    } else if (cnt > 1) {
+    } else if (s16(cnt) > s16(1)) {
       await V_WALK_AROUND();
     } else {
       await DO_WALK(P.OUT);
@@ -3141,7 +3144,7 @@ async function PARSER() {
   let $1;
   loop1: for (;;) {
     cnt = cnt + 1;
-    if (cnt > P_ITBLLEN) {
+    if (s16(cnt) > s16(P_ITBLLEN)) {
       break loop1;
     } else {
       if (g.P_OFLAG == 0) {
@@ -3223,7 +3226,7 @@ async function PARSER() {
     g.P_LEN = g.P_LEN - 1;
   }
   tmp1 = get(g.P_LEXV, ptr);
-  if ((1 < g.P_LEN) && eq(get(g.P_LEXV, ptr), W.GO) && (nw = get(g.P_LEXV, ptr + P_LEXELEN)) && (await WT$(nw, PS$VERB))) {
+  if ((s16(1) < s16(g.P_LEN)) && eq(get(g.P_LEXV, ptr), W.GO) && (nw = get(g.P_LEXV, ptr + P_LEXELEN)) && (await WT$(nw, PS$VERB))) {
     ptr = ptr + P_LEXELEN;
     g.P_LEN = g.P_LEN - 1;
   }
@@ -3236,11 +3239,11 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
-    if (!(g.P_LEN > 1)) {
+    if (!(s16(g.P_LEN) > s16(1))) {
       tell("[", S(g.CANT), "use OOPS that way.]\n");
       return false;
     } else if (get(g.OOPS_TABLE, O_PTR)) {
-      if (g.P_LEN > 2) {
+      if (s16(g.P_LEN) > s16(2)) {
         tell("[Only the first word after OOPS is used.]\n");
       }
       put(g.AGAIN_LEXV, get(g.OOPS_TABLE, O_PTR), get(g.P_LEXV, ptr + P_LEXELEN));
@@ -3263,7 +3266,7 @@ async function PARSER() {
     if (!(g.P_OFLAG == 0) || (g.P_WON == 0) || (getb(g.OOPS_INBUF, 1) == 0)) {
       tell("[", S(g.CANT), "use AGAIN that way.]\n");
       return false;
-    } else if (g.P_LEN > 1) {
+    } else if (s16(g.P_LEN) > s16(1)) {
       if (eq(get(g.P_LEXV, ptr + P_LEXELEN), W.PERIOD, W.COMMA, W.THEN) || eq(get(g.P_LEXV, ptr + P_LEXELEN), W.AND)) {
         ptr = ptr + (2 * P_LEXELEN);
         putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 2);
@@ -3275,7 +3278,7 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 1);
     }
-    if (getb(g.P_LEXV, P_LEXWORDS) > 0) {
+    if (s16(getb(g.P_LEXV, P_LEXWORDS)) > s16(0)) {
       await STUFF(g.RESERVE_LEXV, g.P_LEXV);
       await INBUF_STUFF(g.RESERVE_INBUF, g.P_INBUF);
       g.RESERVE_PTR = ptr;
@@ -3310,7 +3313,7 @@ async function PARSER() {
     g.P_GETFLAGS = 0;
     put(g.P_ITBL, P_VERBN, 0);
     loop3: for (;;) {
-      if ((g.P_LEN = g.P_LEN - 1) < 0) {
+      if (s16(g.P_LEN = g.P_LEN - 1) < s16(0)) {
         g.QUOTE_FLAG = false;
         break loop3;
       } else if (await BUZZER_WORD$(wrd = get(g.P_LEXV, ptr))) {
@@ -3324,7 +3327,7 @@ async function PARSER() {
         if ((wrd == W.TO) && (verb == ACT.TELL || verb == ACT.ASK)) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           wrd = W.QUOTE;
-        } else if ((wrd == W.THEN) && (g.P_LEN > 0) && (verb == 0) && (g.QUOTE_FLAG == 0)) {
+        } else if ((wrd == W.THEN) && (s16(g.P_LEN) > s16(0)) && (verb == 0) && (g.QUOTE_FLAG == 0)) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           put(g.P_ITBL, P_VERBN, 0);
           wrd = W.QUOTE;
@@ -3345,13 +3348,13 @@ async function PARSER() {
           (g.P_LEN == 0) || (g.P_CONT = ptr + P_LEXELEN);
           putb(g.P_LEXV, P_LEXWORDS, g.P_LEN);
           break loop3;
-        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && (len > 1)) || (!(g.QUOTE_FLAG == 0) && (len == 2) && (nw == W.QUOTE)) || ((len > 2) && (nw == W.COMMA || nw == W.AND)))) {
+        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && (s16(len) > s16(1))) || (!(g.QUOTE_FLAG == 0) && (len == 2) && (nw == W.QUOTE)) || ((s16(len) > s16(2)) && (nw == W.COMMA || nw == W.AND)))) {
           dir = val;
           g.P_DIR_WORD = wrd;
           if (nw == W.COMMA || nw == W.AND) {
             await CHANGE_LEXV(ptr + P_LEXELEN, W.THEN);
           }
-          if (!(len > 2)) {
+          if (!(s16(len) > s16(2))) {
             g.QUOTE_FLAG = false;
             break loop3;
           }
@@ -3364,12 +3367,12 @@ async function PARSER() {
           putb(g.P_VTBL, 2, getb(g.P_LEXV, tmp1 = (ptr * 2) + 2));
           putb(g.P_VTBL, 3, getb(g.P_LEXV, tmp1 + 1));
         } else if ((val = await WT$(wrd, PS$PREPOSITION, 0)) || (wrd == W.A || wrd == W.EVERYTHING) || (wrd == W.BOTH || wrd == W.ALL) || (await WT$(wrd, PS$ADJECTIVE)) || (await WT$(wrd, PS$OBJECT))) {
-          if ((g.P_LEN > 1) && (nw == W.OF) && !(verb == ACT.TAKE) && (val == 0) && !(wrd == W.A) && !(wrd == W.ALL || wrd == W.BOTH || wrd == W.EVERYTHING)) {
+          if ((s16(g.P_LEN) > s16(1)) && (nw == W.OF) && !(verb == ACT.TAKE) && (val == 0) && !(wrd == W.A) && !(wrd == W.ALL || wrd == W.BOTH || wrd == W.EVERYTHING)) {
             put(g.P_OFW, g.P_NCN, wrd);
             of_flag = true;
           } else if (!(val == 0) && ((g.P_LEN == 0) || (nw == W.THEN || nw == W.PERIOD))) {
             g.P_END_ON_PREP = true;
-            if (g.P_NCN < 2) {
+            if (s16(g.P_NCN) < s16(2)) {
               put(g.P_ITBL, P_PREP1, val);
               put(g.P_ITBL, P_PREP1N, wrd);
             }
@@ -3382,7 +3385,7 @@ async function PARSER() {
             if (!$1) {
               return false;
             }
-            if (ptr < 0) {
+            if (s16(ptr) < s16(0)) {
               g.QUOTE_FLAG = false;
               break loop3;
             }
@@ -3460,7 +3463,7 @@ async function WAY_TO_TALK(q$ = false) {
 async function WT$(ptr, bit, b1 = 5) {
   let offs = P_P1OFF, typ = 0;
   if (btst(typ = getb(ptr, P_PSOFF), bit)) {
-    if (b1 > 4) {
+    if (s16(b1) > s16(4)) {
       return true;
     } else {
       typ = typ & P_P1BITS;
@@ -3493,7 +3496,7 @@ async function CLAUSE(ptr, val, wrd) {
     put(g.P_ITBL, num, get(g.P_ITBL, num) + 4);
   }
   for (;;) {
-    if ((g.P_LEN = g.P_LEN - 1) < 0) {
+    if (s16(g.P_LEN = g.P_LEN - 1) < s16(0)) {
       put(g.P_ITBL, num + 1, g.P_LEXV + (ptr * 2));
       return -1;
     }
@@ -3523,7 +3526,7 @@ async function CLAUSE(ptr, val, wrd) {
         await CHANGE_LEXV(ptr + 2, W.THEN);
         g.P_LEN = g.P_LEN + 2;
       } else if (await WT$(wrd, PS$OBJECT)) {
-        if ((g.P_LEN > 0) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.EVERYTHING)) {
+        if ((s16(g.P_LEN) > s16(0)) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.EVERYTHING)) {
           put(g.P_OFW, g.P_NCN - 1, wrd);
         } else if ((await WT$(wrd, PS$ADJECTIVE)) && !(nw == 0) && (await WT$(nw, PS$OBJECT))) {
         } else if ((andflg == 0) && !(nw == W.BUT || nw == W.EXCEPT) && !(nw == W.AND || nw == W.COMMA)) {
@@ -3950,18 +3953,18 @@ async function NUMBER$(ptr) {
   cnt = getb(g.P_LEXV + (ptr * 2), 2);
   bptr = getb(g.P_LEXV + (ptr * 2), 3);
   loop1: for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       break loop1;
     } else {
       chr = getb(g.P_INBUF, bptr);
       if (chr == 58) {
         tim = sum;
         sum = 0;
-      } else if (sum > 9999) {
+      } else if (s16(sum) > s16(9999)) {
         return false;
       } else if (chr == CURRENCY_SYMBOL) {
         dollar = true;
-      } else if ((chr > 57) || (chr < 48)) {
+      } else if ((s16(chr) > s16(57)) || (s16(chr) < s16(48))) {
         return false;
       } else {
         sum = (sum * 10) + (chr - 48);
@@ -3970,16 +3973,16 @@ async function NUMBER$(ptr) {
     }
   }
   await CHANGE_LEXV(ptr, W.INTNUM);
-  if (sum > 9999) {
+  if (s16(sum) > s16(9999)) {
     return false;
   } else if (!(tim == 0)) {
-    if (tim > 23) {
+    if (s16(tim) > s16(23)) {
       return false;
     }
     sum = sum + (tim * 60);
   }
   g.P_DOLLAR_FLAG = dollar;
-  if (!(dollar == 0) && (sum > 0)) {
+  if (!(dollar == 0) && (s16(sum) > s16(0))) {
     g.P_AMOUNT = sum;
     return W.MONEY;
   } else {
@@ -4085,7 +4088,7 @@ async function ORPHAN_MERGE() {
   put(g.P_OTBL, P_VERBN, g.P_VTBL);
   putb(g.P_VTBL, 2, 0);
   for (;;) {
-    if ((cnt = cnt + 1) > P_ITBLLEN) {
+    if (s16(cnt = cnt + 1) > s16(P_ITBLLEN)) {
       g.P_MERGED = true;
       return true;
     } else {
@@ -4148,8 +4151,8 @@ async function SYNTAX_CHECK() {
   syn = syn + 1;
   loop1: for (;;) {
     num = getb(syn, P_SBITS) & P_SONUMS;
-    if (g.P_NCN > num) {
-    } else if (!(num < 1) && (g.P_NCN == 0) && (((prep = get(g.P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
+    if (s16(g.P_NCN) > s16(num)) {
+    } else if (!(s16(num) < s16(1)) && (g.P_NCN == 0) && (((prep = get(g.P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
       drive1 = syn;
     } else if (eq(getb(syn, P_SPREP1), get(g.P_ITBL, P_PREP1))) {
       if ((num == 2) && (g.P_NCN == 1)) {
@@ -4251,7 +4254,7 @@ async function ORPHAN(d1, d2) {
   if (g.P_NCN == 2) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC2, P_NC2L, P_NC2, P_NC2L);
   }
-  if (!(g.P_NCN < 1)) {
+  if (!(s16(g.P_NCN) < s16(1))) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC1, P_NC1L, P_NC1, P_NC1L);
   }
   if (!(d1 == 0)) {
@@ -4614,7 +4617,7 @@ async function GET_OBJECT(tbl, vrb = true) {
         tell("?]\n");
       }
       put(tbl, P_MATCHLEN, 1);
-    } else if ((len > 1) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
+    } else if ((s16(len) > s16(1)) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
       if (g.P_SLOCBITS == (-1)) {
         g.P_SLOCBITS = xbits;
         olen = len;
@@ -4739,10 +4742,10 @@ async function WHICH_PRINT(tlen, len, tbl) {
         tell(",");
       }
       tell(" or");
-    } else if (len > 2) {
+    } else if (s16(len) > s16(2)) {
       tell(",");
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       tell("?\n");
       return true;
     }
@@ -4939,9 +4942,9 @@ async function ITAKE_CHECK(tbl, bits) {
 
 async function MANY_CHECK() {
   let loss = false, tmp = 0;
-  if ((get(g.P_PRSO, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
+  if ((s16(get(g.P_PRSO, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
     loss = 1;
-  } else if ((get(g.P_PRSI, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
+  } else if ((s16(get(g.P_PRSI, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
     loss = 2;
   }
   if (!(loss == 0)) {
@@ -4994,7 +4997,7 @@ async function IS_LIT$(rm = false, rmbit = true) {
       }
     }
     await DO_SL(rm, 1, 1);
-    if (get(g.P_TABLE, P_MATCHLEN) > 0) {
+    if (s16(get(g.P_TABLE, P_MATCHLEN)) > s16(0)) {
       lit = true;
     }
   }
@@ -5008,7 +5011,7 @@ async function PICK_NEXT(tbl) {
   cnt = get(tbl, 1);
   str = get(tbl, cnt);
   ++cnt;
-  if (cnt > get(tbl, 0)) {
+  if (s16(cnt) > s16(get(tbl, 0))) {
     cnt = 2;
   }
   put(tbl, 1, cnt);
@@ -5192,7 +5195,7 @@ async function FIND_NOT_HERE(tbl, prso$) {
       g.PRSI = g.P_MOBY_FOUND;
     }
     return false;
-  } else if ((m_f > 1) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC), tbl))) {
+  } else if ((s16(m_f) > s16(1)) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC), tbl))) {
     if (obj == NOT_HERE_OBJECT) {
       return true;
     } else if (!(prso$ == 0)) {
@@ -5535,7 +5538,7 @@ async function PRINT_SENTENCE() {
         if ((cnt == 1) && ((wcnt == 1) || (wrd == W.NE || wrd == W.NW) || (wrd == W.SE || wrd == W.SW) || inTable(wrd, g.CAPS, NUMCAPS))) {
           char = char - 32;
         }
-        if ((char > 31) && (char < 123)) {
+        if ((s16(char) > s16(31)) && (s16(char) < s16(123))) {
           printC(char);
         }
         if (cnt == 1) {
@@ -5591,7 +5594,7 @@ async function SAVE_INPUT() {
         }
       }
     } else {
-      if ((tokens > 1) && (sptr < 80)) {
+      if ((s16(tokens) > s16(1)) && (s16(sptr) < s16(80))) {
         putb(g.INSAVE_A, sptr, 32);
         ++sptr;
       }
@@ -5601,7 +5604,7 @@ async function SAVE_INPUT() {
       cnt = 1;
       loop2: for (;;) {
         x = getb(g.P_INBUF, wptr);
-        if ((x > 96) && (x < 123)) {
+        if ((s16(x) > s16(96)) && (s16(x) < s16(123))) {
           x = x - 32;
         }
         putb(g.INSAVE_A, sptr, x);
@@ -5613,7 +5616,7 @@ async function SAVE_INPUT() {
     }
     lptr = lptr + 4;
     eptr = eptr + 2;
-    if (sptr > 79) {
+    if (s16(sptr) > s16(79)) {
       sptr = 79;
       break loop1;
     } else if (++tokens > savlen) {
@@ -5876,7 +5879,7 @@ async function V_SCORE() {
     tell("s");
   }
   tell(". This gives you the rank of ");
-  (await ITALICIZE((g.SCORE < 15 ? "Tourist." : (g.SCORE < 50 ? "Explorer." : (g.SCORE < 100 ? "Historian." : "Tourist.")))));
+  (await ITALICIZE((s16(g.SCORE) < s16(15) ? "Tourist." : (s16(g.SCORE) < s16(50) ? "Explorer." : (s16(g.SCORE) < s16(100) ? "Historian." : "Tourist.")))));
   tell("]\n");
   return true;
 }
@@ -5884,7 +5887,7 @@ async function V_SCORE() {
 async function V_NOTIFY() {
   if (await WRONG_WINNER$()) {
     return M_FATAL;
-  } else if (g.DO_SCORE$ < 2) {
+  } else if (s16(g.DO_SCORE$) < s16(2)) {
     g.DO_SCORE$ = 2;
   } else {
     g.DO_SCORE$ = 1;
@@ -5984,7 +5987,7 @@ async function V_VERSION() {
   await RELEASE();
   tell(" / Serial Number ");
   loop1: for (;;) {
-    if ((cnt = cnt + 1) > 23) {
+    if (s16(cnt = cnt + 1) > s16(23)) {
       break loop1;
     } else {
       printC(getb(0, cnt));
@@ -7992,7 +7995,7 @@ async function EMPTY_PRSO(dest) {
         tell("It ");
       }
       await LANDS_AT_YOUR_FEET();
-    } else if ((((await WEIGHT(dest)) + (await WEIGHT(obj))) - getProp(dest, P.SIZE)) > getProp(dest, P.CAPACITY)) {
+    } else if (s16(((await WEIGHT(dest)) + (await WEIGHT(obj))) - getProp(dest, P.SIZE)) > s16(getProp(dest, P.CAPACITY))) {
       tell("There isn't enough room ");
       if (hasFlag(dest, CONTAINER)) {
         tell("in ");
@@ -8178,7 +8181,7 @@ async function V_PUT() {
     await ISNT_ARENT(g.PRSI);
     tell("open.\n");
     return true;
-  } else if ((((await WEIGHT(g.PRSI)) + (await WEIGHT(g.PRSO))) - getProp(g.PRSI, P.SIZE)) > getProp(g.PRSI, P.CAPACITY)) {
+  } else if (s16(((await WEIGHT(g.PRSI)) + (await WEIGHT(g.PRSO))) - getProp(g.PRSI, P.SIZE)) > s16(getProp(g.PRSI, P.CAPACITY))) {
     tell("There isn't enough room ");
     if (hasFlag(g.PRSI, CONTAINER)) {
       tell("in ");
@@ -9367,7 +9370,7 @@ async function V_WAIT(n_ = 3) {
   }
   tell("Time passes.\n");
   for (;;) {
-    if (!(x == 0) || (n_ < 1)) {
+    if (!(x == 0) || (s16(n_) < s16(1))) {
       return true;
     } else if (await CLOCKER()) {
       x = true;
@@ -9386,7 +9389,7 @@ async function V_WAIT_FOR() {
       g.CLOCK_WAIT$ = true;
       await IMPOSSIBLE();
       return true;
-    } else if (g.P_NUMBER > 120) {
+    } else if (s16(g.P_NUMBER) > s16(120)) {
       g.CLOCK_WAIT$ = true;
       tell("[That's too long to WAIT.]\n");
       return true;
@@ -9583,7 +9586,7 @@ async function ITAKE(vb = true) {
       (await YOUD_HAVE_TO("open", l));
     }
     return false;
-  } else if (!(loc(l) == g.WINNER) && (((await WEIGHT(g.PRSO)) + (await WEIGHT(g.WINNER))) > LOAD_ALLOWED)) {
+  } else if (!(loc(l) == g.WINNER) && (s16((await WEIGHT(g.PRSO)) + (await WEIGHT(g.WINNER))) > s16(LOAD_ALLOWED))) {
     if (!(vb == 0)) {
       if (first(g.WINNER)) {
         tell("Your load is");
@@ -9594,7 +9597,7 @@ async function ITAKE(vb = true) {
       tell(" too heavy.\n");
     }
     return false;
-  } else if ((await CCOUNT(g.WINNER)) > FUMBLE_NUMBER) {
+  } else if (s16(await CCOUNT(g.WINNER)) > s16(FUMBLE_NUMBER)) {
     if (!(vb == 0)) {
       tell("You're holding too much already.\n");
     }
@@ -9980,7 +9983,7 @@ async function QUEUE(rtn, tick) {
       if (!(int == 0)) {
         c_ = int;
       } else {
-        if (g.C_INTS < C_INTLEN) {
+        if (s16(g.C_INTS) < s16(C_INTLEN)) {
           tell("[Too many interrupts!]\n");
         }
         g.C_INTS = g.C_INTS - C_INTLEN;
@@ -9996,7 +9999,7 @@ async function QUEUE(rtn, tick) {
     }
     c_ = c_ + C_INTLEN;
   }
-  if (int > g.CLOCK_HAND) {
+  if (s16(int) > s16(g.CLOCK_HAND)) {
     tick = -(tick + 3);
   }
   put(int, C_TICK, tick);
@@ -10033,13 +10036,13 @@ async function CLOCKER() {
         break loop1;
       }
       g.SECONDS = g.SECONDS + 15;
-      if (g.SECONDS > 59) {
+      if (s16(g.SECONDS) > s16(59)) {
         g.SECONDS = g.SECONDS - 60;
         ++g.MINUTES;
-        if (g.MINUTES > 59) {
+        if (s16(g.MINUTES) > s16(59)) {
           g.MINUTES = g.MINUTES - 60;
           ++g.HOURS;
-          if (g.HOURS > 23) {
+          if (s16(g.HOURS) > s16(23)) {
             g.HOURS = 0;
           }
         }
@@ -10047,18 +10050,18 @@ async function CLOCKER() {
       break loop1;
     } else if (!(get(g.CLOCK_HAND, C_RTN) == 0)) {
       tick = get(g.CLOCK_HAND, C_TICK);
-      if (tick < (-1)) {
+      if (s16(tick) < s16(-1)) {
         put(g.CLOCK_HAND, C_TICK, (-tick) - 3);
         q$ = g.CLOCK_HAND;
       } else if (!(tick == 0)) {
-        if (tick > 0) {
+        if (s16(tick) > s16(0)) {
           tick = tick - 1;
           put(g.CLOCK_HAND, C_TICK, tick);
         }
         if (!(tick == 0)) {
           q$ = g.CLOCK_HAND;
         }
-        if (!(tick > 0)) {
+        if (!(s16(tick) > s16(0))) {
           rtn = get(g.CLOCK_HAND, C_RTN);
           if (tick == 0) {
             put(g.CLOCK_HAND, C_RTN, 0);
@@ -10601,10 +10604,10 @@ async function NEW_OSIGN(door, v_ = true) {
     tell("clicks into place at the dial's ", S(get(g.SYMBOL_NAMES, g.OSIGN)), " symbol.\n");
   }
   if (g.PRSI == LEFT || g.PRSI == RIGHT) {
-    if ((old > 11) && (g.OSIGN == 0)) {
+    if ((s16(old) > s16(11)) && (g.OSIGN == 0)) {
       await REPORT_SUNSET();
       return true;
-    } else if ((old == 0 || old == 1) && (g.OSIGN > 11)) {
+    } else if ((old == 0 || old == 1) && (s16(g.OSIGN) > s16(11))) {
       await REPORT_SUNSET(true);
     }
     return true;
@@ -10614,7 +10617,7 @@ async function NEW_OSIGN(door, v_ = true) {
 
 async function RESET_SHDIRS() {
   let x = 0, y = 0, z = 0, q = 0;
-  if (g.OSIGN < 3) {
+  if (s16(g.OSIGN) < s16(3)) {
     (x = "north");
     y = P.NORTH;
     if (g.FLIP$ == 0) {
@@ -10624,7 +10627,7 @@ async function RESET_SHDIRS() {
       (z = "west");
       (q = "east");
     }
-  } else if (g.OSIGN < 5) {
+  } else if (s16(g.OSIGN) < s16(5)) {
     if (g.FLIP$ == 0) {
       (x = "northeast");
       y = P.NE;
@@ -10636,7 +10639,7 @@ async function RESET_SHDIRS() {
       (z = "southwest");
       (q = "northeast");
     }
-  } else if (g.OSIGN < 8) {
+  } else if (s16(g.OSIGN) < s16(8)) {
     (z = "south");
     (q = "north");
     if (g.FLIP$ == 0) {
@@ -10646,7 +10649,7 @@ async function RESET_SHDIRS() {
       (x = "west");
       y = P.WEST;
     }
-  } else if (g.OSIGN < 10) {
+  } else if (s16(g.OSIGN) < s16(10)) {
     if (g.FLIP$ == 0) {
       (x = "southeast");
       y = P.NW;
@@ -10683,7 +10686,7 @@ async function I_SHADOW() {
     return false;
   }
   ++g.ODEG;
-  if (g.ODEG > 12) {
+  if (s16(g.ODEG) > s16(12)) {
     g.ODEG = 0;
     ++g.OSIGN;
     await RESET_SHDIRS();
@@ -10691,7 +10694,7 @@ async function I_SHADOW() {
       ++v_;
       await SHADOW_GOES();
     }
-    if (g.OSIGN > 12) {
+    if (s16(g.OSIGN) > s16(12)) {
       g.OSIGN = 0;
       g.ODEG = 0;
       g.ISIGN = 0;
@@ -10725,7 +10728,7 @@ async function I_SHADOW() {
     crlf();
   }
   ++g.IDEG;
-  if (g.IDEG > 25) {
+  if (s16(g.IDEG) > s16(25)) {
     g.IDEG = 0;
     ++g.ISIGN;
     if (loc(INNER_SHADOW) == g.HERE) {
@@ -12119,7 +12122,7 @@ async function I_STYX(cr$ = true) {
     return true;
   }
   ++g.STICKS;
-  if (g.STICKS > 12) {
+  if (s16(g.STICKS) > s16(12)) {
     g.STICKS = 1;
   }
   if (g.STICKS == 1) {
@@ -12307,7 +12310,7 @@ async function I_FLIPPER(cr = true) {
     return false;
   } else if (!(g.FCOUNT == 0)) {
     --g.FCOUNT;
-    if (g.FCOUNT > 2) {
+    if (s16(g.FCOUNT) > s16(2)) {
       return false;
     } else if (g.FCOUNT == 2) {
       move(FIN, g.HERE);
@@ -12382,7 +12385,7 @@ async function I_TIDE() {
   } else if (g.HERE == WSAND) {
     w_ = true;
   }
-  if ((g.HERE == ON_SCAFFOLD || g.HERE == AT_SDOORS) || (g.MINUTES < 54) || !(g.SECONDS == 45 || g.SECONDS == 15)) {
+  if ((g.HERE == ON_SCAFFOLD || g.HERE == AT_SDOORS) || (s16(g.MINUTES) < s16(54)) || !(g.SECONDS == 45 || g.SECONDS == 15)) {
   } else if (g.MINUTES == 54) {
     crlf();
     if (g.SECONDS == 15) {
@@ -13329,7 +13332,7 @@ async function UPDATE_APPETITE() {
     return true;
   } else if (g.APPETITE == g.CCNT) {
     return true;
-  } else if (g.CCNT > 1) {
+  } else if (s16(g.CCNT) > s16(1)) {
     --g.CCNT;
     return true;
   } else {
@@ -13564,7 +13567,7 @@ async function I_BITTEN(cr = true) {
     tell(D(GROUND));
   }
   tell(S(g.PCR));
-  if (g.MINUTES > 27) {
+  if (s16(g.MINUTES) > s16(27)) {
     tell("Moment");
   } else {
     tell("Minute");
@@ -13818,7 +13821,7 @@ async function I_TRINITY() {
       await REVEAL_WIRE();
     }
   }
-  if ((g.HERE == ON_TOWER || g.HERE == TOWER_PLAT) && (g.MINUTES < 30) && (g.DISTRACTION == 0)) {
+  if ((g.HERE == ON_TOWER || g.HERE == TOWER_PLAT) && (s16(g.MINUTES) < s16(30)) && (g.DISTRACTION == 0)) {
     --g.TOLERANCE;
     if (g.TOLERANCE == 0) {
       if (!(w_ == 0)) {
@@ -13922,7 +13925,7 @@ async function I_TRINITY() {
   } else if ((g.MINUTES == 27) && (g.SECONDS == 30)) {
     tell("\n\"Ninety seconds to auto-sequencer. Mark.\"\n");
     return true;
-  } else if (g.MINUTES < 9) {
+  } else if (s16(g.MINUTES) < s16(9)) {
     if (!(g.QUIET$ == 0) || !(v_ == 0) || (g.SECONDS == 15 || g.SECONDS == 45)) {
       return false;
     }
@@ -14047,7 +14050,7 @@ async function REVEAL_WIRE() {
   tell("\n\"What the... ?\" mutters the ", D(WTK), S(g.PCR), "\"I didn't copy, ", D(BAKER), ".\"\n\n\"Aw, hell.\" You hear a flurry of excited ", D(VOICES), ". \"", D(BAKER), " to all units. We have 100% continuity loss towerside. Repeat, ");
   (await ITALICIZE("zero"));
   tell(" continuity.\"\n\nA chorus of expletives fills the airwaves. \"");
-  if (g.MINUTES > 28) {
+  if (s16(g.MINUTES) > s16(28)) {
     tell("Is this a scrub, ", D(BAKER), "?\"\n\n\"Affirmative, ", D(ABLE), ". Sequencer's going. Too late to risk it. This is a scrub, everybody. Repeat, scrub it.\"\n");
     await POLICE_CONVERGE();
     return true;
@@ -14539,11 +14542,11 @@ async function HURRICANE() {
 
 async function I_OPPIE(cr = true) {
   --g.OSC;
-  if (g.MINUTES > 27) {
-    if (g.OSC > 8) {
+  if (s16(g.MINUTES) > s16(27)) {
+    if (s16(g.OSC) > s16(8)) {
       await DEQUEUE(I_OPPIE.id);
       return false;
-    } else if (g.OSC > 4) {
+    } else if (s16(g.OSC) > s16(4)) {
       g.OSC = 4;
     }
   }
@@ -14575,11 +14578,11 @@ async function I_OPPIE(cr = true) {
     g.P_HIM_OBJECT = NOT_HERE_OBJECT;
     setFlag(OPPIE, SEEN);
     tell("With a nervous sigh, the ", D(OPPIE), " disappears into the ", D(SHELTER), S(g.PERIOD));
-    if (g.MINUTES > 27) {
+    if (s16(g.MINUTES) > s16(27)) {
       await DEQUEUE(I_OPPIE.id);
     }
     return true;
-  } else if ((g.OSC < 4) && (g.HERE == S100)) {
+  } else if ((s16(g.OSC) < s16(4)) && (g.HERE == S100)) {
     setFlag(OPPIE, SEEN);
     g.P_HIM_OBJECT = OPPIE;
     if (!(cr == 0)) {
@@ -14845,7 +14848,7 @@ async function ASK_BWOMAN_ABOUT(obj) {
   let q = false, cnt = 0, tbl = 0, x = 0, v_ = 0;
   setFlag(BWOMAN, SEEN);
   if (obj == GTRINITY || obj == PLUTONIUM) {
-    if (getb(0, 33) < 79) {
+    if (s16(getb(0, 33)) < s16(79)) {
       await CTHE_PRINT(BWOMAN);
       tell(" just smiles.\n");
       return true;
@@ -15397,7 +15400,7 @@ async function GIRL_F(context = false) {
       tell(" makes a face.\n");
       return true;
     } else if (isVerb(V.THROW, V.THROW_OVER)) {
-      if (getProp(g.PRSO, P.SIZE) > 3) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         move(g.PRSO, g.HERE);
         await CTHEI_PRINT();
         tell(" dodges the flying ", D(g.PRSO), " and looks up at you reproachfully", S(g.PCR));
@@ -15764,7 +15767,7 @@ async function MEEP_F(context = false) {
         await THE_PRINT();
         tell(S(g.PERIOD));
         return M_FATAL;
-      } else if (!(hasFlag(g.PRSO, TAKEABLE)) || (getProp(g.PRSO, P.SIZE) > 3)) {
+      } else if (!(hasFlag(g.PRSO, TAKEABLE)) || (s16(getProp(g.PRSO, P.SIZE)) > s16(3))) {
         await SOUR_LOOK();
         return M_FATAL;
       } else if ((loc(MEEP) == CAGE) && !(hasFlag(CAGE, OPENED))) {
@@ -15897,7 +15900,7 @@ async function MEEP_F(context = false) {
       if (loc(g.PRSI) == TS6) {
         await CANT_FROM_HERE();
         return true;
-      } else if (getProp(g.PRSO, P.SIZE) > 3) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         await SOUR_LOOK();
         return true;
       } else if (g.PRSO == BAG) {
@@ -15947,7 +15950,7 @@ async function MEEP_F(context = false) {
     } else if (isVerb(V.THROW, V.THROW_OVER)) {
       move(g.PRSO, g.HERE);
       tell(S(g.CTHEMEEP));
-      if (getProp(g.PRSO, P.SIZE) > 3) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         tell("dodges ");
         await THE_PRINT();
         tell(" and gives you a hurt look.\n");
@@ -16136,7 +16139,7 @@ async function SHOW_TO_MEEP(obj) {
   } else if (!(g.APPETITE == 0)) {
     await BUSY_EATING();
     return true;
-  } else if ((loc(MEEP) == g.HERE) && (loc(obj) == g.HERE) && hasFlag(obj, TAKEABLE) && (getProp(obj, P.SIZE) < 4)) {
+  } else if ((loc(MEEP) == g.HERE) && (loc(obj) == g.HERE) && hasFlag(obj, TAKEABLE) && (s16(getProp(obj, P.SIZE)) < s16(4))) {
     x = first(MEEP);
     if (!(x == 0)) {
       move(x, g.HERE);
@@ -16214,7 +16217,7 @@ async function DOG_F() {
       await THEI_PRINT();
     }
     tell(" to deal the sleeping monster a mighty blow");
-    if (!(g.PRSI == false || g.PRSI == HANDS || g.PRSI == FEET) && (getProp(g.PRSI, P.SIZE) < 3)) {
+    if (!(g.PRSI == false || g.PRSI == HANDS || g.PRSI == FEET) && (s16(getProp(g.PRSI, P.SIZE)) < s16(3))) {
       tell(" (or as mighty a blow as you can expect from ");
       await PRINTA(g.PRSI);
       tell(")");
@@ -16501,13 +16504,13 @@ async function GIS_F(context = false) {
   if (isVerb(V.EXAMINE, V.WATCH)) {
     await CTHE_PRINT();
     tell(" in the ");
-    if (g.MINUTES < 28) {
+    if (s16(g.MINUTES) < s16(28)) {
       tell(D(JEEPS));
     } else {
       tell(D(TRENCHES));
     }
     tell(" are obviously under a lot of strain. Their ");
-    if (g.MINUTES < 28) {
+    if (s16(g.MINUTES) < s16(28)) {
       tell("fingers drum impatiently on their steering wheels, and their ");
     }
     tell("eyes dart back and forth between the ", D(SBUNK), " and the ", D(HORIZON), ". One of them is training a ", D(BINOS), " on the road leading south.\n");
@@ -16945,7 +16948,7 @@ async function SWIM_IN_LWATER() {
 }
 
 async function DONT_MISS_MISSILE() {
-  if (g.HCNT < 6) {
+  if (s16(g.HCNT) < s16(6)) {
     tell("The spectacle on the ", D(LWATER), " has you frozen ");
   } else {
     g.HCNT = 6;
@@ -18228,7 +18231,7 @@ async function LOOK_AT_XRAY() {
     tell(" drifting ");
     if (g.ORBCNT == 3) {
       tell("closer to ");
-    } else if (g.ORBCNT > 5) {
+    } else if (s16(g.ORBCNT) > s16(5)) {
       tell("away from ");
     } else {
       tell("past ");
@@ -18271,7 +18274,7 @@ async function ON_PLATFORM_IN() {
   } else if (hasFlag(TS4_DOOR, OPENED)) {
     await DEQUEUE(I_RCOUNT.id);
     await DEQUEUE(I_RODENTS.id);
-    if (g.MINUTES > 49) {
+    if (s16(g.MINUTES) > s16(49)) {
       tell("Numb with cold, you ");
     } else {
       tell("You ");
@@ -19218,7 +19221,7 @@ async function W100_NW() {
 }
 
 async function W100_SW() {
-  if (g.MINUTES > 27) {
+  if (s16(g.MINUTES) > s16(27)) {
     await AIMLESS(D9);
     return D9;
   }
@@ -19256,7 +19259,7 @@ async function S75_F(context = false) {
 async function S100_F(context = false) {
   if (context == M_LOOK) {
     tell("You're hiding behind a small storage ", D(SHED), ".\n\nPeeking around the ", D(CORNER), ", you see a large earth-covered ", D(SBUNK), " immediately", S(g.TON), "east. Several ", D(JEEPS));
-    if (g.MINUTES < 28) {
+    if (s16(g.MINUTES) < s16(28)) {
       tell(", manned by nervous ", D(GIS), ",");
     }
     tell(" are parked around the ", D(SBUNK), "'s open ", D(SBENTRY), S(g.PCR));
@@ -19264,7 +19267,7 @@ async function S100_F(context = false) {
     return true;
   } else if ((context == M_ENTERED) && !(hasFlag(SBUNK, TOUCHED))) {
     setFlag(SBUNK, TOUCHED);
-    if (g.MINUTES < 15) {
+    if (s16(g.MINUTES) < s16(15)) {
       tell("\nA pear-shaped man appears at the ", D(SHELTER), "'s ", D(SBENTRY), ". He strides up to one of the jeeps and taps the young driver on the shoulder. \"General Groves, soldier. Take me back to Base Camp.\"\n\nIll-disguised relief passes over the GI's face as the pear man clambers into the back seat. You duck behind the shed as the jeep roars past, and watch as it disappears (rather hastily) down the south road.\n");
       return true;
     }
@@ -19303,7 +19306,7 @@ async function S100_S() {
 
 async function BUT_HESITATE(str) {
   tell(", but hesistate when you notice one of the ", D(GIS));
-  if (g.MINUTES > 27) {
+  if (s16(g.MINUTES) > s16(27)) {
     tell(" in the ", D(TRENCHES));
   }
   tell(" fingering a ", S(str), ".\n\nDo you want to continue anyway?");
@@ -19320,7 +19323,7 @@ async function BUT_HESITATE(str) {
     tell("drops his binoculars and");
   }
   tell(" leaps out of his ");
-  if (g.MINUTES < 28) {
+  if (s16(g.MINUTES) < s16(28)) {
     tell(D(JEEP));
   } else {
     tell("trench");
@@ -21410,28 +21413,28 @@ async function READ_DIAL() {
     tell(" is creeping slowly towards");
   } else if (!(g.SUN_MOVING$ == 0)) {
     tell(" appears to be drifting slowly ");
-    if ((g.OSIGN == 12) && (g.ODEG > 6)) {
+    if ((g.OSIGN == 12) && (s16(g.ODEG) > s16(6))) {
       tell("away from");
     } else if (door == 0) {
       await SAY_BETWEEN();
       return true;
     } else if (g.ODEG == 5 || g.ODEG == 6) {
       tell("across");
-    } else if (g.ODEG > 6) {
+    } else if (s16(g.ODEG) > s16(6)) {
       tell("away from");
     } else {
       tell("towards");
     }
   } else {
     tell(" rests ");
-    if ((g.OSIGN == 12) && (g.ODEG > 6)) {
+    if ((g.OSIGN == 12) && (s16(g.ODEG) > s16(6))) {
       tell("a little after");
     } else if (door == 0) {
       await SAY_BETWEEN();
       return true;
     } else if (g.ODEG == 5 || g.ODEG == 6) {
       tell("exactly on");
-    } else if (g.ODEG > 6) {
+    } else if (s16(g.ODEG) > s16(6)) {
       tell("a little after");
     } else {
       tell("a bit before");
@@ -21507,7 +21510,7 @@ async function RING_F() {
       if ((x == 7) || eq(get(g.P_NAMW, 1), W.SYMBOLS, W.GLYPHS)) {
         await SPECIFY_SYMBOL();
         return M_FATAL;
-      } else if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (g.ODEG > 4))) {
+      } else if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (s16(g.ODEG) > s16(4)))) {
         tell(S(g.ARROW_ON), "to the ");
         printB(get(g.P_ADJW, 1));
         tell(" symbol.\n");
@@ -21525,7 +21528,7 @@ async function RING_F() {
         await CTHE_PRINT();
         tell(" refuses to move that way.\n");
         return true;
-      } else if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (g.ODEG > 4))) {
+      } else if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (s16(g.ODEG) > s16(4)))) {
         await ALREADY_POINTING();
         return true;
       } else if (hasFlag(g.PRSO, TOUCHED)) {
@@ -21536,15 +21539,15 @@ async function RING_F() {
       await NEW_OSIGN(x);
       return true;
     } else if (g.PRSI == INTNUM) {
-      if (g.P_NUMBER < 1) {
+      if (s16(g.P_NUMBER) < s16(1)) {
         await SPECIFY_SYMBOL();
         return M_FATAL;
-      } else if (g.P_NUMBER > 7) {
+      } else if (s16(g.P_NUMBER) > s16(7)) {
         tell("There are only seven ", D(SYMBOLS), " on the ", D(DIAL), S(g.PERIOD));
         return true;
       }
       x = (g.P_NUMBER - 1) * 2;
-      if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (g.ODEG > 4))) {
+      if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (s16(g.ODEG) > s16(4)))) {
         await ALREADY_POINTING();
         return true;
       } else if (hasFlag(g.PRSO, TOUCHED)) {
@@ -21555,8 +21558,8 @@ async function RING_F() {
       await NEW_OSIGN(x);
       return true;
     } else if (g.PRSI == RIGHT) {
-      x = g.FLIP$ == 0 ? (g.OSIGN > 10 ? 0 : (g.OSIGN == 0 || g.OSIGN == 1 ? 2 : (mod(g.OSIGN, 2) ? (g.OSIGN + 1) : (g.OSIGN + 2)))) : (g.OSIGN == 0 || g.OSIGN == 1 ? 12 : (mod(g.OSIGN, 2) ? (g.OSIGN - 3) : (g.OSIGN - 2)));
-      if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (g.ODEG > 4))) {
+      x = g.FLIP$ == 0 ? (s16(g.OSIGN) > s16(10) ? 0 : (g.OSIGN == 0 || g.OSIGN == 1 ? 2 : (mod(g.OSIGN, 2) ? (g.OSIGN + 1) : (g.OSIGN + 2)))) : (g.OSIGN == 0 || g.OSIGN == 1 ? 12 : (mod(g.OSIGN, 2) ? (g.OSIGN - 3) : (g.OSIGN - 2)));
+      if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (s16(g.ODEG) > s16(4)))) {
         await ALREADY_POINTING();
         return true;
       } else if (hasFlag(g.PRSO, TOUCHED)) {
@@ -21567,8 +21570,8 @@ async function RING_F() {
       await NEW_OSIGN(x);
       return true;
     } else if (g.PRSI == LEFT) {
-      x = g.FLIP$ == 0 ? (g.OSIGN == 0 || g.OSIGN == 1 ? 12 : (mod(g.OSIGN, 2) ? (g.OSIGN - 3) : (g.OSIGN - 2))) : (g.OSIGN > 10 ? 0 : (g.OSIGN == 0 || g.OSIGN == 1 ? 2 : (mod(g.OSIGN, 2) ? (g.OSIGN + 1) : (g.OSIGN + 2))));
-      if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (g.ODEG > 4))) {
+      x = g.FLIP$ == 0 ? (g.OSIGN == 0 || g.OSIGN == 1 ? 12 : (mod(g.OSIGN, 2) ? (g.OSIGN - 3) : (g.OSIGN - 2))) : (s16(g.OSIGN) > s16(10) ? 0 : (g.OSIGN == 0 || g.OSIGN == 1 ? 2 : (mod(g.OSIGN, 2) ? (g.OSIGN + 1) : (g.OSIGN + 2))));
+      if ((g.OSIGN == (x + 1)) || ((g.OSIGN == x) && (s16(g.ODEG) > s16(4)))) {
         await ALREADY_POINTING();
         return true;
       } else if (hasFlag(g.PRSO, TOUCHED)) {
@@ -21863,7 +21866,7 @@ async function GNOMON_F() {
     tell(" it.\n");
     return true;
   } else if (isVerb(V.SCREW, V.PUT, V.PUSH_TO, V.PLUG) && (g.PRSI == DIAL || g.PRSI == BDIAL)) {
-    if ((await WEIGHT(g.PRSI)) > 3) {
+    if (s16(await WEIGHT(g.PRSI)) > s16(3)) {
       (await YOUD_HAVE_TO("clear off", g.PRSI));
       return true;
     } else if ((g.PRSI == BDIAL) && !(await GNOMON_FITS$())) {
@@ -22231,7 +22234,7 @@ async function BAG_F() {
       await EMPTY_OUT_BAG();
       return true;
     } else if (isVerb(V.PUT, V.PUT_ON)) {
-      if (getProp(g.PRSO, P.SIZE) > 1) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(1)) {
         (await YOUD_HAVE_TO("empty out", BAG));
         return true;
       }
@@ -22861,7 +22864,7 @@ async function PRAM_F() {
     tell("[To move the ", D(g.PRSO), ", simply push it in the desired ", D(INTDIR), "; for example, PUSH THE PERAMBULATOR TO THE SOUTH or PULL PRAM EAST.]\n");
     return true;
   } else if (isVerb(V.LOOSEN) && !(g.PRSI == 0) && !(g.P_PRSA_WORD == W.LOOSEN || g.P_PRSA_WORD == W.HOOK || g.P_PRSA_WORD == W.PRY)) {
-    if (getProp(g.PRSO, P.SIZE) > 2) {
+    if (s16(getProp(g.PRSO, P.SIZE)) > s16(2)) {
       await CTHE_PRINT();
       tell(" rolls a few feet, then stops.\n");
       return true;
@@ -23498,7 +23501,7 @@ async function MISSILE_F() {
       return true;
     }
     tell("The ");
-    if (g.HCNT < 6) {
+    if (s16(g.HCNT) < s16(6)) {
       tell("slowly falling ");
     } else {
       tell("floating ");
@@ -23572,13 +23575,13 @@ async function GO_INTO_LWDOOR() {
   await QUEUE(I_METEOR.id, -1);
   await QUEUE(I_MAGPIE.id, -1);
   await QUEUE(I_LUMP.id, -1);
-  if (g.HCNT > 1) {
+  if (s16(g.HCNT) > s16(1)) {
     tell("As y");
   } else {
     tell("Y");
   }
   tell("ou wade to the threshold ");
-  if (g.HCNT > 1) {
+  if (s16(g.HCNT) > s16(1)) {
     tell("a familiar ", D(MEEP), " flutters past");
     await ENTICINGLY();
     tell(" as it slips through ");
@@ -23986,7 +23989,7 @@ async function EXAMINE_OUTER_SHADOW() {
       } else {
         await SHDIRWARD();
         tell(", ");
-        if (g.ODEG < 4) {
+        if (s16(g.ODEG) < s16(4)) {
           tell("towards ");
         } else {
           tell("away from ");
@@ -24756,7 +24759,7 @@ async function SAY_GLOWS() {
 
 async function GLOWING_LOG_F() {
   if (!(g.NOW_PRSI$ == 0)) {
-    if (isVerb(V.THROW) && (getProp(g.PRSO, P.MASS) > 2)) {
+    if (isVerb(V.THROW) && (s16(getProp(g.PRSO, P.MASS)) > s16(2))) {
       move(g.PRSO, SBOG);
       await CTHE_PRINT();
       tell(" shatters the log ");
@@ -25468,7 +25471,7 @@ async function LUMP_F() {
         tell(" bursts into flame when it touches the ", D(g.PRSI), ". Soon there's nothing left of it.\n");
         return true;
       } else if (hasFlag(g.PRSO, FERRIC)) {
-        if (hasFlag(g.PRSO, TAKEABLE) && (loc(g.PRSO) == PLAYER) && (getProp(g.PRSO, P.SIZE) < 6)) {
+        if (hasFlag(g.PRSO, TAKEABLE) && (loc(g.PRSO) == PLAYER) && (s16(getProp(g.PRSO, P.SIZE)) < s16(6))) {
           move(g.PRSO, g.PRSI);
           await CTHE_PRINT();
           tell(" attaches itself to the ");
@@ -26547,7 +26550,7 @@ async function HANDLE_BOOT$(str) {
         (await YOUD_HAVE_TO("take off", g.PRSI));
         return true;
       }
-      if (getProp(g.PRSO, P.SIZE) > 2) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(2)) {
         await CTHE_PRINT();
         tell(" wouldn't fit in there.\n");
         return true;
@@ -26602,7 +26605,7 @@ async function ICICLES_F() {
       await CTHE_PRINT();
       tell(" strikes the ", D(ICICLES), " and ");
       await LANDS_AT_YOUR_FEET();
-      if (getProp(g.PRSO, P.MASS) > 3) {
+      if (s16(getProp(g.PRSO, P.MASS)) > s16(3)) {
         crlf();
         if (hasFlag(ICE, NODESC)) {
           await BREAK_OFF_ICE();
@@ -26658,7 +26661,7 @@ async function ICE_F() {
     return false;
   } else if (isVerb(V.EXAMINE)) {
     tell("The ");
-    if (g.ILIFE < 4) {
+    if (s16(g.ILIFE) < s16(4)) {
       tell("melting ");
     }
     tell(D(ICE), " looks like a crystal needle, eighteen inches long.\n");
@@ -26730,7 +26733,7 @@ async function KEYHOLE_F() {
         await CTHE_PRINT();
         tell(" slides into the hole with a satisfying click.\n");
         return true;
-      } else if ((g.PRSO == HANDS || g.PRSO == FEET) || (getProp(g.PRSO, P.SIZE) > 1)) {
+      } else if ((g.PRSO == HANDS || g.PRSO == FEET) || (s16(getProp(g.PRSO, P.SIZE)) > s16(1))) {
         await TOO_SMALL(g.PRSI);
         return true;
       } else if (loc(KEY) == g.PRSI) {
@@ -28198,7 +28201,7 @@ async function HIVE_F() {
       if (g.PRSO == HANDS) {
         await PUT_HAND_IN_HIVE();
         return true;
-      } else if (getProp(g.PRSO, P.MASS) < 4) {
+      } else if (s16(getProp(g.PRSO, P.MASS)) < s16(4)) {
         move(g.PRSO, g.HERE);
         await CTHE_PRINT();
         tell(" drops out of the ", D(g.PRSI), " and lands at your feet.\n");
@@ -28639,7 +28642,7 @@ async function PRSO_FALLS_DEEP() {
   if (g.PRSO == LEM) {
     tell(" has other ideas.\n");
     return true;
-  } else if (getProp(g.PRSO, P.SIZE) > 3) {
+  } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
     tell(" won't fit ");
   } else {
     move(g.PRSO, g.PRSI);
@@ -28662,7 +28665,7 @@ async function SKINK_F() {
       tell(" wrinkles its nose.\n");
       return true;
     } else if (isVerb(V.THROW, V.THROW_OVER)) {
-      if (!(getProp(g.PRSO, P.SIZE) > 3)) {
+      if (!(s16(getProp(g.PRSO, P.SIZE)) > s16(3))) {
         (await NOT_LIKELY(g.PRSO, "would affect the skink"));
         return true;
       } else if (loc(g.PRSI) == PLAYER) {
@@ -28696,7 +28699,7 @@ async function SKINK_F() {
     if (g.PRSI == false || g.PRSI == HANDS) {
       await PERFORM(V.SQUEEZE, g.PRSO);
       return true;
-    } else if (!(getProp(g.PRSI, P.SIZE) > 3)) {
+    } else if (!(s16(getProp(g.PRSI, P.SIZE)) > s16(3))) {
       (await NOT_LIKELY(g.PRSI, "would affect the skink"));
       return true;
     } else if (loc(g.PRSO) == PLAYER) {
@@ -29022,7 +29025,7 @@ async function CAGE_F() {
           await UPDATE_SCORE();
         }
         return true;
-      } else if (getProp(g.PRSO, P.SIZE) > 3) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         await PRSO_WONT_FIT();
       } else {
         move(g.PRSO, g.PRSI);
@@ -29458,7 +29461,7 @@ async function SHADES_F() {
     tell(" are stooped and emaciated, their sunken eyes dark with inscrutable emotions.\n");
     return true;
   } else if (isVerb(V.TOUCH, V.SQUEEZE, V.SHAKE, V.KNOCK, V.HIT, V.MUNG, V.CUT, V.RIP, V.KICK, V.TURN, V.PUSH, V.PULL, V.MOVE, V.PUSH_TO, V.REACH_IN, V.TAKE) && (g.PRSI == false || g.PRSI == HANDS)) {
-    if ((g.IN_DORY$ == 0) && (g.STICKS > 4)) {
+    if ((g.IN_DORY$ == 0) && (s16(g.STICKS) > s16(4))) {
       await CANT_FROM_HERE();
       return true;
     } else if (isVerb(V.KICK) || (g.PRSI == FEET)) {
@@ -30052,7 +30055,7 @@ async function OCOCO_F() {
   let m = false;
   if (!(g.NOW_PRSI$ == 0)) {
     if (isVerb(V.PUT, V.EMPTY_INTO)) {
-      if (getProp(g.PRSO, P.SIZE) > 1) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(1)) {
         await NARROW_OCOCO();
         return true;
       } else if (!(g.DRIBBLE == 0)) {
@@ -31131,7 +31134,7 @@ async function X5_F() {
       if (!(hasFlag(g.PRSI, OPENED))) {
         await ITS_CLOSED(APANEL);
         return true;
-      } else if (getProp(g.PRSO, P.SIZE) > 1) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(1)) {
         tell("You'd never get ");
         await THE_PRINT();
         tell(" in with all those ", D(WIRES), S(g.PERIOD));
@@ -31364,7 +31367,7 @@ async function WIRE_F() {
       await PULL_ON_WIRE();
       return true;
     } else if (g.PRSI == KNIFE) {
-      if ((g.XWIRE == 0) || (g.MINUTES < 29)) {
+      if ((g.XWIRE == 0) || (s16(g.MINUTES) < s16(29))) {
       } else if (((g.PRSO == RWIRE) && (g.XWIRE == get(g.WIRE_TYPES, 0))) || ((g.PRSO == BWIRE) && (g.XWIRE == get(g.WIRE_TYPES, 1))) || ((g.PRSO == SWIRE) && (g.XWIRE == get(g.WIRE_TYPES, 2))) || ((g.PRSO == WWIRE) && (g.XWIRE == get(g.WIRE_TYPES, 3)))) {
         await UPDATE_SCORE(5, false);
         crlf();
@@ -33043,7 +33046,7 @@ async function BOOK_F() {
         move(g.PRSO, g.PRSI);
         tell(" slips between the pages.\n");
         return true;
-      } else if (getProp(g.PRSO, P.SIZE) > 1) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(1)) {
         tell(" wouldn't fit in the book.\n");
         return true;
       }
@@ -33627,7 +33630,7 @@ async function PADLOCK_F() {
       if (g.PRSO == TKEY) {
         move(g.PRSO, g.PRSI);
         tell("You slide the ", D(g.PRSO));
-      } else if (getProp(g.PRSO, P.SIZE) > 1) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(1)) {
         tell("You'd never fit ");
         await THE_PRINT();
       } else if (loc(TKEY) == g.PRSI) {
@@ -33776,7 +33779,7 @@ async function BREAKER_F() {
         return true;
       }
       tell("\n\"Hold on, ", D(ABLE), ". X just woke up again.\"\n\nA sigh of relief. \"Sounds like a wet line somewhere.\"\n\n\"The kid's keepin' an eye on it, ", D(PITTS), ". If it dies again");
-      if (g.MINUTES < 29) {
+      if (s16(g.MINUTES) < s16(29)) {
         tell(" before the sequencer takes over");
       }
       tell(", we're gonna have to scrub.\"\n\n\"Roger, ", D(BAKER), ". Lotta crossed fingers up here.\"\n");
@@ -34356,9 +34359,9 @@ async function SLIDER_F() {
         return true;
       }
       old = f == 0 ? (g.TFREQ + 5) : (g.TFREQ - 5);
-      if ((f == 0) && (old > 79)) {
+      if ((f == 0) && (s16(old) > s16(79))) {
         old = 80;
-      } else if (!(f == 0) && (old < 20)) {
+      } else if (!(f == 0) && (s16(old) < s16(20))) {
         old = 20;
       }
       g.TFREQ = old;
@@ -34370,9 +34373,9 @@ async function SLIDER_F() {
         return true;
       }
       old = f == 0 ? (g.TFREQ - 5) : (g.TFREQ + 5);
-      if ((f == 0) && (old < 20)) {
+      if ((f == 0) && (s16(old) < s16(20))) {
         old = 20;
-      } else if (!(f == 0) && (old > 79)) {
+      } else if (!(f == 0) && (s16(old) > s16(79))) {
         old = 80;
       }
       g.TFREQ = old;
@@ -34450,7 +34453,7 @@ async function RDIAL_F() {
       }
       setFlag(g.PRSO, TOUCHED);
       old = g.RFREQ + 5;
-      if (old > 79) {
+      if (s16(old) > s16(79)) {
         old = 80;
       }
       g.RFREQ = old;
@@ -34463,7 +34466,7 @@ async function RDIAL_F() {
       }
       setFlag(g.PRSO, TOUCHED);
       old = g.RFREQ - 5;
-      if (old < 20) {
+      if (s16(old) < s16(20)) {
         old = 20;
       }
       g.RFREQ = old;
@@ -34507,10 +34510,10 @@ async function NOW_SET_TO() {
 }
 
 async function RANGE_ERROR$(f) {
-  if (g.P_NUMBER < 20) {
+  if (s16(g.P_NUMBER) < s16(20)) {
     tell("The lowest ", D(INTNUM), " on the ", D(g.PRSO), " is 20.\n");
     return true;
-  } else if (g.P_NUMBER > 80) {
+  } else if (s16(g.P_NUMBER) > s16(80)) {
     tell("The highest ", D(INTNUM), " on the ", D(g.PRSO), " is 80.\n");
     return true;
   } else if (g.P_NUMBER == f) {
@@ -35053,9 +35056,9 @@ async function ENDGAME() {
   await SEE_NO_ONE(st);
   if (!(w_ == 0)) {
     printS(g.Z_MINUS);
-    if (g.SECONDS < 30) {
+    if (s16(g.SECONDS) < s16(30)) {
       tell("thirty");
-    } else if (g.SECONDS < 45) {
+    } else if (s16(g.SECONDS) < s16(45)) {
       tell("fifteen");
     } else {
       tell("ten");
@@ -35092,9 +35095,9 @@ async function ENDGAME() {
   }
   if (!(w_ == 0)) {
     tell("\n\nA burst of static. \"");
-    if (g.SECONDS < 30) {
+    if (s16(g.SECONDS) < s16(30)) {
       tell("Minus fifteen");
-    } else if (g.SECONDS < 45) {
+    } else if (s16(g.SECONDS) < s16(45)) {
       tell("Minus ten");
     } else {
       tell("Seven. Six. Five");
@@ -35143,9 +35146,9 @@ async function ENDGAME() {
   if (!(w_ == 0)) {
     await CTHE_PRINT(WTK);
     tell(" is fading away. \"");
-    if (g.SECONDS < 30) {
+    if (s16(g.SECONDS) < s16(30)) {
       tell("Minus ten seconds. Nine, eight, seven");
-    } else if (g.SECONDS < 45) {
+    } else if (s16(g.SECONDS) < s16(45)) {
       tell("Five seconds. Four");
     } else {
       tell("Three. Two");
@@ -35357,7 +35360,7 @@ async function SLIGHT_F() {
       await VANISH();
       tell(". It disappears behind the ", D(BHOUSE), S(g.PERIOD));
       return true;
-    } else if (getProp(g.PRSO, P.MASS) > 2) {
+    } else if (s16(getProp(g.PRSO, P.MASS)) > s16(2)) {
       tell(S(g.PCR));
       (await ITALICIZE("Ping!"));
       tell(" The powerful beam of the ", D(g.PRSI), " flickers and dies");
@@ -35926,7 +35929,7 @@ async function LAMP_F() {
     }
   }
   if (!(g.NOW_PRSI$ == 0)) {
-    if (isVerb(V.THROW) && (getProp(g.PRSO, P.MASS) > 3)) {
+    if (isVerb(V.THROW) && (s16(getProp(g.PRSO, P.MASS)) > s16(3))) {
       await MUNG_LAMP();
       tell("\n");
       await CTHE_PRINT();
@@ -35948,9 +35951,9 @@ async function LAMP_F() {
     await SWITCH_STATE();
     if (hasFlag(g.PRSO, LIGHTED)) {
       tell("; the beam is ");
-      if (g.BEAM < 5) {
+      if (s16(g.BEAM) < s16(5)) {
         tell("almost out");
-      } else if (g.BEAM < 10) {
+      } else if (s16(g.BEAM) < s16(10)) {
         tell("very dim");
       } else {
         tell("rather dim");
@@ -36314,11 +36317,11 @@ async function READ_TOME() {
   } else {
     $2 = await PICK_NEXT(g.PONDERINGS);
     tell(S($2));
-    if (g.STUDY > 8) {
+    if (s16(g.STUDY) > s16(8)) {
       tell("with great devotion ");
-    } else if (g.STUDY > 5) {
+    } else if (s16(g.STUDY) > s16(5)) {
       tell("intently ");
-    } else if (g.STUDY > 2) {
+    } else if (s16(g.STUDY) > s16(2)) {
       tell("yet again ");
     }
     tell("over the ");
@@ -36341,7 +36344,7 @@ async function PRINT_LINE(tbl) {
     tell(">");
     loop1: for (;;) {
       chr = getb(tbl, ptr);
-      if ((chr > 31) && (chr < 123)) {
+      if ((s16(chr) > s16(31)) && (s16(chr) < s16(123))) {
         printC(chr);
       }
       if (++ptr > len) {
@@ -36582,7 +36585,7 @@ async function TRENCHES_F() {
 async function PIPES_F() {
   if (!(g.NOW_PRSI$ == 0)) {
     if (isVerb(V.PUT, V.EMPTY_INTO)) {
-      if (getProp(g.PRSO, P.SIZE) > 3) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         await CTHEI_PRINT();
         tell(" are too narrow.\n");
         return true;
@@ -36781,7 +36784,7 @@ async function TOO_NARROW() {
 
 async function V_$CREDITS() {
   let x = 0;
-  if (getb(0, 33) < 79) {
+  if (s16(getb(0, 33)) < s16(79)) {
     await TOO_NARROW();
     return true;
   }

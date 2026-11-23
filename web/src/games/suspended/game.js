@@ -348,6 +348,7 @@ export const GOAL_QUEUED = 6;
 export const GOAL_FUNCTION = 7;
 export const G_REACHED = 1;
 export const G_ENROUTE = 2;
+export const LAST_OBJECT = 191;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

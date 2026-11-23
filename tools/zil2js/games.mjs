@@ -272,5 +272,26 @@ export const GAMES = {
   },
   'beyondzork': { title: 'Beyond Zork', srcDir: 'games/beyondzork', main: 'z', objectOrder: { story: 'COMPILED/z.z5' }, storyFile: 'COMPILED/z.z5' },
   'borderzone': { title: 'Border Zone', srcDir: 'games/borderzone', main: 'spy', objectOrder: { story: 'COMPILED/spy.z5' }, storyFile: 'COMPILED/spy.z5' },
-  'sherlock': { title: 'Sherlock: The Riddle of the Crown Jewels', srcDir: 'games/sherlock', main: 'gamesound' },
+  'sherlock': {
+    title: 'Sherlock: The Riddle of the Crown Jewels',
+    srcDir: 'games/sherlock',
+    main: 'gamesound',
+    // Exits keep rooms in one byte, so rooms are numbered first.
+    exits: 'byte-rooms',
+    roomsFirst: true,
+    // and its GLOBAL properties are byte tables
+    globalBytes: true,
+    // The archive lacks V-REFRESH and V-VERIFY ($REFRESH, $VERIFY): minimal versions.
+    fixups: {
+      verbs: (t) => t + `
+<ROUTINE V-REFRESH ()
+	 <RTRUE>>
+
+<ROUTINE V-VERIFY ()
+	 <TELL "Verifying..." CR>
+	 <COND (<VERIFY> <TELL "The disk is correct." CR>)
+	       (T <TELL "The disk is damaged." CR>)>>
+`,
+    },
+  },
 };

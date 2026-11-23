@@ -395,6 +395,7 @@ export const HEDGE_OBJECT_TABLE_LENGTH = 70;
 export const NEW_VOC$ = 1;
 export const CRLF_CHARACTER = 126;
 export const ZSTR_ON = 0;
+export const LAST_OBJECT = 244;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

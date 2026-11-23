@@ -286,11 +286,14 @@ export class MDL {
    * surgery this interpreter does not model, so it is built in.)
    */
   multifrob(x, atms) {
+    // Sherlock passes plain atoms (GL-PRSA): they stand for the global.
+    if (x?.t === 'atom') x = { t: 'gval', v: x };
     const what = x?.t === 'gval' ? 'gval:' + x.v.v : x?.t === 'lval' ? 'lval:' + x.v.v : '';
     const vals = (atms?.items || []).map((a) => {
       if (a.t !== 'atom') return a;
       let name = a.v;
-      if (what === 'gval:PRSA') name = 'V?' + name;
+      if (what === 'gval:PRSA' || what === 'gval:GL-PRSA') name = 'V?' + name;
+      else if (what === 'gval:GL-P-PRSA-WORD') name = 'W?' + name;
       else if (what === 'lval:RARG' && !/^M-/.test(name)) name = 'M-' + name;
       return { t: 'gval', v: atom(name) };
     });
@@ -310,6 +313,7 @@ export class MDL {
         if (type === 'FORM') return { t: 'form', items: a[0].items };
         if (type === 'LIST') return { t: 'list', items: a[0].items };
         if (type === 'ATOM') return a[0];
+        if (type === 'SPLICE') return { t: 'hash', type: 'SPLICE', v: { t: 'list', items: a[0].items } };
         return a[0];
       }
       case 'NTH': return nth(a[0], a.length > 1 ? n(a[1]) : 1);
@@ -322,6 +326,22 @@ export class MDL {
         return { t: a[0].t, root, off, get items() { return root.items.slice(off); } };
       }
       case 'LENGTH': return num(len(a[0]));
+      case 'SUBSTRUC': {
+        // a copy of part of a list: <SUBSTRUC list start count>
+        const items = a[0]?.items || [];
+        const start = a.length > 1 ? n(a[1]) : 0;
+        const count = a.length > 2 ? n(a[2]) : items.length - start;
+        return { t: 'list', items: items.slice(start, start + count) };
+      }
+      case 'MEMQ': case 'MEMBER': {
+        // the rest of the list starting at the element, or FALSE
+        const items = a[1]?.items || [];
+        const k = items.findIndex((x) => same(a[0], x) || (h === 'MEMBER' && show(a[0]) === show(x)));
+        if (k < 0) return null;
+        const root = a[1].root ?? a[1];
+        const off = (a[1].off ?? 0) + k;
+        return { t: a[1].t, root, off, get items() { return root.items.slice(off); } };
+      }
       case 'EMPTY?': return len(a[0]) === 0 ? T : null;
       case 'LENGTH?': return len(a[0]) <= n(a[1]) ? num(len(a[0])) : null;
       case 'TYPE?': {
@@ -403,7 +423,7 @@ export class MDL {
 
 const SPECIAL = new Set(['SETG20', 'QUOTE', 'COND', 'AND', 'OR', 'PROG', 'REPEAT', 'BIND', 'RETURN', 'AGAIN', 'FUNCTION', 'SET', 'SETG',
   'ASSIGNED?', 'GASSIGNED?', 'MAPF', 'MAPR', 'MAPRET', 'MAPSTOP', 'MAPLEAVE']);
-const BUILTINS = new Set(['GETB', 'ZGETB', 'GET', 'ZGET', 'PUTB', 'ZPUTB', 'ZPUT', 'FORM', 'LIST', 'VECTOR', 'UVECTOR', 'CHTYPE', 'NTH', 'REST', 'LENGTH', 'EMPTY?', 'LENGTH?', 'TYPE?', 'TYPE',
+const BUILTINS = new Set(['SUBSTRUC', 'MEMQ', 'MEMBER', 'GETB', 'ZGETB', 'GET', 'ZGET', 'PUTB', 'ZPUTB', 'ZPUT', 'FORM', 'LIST', 'VECTOR', 'UVECTOR', 'CHTYPE', 'NTH', 'REST', 'LENGTH', 'EMPTY?', 'LENGTH?', 'TYPE?', 'TYPE',
   'PRIMTYPE', '==?', '=?', 'EQUAL?', 'N==?', 'N=?', '+', '-', '*', '/', 'MOD', 'G?', 'L?', 'G=?', 'L=?', '0?', '1?', 'LSH', 'ORB', 'BOR',
   'ANDB', 'BAND', 'XORB', 'NOT', 'MAX', 'MIN', 'SPNAME', 'PARSE', 'ATOM', 'STRING', 'ASCII', 'ERROR', 'PRINC', 'PRIN1', 'PRINT',
   'CRLF', 'INSERT-FILE', 'PUTREST', 'PUT', 'GVAL', 'LVAL', 'VOC', 'APPLY', 'EVAL', 'TABLE', 'LTABLE', 'PTABLE', 'PLTABLE', 'ITABLE']);

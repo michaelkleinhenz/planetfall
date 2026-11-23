@@ -125,7 +125,8 @@ export function readZil(text, file = '?') {
       const c = text[i];
       if (c === '\\') { s += text[i + 1]; i += 2; continue; }
       if (ATOM_STOP.has(c)) break;
-      if ((c === ',' || c === "'") && s.length > 0) break;
+      // a quote only matters at the start of a token (Sherlock's OPAL'S)
+      if (c === ',' && s.length > 0) break;
       if (c === ',' || c === "'" || c === '!') {
         if (s.length === 0) break;
       }

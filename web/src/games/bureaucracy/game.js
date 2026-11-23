@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  inTable, readChar,
+  inTable, readChar, s16,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -329,13 +329,13 @@ export const P1$OBJECT = 0;
 export const P1$VERB = 1;
 export const P1$ADJECTIVE = 2;
 export const P1$DIRECTION = 3;
-export const P_NAMW = 34036;
-export const P_ADJW = 34040;
-export const P_OFW = 34044;
-export const P_LEXV = 34048;
-export const P_ITBL = 34286;
-export const YAWNS = 34306;
-export const MEAL = 34318;
+export const P_NAMW = 34204;
+export const P_ADJW = 34208;
+export const P_OFW = 34212;
+export const P_LEXV = 34216;
+export const P_ITBL = 34454;
+export const YAWNS = 34474;
+export const MEAL = 34486;
 export const P_LEXWORDS = 1;
 export const P_LEXSTART = 1;
 export const P_LEXELEN = 2;
@@ -406,10 +406,10 @@ export const BANK_AMOUNT = 3;
 export const BANK_MIDDLE_INITIAL = 2;
 export const BANK_FIRST_NAME = 1;
 export const BANK_LAST_NAME = 0;
-export const BANK_GLOBALS = 34372;
-export const BANKNAMES = 34374;
+export const BANK_GLOBALS = 34540;
+export const BANKNAMES = 34542;
 export const MINIMUM_BALANCE = 1000;
-export const TELLER_GLOBALS = 34386;
+export const TELLER_GLOBALS = 34554;
 export const TELLER_SIGNS = 0;
 export const TELLER_INTRO = 1;
 export const TELLER_SECOND = 2;
@@ -421,7 +421,7 @@ export const STATE_RUN_F1 = 3;
 export const STATE_RUN_F2 = 4;
 export const NUMBER_TELLERS = 10;
 export const MID_TELLER = 5;
-export const COMPUTER_GLOBALS = 34414;
+export const COMPUTER_GLOBALS = 34582;
 export const COMPUTER_REAL_WIDTH = 40;
 export const COMPUTER_WIDTH = 38;
 export const COMPUTER_HEIGHT = 16;
@@ -443,9 +443,9 @@ export const LIGHT_MASK = 16;
 export const TABLE_MASK = 32;
 export const MEAL_MASK = 64;
 export const FOOD_MASK = 128;
-export const NEIGHBOR_SEATS = 34434;
-export const SEAT_LETTERS = 34438;
-export const SEAT_LETTER_NAMES = 34442;
+export const NEIGHBOR_SEATS = 34602;
+export const SEAT_LETTERS = 34606;
+export const SEAT_LETTER_NAMES = 34610;
 export const OBJECT_BREAK = 20;
 export const HATCH_OBJECT = 21;
 export const GRANDCHILDREN_OBJECT = 22;
@@ -472,15 +472,15 @@ export const FROBOZZCO_PERSON = 7;
 export const SLEEPER_PERSON = 8;
 export const PERSON_COUNT = 8;
 export const INIT_LIGHT_TIMER = 4;
-export const ALL_SEATS = 34452;
-export const JET_GLOBALS = 34452;
+export const ALL_SEATS = 34620;
+export const JET_GLOBALS = 34656;
 export const SYSTOLIC_SHIFT = 256;
 export const C_ENABLED$ = 0;
 export const C_ENABLED = 1;
 export const C_DISABLED = 0;
 export const YOURE_ALREADY_STR = 8279;
 export const THIS_IS = 8280;
-export const SL_TABLE = 34498;
+export const SL_TABLE = 34702;
 export const YOU_SEE = 8281;
 export const CANT = 8282;
 export const DONT = 8283;
@@ -503,7 +503,7 @@ export const D_TABLE_ON = 3;
 export const D_TABLE_OFF = -3;
 export const D_RECORD_ON = 4;
 export const D_RECORD_OFF = -4;
-export const GAME_VERBS = 34658;
+export const GAME_VERBS = 34862;
 export const HUNGER_SLIGHT = 40;
 export const HUNGER_MORE = 80;
 export const MUNGER_VERY = 120;
@@ -514,65 +514,65 @@ export const H_EAT = 1;
 export const H_HUNG = 2;
 export const H_LLAMA_EAT_MSGS = 3;
 export const HUNGER_MAX = 4;
-export const HUNGER_MSGS = 34752;
-export const LIKELIES = 34760;
-export const COULDNTS = 34776;
-export const FIXTURES = 34806;
-export const PHONE_NUMBERS = 34810;
-export const C_TABLE = 34838;
+export const HUNGER_MSGS = 34956;
+export const LIKELIES = 34964;
+export const COULDNTS = 34980;
+export const FIXTURES = 35010;
+export const PHONE_NUMBERS = 35014;
+export const C_TABLE = 35042;
 export const C_TABLELEN = 100;
 export const C_INTLEN = 4;
 export const C_RTN = 0;
 export const C_TICK = 1;
-export const DAY_TABLE = 35038;
+export const DAY_TABLE = 35242;
 export const DELAY_FACTOR = 3;
-export const P_OCL1 = 35054;
-export const P_OCL2 = 35104;
-export const P_BUTS = 35154;
-export const P_INBUF = 35218;
-export const RESERVE_INBUF = 35318;
-export const P_OTBL = 35418;
-export const P_VTBL = 35438;
-export const P_OVTBL = 35446;
-export const AGAIN_LEXV = 35454;
-export const RESERVE_LEXV = 35692;
-export const OOPS_INBUF = 35930;
-export const OOPS_TABLE = 36030;
+export const P_OCL1 = 35258;
+export const P_OCL2 = 35308;
+export const P_BUTS = 35358;
+export const P_INBUF = 35422;
+export const RESERVE_INBUF = 35522;
+export const P_OTBL = 35622;
+export const P_VTBL = 35642;
+export const P_OVTBL = 35650;
+export const AGAIN_LEXV = 35658;
+export const RESERVE_LEXV = 35896;
+export const OOPS_INBUF = 36134;
+export const OOPS_TABLE = 36234;
 export const NSVERBS = 19;
-export const SEEVERBS = 36038;
-export const BUZZTABLE = 36238;
-export const UNKNOWN_MSGS = 36260;
-export const CAPS = 36268;
+export const SEEVERBS = 36242;
+export const BUZZTABLE = 36442;
+export const UNKNOWN_MSGS = 36464;
+export const CAPS = 36472;
 export const LAST_OBJECT = 0;
 export const P_SRCBOT = 2;
 export const P_SRCTOP = 0;
 export const P_SRCALL = 1;
 export const NHAVES = 17;
-export const HAVEVERBS = 36442;
+export const HAVEVERBS = 36646;
 export const NTVERBS = 16;
-export const TALKVERBS = 36476;
+export const TALKVERBS = 36680;
 export const NTOUCHES = 70;
-export const TOUCHVERBS = 36508;
+export const TOUCHVERBS = 36712;
 export const NHVERBS = 14;
-export const HURTVERBS = 36648;
+export const HURTVERBS = 36852;
 export const NUMPUTS = 7;
-export const PUTVERBS = 36676;
+export const PUTVERBS = 36880;
 export const NMVERBS = 23;
-export const MOVEVERBS = 36690;
-export const EXTRA_TEXT = 36736;
-export const YES_INBUF = 36742;
-export const YES_LEXV = 36756;
+export const MOVEVERBS = 36894;
+export const EXTRA_TEXT = 36940;
+export const YES_INBUF = 36946;
+export const YES_LEXV = 36960;
 export const MAX_GAME_SCORE = 21;
 export const SCORE_LEV_1 = 19;
 export const SCORE_LEV_2 = 14;
 export const SCORE_LEV_3 = 11;
 export const SCORE_LEV_4 = 8;
 export const SCORE_LEV_5 = 5;
-export const DIRTABLES = 36786;
-export const WALKING_TABLE = 36790;
+export const DIRTABLES = 36990;
+export const WALKING_TABLE = 36994;
 export const FUMBLE_NUMBER = 15;
 export const LOAD_ALLOWED = 100;
-export const MAILING_LIST = 36806;
+export const MAILING_LIST = 37010;
 export const REXIT = 0;
 export const UEXIT = 2;
 export const NEXIT = 3;
@@ -585,15 +585,15 @@ export const CEXITFLAG = 4;
 export const CEXITSTR = 1;
 export const DEXITOBJ = 1;
 export const DEXITSTR = 2;
-export const HO_HUM = 36818;
-export const YUKS = 36832;
-export const POINTLESS = 36842;
-export const PUZZLES = 36852;
-export const MUZAK_TABLE = 36864;
-export const BAD_TUNES = 36868;
-export const TOONS = 36888;
+export const HO_HUM = 37022;
+export const YUKS = 37036;
+export const POINTLESS = 37046;
+export const PUZZLES = 37056;
+export const MUZAK_TABLE = 37068;
+export const BAD_TUNES = 37072;
+export const TOONS = 37092;
 export const NUMBER_OF_TUNES = 26;
-export const CLERK_DOINGS = 36910;
+export const CLERK_DOINGS = 37114;
 export const BURGER_TYPE = 0;
 export const BBSAUCE$ = 1;
 export const CHEESE_TYPE = 2;
@@ -621,22 +621,22 @@ export const SODA = 23;
 export const SODA_TYPE = 24;
 export const CAFFEINE$ = 25;
 export const WATER$ = 26;
-export const BURGER_TYPE_TABLE = 36948;
-export const CHEESE_TYPE_TABLE = 36962;
-export const FRIES_ETC_TABLE = 36988;
-export const DRESSING_TYPE_TABLE = 37022;
-export const DRESSING_WEIGHT_TABLE = 37036;
-export const POTATO_TYPE_TABLE = 37060;
-export const DRINK_TYPE_TABLE = 37068;
-export const JUICE_TYPE_TABLE = 37080;
-export const BEER_TYPE_TABLE = 37092;
-export const WINE_COLOR_TABLE = 37104;
-export const WINE_TYPE_TABLE = 37112;
-export const WINE_COUNTRY_TABLE = 37134;
-export const SODA_TABLE = 37160;
-export const SODA_TYPE_TABLE = 37170;
-export const CAFFEINE_TABLE = 37178;
-export const WATER_TABLE = 37186;
+export const BURGER_TYPE_TABLE = 37152;
+export const CHEESE_TYPE_TABLE = 37166;
+export const FRIES_ETC_TABLE = 37192;
+export const DRESSING_TYPE_TABLE = 37226;
+export const DRESSING_WEIGHT_TABLE = 37240;
+export const POTATO_TYPE_TABLE = 37264;
+export const DRINK_TYPE_TABLE = 37272;
+export const JUICE_TYPE_TABLE = 37284;
+export const BEER_TYPE_TABLE = 37296;
+export const WINE_COLOR_TABLE = 37308;
+export const WINE_TYPE_TABLE = 37316;
+export const WINE_COUNTRY_TABLE = 37338;
+export const SODA_TABLE = 37364;
+export const SODA_TYPE_TABLE = 37374;
+export const CAFFEINE_TABLE = 37382;
+export const WATER_TABLE = 37390;
 export const OPTION_TYPE = 0;
 export const OPTION_OFFSET = 1;
 export const OPTION_STRING = 2;
@@ -644,9 +644,9 @@ export const OPTION_LEN = 3;
 export const OT_YES_NO = 0;
 export const OT_WORD_STRING = 1;
 export const OT_STRING = 2;
-export const BURGER_OPTIONS = 37196;
-export const BAKED_POTATO_OPTIONS = 37222;
-export const COOPS = 37254;
+export const BURGER_OPTIONS = 37400;
+export const BAKED_POTATO_OPTIONS = 37426;
+export const COOPS = 37458;
 export const MACAW_POLITICS = 0;
 export const MACAW_SQUEAKS = 1;
 export const MACAW_FEEBLE = 2;
@@ -658,32 +658,32 @@ export const MACAW_RIGHT_SLOGANS = 6;
 export const MACAW_LEFT_SLOGANS = 7;
 export const MACAW_LEFT = 1;
 export const MACAW_RIGHT = 2;
-export const MACAW_TABLE = 37352;
+export const MACAW_TABLE = 37556;
 export const RESET_MOUSY_SCRIPT = 4;
-export const MOUSY_WISHES = 37368;
+export const MOUSY_WISHES = 37572;
 export const LLAMA_TIMER = 0;
 export const LLAMA_CUTES = 1;
 export const LLAMA_EATS = 2;
-export const LLAMA_TABLE = 37402;
-export const CLERK_SUBJECTS = 37452;
-export const AGENT_SUBJECTS = 37504;
+export const LLAMA_TABLE = 37606;
+export const CLERK_SUBJECTS = 37656;
+export const AGENT_SUBJECTS = 37708;
 export const INIT_NERD_SCRIPT = 3;
-export const NERD_ARRIVALS = 37520;
+export const NERD_ARRIVALS = 37724;
 export const NOBJ_SDESC = 0;
 export const NOBJ_LDESC = 1;
 export const NOBJ_ADJS = 2;
 export const NOBJ_SYNS = 3;
-export const NERD_OBJECTS = 37722;
-export const PARSE_RANDOM_LOC_VEC = 37740;
+export const NERD_OBJECTS = 37926;
+export const PARSE_RANDOM_LOC_VEC = 37944;
 export const MS_ORDERED_FROM_WAITRESS = 1;
 export const MS_ORDERED_FROM_WAITER = 2;
 export const MS_RECEIVED_FOOD = 3;
 export const MS_PAID_FOR_FOOD = 4;
-export const BOYSENBERRY_WINDOW = 37744;
-export const ADVENTURE_TABLE = 37758;
-export const ECLIPSE_TABLE = 37776;
-export const RECIPE_TABLE = 37792;
-export const OTHER_PHONE_MSGS = 37844;
+export const BOYSENBERRY_WINDOW = 37948;
+export const ADVENTURE_TABLE = 37962;
+export const ECLIPSE_TABLE = 37980;
+export const RECIPE_TABLE = 37996;
+export const OTHER_PHONE_MSGS = 38048;
 export const OHOME_NUMBER_X = 0;
 export const OHOME_NUMBER = 1;
 export const WORK_NUMBER_X = 2;
@@ -711,16 +711,16 @@ export const CAB_WAITING_FOR_YOUR_EXIT = 9;
 export const CAB_DRIVER_PISSED = 10;
 export const CAB_AT_AIRPORT = 11;
 export const MAX_CABLEN = 18;
-export const CABTABLE = 37932;
-export const CAB_EXCUSES = 37948;
+export const CABTABLE = 38136;
+export const CAB_EXCUSES = 38152;
 export const CHECK_AMOUNT = 7500;
-export const BOSS_CHECK_WORDS = 38038;
+export const BOSS_CHECK_WORDS = 38242;
 export const ARRIVED = 1;
 export const WAITING = 2;
 export const LEAVING = 3;
 export const WANDERING = 4;
-export const CAB_NOTICE_TXT = 38046;
-export const FORM_HISTORY = 38068;
+export const CAB_NOTICE_TXT = 38250;
+export const FORM_HISTORY = 38272;
 export const LAST_FRIEND = 13;
 export const FRIEND = 12;
 export const LEAST_FAVORITE_COLOR = 11;
@@ -738,49 +738,49 @@ export const LAST_NAME = 0;
 export const MAX_NUM = 32767;
 export const MAX_NUM_DIV_10 = 3276;
 export const MAX_NUM_DIV_100 = 327;
-export const TARGETS = 38264;
-export const ITARGETS = 38276;
+export const TARGETS = 38468;
+export const ITARGETS = 38480;
 export const TARGET_COUNT = 6;
-export const TARGET_NAMES = 38336;
-export const HELP_TABLE = 38348;
-export const TELECOM_HELP_TABLE = 38360;
-export const HACK_TABLE = 38372;
-export const HACK_DIR = 38496;
-export const HELP_DIR = 38508;
-export const QUIT_DIR = 38520;
-export const DIR_DIR = 38532;
-export const CLEAR_DIR = 38542;
-export const TCLEAR_DIR = 38554;
-export const LOGIN_NAME = 38564;
-export const PASSWORD = 38568;
-export const DELAYS = 38572;
-export const QUIT_TABLE = 38582;
-export const LOGOUT_DIR = 38586;
-export const WHO_DIR = 38600;
-export const DIRLIST_DIR = 38610;
-export const TYPE_DIR = 38620;
-export const RENAME_DIR = 38630;
-export const COPY_DIR = 38640;
-export const DELETE_DIR = 38650;
-export const RUN_DIR = 38660;
-export const TELECOM_TABLE = 38670;
+export const TARGET_NAMES = 38540;
+export const HELP_TABLE = 38552;
+export const TELECOM_HELP_TABLE = 38564;
+export const HACK_TABLE = 38576;
+export const HACK_DIR = 38700;
+export const HELP_DIR = 38712;
+export const QUIT_DIR = 38724;
+export const DIR_DIR = 38736;
+export const CLEAR_DIR = 38746;
+export const TCLEAR_DIR = 38758;
+export const LOGIN_NAME = 38768;
+export const PASSWORD = 38772;
+export const DELAYS = 38776;
+export const QUIT_TABLE = 38786;
+export const LOGOUT_DIR = 38790;
+export const WHO_DIR = 38804;
+export const DIRLIST_DIR = 38814;
+export const TYPE_DIR = 38824;
+export const RENAME_DIR = 38834;
+export const COPY_DIR = 38844;
+export const DELETE_DIR = 38854;
+export const RUN_DIR = 38864;
+export const TELECOM_TABLE = 38874;
 export const MAX_FILENAME = 15;
-export const HAK_PROG_NAME = 38694;
-export const FILE_TABLE = 38834;
-export const FIDUC_FILE = 38864;
-export const MENU_FILE = 38888;
-export const AIRPLANE_FILE = 38914;
-export const POST_FILE = 38942;
-export const ZBUG_FILE = 38984;
-export const TRAVEL_FILE = 39008;
-export const DVH2_FILE = 39040;
-export const EXE_FILES = 39064;
-export const HAK_FILES = 39070;
-export const AIRPORT_GLOBALS = 39086;
-export const PATRONS = 39112;
-export const SKYCAP_DOINGS = 39132;
+export const HAK_PROG_NAME = 38898;
+export const FILE_TABLE = 39038;
+export const FIDUC_FILE = 39068;
+export const MENU_FILE = 39092;
+export const AIRPLANE_FILE = 39118;
+export const POST_FILE = 39146;
+export const ZBUG_FILE = 39188;
+export const TRAVEL_FILE = 39212;
+export const DVH2_FILE = 39244;
+export const EXE_FILES = 39268;
+export const HAK_FILES = 39274;
+export const AIRPORT_GLOBALS = 39290;
+export const PATRONS = 39316;
+export const SKYCAP_DOINGS = 39336;
 export const AIRPORT_ROOMS = 5;
-export const AIRLINE_NAMES = 39146;
+export const AIRLINE_NAMES = 39350;
 export const OMNIA_ID = 0;
 export const ZALAGASA_ID = 1;
 export const NOCTURNAL_ID = -2;
@@ -813,25 +813,25 @@ export const CONTINENTAL_ID = -28;
 export const GENERAL_ID = -29;
 export const FRED_ID = -30;
 export const BOING_ID = -31;
-export const AIRLINE_LOOKUP = 39210;
-export const AIRLINE_BITS = 39464;
-export const CURRENT_SIGNS = 39464;
-export const OMNIA_SIGN_TEXT = 39484;
-export const PSEUDO_VEC = 39498;
-export const TICKET_TYPE_TABLE = 39514;
-export const ANS_TABLE = 39522;
+export const AIRLINE_LOOKUP = 39414;
+export const AIRLINE_BITS = 39668;
+export const CURRENT_SIGNS = 39688;
+export const OMNIA_SIGN_TEXT = 39708;
+export const PSEUDO_VEC = 39722;
+export const TICKET_TYPE_TABLE = 39738;
+export const ANS_TABLE = 39746;
 export const NO_PW_SAID = 0;
 export const USER_PW_SAID = 1;
 export const SPY_PW_SAID = 2;
 export const PSTRING = 8706;
 export const SSTRING = 8707;
-export const PARANOID_GLOBALS = 39532;
-export const P_Q = 39538;
-export const P_A = 39782;
-export const OZ_ROYS = 39812;
-export const INCI_TBL = 39826;
-export const UNFO_TBL = 39846;
-export const CRAZIES = 39866;
+export const PARANOID_GLOBALS = 39756;
+export const P_Q = 39762;
+export const P_A = 40006;
+export const OZ_ROYS = 40036;
+export const INCI_TBL = 40050;
+export const UNFO_TBL = 40070;
+export const CRAZIES = 40090;
 export const UNFO_MESSAGE = 1;
 export const INCI_MESSAGE = 2;
 export const SET_COM_TIMER = 4;
@@ -839,61 +839,62 @@ export const NUM_Q = 15;
 export const NUM_QA = 5;
 export const MIN_SCORE = 5;
 export const MAX_SCORE = 5;
-export const ALL_HANDLES = 39876;
+export const ALL_HANDLES = 40100;
 export const HANDLE_COUNT = 3;
-export const HANDLE_STATE = 39882;
-export const A_DIR = 39886;
-export const B_DIR = 39900;
-export const C_DIR = 39914;
-export const D_DIR = 39928;
-export const PRINTR_TABLE = 39942;
-export const RPRINTR_TABLE = 39950;
-export const RANDOM_CARTRIDGE_TABLE = 39958;
+export const HANDLE_STATE = 40106;
+export const A_DIR = 40110;
+export const B_DIR = 40124;
+export const C_DIR = 40138;
+export const D_DIR = 40152;
+export const PRINTR_TABLE = 40166;
+export const RPRINTR_TABLE = 40174;
+export const RANDOM_CARTRIDGE_TABLE = 40182;
 export const MAZE_STEPS = 6;
-export const ALT_COMPLEX_WINDOW_DESC = 39978;
-export const COMPLEX_WINDOW_DESC = 39990;
+export const ALT_COMPLEX_WINDOW_DESC = 40202;
+export const COMPLEX_WINDOW_DESC = 40214;
 export const NUM_PERSECUTION_WINDOWS = 6;
 export const NUM_PERSECUTION_WINDOWS_BY_2 = 3;
 export const NUM_COMPLEX_POSITIONS = 4;
-export const PNOTICE_TXT = 40002;
+export const PNOTICE_TXT = 40226;
 export const MAX_CHARS = 608;
 export const MAX_CHARS_4 = 152;
 export const MAX_CHARS_16 = 38;
 export const QSIZE = 152;
 export const COMPUTER_HEIGHT_2 = 8;
 export const COMPUTER_WIDTH_2 = 19;
-export const PROG_TABLE = 40022;
+export const PROG_TABLE = 40246;
 export const QLEFT = 0;
 export const QRIGHT = 1;
 export const QTOP = 2;
 export const QBOT = 3;
-export const PUNCT_TABLE = 40028;
-export const QTOPS = 40032;
-export const QLEFTS = 40036;
-export const LAST_USED = 40040;
+export const PUNCT_TABLE = 40252;
+export const QTOPS = 40256;
+export const QLEFTS = 40260;
+export const LAST_USED = 40264;
 export const NCHARS = 64;
-export const FUNNY_FIELDS = 40048;
-export const TELLER_SUBJECTS = 40076;
-export const CASH_CHECK_SCRIPT = 40092;
-export const WITHDRAWAL_SCRIPT = 40102;
-export const DEPOSIT_SCRIPT = 40112;
-export const CHANGE_ADDRESS_SCRIPT = 40122;
-export const BANK_THINGS = 40132;
-export const PONGO_STUFF = 40136;
-export const BONGO_STUFF = 40146;
-export const PERSON_ROWS = 40156;
-export const NORMAL_SEAT = 40156;
-export const NORMAL_SEAT_POCKET = 40168;
-export const NORMAL_SEAT_TABLE = 40178;
-export const BATHROOM_LOCKED = 40182;
-export const OTHER_AIRPLANE_OBJECTS = 40192;
-export const SEAT_PSEUDO_VEC = 40518;
-export const FACE_IN_FOOD_STRS = 40522;
-export const LONG_WORD_TABLE = 40554;
+export const FUNNY_FIELDS = 40272;
+export const TELLER_SUBJECTS = 40332;
+export const CASH_CHECK_SCRIPT = 40348;
+export const WITHDRAWAL_SCRIPT = 40358;
+export const DEPOSIT_SCRIPT = 40368;
+export const CHANGE_ADDRESS_SCRIPT = 40378;
+export const BANK_THINGS = 40388;
+export const PONGO_STUFF = 40392;
+export const BONGO_STUFF = 40402;
+export const PERSON_ROWS = 40412;
+export const NORMAL_SEAT = 40428;
+export const NORMAL_SEAT_POCKET = 40440;
+export const NORMAL_SEAT_TABLE = 40450;
+export const BATHROOM_LOCKED = 40454;
+export const OTHER_AIRPLANE_OBJECTS = 40464;
+export const SEAT_PSEUDO_VEC = 40790;
+export const FACE_IN_FOOD_STRS = 40794;
+export const LONG_WORD_TABLE = 40826;
 export const M_FATAL = 2;
 export const FATAL_VALUE = 2;
 export const M_ENTER = 2;
 export const LOW_DIRECTION = 56;
+export const VOCAB = 64;
 
 // ---- Actions (V?xxx) ----
 export const V = {
@@ -1165,280 +1166,280 @@ export const P = {
 
 // ---- Vocabulary words (W?xxx): dictionary addresses ----
 export const W = {
-  $: 127,
-  $: 145,
-  $VER: 91,
-  $VERIFY: 100,
-  _: 199,
-  A: 208,
-  ADDRESS: 280,
-  AFFIRMATIVE: 361,
-  AGAIN: 370,
-  AI_AI: 424,
-  AIR: 451,
-  AIRPORT: 514,
-  AISLE: 541,
-  ALE: 550,
-  ALL: 559,
-  AN: 631,
-  AND: 640,
-  APE: 730,
-  ASSHOLE: 865,
-  AYE: 946,
-  B: 955,
-  BACK: 973,
-  BALANCE: 1009,
-  BASTARD: 1072,
-  BATHROOM: 1081,
-  BEER: 1117,
-  BEEZER: 1126,
-  BLACK: 1306,
-  BLUE: 1342,
-  BONGO: 1396,
-  BOTH: 1450,
-  BOWL: 1486,
-  BUT: 1702,
-  BUTTON: 1711,
-  BUTTONS: 1720,
-  C: 1747,
-  CALIFORNIA: 1792,
-  CALL: 1801,
-  CARD: 1828,
-  CAREFULLY: 1846,
-  CASH: 1900,
-  CENT: 1936,
-  CENTS: 1963,
-  CHANGE: 1981,
-  CHECK: 2008,
-  CHEQUE: 2044,
-  CHICKEN: 2053,
-  CHUTE: 2098,
-  CLINT: 2161,
-  CLOSED: 2188,
-  CLOSELY: 2197,
-  COCKSUCKER: 2224,
-  COLA: 2233,
-  COMMA: 118,
-  COMPLAINT: 2269,
-  CREDIT: 2557,
-  CUNT: 2602,
-  CURSE: 2620,
-  CUSS: 2629,
-  CUSTOMER: 2638,
-  D: 2683,
-  DAMAGED: 2701,
-  DAMN: 2710,
-  DAMNED: 2719,
-  DENIED: 2782,
-  DEPOSIT: 2809,
-  DIRECT: 2962,
-  DOG: 3133,
-  DOWN: 3214,
-  DR: 3232,
-  E: 3340,
-  EVERYTHING: 3574,
-  EXCEPT: 3601,
-  EXCESS: 3610,
-  EYES: 3673,
-  FARMHOUSE: 3700,
-  FELLOW: 3772,
-  FENCE: 3781,
-  FILET: 3844,
-  FINGER: 3889,
-  FINGERS: 3898,
-  FLIGHT: 3970,
-  FLOOR: 3997,
-  FORM: 4114,
-  FORMS: 4123,
-  FRENCH: 4213,
-  FRIES: 4222,
-  FUCK: 4294,
-  FUCKED: 4303,
-  FUCKING: 4312,
-  G: 4321,
-  GALLIA: 4348,
-  GATE: 4402,
-  GENERATOR: 4447,
-  GET: 4483,
-  GIVE: 4501,
-  GO: 4510,
-  GODDAMNED: 4528,
-  GORBACHEV: 4546,
-  GRAB: 4555,
-  GRANTED: 4600,
-  GROUND: 4681,
-  GRUE: 4717,
-  GUY: 4753,
-  HALT: 4825,
-  HANDLES: 4879,
-  HANG: 4897,
-  HER: 5014,
-  HIM: 5086,
-  HOLD: 5149,
-  HOLE: 5158,
-  HOLOGRAM: 5167,
-  HOUSE: 5203,
-  INSCRIPTION: 5401,
-  INTNUM: 5455,
-  ISLAND: 5500,
-  IT: 5509,
-  ITALIAN: 5527,
-  JACK: 5554,
-  JUICE: 5617,
-  JUMP: 5626,
-  JUNGLE: 5635,
-  KA_ABI: 5653,
-  KEYBOARD: 5689,
-  KIEV: 5716,
-  LADY: 5824,
-  LAV: 5905,
-  LAVATORY: 5914,
-  LEAP: 5959,
-  LEVER: 6031,
-  LINE: 6085,
-  LINES: 6094,
-  LOBBY: 6166,
-  LOCK: 6175,
-  MAN: 6391,
-  ME: 6454,
-  MINIMUM: 6580,
-  MINUS: 6589,
-  MISS: 6598,
-  MONEY: 6634,
-  MONKEY: 6652,
-  MR: 6724,
-  MRS: 6733,
-  MUSIC: 6760,
-  MUZAK: 6769,
-  MY: 6778,
-  N: 6796,
-  NAME: 6805,
-  NANCY: 6814,
-  NAW: 6850,
-  NAY: 6859,
-  NEGATIVE: 6886,
-  NEXT: 6967,
-  NO: 7012,
-  NOPE: 7084,
-  NUMBER: 7156,
-  OF: 7228,
-  OK: 7264,
-  OKAY: 7273,
-  OMNIA: 7300,
-  ONE: 7318,
-  OOPS: 7345,
-  OPEN: 7354,
-  OPENED: 7363,
-  OTHER: 7417,
-  OUT: 7435,
-  PAGE: 7498,
-  PAIR: 7525,
-  PARACHUTE: 7588,
-  PARROT: 7624,
-  PAULETTE: 7651,
-  PERIOD: 109,
-  PERMISSION: 7759,
-  PHONE: 7804,
-  PLATE: 7921,
-  PLEASE: 7948,
-  PLUGH: 7966,
-  PLUS: 7975,
-  PLUSSIGN: 7984,
-  PONGO: 8056,
-  POSITIVE: 8101,
-  POSTAGE: 8110,
-  POTATO: 8137,
-  POWER: 8164,
-  PROBLEM: 8254,
-  Q: 8380,
-  QUICKLY: 8443,
-  QUIETLY: 8452,
-  QUIT: 8461,
-  QUOTE: 190,
-  RADIO: 8479,
-  RAPIDLY: 8524,
-  READ: 8569,
-  READER: 8578,
-  REAGAN: 8605,
-  REAR: 8614,
-  RECALL: 8632,
-  RED: 8695,
-  REGULAR: 8722,
-  REQUEST: 8803,
-  RESTART: 8848,
-  RESTORE: 8866,
-  ROGER: 8983,
-  ROOM: 9010,
-  ROW: 9046,
-  SAILOR: 9109,
-  SALAD: 9118,
-  SAVE: 9181,
-  SAW: 9190,
-  SAY: 9199,
-  SCREEN: 9253,
-  SEAT: 9298,
-  SEIZE: 9361,
-  SERVICE: 9406,
-  SHITHEAD: 9568,
-  SHREDDED: 9649,
-  SHROUD: 9658,
-  SHUT: 9667,
-  SIGN: 9694,
-  SIT: 9721,
-  SLOT: 9901,
-  SLOWLY: 9910,
-  SNATCH: 9973,
-  SO: 10036,
-  SODA: 10063,
-  SOFTWARE: 10072,
-  SOUND: 10108,
-  SPECIAL: 10171,
-  STAMP: 10279,
-  STAMPS: 10288,
-  STEAL: 10351,
-  STEWARD: 10378,
-  STEWARDESS: 10387,
-  STICKER: 10405,
-  STINGLAI: 10414,
-  STOP: 10432,
-  STRAP: 10468,
-  STRAPS: 10477,
-  SURE: 10585,
-  TAKE: 10774,
-  TELEPHONE: 10855,
-  TELLER: 10882,
-  THE: 10963,
-  THEM: 10972,
-  THEN: 10990,
-  THIS: 11053,
-  TIME: 11161,
-  TO: 11197,
-  TROUBLE: 11476,
-  TURN: 11539,
-  UNLOCKED: 11746,
-  UP: 11818,
-  VOICE: 11917,
-  WALL: 12007,
-  WELL_DONE: 12124,
-  WINDOW: 12349,
-  WINDOWS: 12358,
-  WINE: 12367,
-  WIRES: 12394,
-  WITHDRAW: 12412,
-  WITHDRAWAL: 12421,
-  WITHOUT: 12439,
-  WOMAN: 12457,
-  XYZZY: 12628,
-  Y: 12637,
-  YAK: 12646,
-  YEAH: 12664,
-  YES: 12682,
-  YOUR: 12727,
-  YUP: 12745,
-  ZALAGASA: 12763,
-  ZALAGASAN: 12772,
-  ZZSTREET: 12799,
-  ZZZP: 12808,
+  $: 134,
+  $: 152,
+  $VER: 98,
+  $VERIFY: 107,
+  _: 206,
+  A: 215,
+  ADDRESS: 287,
+  AFFIRMATIVE: 368,
+  AGAIN: 377,
+  AI_AI: 431,
+  AIR: 458,
+  AIRPORT: 521,
+  AISLE: 548,
+  ALE: 557,
+  ALL: 566,
+  AN: 638,
+  AND: 647,
+  APE: 737,
+  ASSHOLE: 872,
+  AYE: 953,
+  B: 962,
+  BACK: 980,
+  BALANCE: 1016,
+  BASTARD: 1079,
+  BATHROOM: 1088,
+  BEER: 1124,
+  BEEZER: 1133,
+  BLACK: 1313,
+  BLUE: 1349,
+  BONGO: 1403,
+  BOTH: 1457,
+  BOWL: 1493,
+  BUT: 1709,
+  BUTTON: 1718,
+  BUTTONS: 1727,
+  C: 1754,
+  CALIFORNIA: 1799,
+  CALL: 1808,
+  CARD: 1835,
+  CAREFULLY: 1853,
+  CASH: 1907,
+  CENT: 1943,
+  CENTS: 1970,
+  CHANGE: 1988,
+  CHECK: 2015,
+  CHEQUE: 2051,
+  CHICKEN: 2060,
+  CHUTE: 2105,
+  CLINT: 2168,
+  CLOSED: 2195,
+  CLOSELY: 2204,
+  COCKSUCKER: 2231,
+  COLA: 2240,
+  COMMA: 125,
+  COMPLAINT: 2276,
+  CREDIT: 2564,
+  CUNT: 2609,
+  CURSE: 2627,
+  CUSS: 2636,
+  CUSTOMER: 2645,
+  D: 2690,
+  DAMAGED: 2708,
+  DAMN: 2717,
+  DAMNED: 2726,
+  DENIED: 2789,
+  DEPOSIT: 2816,
+  DIRECT: 2969,
+  DOG: 3140,
+  DOWN: 3221,
+  DR: 3239,
+  E: 3347,
+  EVERYTHING: 3581,
+  EXCEPT: 3608,
+  EXCESS: 3617,
+  EYES: 3680,
+  FARMHOUSE: 3707,
+  FELLOW: 3779,
+  FENCE: 3788,
+  FILET: 3851,
+  FINGER: 3896,
+  FINGERS: 3905,
+  FLIGHT: 3977,
+  FLOOR: 4004,
+  FORM: 4121,
+  FORMS: 4130,
+  FRENCH: 4220,
+  FRIES: 4229,
+  FUCK: 4301,
+  FUCKED: 4310,
+  FUCKING: 4319,
+  G: 4328,
+  GALLIA: 4355,
+  GATE: 4409,
+  GENERATOR: 4454,
+  GET: 4490,
+  GIVE: 4508,
+  GO: 4517,
+  GODDAMNED: 4535,
+  GORBACHEV: 4553,
+  GRAB: 4562,
+  GRANTED: 4607,
+  GROUND: 4688,
+  GRUE: 4724,
+  GUY: 4760,
+  HALT: 4832,
+  HANDLES: 4886,
+  HANG: 4904,
+  HER: 5021,
+  HIM: 5093,
+  HOLD: 5156,
+  HOLE: 5165,
+  HOLOGRAM: 5174,
+  HOUSE: 5210,
+  INSCRIPTION: 5408,
+  INTNUM: 5462,
+  ISLAND: 5507,
+  IT: 5516,
+  ITALIAN: 5534,
+  JACK: 5561,
+  JUICE: 5624,
+  JUMP: 5633,
+  JUNGLE: 5642,
+  KA_ABI: 5660,
+  KEYBOARD: 5696,
+  KIEV: 5723,
+  LADY: 5831,
+  LAV: 5912,
+  LAVATORY: 5921,
+  LEAP: 5966,
+  LEVER: 6038,
+  LINE: 6092,
+  LINES: 6101,
+  LOBBY: 6173,
+  LOCK: 6182,
+  MAN: 6398,
+  ME: 6461,
+  MINIMUM: 6587,
+  MINUS: 6596,
+  MISS: 6605,
+  MONEY: 6641,
+  MONKEY: 6659,
+  MR: 6731,
+  MRS: 6740,
+  MUSIC: 6767,
+  MUZAK: 6776,
+  MY: 6785,
+  N: 6803,
+  NAME: 6812,
+  NANCY: 6821,
+  NAW: 6857,
+  NAY: 6866,
+  NEGATIVE: 6893,
+  NEXT: 6974,
+  NO: 7019,
+  NOPE: 7091,
+  NUMBER: 7163,
+  OF: 7235,
+  OK: 7271,
+  OKAY: 7280,
+  OMNIA: 7307,
+  ONE: 7325,
+  OOPS: 7352,
+  OPEN: 7361,
+  OPENED: 7370,
+  OTHER: 7424,
+  OUT: 7442,
+  PAGE: 7505,
+  PAIR: 7532,
+  PARACHUTE: 7595,
+  PARROT: 7631,
+  PAULETTE: 7658,
+  PERIOD: 116,
+  PERMISSION: 7766,
+  PHONE: 7811,
+  PLATE: 7928,
+  PLEASE: 7955,
+  PLUGH: 7973,
+  PLUS: 7982,
+  PLUSSIGN: 7991,
+  PONGO: 8063,
+  POSITIVE: 8108,
+  POSTAGE: 8117,
+  POTATO: 8144,
+  POWER: 8171,
+  PROBLEM: 8261,
+  Q: 8387,
+  QUICKLY: 8450,
+  QUIETLY: 8459,
+  QUIT: 8468,
+  QUOTE: 197,
+  RADIO: 8486,
+  RAPIDLY: 8531,
+  READ: 8576,
+  READER: 8585,
+  REAGAN: 8612,
+  REAR: 8621,
+  RECALL: 8639,
+  RED: 8702,
+  REGULAR: 8729,
+  REQUEST: 8810,
+  RESTART: 8855,
+  RESTORE: 8873,
+  ROGER: 8990,
+  ROOM: 9017,
+  ROW: 9053,
+  SAILOR: 9116,
+  SALAD: 9125,
+  SAVE: 9188,
+  SAW: 9197,
+  SAY: 9206,
+  SCREEN: 9260,
+  SEAT: 9305,
+  SEIZE: 9368,
+  SERVICE: 9413,
+  SHITHEAD: 9575,
+  SHREDDED: 9656,
+  SHROUD: 9665,
+  SHUT: 9674,
+  SIGN: 9701,
+  SIT: 9728,
+  SLOT: 9908,
+  SLOWLY: 9917,
+  SNATCH: 9980,
+  SO: 10043,
+  SODA: 10070,
+  SOFTWARE: 10079,
+  SOUND: 10115,
+  SPECIAL: 10178,
+  STAMP: 10286,
+  STAMPS: 10295,
+  STEAL: 10358,
+  STEWARD: 10385,
+  STEWARDESS: 10394,
+  STICKER: 10412,
+  STINGLAI: 10421,
+  STOP: 10439,
+  STRAP: 10475,
+  STRAPS: 10484,
+  SURE: 10592,
+  TAKE: 10781,
+  TELEPHONE: 10862,
+  TELLER: 10889,
+  THE: 10970,
+  THEM: 10979,
+  THEN: 10997,
+  THIS: 11060,
+  TIME: 11168,
+  TO: 11204,
+  TROUBLE: 11483,
+  TURN: 11546,
+  UNLOCKED: 11753,
+  UP: 11825,
+  VOICE: 11924,
+  WALL: 12014,
+  WELL_DONE: 12131,
+  WINDOW: 12356,
+  WINDOWS: 12365,
+  WINE: 12374,
+  WIRES: 12401,
+  WITHDRAW: 12419,
+  WITHDRAWAL: 12428,
+  WITHOUT: 12446,
+  WOMAN: 12464,
+  XYZZY: 12635,
+  Y: 12644,
+  YAK: 12653,
+  YEAH: 12671,
+  YES: 12689,
+  YOUR: 12734,
+  YUP: 12752,
+  ZALAGASA: 12770,
+  ZALAGASAN: 12779,
+  ZZSTREET: 12806,
+  ZZZP: 12815,
 };
 
 // ---- Adjective numbers (A?xxx) ----
@@ -1487,7 +1488,7 @@ async function OBJECTS_GROUPED$(tbl) {
   tbl = tbl + 2;
   if ((cnt == 2) && inTable(BWIRE, tbl, cnt) && inTable(RWIRE, tbl, cnt)) {
     return true;
-  } else if (cnt >= 2) {
+  } else if (s16(cnt) >= s16(2)) {
     o = 0;
     x1 = false;
     x2 = false;
@@ -1533,7 +1534,7 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
     if (!(g.P_IT_OBJECT == 0) && (await ACCESSIBLE$(g.P_IT_OBJECT))) {
       tmp = false;
       loop1: for (;;) {
-        if ((cnt = cnt + 1) > icnt) {
+        if (s16(cnt = cnt + 1) > s16(icnt)) {
           break loop1;
         } else {
           if (eq(get(g.P_PRSI, cnt), IT)) {
@@ -1546,7 +1547,7 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
       if (tmp == 0) {
         cnt = 0;
         loop2: for (;;) {
-          if ((cnt = cnt + 1) > ocnt) {
+          if (s16(cnt = cnt + 1) > s16(ocnt)) {
             break loop2;
           } else {
             if (eq(get(g.P_PRSO, cnt), IT)) {
@@ -1558,7 +1559,7 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
       }
       cnt = 0;
     }
-    num = ocnt == 0 ? ocnt : (ocnt > 1 ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (icnt > 1 ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
+    num = ocnt == 0 ? ocnt : (s16(ocnt) > s16(1) ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (s16(icnt) > s16(1) ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
     if ((obj == 0) && (icnt == 1)) {
       obj = get(g.P_PRSI, 1);
     }
@@ -1586,9 +1587,9 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
       x = 0;
       g.P_MULT$ = false;
       g.OBJECTS_GROUPED = false;
-      if ((ocnt > 1) && !group$ && (await OBJECTS_GROUPED$(g.P_PRSO))) {
+      if ((s16(ocnt) > s16(1)) && !group$ && (await OBJECTS_GROUPED$(g.P_PRSO))) {
         g.OBJECTS_GROUPED = true;
-      } else if (num > 1) {
+      } else if (s16(num) > s16(1)) {
         g.P_MULT$ = true;
         if (!(old_them = g.P_THEM_OBJECT)) {
           old_them = -2;
@@ -1596,8 +1597,8 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
       }
       tmp = false;
       loop3: for (;;) {
-        if ((cnt = cnt + 1) > num) {
-          if (x > 0) {
+        if (s16(cnt = cnt + 1) > s16(num)) {
+          if (s16(x) > s16(0)) {
             tell("[The ");
             if (!(x == num)) {
               tell("other ");
@@ -1623,7 +1624,7 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
           } else {
             obj1 = get(g.P_PRSI, cnt);
           }
-          if ((num > 1) || eq(get(get(P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
+          if ((s16(num) > s16(1)) || eq(get(get(P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
             if (obj1 == NOT_HERE_OBJECT) {
               x = x + 1;
               continue loop3;
@@ -1655,7 +1656,7 @@ async function MAIN_LOOP(group$ = false, fake$ = false) {
             break loop3;
           }
         }
-        if ((num > 1) && !g.P_MULT$) {
+        if ((s16(num) > s16(1)) && !g.P_MULT$) {
           break loop3;
         }
       }
@@ -1839,7 +1840,7 @@ async function DISPLAY_PLACE() {
 
 async function PRINT_SPACES(n_) {
   for (;;) {
-    if ((n_ = n_ - 1) < 0) {
+    if (s16(n_ = n_ - 1) < s16(0)) {
       return true;
     }
     printC(32);
@@ -2049,7 +2050,7 @@ async function PLAYER_F(context = false) {
     return await PERFORM(V.TAKE_OFF, CHUTE);
   } else if ((h != 0) && (context == M_WINNER)) {
     pr_ = 60;
-    if ((h >= HUNGER_DELERIOUS) && prob(pr_) && !(await GAME_VERB$()) && (g.PRSA != V.WAIT)) {
+    if ((s16(h) >= s16(HUNGER_DELERIOUS)) && prob(pr_) && !(await GAME_VERB$()) && (g.PRSA != V.WAIT)) {
       await PRINT_PICK_ONE(get(HUNGER_MSGS, H_ERRS));
       tell("\n");
       g.NO_HUNGER_INT = true;
@@ -2064,11 +2065,11 @@ async function PLAYER_F(context = false) {
 
 async function I_HUNGER(cr$ = true) {
   let h1 = 0;
-  if (g.HUNGER < HUNGER_DELERIOUS) {
+  if (s16(g.HUNGER) < s16(HUNGER_DELERIOUS)) {
     g.HUNGER = g.HUNGER + 1;
   }
   if (!g.NO_HUNGER_INT && eq((h1 = div(g.HUNGER, 40)) * 40, g.HUNGER)) {
-    if (h1 > HUNGER_MAX) {
+    if (s16(h1) > s16(HUNGER_MAX)) {
       h1 = HUNGER_MAX;
     }
     if (cr$) {
@@ -2191,7 +2192,7 @@ async function ITALICIZE(str) {
   dirOut(D_SCREEN_ON);
   len = get(SL_TABLE, 0);
   len = len + 1;
-  if (len < 2) {
+  if (s16(len) < s16(2)) {
   } else if ((getb(0, 18) == 0) || (getb(0, 1) & 8)) {
     highlight(H_ITALIC);
     loop1: for (;;) {
@@ -2212,7 +2213,7 @@ async function ITALICIZE(str) {
   } else {
     loop2: for (;;) {
       char = getb(SL_TABLE, ptr);
-      if ((char > 96) && (char < 123)) {
+      if ((s16(char) > s16(96)) && (s16(char) < s16(123))) {
         char = char - 32;
       }
       printC(char);
@@ -2358,10 +2359,10 @@ async function ISNT_ARENT(thing = false) {
 }
 
 async function CARRIAGE_RETURNS(cnt = 23) {
-  if (cnt > 0) {
+  if (s16(cnt) > s16(0)) {
     loop1: for (;;) {
       crlf();
-      if ((cnt = cnt - 1) <= 0) {
+      if (s16(cnt = cnt - 1) <= s16(0)) {
         break loop1;
       }
     }
@@ -2403,7 +2404,7 @@ async function FIRMLY_ATTACHED(thing, to, other = false) {
 
 async function PRSO_NOUN_USED$(word1, word2 = false, word3 = false) {
   let wd = 0, ofwd = 0;
-  if (!(g.PRSO == 0) || (get(g.P_PRSO, 0) > 0)) {
+  if (!(g.PRSO == 0) || (s16(get(g.P_PRSO, 0)) > s16(0))) {
     wd = get(P_NAMW, 0);
     ofwd = get(P_OFW, 0);
     if ((wd && (wd == word1 || wd == word2 || wd == word3)) || (ofwd && (ofwd == word1 || ofwd == word2 || ofwd == word3))) {
@@ -2418,7 +2419,7 @@ async function PRSO_NOUN_USED$(word1, word2 = false, word3 = false) {
 
 async function PRSI_NOUN_USED$(word1, word2 = false, word3 = false) {
   let wd = 0, ofwd = 0;
-  if (!(g.PRSI == 0) || (get(g.P_PRSI, 0) > 0)) {
+  if (!(g.PRSI == 0) || (s16(get(g.P_PRSI, 0)) > s16(0))) {
     wd = get(P_NAMW, 1);
     ofwd = get(P_OFW, 1);
     if ((wd && (wd == word1 || wd == word2 || wd == word3)) || (ofwd && (ofwd == word1 || ofwd == word2 || ofwd == word3))) {
@@ -2566,7 +2567,7 @@ async function QUEUE(rtn, tick = (-1)) {
       if (!(int == 0)) {
         c_ = int;
       } else {
-        if (g.C_INTS < C_INTLEN) {
+        if (s16(g.C_INTS) < s16(C_INTLEN)) {
           tell("[Too many interrupts!]\n");
         }
         g.C_INTS = g.C_INTS - C_INTLEN;
@@ -2582,7 +2583,7 @@ async function QUEUE(rtn, tick = (-1)) {
     }
     c_ = c_ + C_INTLEN;
   }
-  if (int > g.CLOCK_HAND) {
+  if (s16(int) > s16(g.CLOCK_HAND)) {
     tick = -(tick + 3);
   }
   put(int, C_TICK, tick);
@@ -2600,14 +2601,14 @@ async function CLOCKER() {
   loop1: for (;;) {
     if (g.CLOCK_HAND == e) {
       g.MINUTES = g.MINUTES + 1;
-      if (g.MINUTES > 59) {
+      if (s16(g.MINUTES) > s16(59)) {
         g.MINUTES = 0;
         g.HOURS = g.HOURS + 1;
-        if (g.HOURS > 23) {
+        if (s16(g.HOURS) > s16(23)) {
           g.HOURS = 0;
           day = get(DAY_TABLE, 0);
           day = day + 1;
-          if (day > 7) {
+          if (s16(day) > s16(7)) {
             day = 1;
           }
           put(DAY_TABLE, 0, day);
@@ -2616,19 +2617,19 @@ async function CLOCKER() {
       break loop1;
     } else if (!(get(g.CLOCK_HAND, C_RTN) == 0)) {
       tick = get(g.CLOCK_HAND, C_TICK);
-      if (tick < (-1)) {
+      if (s16(tick) < s16(-1)) {
         tick = 0 - tick;
         put(g.CLOCK_HAND, C_TICK, tick - 3);
         q$ = g.CLOCK_HAND;
       } else if (!(tick == 0)) {
-        if (tick > 0) {
+        if (s16(tick) > s16(0)) {
           tick = tick - 1;
           put(g.CLOCK_HAND, C_TICK, tick);
         }
         if (!(tick == 0)) {
           q$ = g.CLOCK_HAND;
         }
-        if (!(tick > 0)) {
+        if (!(s16(tick) > s16(0))) {
           rtn = get(g.CLOCK_HAND, C_RTN);
           if (tick == 0) {
             put(g.CLOCK_HAND, C_RTN, 0);
@@ -2654,11 +2655,11 @@ async function I_BLOOD_PRESSURE() {
   let systolic = (await GET_SYSTOLIC()), diastolic = (g.BP & 255);
   if (systolic == 120) {
     return false;
-  } else if ((g.BP_DELAY = g.BP_DELAY - 1) < 1) {
+  } else if (s16(g.BP_DELAY = g.BP_DELAY - 1) < s16(1)) {
     g.BP_DELAY = DELAY_FACTOR;
-    if (systolic > 120) {
+    if (s16(systolic) > s16(120)) {
       return await UPDATE_BP(-2, true, true);
-    } else if (systolic < 120) {
+    } else if (s16(systolic) < s16(120)) {
       return await UPDATE_BP(2, true, true);
     } else {
       return false;
@@ -2671,7 +2672,7 @@ async function I_BLOOD_PRESSURE() {
 async function STUFF_WORD(wd, slot) {
   let lv = RESERVE_LEXV, sv = 0, iv = RESERVE_INBUF, tn = 0;
   putb(lv, P_LEXWORDS, slot + 1);
-  if (slot > 0) {
+  if (s16(slot) > s16(0)) {
     slot = slot - 1;
     lv = lv + ((2 * P_LEXSTART) + (2 * slot * P_LEXELEN));
     tn = 2 * (2 + getb(lv, 3));
@@ -2725,7 +2726,7 @@ async function PARSER(nocrlf$ = false) {
   let $1;
   loop1: for (;;) {
     cnt_omerged = cnt_omerged + 1;
-    if (cnt_omerged > P_ITBLLEN) {
+    if (s16(cnt_omerged) > s16(P_ITBLLEN)) {
       break loop1;
     } else {
       if (g.P_OFLAG == 0) {
@@ -2803,7 +2804,7 @@ async function PARSER(nocrlf$ = false) {
     ptr = ptr + P_LEXELEN;
     g.P_LEN = g.P_LEN - 1;
   }
-  if ((1 < g.P_LEN) && eq(get(P_LEXV, ptr), W.GO) && (nw = get(P_LEXV, ptr + P_LEXELEN)) && btst(getb(nw, 6), false)) {
+  if ((s16(1) < s16(g.P_LEN)) && eq(get(P_LEXV, ptr), W.GO) && (nw = get(P_LEXV, ptr + P_LEXELEN)) && btst(getb(nw, 6), 64)) {
     ptr = ptr + P_LEXELEN;
     g.P_LEN = g.P_LEN - 1;
   }
@@ -2815,11 +2816,11 @@ async function PARSER(nocrlf$ = false) {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
-    if (!(g.P_LEN > 1)) {
+    if (!(s16(g.P_LEN) > s16(1))) {
       tell("[", S(CANT), "use OOPS that way.]\n");
       return false;
     } else if (get(OOPS_TABLE, O_PTR)) {
-      if (g.P_LEN > 2) {
+      if (s16(g.P_LEN) > s16(2)) {
         tell("[Only the first word after OOPS is used.]\n");
       }
       put(AGAIN_LEXV, get(OOPS_TABLE, O_PTR), get(P_LEXV, ptr + P_LEXELEN));
@@ -2842,7 +2843,7 @@ async function PARSER(nocrlf$ = false) {
     if (!(g.P_OFLAG == 0) || (g.P_WON == 0) || (getb(OOPS_INBUF, 1) == 0)) {
       tell("[", S(CANT), "use AGAIN that way.]\n");
       return false;
-    } else if (g.P_LEN > 1) {
+    } else if (s16(g.P_LEN) > s16(1)) {
       if (eq(get(P_LEXV, ptr + P_LEXELEN), W.PERIOD, W.COMMA, W.THEN) || eq(get(P_LEXV, ptr + P_LEXELEN), W.AND)) {
         ptr = ptr + (2 * P_LEXELEN);
         putb(P_LEXV, P_LEXWORDS, getb(P_LEXV, P_LEXWORDS) - 2);
@@ -2854,7 +2855,7 @@ async function PARSER(nocrlf$ = false) {
       ptr = ptr + P_LEXELEN;
       putb(P_LEXV, P_LEXWORDS, getb(P_LEXV, P_LEXWORDS) - 1);
     }
-    if (getb(P_LEXV, P_LEXWORDS) > 0) {
+    if (s16(getb(P_LEXV, P_LEXWORDS)) > s16(0)) {
       await STUFF(RESERVE_LEXV, P_LEXV);
       await INBUF_STUFF(RESERVE_INBUF, P_INBUF);
       g.RESERVE_PTR = ptr;
@@ -2872,7 +2873,7 @@ async function PARSER(nocrlf$ = false) {
       putb(P_LEXV, P_LEXWORDS, g.P_LEN);
     }
     loop2: for (;;) {
-      if ((cnt_omerged = cnt_omerged + 1) > P_ITBLLEN) {
+      if (s16(cnt_omerged = cnt_omerged + 1) > s16(P_ITBLLEN)) {
         break loop2;
       } else {
         put(P_ITBL, cnt_omerged, get(P_OTBL, cnt_omerged));
@@ -2901,7 +2902,7 @@ async function PARSER(nocrlf$ = false) {
       return false;
     }
     loop3: for (;;) {
-      if ((g.P_LEN = g.P_LEN - 1) < 0) {
+      if (s16(g.P_LEN = g.P_LEN - 1) < s16(0)) {
         g.QUOTE_FLAG = false;
         break loop3;
       }
@@ -2917,7 +2918,7 @@ async function PARSER(nocrlf$ = false) {
         if ((wrd == W.TO) && (verb == ACT.TELL || verb == ACT.ASK)) {
           put(P_ITBL, P_VERB, ACT.TELL);
           wrd = W.QUOTE;
-        } else if ((wrd == W.THEN) && (g.P_LEN > 0) && (verb == 0) && (g.QUOTE_FLAG == 0)) {
+        } else if ((wrd == W.THEN) && (s16(g.P_LEN) > s16(0)) && (verb == 0) && (g.QUOTE_FLAG == 0)) {
           put(P_ITBL, P_VERB, ACT.TELL);
           put(P_ITBL, P_VERBN, 0);
           wrd = W.QUOTE;
@@ -2938,17 +2939,17 @@ async function PARSER(nocrlf$ = false) {
           (g.P_LEN == 0) || (g.P_CONT = ptr + P_LEXELEN);
           putb(P_LEXV, P_LEXWORDS, g.P_LEN);
           break loop3;
-        } else if ((val = await DO_WT$(wrd, false, false)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && (len > 1)) || (!(g.QUOTE_FLAG == 0) && (len == 2) && (nw == W.QUOTE)) || ((len > 2) && (nw == W.COMMA || nw == W.AND)))) {
+        } else if ((val = await DO_WT$(wrd, 16, 3)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && (s16(len) > s16(1))) || (!(g.QUOTE_FLAG == 0) && (len == 2) && (nw == W.QUOTE)) || ((s16(len) > s16(2)) && (nw == W.COMMA || nw == W.AND)))) {
           dir = val;
           g.P_DIR_WORD = wrd;
           if (nw == W.COMMA || nw == W.AND) {
             await CHANGE_LEXV(ptr + P_LEXELEN, W.THEN);
           }
-          if (!(len > 2)) {
+          if (!(s16(len) > s16(2))) {
             g.QUOTE_FLAG = false;
             break loop3;
           }
-        } else if ((val = await DO_WT$(wrd, false, false)) && (verb == 0)) {
+        } else if ((val = await DO_WT$(wrd, 64, 1)) && (verb == 0)) {
           g.P_PRSA_WORD = wrd;
           verb = val;
           put(P_ITBL, P_VERB, val);
@@ -2957,16 +2958,16 @@ async function PARSER(nocrlf$ = false) {
           putb(P_VTBL, 2, getb(P_LEXV, of_flag = (ptr * 2) + 2));
           putb(P_VTBL, 3, getb(P_LEXV, of_flag + 1));
           of_flag = false;
-        } else if ((val = await DO_WT$(wrd, false, 0)) || (wrd == W.A || wrd == W.EVERYTHING) || (wrd == W.BOTH || wrd == W.ALL) || btst(getb(wrd, 6), false) || btst(getb(wrd, 6), false)) {
+        } else if ((val = await DO_WT$(wrd, 8, 0)) || (wrd == W.A || wrd == W.EVERYTHING) || (wrd == W.BOTH || wrd == W.ALL) || btst(getb(wrd, 6), 32) || btst(getb(wrd, 6), 128)) {
           if (val && (wrd == W.BACK) && !(verb == ACT.HAND)) {
             val = 0;
           }
-          if ((g.P_LEN > 1) && (nw == W.OF) && !(verb == ACT.TAKE) && (val == 0) && !(wrd == W.A) && !(wrd == W.ALL || wrd == W.BOTH || wrd == W.EVERYTHING)) {
+          if ((s16(g.P_LEN) > s16(1)) && (nw == W.OF) && !(verb == ACT.TAKE) && (val == 0) && !(wrd == W.A) && !(wrd == W.ALL || wrd == W.BOTH || wrd == W.EVERYTHING)) {
             put(P_OFW, g.P_NCN, wrd);
             of_flag = true;
           } else if (!(val == 0) && ((g.P_LEN == 0) || (nw == W.THEN || nw == W.PERIOD))) {
             g.P_END_ON_PREP = true;
-            if (g.P_NCN < 2) {
+            if (s16(g.P_NCN) < s16(2)) {
               put(P_ITBL, P_PREP1, val);
               put(P_ITBL, P_PREP1N, wrd);
             }
@@ -2979,7 +2980,7 @@ async function PARSER(nocrlf$ = false) {
             if (!$1) {
               return false;
             }
-            if (ptr < 0) {
+            if (s16(ptr) < s16(0)) {
               g.QUOTE_FLAG = false;
               break loop3;
             }
@@ -2991,8 +2992,8 @@ async function PARSER(nocrlf$ = false) {
           } else {
             of_flag = false;
           }
-        } else if (btst(getb(wrd, 6), false)) {
-        } else if ((verb == ACT.TELL) && btst(getb(wrd, 6), false)) {
+        } else if (btst(getb(wrd, 6), 4)) {
+        } else if ((verb == ACT.TELL) && btst(getb(wrd, 6), 64)) {
           await WAY_TO_TALK();
           return false;
         } else {
@@ -3057,7 +3058,7 @@ async function WAY_TO_TALK(q$ = false) {
 async function DO_WT$(ptr, bit, b1 = 5) {
   let offs = P_P1OFF, typ = 0;
   if (btst(typ = getb(ptr, P_PSOFF), bit)) {
-    if (b1 > 4) {
+    if (s16(b1) > s16(4)) {
       return true;
     } else {
       typ = typ & P_P1BITS;
@@ -3090,7 +3091,7 @@ async function CLAUSE(ptr, val, wrd) {
     return false;
   }
   for (;;) {
-    if ((g.P_LEN = g.P_LEN - 1) < 0) {
+    if (s16(g.P_LEN = g.P_LEN - 1) < s16(0)) {
       put(P_ITBL, num + 1, P_LEXV + (ptr * 2));
       return -1;
     }
@@ -3106,7 +3107,7 @@ async function CLAUSE(ptr, val, wrd) {
           nw = await NUMBER$(ptr + P_LEXELEN);
         }
       }
-      if (first$$ && ((wrd == W.THE || wrd == W.A || wrd == W.AN) || (val && btst(getb(wrd, 6), false) && !(btst(getb(wrd, 6), false))))) {
+      if (first$$ && ((wrd == W.THE || wrd == W.A || wrd == W.AN) || (val && btst(getb(wrd, 6), 8) && !(btst(getb(wrd, 6), 32))))) {
         put(P_ITBL, num, get(P_ITBL, num) + 4);
       } else if ((wrd == W.PERIOD) && (lw == W.MR || lw == W.MRS || lw == W.MISS)) {
         lw = 0;
@@ -3117,7 +3118,7 @@ async function CLAUSE(ptr, val, wrd) {
           g.P_LEN = g.P_LEN - 1;
           ptr = ptr + P_LEXELEN;
         }
-      } else if ((wrd == W.THEN || wrd == W.PERIOD) || (btst(getb(wrd, 6), false) && get(P_ITBL, P_VERB) && !first$$)) {
+      } else if ((wrd == W.THEN || wrd == W.PERIOD) || (btst(getb(wrd, 6), 8) && get(P_ITBL, P_VERB) && !first$$)) {
         g.P_LEN = g.P_LEN + 1;
         put(P_ITBL, num + 1, P_LEXV + (ptr * 2));
         return ptr - P_LEXELEN;
@@ -3125,10 +3126,10 @@ async function CLAUSE(ptr, val, wrd) {
         ptr = ptr - 4;
         await CHANGE_LEXV(ptr + 2, W.THEN);
         g.P_LEN = g.P_LEN + 2;
-      } else if (btst(getb(wrd, 6), false)) {
-        if ((g.P_LEN > 0) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.EVERYTHING)) {
+      } else if (btst(getb(wrd, 6), 128)) {
+        if ((s16(g.P_LEN) > s16(0)) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.EVERYTHING)) {
           put(P_OFW, g.P_NCN - 1, wrd);
-        } else if (btst(getb(wrd, 6), false) && !(nw == 0) && btst(getb(nw, 6), false)) {
+        } else if (btst(getb(wrd, 6), 32) && !(nw == 0) && btst(getb(nw, 6), 128)) {
           if (wrd == W.TELLER || wrd == W.AISLE || wrd == W.ROW || wrd == W.CARD) {
             if (!(nw == W.WINDOW || nw == W.WINDOWS || nw == W.SIGN || nw == W.INTNUM || nw == W.$ || nw == W.READER)) {
               put(P_ITBL, num + 1, P_LEXV + ((ptr + 2) * 2));
@@ -3141,12 +3142,12 @@ async function CLAUSE(ptr, val, wrd) {
         } else {
           andflg = false;
         }
-      } else if (btst(getb(wrd, 6), false) || btst(getb(wrd, 6), false)) {
+      } else if (btst(getb(wrd, 6), 32) || btst(getb(wrd, 6), 4)) {
       } else if (!(andflg == 0) && (get(P_ITBL, P_VERB) == 0)) {
         ptr = ptr - 4;
         await CHANGE_LEXV(ptr + 2, W.THEN);
         g.P_LEN = g.P_LEN + 2;
-      } else if (btst(getb(wrd, 6), false)) {
+      } else if (btst(getb(wrd, 6), 8)) {
       } else {
         await CANT_USE(ptr);
         return false;
@@ -3529,7 +3530,7 @@ async function NOT_BUZZER_WORD$(word, ptr) {
     (await ITALICIZE("no"));
     tell(" need to get excited!!!\n");
     await UPDATE_BP(2);
-    if (ptr >= 0) {
+    if (s16(ptr) >= s16(0)) {
       put(P_LEXV, ptr, W.PERIOD);
     }
     return W.PERIOD;
@@ -3539,7 +3540,7 @@ async function NOT_BUZZER_WORD$(word, ptr) {
 }
 
 async function VERB_DIR_ONLY$(wrd) {
-  if (!(btst(getb(wrd, 6), false)) && !(btst(getb(wrd, 6), false)) && (btst(getb(wrd, 6), false) || btst(getb(wrd, 6), false))) {
+  if (!(btst(getb(wrd, 6), 128)) && !(btst(getb(wrd, 6), 32)) && (btst(getb(wrd, 6), 16) || btst(getb(wrd, 6), 64))) {
     return true;
   } else {
     return false;
@@ -3556,7 +3557,7 @@ async function STUFF(dest, src, max = 29) {
     put(dest, 0, get(src, 0));
     putb(dest, 2, getb(src, 2));
     putb(dest, 3, getb(src, 3));
-    if ((ctr = ctr + 1) > max) {
+    if (s16(ctr = ctr + 1) > s16(max)) {
       return true;
     }
     dest = dest + (2 * P_LEXELEN);
@@ -3569,7 +3570,7 @@ async function INBUF_STUFF(dest, src) {
   cnt = getb(src, 0) - 1;
   for (;;) {
     putb(dest, cnt, getb(src, cnt));
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       return true;
     }
   }
@@ -3624,13 +3625,13 @@ async function DO_NUMBER$(ptr, cnt = 0) {
   }
   bptr = getb(P_LEXV + (ptr * 2), 3);
   chr = getb(P_INBUF, bptr + cnt + (-1));
-  if (tmp && (cnt >= 2) && (await B_THRU_E$(chr)) && ((getb(P_INBUF, bptr + cnt + (-2)) != 45) || (cnt >= 3))) {
+  if (tmp && (s16(cnt) >= s16(2)) && (await B_THRU_E$(chr)) && ((getb(P_INBUF, bptr + cnt + (-2)) != 45) || (s16(cnt) >= s16(3)))) {
     cnt = cnt - 1;
     if (eq(getb(P_INBUF, bptr + cnt + (-1)), 45)) {
       cnt = cnt - 1;
     }
     if (eq(tmp = await DO_NUMBER$(ptr, cnt), W.INTNUM)) {
-      if (chr >= 97) {
+      if (s16(chr) >= s16(97)) {
         chr = chr - 98;
       } else {
         chr = chr - 66;
@@ -3643,7 +3644,7 @@ async function DO_NUMBER$(ptr, cnt = 0) {
     }
   }
   loop1: for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       break loop1;
     }
     chr = getb(P_INBUF, bptr);
@@ -3661,11 +3662,11 @@ async function DO_NUMBER$(ptr, cnt = 0) {
       minus$ = true;
       exc = sum;
       sum = 0;
-    } else if (sum > 9999) {
+    } else if (s16(sum) > s16(9999)) {
       return false;
     } else if (chr == 36) {
       dollar = true;
-    } else if ((chr > NaN) && (chr < NaN)) {
+    } else if ((s16(chr) > s16(NaN)) && (s16(chr) < s16(NaN))) {
       sum = (sum * 10) + (chr - 48);
     } else {
       return false;
@@ -3673,12 +3674,12 @@ async function DO_NUMBER$(ptr, cnt = 0) {
     bptr = bptr + 1;
   }
   await CHANGE_LEXV(ptr, W.INTNUM);
-  if (g.P_LEN > 1) {
+  if (s16(g.P_LEN) > s16(1)) {
     nw = get(P_LEXV, ptr + P_LEXELEN);
   } else {
     nw = false;
   }
-  if (!(dollar == 0) && (nw == W.PERIOD) && (g.P_LEN >= 2)) {
+  if (!(dollar == 0) && (nw == W.PERIOD) && (s16(g.P_LEN) >= s16(2))) {
     tmp = await CENTS_CHECK(ptr + (P_LEXELEN * 2));
     if (!(tmp == 0)) {
       if (tmp == 100) {
@@ -3687,7 +3688,7 @@ async function DO_NUMBER$(ptr, cnt = 0) {
       sum = (100 * sum) + tmp;
       cctr = g.P_LEN - 2;
       loop2: for (;;) {
-        if ((cctr = cctr - 1) < 0) {
+        if (s16(cctr = cctr - 1) < s16(0)) {
           g.P_LEN = g.P_LEN - 2;
           putb(P_LEXV, P_LEXWORDS, getb(P_LEXV, P_LEXWORDS) - 2);
           break loop2;
@@ -3709,18 +3710,18 @@ async function DO_NUMBER$(ptr, cnt = 0) {
     dollar = true;
     sum = sum * 100;
   }
-  if (sum > 9999) {
+  if (s16(sum) > s16(9999)) {
     return false;
   } else if (!(exc == 0)) {
     g.P_EXCHANGE = exc;
   } else if (!(tim == 0)) {
     g.P_EXCHANGE = 0;
-    if (tim > 23) {
+    if (s16(tim) > s16(23)) {
       return false;
-    } else if (tim > 19) {
-    } else if (tim > 12) {
+    } else if (s16(tim) > s16(19)) {
+    } else if (s16(tim) > s16(12)) {
       return false;
-    } else if (tim > 7) {
+    } else if (s16(tim) > s16(7)) {
     } else {
       tim = 12 + tim;
     }
@@ -3733,7 +3734,7 @@ async function DO_NUMBER$(ptr, cnt = 0) {
   }
   g.P_DOLLAR_FLAG = dollar;
   g.P_NUMBER = sum;
-  if (!(dollar == 0) && (sum > 0)) {
+  if (!(dollar == 0) && (s16(sum) > s16(0))) {
     await CHANGE_LEXV(saved_ptr, W.MONEY);
     return W.MONEY;
   } else {
@@ -3744,9 +3745,9 @@ async function DO_NUMBER$(ptr, cnt = 0) {
 }
 
 async function B_THRU_E$(chr) {
-  if ((chr >= 66) && (chr <= 69)) {
+  if ((s16(chr) >= s16(66)) && (s16(chr) <= s16(69))) {
     return true;
-  } else if ((chr >= 98) && (chr <= 101)) {
+  } else if ((s16(chr) >= s16(98)) && (s16(chr) <= s16(101))) {
     return true;
   } else {
     return false;
@@ -3758,14 +3759,14 @@ async function CENTS_CHECK(ptr) {
   cnt = getb(P_LEXV + (ptr * 2), 2);
   bptr = getb(P_LEXV + (ptr * 2), 3);
   loop1: for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       break loop1;
     }
     chr = getb(P_INBUF, bptr);
-    if ((cctr = cctr + 1) > 2) {
+    if (s16(cctr = cctr + 1) > s16(2)) {
       return false;
     }
-    if ((chr < 58) && (chr > 47)) {
+    if ((s16(chr) < s16(58)) && (s16(chr) > s16(47))) {
       sum = (sum * 10) + (chr - 48);
     } else {
       return false;
@@ -3811,9 +3812,9 @@ async function ORPHAN_MERGE() {
   let cnt = (-1), temp = 0, verb = 0, beg = 0, end = 0, adj = false, wrd = 0, which = 1;
   g.P_OFLAG = false;
   wrd = get(get(P_ITBL, P_VERBN), 0);
-  if (eq(await DO_WT$(wrd, false, false), get(P_OTBL, P_VERB)) || btst(getb(wrd, 6), false)) {
+  if (eq(await DO_WT$(wrd, 64, 1), get(P_OTBL, P_VERB)) || btst(getb(wrd, 6), 32)) {
     adj = true;
-  } else if ((await DO_WT$(wrd, false, false)) && (g.P_NCN == 0)) {
+  } else if ((await DO_WT$(wrd, 128, 0)) && (g.P_NCN == 0)) {
     put(P_ITBL, P_VERB, 0);
     put(P_ITBL, P_VERBN, 0);
     put(P_ITBL, P_NC1, P_LEXV + 2);
@@ -3912,7 +3913,7 @@ async function ORPHAN_MERGE() {
   put(P_OTBL, P_VERBN, P_VTBL);
   putb(P_VTBL, 2, 0);
   for (;;) {
-    if ((cnt = cnt + 1) > P_ITBLLEN) {
+    if (s16(cnt = cnt + 1) > s16(P_ITBLLEN)) {
       g.P_MERGED = which;
       return true;
     } else {
@@ -3948,7 +3949,7 @@ async function CLAUSE_WIN(adj = false) {
 
 async function WORD_PRINT(cnt, buf) {
   for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       return true;
     } else {
       printC(getb(P_INBUF, buf));
@@ -3981,8 +3982,8 @@ async function SYNTAX_CHECK(nogwim$ = false) {
   syn = syn + 1;
   loop1: for (;;) {
     num = getb(syn, P_SBITS) & P_SONUMS;
-    if (g.P_NCN > num) {
-    } else if (!(num < 1) && (g.P_NCN == 0) && (((prep = get(P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
+    if (s16(g.P_NCN) > s16(num)) {
+    } else if (!(s16(num) < s16(1)) && (g.P_NCN == 0) && (((prep = get(P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
       drive1 = syn;
     } else if (eq(getb(syn, P_SPREP1), get(P_ITBL, P_PREP1))) {
       if ((num == 2) && (g.P_NCN == 1)) {
@@ -3992,7 +3993,7 @@ async function SYNTAX_CHECK(nogwim$ = false) {
         return true;
       }
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       if (!(drive1 == 0) || !(drive2 == 0)) {
         break loop1;
       } else {
@@ -4004,7 +4005,7 @@ async function SYNTAX_CHECK(nogwim$ = false) {
     }
   }
   if (!nogwim$ && !(drive1 == 0) && (obj = await GWIM(getb(drive1, P_SFWIM1), getb(drive1, P_SLOC1), getb(drive1, P_SPREP1)))) {
-    if ((getb(drive1, P_SBITS) & P_SONUMS) > 1) {
+    if (s16(getb(drive1, P_SBITS) & P_SONUMS) > s16(1)) {
       return await FAKE_VERB_NOUN(g.P_PRSA_WORD, getb(drive1, P_SPREP1) ? (await PREP_FIND(getb(drive1, P_SPREP1))) : false, getPropAddr(obj, P.ADJECTIVE) ? get(getPropAddr(obj, P.ADJECTIVE), 0) : false, get(getPropAddr(obj, P.SYNONYM), 0));
     }
     put(g.P_PRSO, P_MATCHLEN, 1);
@@ -4080,7 +4081,7 @@ async function ORPHAN(d1, d2) {
   putb(P_OVTBL, 2, getb(P_VTBL, 2));
   putb(P_OVTBL, 3, getb(P_VTBL, 3));
   loop1: for (;;) {
-    if ((cnt = cnt + 1) > P_ITBLLEN) {
+    if (s16(cnt = cnt + 1) > s16(P_ITBLLEN)) {
       break loop1;
     } else {
       put(P_OTBL, cnt, get(P_ITBL, cnt));
@@ -4089,7 +4090,7 @@ async function ORPHAN(d1, d2) {
   if (g.P_NCN == 2) {
     await CLAUSE_COPY(P_ITBL, P_OTBL, P_NC2, P_NC2L, P_OCL2);
   }
-  if (!(g.P_NCN < 1)) {
+  if (!(s16(g.P_NCN) < s16(1))) {
     await CLAUSE_COPY(P_ITBL, P_OTBL, P_NC1, P_NC1L, P_OCL1);
   }
   if (!(d1 == 0)) {
@@ -4129,7 +4130,7 @@ async function BUFFER_PRINT(beg, end, cp) {
       }
       if (wrd == W.PERIOD) {
         nosp = true;
-      } else if ((btst(getb(wrd, 6), false) || btst(getb(wrd, 6), false)) && !(btst(getb(wrd, 6), false)) && !(btst(getb(wrd, 6), false))) {
+      } else if ((btst(getb(wrd, 6), 4) || btst(getb(wrd, 6), 8)) && !(btst(getb(wrd, 6), 32)) && !(btst(getb(wrd, 6), 128))) {
         nosp = true;
       } else if (wrd == W.ME) {
         await DPRINT(PLAYER);
@@ -4145,7 +4146,7 @@ async function BUFFER_PRINT(beg, end, cp) {
           tell("the ");
         }
         if (wrd == W.INTNUM) {
-          if ((g.P_NUMBER == (-1)) && (g.P_SEAT_NUMBER >= 0)) {
+          if ((g.P_NUMBER == (-1)) && (s16(g.P_SEAT_NUMBER) >= s16(0))) {
             tell(N(div(g.P_SEAT_NUMBER, 4) + 1), C(getb(SEAT_LETTERS, mod(g.P_SEAT_NUMBER, 4))));
           } else {
             tell(N(g.P_NUMBER));
@@ -4234,7 +4235,7 @@ async function CLAUSE_COPY(src, dest, bb, ee, ocl, insrt = false) {
           } else {
             cnt = 1;
           }
-          if (cnt > 0) {
+          if (s16(cnt) > s16(0)) {
             put(ocl, P_MATCHLEN, get(ocl, P_MATCHLEN) + (2 * cnt));
             if ((beg != end) && ((beg + P_WORDLEN) != end)) {
               b = end - P_WORDLEN;
@@ -4296,7 +4297,7 @@ async function CLAUSE_COPY(src, dest, bb, ee, ocl, insrt = false) {
     }
     beg = beg + P_WORDLEN;
   }
-  if (!flg && (obeg > 0) && (cnt = get(ocl, P_MATCHLEN) - obeg)) {
+  if (!flg && (s16(obeg) > s16(0)) && (cnt = get(ocl, P_MATCHLEN) - obeg)) {
     put(ocl, P_MATCHLEN, 0);
     obeg = obeg + 1;
     loop7: for (;;) {
@@ -4324,7 +4325,7 @@ async function PREP_FIND(prep) {
   let cnt = 0, size = 0, preps = g.PREPOSITIONS;
   size = get(preps, 0) * 2;
   for (;;) {
-    if ((cnt = cnt + 1) > size) {
+    if (s16(cnt = cnt + 1) > s16(size)) {
       return false;
     } else if (eq(get(preps, cnt), prep)) {
       return get(preps, cnt - 1);
@@ -4393,7 +4394,7 @@ async function SNARF_OBJECTS() {
     }
   }
   if (!(get(P_BUTS, P_MATCHLEN) == 0)) {
-    if (get(g.P_PRSO, P_MATCHLEN) > 1) {
+    if (s16(get(g.P_PRSO, P_MATCHLEN)) > s16(1)) {
       g.P_PRSO = await BUT_MERGE(g.P_PRSO);
     } else {
       g.P_PRSI = await BUT_MERGE(g.P_PRSI);
@@ -4407,7 +4408,7 @@ async function BUT_MERGE(tbl) {
   len = get(tbl, P_MATCHLEN);
   put(g.P_MERGE, P_MATCHLEN, 0);
   loop1: for (;;) {
-    if ((len = len - 1) < 0) {
+    if (s16(len = len - 1) < s16(0)) {
       break loop1;
     }
     obj = get(tbl, cnt);
@@ -4485,15 +4486,15 @@ async function SNARFEM(ptr, eptr, tbl) {
         if (!$4) {
           return false;
         }
-      } else if (btst(getb(wrd, 6), false)) {
+      } else if (btst(getb(wrd, 6), 4)) {
       } else if (wrd == W.AND || wrd == W.COMMA) {
       } else if (wrd == W.OF) {
         if (g.P_GETFLAGS == 0) {
           g.P_GETFLAGS = P_INHIBIT;
         }
-      } else if (btst(getb(wrd, 6), false) && (await ADJ_CHECK(wrd, g.P_ADJ)) && !(nw == W.OF)) {
+      } else if (btst(getb(wrd, 6), 32) && (await ADJ_CHECK(wrd, g.P_ADJ)) && !(nw == W.OF)) {
         g.P_ADJ = wrd;
-      } else if (btst(getb(wrd, 6), false)) {
+      } else if (btst(getb(wrd, 6), 128)) {
         g.P_NAM = wrd;
         oneobj = wrd;
       }
@@ -4514,10 +4515,10 @@ async function GET_OBJECT(tbl, vrb = true) {
   }
   adj = g.P_ADJ;
   if ((g.P_NAM == 0) && !(g.P_ADJ == 0)) {
-    if (btst(getb(g.P_ADJ, 6), false)) {
+    if (btst(getb(g.P_ADJ, 6), 128)) {
       g.P_NAM = g.P_ADJ;
       g.P_ADJ = false;
-    } else if (bts = await DO_WT$(g.P_ADJ, false, false)) {
+    } else if (bts = await DO_WT$(g.P_ADJ, 16, 3)) {
       g.P_ADJ = false;
       put(tbl, P_MATCHLEN, 1);
       put(tbl, 1, INTDIR);
@@ -4565,7 +4566,7 @@ async function GET_OBJECT(tbl, vrb = true) {
         tell("?]\n");
       }
       put(tbl, P_MATCHLEN, 1);
-    } else if ((len > 1) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
+    } else if ((s16(len) > s16(1)) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
       if (g.P_SLOCBITS == (-1)) {
         g.P_SLOCBITS = xbits;
         olen = len;
@@ -4599,7 +4600,7 @@ async function GET_OBJECT(tbl, vrb = true) {
           return false;
         } else if (!(vrb == 0) && !(g.P_NAM == 0)) {
           xtbl = tbl == g.P_PRSO ? P_OCL1 : P_OCL2;
-          if (get(xtbl, 0) > 10) {
+          if (s16(get(xtbl, 0)) > s16(10)) {
             put(xtbl, 0, 0);
             tell("Look, you're not getting anywhere this way. Try something else.\n");
           } else {
@@ -4686,7 +4687,7 @@ async function MOBY_FIND(tbl) {
       if (!(loc(obj) == ROOMS) && (foo = await THIS_IT$(obj))) {
         foo = await OBJ_FOUND(obj, tbl);
       }
-      if ((obj = obj + 1) > LAST_OBJECT) {
+      if (s16(obj = obj + 1) > s16(LAST_OBJECT)) {
         break loop2;
       }
     }
@@ -4738,10 +4739,10 @@ async function WHICH_PRINT(tlen, len, tbl) {
         tell(",");
       }
       tell(" or");
-    } else if (len > 2) {
+    } else if (s16(len) > s16(2)) {
       tell(",");
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       tell("?\n");
       return true;
     }
@@ -4767,7 +4768,7 @@ async function GLOBAL_CHECK(tbl) {
           await OBJ_FOUND(obj, tbl);
         }
       }
-      if ((cnt = cnt + 1) > rmgl) {
+      if (s16(cnt = cnt + 1) > s16(rmgl)) {
         break loop1;
       }
     }
@@ -4944,7 +4945,7 @@ async function ITAKE_CHECK(tbl, bits) {
           } else if (!(loc(l) == PLAYER)) {
             got = 0;
           }
-          if (got > 0) {
+          if (s16(got) > s16(0)) {
             await SAY_TAKING(obj, l);
             tried_take$ = true;
             if (!(await ITAKE(true))) {
@@ -4992,7 +4993,7 @@ async function ITAKE_CHECK(tbl, bits) {
           return false;
         }
       }
-      if ((ptr = ptr + 1) > len) {
+      if (s16(ptr = ptr + 1) > s16(len)) {
         return true;
       }
     }
@@ -5002,9 +5003,9 @@ async function ITAKE_CHECK(tbl, bits) {
 
 async function MANY_CHECK() {
   let loss = false, tmp = 0;
-  if ((get(g.P_PRSO, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
+  if ((s16(get(g.P_PRSO, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
     loss = 1;
-  } else if ((get(g.P_PRSI, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
+  } else if ((s16(get(g.P_PRSI, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
     loss = 2;
   }
   if (!(loss == 0)) {
@@ -5028,7 +5029,7 @@ async function PICK_NEXT(tbl) {
   let cnt = 0, str = 0;
   cnt = getb(tbl, 2);
   str = get(tbl + 3, cnt);
-  if ((cnt = cnt + 1) >= get(tbl, 0)) {
+  if (s16(cnt = cnt + 1) >= s16(get(tbl, 0))) {
     cnt = 0;
   }
   putb(tbl, 2, cnt);
@@ -5140,15 +5141,15 @@ async function ANYONE_HERE$() {
         if (RANDOM_PERSON == g.PRSO || RANDOM_PERSON == g.PRSI || RANDOM_PERSON == g.WINNER) {
           obj = RANDOM_PERSON;
           break loop1;
-        } else if ((g.HERE == SEAT) && !(getb(33808, 6) == 0)) {
-          putProp(RANDOM_PERSON, P.PSEUDO_TABLE, getb(33808, 6));
+        } else if ((g.HERE == SEAT) && !(getb(33976, 6) == 0)) {
+          putProp(RANDOM_PERSON, P.PSEUDO_TABLE, getb(33976, 6));
           obj = RANDOM_PERSON;
           break loop1;
         } else if ((await ON_PLANE$()) && hasFlag(FLIGHT_ATTENDANT, SEEN)) {
           obj = FLIGHT_ATTENDANT;
           break loop1;
-        } else if ((g.HERE == AISLE) && !(getb(33808, 6) == 0)) {
-          putProp(RANDOM_PERSON, P.PSEUDO_TABLE, getb(33808, 6));
+        } else if ((g.HERE == AISLE) && !(getb(33976, 6) == 0)) {
+          putProp(RANDOM_PERSON, P.PSEUDO_TABLE, getb(33976, 6));
           obj = RANDOM_PERSON;
           break loop1;
         } else if (g.HERE == IN_POT) {
@@ -5242,7 +5243,7 @@ async function FIND_NOT_HERE(tbl, prso$) {
       g.PRSI = g.P_MOBY_FOUND;
     }
     return false;
-  } else if ((m_f > 1) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC), tbl))) {
+  } else if ((s16(m_f) > s16(1)) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC), tbl))) {
     if (obj == NOT_HERE_OBJECT) {
       return true;
     } else if (!(prso$ == 0)) {
@@ -5568,7 +5569,7 @@ async function ITS_CLOSED(obj = false) {
 }
 
 async function DO_BANKWORD$(ptr) {
-  if (!(get(33854, 0) == 0)) {
+  if (!(get(34022, 0) == 0)) {
     return await BANKWORD$(ptr);
   } else {
     return false;
@@ -5582,7 +5583,7 @@ async function DO_FORM$() {
     wrd = false;
     await read(P_INBUF, P_LEXV);
     n_ = getb(P_LEXV, P_LEXWORDS);
-    if (n_ > 0) {
+    if (s16(n_) > s16(0)) {
       wrd = get(P_LEXV, P_LEXSTART);
     }
     if (wrd == W.RESTORE) {
@@ -5614,7 +5615,7 @@ async function GO() {
   clearScreen(-1);
   await COPYRIGHT();
   if (await DO_FORM$()) {
-    if ((g.HEIGHT < FORM_LENGTH) || (g.WIDTH < FORM_WIDTH)) {
+    if ((s16(g.HEIGHT) < s16(FORM_LENGTH)) || (s16(g.WIDTH) < s16(FORM_WIDTH))) {
       tell("\n[Screen too small.]\n");
       await quit();
     }
@@ -5684,7 +5685,7 @@ async function ESTABLISH_EXCHANGES() {
   y = y - 1;
   loop1: for (;;) {
     z = random(797) + 201;
-    if ((z > x) || (z < y)) {
+    if ((s16(z) > s16(x)) || (s16(z) < s16(y))) {
       break loop1;
     }
   }
@@ -5703,7 +5704,7 @@ async function INIT_STATUS_LINE() {
   cursorSet(1, 1);
   highlight(H_INVERSE);
   await PRINT_SPACES(g.WIDTH);
-  if (g.WIDTH < 64) {
+  if (s16(g.WIDTH) < s16(64)) {
     cursorSet(1, g.WIDTH - 11);
     tell("BP:");
   } else {
@@ -6019,7 +6020,7 @@ async function GROUND_F() {
 async function POCKET_F() {
   let obj = 0;
   if (!(g.NOW_PRSI$ == 0)) {
-    if (isVerb(V.PUT) && (getProp(g.PRSO, P.SIZE) > 3)) {
+    if (isVerb(V.PUT) && (s16(getProp(g.PRSO, P.SIZE)) > s16(3))) {
       await CTHE_PRINT();
       tell(" is too big to fit in ");
       await DPRINT(g.PRSI);
@@ -6315,7 +6316,7 @@ async function V_SUPER_BRIEF() {
 async function V_DIAGNOSE() {
   if (await WRONG_WINNER$()) {
     return FATAL_VALUE;
-  } else if (getb(33808, 14)) {
+  } else if (getb(33976, 14)) {
     tell("How do you expect to feel after eating that stuff?\n");
     return true;
   } else {
@@ -6587,17 +6588,17 @@ async function V_SCORE() {
   systolic = await GET_SYSTOLIC();
   if (systolic == 0) {
     tell("Defunct");
-  } else if (systolic < 105) {
+  } else if (s16(systolic) < s16(105)) {
     tell("Sleepy");
-  } else if (systolic < 115) {
+  } else if (s16(systolic) < s16(115)) {
     tell("Calm");
-  } else if (systolic < 125) {
+  } else if (s16(systolic) < s16(125)) {
     tell("Stable");
-  } else if (systolic < 130) {
+  } else if (s16(systolic) < s16(130)) {
     tell("Annoyed");
-  } else if (systolic < 135) {
+  } else if (s16(systolic) < s16(135)) {
     tell("Angry");
-  } else if (systolic < 139) {
+  } else if (s16(systolic) < s16(139)) {
     tell("Really Pissed Off");
   } else {
     tell("Livid");
@@ -6615,7 +6616,7 @@ async function V_SCORE() {
 async function V_NOTIFY() {
   if (await WRONG_WINNER$()) {
     return FATAL_VALUE;
-  } else if (g.DO_SCORE$ < 2) {
+  } else if (s16(g.DO_SCORE$) < s16(2)) {
     g.DO_SCORE$ = 2;
   } else {
     g.DO_SCORE$ = 1;
@@ -6663,20 +6664,20 @@ async function UPDATE_BP(factor = 1, cr = true, decay$ = false) {
     return false;
   }
   g.BP_DELAY = DELAY_FACTOR;
-  if ((systolic >= 119) && (systolic <= 121)) {
+  if ((s16(systolic) >= s16(119)) && (s16(systolic) <= s16(121))) {
     already_normal$ = true;
   }
-  if ((factor > 0) && (g.LAST_BP_CHANGE > 0)) {
+  if ((s16(factor) > s16(0)) && (s16(g.LAST_BP_CHANGE) > s16(0))) {
     factor = factor + g.LAST_BP_CHANGE;
   }
   g.LAST_BP_CHANGE = factor;
-  if ((systolic = systolic + factor) > 255) {
+  if (s16(systolic = systolic + factor) > s16(255)) {
     systolic = 250;
   }
   diastolic = 80 + div(systolic - 120, 2);
   g.BP = (systolic * SYSTOLIC_SHIFT) | diastolic;
   if (decay$) {
-    if ((systolic >= 119) && (systolic <= 121)) {
+    if ((s16(systolic) >= s16(119)) && (s16(systolic) <= s16(121))) {
       g.BP = (120 * SYSTOLIC_SHIFT) | 80;
       if (!already_normal$) {
         if (!(cr == 0)) {
@@ -6691,7 +6692,7 @@ async function UPDATE_BP(factor = 1, cr = true, decay$ = false) {
     } else {
       return false;
     }
-  } else if ((systolic > 230) && (diastolic > 130)) {
+  } else if ((s16(systolic) > s16(230)) && (s16(diastolic) > s16(130))) {
     if (!(cr == 0)) {
       crlf();
     }
@@ -6700,7 +6701,7 @@ async function UPDATE_BP(factor = 1, cr = true, decay$ = false) {
     tell(", causing a small vessel in your brain to rupture. You sink into coma and die without pain.");
     await JIGS_UP();
     return true;
-  } else if (systolic <= 96) {
+  } else if (s16(systolic) <= s16(96)) {
     if (!(cr == 0)) {
       crlf();
     }
@@ -6711,7 +6712,7 @@ async function UPDATE_BP(factor = 1, cr = true, decay$ = false) {
     await V_LOOK();
     return true;
   }
-  return (await SAY_SCORE_UPDATE("blood pressure", cr, factor < 0 ? true : false));
+  return (await SAY_SCORE_UPDATE("blood pressure", cr, s16(factor) < s16(0) ? true : false));
 }
 
 async function V_TIME() {
@@ -6733,10 +6734,10 @@ async function V_TIME() {
 async function TELL_TIME() {
   let h = 0, pm$ = false;
   tell(S(get(DAY_TABLE, get(DAY_TABLE, 0))), "day, ");
-  if (g.HOURS > 11) {
+  if (s16(g.HOURS) > s16(11)) {
     pm$ = true;
   }
-  if (g.HOURS > 12) {
+  if (s16(g.HOURS) > s16(12)) {
     h = g.HOURS - 12;
   } else if (g.HOURS == 0) {
     h = 12;
@@ -6744,7 +6745,7 @@ async function TELL_TIME() {
     h = g.HOURS;
   }
   tell(N(h), ":");
-  if (g.MINUTES < 10) {
+  if (s16(g.MINUTES) < s16(10)) {
     tell("0");
   }
   tell(N(g.MINUTES));
@@ -7454,7 +7455,7 @@ async function LOOK_INTDIR$() {
           return true;
         }
         break loop1;
-      } else if ((ptr = ptr - 1) < 0) {
+      } else if (s16(ptr = ptr - 1) < s16(0)) {
         break loop1;
       }
     }
@@ -8569,7 +8570,7 @@ async function EMPTY_PRSO(dest) {
           tell("It ");
         }
         await FALLS();
-      } else if ((((await WEIGHT(dest)) + (await WEIGHT(obj))) - getProp(dest, P.SIZE)) > getProp(dest, P.CAPACITY)) {
+      } else if (s16(((await WEIGHT(dest)) + (await WEIGHT(obj))) - getProp(dest, P.SIZE)) > s16(getProp(dest, P.CAPACITY))) {
         tell("There isn't enough room ");
         if (hasFlag(dest, CONTAINER)) {
           tell("in ");
@@ -8758,7 +8759,7 @@ async function V_PUT() {
     await ISNT_ARENT(g.PRSI);
     tell("open.\n");
     return true;
-  } else if ((((await WEIGHT(g.PRSI)) + (await WEIGHT(g.PRSO))) - getProp(g.PRSI, P.SIZE)) > getProp(g.PRSI, P.CAPACITY)) {
+  } else if (s16(((await WEIGHT(g.PRSI)) + (await WEIGHT(g.PRSO))) - getProp(g.PRSI, P.SIZE)) > s16(getProp(g.PRSI, P.CAPACITY))) {
     tell("There isn't enough room ");
     if (g.PRSI == UNDER_SEAT) {
     } else if (hasFlag(g.PRSI, CONTAINER)) {
@@ -9357,7 +9358,7 @@ async function ASK_CHAR_ABOUT(char, obj, sub_tbl, flag, inv_fcn = false) {
       }
       tell("\"", S(get(tbl, 1)), "\"\n");
       return true;
-    } else if ((ptr = ptr + 1) > len) {
+    } else if (s16(ptr = ptr + 1) > s16(len)) {
       break loop1;
     }
   }
@@ -9960,7 +9961,7 @@ async function PERFORM_WALK_TO(room) {
       break loop2;
     }
   }
-  if (ct > 0) {
+  if (s16(ct) > s16(0)) {
     if (g.HERE != (cf = get(wt, ct = ct - 1))) {
       await GOTO(cf);
     }
@@ -9971,7 +9972,7 @@ async function PERFORM_WALK_TO(room) {
       if (oh == g.HERE) {
         return true;
       }
-      if ((ct = ct - 1) <= 0) {
+      if (s16(ct = ct - 1) <= s16(0)) {
         return true;
       }
     }
@@ -10000,7 +10001,7 @@ async function V_WAIT(n_ = 3) {
   } else {
     tell("Time passes.\n");
     loop1: for (;;) {
-      if (!(x == 0) || (n_ < 1)) {
+      if (!(x == 0) || (s16(n_) < s16(1))) {
         break loop1;
       } else if (await CLOCKER()) {
         x = true;
@@ -10019,7 +10020,7 @@ async function V_WAIT_FOR() {
     if (g.P_NUMBER == 0) {
       g.CLOCK_WAIT$ = true;
       await IMPOSSIBLE();
-    } else if (g.P_NUMBER > 120) {
+    } else if (s16(g.P_NUMBER) > s16(120)) {
       g.CLOCK_WAIT$ = true;
       tell("[That's too long to WAIT.]\n");
     } else {
@@ -10234,7 +10235,7 @@ async function ITAKE(vb = true) {
       (await YOUD_HAVE_TO("open", l));
     }
     return false;
-  } else if (!(loc(l) == g.WINNER) && (((await WEIGHT(g.PRSO)) + (await WEIGHT(g.WINNER))) > LOAD_ALLOWED)) {
+  } else if (!(loc(l) == g.WINNER) && (s16((await WEIGHT(g.PRSO)) + (await WEIGHT(g.WINNER))) > s16(LOAD_ALLOWED))) {
     if (!(vb == 0)) {
       if (first(g.WINNER)) {
         tell("Your load is");
@@ -10245,14 +10246,14 @@ async function ITAKE(vb = true) {
       tell(" too heavy.\n");
     }
     return false;
-  } else if ((await CCOUNT(g.WINNER)) > FUMBLE_NUMBER) {
+  } else if (s16(await CCOUNT(g.WINNER)) > s16(FUMBLE_NUMBER)) {
     if (!(vb == 0)) {
       tell("You're holding too much already.\n");
     }
     return false;
   } else {
     ml = getProp(g.PRSO, P.MAIL_LETTER);
-    if (ml < 0) {
+    if (s16(ml) < s16(0)) {
       ml = 0 - ml;
       if (!(hasFlag(g.PRSO, TOUCHED))) {
         l = loc(g.PRSO);
@@ -10751,7 +10752,7 @@ async function V_HOLD() {
     tell("No, other people are supposed to put you on hold.\n");
     return true;
   } else if (hasFlag(MACHINE, SEEN)) {
-    if (g.HOLD_TURNS > 0) {
+    if (s16(g.HOLD_TURNS) > s16(0)) {
       tell(S(YOURE_ALREADY_STR), "on hold", S(PERIOD));
       return true;
     } else {
@@ -10802,30 +10803,30 @@ async function V_STINGLAI() {
 }
 
 async function NEXT_TOON() {
-  let x = getb(33856, 1);
-  if ((x = x + 1) > NUMBER_OF_TUNES) {
+  let x = getb(34024, 1);
+  if (s16(x = x + 1) > s16(NUMBER_OF_TUNES)) {
     x = 0;
   }
-  putb(33856, 1, x);
-  putb(33856, 2, false);
+  putb(34024, 1, x);
+  putb(34024, 2, false);
   return x;
 }
 
 async function I_TUNE_TIMER() {
   let x = 0, y = 0;
-  x = getb(33856, 0);
-  if ((x = x + 1) > 10) {
+  x = getb(34024, 0);
+  if (s16(x = x + 1) > s16(10)) {
     x = 0;
     await NEXT_TOON();
   }
-  putb(33856, 0, x);
+  putb(34024, 0, x);
   return false;
 }
 
 async function I_RADIO(cr = true) {
   if (!(g.HERE == BEHIND_MANSION || g.HERE == IN_PORCH || g.HERE == TROPHY_ROOM || g.HERE == OUTSIDE_MANSION)) {
     return false;
-  } else if (!(getb(33856, 2)) && (getb(33856, 0) == 0)) {
+  } else if (!(getb(34024, 2)) && (getb(34024, 0) == 0)) {
     if (!(cr == 0)) {
       crlf();
     }
@@ -11055,7 +11056,7 @@ async function GET_YES_NO(prompt, offs, coopstr) {
   for (;;) {
     word = await GET_WORD();
     if (await YES_USED$(word)) {
-      if (offs >= 0) {
+      if (s16(offs) >= s16(0)) {
         put(MEAL, offs, true);
       }
       return true;
@@ -11086,17 +11087,17 @@ async function GET_1_OF_N(prompt, table, offset, coopstr) {
         ttbl = get(table, offs);
         if (inTable(word, ttbl + 2, get(ttbl, 0))) {
           val = get(ttbl, 1);
-          if (offset >= 0) {
+          if (s16(offset) >= s16(0)) {
             put(MEAL, offset, val);
           }
           return val;
         }
-        if ((offs = offs + 1) >= n_) {
+        if (s16(offs = offs + 1) >= s16(n_)) {
           break loop2;
         }
       }
     } else if (inTable(word, table, n_)) {
-      if (offset >= 0) {
+      if (s16(offset) >= s16(0)) {
         put(MEAL, offset, word);
       }
       return word;
@@ -11111,7 +11112,7 @@ async function GET_ORDER(who) {
   let d_ = false, cnt = 0, word = 0;
   loop1: for (;;) {
     put(MEAL, cnt, 0);
-    if ((cnt = cnt + 1) > WATER$) {
+    if (s16(cnt = cnt + 1) > s16(WATER$)) {
       break loop1;
     }
   }
@@ -11196,10 +11197,10 @@ async function GET_WORD() {
     tell("\n>>");
     await read(P_INBUF, P_LEXV);
     n_ = getb(P_LEXV, P_LEXWORDS);
-    if (btst(getb(word = get(P_LEXV, P_LEXSTART), 6), false) && (n_ >= 2)) {
+    if (btst(getb(word = get(P_LEXV, P_LEXSTART), 6), 4) && (s16(n_) >= s16(2))) {
       word = get(P_LEXV, P_LEXSTART + P_LEXELEN);
     }
-    if (n_ > 0) {
+    if (s16(n_) > s16(0)) {
       if (word == W.QUIT || word == W.Q) {
         await V_QUIT();
       } else if (word == W.RESTART) {
@@ -11225,7 +11226,7 @@ async function PRINT_WITH(options, none) {
     if (!(get(MEAL, get(options, offs + OPTION_OFFSET)) == 0)) {
       ct = ct + 1;
     }
-    if ((offs = offs + OPTION_LEN) > len) {
+    if (s16(offs = offs + OPTION_LEN) > s16(len)) {
       break loop1;
     }
   }
@@ -11383,14 +11384,14 @@ async function END_CAPS(allwords$ = false) {
   lc = 32;
   for (;;) {
     x = getb(SL_TABLE, cnt);
-    if ((x >= 97) && (x <= 122)) {
+    if ((s16(x) >= s16(97)) && (s16(x) <= s16(122))) {
       if ((cnt == 2) || (!(allwords$ == 0) && (lc == 32))) {
         x = x - 32;
       }
     }
     printC(x);
     lc = x;
-    if ((cnt = cnt + 1) > len) {
+    if (s16(cnt = cnt + 1) > s16(len)) {
       return true;
     }
   }
@@ -11423,7 +11424,7 @@ async function COOPERATE() {
 
 async function SAY_MUZAK(x = (-1)) {
   if (x == (-1)) {
-    x = getb(33856, 1);
+    x = getb(34024, 1);
   }
   if (x == 0) {
     tell("\"The Girl From Ipanema,\" with lots of strings");
@@ -12069,7 +12070,7 @@ async function GIVE_TO_CLERK(give_or_show) {
       setFlag(SOFTWARE, SEEN);
       move(obj, CLERK);
       move(RECIPE, PLAYER);
-      putb(33808, 38, true);
+      putb(33976, 38, true);
       await DEQUEUE(I_CLERK_TRADE.id);
       setFlag(RECIPE, SEEN);
       if (hasFlag(SOFTWARE, SEEN)) {
@@ -12155,7 +12156,7 @@ async function ASK_CLERK_ABOUT(obj) {
     await SEEN_SOFTWARE$(false);
   } else if ((obj == RECIPE) && (await VISIBLE$(obj))) {
     await DESCRIBE_RECIPE();
-    if (g.CLERK_SCRIPT > 1) {
+    if (s16(g.CLERK_SCRIPT) > s16(1)) {
       g.CLERK_SCRIPT = 1;
     }
   } else {
@@ -12225,7 +12226,7 @@ async function WAITER_F(context = false) {
   } else if (isVerb(V.GIVE, V.SHOW)) {
     if (g.PRSO == BURGER) {
       return await PERFORM(V.RETURN, g.PRSO);
-    } else if (g.MEAL_STATE < MS_ORDERED_FROM_WAITER) {
+    } else if (s16(g.MEAL_STATE) < s16(MS_ORDERED_FROM_WAITER)) {
       if ((g.PRSO == BEEZER || g.PRSO == EXCESS || g.PRSO == MONEY) || (g.PRSO == CHECK)) {
         await CTHE_PRINT(WAITER);
         tell(" says, \"Order first, pay later. Are you stupid or something?\"\n");
@@ -12253,21 +12254,21 @@ async function WAITER_F(context = false) {
         crlf();
         g.P_NUMBER = 0;
         return true;
-      } else if (g.CASH < 450) {
-        if (g.P_NUMBER >= 450) {
+      } else if (s16(g.CASH) < s16(450)) {
+        if (s16(g.P_NUMBER) >= s16(450)) {
           tell(S(DONT), "have that much!");
         } else {
           tell("He won't accept less than $4.50!");
         }
         g.P_NUMBER = 0;
-      } else if (g.P_NUMBER < 450) {
+      } else if (s16(g.P_NUMBER) < s16(450)) {
         await CTHE_PRINT(WAITER);
         tell(" snaps, \"Look, I don't have all day; just pay the tab!\"");
         g.P_NUMBER = 0;
       } else if (g.P_NUMBER == 450) {
         await CTHE_PRINT(WAITER);
         tell(" seems quite displeased but takes your money anyway;");
-      } else if (g.P_NUMBER < 480) {
+      } else if (s16(g.P_NUMBER) < s16(480)) {
         await CTHE_PRINT(WAITER);
         tell(" says, \"Keep your lousy tip, cheapskate,\" then");
         g.P_NUMBER = 450;
@@ -12621,7 +12622,7 @@ async function MACAW_F(context = false) {
     } else if (isVerb(V.GIVE) && !(g.PRSO == PAINTING)) {
       setFlag(g.PRSI, SEEN);
       await CTHEI_PRINT();
-      if (getProp(g.PRSO, P.SIZE) > 3) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(3)) {
         tell(" couldn't possibly take such ");
         if (!(hasFlag(g.PRSO, PLURAL))) {
           tell("a ");
@@ -12992,7 +12993,7 @@ async function DMAN_APPEARS() {
 async function I_DOORBELL(cr = true) {
   let ring = true;
   g.DOORBELL_RINGS = g.DOORBELL_RINGS - 1;
-  if (g.DOORBELL_RINGS <= 0) {
+  if (s16(g.DOORBELL_RINGS) <= s16(0)) {
     await DEQUEUE(I_DOORBELL.id);
     setFlag(FROOM_DOOR, TOUCHED);
     ring = false;
@@ -13048,15 +13049,15 @@ async function MUNG_WVEC(wvec, wlen, lt) {
   loop1: for (;;) {
     put(wvec, offs - 1, get(lt, offs));
     wlen = wlen - 1;
-    if ((offs = offs + 1) > llen) {
+    if (s16(offs = offs + 1) > s16(llen)) {
       break loop1;
     }
   }
-  if (wlen > 0) {
+  if (s16(wlen) > s16(0)) {
     for (;;) {
       put(wvec, offs - 1, W.ZZZP);
       offs = offs + 1;
-      if ((wlen = wlen - 1) < 1) {
+      if (s16(wlen = wlen - 1) < s16(1)) {
         return true;
       }
     }
@@ -13066,12 +13067,12 @@ async function MUNG_WVEC(wvec, wlen, lt) {
 }
 
 async function SAY_NERD_MONEY(amt = (-1), ast = 0) {
-  if (amt <= 0) {
+  if (s16(amt) <= s16(0)) {
     amt = g.CASH + 100;
   }
-  if (amt > 0) {
+  if (s16(amt) > s16(0)) {
     amt = div(amt, 100);
-  } else if ((amt = div(amt + 100, 100)) <= 0) {
+  } else if (s16(amt = div(amt + 100, 100)) <= s16(0)) {
     amt = 26;
   }
   if (amt == 1) {
@@ -13324,7 +13325,7 @@ async function SHOW_TO_NERD(obj = false) {
   }
   setFlag(NERD, TOUCHED);
   if (obj == MONEY) {
-    if (g.P_NUMBER > g.CASH) {
+    if (s16(g.P_NUMBER) > s16(g.CASH)) {
       tell("\"This isn't ");
       await SAY_NERD_MONEY(g.P_NUMBER);
       tell("!\" He hands it back.\n");
@@ -13714,7 +13715,7 @@ async function LEAVE_BY_BACK_DOOR() {
     return IN_ALLEY;
   } else {
     tell("The door is closed", S(PERIOD));
-    if ((g.MEAL_STATE >= MS_ORDERED_FROM_WAITER) && (g.MEAL_STATE < MS_PAID_FOR_FOOD)) {
+    if ((s16(g.MEAL_STATE) >= s16(MS_ORDERED_FROM_WAITER)) && (s16(g.MEAL_STATE) < s16(MS_PAID_FOR_FOOD))) {
       await I_WAITER_ARRIVES(true);
     }
     return false;
@@ -13733,7 +13734,7 @@ async function DINER_F(context = false) {
     if (g.P_WALK_DIR == P.SOUTH) {
       tell("You slither out the back way, wondering why you never see any live dogs hanging around this restaurant", S(PCR));
       return false;
-    } else if ((g.MEAL_STATE > MS_ORDERED_FROM_WAITRESS) && (g.MEAL_STATE != MS_PAID_FOR_FOOD)) {
+    } else if ((s16(g.MEAL_STATE) > s16(MS_ORDERED_FROM_WAITRESS)) && (g.MEAL_STATE != MS_PAID_FOR_FOOD)) {
       await DEQUEUE(I_WAITER_ARRIVES.id);
       await I_WAITER_ARRIVES(true);
       return true;
@@ -13799,13 +13800,13 @@ async function FOOD_F() {
       } else {
         tell(S(CANT), "eat it until you've got it.\n");
       }
-    } else if (g.MEAL_STATE >= MS_RECEIVED_FOOD) {
+    } else if (s16(g.MEAL_STATE) >= s16(MS_RECEIVED_FOOD)) {
       tell("You've already got whatever you're going to get.\n");
     } else {
       tell("You'll just have to wait for someone to take your order.\n");
     }
     return true;
-  } else if (g.MEAL_STATE >= MS_RECEIVED_FOOD) {
+  } else if (s16(g.MEAL_STATE) >= s16(MS_RECEIVED_FOOD)) {
     tell("We'll admit that you didn't get everything you ordered, but at least the service was prompt.\n");
     return true;
   } else {
@@ -13819,7 +13820,7 @@ async function FOOD_F() {
 }
 
 async function QUEUE_WAITER() {
-  if ((g.MEAL_STATE >= MS_ORDERED_FROM_WAITRESS) && (g.MEAL_STATE < MS_PAID_FOR_FOOD)) {
+  if ((s16(g.MEAL_STATE) >= s16(MS_ORDERED_FROM_WAITRESS)) && (s16(g.MEAL_STATE) < s16(MS_PAID_FOR_FOOD))) {
     g.P_HIM_OBJECT = NOT_HERE_OBJECT;
     if (await QUEUED$(I_WAITER_ARRIVES.id)) {
       await DEQUEUE(I_WAITER_ARRIVES.id);
@@ -14058,7 +14059,7 @@ async function MENTION_RECORDING() {
     tell("You can hear ");
   }
   await SAY_MUZAK();
-  putb(33856, 2, true);
+  putb(34024, 2, true);
   if (!(x == 0)) {
     tell(" is");
   }
@@ -14602,7 +14603,7 @@ async function GENERIC_CARD_F(tbl) {
         }
         val = cd;
       }
-      if ((i = i + 1) >= len) {
+      if (s16(i = i + 1) >= s16(len)) {
         break loop1;
       }
     }
@@ -14904,7 +14905,7 @@ async function RECIPE_F() {
         if (g.PRSO == ADVENTURE) {
           remove(g.PRSO);
           move(g.PRSI, PLAYER);
-          putb(33808, 38, true);
+          putb(33976, 38, true);
           await DEQUEUE(I_CLERK_TRADE.id);
           setFlag(g.PRSI, SEEN);
           await CTHE_PRINT(CLERK);
@@ -14990,7 +14991,7 @@ async function CHECK_TAKE_FROM(tbl, len) {
         }
         best$ = obj;
       }
-      if (len <= 0) {
+      if (s16(len) <= s16(0)) {
         break loop1;
       }
     }
@@ -15030,7 +15031,7 @@ async function GENERIC_SOFTWARE_F(tbl) {
           best$ = false;
         }
       }
-      if ((len = len - 1) < 0) {
+      if (s16(len = len - 1) < s16(0)) {
         break loop1;
       }
     }
@@ -15043,7 +15044,7 @@ async function PEN_MAILBOX_F() {
     if (isVerb(V.PUT, V.PUT_BEHIND, V.EMPTY_INTO)) {
       if (!(hasFlag(g.PRSI, OPENED))) {
         await ITS_CLOSED(g.PRSI);
-      } else if (getProp(g.PRSO, P.SIZE) > 10) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(10)) {
         await CTHE_PRINT();
         tell(" won't fit in ");
         await THEI_PRINT();
@@ -15382,7 +15383,7 @@ async function LFENCE_F() {
       tell(" and lands in the pen.\n");
       return true;
     } else if (isVerb(V.PUT_UNDER, V.PUT_BEHIND)) {
-      if (getProp(g.PRSO, P.SIZE) > 1) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(1)) {
         await CTHE_PRINT();
         tell(" won't fit.\n");
       } else {
@@ -16078,7 +16079,7 @@ async function RADIO_F() {
     tell(" is playing ");
     await SAY_MUZAK();
     printS(PERIOD);
-    putb(33856, 2, true);
+    putb(34024, 2, true);
     return true;
   } else {
     return false;
@@ -16477,7 +16478,7 @@ async function UNDER_PERCH_F(context = false) {
 }
 
 async function MORE_MESSAGES$() {
-  if (eq(get(g.PHONE_MSGS, 0), 0) && (get(OTHER_PHONE_MSGS, 0) > 0)) {
+  if (eq(get(g.PHONE_MSGS, 0), 0) && (s16(get(OTHER_PHONE_MSGS, 0)) > s16(0))) {
     return true;
   } else {
     return false;
@@ -16519,7 +16520,7 @@ async function PB_BUTTON_F() {
       tell("You have no messages.\n");
     } else {
       loop1: for (;;) {
-        if (i > num) {
+        if (s16(i) > s16(num)) {
           break loop1;
         } else {
           crlf();
@@ -16576,7 +16577,7 @@ async function MACHINE_F() {
 
 async function CALLING_HOME$() {
   let fld = (get(g.LICENSE_FORM, PHONE_NUMBER + 1) + (FIELD_DATA_OFFSET - 1)), max = 0, nlen = 0, ib = P_INBUF, tf = 0, tnlen = 0, sib = 0, smax = 0, _1st$ = 0, c1 = 0, c2 = 0;
-  if ((nlen = getb(fld, 0)) > (max = getb(ib, 1))) {
+  if (s16(nlen = getb(fld, 0)) > s16(max = getb(ib, 1))) {
     return false;
   } else {
     tf = fld;
@@ -16587,11 +16588,11 @@ async function CALLING_HOME$() {
     loop1: for (;;) {
       _1st$ = getb(fld, 1);
       loop2: for (;;) {
-        if (max < (nlen - 2)) {
+        if (s16(max) < s16(nlen - 2)) {
           return false;
         } else if (_1st$ != getb(ib, 0)) {
           ib = ib + 1;
-          if ((max = max - 1) < 1) {
+          if (s16(max = max - 1) < s16(1)) {
             return false;
           }
         } else {
@@ -16613,7 +16614,7 @@ async function CALLING_HOME$() {
           if (await CHECK_NUMBER(c1)) {
             if (c2 == 32 || c2 == 45) {
               fld = fld + 1;
-              if ((nlen = nlen - 1) < 1) {
+              if (s16(nlen = nlen - 1) < s16(1)) {
                 break loop3;
               }
               continue loop3;
@@ -16623,7 +16624,7 @@ async function CALLING_HOME$() {
           } else if (await CHECK_NUMBER(c2)) {
             if (c1 == 32 || c1 == 45) {
               ib = ib + 1;
-              if ((max = max - 1) < 1) {
+              if (s16(max = max - 1) < s16(1)) {
                 return false;
               }
               continue loop3;
@@ -16632,10 +16633,10 @@ async function CALLING_HOME$() {
         }
         max = max - 1;
         nlen = nlen - 1;
-        if (nlen < 1) {
+        if (s16(nlen) < s16(1)) {
           return true;
         }
-        if (max < 1) {
+        if (s16(max) < s16(1)) {
           return false;
         }
         ib = ib + 1;
@@ -16852,11 +16853,11 @@ async function SAY_NUMBER(x) {
   tell("\n", N(get(PHONE_NUMBERS, x)), "-");
   x = x + 1;
   x = get(PHONE_NUMBERS, x);
-  if (x < 10) {
+  if (s16(x) < s16(10)) {
     tell("000");
-  } else if (x < 100) {
+  } else if (s16(x) < s16(100)) {
     tell("00");
-  } else if (x < 1000) {
+  } else if (s16(x) < s16(1000)) {
     tell("0");
   }
   tell(N(x), "\n");
@@ -16912,9 +16913,9 @@ async function CALL_BANK(l = false) {
   setFlag(MACHINE, SEEN);
   clearFlag(BANKSOUND, NODESC);
   tell("After a few seconds you're connected. A woman says, \"Good ");
-  if (g.HOURS > 17) {
+  if (s16(g.HOURS) > s16(17)) {
     tell("evening");
-  } else if (g.HOURS > 11) {
+  } else if (s16(g.HOURS) > s16(11)) {
     tell("afternoon");
   } else {
     tell("morning");
@@ -16926,7 +16927,7 @@ async function CALL_BANK(l = false) {
     await SHOW_FIELD(CITY_NAME);
   }
   tell(" Branch. ");
-  if (g.HOURS > 15) {
+  if (s16(g.HOURS) > s16(15)) {
     tell("Our office is open from 10:00 am to 4:00 pm Monday through Friday, except on holidays. This is a recording. Have a nice day.\"\n\nYou hear a dialling tone.\n");
   } else {
     clearFlag(BANKSOUND, INVISIBLE);
@@ -17008,7 +17009,7 @@ async function CABSOUND_OFF() {
   tbl = getPropAddr(CABSOUND, P.SYNONYM);
   loop1: for (;;) {
     put(tbl, cnt, W.ZZZP);
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       break loop1;
     }
   }
@@ -17017,7 +17018,7 @@ async function CABSOUND_OFF() {
 }
 
 async function ENTER_FROM_OUTSIDE() {
-  if (eq(getb(33940, 11), CAB_HERE)) {
+  if (eq(getb(34108, 11), CAB_HERE)) {
     await PERFORM(V.ENTER, CAB);
     return false;
   } else if (hasFlag(FROOM_DOOR, OPENED)) {
@@ -17034,7 +17035,7 @@ async function PRINT_CABFIELD(tbl) {
   loop1: for (;;) {
     chr = getb(tbl, ptr);
     if (first_) {
-      if ((chr >= 97) && (chr <= 122)) {
+      if ((s16(chr) >= s16(97)) && (s16(chr) <= s16(122))) {
         chr = chr - 32;
       }
       first_ = false;
@@ -17042,7 +17043,7 @@ async function PRINT_CABFIELD(tbl) {
       first_ = true;
     }
     printC(chr);
-    if ((ptr = ptr + 1) > len) {
+    if (s16(ptr = ptr + 1) > s16(len)) {
       break loop1;
     }
   }
@@ -17050,15 +17051,15 @@ async function PRINT_CABFIELD(tbl) {
 }
 
 async function CALL_CAB() {
-  let x = false, word = 0, ptr = 0, tbl = 0, len = 0, street_ok = true, cs = getb(33940, 11), cd = getb(33940, 14), take_info = true, ct = getb(33940, 9);
+  let x = false, word = 0, ptr = 0, tbl = 0, len = 0, street_ok = true, cs = getb(34108, 11), cd = getb(34108, 14), take_info = true, ct = getb(34108, 9);
   if (await QUEUED$(I_NO_CAB.id)) {
     await DEQUEUE(I_NO_CAB.id);
   }
-  putb(33940, 14, false);
+  putb(34108, 14, false);
   setFlag(MACHINE, SEEN);
   await SETUP_CABMAN();
   tell("After a few rings a man answers. \"Getlost Airport Cab. Last name of passenger please.\"\n");
-  word = await GET_CABWORD(get(33942, 0));
+  word = await GET_CABWORD(get(34110, 0));
   if (!(hasFlag(MACHINE, SEEN))) {
     return true;
   }
@@ -17066,10 +17067,10 @@ async function CALL_CAB() {
     ct = 0;
   }
   if (ct != 0) {
-    if (await NEQ_TBL(get(33942, 0), get(33952, 0))) {
+    if (await NEQ_TBL(get(34110, 0), get(34120, 0))) {
       tell("\"You sound a lot like ");
       await MR_OR_MISS();
-      await PRINT_CABFIELD(get(33952, 0));
+      await PRINT_CABFIELD(get(34120, 0));
       tell(". Are you some kind of prankster?\"\n");
       if (await QUEUED$(I_CAB.id)) {
         await DEQUEUE(I_CAB.id);
@@ -17077,8 +17078,8 @@ async function CALL_CAB() {
     } else if ((cs == CAB_RETURNED) || !(cd == 0)) {
       tell("\"Gee");
       await LADY_OR_MISTER();
-      tell(", we sent a cab to ", N(get(33947, 0)), " ");
-      await PRINT_CABFIELD(get(33944, 0));
+      tell(", we sent a cab to ", N(get(34115, 0)), " ");
+      await PRINT_CABFIELD(get(34112, 0));
       tell(" and the driver couldn't find you. Is that address correct?\"\n");
       await UPDATE_BP(5);
       loop1: for (;;) {
@@ -17090,13 +17091,13 @@ async function CALL_CAB() {
           tell("\"Ok");
           await LADY_OR_MISTER();
           tell(" we'll send another one.\" He hangs up.\n");
-          putb(33940, 9, ct + 1);
+          putb(34108, 9, ct + 1);
           if (await SEND_CAB$()) {
-            putb(33940, 11, CAB_SENT);
-            putb(33940, 10, random(3) + 2);
+            putb(34108, 11, CAB_SENT);
+            putb(34108, 10, random(3) + 2);
             await QUEUE(I_CAB.id);
           } else {
-            putb(33940, 11, CAB_INIT);
+            putb(34108, 11, CAB_INIT);
             await QUEUE(I_NO_CAB.id, random(5) + 5);
           }
           take_info = false;
@@ -17117,11 +17118,11 @@ async function CALL_CAB() {
       await UPDATE_BP(5);
       clearFlag(MACHINE, SEEN);
       take_info = false;
-      if (getb(33940, 11) != CAB_SENT) {
-        putb(33940, 9, ct = ct + 1);
+      if (getb(34108, 11) != CAB_SENT) {
+        putb(34108, 9, ct = ct + 1);
         if (await SEND_CAB$()) {
-          putb(33940, 11, CAB_SENT);
-          putb(33940, 10, random(3) + 2);
+          putb(34108, 11, CAB_SENT);
+          putb(34108, 10, random(3) + 2);
           await QUEUE(I_CAB.id);
         } else {
           await QUEUE(I_NO_CAB.id, random(5) + 5);
@@ -17129,7 +17130,7 @@ async function CALL_CAB() {
       }
     }
   }
-  await COPY_TBL(get(33942, 0), get(33952, 0));
+  await COPY_TBL(get(34110, 0), get(34120, 0));
   if (take_info) {
     tell("\"Ok");
     await LADY_OR_MISTER();
@@ -17166,24 +17167,24 @@ async function CALL_CAB() {
       tell(" Well, look, I'll see what we can do");
     }
     tell(". What's the name of your street?\"\n");
-    word = await GET_CABWORD(get(33944, 0), false);
+    word = await GET_CABWORD(get(34112, 0), false);
     if (!(hasFlag(MACHINE, SEEN))) {
       return true;
     }
-    if (await NEQ_TBL(get(33944, 0), get(g.LICENSE_FORM, STREET_NAME + 1) + (FIELD_DATA_OFFSET - 1), true)) {
-      putb(33940, 14, true);
+    if (await NEQ_TBL(get(34112, 0), get(g.LICENSE_FORM, STREET_NAME + 1) + (FIELD_DATA_OFFSET - 1), true)) {
+      putb(34108, 14, true);
       tell("\"I'm not sure if I've heard of that street. We'll give it a try though.\"\n");
       street_ok = false;
     }
     tell("\"Street number?\"\n");
-    tbl = get(33940, 0);
+    tbl = get(34108, 0);
     loop3: for (;;) {
       word = await GET_CABWORD(tbl, false);
       if (!(hasFlag(MACHINE, SEEN))) {
         return true;
       }
       len = getb(tbl, 0);
-      if (len > 4) {
+      if (s16(len) > s16(4)) {
         await TOO_LONG();
         continue loop3;
       }
@@ -17191,9 +17192,9 @@ async function CALL_CAB() {
       word = 0;
       loop4: for (;;) {
         x = getb(tbl, ptr);
-        if ((x > NaN) && (x < NaN)) {
+        if ((s16(x) > s16(NaN)) && (s16(x) < s16(NaN))) {
           word = (word * 10) + (x - 48);
-          if ((ptr = ptr + 1) > len) {
+          if (s16(ptr = ptr + 1) > s16(len)) {
             x = false;
             break loop4;
           }
@@ -17209,7 +17210,7 @@ async function CALL_CAB() {
         x = getProp(OUTSIDE_HOUSE, P.STADDR);
         if (!(street_ok == 0) && (word != x)) {
           word = word - x - (-2);
-          if ((word >= 0) && (word <= 5)) {
+          if ((s16(word) >= s16(0)) && (s16(word) <= s16(5))) {
             tell("\"We refuse to send a cab there because ");
             tell(S(get(CAB_EXCUSES, word)));
           } else {
@@ -17222,9 +17223,9 @@ async function CALL_CAB() {
       }
     }
     if (!street_ok) {
-      putb(33940, 14, true);
+      putb(34108, 14, true);
     }
-    put(33947, 0, await TEXT_TO_VALUE(get(33940, 0)));
+    put(34115, 0, await TEXT_TO_VALUE(get(34108, 0)));
     tell("\"Okay. Lemme put you on hold for a minute while I see what we got in your area.\"\n\n");
     await SETUP_CABMUSIC();
     await QUEUE(I_CAB_MUSIC.id);
@@ -17266,7 +17267,7 @@ async function NEQ_TBL(tbl1, tbl2, street = false) {
 
 async function UPPERC(chr) {
   chr = chr;
-  if ((chr >= 97) && (chr <= 122)) {
+  if ((s16(chr) >= s16(97)) && (s16(chr) <= s16(122))) {
     chr = chr + NaN;
   }
   return chr;
@@ -17309,18 +17310,18 @@ async function GET_CABWORD(tbl = false, alpha = true, otbl = false) {
     lexw = getb(P_LEXV, P_LEXWORDS);
     len = P_LEXV + (lexw * 4);
     len = (getb(len, 1) + getb(len, 0)) - getb(P_LEXV, 5);
-    if (!(tbl == 0) && (len > MAX_CABLEN)) {
+    if (!(tbl == 0) && (s16(len) > s16(MAX_CABLEN))) {
       await TOO_LONG();
       continue loop1;
     }
     loop2: for (;;) {
       word = get(P_LEXV, P_LEXSTART + offs);
-      if (lexw > 1) {
+      if (s16(lexw) > s16(1)) {
         word2 = get(P_LEXV, P_LEXSTART + P_LEXELEN + offs);
       } else {
         break loop2;
       }
-      if (!(word == 0) && btst(getb(word, 6), false)) {
+      if (!(word == 0) && btst(getb(word, 6), 4)) {
         lexw = lexw - 1;
         offs = offs + P_LEXELEN;
       } else {
@@ -17328,7 +17329,7 @@ async function GET_CABWORD(tbl = false, alpha = true, otbl = false) {
       }
     }
     if (lexw != 0) {
-      if ((lexw > 1) && (word == W.HANG) && (word2 == W.UP) && hasFlag(MACHINE, SEEN)) {
+      if ((s16(lexw) > s16(1)) && (word == W.HANG) && (word2 == W.UP) && hasFlag(MACHINE, SEEN)) {
         g.PRSO = MACHINE;
         await V_HANGUP();
         return false;
@@ -17353,7 +17354,7 @@ async function GET_CABWORD(tbl = false, alpha = true, otbl = false) {
       x = getb(P_INBUF, sptr);
       putb(tbl, dptr, x);
       sptr = sptr + 1;
-      if ((dptr = dptr + 1) > len) {
+      if (s16(dptr = dptr + 1) > s16(len)) {
         putb(tbl, 0, len);
         break loop3;
       }
@@ -17364,7 +17365,7 @@ async function GET_CABWORD(tbl = false, alpha = true, otbl = false) {
     dptr = 1;
     sptr = lexw;
     for (;;) {
-      if (((sptr = sptr - 1) < 0) || (dptr > 3)) {
+      if ((s16(sptr = sptr - 1) < s16(0)) || (s16(dptr) > s16(3))) {
         return lexw;
       }
       word = get(P_LEXV, P_LEXSTART + (offs = offs + 1));
@@ -17394,10 +17395,10 @@ async function STR2NUM(wnum) {
   word = 0;
   loop1: for (;;) {
     x = getb(P_INBUF, sptr);
-    if ((x > NaN) && (x < NaN)) {
+    if ((s16(x) > s16(NaN)) && (s16(x) < s16(NaN))) {
       word = (word * 10) + x + NaN;
       sptr = sptr + 1;
-      if ((dptr = dptr + 1) > len) {
+      if (s16(dptr = dptr + 1) > s16(len)) {
         break loop1;
       }
     } else {
@@ -17409,12 +17410,12 @@ async function STR2NUM(wnum) {
 }
 
 async function SEND_CAB$() {
-  let ct = getb(33940, 9);
+  let ct = getb(34108, 9);
   if (!(g.END_GAME$ == 0)) {
     return false;
-  } else if (!(getb(33940, 14) == 0)) {
+  } else if (!(getb(34108, 14) == 0)) {
     return false;
-  } else if (ct > 2) {
+  } else if (s16(ct) > s16(2)) {
     return true;
   } else if (ct == 1) {
     return prob(80);
@@ -17426,7 +17427,7 @@ async function SEND_CAB$() {
 }
 
 async function KEEP_HOLDING$(max) {
-  if ((g.HOLD_TURNS = g.HOLD_TURNS + 1) > max) {
+  if (s16(g.HOLD_TURNS = g.HOLD_TURNS + 1) > s16(max)) {
     return false;
   } else if ((g.HOLD_TURNS == 1) || prob(60)) {
     return true;
@@ -17436,7 +17437,7 @@ async function KEEP_HOLDING$(max) {
 }
 
 async function I_CAB_MUSIC(cr = true) {
-  let ct = getb(33940, 9);
+  let ct = getb(34108, 9);
   if (!(await VISIBLE$(MACHINE))) {
     return false;
   } else {
@@ -17455,15 +17456,15 @@ async function I_CAB_MUSIC(cr = true) {
       await SAY_MUZAK();
       tell(". \"Okay, ");
       await MR_OR_MISS();
-      await PRINT_CABFIELD(get(33942, 0));
-      tell(". We'll send a cab over to ", N(get(33947, 0)), " ");
-      await PRINT_CABFIELD(get(33944, 0));
+      await PRINT_CABFIELD(get(34110, 0));
+      tell(". We'll send a cab over to ", N(get(34115, 0)), " ");
+      await PRINT_CABFIELD(get(34112, 0));
       tell(" right away. Thanks for calling Getlost.\"\n\nHe hangs up.\n");
       clearFlag(MACHINE, SEEN);
-      putb(33940, 9, ct = ct + 1);
+      putb(34108, 9, ct = ct + 1);
       if (await SEND_CAB$()) {
-        putb(33940, 11, CAB_SENT);
-        putb(33940, 10, random(3) + 2);
+        putb(34108, 11, CAB_SENT);
+        putb(34108, 10, random(3) + 2);
         return await QUEUE(I_CAB.id);
       } else {
         return await QUEUE(I_NO_CAB.id, random(5) + 5);
@@ -17744,8 +17745,8 @@ async function CHECK_F() {
         if (g.HERE != BANK) {
           tell("It's probably best to try that in the bank.\n");
           return true;
-        } else if (eq(await ZABS(get(33959, 0)), getb(33956, 0))) {
-          put(33974, 0, CASH_CHECK_SCRIPT);
+        } else if (eq(await ZABS(get(34127, 0)), getb(34124, 0))) {
+          put(34142, 0, CASH_CHECK_SCRIPT);
           await PERFORM(V.SHOW, CHECK, TELLER);
           return true;
         } else {
@@ -17793,7 +17794,7 @@ async function MONEY_D(y = false) {
   let x = 0, doll = 0, cent = 0;
   if (y) {
     x = y;
-  } else if (!(g.P_DOLLAR_FLAG == 0) && (g.P_NUMBER > 0) && g.PERFORMING$) {
+  } else if (!(g.P_DOLLAR_FLAG == 0) && (s16(g.P_NUMBER) > s16(0)) && g.PERFORMING$) {
     x = g.P_NUMBER;
   } else {
     x = g.CASH;
@@ -17813,7 +17814,7 @@ async function MONEY_D(y = false) {
     tell("$", N(doll), ".");
     if (cent == 0) {
       tell("00");
-    } else if (cent < 10) {
+    } else if (s16(cent) < s16(10)) {
       tell("0", N(cent));
     } else {
       tell(N(cent));
@@ -17827,7 +17828,7 @@ async function REDUCE_CASH(num = false) {
     num = g.P_NUMBER;
   }
   g.CASH = g.CASH - num;
-  if (g.CASH <= 0) {
+  if (s16(g.CASH) <= s16(0)) {
     return remove(MONEY);
   } else {
     return false;
@@ -17855,7 +17856,7 @@ async function MONEY_F() {
     if (!g.P_DOLLAR_FLAG) {
       g.P_NUMBER = g.CASH;
     }
-    if (g.P_NUMBER > g.CASH) {
+    if (s16(g.P_NUMBER) > s16(g.CASH)) {
       tell(S(DONT), "have that much.\n");
     } else {
       tell("You drop ");
@@ -17967,46 +17968,46 @@ async function I_NO_CAB() {
 }
 
 async function I_CAB() {
-  let cs = getb(33940, 11), turns = getb(33940, 10);
+  let cs = getb(34108, 11), turns = getb(34108, 10);
   if (cs == CAB_SENT) {
     if (turns == 0) {
-      putb(33940, 11, CAB_HERE);
-      putb(33940, 10, random(3) + 1);
+      putb(34108, 11, CAB_HERE);
+      putb(34108, 10, random(3) + 1);
       return await CAB_SEEN$(ARRIVED);
     } else {
       if (turns == 1) {
-        putb(33940, 10, 0);
+        putb(34108, 10, 0);
         return await CAB_SEEN$(WANDERING);
       } else {
-        putb(33940, 10, turns = turns - 1);
+        putb(34108, 10, turns = turns - 1);
         return false;
       }
     }
   } else if (cs == CAB_HERE || cs == CAB_NEEDS_ID) {
     if (turns == 0) {
       clearFlag(CAB_DRIVER, SEEN);
-      putb(33940, 11, CAB_RETURNED);
+      putb(34108, 11, CAB_RETURNED);
       await DEQUEUE(I_CAB.id);
       return await CAB_SEEN$(LEAVING);
     } else if (cs == CAB_NEEDS_ID) {
       if (hasFlag(g.HERE, INDOORS)) {
         return false;
-      } else if (turns < 2) {
+      } else if (s16(turns) < s16(2)) {
         tell("\nThe cab driver is looking impatient.\n");
       }
-      putb(33940, 10, turns = turns - 1);
+      putb(34108, 10, turns = turns - 1);
       return true;
     } else {
-      putb(33940, 10, turns = turns - 1);
+      putb(34108, 10, turns = turns - 1);
       return await CAB_SEEN$(WAITING);
     }
   } else if (cs == CAB_INHABITED) {
     if (turns == 0) {
       tell("\nThe cab driver drives on. He shows you pictures of his kids and mentions that they like the airport a lot also. He says that he has a lot of regular customers who regularly go to the airport. \"I had John Travolta in the cab once,\" he says. \"Wanted to go to some club, wouldn't go to the airport. And where is he now? See that movie \"Perfect\"? Terrible. Should have gone to the airport.\" And so on.\n");
-      putb(33940, 11, CAB_JUST_AT_AIRPORT);
+      putb(34108, 11, CAB_JUST_AT_AIRPORT);
       return true;
     } else {
-      putb(33940, 10, 0);
+      putb(34108, 10, 0);
       return false;
     }
   } else if (cs == CAB_JUST_AT_AIRPORT || cs == CAB_AT_AIRPORT) {
@@ -18094,7 +18095,7 @@ async function GDOOR_F(tbl) {
 async function CAB_AND_DRIVER_AVAILABLE() {
   if (g.HERE == CAB_ROOM) {
     return true;
-  } else if ((g.HERE == OUTSIDE_HOUSE) && eq(getb(33940, 11), CAB_HERE, CAB_NEEDS_ID)) {
+  } else if ((g.HERE == OUTSIDE_HOUSE) && eq(getb(34108, 11), CAB_HERE, CAB_NEEDS_ID)) {
     return true;
   } else {
     return false;
@@ -18102,7 +18103,7 @@ async function CAB_AND_DRIVER_AVAILABLE() {
 }
 
 async function CAB_F() {
-  let cs = getb(33940, 11), turns = getb(33940, 10);
+  let cs = getb(34108, 11), turns = getb(34108, 10);
   if (((cs == CAB_HERE || cs == CAB_NEEDS_ID) || (g.HERE == CAB_ROOM)) && ((await EXITING$()) || isVerb(V.ENTER, V.OPEN, V.WALK_TO, V.KNOCK, V.LOOK_INSIDE))) {
     if (g.HERE == CAB_ROOM) {
       if ((await EXITING$()) || isVerb(V.OPEN)) {
@@ -18136,7 +18137,7 @@ async function CAB_F() {
       return (await ITS_ALREADY("here"));
     } else if (cs == CAB_SENT) {
       if (isVerb(V.WAVE_AT)) {
-        if (turns <= 1) {
+        if (s16(turns) <= s16(1)) {
           await CTHE_PRINT(CAB);
           tell(" pays no attention to you.\n");
           return true;
@@ -18145,9 +18146,9 @@ async function CAB_F() {
           return true;
         }
       } else {
-        return await V_WAIT(getb(33940, 10) + 1);
+        return await V_WAIT(getb(34108, 10) + 1);
       }
-    } else if ((cs == CAB_INIT) || getb(33940, 14)) {
+    } else if ((cs == CAB_INIT) || getb(34108, 14)) {
       await V_WAIT(10);
       if (!g.CLOCK_WAIT$) {
         if (isVerb(V.WAVE_AT)) {
@@ -18163,12 +18164,12 @@ async function CAB_F() {
     } else {
       return false;
     }
-  } else if (isVerb(V.EXAMINE, V.LOOK_INSIDE) && (((cs == CAB_SENT) && (turns <= 1)) || (cs == CAB_HERE || cs == CAB_NEEDS_ID))) {
+  } else if (isVerb(V.EXAMINE, V.LOOK_INSIDE) && (((cs == CAB_SENT) && (s16(turns) <= s16(1))) || (cs == CAB_HERE || cs == CAB_NEEDS_ID))) {
     tell("It's just an ordinary cab.\n");
     return true;
   } else if (await CAB_AND_DRIVER_AVAILABLE()) {
     return false;
-  } else if ((turns <= 1) && (g.HERE == OUTSIDE_HOUSE) && (cs == CAB_SENT) && isVerb(V.ENTER, V.OPEN, V.WALK_TO, V.KNOCK, V.LOOK_INSIDE)) {
+  } else if ((s16(turns) <= s16(1)) && (g.HERE == OUTSIDE_HOUSE) && (cs == CAB_SENT) && isVerb(V.ENTER, V.OPEN, V.WALK_TO, V.KNOCK, V.LOOK_INSIDE)) {
     tell("The Passengers' Teleportation Device hasn't been approved for use yet, so you'll have to go to where the cab is first.\n");
     return true;
   } else {
@@ -18196,15 +18197,15 @@ async function CAB_DRIVER_ARREST() {
 }
 
 async function CAB_DRIVER_F() {
-  let cs = getb(33940, 11);
+  let cs = getb(34108, 11);
   if ((isVerb(V.TELL, V.ASK_ABOUT) || (CAB_DRIVER == g.WINNER)) && (cs == CAB_HERE) && !(hasFlag(CAB_DRIVER, SEEN))) {
     setFlag(CAB_DRIVER, SEEN);
     tell("The driver says, \"Are you the one who called for a cab?\"\n");
     await PCLEAR();
     if ((await SAID_YES$("\"Yes or no for chrissake!\""))) {
       tell("\"Let's see some ID then.\"\n");
-      putb(33940, 11, CAB_NEEDS_ID);
-      putb(33940, 10, 3);
+      putb(34108, 11, CAB_NEEDS_ID);
+      putb(34108, 10, 3);
     } else {
       clearFlag(CAB_DRIVER, SEEN);
       await CAB_LEAVES();
@@ -18220,7 +18221,7 @@ async function CAB_DRIVER_F() {
       return FATAL_VALUE;
     } else if (isVerb(V.GIVE, V.SHOW, V.PAY)) {
       if ((g.PRSO == EXCESS || g.PRSO == BEEZER || g.PRSO == VISA) && !(isVerb(V.PAY)) && (cs == CAB_NEEDS_ID)) {
-        if (await NEQ_TBL(get(33942, 0), get(g.LICENSE_FORM, LAST_NAME + 1) + (FIELD_DATA_OFFSET - 1))) {
+        if (await NEQ_TBL(get(34110, 0), get(g.LICENSE_FORM, LAST_NAME + 1) + (FIELD_DATA_OFFSET - 1))) {
           tell("The driver examines ");
           if (g.PRSO == VISA) {
             await THE_PRINT();
@@ -18230,7 +18231,7 @@ async function CAB_DRIVER_F() {
           }
           tell(". He says, \"I'm looking for ");
           await MR_OR_MISS();
-          await PRINT_CABFIELD(get(33942, 0));
+          await PRINT_CABFIELD(get(34110, 0));
           tell(", not you.\"\n");
         } else {
           tell("The cab door pops open and you climb in. The cab driver says, \"You going to the airport, ");
@@ -18241,8 +18242,8 @@ async function CAB_DRIVER_F() {
           } else {
             tell("\"Well that's where I'm going,\"");
           }
-          putb(33940, 11, CAB_INHABITED);
-          putb(33940, 10, 1);
+          putb(34108, 11, CAB_INHABITED);
+          putb(34108, 10, 1);
           move(CAB, CAB_ROOM);
           setFlag(CAB, NODESC);
           move(PLAYER, CAB_ROOM);
@@ -18261,28 +18262,28 @@ async function CAB_DRIVER_F() {
         if (!g.P_DOLLAR_FLAG) {
           await SPECIFY_AN_AMOUNT();
           g.P_NUMBER = 0;
-        } else if (g.CASH < 1750) {
-          if (g.P_NUMBER >= 1750) {
+        } else if (s16(g.CASH) < s16(1750)) {
+          if (s16(g.P_NUMBER) >= s16(1750)) {
             tell(S(DONT), "have that much!");
           } else {
             tell("He won't accept less than the fare!");
           }
           g.P_NUMBER = 0;
-        } else if (g.P_NUMBER < 1750) {
+        } else if (s16(g.P_NUMBER) < s16(1750)) {
           tell("He shakes the balance out of you. And leaves.");
           g.P_NUMBER = 1750;
         } else if (g.P_NUMBER == 1750) {
           tell("With a bitter sneer the cab driver spins his wheels in a puddle and drives off, drenching you with dirty water.");
-        } else if (g.P_NUMBER > g.CASH) {
+        } else if (s16(g.P_NUMBER) > s16(g.CASH)) {
           tell("The driver takes all of your money, ");
-          if (g.CASH < 1951) {
+          if (s16(g.CASH) < s16(1951)) {
             tell("even though he seems to think it smells like a week-old fish carcass. You're still wondering how he could possibly know ");
             (await ITALICIZE("that"));
             tell(" about your mother when he drives off.");
           } else {
             tell("and says you can owe him the balance.");
           }
-        } else if (g.P_NUMBER < 1951) {
+        } else if (s16(g.P_NUMBER) < s16(1951)) {
           tell("The driver looks at the money as if it were a week-old dead fish. He mentions something about your mother that you don't see how he could possibly know and drives off huffily.");
         } else {
           tell("The driver thanks you profusely, points out some of the unique architectural features of the airport and hopes that your career, whatever it is, goes better than John Travolta's has of late. He drives off.");
@@ -18317,13 +18318,13 @@ async function CNOTICE_F() {
 }
 
 async function CAB_ROOM_F(rarg = false) {
-  let cs = getb(33940, 11), val = 0;
+  let cs = getb(34108, 11), val = 0;
   if (rarg == M_LOOK) {
     tell("You're in the back seat of a Getlost cab.\n");
     return true;
   } else if (rarg == M_BEG) {
     if (!(await GAME_VERB$()) && (cs == CAB_JUST_AT_AIRPORT)) {
-      putb(33940, 11, CAB_AT_AIRPORT);
+      putb(34108, 11, CAB_AT_AIRPORT);
     }
     if (isVerb(V.EXAMINE, V.LOOK_ON) && (g.PRSO == CAB)) {
       tell("It's just an ordinary back seat of a cab. There is a cab notice here.\n");
@@ -18331,11 +18332,11 @@ async function CAB_ROOM_F(rarg = false) {
     } else if (isVerb(V.WAIT)) {
       if (cs == CAB_AT_AIRPORT || cs == CAB_EXIT_ATTEMPT) {
         tell("The driver asks you not to hang around in his cab.\n");
-        putb(33940, 11, CAB_WAITING_FOR_YOUR_EXIT);
+        putb(34108, 11, CAB_WAITING_FOR_YOUR_EXIT);
         return true;
       } else if (cs == CAB_WAITING_FOR_YOUR_EXIT) {
         tell("The driver tells you to pay him and leave or he'll call a cop.\n");
-        putb(33940, 11, CAB_DRIVER_PISSED);
+        putb(34108, 11, CAB_DRIVER_PISSED);
         return true;
       } else if (cs == CAB_DRIVER_PISSED) {
         await GOTO(await CAB_DRIVER_ARREST(), true, true);
@@ -18358,13 +18359,13 @@ async function CAB_ROOM_F(rarg = false) {
 }
 
 async function CAB_EXIT_F() {
-  let cs = getb(33940, 11);
+  let cs = getb(34108, 11);
   if ((cs == CAB_INHABITED) || (await QUEUED$(I_CAB.id))) {
     tell("The cab is still moving, so you decide to stay.\n");
     return false;
   } else if (cs == CAB_JUST_AT_AIRPORT || cs == CAB_AT_AIRPORT || cs == CAB_WAITING_FOR_YOUR_EXIT) {
     tell("The cab driver won't let you leave until you pay.\n");
-    putb(33940, 11, CAB_EXIT_ATTEMPT);
+    putb(34108, 11, CAB_EXIT_ATTEMPT);
     return false;
   } else if (cs == CAB_EXIT_ATTEMPT || cs == CAB_DRIVER_PISSED) {
     return await CAB_DRIVER_ARREST();
@@ -18378,7 +18379,7 @@ async function AIRPORT$(cs) {
 }
 
 async function CAB_LEAVES() {
-  putb(33940, 11, CAB_RETURNED);
+  putb(34108, 11, CAB_RETURNED);
   clearFlag(CAB_DRIVER, SEEN);
   await DEQUEUE(I_CAB.id);
   tell("The cab driver guns the engine and takes off.\n");
@@ -18386,8 +18387,8 @@ async function CAB_LEAVES() {
 }
 
 async function EXIT_CAB(home$ = false) {
-  putb(33940, 11, CAB_INIT);
-  putb(33940, 9, 0);
+  putb(34108, 11, CAB_INIT);
+  putb(34108, 9, 0);
   await DEQUEUE(I_CAB.id);
   clearFlag(CAB, SEEN);
   clearFlag(CAB_DRIVER, SEEN);
@@ -18434,7 +18435,7 @@ async function DRAW_FORM(which, name) {
     tf = get(fields, 0);
     await OPEN_LINE(rline = getb(tf, 8));
     tell(S(get(tf, 0)));
-    if ((len > 1) && (tf = get(fields, 1)) && eq(getb(tf, 8), rline)) {
+    if ((s16(len) > s16(1)) && (tf = get(fields, 1)) && eq(getb(tf, 8), rline)) {
       await SET_FORM_CURS(rline, getb(tf, 7));
       fields = fields + 2;
       len = len - 1;
@@ -18527,7 +18528,7 @@ async function FILL_FIELD(field, which, err$ = false) {
   g.FY = getb(tbl, 8);
   oldlen = getb(tbl, 11);
   await SET_FORM_CURS(g.FY, g.FX);
-  if ((cnt == 0) && (oldlen > 0)) {
+  if ((cnt == 0) && (s16(oldlen) > s16(0))) {
     putb(tbl, 11, 0);
     oldlen = 0;
     await PRINT_SPACES(max);
@@ -18537,11 +18538,11 @@ async function FILL_FIELD(field, which, err$ = false) {
     char = await readChar(1);
     if (char == 13) {
       if (cnt == 0) {
-        if (oldlen > 0) {
+        if (s16(oldlen) > s16(0)) {
           return true;
         }
         err$ = true;
-        if (!(getb(33984, 3) == 0)) {
+        if (!(getb(34152, 3) == 0)) {
           (await FERROR("INCOMPLETE-FIELD-ENTRY"));
         } else {
           (await FERROR("Incomplete field entry"));
@@ -18560,14 +18561,14 @@ async function FILL_FIELD(field, which, err$ = false) {
       if (err$) {
         await CLEAR_FERROR();
       }
-      if (oldlen > 0) {
+      if (s16(oldlen) > s16(0)) {
         putb(tbl, 11, oldlen);
       }
       return false;
     } else if (char == 127 || char == 8) {
       if (cnt == 0) {
         err$ = true;
-        if (!(getb(33984, 3) == 0)) {
+        if (!(getb(34152, 3) == 0)) {
           (await FERROR("1ST-CHAR-IN-FIELD"));
         } else {
           (await FERROR("1st char in field"));
@@ -18592,7 +18593,7 @@ async function FILL_FIELD(field, which, err$ = false) {
       (await FERROR("End of field"));
       continue loop1;
     } else if (!(get(tbl, 1)) || (await apply(get(tbl, 1), FORM_ADD_CHAR, tbl, char))) {
-      if ((char > NaN) && (char < NaN)) {
+      if ((s16(char) > s16(NaN)) && (s16(char) < s16(NaN))) {
         char = char - 32;
       }
       if (echo$) {
@@ -18639,7 +18640,7 @@ async function FF_STREET_NUMBER(context, tbl, char = 0) {
     }
   } else if (context == FORM_EXIT_FIELD) {
     x = await TEXT_TO_VALUE(tbl = tbl + (FIELD_DATA_OFFSET - 1));
-    if (x < 10) {
+    if (s16(x) < s16(10)) {
       (await FERROR("We know it's actually 15"));
       putb(tbl, 0, 2);
       putb(tbl, 1, 49);
@@ -18680,7 +18681,7 @@ async function FF_PHONE_NUMBER(context, tbl, char = 0) {
 }
 
 async function CHECK_NUMBER(char) {
-  if ((char >= 48) && (char <= 57)) {
+  if ((s16(char) >= s16(48)) && (s16(char) <= s16(57))) {
     return true;
   } else {
     return false;
@@ -18709,7 +18710,7 @@ async function FF_SEX(context, tbl, char = 0) {
 
 async function FF_MIDDLE_INITIAL(context, tbl, char = 0) {
   if (context == FORM_ADD_CHAR) {
-    if (((char >= 65) && (char <= 90)) || ((char >= 97) && (char <= 122))) {
+    if (((s16(char) >= s16(65)) && (s16(char) <= s16(90))) || ((s16(char) >= s16(97)) && (s16(char) <= s16(122)))) {
       return true;
     } else {
       (await FERROR("Invalid character"));
@@ -18771,7 +18772,7 @@ async function FORM_NAME(field) {
     }
     loop1: for (;;) {
       char = getb(tbl, sptr);
-      if ((char > NaN) && (char < NaN)) {
+      if ((s16(char) > s16(NaN)) && (s16(char) < s16(NaN))) {
         if (!uc$) {
           char = char + 32;
         } else if (!(all_uc$ == 0) || (cnt == 1)) {
@@ -18785,7 +18786,7 @@ async function FORM_NAME(field) {
           cap$ = true;
         } else {
           sptr = sptr + 1;
-          if ((cnt = cnt + 1) > len) {
+          if (s16(cnt = cnt + 1) > s16(len)) {
             return true;
           }
           continue loop1;
@@ -18794,7 +18795,7 @@ async function FORM_NAME(field) {
       putb(tbl, dptr, char);
       dptr = dptr + 1;
       sptr = sptr + 1;
-      if ((cnt = cnt + 1) > len) {
+      if (s16(cnt = cnt + 1) > s16(len)) {
         return true;
       }
     }
@@ -18825,8 +18826,8 @@ async function PICK_FIELD(which, len, histvec, histlen) {
   passes = 0;
   m = 0;
   loop1: for (;;) {
-    if ((passes = passes + 1) > len) {
-      if ((m = m + 1) > len) {
+    if (s16(passes = passes + 1) > s16(len)) {
+      if (s16(m = m + 1) > s16(len)) {
         n_ = -1;
         break loop1;
       }
@@ -18859,7 +18860,7 @@ async function FILL_FORM(which, name) {
       await apply(get(f, 1), FORM_FIELD_RESET, f);
     }
     putb(get(which, zz), 10, 0);
-    if ((zz = zz + 1) >= fieldct) {
+    if (s16(zz = zz + 1) >= s16(fieldct)) {
       break loop1;
     }
   }
@@ -18894,7 +18895,7 @@ async function FILL_FORM(which, name) {
       }
       if (errval == FATAL_VALUE || errval == 3) {
         err$ = true;
-        if ((errval == FATAL_VALUE) && ((bogus_errors = bogus_errors + 1) <= 3)) {
+        if ((errval == FATAL_VALUE) && (s16(bogus_errors = bogus_errors + 1) <= s16(3))) {
           continue loop2;
         }
       }
@@ -18916,7 +18917,7 @@ async function FILL_FORM(which, name) {
   clearScreen(S_TEXT);
   await INIT_STATUS_LINE();
   crlf();
-  if (g.FERROR_COUNT > 0) {
+  if (s16(g.FERROR_COUNT) > s16(0)) {
     await UPDATE_BP(g.FERROR_COUNT);
     crlf();
   }
@@ -18932,13 +18933,13 @@ async function TEXT_TO_VALUE(tbl, dot_ok = false) {
   ptr = 1;
   loop1: for (;;) {
     x = getb(tbl, ptr);
-    if ((x > NaN) && (x < NaN)) {
-      if (sum > MAX_NUM_DIV_10) {
+    if ((s16(x) > s16(NaN)) && (s16(x) < s16(NaN))) {
+      if (s16(sum) > s16(MAX_NUM_DIV_10)) {
         return -1;
       }
       sum = sum * 10;
       x = x - 48;
-      if (sum > (MAX_NUM - x)) {
+      if (s16(sum) > s16(MAX_NUM - x)) {
         return -1;
       }
       sum = sum + x;
@@ -18948,9 +18949,9 @@ async function TEXT_TO_VALUE(tbl, dot_ok = false) {
     } else {
       return -2;
     }
-    if ((ptr = ptr + 1) > len) {
+    if (s16(ptr = ptr + 1) > s16(len)) {
       if (dot_ok && !dot_seen) {
-        if (sum > MAX_NUM_DIV_100) {
+        if (s16(sum) > s16(MAX_NUM_DIV_100)) {
           return -1;
         }
         sum = sum * 100;
@@ -19002,7 +19003,7 @@ async function SHOW_FIELDS(fields = false) {
     tell(S(get(tf, 0)), " ");
     await PRINT_VAL(tf);
     crlf();
-    if ((ct = ct + 1) > len) {
+    if (s16(ct = ct + 1) > s16(len)) {
       return true;
     }
   }
@@ -19019,7 +19020,7 @@ async function PRINT_VAL(tf) {
       char = getb(tf, ptr);
       printC(char);
       ptr = ptr + 1;
-      if ((cnt = cnt + 1) > len) {
+      if (s16(cnt = cnt + 1) > s16(len)) {
         return true;
       }
     }
@@ -19028,14 +19029,14 @@ async function PRINT_VAL(tf) {
 
 async function START_COMPUTER(dirtbl) {
   g.FERROR_COUNT = 0;
-  putb(33984, 3, false);
+  putb(34152, 3, false);
   await DO_PROG(-1);
   await DRAW_COMPUTER_SCREEN();
   (await FERROR_MSG("Press ? for help, or enter a command."));
-  putb(33984, 0, 0);
+  putb(34152, 0, 0);
   await COMPUTER_LOOP(dirtbl);
   await EXIT_HACK();
-  if (g.FERROR_COUNT > 0) {
+  if (s16(g.FERROR_COUNT) > s16(0)) {
     await UPDATE_BP(g.FERROR_COUNT);
   }
   return true;
@@ -19043,17 +19044,17 @@ async function START_COMPUTER(dirtbl) {
 
 async function CLEAR_SCREEN() {
   let n_ = 0;
-  putb(33984, 2, false);
-  n_ = (getb(33984, 0) - 1);
+  putb(34152, 2, false);
+  n_ = (getb(34152, 0) - 1);
   loop1: for (;;) {
-    if (n_ < 0) {
+    if (s16(n_) < s16(0)) {
       break loop1;
     }
     await SET_COMPUTER_CURS(n_, 0);
     tell("                                      ");
     n_ = n_ - 1;
   }
-  putb(33984, 0, 0);
+  putb(34152, 0, 0);
   return await SET_COMPUTER_CURS(0, 0);
 }
 
@@ -19088,20 +19089,20 @@ async function CLEAR_QUADRANT(n_) {
 }
 
 async function SET_COMPUTER_CURS(y, x) {
-  if ((y = y + 1) > getb(33984, 0)) {
+  if (s16(y = y + 1) > s16(getb(34152, 0))) {
     await LINE_CHECK();
-    putb(33984, 0, y);
+    putb(34152, 0, y);
   }
-  putb(33984, 6, x);
-  putb(33984, 7, y = y - 1);
+  putb(34152, 6, x);
+  putb(34152, 7, y = y - 1);
   return await SET_FORM_CURS(y + COMPUTER_FIRST_LINE, x = x + 1);
 }
 
 async function DRAW_COMPUTER_SCREEN() {
   let n_ = 0;
   crlf();
-  putb(33984, 4, false);
-  if (!(getb(33984, 3) == 0)) {
+  putb(34152, 4, false);
+  if (!(getb(34152, 3) == 0)) {
     tell("Boysenberry Terminal Emulator 5.21");
   } else {
     tell("BCDOS 1.0");
@@ -19128,11 +19129,11 @@ async function DRAW_COMPUTER_SCREEN() {
   loop1: for (;;) {
     await OPEN_LINE(n_);
     await CLOSE_LINE(n_);
-    if ((n_ = n_ + 1) >= COMPUTER_REAL_HEIGHT) {
+    if (s16(n_ = n_ + 1) >= s16(COMPUTER_REAL_HEIGHT)) {
       break loop1;
     }
   }
-  if (g.HEIGHT > (g.FLINE + COMPUTER_REAL_HEIGHT)) {
+  if (s16(g.HEIGHT) > s16(g.FLINE + COMPUTER_REAL_HEIGHT)) {
     return await BLANK_LINE(COMPUTER_REAL_HEIGHT);
   } else {
     return false;
@@ -19151,7 +19152,7 @@ async function COMMAND_FIELD(context, tbl, char = 0) {
     highlight(H_INVERSE);
     await SET_FORM_CURS(g.FY, g.FX);
     return false;
-  } else if (((context == FORM_ADD_CHAR) && (char <= 32 /* " " */))) {
+  } else if (((context == FORM_ADD_CHAR) && (s16(char) <= s16(32 /* " " */)))) {
     (await FERROR("ILLEGAL-CHARACTER"));
     return false;
   } else {
@@ -19160,7 +19161,7 @@ async function COMMAND_FIELD(context, tbl, char = 0) {
 }
 
 async function LOGIN_COMMAND_FIELD(context, tbl, char = 0) {
-  if (((context == FORM_ADD_CHAR) && (char <= 32 /* " " */))) {
+  if (((context == FORM_ADD_CHAR) && (s16(char) <= s16(32 /* " " */)))) {
     (await FERROR("ILLEGAL-CHARACTER"));
     return false;
   } else {
@@ -19207,26 +19208,26 @@ async function GET_COMMAND(err$ = false) {
 }
 
 async function COMPUTER_LOOP(dirtbl) {
-  let w_ = REAL_COMMAND_WINDOW, fld = get(w_, 0), tc = getb(33984, 3), err$ = 0, cval = 0, _1st$ = 0, css = 0;
+  let w_ = REAL_COMMAND_WINDOW, fld = get(w_, 0), tc = getb(34152, 3), err$ = 0, cval = 0, _1st$ = 0, css = 0;
   g.FORM_COMPUTER$ = true;
   g.CURRENT_DIR = dirtbl;
-  putb(33984, 1, 0);
+  putb(34152, 1, 0);
   err$ = false;
   cval = 0;
   _1st$ = true;
   css = 0;
   for (;;) {
-    if (!(getb(33984, 3) == 0)) {
+    if (!(getb(34152, 3) == 0)) {
       (await SETUP_COMMAND_LINE("CMD:", 4, COMMAND_FIELD.id));
     } else {
       (await SETUP_COMMAND_LINE("Command:", 8, COMMAND_FIELD.id));
     }
-    if (!(getb(33984, 18) == 0)) {
+    if (!(getb(34152, 18) == 0)) {
       err$ = true;
-      putb(33984, 18, false);
+      putb(34152, 18, false);
     }
     if (!err$ && !_1st$) {
-      if (!(getb(33984, 3) == 0)) {
+      if (!(getb(34152, 3) == 0)) {
         (await FERROR_MSG("ENTER-COMMAND"));
       } else {
         (await FERROR_MSG("Enter a command"));
@@ -19235,19 +19236,19 @@ async function COMPUTER_LOOP(dirtbl) {
     await GET_COMMAND(err$);
     err$ = false;
     if (!(tc == 0)) {
-      if ((css = (css = getb(33984, 15)) + 1) > 4) {
-        if (!(getb(33984, 17) == 0)) {
+      if (s16(css = (css = getb(34152, 15)) + 1) > s16(4)) {
+        if (!(getb(34152, 17) == 0)) {
           await COMPUTER_WIN();
           return true;
-        } else if ((css == 5) && !(get(33992, 0) == 0)) {
-          if (!(await FIND_FILE(get(33994, 0)))) {
-            putb(33984, 16, 4);
+        } else if ((css == 5) && !(get(34160, 0) == 0)) {
+          if (!(await FIND_FILE(get(34162, 0)))) {
+            putb(34152, 16, 4);
           } else {
-            (await INT_MESSAGE("USER RQH ACCESSING ", get(33992, 0)));
+            (await INT_MESSAGE("USER RQH ACCESSING ", get(34160, 0)));
           }
         }
       }
-      putb(33984, 15, css);
+      putb(34152, 15, css);
     }
     cval = await PROCESS_COMMAND(fld, dirtbl);
     _1st$ = false;
@@ -19259,21 +19260,21 @@ async function COMPUTER_LOOP(dirtbl) {
     if (!(tc == 0) && (await CHECK_LIMIT())) {
       return true;
     }
-    if (!(tc == 0) && (getb(33984, 14) > 0)) {
+    if (!(tc == 0) && (s16(getb(34152, 14)) > s16(0))) {
       await CHECK_TERMINATION(true);
-      putb(33984, 14, 0);
+      putb(34152, 14, 0);
     }
-    if (!(get(33992, 0)) && (getb(33984, 13) > 0)) {
+    if (!(get(34160, 0)) && (s16(getb(34152, 13)) > s16(0))) {
       await LINE_CHECK(true);
     }
-    if (!(getb(33984, 16) == 0)) {
+    if (!(getb(34152, 16) == 0)) {
       await SECURITY_COMES(true);
     }
-    putb(33984, 12, getb(33984, 12) - 1);
-    if (eq(getb(33984, 12), 0)) {
-      putb(33984, 14, random(4));
+    putb(34152, 12, getb(34152, 12) - 1);
+    if (eq(getb(34152, 12), 0)) {
+      putb(34152, 14, random(4));
     }
-    if (!(getb(33984, 4) == 0)) {
+    if (!(getb(34152, 4) == 0)) {
       return true;
     }
   }
@@ -19299,13 +19300,13 @@ async function SETUP_NEXT_TARGET() {
   loop1: for (;;) {
     if (!((targ = get(TARGETS, n_ = random(TARGET_COUNT) - 1)) == 0)) {
       break loop1;
-    } else if ((tries = tries + 1) > TARGET_COUNT) {
+    } else if (s16(tries = tries + 1) > s16(TARGET_COUNT)) {
       n_ = 0;
       loop2: for (;;) {
         if (!((targ = get(TARGETS, n_)) == 0)) {
           break loop2;
         }
-        if ((n_ = n_ + 1) >= TARGET_COUNT) {
+        if (s16(n_ = n_ + 1) >= s16(TARGET_COUNT)) {
           break loop2;
         }
       }
@@ -19315,40 +19316,40 @@ async function SETUP_NEXT_TARGET() {
   if (targ) {
     put(TARGETS, n_, false);
     tries = get(TARGET_NAMES, n_);
-    put(33992, 0, get(tries, 1));
-    put(33994, 0, get(tries, 0));
-    putb(33984, 15, 0);
-    putb(33984, 12, random(3) + 5);
-    if (!(await FIND_FILE(HAK_PROG_NAME)) || !(dir = await FIND_FILE(get(33994, 0)))) {
-      return putb(33984, 16, 1);
+    put(34160, 0, get(tries, 1));
+    put(34162, 0, get(tries, 0));
+    putb(34152, 15, 0);
+    putb(34152, 12, random(3) + 5);
+    if (!(await FIND_FILE(HAK_PROG_NAME)) || !(dir = await FIND_FILE(get(34162, 0)))) {
+      return putb(34152, 16, 1);
     } else if (get(get(dir, 0), 1) != targ) {
-      return putb(33984, 16, 2);
+      return putb(34152, 16, 2);
     } else {
       return false;
     }
   } else {
-    return putb(33984, 16, 3);
+    return putb(34152, 16, 3);
   }
 }
 
 async function LINE_CHECK(force$ = false) {
   let lc = 0;
   let $1;
-  if ($1 = !(getb(33984, 3))) {
+  if ($1 = !(getb(34152, 3))) {
     return $1;
-  } else if (!force$ && (getb(33984, 14) > 0)) {
+  } else if (!force$ && (s16(getb(34152, 14)) > s16(0))) {
     return await CHECK_TERMINATION();
-  } else if (getb(33984, 13) > 0) {
-    if (force$ || ((lc = (lc = getb(33984, 13)) - 1) <= 0)) {
-      putb(33984, 13, 0);
+  } else if (s16(getb(34152, 13)) > s16(0)) {
+    if (force$ || (s16(lc = (lc = getb(34152, 13)) - 1) <= s16(0))) {
+      putb(34152, 13, 0);
       await SETUP_NEXT_TARGET();
-      if (!(getb(33984, 16))) {
-        return (await INT_MESSAGE("USER RQH ABOUT TO USE ", get(33992, 0)));
+      if (!(getb(34152, 16))) {
+        return (await INT_MESSAGE("USER RQH ABOUT TO USE ", get(34160, 0)));
       } else {
         return false;
       }
     } else {
-      putb(33984, 13, lc);
+      putb(34152, 13, lc);
       return false;
     }
   } else {
@@ -19357,27 +19358,27 @@ async function LINE_CHECK(force$ = false) {
 }
 
 async function CHECK_TERMINATION(force$ = false) {
-  let tc = getb(33984, 14);
-  if (force$ || ((tc = tc - 1) <= 0)) {
-    putb(33984, 14, tc);
-    putb(33984, 18, true);
-    if (!(get(33992, 0) == 0)) {
-      (await INT_MESSAGE("USER RQH THROUGH WITH ", get(33992, 0)));
+  let tc = getb(34152, 14);
+  if (force$ || (s16(tc = tc - 1) <= s16(0))) {
+    putb(34152, 14, tc);
+    putb(34152, 18, true);
+    if (!(get(34160, 0) == 0)) {
+      (await INT_MESSAGE("USER RQH THROUGH WITH ", get(34160, 0)));
     }
-    put(33992, 0, false);
-    put(33994, 0, false);
-    putb(33984, 13, random(5));
+    put(34160, 0, false);
+    put(34162, 0, false);
+    putb(34152, 13, random(5));
     return true;
   } else {
-    putb(33984, 14, tc);
+    putb(34152, 14, tc);
     return false;
   }
 }
 
 async function CHECK_LIMIT() {
-  let n_ = getb(33984, 1);
-  putb(33984, 1, n_ = n_ + 1);
-  if (n_ > 50) {
+  let n_ = getb(34152, 1);
+  putb(34152, 1, n_ = n_ + 1);
+  if (s16(n_) > s16(50)) {
     await SECURITY_COMES();
     return true;
   } else {
@@ -19402,7 +19403,7 @@ async function PROCESS_COMMAND(fld, dirtbl) {
       }
       dt = dt + 2;
     }
-    if (!(getb(33984, 3) == 0)) {
+    if (!(getb(34152, 3) == 0)) {
       (await FERROR("CMD-NOT-FOUND"));
     } else {
       (await FERROR("Command not found"));
@@ -19416,7 +19417,7 @@ async function PROCESS_COMMAND(fld, dirtbl) {
 async function HELP_CMD(arg1, arg2, arg3) {
   let ctbl = 0;
   await CLEAR_SCREEN();
-  if (!(getb(33984, 3) == 0)) {
+  if (!(getb(34152, 3) == 0)) {
     ctbl = TELECOM_HELP_TABLE;
   } else {
     ctbl = HELP_TABLE;
@@ -19434,10 +19435,10 @@ async function WHO_CMD(fld, entry, dir) {
   await SET_COMPUTER_CURS(2, 0);
   (await DUMP_STRING("RQH     ", true));
   await SET_COMPUTER_CURS(2, 8);
-  if (!(get(33992, 0))) {
+  if (!(get(34160, 0))) {
     (await DUMP_STRING("DVH2                CHA/OS", true));
   } else {
-    await DUMP_STRING(get(33992, 0), true);
+    await DUMP_STRING(get(34160, 0), true);
     await SET_COMPUTER_CURS(2, 28);
     (await DUMP_STRING("HAK", true));
   }
@@ -19450,7 +19451,7 @@ async function DIR_CMD(fld, entry, dir, fline$ = 0) {
     await CLEAR_SCREEN();
   }
   await SET_COMPUTER_CURS(fline$, 0);
-  if (getb(33984, 3)) {
+  if (getb(34152, 3)) {
     (await DUMP_STRING("COMMAND LIST:", true));
   } else {
     (await DUMP_STRING("Command list:", true));
@@ -19470,7 +19471,7 @@ async function DIR_CMD(fld, entry, dir, fline$ = 0) {
       fline$ = fline$ + 1;
     }
     dir = dir + 2;
-    if ((n_ = n_ - 1) <= 0) {
+    if (s16(n_ = n_ - 1) <= s16(0)) {
       break loop1;
     }
   }
@@ -19502,7 +19503,7 @@ async function DUMP_LTABLE(tbl, script$ = false, noscreen$ = false) {
     off = 1;
     loop1: for (;;) {
       printC(getb(tbl, off));
-      if ((off = off + 1) > n_) {
+      if (s16(off = off + 1) > s16(n_)) {
         break loop1;
       }
     }
@@ -19516,7 +19517,7 @@ async function DUMP_LTABLE(tbl, script$ = false, noscreen$ = false) {
     dirOut(D_SCREEN_ON);
     setWindow(S_WINDOW);
     if (!noscreen$) {
-      return await SET_COMPUTER_CURS(getb(33984, 7), getb(33984, 6) + n_);
+      return await SET_COMPUTER_CURS(getb(34152, 7), getb(34152, 6) + n_);
     } else {
       return false;
     }
@@ -19527,13 +19528,13 @@ async function DUMP_LTABLE(tbl, script$ = false, noscreen$ = false) {
 
 async function DUMP_TABLE(tbl, fline = 0) {
   let sline = 0, dline = 0, n_ = get(tbl, 0), remain = n_, ct = 0, st = 0;
-  if (n_ > (COMPUTER_HEIGHT - fline)) {
+  if (s16(n_) > s16(COMPUTER_HEIGHT - fline)) {
     dline = COMPUTER_HEIGHT - fline;
   } else {
     dline = n_;
   }
   loop1: for (;;) {
-    if (remain > (COMPUTER_HEIGHT - fline)) {
+    if (s16(remain) > s16(COMPUTER_HEIGHT - fline)) {
       sline = COMPUTER_HEIGHT - 1;
       remain = remain - COMPUTER_HEIGHT - fline;
     } else {
@@ -19544,13 +19545,13 @@ async function DUMP_TABLE(tbl, fline = 0) {
       await SET_COMPUTER_CURS(sline, 0);
       await LINE_CHECK();
       await DUMP_STRING(get(tbl, dline));
-      if ((sline = sline - 1) < fline) {
+      if (s16(sline = sline - 1) < s16(fline)) {
         break loop2;
       }
       dline = dline - 1;
     }
-    if (remain > 0) {
-      if ((dline = (n_ - remain) + COMPUTER_HEIGHT) > n_) {
+    if (s16(remain) > s16(0)) {
+      if (s16(dline = (n_ - remain) + COMPUTER_HEIGHT) > s16(n_)) {
         dline = n_;
       }
       (await FERROR_MSG("Strike any key to see next page"));
@@ -19573,7 +19574,7 @@ async function DUMP_TABLE(tbl, fline = 0) {
       tell(S(get(tbl, ct)));
     }
     crlf();
-    if ((ct = ct + 1) > n_) {
+    if (s16(ct = ct + 1) > s16(n_)) {
       break loop3;
     }
   }
@@ -19584,7 +19585,7 @@ async function DUMP_TABLE(tbl, fline = 0) {
 }
 
 async function WRITE_TABLE_TO_COMPUTER(tbl) {
-  putb(33984, 3, false);
+  putb(34152, 3, false);
   g.FORM_COMPUTER$ = true;
   await DRAW_COMPUTER_SCREEN();
   highlight(H_NORMAL);
@@ -19605,14 +19606,14 @@ async function FERROR_MSG(str) {
 }
 
 async function EXIT_HACK(quiet$ = false) {
-  if (!(getb(33984, 4) == 0)) {
+  if (!(getb(34152, 4) == 0)) {
     return true;
   }
   if (!quiet$) {
-    if (!(getb(33984, 3) == 0)) {
+    if (!(getb(34152, 3) == 0)) {
       (await FERROR_MSG("Disconnect requested. Strike any key."));
-      if (!(getb(33984, 17) == 0)) {
-        putb(33984, 5, true);
+      if (!(getb(34152, 17) == 0)) {
+        putb(34152, 5, true);
         await QUEUE(I_COMPUTER_DIES.id, 1);
       }
     } else {
@@ -19630,7 +19631,7 @@ async function EXIT_HACK(quiet$ = false) {
     crlf();
     tell("Your screen goes blank.\n");
   }
-  putb(33984, 4, true);
+  putb(34152, 4, true);
   return true;
 }
 
@@ -19639,7 +19640,7 @@ async function QUIT_CMD(arg1, arg2, arg3) {
 }
 
 async function CLEAR_CMD(arg1, arg2, arg3) {
-  if (!(getb(33984, 3))) {
+  if (!(getb(34152, 3))) {
     await DO_PROG(-1);
   }
   await CLEAR_SCREEN();
@@ -19654,21 +19655,21 @@ async function HACK_CMD(arg1, arg2, arg3) {
 
 async function RUN_TELE_COMM() {
   let f = 0, n_ = 0;
-  if (!(getb(33984, 5) == 0)) {
+  if (!(getb(34152, 5) == 0)) {
     tell("\nThe mainframe doesn't seem to be responding, so your Boysenberry rejects the modular plug. Have you messed up the computer system?\n");
     return true;
   } else {
-    if (!((g.REFRESH_COUNT = g.REFRESH_COUNT - 1) < 0)) {
+    if (!(s16(g.REFRESH_COUNT = g.REFRESH_COUNT - 1) < s16(0))) {
       n_ = 0;
       loop1: for (;;) {
         put(TARGETS, n_, get(ITARGETS, n_));
-        if ((n_ = n_ + 1) > (TARGET_COUNT - 1)) {
+        if (s16(n_ = n_ + 1) > s16(TARGET_COUNT - 1)) {
           break loop1;
         }
       }
     }
     g.FORM_COMPUTER$ = true;
-    putb(33984, 3, true);
+    putb(34152, 3, true);
     await DRAW_COMPUTER_SCREEN();
     await SET_COMPUTER_CURS(0, 0);
     highlight(H_NORMAL);
@@ -19681,19 +19682,19 @@ async function RUN_TELE_COMM() {
       await SET_COMPUTER_CURS(4, 0);
       (await DUMP_STRING("LOGON AT "));
       tell(N(g.HOURS), ":");
-      if (g.MINUTES < 10) {
+      if (s16(g.MINUTES) < s16(10)) {
         tell("0");
       }
       tell(N(g.MINUTES));
       await SET_COMPUTER_CURS(6, 0);
       (await DUMP_STRING("DVH2 CHA/OS: ? OR HELP FOR HELP", true));
-      putb(33984, 3, true);
+      putb(34152, 3, true);
       await SETUP_NEXT_TARGET();
-      putb(33984, 12, 2);
+      putb(34152, 12, 2);
       (await FERROR_MSG("ENTER-COMMAND"));
-      if (!(getb(33984, 16))) {
+      if (!(getb(34152, 16))) {
         await COMPUTER_LOOP(TELECOM_TABLE);
-      } else if (!(getb(33984, 4))) {
+      } else if (!(getb(34152, 4))) {
         await SECURITY_COMES(true);
       }
     }
@@ -19705,7 +19706,7 @@ async function DELAY(sec = 1) {
   let n_ = getb(DELAYS, getb(0, 30));
   n_ = 1000 * n_ * sec;
   for (;;) {
-    if ((n_ = n_ - 1) <= 0) {
+    if (s16(n_ = n_ - 1) <= s16(0)) {
       return true;
     }
   }
@@ -19739,7 +19740,7 @@ async function DO_LOGIN() {
     if (!(good_name$ == 0) && !(good_password$ == 0)) {
       return true;
     }
-    if ((ct = ct - 1) < 1) {
+    if (s16(ct = ct - 1) < s16(1)) {
       await SECURITY_COMES();
       return false;
     }
@@ -19747,7 +19748,7 @@ async function DO_LOGIN() {
 }
 
 async function SECURITY_COMES(lossage$ = false) {
-  let sc = getb(33984, 4), dc$ = getb(33984, 16);
+  let sc = getb(34152, 4), dc$ = getb(34152, 16);
   await EXIT_HACK(true);
   tell("Unfortunately, it would seem that the nerd has noticed ");
   if (!sc) {
@@ -19816,7 +19817,7 @@ async function FIND_FILE(nmtbl) {
     if (!(get(de, 1) == 0) && !(await NEQ_TBL(nmtbl, get(de, 0)))) {
       break loop1;
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       dir = false;
       break loop1;
     }
@@ -19830,7 +19831,7 @@ async function FILE_NAME_FCN(context, tbl, char = 0) {
 }
 
 async function GET_FILE_NAME(msg, old$ = true) {
-  if (!(old$ == 0) && !(getb(33984, 2))) {
+  if (!(old$ == 0) && !(getb(34152, 2))) {
     await LIST_DIR_OF_FILES(FILE_TABLE);
   }
   await FERROR_MSG(msg);
@@ -19843,7 +19844,7 @@ async function LIST_DIR_OF_FILES(dir, cmd$ = false) {
   let len = get(dir, 0), line = 0, de = 0;
   await CLEAR_SCREEN();
   await SET_COMPUTER_CURS(line, 0);
-  putb(33984, 2, true);
+  putb(34152, 2, true);
   if (cmd$) {
     (await DUMP_STRING("DIR DVH2<CHA/OS.OP>*.*", true));
   } else {
@@ -19859,7 +19860,7 @@ async function LIST_DIR_OF_FILES(dir, cmd$ = false) {
       await DUMP_LTABLE(get(de, 0), true);
       line = line + 1;
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       return true;
     }
     dir = dir + 2;
@@ -19913,17 +19914,17 @@ async function RENAME_CMD(fld, entry, dir) {
   (fnt = (await GET_FILE_NAME("ENTER-NAME-OF-FILE-TO-RENAME")));
   if (dir = await FIND_FILE(fnt)) {
     (fnt = (await GET_FILE_NAME("ENTER-NEW-FILE-NAME", false)));
-    putb(33984, 2, false);
+    putb(34152, 2, false);
     if (nd = await FIND_FILE(fnt)) {
       if (nd == dir) {
       } else if (nd == (await FIND_FILE(HAK_PROG_NAME))) {
-        putb(33984, 2, true);
+        putb(34152, 2, true);
         (await FERROR("FILE-PROTECTION-VIOLATION"));
       } else if (await CONFIRM_OVERWRITE()) {
         await DO_COPY(dir, nd);
         put(get(dir, 0), 1, false);
       } else {
-        putb(33984, 2, true);
+        putb(34152, 2, true);
         (await FERROR("RENAME-ABORTED"));
       }
     } else {
@@ -19942,7 +19943,7 @@ async function CONFIRM_OVERWRITE() {
   (await FERROR("TARGET-FILE-ALREADY-EXISTS"));
   (await SETUP_COMMAND_LINE("Y-TO-OVERWRITE:", 15, false));
   await GET_COMMAND();
-  if (((getb(fld, 0) >= 1) && eq(getb(fld, 1), 89 /* "Y" */))) {
+  if (((s16(getb(fld, 0)) >= s16(1)) && eq(getb(fld, 1), 89 /* "Y" */))) {
     (await FERROR_MSG("OVERWRITTEN"));
     return true;
   } else {
@@ -19959,13 +19960,13 @@ async function DO_COPY(de1, de2) {
 async function COPY_NAME(fnt, dir) {
   let nmlen = 0;
   dir = get(get(dir, 0), 0);
-  if ((nmlen = getb(fnt, 0)) > MAX_FILENAME) {
+  if (s16(nmlen = getb(fnt, 0)) > s16(MAX_FILENAME)) {
     nmlen = MAX_FILENAME;
   }
   putb(dir, 0, nmlen);
   for (;;) {
     putb(dir, nmlen, getb(fnt, nmlen));
-    if ((nmlen = nmlen - 1) < 1) {
+    if (s16(nmlen = nmlen - 1) < s16(1)) {
       return true;
     }
   }
@@ -19987,7 +19988,7 @@ async function COPY_CMD(fld, entry, dir) {
       await CHECK_WINNING$();
       return FATAL_VALUE;
     } else if (nd = await FIND_FREE_FILE()) {
-      putb(33984, 2, false);
+      putb(34152, 2, false);
       await COPY_NAME(fnt, nd);
       await DO_COPY(dir, nd);
       await CHECK_WINNING$();
@@ -20004,8 +20005,8 @@ async function COPY_CMD(fld, entry, dir) {
 
 async function CHECK_WINNING$() {
   let dir = 0;
-  if (!(get(33994, 0) == 0) && (dir = await FIND_FILE(get(33994, 0))) && eq(get(get(dir, 0), 1), DVH2_FILE) && (getb(33984, 15) < 4)) {
-    return putb(33984, 17, true);
+  if (!(get(34162, 0) == 0) && (dir = await FIND_FILE(get(34162, 0))) && eq(get(get(dir, 0), 1), DVH2_FILE) && (s16(getb(34152, 15)) < s16(4))) {
+    return putb(34152, 17, true);
   } else {
     return false;
   }
@@ -20018,7 +20019,7 @@ async function FIND_FREE_FILE() {
       tbl = tbl + (len * 2);
       break loop1;
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       tbl = false;
       break loop1;
     }
@@ -20031,7 +20032,7 @@ async function DELETE_CMD(foo, bar, bletch) {
   (fnt = (await GET_FILE_NAME("ENTER-NAME-OF-FILE-TO-ERASE")));
   if (dir = await FIND_FILE(fnt)) {
     put(get(dir, 0), 1, false);
-    putb(33984, 2, false);
+    putb(34152, 2, false);
     return false;
   } else {
     (await FERROR("FILE-NOT-FOUND"));
@@ -20044,7 +20045,7 @@ async function COMPUTER_WIN() {
   (await DUMP_STRING("AUTO SHUTDOWN IN PROGRESS"));
   await DELAY(2);
   await EXIT_HACK(true);
-  putb(33984, 5, true);
+  putb(34152, 5, true);
   return await I_COMPUTER_DIES(false);
 }
 
@@ -20132,7 +20133,7 @@ async function AIRPORT_CROWD_F(context = false) {
       return false;
     }
   } else if (isVerb(V.TELL, V.ASK_ABOUT, V.ASK_FOR, V.TELL_ABOUT, V.YELL, V.QUESTION, V.REPLY, V.HELLO, V.GOODBYE, V.THANK)) {
-    if (!(getb(34004, 22) == 0)) {
+    if (!(getb(34172, 22) == 0)) {
       tell("The cheering of ");
       await THE_PRINT();
       tell(" drowns out your words.\n");
@@ -20144,7 +20145,7 @@ async function AIRPORT_CROWD_F(context = false) {
     }
     return FATAL_VALUE;
   } else if (isVerb(V.EXAMINE, V.WATCH)) {
-    if (!(getb(34004, 22) == 0)) {
+    if (!(getb(34172, 22) == 0)) {
       await CTHE_PRINT();
       tell(" are cheering wildly at you.\n");
     } else if (g.HERE == PILLAR_A || g.HERE == PILLAR_B) {
@@ -20155,7 +20156,7 @@ async function AIRPORT_CROWD_F(context = false) {
     }
     return true;
   } else if (isVerb(V.WAVE_AT, V.BOW)) {
-    if (!(getb(34004, 22) == 0)) {
+    if (!(getb(34172, 22) == 0)) {
       await CTHE_PRINT();
       tell(" cheer all the louder.\n");
     } else if (g.HERE == PILLAR_A || g.HERE == PILLAR_B) {
@@ -20190,22 +20191,22 @@ async function CROWD_IGNORES_YOU() {
 
 async function VISIT_AIRPORT(exit_routine$ = false) {
   let n_ = 0, nn = 0;
-  putb(34004, 0, n_ = random(AIRPORT_ROOMS));
-  putb(34004, 1, n_);
-  if (n_ <= div(AIRPORT_ROOMS + 1, 2)) {
-    putb(34004, 2, AIRPORT_ROOMS);
+  putb(34172, 0, n_ = random(AIRPORT_ROOMS));
+  putb(34172, 1, n_);
+  if (s16(n_) <= s16(div(AIRPORT_ROOMS + 1, 2))) {
+    putb(34172, 2, AIRPORT_ROOMS);
   } else {
-    putb(34004, 2, 1);
+    putb(34172, 2, 1);
   }
   nn = 1;
   loop1: for (;;) {
-    putb(34004, 0, nn);
+    putb(34172, 0, nn);
     await LIST_AIRLINES(true);
-    if ((nn = nn + 1) > AIRPORT_ROOMS) {
+    if (s16(nn = nn + 1) > s16(AIRPORT_ROOMS)) {
       break loop1;
     }
   }
-  putb(34004, 0, n_);
+  putb(34172, 0, n_);
   if (!exit_routine$) {
     g.HERE = AIRPORT_ENTRANCE;
     move(PLAYER, g.HERE);
@@ -20276,7 +20277,7 @@ async function I_LOSE_BOOK() {
 }
 
 async function SOUTH_FROM_ENTRANCE() {
-  if (eq(getb(34004, 0), AIRPORT_ROOMS)) {
+  if (eq(getb(34172, 0), AIRPORT_ROOMS)) {
     return LANDF;
   } else {
     tell("Busy traffic blocks your path.\n");
@@ -20287,7 +20288,7 @@ async function SOUTH_FROM_ENTRANCE() {
 async function DO_LSH(ct) {
   let bit = 1;
   loop1: for (;;) {
-    if ((ct = ct - 1) < 1) {
+    if (s16(ct = ct - 1) < s16(1)) {
       break loop1;
     }
     bit = bit * 2;
@@ -20297,11 +20298,11 @@ async function DO_LSH(ct) {
 
 async function SEEN_BIT_HACK(rm, fact) {
   let bit = 0;
-  bit = (await DO_LSH(getb(34004, 0))) * fact;
+  bit = (await DO_LSH(getb(34172, 0))) * fact;
   g.OLD_HERE = false;
-  if (!(btst(get(34007, 0), bit))) {
+  if (!(btst(get(34175, 0), bit))) {
     clearFlag(rm, TOUCHED);
-    put(34007, 0, get(34007, 0) | bit);
+    put(34175, 0, get(34175, 0) | bit);
   } else {
     setFlag(rm, TOUCHED);
   }
@@ -20309,7 +20310,7 @@ async function SEEN_BIT_HACK(rm, fact) {
 }
 
 async function INTO_CONCOURSE() {
-  if (eq(getb(34004, 0), AIRPORT_ROOMS)) {
+  if (eq(getb(34172, 0), AIRPORT_ROOMS)) {
     tell("[Which way do you want to go in, north or south?]\n");
     return false;
   } else {
@@ -20318,8 +20319,8 @@ async function INTO_CONCOURSE() {
 }
 
 async function ENTER_CONCOURSE() {
-  putb(34004, 24, true);
-  if (eq(getb(34004, 0), getb(34004, 2))) {
+  putb(34172, 24, true);
+  if (eq(getb(34172, 0), getb(34172, 2))) {
     return ZALAGASA_CONCOURSE;
   } else {
     await SEEN_BIT_HACK(AIRPORT_CONCOURSE, 32);
@@ -20328,24 +20329,24 @@ async function ENTER_CONCOURSE() {
 }
 
 async function NEXT_ENTRANCE() {
-  let n_ = getb(34004, 0);
+  let n_ = getb(34172, 0);
   if (n_ == AIRPORT_ROOMS) {
-    putb(34004, 0, 0);
+    putb(34172, 0, 0);
     return await NEXT_ENTRANCE();
   } else {
-    putb(34004, 0, n_ = n_ + 1);
+    putb(34172, 0, n_ = n_ + 1);
     await SEEN_BIT_HACK(AIRPORT_ENTRANCE, 1);
     return AIRPORT_ENTRANCE;
   }
 }
 
 async function PREVIOUS_ENTRANCE() {
-  let n_ = getb(34004, 0);
+  let n_ = getb(34172, 0);
   if (n_ == 1) {
-    putb(34004, 0, AIRPORT_ROOMS + 1);
+    putb(34172, 0, AIRPORT_ROOMS + 1);
     return await PREVIOUS_ENTRANCE();
   } else {
-    putb(34004, 0, n_ = n_ - 1);
+    putb(34172, 0, n_ = n_ - 1);
     await SEEN_BIT_HACK(AIRPORT_ENTRANCE, 1);
     return AIRPORT_ENTRANCE;
   }
@@ -20358,7 +20359,7 @@ async function AIRPORT_ENTRANCE_F(context = false) {
     tell("You're at an entrance marked:\n");
     await LIST_AIRLINES(false);
     tell("Other entrances stretch off to the east and west");
-    if (eq(getb(34004, 0), AIRPORT_ROOMS)) {
+    if (eq(getb(34172, 0), AIRPORT_ROOMS)) {
       tell("; there's a Lost and Found office to the south");
     }
     tell(S(PERIOD));
@@ -20372,7 +20373,7 @@ async function DO_ORB(offs) {
   let tbl = AIRLINE_BITS, n_ = ((AIRPORT_ROOMS * 2) - 2), res = 0;
   loop1: for (;;) {
     res = get(tbl, n_ + offs) | res;
-    if ((n_ = n_ - 2) < 0) {
+    if (s16(n_ = n_ - 2) < s16(0)) {
       break loop1;
     }
   }
@@ -20391,7 +20392,7 @@ async function FIND_FREE_BIT(wd, used$ = false) {
         break loop1;
       }
     }
-    if ((n_ = n_ - 1) < 1) {
+    if (s16(n_ = n_ - 1) < s16(1)) {
       break loop1;
     }
     msk = msk * 2;
@@ -20410,7 +20411,7 @@ async function BIT_TRANS(wd) {
       if (!((wd & 1) == 0)) {
         break loop1;
       }
-      if ((n_ = n_ + 1) >= 16) {
+      if (s16(n_ = n_ + 1) >= s16(16)) {
         break loop1;
       }
       wd = div(wd, 2);
@@ -20420,7 +20421,7 @@ async function BIT_TRANS(wd) {
 }
 
 async function LIST_AIRLINES(change$) {
-  let nn = getb(34004, 0), w1 = 0, w2 = 0, u1 = 0, u2 = 0, old = 0, new_ = 0, n_ = 0, b = 0;
+  let nn = getb(34172, 0), w1 = 0, w2 = 0, u1 = 0, u2 = 0, old = 0, new_ = 0, n_ = 0, b = 0;
   let $1, $2, $3, $4;
   nn = nn - 1;
   nn = nn * 2;
@@ -20429,10 +20430,10 @@ async function LIST_AIRLINES(change$) {
   u1 = await DO_ORB(0);
   u2 = (await DO_ORB(1)) | 3;
   if ((w1 == 0) && (w2 == 0)) {
-    if (eq(getb(34004, 0), getb(34004, 1))) {
+    if (eq(getb(34172, 0), getb(34172, 1))) {
       w2 = w2 | 1;
     }
-    if (getb(34004, 0) != getb(34004, 2)) {
+    if (getb(34172, 0) != getb(34172, 2)) {
       w2 = w2 | 2;
     }
     n_ = 4;
@@ -20497,7 +20498,7 @@ async function LIST_BITS(wd, offs) {
       tell(S($1));
       tell("\n");
     }
-    if ((n_ = n_ + 1) > 15) {
+    if (s16(n_ = n_ + 1) > s16(15)) {
       return true;
     }
     msk = msk * 2;
@@ -20505,7 +20506,7 @@ async function LIST_BITS(wd, offs) {
 }
 
 async function AIRLINE_STR(n_) {
-  if (n_ < 0) {
+  if (s16(n_) < s16(0)) {
     return get(AIRLINE_NAMES, 0 - n_);
   } else {
     return get(AIRLINE_NAMES, n_);
@@ -20513,13 +20514,13 @@ async function AIRLINE_STR(n_) {
 }
 
 async function NEXT_CONCOURSE() {
-  let n_ = getb(34004, 0);
-  putb(34004, 0, n_ = n_ + 1);
-  putb(34004, 24, true);
-  if (n_ == getb(34004, 2)) {
+  let n_ = getb(34172, 0);
+  putb(34172, 0, n_ = n_ + 1);
+  putb(34172, 24, true);
+  if (n_ == getb(34172, 2)) {
     return await NEXT_CONCOURSE();
-  } else if (n_ > AIRPORT_ROOMS) {
-    putb(34004, 0, 0);
+  } else if (s16(n_) > s16(AIRPORT_ROOMS)) {
+    putb(34172, 0, 0);
     return await NEXT_CONCOURSE();
   } else {
     await SEEN_BIT_HACK(AIRPORT_CONCOURSE, 32);
@@ -20528,13 +20529,13 @@ async function NEXT_CONCOURSE() {
 }
 
 async function PREVIOUS_CONCOURSE() {
-  let n_ = getb(34004, 0);
-  putb(34004, 0, n_ = n_ - 1);
-  putb(34004, 24, true);
-  if (n_ == getb(34004, 2)) {
+  let n_ = getb(34172, 0);
+  putb(34172, 0, n_ = n_ - 1);
+  putb(34172, 24, true);
+  if (n_ == getb(34172, 2)) {
     return await PREVIOUS_CONCOURSE();
   } else if (n_ == 0) {
-    putb(34004, 0, AIRPORT_ROOMS + 1);
+    putb(34172, 0, AIRPORT_ROOMS + 1);
     return await PREVIOUS_CONCOURSE();
   } else {
     await SEEN_BIT_HACK(AIRPORT_CONCOURSE, 32);
@@ -20545,28 +20546,28 @@ async function PREVIOUS_CONCOURSE() {
 async function AIRPORT_CONCOURSE_F(context = false) {
   let $1, $2;
   if (context == M_ENTERING) {
-    if (!(getb(34004, 24) == 0)) {
+    if (!(getb(34172, 24) == 0)) {
       await SETUP_SIGNS_AND_DESK();
     }
-    putb(34004, 24, false);
-    putb(34004, 23, false);
+    putb(34172, 24, false);
+    putb(34172, 23, false);
     if ($1 = g.HERE == ZALAGASA_CONCOURSE) {
       return $1;
-    } else if (hasFlag(AIRPORT_CONCOURSE, TOUCHED) && eq(getb(34004, 0), getb(34004, 1))) {
-      return putb(34004, 23, true);
+    } else if (hasFlag(AIRPORT_CONCOURSE, TOUCHED) && eq(getb(34172, 0), getb(34172, 1))) {
+      return putb(34172, 23, true);
     } else {
       return false;
     }
   } else if (context == M_ENTERED) {
-    if (!(getb(34004, 23) == 0)) {
-      putb(34004, 23, false);
+    if (!(getb(34172, 23) == 0)) {
+      putb(34172, 23, false);
       return await UPDATE_BP(4);
     } else {
       return false;
     }
   } else if (context == M_LOOK) {
     tell("You're in the main concourse. To the north, there's a ticket desk for ");
-    $2 = await AIRLINE_STR(getb(34004, 5));
+    $2 = await AIRLINE_STR(getb(34172, 5));
     tell(S($2));
     tell("; overhead are signs pointing to various airlines:\n");
     await LIST_SIGNS();
@@ -20586,29 +20587,29 @@ async function LIST_SIGNS() {
     $1 = await AIRLINE_STR(ts);
     tell(S($1));
     tell("\n");
-    if ((n_ = n_ + 1) >= 10) {
+    if (s16(n_ = n_ + 1) >= s16(10)) {
       return true;
     }
   }
 }
 
 async function SETUP_SIGNS_AND_DESK() {
-  let rn = getb(34004, 0), nn = ((rn - 1) * 2), wd = 0, fact = 0, cs = CURRENT_SIGNS, source = 0, tt = 0, dest = 0, n_ = 0, m = 0, nw = 0, which$ = 0;
-  putb(34004, 13, false);
+  let rn = getb(34172, 0), nn = ((rn - 1) * 2), wd = 0, fact = 0, cs = CURRENT_SIGNS, source = 0, tt = 0, dest = 0, n_ = 0, m = 0, nw = 0, which$ = 0;
+  putb(34172, 13, false);
   if (g.HERE == ZALAGASA_CONCOURSE) {
     move(AIRCLERK, ZALAGASA_DESK);
     wd = ZALAGASA_ID;
-    putb(34004, 13, true);
-  } else if (rn == getb(34004, 1)) {
+    putb(34172, 13, true);
+  } else if (rn == getb(34172, 1)) {
     remove(AIRCLERK);
     wd = OMNIA_ID;
   } else {
     move(AIRCLERK, AIRLINE_DESK);
     if (prob(50)) {
-      if ((nn = nn - 2) < 0) {
+      if (s16(nn = nn - 2) < s16(0)) {
         nn = (AIRPORT_ROOMS * 2) - 2;
       }
-    } else if ((nn = nn + 2) >= (AIRPORT_ROOMS * 2)) {
+    } else if (s16(nn = nn + 2) >= s16(AIRPORT_ROOMS * 2)) {
       nn = 0;
     }
     if (prob(50)) {
@@ -20619,11 +20620,11 @@ async function SETUP_SIGNS_AND_DESK() {
     }
     wd = (await BIT_TRANS(await FIND_FREE_BIT(wd, true))) + fact;
   }
-  putb(34004, 5, wd);
+  putb(34172, 5, wd);
   n_ = 0;
   loop1: for (;;) {
     put(cs, n_, 0);
-    if ((n_ = n_ + 1) > 9) {
+    if (s16(n_ = n_ + 1) > s16(9)) {
       break loop1;
     }
   }
@@ -20632,23 +20633,23 @@ async function SETUP_SIGNS_AND_DESK() {
   nn = 2 * nn;
   if (g.HERE == ZALAGASA_CONCOURSE) {
     put(cs, nn, OMNIA_ID);
-    if (rn > getb(34004, 1)) {
+    if (s16(rn) > s16(getb(34172, 1))) {
       put(cs, nn + 1, "west");
     } else {
       put(cs, nn + 1, "east");
     }
   } else {
     put(cs, nn, ZALAGASA_ID);
-    if (rn > getb(34004, 2)) {
+    if (s16(rn) > s16(getb(34172, 2))) {
       put(cs, nn + 1, "west");
     } else {
       put(cs, nn + 1, "east");
     }
   }
   source = AIRLINE_LOOKUP + 2;
-  if (tt = inTable(getb(34004, 5), source, get(AIRLINE_LOOKUP, 0))) {
+  if (tt = inTable(getb(34172, 5), source, get(AIRLINE_LOOKUP, 0))) {
     setFlag(AIRLINE_DESK, VOWEL);
-  } else if (tt = inTable(0 - getb(34004, 5), source, get(AIRLINE_LOOKUP, 0))) {
+  } else if (tt = inTable(0 - getb(34172, 5), source, get(AIRLINE_LOOKUP, 0))) {
     clearFlag(AIRLINE_DESK, VOWEL);
   }
   source = tt - 4;
@@ -20670,7 +20671,7 @@ async function SETUP_SIGNS_AND_DESK() {
   m = 0;
   nw = 0;
   loop2: for (;;) {
-    if ((m > AIRPORT_ROOMS) || (n_ > 9)) {
+    if ((s16(m) > s16(AIRPORT_ROOMS)) || (s16(n_) > s16(9))) {
       return true;
     }
     if (get(cs, n_ + 1) != 0) {
@@ -20702,7 +20703,7 @@ async function SETUP_SIGNS_AND_DESK() {
       break loop3;
     }
     put(cs, n_, nw);
-    put(cs, n_ = n_ + 1, ((m + 1) > rn ? "east" : "west"));
+    put(cs, n_ = n_ + 1, (s16(m + 1) > s16(rn) ? "east" : "west"));
     n_ = n_ + 1;
     m = m + 1;
   }
@@ -20718,7 +20719,7 @@ async function COPY_SYNS(source, dest, dest2 = false) {
         put(dest2, len, x);
       }
     }
-    if (len < 1) {
+    if (s16(len) < s16(1)) {
       return true;
     }
   }
@@ -20743,7 +20744,7 @@ async function GENERIC_DESK_F(tbl) {
 
 async function SDESC_DESK() {
   let $1;
-  $1 = await AIRLINE_STR(getb(34004, 5));
+  $1 = await AIRLINE_STR(getb(34172, 5));
   tell(S($1));
   tell(" desk");
   return true;
@@ -20790,11 +20791,11 @@ async function ACTUAL_DESK_F() {
     } else {
       return false;
     }
-  } else if (isVerb(V.LOOK_BEHIND) && ((getb(34004, 5) != OMNIA_ID) || (g.PRSO == ACTUAL_ZDESK))) {
+  } else if (isVerb(V.LOOK_BEHIND) && ((getb(34172, 5) != OMNIA_ID) || (g.PRSO == ACTUAL_ZDESK))) {
     tell("There's a clerk standing behind the desk.\n");
     return true;
   } else if (isVerb(V.WALK_AROUND)) {
-    if ((getb(34004, 5) != OMNIA_ID) || (g.PRSO == ACTUAL_ZDESK)) {
+    if ((getb(34172, 5) != OMNIA_ID) || (g.PRSO == ACTUAL_ZDESK)) {
       tell("The clerk blocks your path, and directs you back to the front of the desk.\n");
       return true;
     } else {
@@ -20810,18 +20811,18 @@ async function AIRLINE_DESK_F(context = false) {
   let source = 0, dest = 0, len = 0, dest2 = 0, tt = 0;
   if (context == M_LOOK) {
     tell("You're standing in ");
-    if (eq(getb(34004, 5), OMNIA_ID)) {
+    if (eq(getb(34172, 5), OMNIA_ID)) {
       tell("front of the deserted Omnia Gallia desk.\n");
       return true;
     }
-    if (!(getb(34004, 11) == 0)) {
+    if (!(getb(34172, 11) == 0)) {
       tell("front of ");
     } else {
       tell("line at ");
     }
     await THE_PRINT(ACTUAL_DESK);
     tell(", just north of the concourse.");
-    if (!(getb(34004, 11) == 0)) {
+    if (!(getb(34172, 11) == 0)) {
       tell(" ");
       await CTHE_PRINT(AIRCLERK);
       tell(" is looking at you expectantly.");
@@ -20833,17 +20834,17 @@ async function AIRLINE_DESK_F(context = false) {
     remove(OMNIA_SIGN);
     await DEQUEUE(I_DESK.id);
     await DEQUEUE(I_ZALAGASA_DESK.id);
-    putb(34004, 11, false);
+    putb(34172, 11, false);
     remove(FATSO);
-    if ((g.HERE == ZALAGASA_DESK) && (getb(34004, 10) != 2)) {
-      putb(34004, 10, 1);
+    if ((g.HERE == ZALAGASA_DESK) && (getb(34172, 10) != 2)) {
+      putb(34172, 10, 1);
     }
     return false;
   } else if (context == M_ENTERING) {
     if (g.HERE != ZALAGASA_DESK) {
       await SEEN_BIT_HACK(AIRLINE_DESK, 1024);
     }
-    if (eq(getb(34004, 5), OMNIA_ID)) {
+    if (eq(getb(34172, 5), OMNIA_ID)) {
       move(OMNIA_SIGN, g.HERE);
       if (!(hasFlag(AIRLINE_DESK, TOUCHED))) {
         tell("As you approach the desk, you notice a sign, which a departing Deep Thought Corporation repairman in ");
@@ -20853,14 +20854,14 @@ async function AIRLINE_DESK_F(context = false) {
       }
       return false;
     } else if (g.HERE == ZALAGASA_DESK) {
-      if (!(getb(34004, 18) == 0) || !(getb(34004, 19) == 0)) {
-        putb(34004, 10, 3);
-      } else if (getb(34004, 10) != 1) {
-        putb(34004, 9, 0);
+      if (!(getb(34172, 18) == 0) || !(getb(34172, 19) == 0)) {
+        putb(34172, 10, 3);
+      } else if (getb(34172, 10) != 1) {
+        putb(34172, 9, 0);
       }
       await QUEUE(I_ZALAGASA_DESK.id);
     } else {
-      putb(34004, 8, 0);
+      putb(34172, 8, 0);
       await QUEUE(I_DESK.id);
     }
     return false;
@@ -20884,7 +20885,7 @@ async function DISPLAY_SIGN(tbl) {
   for (;;) {
     tell(S(get(tbl, 0)));
     crlf();
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       return true;
     }
     tbl = tbl + 2;
@@ -20894,13 +20895,13 @@ async function DISPLAY_SIGN(tbl) {
 async function I_TERMINAL(cr = true) {
   let p_ = 0;
   if (g.HERE == IN_TOWER) {
-  } else if (!(getb(34004, 6) == 0)) {
-    putb(34004, 6, false);
+  } else if (!(getb(34172, 6) == 0)) {
+    putb(34172, 6, false);
     return false;
-  } else if (!(getb(34004, 7) == 0)) {
-    putb(34004, 7, false);
+  } else if (!(getb(34172, 7) == 0)) {
+    putb(34172, 7, false);
   } else if (prob(20)) {
-    putb(34004, 7, true);
+    putb(34172, 7, true);
     if (!(cr == 0)) {
       crlf();
     }
@@ -20925,7 +20926,7 @@ async function I_TERMINAL(cr = true) {
     tell("You hear ");
     await SAY_MUZAK();
     tell(" being played very ");
-    if ((g.HERE == ZALAGASA_CONCOURSE) && !(getb(34004, 15) == 0)) {
+    if ((g.HERE == ZALAGASA_CONCOURSE) && !(getb(34172, 15) == 0)) {
       tell("loudly and ");
     }
     tell("soothingly.\n");
@@ -20937,9 +20938,9 @@ async function I_TERMINAL(cr = true) {
 
 async function I_DESK(cr = true) {
   let n_ = 0;
-  n_ = getb(34004, 8);
-  putb(34004, 8, n_ = n_ + 1);
-  if ((n_ <= 1) || (n_ > 4)) {
+  n_ = getb(34172, 8);
+  putb(34172, 8, n_ = n_ + 1);
+  if ((s16(n_) <= s16(1)) || (s16(n_) > s16(4))) {
     return false;
   }
   if (!(cr == 0)) {
@@ -20962,10 +20963,10 @@ async function I_DESK(cr = true) {
 
 async function WELCOME_TO_DESK() {
   let $1;
-  putb(34004, 11, true);
-  putb(34004, 12, false);
+  putb(34172, 11, true);
+  putb(34172, 12, false);
   tell("\"Welcome to ");
-  $1 = await AIRLINE_STR(getb(34004, 5));
+  $1 = await AIRLINE_STR(getb(34172, 5));
   tell(S($1));
   tell(", ");
   await SIR_OR_MAAM();
@@ -20989,12 +20990,12 @@ async function CLERK_BYE() {
 }
 
 async function TURNING_ATTENTION() {
-  putb(34004, 11, false);
+  putb(34172, 11, false);
   if (g.HERE == ZALAGASA_DESK) {
-    putb(34004, 9, -1);
-    putb(34004, 10, 2);
+    putb(34172, 9, -1);
+    putb(34172, 10, 2);
   } else {
-    putb(34004, 8, -1);
+    putb(34172, 8, -1);
   }
   await THE_PRINT(AIRCLERK);
   tell(", turning ");
@@ -21009,7 +21010,7 @@ async function TURNING_ATTENTION() {
 
 async function DESCRIBE_AIRCLERK() {
   let $1;
-  $1 = await AIRLINE_STR(getb(34004, 5));
+  $1 = await AIRLINE_STR(getb(34172, 5));
   tell(S($1));
   tell(" clerk");
   return true;
@@ -21018,14 +21019,14 @@ async function DESCRIBE_AIRCLERK() {
 async function AIRCLERK_F(context = false) {
   if (context == M_OBJDESC) {
     tell("A clerk is standing behind the desk, ");
-    if (!(getb(34004, 11))) {
+    if (!(getb(34172, 11))) {
       tell("talking to the first person in line.");
     } else {
       tell("looking at you expectantly.");
     }
     return true;
   } else if (context == M_WINNER) {
-    putb(34004, 12, true);
+    putb(34172, 12, true);
     if (isVerb(V.TAKE, V.EXAMINE, V.READ)) {
       await SHOW_TO_AIRCLERK();
       return FATAL_VALUE;
@@ -21062,7 +21063,7 @@ async function AIRCLERK_F(context = false) {
       if (await NOT_FIRST_IN_LINE$()) {
         return true;
       } else {
-        putb(34004, 12, true);
+        putb(34172, 12, true);
         await SHOW_TO_AIRCLERK();
         return true;
       }
@@ -21070,7 +21071,7 @@ async function AIRCLERK_F(context = false) {
       return false;
     }
   } else {
-    putb(34004, 12, true);
+    putb(34172, 12, true);
     if (isVerb(V.TELL)) {
       if (await NOT_FIRST_IN_LINE$()) {
         return FATAL_VALUE;
@@ -21094,7 +21095,7 @@ async function AIRCLERK_F(context = false) {
 }
 
 async function NOT_FIRST_IN_LINE$() {
-  if (getb(34004, 11) == 0) {
+  if (getb(34172, 11) == 0) {
     await CTHE_PRINT(AIRCLERK);
     tell(" gives you an icy smile. \"I'll be pleased to help you in just a moment, ");
     await SIR_OR_MAAM();
@@ -21110,7 +21111,7 @@ async function ASK_AIRCLERK_ABOUT(obj = false) {
     obj = g.PRSI;
   }
   if (obj == TICKET || obj == ZTICKET) {
-    if (!(getb(34004, 13))) {
+    if (!(getb(34172, 13))) {
       tell("\"You'd have to go to the airline that issued the ticket, ");
       await SIR_OR_MAAM();
       tell(",\" notes ");
@@ -21121,10 +21122,10 @@ async function ASK_AIRCLERK_ABOUT(obj = false) {
       return true;
     }
   } else if (obj == AIRLINE) {
-    if (eq(getProp(AIRLINE, P.PSEUDO_TABLE), OMNIA_ID) && eq(getb(34004, 5), ZALAGASA_ID)) {
+    if (eq(getProp(AIRLINE, P.PSEUDO_TABLE), OMNIA_ID) && eq(getb(34172, 5), ZALAGASA_ID)) {
       tell("\"I'm authorised to exchange Omnia Gallia tickets for Air Zalagasa tickets, under certain circumstances. If you'd just show me your ticket, perhaps I can help you.\"\n");
       return true;
-    } else if (eq(getProp(AIRLINE, P.PSEUDO_TABLE), getb(34004, 5))) {
+    } else if (eq(getProp(AIRLINE, P.PSEUDO_TABLE), getb(34172, 5))) {
       tell("\"That's me! What can I do for you?\"\n");
       return true;
     } else {
@@ -21132,7 +21133,7 @@ async function ASK_AIRCLERK_ABOUT(obj = false) {
       await TURNING_ATTENTION();
       return true;
     }
-  } else if (!(getb(34004, 13) == 0) && (obj == THE_FLIGHT)) {
+  } else if (!(getb(34172, 13) == 0) && (obj == THE_FLIGHT)) {
     await ASK_ABOUT_42();
     return true;
   }
@@ -21149,7 +21150,7 @@ async function ASK_AIRCLERK_FOR(obj = false) {
   if (obj == 0) {
     obj = g.PRSI;
   }
-  if (!(getb(34004, 13) == 0) && (obj == TICKET || obj == ZTICKET)) {
+  if (!(getb(34172, 13) == 0) && (obj == TICKET || obj == ZTICKET)) {
     await DO_TICKET(obj);
     return true;
   }
@@ -21166,17 +21167,17 @@ async function SHOW_TO_AIRCLERK(obj = false) {
   if (obj == 0) {
     obj = g.PRSO;
   }
-  if (!(getb(34004, 13) == 0) && !(getb(34004, 14) == 0)) {
+  if (!(getb(34172, 13) == 0) && !(getb(34172, 14) == 0)) {
     tell("\"I'm sorry, ");
     await SIR_OR_MAAM();
     if (obj != MONEY) {
       tell(", I'm authorised to take only cash for this transaction.\"\n");
       return true;
     } else if ((await GET_YES_NO(", you'll need quite a bit more than this. Would you like the direct flight instead?\"", -1, "A simple yes or no would suffice.\""))) {
-      putb(34004, 14, false);
+      putb(34172, 14, false);
       remove(TICKET);
       move(ZTICKET, PLAYER);
-      putb(34004, 15, true);
+      putb(34172, 15, true);
       tell("\"A wise choice. The flight through Zalagasa is really very pleasant. Have a nice day!\" burbles ");
       await TURNING_ATTENTION();
       await UPDATE_SCORE(1);
@@ -21185,7 +21186,7 @@ async function SHOW_TO_AIRCLERK(obj = false) {
       tell("\"Very well. I'll still need the $200 before I can issue the ticket.\"\n");
       return true;
     }
-  } else if (!(getb(34004, 13) == 0) && (obj == TICKET || obj == ZTICKET)) {
+  } else if (!(getb(34172, 13) == 0) && (obj == TICKET || obj == ZTICKET)) {
     await DO_TICKET(obj);
     return true;
   } else if (obj == TICKET) {
@@ -21229,7 +21230,7 @@ async function SIGNS_F() {
 async function DESC_AIRLINE() {
   let id = 0;
   let $1;
-  if ((id = getProp(AIRLINE, P.PSEUDO_TABLE)) > (-1)) {
+  if (s16(id = getProp(AIRLINE, P.PSEUDO_TABLE)) > s16(-1)) {
     $1 = await AIRLINE_STR(id);
     tell(S($1));
     return true;
@@ -21258,7 +21259,7 @@ async function MATCH_AIRLINE_NAME(adj, nam, tbl) {
     n_ = 0;
     loop1: for (;;) {
       tell(S(get(tbl, n_)));
-      if ((n_ = n_ + 1) > 30) {
+      if (s16(n_ = n_ + 1) > s16(30)) {
         tell(", or ", S(get(tbl, n_)), "?\n");
         break loop1;
       }
@@ -21271,14 +21272,14 @@ async function MATCH_AIRLINE_NAME(adj, nam, tbl) {
     loop2: for (;;) {
       if (!nam || (nam == get(tbl, 1))) {
         if (!adj || (adj == get(tbl, 0)) || (adj == get(tbl, 1))) {
-          if ((adj = get(tbl, 2)) < 0) {
+          if (s16(adj = get(tbl, 2)) < s16(0)) {
             adj = 0 - adj;
           }
           putProp(obj, P.PSEUDO_TABLE, adj);
           break loop2;
         }
       }
-      if ((len = len - 3) <= 2) {
+      if (s16(len = len - 3) <= s16(2)) {
         putProp(obj, P.PSEUDO_TABLE, -1);
         obj = false;
         break loop2;
@@ -21307,9 +21308,9 @@ async function AIRLINE_F() {
     if (id == (-1)) {
       await ORPHAN_VERB(false, ACT.ENTER);
     } else if (g.HERE == AIRPORT_ENTRANCE) {
-      arn = getb(34004, 0);
+      arn = getb(34172, 0);
       arn = arn - 1;
-      if (id > 15) {
+      if (s16(id) > s16(15)) {
         bits = get(AIRLINE_BITS, arn * 2);
         id = id - 16;
       } else {
@@ -21322,7 +21323,7 @@ async function AIRLINE_F() {
         await V_WALK_AROUND();
       }
     } else if (g.HERE == AIRLINE_DESK) {
-      if (id == getb(34004, 5)) {
+      if (id == getb(34172, 5)) {
         await ALREADY_THERE();
       } else {
         await AIRLINE_WALK(P.SOUTH);
@@ -21354,10 +21355,10 @@ async function AIRLINE_WALK(dir) {
 async function ZALAGASA_CONCOURSE_F(context = false) {
   let val = 0;
   val = await AIRPORT_CONCOURSE_F(context);
-  if (!(getb(34004, 21) == 0)) {
-  } else if (!(getb(34004, 15) == 0)) {
-    if (((context == M_ENTERED) && !(getb(34004, 16))) || ((context == M_LOOK) && !(getb(34004, 15) == 0))) {
-      putb(34004, 16, true);
+  if (!(getb(34172, 21) == 0)) {
+  } else if (!(getb(34172, 15) == 0)) {
+    if (((context == M_ENTERED) && !(getb(34172, 16))) || ((context == M_LOOK) && !(getb(34172, 15) == 0))) {
+      putb(34172, 16, true);
       tell("\nYou notice a pillar here, with a single Gush-O-Slush(R) Spam-For-The-Ears(TM) speaker producing sound at a particularly high volume. In the ceiling above the pillar, there's a grate covering a duct of some sort.\n");
     }
   }
@@ -21366,27 +21367,27 @@ async function ZALAGASA_CONCOURSE_F(context = false) {
 
 async function I_ZALAGASA_DESK(cr = true) {
   let n_ = 0;
-  n_ = getb(34004, 9);
-  putb(34004, 9, n_ = n_ + 1);
-  if ((n_ <= 1) || (n_ > 10)) {
+  n_ = getb(34172, 9);
+  putb(34172, 9, n_ = n_ + 1);
+  if ((s16(n_) <= s16(1)) || (s16(n_) > s16(10))) {
     return false;
   }
   if (!(cr == 0) && (n_ != 6)) {
     crlf();
   }
   if (n_ == 2) {
-    if (!(getb(34004, 10) == 0)) {
-      putb(34004, 11, true);
-      putb(34004, 12, false);
+    if (!(getb(34172, 10) == 0)) {
+      putb(34172, 11, true);
+      putb(34172, 12, false);
       tell("Somehow, the clerk proceeded with commendable efficiency, and you now find yourself at the front of the line");
-      if (getb(34004, 10) != 3) {
+      if (getb(34172, 10) != 3) {
         tell(" once again. \"Welcome back, ");
       } else {
         tell(". \"Good day, ");
       }
       await SIR_OR_MAAM();
       tell(",\" smiles the clerk. \"May I help you?\"\n");
-      putb(34004, 9, 5);
+      putb(34172, 9, 5);
       return true;
     }
     move(FATSO, g.HERE);
@@ -21424,11 +21425,11 @@ async function I_ZALAGASA_DESK(cr = true) {
     tell("\n");
     await CTHE_PRINT(FATSO);
     tell(" in front of you says he won't bother, then, he'll just go to Nice next month as he originally planned. The clerk hopes that he has a nice day, the man walks away, and the clerk turns to you. ");
-    putb(34004, 10, 2);
+    putb(34172, 10, 2);
     await WELCOME_TO_DESK();
   } else if (n_ == 6) {
-    if (!(getb(34004, 12) == 0)) {
-      putb(34004, 9, 5);
+    if (!(getb(34172, 12) == 0)) {
+      putb(34172, 9, 5);
       return false;
     } else {
       if (cr) {
@@ -21443,19 +21444,19 @@ async function I_ZALAGASA_DESK(cr = true) {
 }
 
 async function FIRST_ZALAG_PAGE() {
-  putb(34004, 6, true);
+  putb(34172, 6, true);
   tell("A voice on the public address system says, \"Air Zalagasa announce the imminent departure of flight 42 to Paris, with service to Zalagasa. Would all remaining passengers please check in immediately at the Air Zalagasa desk. Thank you.\"\n");
   return true;
 }
 
 async function SECOND_ZALAG_PAGE() {
-  putb(34004, 6, true);
+  putb(34172, 6, true);
   tell("\n\"Air Zalagasa announce the momentary departure of flight 42 to Paris. All passengers should be on board at this time.\"\n");
   return true;
 }
 
 async function LAST_ZALAG_PAGE() {
-  putb(34004, 6, true);
+  putb(34172, 6, true);
   tell("\n\"Air Zalagasa announce the departure of flight 42 to Paris. This flight is now closed. Have a nice day.\"\n");
   return true;
 }
@@ -21463,7 +21464,7 @@ async function LAST_ZALAG_PAGE() {
 async function DO_TICKET(obj, swap$ = true) {
   let wd = 0;
   if (obj == TICKET) {
-    if (!(getb(34004, 15) == 0)) {
+    if (!(getb(34172, 15) == 0)) {
       tell("\"I've already explained that that flight is long gone. You'll have to take care of this through Omnia Gallia or the travel agent who originally issued the ticket. I really can't help you at all,\" apologises ");
       await TURNING_ATTENTION();
       await UPDATE_BP(2);
@@ -21476,18 +21477,18 @@ async function DO_TICKET(obj, swap$ = true) {
       tell(". Here's your new ticket, on our Flight 42. Have a nice day!\" burbles ");
       remove(TICKET);
       move(ZTICKET, PLAYER);
-      putb(34004, 15, true);
+      putb(34172, 15, true);
       await TURNING_ATTENTION();
       return await UPDATE_SCORE(1);
     } else {
-      putb(34004, 14, true);
+      putb(34172, 14, true);
       tell("\"As you wish, ");
       await SIR_OR_MAAM();
       tell(". That will be $200, please.\"\n");
       return true;
     }
   } else if (obj == ZTICKET) {
-    putb(34004, 15, true);
+    putb(34172, 15, true);
     tell("\"I'm really terribly sorry, ");
     await SIR_OR_MAAM();
     tell(", but that flight has already left the gate. ", S(DONT), "really expect me to break into the tower and make it come back, now, do you? If you have any problems, you'll have to go back to the Omnia Gallia desk, since it's really their ticket. They may be able to give you a flight on a later date, and then you can exchange that for one of our flights. ");
@@ -21612,7 +21613,7 @@ async function DOWN_PILLAR() {
     return PILLAR_A;
   } else {
     tell("You slide the last few feet to the floor");
-    if (!(getb(34004, 22))) {
+    if (!(getb(34172, 22))) {
       tell(S(PCR));
       return ZALAGASA_CONCOURSE;
     } else {
@@ -21625,12 +21626,12 @@ async function DOWN_PILLAR() {
       } else {
         tell(" There");
       }
-      putb(34004, 19, true);
-      if ((await META_IN$(ZTICKET, PLAYER)) && !(getb(34004, 18) == 0)) {
+      putb(34172, 19, true);
+      if ((await META_IN$(ZTICKET, PLAYER)) && !(getb(34172, 18) == 0)) {
         tell(", you are quickly issued a boarding card and passed into the personal care of a passing airline official, who whisks you through all the formalities in a way which shows it's perfectly possible really, if they put their minds to it. Within three minutes you are sitting in a seat on a plane, and three minutes later still you have taken off and the plane is safely on its way to Zalagasa.\n");
         await GO_TO_PLANE();
         return false;
-      } else if (!(getb(34004, 18))) {
+      } else if (!(getb(34172, 18))) {
         tell(", an airline official points out that the ");
         await DPRINT(PLANE);
         tell(" has indeed left the terminal, so it's quite impossible for you to board, whether or not you have a ticket. There's nothing he can do, it's too late to recall the flight, and you'll just have to wait until another day. Provided, of course, that Omnia Gallia will exchange your ticket. He certainly can't provide any cash to get you home -- it's absolutely not his fault that you missed your flight.\n");
@@ -21684,7 +21685,7 @@ async function SPEAKER_F(context = false) {
   } else if (isVerb(V.EXAMINE, V.LOOK_ON, V.READ, V.LOOK_BEHIND, V.SEARCH)) {
     if (!(isVerb(V.LOOK_BEHIND, V.SEARCH))) {
       tell("It's a perfectly ordinary Gush-O-Slush(R) Spam-For-The-Ears(TM) speaker");
-      if (!(getb(34004, 21))) {
+      if (!(getb(34172, 21))) {
         tell(", playing ");
         await VERY_LOUDLY(false);
       } else {
@@ -21717,7 +21718,7 @@ async function SPEAKER_F(context = false) {
     }
     return true;
   } else if (isVerb(V.REPAIR)) {
-    if (!(getb(34004, 21) == 0)) {
+    if (!(getb(34172, 21) == 0)) {
       tell("Alas, you're not licensed to repair Gush-O-Slush(R) Spam-For-The-Ears(TM) speakers.\n");
       return true;
     } else {
@@ -21725,13 +21726,13 @@ async function SPEAKER_F(context = false) {
       return true;
     }
   } else if (isVerb(V.SHORT, V.CROSS)) {
-    if (!(getb(34004, 22) == 0)) {
+    if (!(getb(34172, 22) == 0)) {
       await CANT_SHORT_TWICE();
     } else {
       tell("Capital idea. How do you propose to do it?\n");
     }
     return true;
-  } else if (isVerb(V.LISTEN) && !(getb(34004, 21))) {
+  } else if (isVerb(V.LISTEN) && !(getb(34172, 21))) {
     await CTHE_PRINT();
     tell(" plays ");
     await VERY_LOUDLY();
@@ -21751,7 +21752,7 @@ async function SPEAKER_F(context = false) {
 async function GSPEAKER_F(context = false) {
   if (context == M_OBJDESC) {
     tell("A speaker is attached to the top of the pillar");
-    if (!(getb(34004, 21))) {
+    if (!(getb(34172, 21))) {
       tell(", playing ");
       await VERY_LOUDLY(false);
     } else {
@@ -21768,7 +21769,7 @@ async function GSPEAKER_F(context = false) {
   } else if (isVerb(V.EXAMINE, V.LOOK_ON, V.READ)) {
     if (!(isVerb(V.LOOK_BEHIND, V.SEARCH))) {
       tell("It's a perfectly ordinary Gush-O-Slush(R) Spam-For-The-Ears(TM) speaker");
-      if (!(getb(34004, 21))) {
+      if (!(getb(34172, 21))) {
         tell(", playing ");
         await VERY_LOUDLY(false);
       } else {
@@ -21780,7 +21781,7 @@ async function GSPEAKER_F(context = false) {
   } else if (isVerb(V.LOOK_BEHIND, V.SEARCH)) {
     tell("You can't see much from here.\n");
     return true;
-  } else if (isVerb(V.LISTEN) && !(getb(34004, 21))) {
+  } else if (isVerb(V.LISTEN) && !(getb(34172, 21))) {
     await CTHE_PRINT();
     tell(" plays ");
     await VERY_LOUDLY();
@@ -21798,7 +21799,7 @@ async function WITH_DANGLING(x) {
 }
 
 async function VERY_LOUDLY(cr = true) {
-  putb(34004, 6, true);
+  putb(34172, 6, true);
   await SAY_MUZAK();
   tell(" very loudly and soothingly at you.");
   if (!(cr == 0)) {
@@ -21834,7 +21835,7 @@ async function WIRES_F() {
       tell(S(PERIOD));
       return true;
     } else if (g.PRSI == getProp(g.PRSO, P.OTHER_WIRE)) {
-      if (!(getb(34004, 22) == 0)) {
+      if (!(getb(34172, 22) == 0)) {
         await CANT_SHORT_TWICE();
       } else {
         await TOUCH_WIRES_TOGETHER();
@@ -21856,7 +21857,7 @@ async function WIRES_F() {
       await BEYOND_REPAIR();
       return true;
     } else if (g.PRSI == getProp(g.PRSO, P.OTHER_WIRE)) {
-      if (!(getb(34004, 22) == 0)) {
+      if (!(getb(34172, 22) == 0)) {
         await CANT_SHORT_TWICE();
         return true;
       } else {
@@ -21871,7 +21872,7 @@ async function WIRES_F() {
   } else if (isVerb(V.PULL, V.UNPLUG, V.LOOSEN, V.OPEN)) {
     if (hasFlag(g.PRSO, TOUCHED /* CONNECTED */)) {
       move(g.PRSO, PILLAR_B);
-      putb(34004, 21, true);
+      putb(34172, 21, true);
       clearFlag(g.PRSO, TOUCHED /* CONNECTED */);
       tell("You grasp ");
       await THE_PRINT();
@@ -21936,7 +21937,7 @@ async function CANT_SHORT_TWICE() {
 }
 
 async function TOUCH_WIRES_TOGETHER() {
-  if (!(getb(34004, 22) == 0)) {
+  if (!(getb(34172, 22) == 0)) {
     await CANT_SHORT_TWICE();
     return true;
   } else if (hasFlag(BWIRE, TOUCHED /* CONNECTED */)) {
@@ -21955,7 +21956,7 @@ async function TOUCH_WIRES_TOGETHER() {
     await STILL_CONNECTED();
     return true;
   } else {
-    putb(34004, 22, true);
+    putb(34172, 22, true);
     putProp(PILLAR_B, P.HEAR, AIRPORT_CROWD);
     putProp(PILLAR_A, P.HEAR, AIRPORT_CROWD);
     putProp(DUCT, P.HEAR, 0);
@@ -21992,7 +21993,7 @@ async function GRATE_F() {
   } else if (await ENTERING$()) {
     if (g.HERE == PILLAR_B) {
       return await DO_WALK(P.UP);
-    } else if ((g.HERE == DUCT) && eq(getb(34004, 17), 0)) {
+    } else if ((g.HERE == DUCT) && eq(getb(34172, 17), 0)) {
       return await DO_WALK(P.DOWN);
     } else {
       tell(S(CANT), "reach ");
@@ -22001,7 +22002,7 @@ async function GRATE_F() {
       return true;
     }
   } else if (await TOUCHING$()) {
-    if ((g.HERE == PILLAR_B) || ((g.HERE == DUCT) && eq(getb(34004, 17), 0))) {
+    if ((g.HERE == PILLAR_B) || ((g.HERE == DUCT) && eq(getb(34172, 17), 0))) {
       if (isVerb(V.OPEN) && first(g.PRSO)) {
         tell("The objects on the grate fall out of the duct and disappear.\n");
         await MOVE_ALL(g.PRSO, LANDF);
@@ -22042,7 +22043,7 @@ async function TOWER_GRATE_F() {
 }
 
 async function DUCT_NORTH() {
-  let dn = getb(34004, 17);
+  let dn = getb(34172, 17);
   if (dn == 1) {
     tell("You hit your head against the duct. Ouch!\n");
     return false;
@@ -22054,7 +22055,7 @@ async function DUCT_NORTH() {
 }
 
 async function DUCT_WEST() {
-  let dn = getb(34004, 17);
+  let dn = getb(34172, 17);
   if (dn == 3) {
     return await DOWN_DUCT();
   } else {
@@ -22064,7 +22065,7 @@ async function DUCT_WEST() {
 }
 
 async function DUCT_EAST() {
-  let dn = getb(34004, 17);
+  let dn = getb(34172, 17);
   if (dn == 2) {
     return await UP_DUCT();
   } else {
@@ -22074,7 +22075,7 @@ async function DUCT_EAST() {
 }
 
 async function DUCT_SOUTH() {
-  if (eq(getb(34004, 17), 1)) {
+  if (eq(getb(34172, 17), 1)) {
     return await UP_DUCT();
   } else {
     tell("You hit your head against the duct. Ouch!\n");
@@ -22083,7 +22084,7 @@ async function DUCT_SOUTH() {
 }
 
 async function OUT_OF_DUCT() {
-  if (eq(getb(34004, 17), 1)) {
+  if (eq(getb(34172, 17), 1)) {
     return await DOWN_DUCT();
   } else {
     return await WHICH_WAY_OUT();
@@ -22091,26 +22092,26 @@ async function OUT_OF_DUCT() {
 }
 
 async function UP_DUCT() {
-  let n_ = getb(34004, 17);
+  let n_ = getb(34172, 17);
   tell("You crawl higher into the duct", S(PCR));
   if (n_ == 3) {
     return TOWER_DUCT;
   } else {
-    putb(34004, 17, n_ = n_ + 1);
+    putb(34172, 17, n_ = n_ + 1);
     clearFlag(DUCT, TOUCHED);
     return DUCT;
   }
 }
 
 async function DOWN_DUCT() {
-  let n_ = getb(34004, 17);
+  let n_ = getb(34172, 17);
   if (g.HERE != TOWER_DUCT) {
-    putb(34004, 17, n_ = n_ - 1);
+    putb(34172, 17, n_ = n_ - 1);
   }
   if (n_ == 0) {
     if (!(hasFlag(GRATE, OPENED))) {
       tell("The grating blocks your way.\n");
-      putb(34004, 17, 1);
+      putb(34172, 17, 1);
       return false;
     } else {
       return PILLAR_B;
@@ -22123,7 +22124,7 @@ async function DOWN_DUCT() {
 }
 
 async function BOTTOM_DUCT$() {
-  if ((g.HERE == DUCT) && eq(getb(34004, 17), 1)) {
+  if ((g.HERE == DUCT) && eq(getb(34172, 17), 1)) {
     return true;
   } else {
     return false;
@@ -22131,10 +22132,10 @@ async function BOTTOM_DUCT$() {
 }
 
 async function DUCT_F(context = false) {
-  let dn = getb(34004, 17);
+  let dn = getb(34172, 17);
   if (context == M_ENTERING) {
     if (dn == 0) {
-      putb(34004, 17, 1);
+      putb(34172, 17, 1);
     }
     if (await BOTTOM_DUCT$()) {
       clearFlag(GRATE, INVISIBLE);
@@ -22335,11 +22336,11 @@ async function IN_TOWER_F(context = false) {
 
 async function I_CONSOLE(cr = true) {
   let plane$ = true, n_ = 0;
-  if (!(getb(34004, 19) == 0) || !(getb(34004, 18) == 0)) {
+  if (!(getb(34172, 19) == 0) || !(getb(34172, 18) == 0)) {
     plane$ = false;
   }
-  n_ = getb(34004, 20);
-  putb(34004, 20, n_ = n_ - 1);
+  n_ = getb(34172, 20);
+  putb(34172, 20, n_ = n_ - 1);
   if (n_ == 3) {
     if (!plane$) {
       return false;
@@ -22395,7 +22396,7 @@ async function I_CONSOLE(cr = true) {
 }
 
 async function PLANE_TAKES_OFF() {
-  putb(34004, 19, true);
+  putb(34172, 19, true);
   await DEQUEUE(I_CONSOLE.id);
   tell("Moments later, a huge intercontinental jet roars past the tower, barely missing a Piper Cub as it climbs out of sight.\n");
   return true;
@@ -22541,9 +22542,9 @@ async function THEY_STOP_FLIGHT() {
 
 async function SHALL_BE_DONE(str) {
   tell("One of the controllers prostrates himself at your words. \"");
-  if (!(getb(34004, 19) == 0) || !(getb(34004, 18) == 0)) {
+  if (!(getb(34172, 19) == 0) || !(getb(34172, 18) == 0)) {
     tell("Alas, O mighty one, it is too late. That flight has already ");
-    if (!(getb(34004, 19) == 0)) {
+    if (!(getb(34172, 19) == 0)) {
       tell("taken off!\"\n");
     } else {
       tell("been recalled!\"\n");
@@ -22605,11 +22606,11 @@ async function THE_FLIGHT_F(context = false) {
   } else if (isVerb(V.EXAMINE, V.WATCH)) {
     if (!(g.HERE == IN_TOWER)) {
       await CANT_SEE_MUCH();
-    } else if (!(getb(34004, 19) == 0)) {
+    } else if (!(getb(34172, 19) == 0)) {
       tell("It's already out of sight.\n");
     } else {
       tell("Peering outside, you can see an Air Zalagasa jet ");
-      if (!(getb(34004, 18) == 0)) {
+      if (!(getb(34172, 18) == 0)) {
         tell("rolling towards the terminal.\n");
       } else {
         tell("waiting at the end of a runway.\n");
@@ -22659,9 +22660,9 @@ async function STATIC_STOPS(str) {
 }
 
 async function FLIGHT_DONE$() {
-  if (!(getb(34004, 18) == 0) || !(getb(34004, 19) == 0)) {
+  if (!(getb(34172, 18) == 0) || !(getb(34172, 19) == 0)) {
     tell("Too late. That flight has already ");
-    if (!(getb(34004, 19) == 0)) {
+    if (!(getb(34172, 19) == 0)) {
       tell("left.\n");
     } else {
       tell("been recalled.\n");
@@ -22682,7 +22683,7 @@ async function GRANT_PLANE_REQUEST() {
 
 async function TURN_AROUND_PLANE() {
   if (!(await FLIGHT_DONE$())) {
-    putb(34004, 18, true);
+    putb(34172, 18, true);
     tell("The radio mutters something impolite. \"Acknowledged, tower. We'll taxi her back to the terminal.\"\n");
     await UPDATE_SCORE(1);
   }
@@ -22690,7 +22691,7 @@ async function TURN_AROUND_PLANE() {
 }
 
 async function AIRPORT_MUSIC_F() {
-  if (!(getb(34004, 22) == 0)) {
+  if (!(getb(34172, 22) == 0)) {
     g.P_IT_OBJECT = NOT_HERE_OBJECT;
     tell("Thankfully, you can't hear that anymore.\n");
     return FATAL_VALUE;
@@ -22952,7 +22953,7 @@ async function OUTSIDE_FORT_F(context = false) {
       tell(". \"No trespassing!\"\n");
       return true;
     } else {
-      putb(34030, 1, SET_COM_TIMER);
+      putb(34198, 1, SET_COM_TIMER);
       await QUEUE(I_INTERCOM.id);
       return false;
     }
@@ -23558,7 +23559,7 @@ async function PARANOID_IS_ANGRY() {
   pscore = 0;
   for (;;) {
     if (i == NUM_QA) {
-      if (pscore < MIN_SCORE) {
+      if (s16(pscore) < s16(MIN_SCORE)) {
         await CTHE_PRINT(THE_PARANOID);
         tell(" says, \"You are obviously an impostor.");
         await SPY_JIGS_UP();
@@ -23589,7 +23590,7 @@ async function PARANOID_IS_ANGRY() {
     t1 = get(atb, k);
     t1l = get(t1, 0);
     loop3: for (;;) {
-      if ((t1l = t1l - 1) < 0) {
+      if (s16(t1l = t1l - 1) < s16(0)) {
         break loop3;
       }
       t1 = t1 + 2;
@@ -23598,7 +23599,7 @@ async function PARANOID_IS_ANGRY() {
       if (al == t2l) {
         j = 1;
         loop4: for (;;) {
-          if ((t2l = t2l - 1) < 0) {
+          if (s16(t2l = t2l - 1) < s16(0)) {
             pscore = pscore + 1;
             t1l = 0;
             put(qtb, k, 0);
@@ -23641,17 +23642,17 @@ async function W_COMP(tb1, indx) {
   let lni = div(indx, 256), strt = (indx & 255), aln = getb(tb1, 0), i = 1, val = true, c1 = 0, c2 = 0;
   if ((lni == aln) || (lni == (aln - 1))) {
     loop1: for (;;) {
-      if (((c1 = getb(tb1, i)) >= 65) && (c1 <= 90)) {
+      if ((s16(c1 = getb(tb1, i)) >= s16(65)) && (s16(c1) <= s16(90))) {
         c1 = c1 + NaN;
       }
-      if (((c2 = getb(P_INBUF, strt)) >= 65) && (c2 <= 90)) {
+      if ((s16(c2 = getb(P_INBUF, strt)) >= s16(65)) && (s16(c2) <= s16(90))) {
         c2 = c2 + NaN;
       }
       if (c1 != c2) {
         val = false;
         break loop1;
       }
-      if ((i = i + 1) > lni) {
+      if (s16(i = i + 1) > s16(lni)) {
         if ((lni != aln) && (getb(tb1, i) != 83)) {
           val = false;
         }
@@ -23709,7 +23710,7 @@ async function INCIDENT_F(context = false) {
 }
 
 async function BOGUS_PASSWORD$() {
-  if ((await QUEUED$(I_SPY.id)) && (getb(34030, 0) < 4)) {
+  if ((await QUEUED$(I_SPY.id)) && (s16(getb(34198, 0)) < s16(4))) {
     (await SPY_CONFUSED("I thought it was something else"));
     return true;
   } else {
@@ -23718,7 +23719,7 @@ async function BOGUS_PASSWORD$() {
 }
 
 async function SAID_INC_TO_SPY$(force$ = false) {
-  if (force$ || ((await QUEUED$(I_SPY.id)) && (getb(34030, 0) < 4))) {
+  if (force$ || ((await QUEUED$(I_SPY.id)) && (s16(getb(34198, 0)) < s16(4)))) {
     return (await SPY_CONFUSED("I thought I was supposed to say that"));
   } else {
     return false;
@@ -23747,7 +23748,7 @@ async function CHECK_FOR_PARANOID(bad$ = false) {
       if (hasFlag(INTERCOM, TOUCHED)) {
         await COM_OFF();
       } else {
-        putb(34030, 5, true);
+        putb(34198, 5, true);
       }
     } else {
       tell("The intercom is off so no one hears you.\n");
@@ -23779,9 +23780,9 @@ async function SAID_CRAZY(no_pers$ = false) {
       return FATAL_VALUE;
     }
   }
-  cnt = getb(34030, 4);
+  cnt = getb(34198, 4);
   tell(S(get(CRAZIES, cnt)));
-  putb(34030, 4, cnt - 1);
+  putb(34198, 4, cnt - 1);
   if (cnt == 0) {
     await JIGS_UP();
   } else {
@@ -23842,11 +23843,11 @@ async function COMP_WORDS_FROM_INBUF(tbl, rst) {
   tlen = get(tbl, 0) - rst;
   tbl = tbl + ((1 + rst) * 2);
   g.COMP_WORD_FATAL$ = false;
-  if (cnt >= tlen) {
+  if (s16(cnt) >= s16(tlen)) {
     wrd = 0;
     loop1: for (;;) {
       if (cnt == 0) {
-        if (tlen <= 0) {
+        if (s16(tlen) <= s16(0)) {
           g.CURRENT_MESSAGE = which;
           return true;
         }
@@ -23862,7 +23863,7 @@ async function COMP_WORDS_FROM_INBUF(tbl, rst) {
         buf = buf + (2 * P_LEXELEN);
         continue loop1;
       } else if (wrd != get(tbl, 0)) {
-        if ((cnt <= 2) && (wrd == W.PERIOD)) {
+        if ((s16(cnt) <= s16(2)) && (wrd == W.PERIOD)) {
         } else if ((wrd != W.THEN) || (get(tbl, 0) != W.COMMA)) {
           return false;
         }
@@ -23878,9 +23879,9 @@ async function COMP_WORDS_FROM_INBUF(tbl, rst) {
 }
 
 async function SAID_UNF_TO_SPY$(force$ = false) {
-  if (!(force$ == 0) || ((await QUEUED$(I_SPY.id)) && (getb(34030, 0) < 4))) {
-    if (eq(get(34032, 0), NO_PW_SAID)) {
-      put(34032, 0, USER_PW_SAID);
+  if (!(force$ == 0) || ((await QUEUED$(I_SPY.id)) && (s16(getb(34198, 0)) < s16(4)))) {
+    if (eq(get(34200, 0), NO_PW_SAID)) {
+      put(34200, 0, USER_PW_SAID);
       await CTHE_PRINT(SPY);
       tell(" consults some notes written on his shirt cuff and shows a look of understanding.\n");
       return true;
@@ -24093,11 +24094,11 @@ async function MAGAZINE_F() {
 
 async function I_SPY(cr = true) {
   let x = 0, str = 0, state = 0;
-  x = getb(34030, 0);
+  x = getb(34198, 0);
   x = x - 1;
-  putb(34030, 0, x);
+  putb(34198, 0, x);
   str = SSTRING;
-  state = get(34032, 0);
+  state = get(34200, 0);
   if (x == 4) {
     return false;
   } else if (!(cr == 0)) {
@@ -24111,7 +24112,7 @@ async function I_SPY(cr = true) {
     return true;
   } else if (x == 2) {
     if (state == USER_PW_SAID) {
-      put(34032, 0, SPY_PW_SAID);
+      put(34200, 0, SPY_PW_SAID);
       await CTHE_PRINT(SPY);
       tell(" looks you straight in the eye and says, \"", S(str), ".\"\n");
       setFlag(INCIDENT, TOUCHED);
@@ -24125,7 +24126,7 @@ async function I_SPY(cr = true) {
     }
   } else if ((x == 1) && !(state == SPY_PW_SAID)) {
     if (state == USER_PW_SAID) {
-      put(34032, 0, SPY_PW_SAID);
+      put(34200, 0, SPY_PW_SAID);
       await CTHE_PRINT(SPY);
       tell(" seems a little puzzled but says, \"", S(str), ".\"\n");
     } else {
@@ -24193,10 +24194,10 @@ async function I_INTERCOM(cr = true) {
     await COM_OFF();
     return true;
   }
-  x = putb(34030, 1, getb(34030, 1) - 1);
+  x = putb(34198, 1, getb(34198, 1) - 1);
   str = PSTRING;
-  if (!(getb(34030, 5) == 0)) {
-    putb(34030, 5, false);
+  if (!(getb(34198, 5) == 0)) {
+    putb(34198, 5, false);
     return true;
   }
   if (!(cr == 0)) {
@@ -24238,7 +24239,7 @@ async function I_INTERCOM(cr = true) {
 }
 
 async function COM_OFF() {
-  putb(34030, 1, SET_COM_TIMER);
+  putb(34198, 1, SET_COM_TIMER);
   await DEQUEUE(I_INTERCOM.id);
   tell("You hear an electric ");
   (await ITALICIZE("snap"));
@@ -24647,7 +24648,7 @@ async function SWITCH_STATE(handle) {
 
 async function CHECK_MOVE(h1, h2) {
   let hs = HANDLE_STATE, tmp = 0;
-  if (g.HANDLE_TURNS < 0) {
+  if (s16(g.HANDLE_TURNS) < s16(0)) {
     if (!(getb(hs, 0)) && !(getb(hs, 1) == 0) && !(getb(hs, 0))) {
       g.HANDLE_TURNS = 0;
       return true;
@@ -24655,7 +24656,7 @@ async function CHECK_MOVE(h1, h2) {
       return false;
     }
   } else {
-    if (getProp(h2, P.HANDLE_NUMBER) < getProp(h1, P.HANDLE_NUMBER)) {
+    if (s16(getProp(h2, P.HANDLE_NUMBER)) < s16(getProp(h1, P.HANDLE_NUMBER))) {
       tmp = h1;
       h1 = h2;
       h2 = tmp;
@@ -25049,7 +25050,7 @@ async function OTHER_TRAP_DOOR_F(context = false) {
     return await PERFORM(V.UNLOCK, g.PRSO);
   } else if (isVerb(V.OPEN, V.PULL)) {
     if (hasFlag(g.PRSO, LOCKED)) {
-      if (ss >= 125) {
+      if (s16(ss) >= s16(125)) {
         tell("Despite your increased strength, ");
         await THE_PRINT();
         tell(" doesn't move. Perhaps it's locked");
@@ -25059,16 +25060,16 @@ async function OTHER_TRAP_DOOR_F(context = false) {
       }
       tell(S(PERIOD));
       return await UPDATE_BP(2);
-    } else if (ss >= 140) {
+    } else if (s16(ss) >= s16(140)) {
       tell("Your current rage level is so great that you have the strength of ten.\n");
       await V_OPEN();
       return true;
     } else {
-      if (ss <= 121) {
+      if (s16(ss) <= s16(121)) {
         tell("In your current relaxed state, you can't get ");
         await THE_PRINT();
         tell(" to move at all");
-      } else if (ss <= 125) {
+      } else if (s16(ss) <= s16(125)) {
         await CTHE_PRINT();
         tell(" seems to budge a little, but springs back in place");
       } else {
@@ -25237,7 +25238,7 @@ async function LRWINDOW_F(left$) {
   if (isVerb(V.EXAMINE, V.LOOK_ON, V.LOOK_INSIDE)) {
     tell("You look at this screen and see ");
     pos = pos - 1;
-    if (!(getb(33984, 5) == 0)) {
+    if (!(getb(34152, 5) == 0)) {
       tell(S(get(ALT_COMPLEX_WINDOW_DESC, pos)));
     } else {
       tell(S(get(COMPLEX_WINDOW_DESC, pos)));
@@ -25296,7 +25297,7 @@ async function UNDER_TRAP_DOOR_F(context = false) {
 
 async function UP_TO_LANDING_STRIP() {
   tell("You struggle up the air shaft, and find yourself back above ground");
-  if (!(getb(33984, 5)) && !g.PLANE_SUMMONED$) {
+  if (!(getb(34152, 5)) && !g.PLANE_SUMMONED$) {
     tell(", where you see a primitive landing strip hacked out of the jungle.\n\nLook. Um...\n\nWe're not quite sure how to put this, so we got the lawyers to draft something instead.\n\n\"Infocom Inc. currently possesses no mechanism for allowing proactive product end-users\" -- sorry about the tacky '80s MBA jargon, but you know how lawyers ");
     (await ITALICIZE("love"));
     tell(" bull like that -- \"to escape from interactive fiction situations without having made the least attempt to solve the puzzles.\n\n\"The normal penalty under these circumstances would be death. However, we are prepared to offer you the option of returning whence you came.\n\n\"Actually, this isn't really an option. Look at it from our point of view. Suppose you said 'To hell with it, I'd rather die', where would we be then? We'd have no option but to sue the guts out of you. And have you the remotest idea of the paperwork ");
@@ -25317,7 +25318,7 @@ async function DOWN_FROM_STRIP() {
     tell("All right, climbing down is ");
     (await ITALICIZE("absolutely"));
     tell(" impossible, due to the law of gravity.\n\nThis may seem like a pretty feeble excuse to you. You're right. ");
-    if (!(getb(33984, 5) == 0)) {
+    if (!(getb(34152, 5) == 0)) {
       tell("If we let you back down there now, we'd have to show the nerd running amok, crazed with grief over the death of his computer, and you'd have to be able to fight him, or console him, or whatever's appropriate, and it would just be too painful for us. ");
       (await ITALICIZE("Ergo"));
       tell(", you'll have to stay here");
@@ -25347,7 +25348,7 @@ async function LANDING_STRIP_F(context = false) {
       tell("Infocom regrets that the laws of nature were suspended for only one turn. You crash to the ground with some interesting new theories forming in your mind on the method of proof-by-induction. Unfortunately, before you can organise your thoughts into anything which would be remotely acceptable as a Ph.D. dissertation -- even at Caltech -- you die.");
       await JIGS_UP();
       return true;
-    } else if ((g.LS_MOVE_COUNT = g.LS_MOVE_COUNT - 1) <= 0) {
+    } else if (s16(g.LS_MOVE_COUNT = g.LS_MOVE_COUNT - 1) <= s16(0)) {
       if (isVerb(V.WAIT)) {
         tell("There is a limit to human patience. You are really fed up now, and wish you were dead. Fair enough.");
         await JIGS_UP();
@@ -25423,7 +25424,7 @@ async function I_PLANE_ARRIVES() {
       tell(" arms and you begin to realise why people like private ");
       await DPRINT(PLANE);
       tell("s", S(PCR));
-      if (!(getb(33984, 5) == 0)) {
+      if (!(getb(34152, 5) == 0)) {
         move(END_MAIL, FROOM);
         tell("After an eventful and invigorating flight, you land at your home airport, pass through customs without the least difficulty, and are ushered into a waiting taxi, which drives you straight to the wrong place. Perhaps you thought that the taxi company was being fouled up by the nerd. Wrong. Taxi companies foul up because that's what they like doing", S(PERIOD));
         g.END_GAME$ = true;
@@ -25506,7 +25507,7 @@ async function PROG_FOURTH(a_, b, c_) {
 
 async function DO_PROG(nqn, mb = 0) {
   let nbchrs = 0, ngchrs = 0, qn = nqn, n_ = 0, rt = 0, top = 0, cq = 0, i = 0, ct = 0, tbl = 0;
-  if (nqn >= 0) {
+  if (s16(nqn) >= s16(0)) {
     await CLEAR_QUADRANT(qn);
   } else {
     qn = 0;
@@ -25539,33 +25540,33 @@ async function DO_PROG(nqn, mb = 0) {
       i = 0;
       loop3: for (;;) {
         putb(tbl, i, getb(tbl, i) & 63);
-        if ((i = i + 1) >= div(COMPUTER_HEIGHT, 2)) {
+        if (s16(i = i + 1) >= s16(div(COMPUTER_HEIGHT, 2))) {
           break loop3;
         }
       }
-      if ((ct = ct + 1) >= div(COMPUTER_WIDTH, 2)) {
+      if (s16(ct = ct + 1) >= s16(div(COMPUTER_WIDTH, 2))) {
         break loop2;
       }
     }
     cq = cq - 1;
-    if ((n_ = n_ - 1) <= 0) {
+    if (s16(n_ = n_ - 1) <= s16(0)) {
       break loop1;
     }
   }
-  if (nqn < 0) {
+  if (s16(nqn) < s16(0)) {
     return true;
   }
   nbchrs = div(MAX_CHARS, 4) * (qn + 1);
   ngchrs = div(MAX_CHARS, 16) * ((qn * 2) + 1);
   nbchrs = nbchrs - ngchrs;
   loop4: for (;;) {
-    if (!((nbchrs = nbchrs - 1) < 0)) {
+    if (!(s16(nbchrs = nbchrs - 1) < s16(0))) {
       await GEN_BAD_CHAR(qn, mb);
     }
-    if (!((ngchrs = ngchrs - 1) < 0)) {
+    if (!(s16(ngchrs = ngchrs - 1) < s16(0))) {
       await GEN_GOOD_CHAR(qn, mb);
     }
-    if ((ngchrs <= 0) && (nbchrs <= 0)) {
+    if ((s16(ngchrs) <= s16(0)) && (s16(nbchrs) <= s16(0))) {
       break loop4;
     }
   }
@@ -25593,7 +25594,7 @@ async function TEST_CHAR(x, y, bit, set$ = true) {
   let tbl = 0, chr = 0, nb = 0;
   tbl = get(PROG_TABLE, x);
   nb = (chr = getb(tbl, y)) & 192;
-  if (!(nb == 0) && (nb <= bit)) {
+  if (!(nb == 0) && (s16(nb) <= s16(bit))) {
     return false;
   } else if (set$) {
     putb(tbl, y, chr | 64);
@@ -25606,7 +25607,7 @@ async function TEST_CHAR(x, y, bit, set$ = true) {
 async function GEN_GOOD_CHAR(qn, mb) {
   let gq = 0, x = 0, y = 0, qct = 0, cl = 0, ct = 0, rx = 0, ry = 0, gq_2 = 0, chr = 0, dump$ = 0;
   gq = (gq = random((qn * 2) + 1)) - 1;
-  if (gq >= qn) {
+  if (s16(gq) >= s16(qn)) {
     gq = qn;
   }
   x = random(div(COMPUTER_WIDTH, 2));
@@ -25625,7 +25626,7 @@ async function GEN_GOOD_CHAR(qn, mb) {
     chr = 0;
     dump$ = false;
     for (;;) {
-      if (qct > 5) {
+      if (s16(qct) > s16(5)) {
         return true;
       } else if (!(chr = await TEST_CHAR(rx, ry, mb))) {
         if (!dump$) {
@@ -25636,21 +25637,21 @@ async function GEN_GOOD_CHAR(qn, mb) {
           if (eq(y = getb(LAST_USED, gq_2 + 1), 255)) {
             y = 0;
           }
-          if (y >= div(COMPUTER_HEIGHT, 2)) {
+          if (s16(y) >= s16(div(COMPUTER_HEIGHT, 2))) {
             x = div(COMPUTER_WIDTH, 2);
           }
           rx = cl + x;
           ry = ct + y;
         }
         loop3: for (;;) {
-          if (qct > 5) {
+          if (s16(qct) > s16(5)) {
             break loop3;
-          } else if ((x = x + 1) >= div(COMPUTER_WIDTH, 2)) {
-            if ((y = y + 1) >= div(COMPUTER_HEIGHT, 2)) {
+          } else if (s16(x = x + 1) >= s16(div(COMPUTER_WIDTH, 2))) {
+            if (s16(y = y + 1) >= s16(div(COMPUTER_HEIGHT, 2))) {
               putb(LAST_USED, gq_2, x);
               putb(LAST_USED, gq_2 + 1, y);
               qct = qct + 1;
-              if ((gq = gq + 1) > qn) {
+              if (s16(gq = gq + 1) > s16(qn)) {
                 gq = 0;
               }
               cl = getb(QLEFTS, gq);
@@ -25661,7 +25662,7 @@ async function GEN_GOOD_CHAR(qn, mb) {
               }
               if (eq(y = getb(LAST_USED, gq_2 + 1), 255)) {
                 y = 0;
-              } else if (y >= div(COMPUTER_HEIGHT, 2)) {
+              } else if (s16(y) >= s16(div(COMPUTER_HEIGHT, 2))) {
                 x = div(COMPUTER_WIDTH, 2);
               }
               ry = y + ct;
@@ -25691,14 +25692,14 @@ async function GEN_CHAR(h, v_) {
   if (mod(v_, 2) == 0) {
     if (!(tf = get(ff, v_))) {
       tf = (await PICK_ONE(g.LICENSE_FORM)) + (FIELD_DATA_OFFSET - 1);
-      if ((h + getb(tf, 0)) <= COMPUTER_WIDTH) {
+      if (s16(h + getb(tf, 0)) <= s16(COMPUTER_WIDTH)) {
         put(ff, v_, tf);
         put(ff, v1, h);
       } else {
         tf = false;
       }
     }
-    if (tf && (h >= (sw = get(ff, v1)))) {
+    if (tf && (s16(h) >= s16(sw = get(ff, v1)))) {
       chr = getb(tf, 1 + mod(h - sw, getb(tf, 0)));
     }
   }
@@ -25713,11 +25714,11 @@ async function INVERT_CHAR(n_) {
   n_ = n_ & 63;
   if (n_ == 0) {
     n_ = 32;
-  } else if (n_ < 27) {
+  } else if (s16(n_) < s16(27)) {
     n_ = n_ + NaN;
-  } else if (n_ < 54) {
+  } else if (s16(n_) < s16(54)) {
     n_ = n_ + NaN;
-  } else if (n_ >= 57) {
+  } else if (s16(n_) >= s16(57)) {
     n_ = n_ + NaN;
   } else {
     n_ = getb(PUNCT_TABLE, n_ - 54);
@@ -25731,9 +25732,9 @@ async function SLIP_F(tbl) {
   tbl = tbl + 2;
   if (!(g.HERE == BANK)) {
     return false;
-  } else if (eq(getb(33956, 0), await ZABS(get(33963, 0)), await ZABS(get(33957, 0)))) {
+  } else if (eq(getb(34124, 0), await ZABS(get(34131, 0)), await ZABS(get(34125, 0)))) {
     return WFORM;
-  } else if (eq(getb(33956, 0), await ZABS(get(33965, 0)))) {
+  } else if (eq(getb(34124, 0), await ZABS(get(34133, 0)))) {
     return DFORM;
   } else if (isVerb(V.ASK_ABOUT) && (g.PRSO == TELLER)) {
     if (!(loc(DFORM))) {
@@ -25758,17 +25759,17 @@ async function WDFORM_F() {
     return true;
   } else if (g.NOW_PRSI$ == 0) {
     if (g.PRSO == DFORM) {
-      amt = get(33970, 0);
+      amt = get(34138, 0);
       dep = true;
     } else {
-      amt = get(33972, 0);
+      amt = get(34140, 0);
     }
     if (isVerb(V.MAKE) && (await NOUN_USED$(W.DEPOSIT, W.WITHDRAWAL))) {
       return await PERFORM(V.ASK_ABOUT, TELLER, g.PRSO);
     } else if (isVerb(V.FILL_IN)) {
-      putb(33956, 25, 0);
+      putb(34124, 25, 0);
       putProp(g.PRSO, P.LOSING, 0);
-      put(33979, 0, g.PRSO);
+      put(34147, 0, g.PRSO);
       if (dep) {
         (await FILL_FORM(g.BANK_FORM_DEPOSIT, "              DEPOSIT SLIP              "));
       } else {
@@ -25818,7 +25819,7 @@ async function BCHECK(context, tbl, char, field) {
 }
 
 async function BCOMPARE_FIELDS(tbl1, tbl2, field) {
-  let len = getb(tbl1, 11), tcf = get(33979, 0);
+  let len = getb(tbl1, 11), tcf = get(34147, 0);
   field = await DO_LSH(field);
   if (await NEQ_TBL(tbl1 + (FIELD_DATA_OFFSET - 1), tbl2 + (FIELD_DATA_OFFSET - 1))) {
     putProp(tcf, P.LOSING, getProp(tcf, P.LOSING) | field);
@@ -25843,10 +25844,10 @@ async function BANK_CHECK_AMOUNT(context, tbl, char = false) {
       (await FERROR("Not the old $0 trick"));
       return false;
     } else if (g.PRSO == WFORM) {
-      put(33972, 0, x);
+      put(34140, 0, x);
       return true;
     } else {
-      put(33970, 0, x);
+      put(34138, 0, x);
       return true;
     }
   } else if (context == FORM_ADD_CHAR) {
@@ -25870,14 +25871,14 @@ async function BANK_CHECK_DEAL(context, tbl, char = false) {
   let x = 0;
   if (context == FORM_EXIT_FIELD) {
     if (eq(getb(tbl, 12), 89, 121)) {
-      putb(33956, 25, 1);
+      putb(34124, 25, 1);
       if (g.PRSO == WFORM) {
         (await FERROR("You look like a sleazebag", true));
       } else {
         (await FERROR("You'll get caught", true));
       }
     } else {
-      putb(33956, 25, 2);
+      putb(34124, 25, 2);
       if (g.PRSO == WFORM) {
         (await FERROR("Not what our spies say", true));
       } else {
@@ -25893,7 +25894,7 @@ async function BANK_CHECK_DEAL(context, tbl, char = false) {
       return false;
     }
   } else if (context == FORM_FIELD_RESET) {
-    return putb(33956, 25, 0);
+    return putb(34124, 25, 0);
   } else {
     return true;
   }
@@ -25902,7 +25903,7 @@ async function BANK_CHECK_DEAL(context, tbl, char = false) {
 async function BANK_DRUGS(context, tbl, char = false) {
   let x = 0;
   if (context == FORM_OK_TO_ENTER_FIELD$) {
-    if (eq(getb(33956, 25), 1)) {
+    if (eq(getb(34124, 25), 1)) {
       return true;
     } else {
       return false;
@@ -25917,24 +25918,24 @@ async function BANK_DRUGS(context, tbl, char = false) {
 }
 
 async function TO_BANK() {
-  let ba = get(33961, 0), h = 0, t1 = 0, t2 = 0, t3 = 0, t4 = 0, closed = false;
+  let ba = get(34129, 0), h = 0, t1 = 0, t2 = 0, t3 = 0, t4 = 0, closed = false;
   if (!(g.END_GAME$ == 0)) {
     (await FROB_IS_CLOSED("bank"));
     return false;
   }
-  putb(33956, 11, STATE_INIT);
-  putb(33956, 0, 0);
+  putb(34124, 11, STATE_INIT);
+  putb(34124, 0, 0);
   if (ba == 0) {
     if (prob(50)) {
       ba = random(10);
-      put(33961, 0, 0 - ba);
+      put(34129, 0, 0 - ba);
       closed = true;
     } else {
       ba = random(10) + 20;
-      put(33961, 0, ba);
+      put(34129, 0, ba);
     }
     t1 = random(NUMBER_TELLERS);
-    put(33957, 0, t1);
+    put(34125, 0, t1);
     t2 = random(NUMBER_TELLERS);
     if (t2 == t1) {
       if (t2 == NUMBER_TELLERS) {
@@ -25967,11 +25968,11 @@ async function TO_BANK() {
         break loop2;
       }
     }
-    put(33959, 0, t2);
-    put(33963, 0, t3);
-    put(33965, 0, t4);
+    put(34127, 0, t2);
+    put(34131, 0, t3);
+    put(34133, 0, t4);
     await QUEUE(I_BANK_HOURS.id);
-  } else if (ba < 0) {
+  } else if (s16(ba) < s16(0)) {
     ba = 0 - ba;
     closed = true;
   }
@@ -26016,43 +26017,43 @@ async function PRINT_BANK_DELTA(ba) {
 }
 
 async function I_BANK_HOURS() {
-  let ba = get(33961, 0), i = 0, val = false;
+  let ba = get(34129, 0), i = 0, val = false;
   i = await ZABS(ba);
   if (eq(i = i - 1, 0)) {
     if (!(loc(PLAYER) == BANK) && !(loc(PLAYER) == ST_A)) {
       await DEQUEUE(I_BANK_HOURS.id);
       i = 0;
-    } else if ((ba > 0) && (loc(PLAYER) == BANK)) {
+    } else if ((s16(ba) > s16(0)) && (loc(PLAYER) == BANK)) {
       tell("\nUnfortunately, the bank has closed. ");
       await LEAVE_BANK(true);
       val = true;
-    } else if (ba > 0) {
+    } else if (s16(ba) > s16(0)) {
       i = 0 - random(10);
     } else {
       i = random(10) + 20;
     }
-  } else if (ba < 0) {
+  } else if (s16(ba) < s16(0)) {
     i = 0 - i;
   }
-  put(33961, 0, i);
+  put(34129, 0, i);
   return val;
 }
 
 async function BANK_DESC_BRIEF() {
-  if (eq(getb(33956, 0), 0)) {
+  if (eq(getb(34124, 0), 0)) {
     tell("bank");
     return true;
   } else {
-    tell("Teller #", N(getb(33956, 0)));
+    tell("Teller #", N(getb(34124, 0)));
     return true;
   }
 }
 
 async function BANK_F(context = false) {
-  let tn = getb(33956, 0), ba = get(33961, 0);
+  let tn = getb(34124, 0), ba = get(34129, 0);
   if (context == M_END) {
-    if (isVerb(V.WAIT) && !(getb(33956, 26) == 0)) {
-      await MORE_TELLER_INTERACTION(get(33974, 0));
+    if (isVerb(V.WAIT) && !(getb(34124, 26) == 0)) {
+      await MORE_TELLER_INTERACTION(get(34142, 0));
       return true;
     } else {
       return false;
@@ -26080,7 +26081,7 @@ async function BANK_F(context = false) {
   } else if (isVerb(V.OPEN)) {
     if (g.HERE == BANK) {
       tell("How could it be closed if you are in it?\n");
-    } else if (!(g.END_GAME$ == 0) || (ba < 0)) {
+    } else if (!(g.END_GAME$ == 0) || (s16(ba) < s16(0))) {
       tell("The bank will open in its own good time.\n");
     } else if (ba == 0) {
       tell("Why don't you find out if it's closed first?\n");
@@ -26097,13 +26098,13 @@ async function BANK_F(context = false) {
 }
 
 async function RESET_BANK() {
-  putb(33956, 26, false);
-  put(33974, 0, false);
+  putb(34124, 26, false);
+  put(34142, 0, false);
   if (!(loc(DFORM))) {
-    put(33970, 0, 0);
+    put(34138, 0, 0);
   }
   if (!(loc(WFORM))) {
-    put(33972, 0, 0);
+    put(34140, 0, 0);
   }
   return true;
 }
@@ -26117,20 +26118,20 @@ async function HANDLE_BANK_DROP(obj) {
     if (obj == MONEY) {
       remove(obj);
       tell(" is scooped up by ");
-      if (!(getb(33956, 22) == 0)) {
+      if (!(getb(34124, 22) == 0)) {
         tell("the special polyester employee");
       } else {
         tell("an efficient looking bank employee made out of that special polyester reserved for people who work in banks");
       }
       tell(". He lectures you for a while on the evils of littering, then pockets the money and leaves", S(PERIOD));
       return true;
-    } else if (!(getb(33956, 22) == 0)) {
-      putb(33956, 22, false);
+    } else if (!(getb(34124, 22) == 0)) {
+      putb(34124, 22, false);
       tell(" is returned to you by the special polyester employee who warned you earlier. However, he is not as patient this time. ");
       await LEAVE_BANK(false);
       return FATAL_VALUE;
     } else {
-      putb(33956, 22, true);
+      putb(34124, 22, true);
       tell(" is returned to you by an efficient looking bank employee made out of that special polyester reserved for people who work in banks. He informs you that it is against bank policy for customers to drop things (except of course money) in the bank. As a matter of fact, he's pretty fed up, what with the computer foul-ups and the itching polyester and so forth, so he's going to throw you out next time. You bet he is! He then disappears", S(PERIOD));
       return true;
     }
@@ -26139,8 +26140,8 @@ async function HANDLE_BANK_DROP(obj) {
 
 async function LEAVE_BANK(flg) {
   tell("You are whisked out of the bank with an efficiency that the bank obviously never applies to approving mortgages or clearing out-of-state cheques");
-  putb(33956, 0, 0);
-  putb(33956, 11, STATE_INIT);
+  putb(34124, 0, 0);
+  putb(34124, 11, STATE_INIT);
   if (loc(CHECK) == TELLER) {
     tell(". Fortunately, your cheque is returned to you");
     move(CHECK, PLAYER);
@@ -26161,7 +26162,7 @@ async function TELLER_WINDOW_F() {
       tell("Which window do you want to go to?\n");
       await ORPHAN_VERB(false, ACT.ENTER);
       return true;
-    } else if (eq(getb(33956, 0), g.NEW_TELLER)) {
+    } else if (eq(getb(34124, 0), g.NEW_TELLER)) {
       await ALREADY_THERE();
       return true;
     } else {
@@ -26176,8 +26177,8 @@ async function TELLER_WINDOW_F() {
 }
 
 async function TELLER_GOTO_F() {
-  if (eq(getb(33956, 0), 0)) {
-    putb(33956, 0, MID_TELLER);
+  if (eq(getb(34124, 0), 0)) {
+    putb(34124, 0, MID_TELLER);
     g.OLD_HERE = false;
     await RESET_BANK();
     return BANK;
@@ -26188,16 +26189,16 @@ async function TELLER_GOTO_F() {
 }
 
 async function NEXT_TELLER_F(ntn = false) {
-  let tn = getb(33956, 0);
+  let tn = getb(34124, 0);
   if (!ntn && ((tn == 0) || (tn == NUMBER_TELLERS))) {
     tell("There is no exit that way.\n");
     return false;
   } else {
     g.OLD_HERE = false;
     if (!ntn) {
-      putb(33956, 0, tn = tn + 1);
+      putb(34124, 0, tn = tn + 1);
     } else {
-      putb(33956, 0, ntn);
+      putb(34124, 0, ntn);
     }
     await RESET_BANK();
     return BANK;
@@ -26205,12 +26206,12 @@ async function NEXT_TELLER_F(ntn = false) {
 }
 
 async function PREV_TELLER_F() {
-  let tn = getb(33956, 0);
-  if (tn <= 1) {
+  let tn = getb(34124, 0);
+  if (s16(tn) <= s16(1)) {
     tell("There is no exit that way.\n");
     return false;
   } else {
-    putb(33956, 0, tn = tn - 1);
+    putb(34124, 0, tn = tn - 1);
     await RESET_BANK();
     g.OLD_HERE = false;
     return BANK;
@@ -26218,8 +26219,8 @@ async function PREV_TELLER_F() {
 }
 
 async function EXIT_BANK_CHECK() {
-  let ot = getb(33956, 0);
-  putb(33956, 0, 0);
+  let ot = getb(34124, 0);
+  putb(34124, 0, 0);
   if (ot != 0) {
     g.OLD_HERE = false;
     return BANK;
@@ -26229,26 +26230,26 @@ async function EXIT_BANK_CHECK() {
 }
 
 async function HANDLE_TELLER_NUMBER() {
-  let tn = getb(33956, 0), a_ = 0, b = 0, c_ = 0, d_ = 0;
-  a_ = get(33957, 0);
-  b = get(33959, 0);
-  c_ = get(33963, 0);
-  d_ = get(33965, 0);
+  let tn = getb(34124, 0), a_ = 0, b = 0, c_ = 0, d_ = 0;
+  a_ = get(34125, 0);
+  b = get(34127, 0);
+  c_ = get(34131, 0);
+  d_ = get(34133, 0);
   if (tn == 0) {
     return true;
   } else {
     crlf();
     if (tn == (await ZABS(a_))) {
-      put(33957, 0, 0 - (await ZABS(a_)));
+      put(34125, 0, 0 - (await ZABS(a_)));
       return await TELLER_INTERACTION(CHANGE_ADDRESS_SCRIPT, a_);
     } else if (tn == (await ZABS(b))) {
-      put(33959, 0, 0 - (await ZABS(b)));
+      put(34127, 0, 0 - (await ZABS(b)));
       return await TELLER_INTERACTION(CASH_CHECK_SCRIPT, b);
     } else if (tn == (await ZABS(c_))) {
-      put(33963, 0, 0 - (await ZABS(c_)));
+      put(34131, 0, 0 - (await ZABS(c_)));
       return await TELLER_INTERACTION(WITHDRAWAL_SCRIPT, c_);
     } else if (tn == (await ZABS(d_))) {
-      put(33965, 0, 0 - (await ZABS(d_)));
+      put(34133, 0, 0 - (await ZABS(d_)));
       return await TELLER_INTERACTION(DEPOSIT_SCRIPT, d_);
     } else {
       return await SAY_SIGN();
@@ -26257,7 +26258,7 @@ async function HANDLE_TELLER_NUMBER() {
 }
 
 async function ZABS(x) {
-  if (x < 0) {
+  if (s16(x) < s16(0)) {
     return 0 - x;
   } else {
     return x;
@@ -26265,13 +26266,13 @@ async function ZABS(x) {
 }
 
 async function TELLER_INTERACTION(scr, first_) {
-  put(33974, 0, scr);
+  put(34142, 0, scr);
   await SAY_SIGN();
-  if (first_ > 0) {
+  if (s16(first_) > s16(0)) {
     crlf();
     return await MORE_TELLER_INTERACTION(scr);
   } else {
-    putb(33956, 26, true);
+    putb(34124, 26, true);
     return true;
   }
 }
@@ -26280,7 +26281,7 @@ async function MORE_TELLER_INTERACTION(scr) {
   let fcn = 0, obj = 0, n_ = 0;
   tell("The teller at the window says, \"Do you wish to");
   tell(S(get(scr, TELLER_INTRO)), "\n");
-  putb(33956, 11, STATE_INIT);
+  putb(34124, 11, STATE_INIT);
   if ((await SAID_YES$("Just answer yes or no!"))) {
     obj = get(scr, TELLER_OBJ);
     if (!(obj == 0)) {
@@ -26290,10 +26291,10 @@ async function MORE_TELLER_INTERACTION(scr) {
         tell(",\" she says as she hands you one.\n");
         await THIS_IS_IT(obj);
         if (obj == DFORM) {
-          put(33976, 0, 0);
-          put(33970, 0, 0);
+          put(34144, 0, 0);
+          put(34138, 0, 0);
         } else {
-          put(33972, 0, 0);
+          put(34140, 0, 0);
         }
         return move(obj, PLAYER);
       } else {
@@ -26311,7 +26312,7 @@ async function MORE_TELLER_INTERACTION(scr) {
     tell(" instructs you to go to window ");
     n_ = random(NUMBER_TELLERS);
     for (;;) {
-      if (n_ == getb(33956, 0)) {
+      if (n_ == getb(34124, 0)) {
         if (n_ == 1) {
           n_ = 3;
         } else if (n_ == NUMBER_TELLERS) {
@@ -26327,7 +26328,7 @@ async function MORE_TELLER_INTERACTION(scr) {
 }
 
 async function TELLER_F(context = false) {
-  if (eq(getb(33956, 0), await ZABS(get(33957, 0)), await ZABS(get(33959, 0)), await ZABS(get(33963, 0)), await ZABS(get(33965, 0)))) {
+  if (eq(getb(34124, 0), await ZABS(get(34125, 0)), await ZABS(get(34127, 0)), await ZABS(get(34131, 0)), await ZABS(get(34133, 0)))) {
     if (context == M_OBJDESC) {
       await CPRINTA(TELLER);
       tell(" is at the window.");
@@ -26418,7 +26419,7 @@ async function SHOW_TELLER_PRSO() {
 }
 
 async function GIVE_SHOW_TELLER_PRSO(give$) {
-  let scr = get(33974, 0), flg = false;
+  let scr = get(34142, 0), flg = false;
   if (scr == 0) {
     await CTHE_PRINT(TELLER);
     tell(" seems to be asleep.\n");
@@ -26429,24 +26430,24 @@ async function GIVE_SHOW_TELLER_PRSO(give$) {
       flg = true;
     }
   } else if (scr == DEPOSIT_SCRIPT) {
-    if (!(loc(DFORM)) && eq(get(33970, 0), 0) && !(loc(WFORM)) && eq(get(33972, 0), 0)) {
+    if (!(loc(DFORM)) && eq(get(34138, 0), 0) && !(loc(WFORM)) && eq(get(34140, 0), 0)) {
       await ASK_TELLER_ABOUT(g.PRSO);
     } else if (!(await DEPOSIT_CHECK(g.PRSO, give$))) {
       if (!(await DEPOSIT_BRUSH_OFF(g.PRSO, give$))) {
         flg = true;
       }
     } else {
-      putb(33956, 26, false);
+      putb(34124, 26, false);
     }
   } else if (scr == WITHDRAWAL_SCRIPT) {
-    if (!(loc(WFORM)) && eq(get(33972, 0), 0)) {
+    if (!(loc(WFORM)) && eq(get(34140, 0), 0)) {
       await ASK_TELLER_ABOUT(g.PRSO);
     } else if (!(await WITHDRAW_CHECK(g.PRSO, give$))) {
       if (!(await WITHDRAWAL_BRUSH_OFF(g.PRSO, give$))) {
         flg = true;
       }
     } else {
-      putb(33956, 26, false);
+      putb(34124, 26, false);
     }
   } else if (scr == CASH_CHECK_SCRIPT) {
     if (!(await CHECK_CHECK(g.PRSO, give$))) {
@@ -26506,7 +26507,7 @@ async function ASK_TELLER_FOR(obj) {
 }
 
 async function ASK_TELLER_ABOUT(obj, for_ = false) {
-  let scr = get(33974, 0), mbal = false, bal = false, adf = false, nonsense = false;
+  let scr = get(34142, 0), mbal = false, bal = false, adf = false, nonsense = false;
   if (g.PRSI == WFORM) {
     g.NOW_PRSI$ = true;
     if (await NOUN_USED$(W.BALANCE, W.MINIMUM)) {
@@ -26534,22 +26535,22 @@ async function ASK_TELLER_ABOUT(obj, for_ = false) {
     await CTHE_PRINT(TELLER);
     tell(" says, \"I'm not allowed give out balances.\"\n");
   } else if (scr == DEPOSIT_SCRIPT) {
-    if (!(loc(DFORM)) && eq(get(33970, 0), 0)) {
-      putb(33956, 26, false);
+    if (!(loc(DFORM)) && eq(get(34138, 0), 0)) {
+      putb(34124, 26, false);
       await MORE_TELLER_INTERACTION(scr);
     } else if (obj == DFORM) {
       if (!(loc(DFORM))) {
         if (!(for_ == 0)) {
           await CTHE_PRINT(TELLER);
           tell(" says, \"It's against bank policy to give it back to you.\"\n");
-        } else if ((loc(CHECK) == TELLER) || (loc(MONEY) == TELLER) || (get(33976, 0) != 0)) {
+        } else if ((loc(CHECK) == TELLER) || (loc(MONEY) == TELLER) || (get(34144, 0) != 0)) {
           await CTHE_PRINT(TELLER);
           tell(" says, \"I have it. All I need is to see some ID.\"\n");
         } else {
           await CTHE_PRINT(TELLER);
           tell(" says, \"I have it. Just give me the money or check to deposit.\"\n");
         }
-      } else if ((loc(CHECK) == TELLER) || (loc(MONEY) == TELLER) || (get(33976, 0) != 0)) {
+      } else if ((loc(CHECK) == TELLER) || (loc(MONEY) == TELLER) || (get(34144, 0) != 0)) {
         await CTHE_PRINT(TELLER);
         tell(" says, \"I need it to finish the deposit.\"\n");
       } else {
@@ -26558,7 +26559,7 @@ async function ASK_TELLER_ABOUT(obj, for_ = false) {
       }
     } else if (obj == CHECK || obj == MONEY) {
       if (for_) {
-        if (((obj == CHECK) && (loc(CHECK) == TELLER)) || ((obj == CHECK) && (get(33976, 0) != 0))) {
+        if (((obj == CHECK) && (loc(CHECK) == TELLER)) || ((obj == CHECK) && (get(34144, 0) != 0))) {
           await CTHE_PRINT(TELLER);
           tell(" says, \"I can't return that to you, it's against the rules.\"");
         } else {
@@ -26576,8 +26577,8 @@ async function ASK_TELLER_ABOUT(obj, for_ = false) {
       await ASK_CHAR_ABOUT(TELLER, obj, TELLER_SUBJECTS, 0);
     }
   } else if (scr == WITHDRAWAL_SCRIPT) {
-    if (!adf && !(loc(WFORM)) && eq(get(33972, 0), 0)) {
-      putb(33956, 26, false);
+    if (!adf && !(loc(WFORM)) && eq(get(34140, 0), 0)) {
+      putb(34124, 26, false);
       await MORE_TELLER_INTERACTION(scr);
     } else if ((obj == WFORM) && !adf) {
       if (!(loc(WFORM))) {
@@ -26629,10 +26630,10 @@ async function ASK_TELLER_ABOUT(obj, for_ = false) {
 
 async function CHECK_CHECK(obj, give) {
   if (obj == CHECK) {
-    putb(33956, 26, false);
+    putb(34124, 26, false);
     tell(S(get(CASH_CHECK_SCRIPT, TELLER_THIRD)), "\n");
     move(obj, TELLER);
-    putb(33956, 11, STATE_RUN_F2);
+    putb(34124, 11, STATE_RUN_F2);
     return true;
   } else {
     return false;
@@ -26657,7 +26658,7 @@ async function CHECK_BRUSH_OFF(obj, give) {
     await DPRINT(CHECK);
     tell(" to you. She says, \"Your ID's OK, but I'm afraid I've run out of negative money; the Treasury has it all.\"\n");
     move(CHECK, PLAYER);
-    putb(33956, 11, STATE_INIT);
+    putb(34124, 11, STATE_INIT);
     return true;
   } else {
     return false;
@@ -26666,13 +26667,13 @@ async function CHECK_BRUSH_OFF(obj, give) {
 
 async function WITHDRAW_CHECK(obj, give) {
   if (obj == WFORM) {
-    if (eq(get(33972, 0), 0)) {
+    if (eq(get(34140, 0), 0)) {
       await CTHE_PRINT(TELLER);
       tell(" asks you to fill out the withdrawal slip.\n");
     } else {
       remove(WFORM);
       tell(S(get(WITHDRAWAL_SCRIPT, TELLER_THIRD)), "\n");
-      putb(33956, 11, STATE_RUN_F2);
+      putb(34124, 11, STATE_RUN_F2);
     }
     return true;
   } else if (obj == DFORM) {
@@ -26702,17 +26703,17 @@ async function WITHDRAWAL_BRUSH_OFF(obj, give) {
     if (give) {
       tell(" and returns it to you");
     }
-    w_ = get(33972, 0);
-    put(33972, 0, 0);
-    b = get(33968, 0);
+    w_ = get(34140, 0);
+    put(34140, 0, 0);
+    b = get(34136, 0);
     tb = b - w_;
     if (!(getProp(WFORM, P.LOSING) == 0)) {
       tell(". She says, \"Your ID doesn't correspond with your ");
       await DPRINT(WFORM);
-    } else if ((w_ > 0) && (tb >= MINIMUM_BALANCE)) {
+    } else if ((s16(w_) > s16(0)) && (s16(tb) >= s16(MINIMUM_BALANCE))) {
       tell(". She hands you your money and says, \"Your new balance is ");
       await MONEY_D(tb);
-      put(33968, 0, tb);
+      put(34136, 0, tb);
       do_hunger$ = true;
       await THIS_IS_IT(MONEY);
       if (loc(MONEY) == PLAYER) {
@@ -26725,7 +26726,7 @@ async function WITHDRAWAL_BRUSH_OFF(obj, give) {
         g.CASH = w_;
       }
     } else {
-      if ((w_ < 0) || (tb < 0)) {
+      if ((s16(w_) < s16(0)) || (s16(tb) < s16(0))) {
         tell(". She says, \"I'm afraid you have only ");
         await MONEY_D(b);
         tell(" in your account. That is insufficient to cover your withdrawal");
@@ -26736,9 +26737,9 @@ async function WITHDRAWAL_BRUSH_OFF(obj, give) {
       }
     }
     tell(". Have a nice day.\"\n");
-    putb(33956, 11, STATE_INIT);
-    if (do_hunger$ && (await QUEUED$(I_HUNGER.id)) && (g.HUNGER < 180)) {
-      if (g.HUNGER < 160) {
+    putb(34124, 11, STATE_INIT);
+    if (do_hunger$ && (await QUEUED$(I_HUNGER.id)) && (s16(g.HUNGER) < s16(180))) {
+      if (s16(g.HUNGER) < s16(160)) {
         g.HUNGER = 159;
         await I_HUNGER();
       }
@@ -26767,7 +26768,7 @@ async function W_CHECK() {
 async function DEPOSIT_CHECK(obj, give) {
   let form$ = false;
   form$ = await D_FORM$();
-  if (((obj == DFORM) && eq(get(33970, 0), 0)) || ((obj == WFORM) && eq(get(33972, 0), 0))) {
+  if (((obj == DFORM) && eq(get(34138, 0), 0)) || ((obj == WFORM) && eq(get(34140, 0), 0))) {
     await CTHE_PRINT(TELLER);
     tell(" asks you to fill out ");
     await THE_PRINT(obj);
@@ -26779,7 +26780,7 @@ async function DEPOSIT_CHECK(obj, give) {
     return true;
   } else if (obj == DFORM || obj == WFORM || obj == CHECK || obj == MONEY) {
     if ((obj == MONEY) && (g.CASH != g.P_NUMBER)) {
-      put(33976, 0, get(33976, 0) + g.P_NUMBER);
+      put(34144, 0, get(34144, 0) + g.P_NUMBER);
       await REDUCE_CASH();
     } else if (obj == DFORM || obj == WFORM) {
       remove(obj);
@@ -26787,9 +26788,9 @@ async function DEPOSIT_CHECK(obj, give) {
     } else {
       move(obj, TELLER);
     }
-    if (form$ && ((loc(CHECK) == TELLER) || (loc(MONEY) == TELLER) || (get(33976, 0) != 0))) {
+    if (form$ && ((loc(CHECK) == TELLER) || (loc(MONEY) == TELLER) || (get(34144, 0) != 0))) {
       tell(S(get(DEPOSIT_SCRIPT, TELLER_THIRD)), "\n");
-      putb(33956, 11, STATE_RUN_F2);
+      putb(34124, 11, STATE_RUN_F2);
     } else {
       tell("She takes ");
       await THE_PRINT(obj);
@@ -26807,9 +26808,9 @@ async function DEPOSIT_CHECK(obj, give) {
 }
 
 async function D_FORM$() {
-  if (!(loc(DFORM)) && (get(33970, 0) != 0)) {
+  if (!(loc(DFORM)) && (get(34138, 0) != 0)) {
     return DFORM;
-  } else if (!(loc(WFORM)) && (get(33972, 0) != 0)) {
+  } else if (!(loc(WFORM)) && (get(34140, 0) != 0)) {
     return WFORM;
   } else {
     return false;
@@ -26819,7 +26820,7 @@ async function D_FORM$() {
 async function DEPOSIT_BRUSH_OFF(obj, give) {
   let w_ = 0, b = 0, tb = 0, frm = false;
   frm = await D_FORM$();
-  if (frm && ((get(33976, 0) != 0) || (loc(MONEY) == TELLER) || (loc(CHECK) == TELLER))) {
+  if (frm && ((get(34144, 0) != 0) || (loc(MONEY) == TELLER) || (loc(CHECK) == TELLER))) {
     if (obj == BEEZER || obj == EXCESS || obj == VISA) {
       await CTHE_PRINT(TELLER);
       tell(" looks at ");
@@ -26828,22 +26829,22 @@ async function DEPOSIT_BRUSH_OFF(obj, give) {
         tell(" and returns it to you");
       }
       if (frm == DFORM) {
-        w_ = get(33970, 0);
-        put(33970, 0, 0);
+        w_ = get(34138, 0);
+        put(34138, 0, 0);
       } else {
-        w_ = get(33972, 0);
-        put(33972, 0, 0);
+        w_ = get(34140, 0);
+        put(34140, 0, 0);
       }
-      b = get(33968, 0);
+      b = get(34136, 0);
       tb = b + w_;
       if (!(getProp(frm, P.LOSING) == 0)) {
         tell(". She says (while returning your ");
-        if ((get(33976, 0) > 0) || (loc(MONEY) == TELLER)) {
+        if ((s16(get(34144, 0)) > s16(0)) || (loc(MONEY) == TELLER)) {
           tell("cash");
           if (!(loc(MONEY) == PLAYER)) {
             move(MONEY, PLAYER);
           }
-          g.CASH = get(33976, 0) + g.CASH;
+          g.CASH = get(34144, 0) + g.CASH;
         } else {
           tell("cheque");
           move(CHECK, PLAYER);
@@ -26860,9 +26861,9 @@ async function DEPOSIT_BRUSH_OFF(obj, give) {
         if (!(loc(MONEY) == PLAYER)) {
           move(MONEY, PLAYER);
         }
-        g.CASH = get(33976, 0) + g.CASH;
-      } else if (((loc(CHECK) == TELLER) && (w_ == CHECK_AMOUNT)) || ((loc(MONEY) == TELLER) && (g.CASH == w_)) || (w_ == get(33976, 0))) {
-        put(33968, 0, tb);
+        g.CASH = get(34144, 0) + g.CASH;
+      } else if (((loc(CHECK) == TELLER) && (w_ == CHECK_AMOUNT)) || ((loc(MONEY) == TELLER) && (g.CASH == w_)) || (w_ == get(34144, 0))) {
+        put(34136, 0, tb);
         tell(". She says, \"");
         if (loc(CHECK) == TELLER) {
           tell("Let's see, you are depositing -$75 using a withdrawal slip. Since a withdrawal slip is the negative of a deposit slip, negative of -$75 is $75. It all makes perfect sense. ");
@@ -26875,10 +26876,10 @@ async function DEPOSIT_BRUSH_OFF(obj, give) {
         if (loc(MONEY) == TELLER) {
           await MONEY_D(g.CASH);
         } else {
-          await MONEY_D(get(33976, 0));
+          await MONEY_D(get(34144, 0));
         }
         tell(", but your deposit slip says ");
-        if (w_ > 0) {
+        if (s16(w_) > s16(0)) {
           await MONEY_D(w_);
         } else {
           tell("$");
@@ -26887,14 +26888,14 @@ async function DEPOSIT_BRUSH_OFF(obj, give) {
         if (loc(MONEY) == TELLER) {
           move(MONEY, PLAYER);
         } else {
-          g.CASH = get(33976, 0) + g.CASH;
+          g.CASH = get(34144, 0) + g.CASH;
         }
       } else {
         tell(". She says (while returning your cheque), \"You must deposit exactly the check amount");
         move(CHECK, PLAYER);
       }
       tell(". Have a nice day.\"\n");
-      putb(33956, 11, STATE_INIT);
+      putb(34124, 11, STATE_INIT);
       return true;
     } else {
       return false;
@@ -26914,7 +26915,7 @@ async function TELLER_SIGN_F() {
 
 async function SAY_SIGN() {
   let scr = 0;
-  scr = get(33974, 0);
+  scr = get(34142, 0);
   if (!(scr == 0)) {
     tell("This window has a sign above it that says:\n", S(get(scr, TELLER_SIGNS)));
   } else {
@@ -26928,7 +26929,7 @@ async function SAY_SIGN() {
 async function MATCH_TELLER_NAME(adj, nam, arg) {
   let num = 0;
   if ((adj == W.TELLER || adj == W.WINDOW) && (nam == W.INTNUM)) {
-    if ((g.P_NUMBER > NUMBER_TELLERS) || (g.P_NUMBER <= 0) || !(g.HERE == BANK)) {
+    if ((s16(g.P_NUMBER) > s16(NUMBER_TELLERS)) || (s16(g.P_NUMBER) <= s16(0)) || !(g.HERE == BANK)) {
       return false;
     } else {
       g.NEW_TELLER = g.P_NUMBER;
@@ -26939,7 +26940,7 @@ async function MATCH_TELLER_NAME(adj, nam, arg) {
       g.NEW_TELLER = -1;
       return TELLER_WINDOWS;
     } else if (adj == W.NEXT) {
-      if (eq(num = getb(33956, 0), 0) || (num == NUMBER_TELLERS)) {
+      if (eq(num = getb(34124, 0), 0) || (num == NUMBER_TELLERS)) {
         return false;
       } else {
         g.NEW_TELLER = num + 1;
@@ -26970,10 +26971,10 @@ async function I_BANK(cr = true) {
   if (!(cr == 0)) {
     crlf();
   }
-  y = get(33854, 0);
+  y = get(34022, 0);
   if (!(y == 0)) {
     who = get(getPropAddr(BANKSOUND, P.SYNONYM), 0);
-    if ((y = y + 1) > 3) {
+    if (s16(y = y + 1) > s16(3)) {
       if (who == W.BONGO) {
         tell("\"Yap yap yap!\" says Bongo. \"Be right back!");
       } else {
@@ -26997,7 +26998,7 @@ async function I_BANK(cr = true) {
       await HOLD_BANK();
       return true;
     }
-    put(33854, 0, y);
+    put(34022, 0, y);
     if (y == 3) {
       if (who == W.BONGO) {
         tell("Bongo says, \"Bark bark bark!\"\n");
@@ -27088,14 +27089,14 @@ async function PONGO_MAAM(who) {
 
 async function BANKWORD$(ptr) {
   let credit = false, addr = false, problem = false, len = 0, wrd = 0, bongo$ = false, money$ = false, form = false, first_ = 2, bal = false, person = false, hold = false;
-  wrd = get(33854, 0);
+  wrd = get(34022, 0);
   wrd = get(getPropAddr(BANKSOUND, P.SYNONYM), 0);
   if (wrd == W.BONGO) {
     bongo$ = true;
   }
   len = g.P_LEN;
   loop1: for (;;) {
-    if ((len = len - 1) < 0) {
+    if (s16(len = len - 1) < s16(0)) {
       break loop1;
     }
     wrd = get(P_LEXV, ptr);
@@ -27113,7 +27114,7 @@ async function BANKWORD$(ptr) {
       credit = wrd;
     } else if (wrd == W.BALANCE) {
       bal = wrd;
-    } else if ((first_ <= 0) && ((wrd == W.BONGO || wrd == W.PONGO || wrd == W.PAULETTE) || (wrd == W.CLINT || wrd == W.ROGER || wrd == W.NANCY))) {
+    } else if ((s16(first_) <= s16(0)) && ((wrd == W.BONGO || wrd == W.PONGO || wrd == W.PAULETTE) || (wrd == W.CLINT || wrd == W.ROGER || wrd == W.NANCY))) {
       person = wrd;
     }
     first_ = first_ - 1;
@@ -27160,7 +27161,7 @@ async function BANKWORD$(ptr) {
   } else {
     return false;
   }
-  put(33854, 0, 3);
+  put(34022, 0, 3);
   return true;
 }
 
@@ -27177,7 +27178,7 @@ async function SAY_BANKSOUND() {
 async function BANKSOUND_OFF() {
   setFlag(BANKSOUND, INVISIBLE);
   setFlag(BANKSOUND, NODESC);
-  put(33854, 0, 0);
+  put(34022, 0, 0);
   g.HOLDING_FOR_PONGO$ = false;
   return await DEQUEUE(I_BANK.id);
 }
@@ -27185,7 +27186,7 @@ async function BANKSOUND_OFF() {
 async function SETUP_BANKSOUND() {
   let tbl = 0, x = 0, y = 0;
   g.HOLD_TURNS = 0;
-  put(33854, 0, 1);
+  put(34022, 0, 1);
   clearFlag(BANKSOUND, INVISIBLE);
   setFlag(BANKSOUND, NOARTICLE);
   setFlag(BANKSOUND, LIVING);
@@ -27233,7 +27234,7 @@ async function BANKSOUND_F(context = false) {
       await REFERRING();
       return FATAL_VALUE;
     }
-  } else if (eq(get(33854, 0), 0)) {
+  } else if (eq(get(34022, 0), 0)) {
     tell("You're still on hold.\n");
     return true;
   } else if (context == M_WINNER) {
@@ -27292,7 +27293,7 @@ async function BANKSOUND_F(context = false) {
 
 async function SETUP_BANKMUSIC() {
   let tbl = 0;
-  put(33854, 0, 0);
+  put(34022, 0, 0);
   clearFlag(BANKSOUND, LIVING);
   clearFlag(BANKSOUND, PERSON);
   clearFlag(BANKSOUND, FEMALE);
@@ -27313,7 +27314,7 @@ async function GO_TO_PLANE() {
   await DEQUEUE(I_ZALAGASA_DESK.id);
   await DEQUEUE(I_DESK.id);
   await QUEUE(I_PHONES.id);
-  putb(33856, 0, 3);
+  putb(34024, 0, 3);
   g.HERE = AISLE;
   move(PLAYER, AISLE);
   await INITIALIZE_SEATS();
@@ -27387,15 +27388,15 @@ async function PLANE_F() {
 async function AISLE_SEEN$(row, doset$ = false, newval = false) {
   let bit = (await DO_LSH(row));
   if (!doset$) {
-    if (btst(get(33808, 0), bit)) {
+    if (btst(get(33976, 0), bit)) {
       return true;
     } else {
       return false;
     }
   } else if (!(newval == 0)) {
-    return put(33808, 0, get(33808, 0) | bit);
+    return put(33976, 0, get(33976, 0) | bit);
   } else {
-    return put(33808, 0, get(33808, 0) & ((bit ^ (-1)) << 16 >> 16));
+    return put(33976, 0, get(33976, 0) & ((bit ^ (-1)) << 16 >> 16));
   }
 }
 
@@ -27414,7 +27415,7 @@ async function OCCUPIED$(n_ = 0, row = 0) {
 async function SET_SEAT_PERSON(who, seatnum, row, two$ = false) {
   let old = 0;
   old = await SEAT_PERSON(seatnum, row);
-  if ((old > 0) && (old < PERSON_MASK)) {
+  if ((s16(old) > s16(0)) && (s16(old) < s16(PERSON_MASK))) {
     putb(PERSON_ROWS, old = old - 1, 255);
   }
   if (!(who == 0)) {
@@ -27456,7 +27457,7 @@ async function COUNT_OCCUPIED_SEATS(row = 0) {
 }
 
 async function ROW_LOOK_OK$(row) {
-  if (((row > g.CURRENT_ROW) && (g.P_DIRECTION == P.SOUTH)) || ((row < g.CURRENT_ROW) && (g.P_DIRECTION == P.NORTH))) {
+  if (((s16(row) > s16(g.CURRENT_ROW)) && (g.P_DIRECTION == P.SOUTH)) || ((s16(row) < s16(g.CURRENT_ROW)) && (g.P_DIRECTION == P.NORTH))) {
     return true;
   } else {
     return false;
@@ -27496,14 +27497,14 @@ async function AISLE_F(rarg) {
         return true;
       } else if (g.P_DIRECTION == P.SOUTH || g.P_DIRECTION == P.NORTH) {
         if (await QUEUED$(I_CLEANUP_FOOD.id)) {
-          if (await ROW_LOOK_OK$(getb(33808, 39))) {
+          if (await ROW_LOOK_OK$(getb(33976, 39))) {
             await DEQUEUE(I_CLEANUP_FOOD.id);
             tell("A flight attendant is wiping ");
-            if (eq(getb(33808, 40), PERSON_MASK)) {
+            if (eq(getb(33976, 40), PERSON_MASK)) {
               tell("someone down");
             } else {
               tell("down ");
-              await RANDOM_PERSON_F(M_OBJDESC, getb(33808, 40));
+              await RANDOM_PERSON_F(M_OBJDESC, getb(33976, 40));
             }
             tell(" with a wet cloth.\n");
             return true;
@@ -27511,12 +27512,12 @@ async function AISLE_F(rarg) {
             return false;
           }
         } else if (await QUEUED$(I_FAKE_ATTENDANT.id)) {
-          if (await ROW_LOOK_OK$(getb(33808, 10))) {
+          if (await ROW_LOOK_OK$(getb(33976, 10))) {
             await DEQUEUE(I_FAKE_ATTENDANT.id);
-            if (eq(getb(33808, 10), 9)) {
+            if (eq(getb(33976, 10), 9)) {
               tell("You witness the tail end of an argument between a flight attendant and an angry man. The flight attendant appears to be righteously enraged at having been summoned by the bell to attend to a passenger's needs, and the angry man is protesting that never, never would he be so foolish and unreasonable as even to contemplate pressing a flight attendant call button, which he is well aware is an offence against almost everything that it is possible to be an offence against.\n");
               return true;
-            } else if ((await COUNT_OCCUPIED_SEATS(getb(33808, 10))) == 0) {
+            } else if ((await COUNT_OCCUPIED_SEATS(getb(33976, 10))) == 0) {
               tell("You see a bewildered flight attendant, who perhaps is starting to believe in ghosts.\n");
               return true;
             } else {
@@ -27554,14 +27555,14 @@ async function AISLE_F(rarg) {
     }
   } else if (rarg == M_ENTERED) {
     if (g.CURRENT_ROW == 8) {
-      putb(33808, 26, true);
+      putb(33976, 26, true);
     } else {
-      putb(33808, 26, false);
+      putb(33976, 26, false);
     }
-    if (((await QUEUED$(I_FAKE_ATTENDANT.id)) && (g.CURRENT_ROW == getb(33808, 10))) || ((await QUEUED$(I_CLEANUP_FOOD.id)) && (g.CURRENT_ROW == getb(33808, 39)))) {
+    if (((await QUEUED$(I_FAKE_ATTENDANT.id)) && (g.CURRENT_ROW == getb(33976, 10))) || ((await QUEUED$(I_CLEANUP_FOOD.id)) && (g.CURRENT_ROW == getb(33976, 39)))) {
       await FLIGHT_ATTENDANT_APPEARS();
       tell("\nYou arrive just as the flight attendant finishes ");
-      if (g.CURRENT_ROW == getb(33808, 39)) {
+      if (g.CURRENT_ROW == getb(33976, 39)) {
         tell("some rather nasty business involving food");
       } else {
         tell("a heated argument about a call button");
@@ -27573,11 +27574,11 @@ async function AISLE_F(rarg) {
     await SET_AISLE_TOUCHED();
     return false;
   } else if (rarg == M_EXIT) {
-    if (!(getb(33808, 26) == 0) && (getb(33808, 25) == 0)) {
+    if (!(getb(33976, 26) == 0) && (getb(33976, 25) == 0)) {
       tell("Unfortunately, you wake the baby as you tiptoe past. It immediately emits a hateful little bleat. You wonder if it has any llama blood in it, then it starts to scream. The mother picks it up and walks up and down the aisle for a moment to calm it. Within seconds, it falls into a stupid, half-witted sleep", S(PCR));
-      putb(33808, 25, 1);
+      putb(33976, 25, 1);
     }
-    putb(33808, 26, false);
+    putb(33976, 26, false);
     if (g.HERE == NERD) {
       remove(NERD);
       await NERD_SAYS_WAIT();
@@ -27586,7 +27587,7 @@ async function AISLE_F(rarg) {
   } else if (!(rarg == 0)) {
     return false;
   } else if (isVerb(V.WALK_TO)) {
-    if ((nr = getb(33808, 2)) && (nr != g.CURRENT_ROW)) {
+    if ((nr = getb(33976, 2)) && (nr != g.CURRENT_ROW)) {
       if (g.HERE == SEAT) {
         if (await STUCK_IN_SEAT$()) {
           return true;
@@ -27664,7 +27665,7 @@ async function DESC_SEATBELT() {
 }
 
 async function SAME_SIDE$(seata, seatb) {
-  if (((seata >= SEAT_C) && (seatb >= SEAT_C)) || ((seata <= SEAT_B) && (seatb <= SEAT_B))) {
+  if (((s16(seata) >= s16(SEAT_C)) && (s16(seatb) >= s16(SEAT_C))) || ((s16(seata) <= s16(SEAT_B)) && (s16(seatb) <= s16(SEAT_B)))) {
     return true;
   } else {
     return false;
@@ -27672,7 +27673,7 @@ async function SAME_SIDE$(seata, seatb) {
 }
 
 async function SEAT_OK$(must_match_and_shut_up = false) {
-  let new_row = getb(33808, 2), new_seat = getb(33808, 3);
+  let new_row = getb(33976, 2), new_seat = getb(33976, 3);
   if (must_match_and_shut_up) {
     if ((g.HERE == SEAT) && (new_row == g.CURRENT_ROW) && (new_seat == g.CURRENT_SEAT)) {
       return true;
@@ -27817,7 +27818,7 @@ async function SET_AISLE_TOUCHED() {
 
 async function SETUP_NEIGHBOR(which) {
   let n_ = 0, ct = 0, last = 0;
-  if (which < 2) {
+  if (s16(which) < s16(2)) {
     ct = SEAT_B;
     if (which == 0) {
       last = SEAT_E;
@@ -27833,13 +27834,13 @@ async function SETUP_NEIGHBOR(which) {
     if (!((n_ = await SEAT_PERSON(ct)) == 0)) {
       break loop1;
     }
-    if ((ct = ct + 1) > last) {
+    if (s16(ct = ct + 1) > s16(last)) {
       break loop1;
     }
   }
-  putb(33808, 6, n_);
-  if (n_ > 0) {
-    return putb(33808, 7, ct);
+  putb(33976, 6, n_);
+  if (s16(n_) > s16(0)) {
+    return putb(33976, 7, ct);
   } else {
     return false;
   }
@@ -27950,7 +27951,7 @@ async function GEN_SEAT(offs) {
     if (offs == 0) {
       break loop1;
     }
-    if (offs < 0) {
+    if (s16(offs) < s16(0)) {
       if (start == SEAT_B) {
         start = SEAT_E;
       } else {
@@ -27972,61 +27973,61 @@ async function GEN_SEAT(offs) {
 async function CALL_SEAT() {
   let row = (await GEN_ROW(1)), seat = (await GEN_SEAT(2));
   tell("You hear a ding-dong from ");
-  if (row > g.CURRENT_ROW) {
+  if (s16(row) > s16(g.CURRENT_ROW)) {
     tell("behind you");
   } else {
     tell("far ahead");
   }
   tell(S(PERIOD));
-  putb(33808, 10, row);
+  putb(33976, 10, row);
   return await QUEUE(I_FAKE_ATTENDANT.id, 2);
 }
 
 async function I_FAKE_ATTENDANT() {
-  putb(33808, 10, 0);
+  putb(33976, 10, 0);
   return false;
 }
 
 async function I_CLEANUP_FOOD() {
-  putb(33808, 39, 0);
-  putb(33808, 40, 0);
+  putb(33976, 39, 0);
+  putb(33976, 40, 0);
   return false;
 }
 
 async function RECLINE_SEAT() {
-  let row = (await GEN_ROW(3)), seatnum = (await GEN_SEAT(-1)), who = 0, ct = getb(33808, 11);
-  if ((row == (getb(33808, 15) - 1)) && (seatnum == getb(33808, 16)) && !(getb(33808, 12) == 0)) {
-    await SET_SEAT((await GET_SEAT(getb(33808, 16), getb(33808, 15))) & ((MEAL_MASK ^ (-1)) << 16 >> 16), getb(33808, 16), getb(33808, 15));
+  let row = (await GEN_ROW(3)), seatnum = (await GEN_SEAT(-1)), who = 0, ct = getb(33976, 11);
+  if ((row == (getb(33976, 15) - 1)) && (seatnum == getb(33976, 16)) && !(getb(33976, 12) == 0)) {
+    await SET_SEAT((await GET_SEAT(getb(33976, 16), getb(33976, 15))) & ((MEAL_MASK ^ (-1)) << 16 >> 16), getb(33976, 16), getb(33976, 15));
     tell("There is a dreadful wet squelch from towards the ");
-    if (getb(33808, 15) < g.CURRENT_ROW) {
+    if (s16(getb(33976, 15)) < s16(g.CURRENT_ROW)) {
       tell("front");
     } else {
       tell("rear");
     }
     tell(" of the cabin, and, briefly, a whiff of something truly hellish.\n");
     await QUEUE(I_CALL_CRASH.id, 10);
-    putb(33808, 13, true);
+    putb(33976, 13, true);
   } else {
     await DESCRIBE_SPLAT(row, seatnum);
   }
-  if ((ct = ct + 1) > 5) {
+  if (s16(ct = ct + 1) > s16(5)) {
     tell("\nSeveral of the passengers seem to be gathering in the aisle; as they approach you, what had seemed like a low murmur becomes an angry roar. \"Are you too blasted stupid to figure out what's going on here, you twit? Trying to break all our necks, is that it? Well, we're not having it!\" After they rend you limb from limb, they box you up, and toss you out of the ");
     await DPRINT(PLANE);
     tell(" over a particularly notorious den of cannibals, where you become a picnic.");
     return await JIGS_UP();
   } else {
-    return putb(33808, 11, ct);
+    return putb(33976, 11, ct);
   }
 }
 
 async function DESCRIBE_SPLAT(row, seatnum) {
   let who = 0, n_ = 0, dir = 0, str = 0;
-  if (row > g.CURRENT_ROW) {
+  if (s16(row) > s16(g.CURRENT_ROW)) {
     (dir = "rear");
   } else {
     (dir = "front");
   }
-  if (row < AISLE_COUNT) {
+  if (s16(row) < s16(AISLE_COUNT)) {
     who = await SEAT_PERSON(seatnum, row + 1);
   }
   n_ = who;
@@ -28034,8 +28035,8 @@ async function DESCRIBE_SPLAT(row, seatnum) {
     tell("From somewhere in the ", S(dir), " of the aircraft, you hear a sad mechanical groan, as if a tired Comf-O-Mat (TM) seat had, for the too-manyth time, forced itself to recline abruptly, then forced itself upright again");
   } else {
     await QUEUE(I_CLEANUP_FOOD.id, 2);
-    putb(33808, 39, row = row + 1);
-    putb(33808, 40, who);
+    putb(33976, 39, row = row + 1);
+    putb(33976, 40, who);
     if ((who == PERSON_MASK) || !(((await GET_SEAT(seatnum, row)) & FOOD_MASK) == 0) || !(str = get(FACE_IN_FOOD_STRS, n_ = 2 * (n_ = n_ - 1)))) {
       tell("You hear a hoarse cry of dismay from the ", S(dir), " of the ");
       await DPRINT(PLANE);
@@ -28043,7 +28044,7 @@ async function DESCRIBE_SPLAT(row, seatnum) {
     } else {
       await SET_SEAT((await GET_SEAT(seatnum, row)) | FOOD_MASK, seatnum, row);
       tell("From somewhere ");
-      if (g.CURRENT_ROW > row) {
+      if (s16(g.CURRENT_ROW) > s16(row)) {
         tell("in front");
       } else {
         tell("behind");
@@ -28195,20 +28196,20 @@ async function UNDER_SEAT_F() {
 }
 
 async function SDESC_SEAT() {
-  if (!(getb(33808, 2))) {
+  if (!(getb(33976, 2))) {
     tell("Seat ", N(g.CURRENT_ROW));
     printC(await SEAT_LETTER(g.CURRENT_SEAT));
     return true;
   } else {
-    tell("Seat ", N(getb(33808, 2)));
-    printC(await SEAT_LETTER(getb(33808, 3)));
+    tell("Seat ", N(getb(33976, 2)));
+    printC(await SEAT_LETTER(getb(33976, 3)));
     return true;
   }
 }
 
 async function SEAT_TO_AISLE() {
   let neighbor = 0, new_seat = 0;
-  if (((g.CURRENT_SEAT > SEAT_C) && (g.P_WALK_DIR == P.WEST)) || ((g.CURRENT_SEAT < SEAT_D) && (g.P_WALK_DIR == P.EAST)) || (g.P_WALK_DIR == P.OUT)) {
+  if (((s16(g.CURRENT_SEAT) > s16(SEAT_C)) && (g.P_WALK_DIR == P.WEST)) || ((s16(g.CURRENT_SEAT) < s16(SEAT_D)) && (g.P_WALK_DIR == P.EAST)) || (g.P_WALK_DIR == P.OUT)) {
     await LEAVE_SEAT();
     return AISLE;
   } else if (((g.CURRENT_SEAT == SEAT_B) && (g.P_WALK_DIR == P.WEST)) || ((g.CURRENT_SEAT == SEAT_E) && (g.P_WALK_DIR == P.EAST))) {
@@ -28241,7 +28242,7 @@ async function SEAT_TO_AISLE() {
 
 async function STUCK_IN_SEAT$() {
   let $1;
-  if (!(getb(33808, 18) == 0)) {
+  if (!(getb(33976, 18) == 0)) {
     await CTHE_PRINT(FLIGHT_ATTENDANT);
     tell(" stops you. \"We'll tell you when you can leave your seat, ");
     $1 = await STR_SIR_OR_MAAM();
@@ -28255,7 +28256,7 @@ async function STUCK_IN_SEAT$() {
 
 async function LOOK_FROM_SEAT(which_way) {
   let ss = (g.CURRENT_SEAT + which_way);
-  if ((ss == 0) || (ss > 4)) {
+  if ((ss == 0) || (s16(ss) > s16(4))) {
     return false;
   } else if (eq(ss + g.CURRENT_SEAT, 5)) {
     tell("You see an aisle.\n");
@@ -28267,7 +28268,7 @@ async function LOOK_FROM_SEAT(which_way) {
 }
 
 async function SEAT_F(context = false) {
-  let new_row = getb(33808, 2), new_seat = getb(33808, 3), pers = 0;
+  let new_row = getb(33976, 2), new_seat = getb(33976, 3), pers = 0;
   if (context == M_LOOK) {
     tell("This is an incredibly comfortable FubAero Comf-O-Mat (TM) seat equipped with its own set of passenger station comfort controls. There are buttons to recline the seat, call the attendant and control the lighting, and a socket. The seat back in front of you contains a table and a pocket");
     if (first(SEAT_POCKET)) {
@@ -28287,7 +28288,7 @@ async function SEAT_F(context = false) {
         tell(".");
       }
     }
-    if (!(getb(33808, 9) == 0)) {
+    if (!(getb(33976, 9) == 0)) {
       tell(" Your headphones are plugged into their receptacle.");
     }
     if (!(hasFlag(SEATBELT, WORN))) {
@@ -28303,14 +28304,14 @@ async function SEAT_F(context = false) {
     }
     await DESC_SEATBELT();
     crlf();
-    if (!(getb(33808, 6) == 0)) {
+    if (!(getb(33976, 6) == 0)) {
       crlf();
-      if (((g.CURRENT_SEAT < SEAT_D) && (getb(33808, 7) > SEAT_C)) || ((g.CURRENT_SEAT > SEAT_C) && (getb(33808, 7) < SEAT_D))) {
+      if (((s16(g.CURRENT_SEAT) < s16(SEAT_D)) && (s16(getb(33976, 7)) > s16(SEAT_C))) || ((s16(g.CURRENT_SEAT) > s16(SEAT_C)) && (s16(getb(33976, 7)) < s16(SEAT_D)))) {
         tell("Across the aisle, you see ");
       } else {
         tell("In the next seat, you see ");
       }
-      await RANDOM_PERSON_F(M_OBJDESC, getb(33808, 6));
+      await RANDOM_PERSON_F(M_OBJDESC, getb(33976, 6));
       tell(S(PERIOD));
     }
     if (hasFlag(FLIGHT_ATTENDANT, SEEN)) {
@@ -28348,8 +28349,8 @@ async function SEAT_F(context = false) {
       return false;
     }
   } else if (context == M_ENTERING) {
-    putb(33808, 45, true);
-    if (!(getb(33808, 13) == 0) && (g.CURRENT_ROW == getb(33808, 15)) && (g.CURRENT_SEAT == getb(33808, 16)) && !(loc(SAFETY_CARD_TWO))) {
+    putb(33976, 45, true);
+    if (!(getb(33976, 13) == 0) && (g.CURRENT_ROW == getb(33976, 15)) && (g.CURRENT_SEAT == getb(33976, 16)) && !(loc(SAFETY_CARD_TWO))) {
       tell("You are in your seat. There is no sign of your dinner which has been slammed between the table and the seat in front of you when it reclined. Only a tiny trickle of greenish slime betrays that the hateful food was ever there. A small piece of laminated card has fallen from the seat-back", S(PCR));
       move(SAFETY_CARD_TWO, UNDER_SEAT);
       if (await QUEUED$(I_CALL_CRASH.id)) {
@@ -28364,7 +28365,7 @@ async function SEAT_F(context = false) {
     return false;
   } else if (!(await ON_PLANE$())) {
     return await CANT_SEE_ANY(SEAT);
-  } else if ((await TOUCHING$()) && (g.HERE == SEAT) && ((getb(33808, 3) != g.CURRENT_SEAT) || (getb(33808, 2) != g.CURRENT_ROW))) {
+  } else if ((await TOUCHING$()) && (g.HERE == SEAT) && ((getb(33976, 3) != g.CURRENT_SEAT) || (getb(33976, 2) != g.CURRENT_ROW))) {
     tell("Kindly confine your attentions to your own seat.\n");
     return true;
   } else if (!(g.NOW_PRSI$ == 0)) {
@@ -28414,7 +28415,7 @@ async function SEAT_F(context = false) {
         await LEAVE_SEAT();
         tell("When you reach that row, you see that the seat of your dreams is already taken", S(PCR));
         await PERFORM(V.WALK_TO, AISLE);
-        putb(33808, 3, 0);
+        putb(33976, 3, 0);
         return true;
       }
     } else {
@@ -28473,7 +28474,7 @@ async function SEAT_F(context = false) {
 
 async function I_ATTENDANT_FLUSTERED() {
   let $1;
-  if ((g.CURRENT_ROW == getb(33808, 15)) && (g.CURRENT_SEAT == getb(33808, 16)) && (g.HERE == SEAT)) {
+  if ((g.CURRENT_ROW == getb(33976, 15)) && (g.CURRENT_SEAT == getb(33976, 16)) && (g.HERE == SEAT)) {
     tell("\nA flight attendant comes up to you, glowering angrily. Then she notices that your food has gone. \"Oh... er...\" she mutters in confusion. \"Ah... my colleague must have taken your plate. Hope you enjoyed your meal, ");
     $1 = await STR_SIR_OR_MAAM();
     tell(S($1));
@@ -28490,13 +28491,13 @@ async function I_CALL_CRASH() {
   $1 = await STR_SIR_OR_MAAM();
   tell(S($1));
   tell(",\" she says, and walks away.\n");
-  putb(33808, 27, true);
+  putb(33976, 27, true);
   return await QUEUE(I_CRASH.id, 10);
 }
 
 async function I_CRASH() {
   let $1;
-  if (!(getb(33808, 27) == 0)) {
+  if (!(getb(33976, 27) == 0)) {
     await I_REALLY_CRASH();
   } else {
     await FLIGHT_ATTENDANT_APPEARS();
@@ -28526,10 +28527,10 @@ async function I_REALLY_CRASH() {
 
 async function LEAVE_SEAT(nomeal$ = false) {
   let neighbor = 0;
-  if (!(getb(33808, 45))) {
+  if (!(getb(33976, 45))) {
     return true;
   }
-  putb(33808, 45, false);
+  putb(33976, 45, false);
   if (hasFlag(SEATBELT, WORN)) {
     clearFlag(SEATBELT, WORN);
     move(SEATBELT, SEAT);
@@ -28541,12 +28542,12 @@ async function LEAVE_SEAT(nomeal$ = false) {
     await THE_PRINT(SEAT_POCKET);
     tell(S(PCR));
     clearFlag(PHONES, WORN);
-    putb(33808, 9, false);
+    putb(33976, 9, false);
     move(PHONES, SEAT_POCKET);
   }
   g.OLD_HERE = false;
-  putb(33808, 4, g.CURRENT_ROW);
-  putb(33808, 5, g.CURRENT_SEAT);
+  putb(33976, 4, g.CURRENT_ROW);
+  putb(33976, 5, g.CURRENT_SEAT);
   if (!(nomeal$ == 0)) {
     return true;
   } else if (!((await AIR_MEAL_STATE()) == 0) && (loc(AIRLINE_MEAL) == SEAT_TABLE)) {
@@ -28597,7 +28598,7 @@ async function SEAT_TABLE_F() {
       return false;
     }
   } else if (isVerb(V.OPEN, V.LOWER, V.UNFOLD)) {
-    if (!(getb(33808, 13) == 0) && (g.CURRENT_ROW == getb(33808, 15)) && (g.CURRENT_SEAT == getb(33808, 16))) {
+    if (!(getb(33976, 13) == 0) && (g.CURRENT_ROW == getb(33976, 15)) && (g.CURRENT_SEAT == getb(33976, 16))) {
       tell("Your hand seems to stop of its own accord when it encounters the emanations from behind ");
       await THE_PRINT();
       tell(S(PERIOD));
@@ -28618,12 +28619,12 @@ async function SEAT_TABLE_F() {
 async function SETUP_NEW_SEAT(force$ = false) {
   let $1;
   await SETUP_NEIGHBOR(g.CURRENT_SEAT);
-  putb(33808, 2, 0);
-  putb(33808, 3, 0);
-  if ((g.CURRENT_ROW == getb(33808, 4)) && (g.CURRENT_SEAT == getb(33808, 5)) && !force$) {
+  putb(33976, 2, 0);
+  putb(33976, 3, 0);
+  if ((g.CURRENT_ROW == getb(33976, 4)) && (g.CURRENT_SEAT == getb(33976, 5)) && !force$) {
     return true;
   } else {
-    putb(33808, 9, false);
+    putb(33976, 9, false);
     if (!(await META_IN$(SAFETY_CARD_TWO, PLAYER))) {
       remove(SAFETY_CARD_TWO);
     }
@@ -28641,7 +28642,7 @@ async function SETUP_NEW_SEAT(force$ = false) {
     } else {
       clearFlag(SEAT_TABLE, SURFACE);
     }
-    if (((await POLICE_AREA(SEAT, NORMAL_SEAT)) + (await POLICE_AREA(SEAT_POCKET, NORMAL_SEAT_POCKET)) + (await POLICE_AREA(UNDER_SEAT, false)) + (await POLICE_AREA(SEAT_TABLE, NORMAL_SEAT_TABLE))) > 0) {
+    if (s16((await POLICE_AREA(SEAT, NORMAL_SEAT)) + (await POLICE_AREA(SEAT_POCKET, NORMAL_SEAT_POCKET)) + (await POLICE_AREA(UNDER_SEAT, false)) + (await POLICE_AREA(SEAT_TABLE, NORMAL_SEAT_TABLE))) > s16(0)) {
       if (!force$) {
         await FLIGHT_ATTENDANT_APPEARS();
         tell("Just as you're settling in, a flustered flight attendant rushes up to you. \"You left your personal belongings in your old seat, ");
@@ -28767,10 +28768,10 @@ async function MATCH_SEAT_NAME(adj, nam, arg) {
         }
       }
       if (win$) {
-        if ((tmp = get(vec, 2)) >= OBJECT_BREAK) {
+        if (s16(tmp = get(vec, 2)) >= s16(OBJECT_BREAK)) {
           putProp(RANDOM_OBJECT, P.PSEUDO_TABLE, tmp);
           return RANDOM_OBJECT;
-        } else if ((g.HERE == SEAT || g.HERE == AISLE) && (tmp == getb(33808, 6))) {
+        } else if ((g.HERE == SEAT || g.HERE == AISLE) && (tmp == getb(33976, 6))) {
           putProp(RANDOM_PERSON, P.PSEUDO_TABLE, tmp);
           if (await GET_SEX(tmp)) {
             setFlag(RANDOM_PERSON, FEMALE);
@@ -28787,7 +28788,7 @@ async function MATCH_SEAT_NAME(adj, nam, arg) {
           could_be_person$ = 255;
         }
       }
-      if ((len = len - 3) < 3) {
+      if (s16(len = len - 3) < s16(3)) {
         if (!(could_be_person$ == 0) && (could_be_person$ != 255)) {
           putProp(RANDOM_PERSON, P.PSEUDO_TABLE, could_be_person$);
           if (await GET_SEX(could_be_person$)) {
@@ -28808,43 +28809,43 @@ async function MATCH_SEAT_NAME(adj, nam, arg) {
   } else if (inTable(nam, nmvec, nmlen) || inTable(adj, nmvec, nmlen)) {
     if ((adj == W.SEAT) || (adj == W.INTNUM) || !nam) {
       if (adj == W.INTNUM) {
-        putb(33808, 2, g.P_NUMBER);
+        putb(33976, 2, g.P_NUMBER);
       } else {
         if (adj != W.SEAT) {
           nam = adj;
           adj = false;
         }
-        putb(33808, 2, g.CURRENT_ROW);
+        putb(33976, 2, g.CURRENT_ROW);
       }
-      putb(33808, 3, nam == W.B ? SEAT_B : (nam == W.C ? SEAT_C : (nam == W.D ? SEAT_D : (nam == W.E ? SEAT_E : false))));
+      putb(33976, 3, nam == W.B ? SEAT_B : (nam == W.C ? SEAT_C : (nam == W.D ? SEAT_D : (nam == W.E ? SEAT_E : false))));
       return SEAT;
     } else {
       return false;
     }
   } else if ((nam == W.SEAT) || !nam) {
     if (g.HERE != SEAT) {
-      putb(33808, 2, getb(33808, 4));
-      putb(33808, 3, getb(33808, 5));
+      putb(33976, 2, getb(33976, 4));
+      putb(33976, 3, getb(33976, 5));
     } else {
-      putb(33808, 2, g.CURRENT_ROW);
-      putb(33808, 3, g.CURRENT_SEAT);
+      putb(33976, 2, g.CURRENT_ROW);
+      putb(33976, 3, g.CURRENT_SEAT);
     }
     return SEAT;
   } else if ((adj == W.AISLE || adj == W.ROW) && (nam == W.INTNUM)) {
-    if ((g.P_NUMBER < 1) || (g.P_NUMBER > AISLE_COUNT)) {
+    if ((s16(g.P_NUMBER) < s16(1)) || (s16(g.P_NUMBER) > s16(AISLE_COUNT))) {
       return FATAL_VALUE;
     } else {
-      putb(33808, 2, g.P_NUMBER);
+      putb(33976, 2, g.P_NUMBER);
       return AISLE;
     }
-  } else if ((nam == W.INTNUM) && (g.P_SEAT_NUMBER >= 0)) {
+  } else if ((nam == W.INTNUM) && (s16(g.P_SEAT_NUMBER) >= s16(0))) {
     row = div(g.P_SEAT_NUMBER, 4) + 1;
     snum = mod(g.P_SEAT_NUMBER, 4) + 1;
-    if ((row < 1) || (row > AISLE_COUNT)) {
+    if ((s16(row) < s16(1)) || (s16(row) > s16(AISLE_COUNT))) {
       return FATAL_VALUE;
     } else {
-      putb(33808, 2, row);
-      putb(33808, 3, snum);
+      putb(33976, 2, row);
+      putb(33976, 3, snum);
       return SEAT;
     }
   } else {
@@ -28870,7 +28871,7 @@ async function GALLEY_F(context = false) {
 }
 
 async function LAV_LOBBY_F(context = false) {
-  let ho = getb(33808, 33);
+  let ho = getb(33976, 33);
   if (context == M_LOOK) {
     tell("There is a telephone here, with a slot for credit cards. The emergency hatch lies to the east, and the lavatory is south.\n");
     if (hasFlag(FLIGHT_ATTENDANT, SEEN)) {
@@ -28888,12 +28889,12 @@ async function LAV_LOBBY_F(context = false) {
       crlf();
     }
     return false;
-  } else if ((context == M_ENTERED) && !(getb(33808, 27) == 0)) {
+  } else if ((context == M_ENTERED) && !(getb(33976, 27) == 0)) {
     tell("\nThe phone is ringing.\n");
     await THIS_IS_IT(AIRPHONE);
     return false;
   } else if (context == M_BEG) {
-    if (ho >= 2) {
+    if (s16(ho) >= s16(2)) {
       if (isVerb(V.LEAP, V.EXIT) || (isVerb(V.WALK) && (g.P_WALK_DIR == P.EAST || g.P_WALK_DIR == P.OUT)) || ((await ENTERING$()) && (await RAND_PRSO$(HATCH_OBJECT)))) {
         tell("No.\n");
       } else if (isVerb(V.WAIT)) {
@@ -28910,7 +28911,7 @@ async function LAV_LOBBY_F(context = false) {
         }
         tell(S(PERIOD));
       }
-      if ((ho = ho + 1) >= 4) {
+      if (s16(ho = ho + 1) >= s16(4)) {
         crlf();
         bufOut(false);
         tell(">");
@@ -28923,14 +28924,14 @@ async function LAV_LOBBY_F(context = false) {
           remove(NERD);
           await NERD_SAYS_WAIT();
         }
-        putb(33808, 33, ho = 0);
+        putb(33976, 33, ho = 0);
         if ((loc(CHUTE) == PLAYER) && hasFlag(CHUTE, WORN)) {
           await GO_OUTSIDE_PLANE();
         } else {
           await TO_IN_AIR();
         }
       }
-      putb(33808, 33, ho);
+      putb(33976, 33, ho);
       return true;
     } else {
       return false;
@@ -29031,7 +29032,7 @@ async function RECEPTACLE_F() {
       return false;
     }
   } else if (isVerb(V.EXAMINE, V.LOOK_INSIDE, V.SEARCH)) {
-    if (!(getb(33808, 9) == 0)) {
+    if (!(getb(33976, 9) == 0)) {
       await CTHE_PRINT(PHONES);
       tell(" are plugged in to the receptacle.\n");
     } else {
@@ -29048,24 +29049,24 @@ async function RECEPTACLE_F() {
 }
 
 async function UNPLUG_PHONES() {
-  if (!(getb(33808, 9))) {
+  if (!(getb(33976, 9))) {
     tell("The headphones aren't plugged in.\n");
   } else {
-    putb(33808, 9, false);
+    putb(33976, 9, false);
     tell("You unplug the headphones.\n");
   }
   return true;
 }
 
 async function PLUG_IN_PHONES() {
-  if (!(getb(33808, 9) == 0)) {
+  if (!(getb(33976, 9) == 0)) {
     tell("The headphones are already plugged in.\n");
     return true;
   } else if (!(loc(PHONES) == PLAYER)) {
     tell("You'd find that a lot easier to do if you were holding the headphones.\n");
     return true;
   } else {
-    putb(33808, 9, true);
+    putb(33976, 9, true);
     tell("You plug in ");
     await THE_PRINT(PHONES);
     tell(S(PERIOD));
@@ -29086,14 +29087,14 @@ async function SDESC_PHONES() {
 
 async function PHONES_F() {
   let plugged_in$ = false;
-  if (!(getb(33808, 9) == 0)) {
+  if (!(getb(33976, 9) == 0)) {
     plugged_in$ = true;
   }
   if (!(g.NOW_PRSI$ == 0)) {
     return false;
   } else if (isVerb(V.DROP) || (await PUTTING$())) {
     if (plugged_in$) {
-      putb(33808, 9, false);
+      putb(33976, 9, false);
       tell("[unplugging ");
       await THE_PRINT();
       tell(" first", S(BRACKET));
@@ -29118,7 +29119,7 @@ async function PHONES_F() {
       return false;
     } else {
       setFlag(g.PRSO, WORN);
-      putb(33856, 0, 0);
+      putb(34024, 0, 0);
       tell("You put on ");
       await THE_PRINT();
       if (plugged_in$) {
@@ -29158,17 +29159,17 @@ async function PHONES_F() {
 
 async function I_PHONES() {
   let x = 0, y = 0;
-  x = getb(33856, 0);
-  if ((x = x + 1) > 3) {
+  x = getb(34024, 0);
+  if (s16(x = x + 1) > s16(3)) {
     x = 0;
     await NEXT_TOON();
-    if ((loc(PHONES) == PLAYER) && hasFlag(PHONES, WORN) && !(getb(33808, 9) == 0)) {
+    if ((loc(PHONES) == PLAYER) && hasFlag(PHONES, WORN) && !(getb(33976, 9) == 0)) {
       tell("\nYou hear ");
       await SAY_MUZAK();
       tell(" playing on the headphones.\n");
     }
   }
-  putb(33856, 0, x);
+  putb(34024, 0, x);
   return false;
 }
 
@@ -29195,9 +29196,9 @@ async function SET_SEX(obj, sex, xfemale = false, male = false) {
 
 async function FLIGHT_ATTENDANT_APPEARS(sex = 0) {
   let female$ = false;
-  putb(33808, 22, true);
+  putb(33976, 22, true);
   setFlag(FLIGHT_ATTENDANT, SEEN);
-  putb(33808, 41, g.CURRENT_ROW);
+  putb(33976, 41, g.CURRENT_ROW);
   if (sex == 0) {
     female$ = prob(50);
   } else if (sex == 1) {
@@ -29205,22 +29206,22 @@ async function FLIGHT_ATTENDANT_APPEARS(sex = 0) {
   }
   await SET_SEX(FLIGHT_ATTENDANT, female$, W.STEWARDESS, W.STEWARD);
   if (female$) {
-    put(33837, 0, "She");
-    put(33839, 0, "her");
+    put(34005, 0, "She");
+    put(34007, 0, "her");
   } else {
-    put(33837, 0, "He");
-    put(33839, 0, "him");
+    put(34005, 0, "He");
+    put(34007, 0, "him");
   }
   await QUEUE(I_LOSE_ATTENDANT.id, -1);
-  return putb(33808, 22, true);
+  return putb(33976, 22, true);
 }
 
 async function I_LOSE_ATTENDANT() {
-  if (!(getb(33808, 22) == 0)) {
-    putb(33808, 22, false);
+  if (!(getb(33976, 22) == 0)) {
+    putb(33976, 22, false);
     return false;
   } else if (hasFlag(FLIGHT_ATTENDANT, SEEN)) {
-    if (g.CURRENT_ROW == getb(33808, 41)) {
+    if (g.CURRENT_ROW == getb(33976, 41)) {
       tell("\nThe attendant leaves.\n");
     }
     return await FLIGHT_ATTENDANT_LEAVES();
@@ -29232,26 +29233,26 @@ async function I_LOSE_ATTENDANT() {
 async function I_FORCE_RETURN() {
   let val = false;
   let $1;
-  if (!(getb(33808, 12) == 0) && !(getb(33808, 13))) {
-    if (!(g.HERE == SEAT) || (g.CURRENT_ROW != getb(33808, 15)) || (g.CURRENT_SEAT != getb(33808, 16))) {
+  if (!(getb(33976, 12) == 0) && !(getb(33976, 13))) {
+    if (!(g.HERE == SEAT) || (g.CURRENT_ROW != getb(33976, 15)) || (g.CURRENT_SEAT != getb(33976, 16))) {
       val = true;
       tell("\nThe attendant comes up to you. \"Please sit down and finish your delicious Zalagasan dinner at this time, ");
       $1 = await STR_SIR_OR_MAAM();
       tell(S($1));
       tell(".\" She escorts you to your seat.");
-      if (getb(33808, 24)) {
+      if (getb(33976, 24)) {
         tell(" You have already been through all the mind-reading stuff and seen this hateful hockey puck in action, so you obey without question.");
       } else {
-        putb(33808, 24, true);
+        putb(33976, 24, true);
         tell(" As you sit down, you read her mind. It says, \"I can read your mind, buster. Cut the nonsense and eat your delicious food.\"");
       }
       crlf();
-      putb(33808, 3, SEAT_B);
-      putb(33808, 2, 3);
+      putb(33976, 3, SEAT_B);
+      putb(33976, 2, 3);
       await GOTO(SEAT);
     }
   }
-  if (!(getb(33808, 13))) {
+  if (!(getb(33976, 13))) {
     return await QUEUE(I_FORCE_RETURN.id, 10);
   } else {
     return false;
@@ -29259,9 +29260,9 @@ async function I_FORCE_RETURN() {
 }
 
 async function FLIGHT_ATTENDANT_LEAVES() {
-  putb(33808, 18, false);
+  putb(33976, 18, false);
   clearFlag(FLIGHT_ATTENDANT, SEEN);
-  putb(33808, 41, 0);
+  putb(33976, 41, 0);
   return await DEQUEUE(I_LOSE_ATTENDANT.id);
 }
 
@@ -29269,10 +29270,10 @@ async function ASK_FOR_STINGLAI() {
   if (hasFlag(CHUTE, TOUCHED)) {
     tell("\"Sorry, that's the only spare we have. We carry only enough of them for the crew, and luckily the navigator was sick today.\"\n");
     return true;
-  } else if (!(getb(33808, 35) == 0)) {
+  } else if (!(getb(33976, 35) == 0)) {
     setFlag(CHUTE, TOUCHED);
     tell("\"Oh! You're one of us,\" says the attendant, smiling. \"If I'd known, I'd never have given you the Zalagasan Special. Awful, wasn't it?\"\n\nShe hands you a parachute and helps you strap it to your back. \"You go first,\" she smiles, \"I just have to make some pointlessly reassuring noises to the animals back there.\" She leaves.\n");
-    putb(33808, 22, false);
+    putb(33976, 22, false);
     await FLIGHT_ATTENDANT_LEAVES();
     move(CHUTE, PLAYER);
     return setFlag(CHUTE, WORN);
@@ -29292,13 +29293,13 @@ async function FLIGHT_ATTENDANT_F(context = false) {
     await DPRINT(g.PRSO);
     tell(" is a very sensitive, delicate creature, and might start to feel uncomfortable if a passenger started following him (or her) around. Besides, you need only ring for one and your slightest whim will be attended to.\n");
     return true;
-  } else if ((g.HERE == GALLEY) && !(getb(33808, 35))) {
+  } else if ((g.HERE == GALLEY) && !(getb(33976, 35))) {
     await CTHE_PRINT(FLIGHT_ATTENDANT);
     tell(" hasn't warmed up any. \"I don't know what you have in mind, but I don't want any part of it. Maybe you'd better get back to your seat.\"\n");
     await PCLEAR();
     return FATAL_VALUE;
   } else if (hasFlag(FLIGHT_ATTENDANT, SEEN) || (g.HERE == GALLEY)) {
-    putb(33808, 22, true);
+    putb(33976, 22, true);
     if (context == M_WINNER) {
       if (isVerb(V.STINGLAI)) {
         if ((g.PRSO == CHUTE) || (await RAND_PRSO$(FAKE_CHUTE_OBJECT))) {
@@ -29309,7 +29310,7 @@ async function FLIGHT_ATTENDANT_F(context = false) {
         }
         return false;
       } else if (isVerb(V.HELLO)) {
-        if ((g.P_PRSA_WORD == W.NO) && (getb(33808, 23) == 0)) {
+        if ((g.P_PRSA_WORD == W.NO) && (getb(33976, 23) == 0)) {
           putProp(RANDOM_OBJECT, P.PSEUDO_TABLE, REGULATIONS_OBJECT);
           await PERFORM_WITH_PLAYER(V.ASK_ABOUT, FLIGHT_ATTENDANT, RANDOM_OBJECT);
           return FATAL_VALUE;
@@ -29344,7 +29345,7 @@ async function FLIGHT_ATTENDANT_F(context = false) {
         } else if (isVerb(V.SHOW)) {
           tell("\"Yes, that's very nice.\"\n");
           return true;
-        } else if (!(getb(33808, 12) == 0)) {
+        } else if (!(getb(33976, 12) == 0)) {
           tell("\"Really, ");
           $2 = await STR_SIR_OR_MAAM();
           tell(S($2));
@@ -29366,7 +29367,7 @@ async function FLIGHT_ATTENDANT_F(context = false) {
         return true;
       } else if (isVerb(V.ASK_ABOUT, V.ASK_FOR)) {
         if (await RAND_PRSI$(REGULATIONS_OBJECT)) {
-          putb(33808, 23, 0);
+          putb(33976, 23, 0);
           tell("\"The ZAA clearly states that all tables must be in their stowed position for landing. Clearly, your table cannot be stowed (except of course by brute force, which is prohibited) while your food is still in place. Union rules do not permit me to remove a full plate. Therefore unless you eat your food, I shall not be able to remove your plate, your table will not be stowed properly, we shall not be able to land, and we shall have to fly round and round until we run out of fuel, crash, and die. Thank you for your attention. Sit back, relax and enjoy the flight.\"\n\nThe attendant goes away.\n");
           return await FLIGHT_ATTENDANT_LEAVES();
         } else if ((g.PRSI == CHUTE) || (await RAND_PRSI$(FAKE_CHUTE_OBJECT))) {
@@ -29446,19 +29447,19 @@ async function I_DIDNT_RETURN_TO_SEAT(food_winner$ = false) {
       $1 = await STR_SIR_OR_MAAM();
       tell(S($1));
       tell(".\" You find yourself being frog-marched back to your seat, where you are unceremoniously dumped", S(PCR));
-      if (!(getb(33808, 12) == 0) && !(getb(33808, 14))) {
+      if (!(getb(33976, 12) == 0) && !(getb(33976, 14))) {
         tell("\"Besides, you haven't eaten your delicious Zalagasan dinner yet.\"\n");
       }
-      putb(33808, 2, getb(33808, 4));
-      putb(33808, 3, getb(33808, 5));
+      putb(33976, 2, getb(33976, 4));
+      putb(33976, 3, getb(33976, 5));
       await PERFORM(V.WALK_TO, SEAT);
       await DISPLAY_PLACE();
     } else {
       clearFlag(SEATBELT_LIGHT, LIGHTED);
       tell("\nThe FASTEN SEAT BELT light overhead blinks off.\n");
     }
-    if (!(get(33828, 0) == 0)) {
-      await apply(get(33828, 0));
+    if (!(get(33996, 0) == 0)) {
+      await apply(get(33996, 0));
     }
     return true;
   }
@@ -29472,7 +29473,7 @@ async function AIRLINE_MEAL_F() {
       return true;
     } else if (isVerb(V.EAT)) {
       tell("You hold your breath and cram the disgusting food into your mouth. It writhes distinctly on the way down. You hear groans of disgust and disbelief from your fellow passengers.\n");
-      putb(33808, 14, true);
+      putb(33976, 14, true);
       remove(AIRLINE_MEAL);
       await QUEUE(I_ATE_FOOD.id, 2);
       return true;
@@ -29480,11 +29481,11 @@ async function AIRLINE_MEAL_F() {
       if ((await NOUN_USED$(W.BOWL, W.PLATE)) && !(isVerb(V.LOOK_INSIDE))) {
         tell("It's a traditional Zalagasan pottery bowl, and it looks as if you'd better not think about what it's made of.\n");
         return true;
-      } else if (!(getb(33808, 17) == 0)) {
+      } else if (!(getb(33976, 17) == 0)) {
         tell("Very well. It's horrible. At first you think \"Ho hum, don't mind eating it, but I wouldn't want to tread in it\" but then you decide that it's even worse than that. It seems to be composed of old shoe-leather and a number of small greenish, mutated things with too many heads. Innumerable tiny eyes peer up at you from the plate.\n");
         return true;
       } else {
-        putb(33808, 17, true);
+        putb(33976, 17, true);
         tell(S(DONT), "want to.\n");
         return true;
       }
@@ -29500,8 +29501,8 @@ async function AIRLINE_MEAL_F() {
           return true;
         }
         tell("As you gingerly pick up your bowl of hateful food, the flight attendant appears. ");
-        if (!(getb(33808, 24))) {
-          putb(33808, 24, true);
+        if (!(getb(33976, 24))) {
+          putb(33976, 24, true);
           tell("You read her mind. It says \"I can read your mind, buster. Put that food down or else.\"");
         } else {
           tell("This being the mind-reading hockey puck, nothing need be said.");
@@ -29569,7 +29570,7 @@ async function AIRLINE_MEAL_F() {
 }
 
 async function CHECK_REGULATIONS() {
-  let ct = getb(33808, 23), val = false;
+  let ct = getb(33976, 23), val = false;
   let $1;
   if ((ct = ct - 1) == 0) {
     tell("\n\"You had better eat that food, ");
@@ -29578,7 +29579,7 @@ async function CHECK_REGULATIONS() {
     tell(". Do you not know the regulations?\"\n");
     val = true;
   }
-  putb(33808, 23, ct);
+  putb(33976, 23, ct);
   return val;
 }
 
@@ -29595,7 +29596,7 @@ async function SERVE_MEAL() {
   tell("\n");
   await CTHE_PRINT(FLIGHT_ATTENDANT);
   tell(" appears and");
-  if (!(getb(33808, 6) == 0)) {
+  if (!(getb(33976, 6) == 0)) {
     tell(", after a brief consultation, rewards your neighbour with a delicious concoction involving raspberries and kiwi fruit. She then");
   }
   tell(" asks you what you would like for dinner. \"We have Chicken Kiev with raspberry vinegar and a kiwi fruit, or we have Filet with raspberries and kiwi vinegar dressing. Which would you prefer?\"\n");
@@ -29654,28 +29655,28 @@ async function SERVE_MEAL() {
     move(AIRLINE_MEAL, SEAT_TABLE);
     await THIS_IS_IT(AIRLINE_MEAL);
     await AIR_MEAL_STATE(1);
-    putb(33808, 12, true);
+    putb(33976, 12, true);
     setFlag(SEAT_TABLE, SURFACE);
     await TABLE_STATE(1);
-    putb(33808, 15, g.CURRENT_ROW);
-    putb(33808, 16, g.CURRENT_SEAT);
+    putb(33976, 15, g.CURRENT_ROW);
+    putb(33976, 16, g.CURRENT_SEAT);
     await QUEUE(I_WARN_LOSER.id, 20);
     await QUEUE(I_MEAL_ESCAPES.id, 75);
     tell("\n\"Ladies and gentlemen, at this time we will be enabling the various comfort control functions of your Comf-O-Mat (TM) seats. For your safety and comfort, please do not abuse them.\"\n");
-    return putb(33808, 8, false);
+    return putb(33976, 8, false);
   }
 }
 
 async function I_WARN_LOSER() {
   let move$ = false;
   let $1;
-  if (!(getb(33808, 13)) && !(getb(33808, 14))) {
+  if (!(getb(33976, 13)) && !(getb(33976, 14))) {
     if (!(g.HERE == AISLE || g.HERE == SEAT)) {
       await QUEUE(I_WARN_LOSER.id, -1);
       return false;
     } else if (g.HERE == AISLE) {
       move$ = true;
-    } else if ((g.HERE == SEAT) && ((g.CURRENT_ROW != getb(33808, 15)) || (g.CURRENT_SEAT != getb(33808, 16)))) {
+    } else if ((g.HERE == SEAT) && ((g.CURRENT_ROW != getb(33976, 15)) || (g.CURRENT_SEAT != getb(33976, 16)))) {
       move$ = true;
     }
     await DEQUEUE(I_WARN_LOSER.id);
@@ -29687,8 +29688,8 @@ async function I_WARN_LOSER() {
     tell(". You haven't eaten your delicious Zalagasan dinner yet. Surely you must know the regulations.\"");
     if (move$) {
       tell(" You find yourself, as if by magic, back in your seat, staring at the hateful thing", S(PCR));
-      putb(33808, 2, getb(33808, 15));
-      putb(33808, 3, getb(33808, 16));
+      putb(33976, 2, getb(33976, 15));
+      putb(33976, 3, getb(33976, 16));
       await PERFORM(V.WALK_TO, SEAT);
       await DISPLAY_PLACE();
     } else {
@@ -29701,7 +29702,7 @@ async function I_WARN_LOSER() {
 }
 
 async function I_MEAL_ESCAPES() {
-  if (!(getb(33808, 13)) && !(getb(33808, 14))) {
+  if (!(getb(33976, 13)) && !(getb(33976, 14))) {
     tell("\nAfter a relatively lengthy and peculiarly odorous incubation, your Zalagasan specialty finally escapes its bowl and runs amok in the ");
     await DPRINT(PLANE);
     tell(". Its adventures conclude, at least from your point of view, when it enters the cockpit and forces the pilot to crash into the jungle, much to the chagrin of those passengers who survived that long.");
@@ -29712,9 +29713,9 @@ async function I_MEAL_ESCAPES() {
 }
 
 async function I_RUN_PLANE() {
-  let rpc = get(33850, 0);
-  if ((rpc = rpc + 1) < 15) {
-    put(33850, 0, rpc);
+  let rpc = get(34018, 0);
+  if (s16(rpc = rpc + 1) < s16(15)) {
+    put(34018, 0, rpc);
     return false;
   }
   await DEQUEUE(I_RUN_PLANE.id);
@@ -29723,7 +29724,7 @@ async function I_RUN_PLANE() {
     await SERVE_MEAL();
   } else {
     await QUEUE(I_DIDNT_RETURN_TO_SEAT.id, 5);
-    put(33828, 0, SERVE_MEAL.id);
+    put(33996, 0, SERVE_MEAL.id);
   }
   return true;
 }
@@ -29801,9 +29802,9 @@ async function SDESC_RANDOM_OBJECT() {
 async function RANDOM_OBJECT_F(context = false) {
   let which = getProp(RANDOM_OBJECT, P.PSEUDO_TABLE), str = 0, food_here$ = false, ns = 0, food_person = 0, food_seat = 0;
   if (which == OTHER_FOOD_OBJECT) {
-    if (!(getb(33808, 12) == 0)) {
+    if (!(getb(33976, 12) == 0)) {
       if (g.HERE == SEAT) {
-        if (!((food_person = getb(33808, 6)) == 0)) {
+        if (!((food_person = getb(33976, 6)) == 0)) {
           ns = getb(NEIGHBOR_SEATS, g.CURRENT_SEAT - 1);
           if (((await GET_SEAT(ns)) & FOOD_MASK) == 0) {
             food_here$ = true;
@@ -29903,7 +29904,7 @@ async function RANDOM_OBJECT_F(context = false) {
       return false;
     }
   } else if ((which == VOICE_OBJECT) || ((g.HERE == LAV_LOBBY) && isVerb(V.LISTEN))) {
-    if (!(getb(33808, 28) == 0) && hasFlag(AIRPHONE, TOUCHED)) {
+    if (!(getb(33976, 28) == 0) && hasFlag(AIRPHONE, TOUCHED)) {
       if (isVerb(V.LISTEN)) {
         await DEQUEUE(I_SAY_VOICES.id);
         return await I_SAY_VOICES(false);
@@ -29985,7 +29986,7 @@ async function RANDOM_OBJECT_F(context = false) {
       if (g.HERE == OUTSIDE_PLANE) {
         tell("It's a normal hatch, closed, from which you're dangling.\n");
         return true;
-      } else if (getb(33808, 33) > 1) {
+      } else if (s16(getb(33976, 33)) > s16(1)) {
         tell("The hatch is open.\n");
         return true;
       } else {
@@ -29996,26 +29997,26 @@ async function RANDOM_OBJECT_F(context = false) {
       tell("You must be determined to prove that anything can be difficult if enough intelligence is applied.\n");
       return true;
     } else if (isVerb(V.RAISE)) {
-      if (getb(33808, 33) > 0) {
+      if (s16(getb(33976, 33)) > s16(0)) {
         tell("You must be determined to win that bet.\n");
-        return putb(33808, 34, true);
+        return putb(33976, 34, true);
       } else {
-        putb(33808, 33, 1);
+        putb(33976, 33, 1);
         tell("That wasn't too bad. Bet the next step is a real killer.\n");
         return true;
       }
     } else if (isVerb(V.PULL)) {
-      if (getb(33808, 33) == 0) {
+      if (getb(33976, 33) == 0) {
         tell("You must be determined to win that bet.\n");
-        return putb(33808, 34, true);
+        return putb(33976, 34, true);
       } else {
-        putb(33808, 33, 2);
+        putb(33976, 33, 2);
         await DEQUEUE(I_WARN_LOSER.id);
         await DEQUEUE(I_MEAL_ESCAPES.id);
         await DEQUEUE(I_RUN_PLANE.id);
         await DEQUEUE(I_DIDNT_RETURN_TO_SEAT.id);
         await DEQUEUE(I_LOSE_ATTENDANT.id);
-        if (!(getb(33808, 34) == 0)) {
+        if (!(getb(33976, 34) == 0)) {
           tell("Although you tried, y");
         } else {
           tell("Y");
@@ -30035,7 +30036,7 @@ async function RANDOM_OBJECT_F(context = false) {
         return await PERFORM(V.EXAMINE, RANDOM_OBJECT);
       }
     } else if (isVerb(V.CLOSE, V.LOCK)) {
-      putb(33808, 33, 0);
+      putb(33976, 33, 0);
       await ALREADY_CLOSED();
       return true;
     } else if (isVerb(V.KNOCK)) {
@@ -30067,7 +30068,7 @@ async function RANDOM_OBJECT_F(context = false) {
   } else if (which == BABY_OBJECT) {
     if (!(await ON_PLANE$())) {
       return await CANT_SEE_ANY(RANDOM_OBJECT);
-    } else if (getb(33808, 6) != MOMMA_PERSON) {
+    } else if (getb(33976, 6) != MOMMA_PERSON) {
       tell("There doesn't seem to be one in the immediate vicinity.\n");
       return true;
     } else if (isVerb(V.TAKE)) {
@@ -30081,16 +30082,16 @@ async function RANDOM_OBJECT_F(context = false) {
       return true;
     } else if (!(g.NOW_PRSI$ == 0) && isVerb(V.SHOW)) {
       if (g.PRSO == AIRLINE_MAGAZINE) {
-        if (getb(33808, 25) > 1) {
+        if (s16(getb(33976, 25)) > s16(1)) {
           tell("The mother sees you coming and drives you away", S(PCR));
           await DO_WALK(P.NORTH);
         } else {
-          putb(33808, 25, 2);
+          putb(33976, 25, 2);
           tell("The baby is amused by the pretensions of the in-flight magazine. It gurgles over the llama-wool clothes, chortles at the pygmy hogs, licks its hateful chops over the nice arrangements of cannibal cuisine, and giggles at the Ai-Ai. Then it sees the picture of Princess Ani-Ta'a. Its face turns bright red and crumples up (an improvement, if anything) and it bursts into hysterical sobs.\n\nIts mother glares at you, picks up the baby and begins to stroll up and down the aisle, crooning horribly to her offspring.\n");
         }
         await QUEUE(I_MOMMA_RETURNS.id, 4);
-        putb(33808, 6, 0);
-        putb(33808, 7, 0);
+        putb(33976, 6, 0);
+        putb(33976, 7, 0);
         return await SET_SEAT_PERSON(0, SEAT_B, 8, true);
       } else {
         tell("The loathsome little creature smiles and nods.\n");
@@ -30117,14 +30118,14 @@ async function RANDOM_OBJECT_F(context = false) {
       tell(" from here.\n");
       return true;
     } else if (isVerb(V.PUSH)) {
-      if (!(getb(33808, 8) == 0)) {
-        put(33850, 0, get(33850, 0) - 1);
-        if (!(getb(33808, 9))) {
-          put(33850, 0, get(33850, 0) - 1);
+      if (!(getb(33976, 8) == 0)) {
+        put(34018, 0, get(34018, 0) - 1);
+        if (!(getb(33976, 9))) {
+          put(34018, 0, get(34018, 0) - 1);
           tell("You hear a tiny metallic voice whispering nearby.\n");
           return true;
         } else if (!(hasFlag(PHONES, WORN))) {
-          put(33850, 0, get(33850, 0) - 1);
+          put(34018, 0, get(34018, 0) - 1);
           tell("You hear a small metallic voice whispering nearby.\n");
           return true;
         } else {
@@ -30159,12 +30160,12 @@ async function RANDOM_OBJECT_F(context = false) {
 async function I_MOMMA_RETURNS() {
   if ((g.HERE == SEAT || g.HERE == AISLE) && (g.CURRENT_ROW == 8) && ((g.HERE == AISLE) || (g.CURRENT_SEAT == SEAT_B || g.CURRENT_SEAT == SEAT_C))) {
     tell("\nThe mother returns, bearing her by now quiet infant. She is accompanied by a flight attendant, who marches you back to your seat without further ado.\n\n");
-    if (getb(33808, 12)) {
-      putb(33808, 2, getb(33808, 15));
-      putb(33808, 3, getb(33808, 16));
+    if (getb(33976, 12)) {
+      putb(33976, 2, getb(33976, 15));
+      putb(33976, 3, getb(33976, 16));
     } else {
-      putb(33808, 2, 3);
-      putb(33808, 3, SEAT_B);
+      putb(33976, 2, 3);
+      putb(33976, 3, SEAT_B);
     }
     await PERFORM(V.WALK_TO, SEAT);
     await SET_SEAT_PERSON(MOMMA_PERSON, SEAT_B, 8, true);
@@ -30394,7 +30395,7 @@ async function RANDOM_PERSON_F(context = 0, n_ = 0) {
         ptr = g.P_CONT;
         ct = g.P_LEN;
         loop1: for (;;) {
-          if (ct > 0) {
+          if (s16(ct) > s16(0)) {
             if (eq(get(P_LEXV, ptr), W.STINGLAI, W.KA_ABI)) {
               tell("understand your extremely imprecise pronunciation");
               break loop1;
@@ -30432,7 +30433,7 @@ async function RANDOM_PERSON_F(context = 0, n_ = 0) {
     return true;
   } else if (n_ == FAT_PERSON) {
     tell("He's entirely absorbed in the contemplation of his next meal");
-    if (!(getb(33808, 12) == 0) && (((await GET_SEAT(SEAT_E, 6)) & FOOD_MASK) == 0)) {
+    if (!(getb(33976, 12) == 0) && (((await GET_SEAT(SEAT_E, 6)) & FOOD_MASK) == 0)) {
       tell(", despite the one he's now eating");
     }
     tell(S(PERIOD));
@@ -30527,9 +30528,9 @@ async function SMOKER_SHOOTS_YOU() {
 async function SMOKER_PERSON_PRSO() {
   if (await TOUCHING$()) {
     if (!g.SEX) {
-      if (!(getb(33808, 44))) {
+      if (!(getb(33976, 44))) {
         tell("He draws away from you, looking shocked. \"Touch me again and you'll live to regret it, buddy.\"\n");
-        return putb(33808, 44, true);
+        return putb(33976, 44, true);
       } else {
         await SMOKER_SHOOTS_YOU();
         return true;
@@ -30562,19 +30563,19 @@ async function SMOKER_PERSON_PRSO() {
 
 async function SMOKER_PERSON_PRSI() {
   if (isVerb(V.TAKE)) {
-    if (!(getb(33808, 44) == 0)) {
+    if (!(getb(33976, 44) == 0)) {
       await SMOKER_SHOOTS_YOU();
     } else {
       tell("\"Try something like that again and I guarantee you'll regret it.\n");
     }
-    return putb(33808, 44, true);
+    return putb(33976, 44, true);
   } else if (isVerb(V.SHOW)) {
     if (g.PRSO == AIRLINE_MEAL) {
-      if (!(getb(33808, 44) == 0)) {
+      if (!(getb(33976, 44) == 0)) {
         return await SMOKER_SHOOTS_YOU();
       } else {
         tell("\"Do that again and you'll live to regret it.\"\n");
-        return putb(33808, 44, true);
+        return putb(33976, 44, true);
       }
     } else {
       return false;
@@ -30654,9 +30655,9 @@ async function AIRPHONE_F() {
     putProp(RANDOM_OBJECT, P.PSEUDO_TABLE, VOICE_OBJECT);
     await PERFORM(V.LISTEN, RANDOM_OBJECT);
     return true;
-  } else if (isVerb(V.REPLY) || (isVerb(V.TAKE) && !(getb(33808, 27) == 0))) {
-    if (!(getb(33808, 27) == 0)) {
-      putb(33808, 27, false);
+  } else if (isVerb(V.REPLY) || (isVerb(V.TAKE) && !(getb(33976, 27) == 0))) {
+    if (!(getb(33976, 27) == 0)) {
+      putb(33976, 27, false);
       tell("\"Hello? Hello? ");
       (await GENDER_PRINT("Mr ", "Ms "));
       await PRINT_LAST_NAME();
@@ -30674,7 +30675,7 @@ async function AIRPHONE_F() {
           }
           tell("\nThe line is disconnected. For a moment you hear a hum, and then voices.\n");
           await QUEUE(I_SAY_VOICES.id, 1);
-          putb(33808, 28, true);
+          putb(33976, 28, true);
           putProp(LAV_LOBBY, P.HEAR, RANDOM_OBJECT);
           setFlag(AIRPHONE, TOUCHED);
         } else {
@@ -30711,21 +30712,21 @@ async function AIRPHONE_F() {
 }
 
 async function I_SAY_VOICES(cr = true) {
-  if ((g.HERE == LAV_LOBBY) && !(getb(33808, 28) == 0) && hasFlag(AIRPHONE, TOUCHED)) {
+  if ((g.HERE == LAV_LOBBY) && !(getb(33976, 28) == 0) && hasFlag(AIRPHONE, TOUCHED)) {
     putProp(LAV_LOBBY, P.HEAR, 0);
     if (cr) {
       crlf();
     }
     tell("\"Uh, Roger, Air Zalagasa 612, say your message.\"\n\n\"Uh, Air Zalagasa 612, we have engine failure and our ");
-    if (getb(33808, 16) >= SEAT_D) {
+    if (s16(getb(33976, 16)) >= s16(SEAT_D)) {
       tell("starboard");
     } else {
       tell("port");
     }
     tell(" wing is about to drop off. We anticipate a crash situation at this time.\"\n\n\"Roger, Air, uh, Zalagasa 612, estimate your crash time please.\"\n\n\"Air Zalagasa 612, about five minutes from now.\"\n\n\"Understood. By the way, there was no crash filed for this time in your flight plan. You really should apply in triplicate for permission to crash, at least half an hour before take off.\"\n\nClick.\n\nYou hang up.\n");
-    putb(33808, 28, false);
+    putb(33976, 28, false);
     clearFlag(AIRPHONE, TOUCHED);
-    putb(33808, 35, true);
+    putb(33976, 35, true);
     return true;
   } else {
     return false;
@@ -30956,7 +30957,7 @@ async function RIPCORD_F() {
 
 async function TO_IN_AIR() {
   await DEQUEUE(I_OUTSIDE_PLANE.id);
-  putb(33808, 19, 3);
+  putb(33976, 19, 3);
   await QUEUE(I_FALLING.id);
   await GOTO(IN_AIR, true, true);
   return true;
@@ -31027,8 +31028,8 @@ async function GO_OUTSIDE_PLANE() {
 
 async function I_OUTSIDE_PLANE() {
   let script = 0;
-  script = getb(33808, 19);
-  putb(33808, 19, script = script - 1);
+  script = getb(33976, 19);
+  putb(33976, 19, script = script - 1);
   crlf();
   if (script == 4) {
     setFlag(OUTSIDE_PLANE, SEEN);
@@ -31065,10 +31066,10 @@ async function LOOK_IN_HATCH() {
 async function I_FALLING() {
   let script = 0, float = false, val = false;
   float = await CHUTE_OPEN$();
-  script = getb(33808, 19);
-  putb(33808, 19, script = script - 1);
-  if (float && !(getb(33808, 36))) {
-    putb(33808, 36, true);
+  script = getb(33976, 19);
+  putb(33976, 19, script = script - 1);
+  if (float && !(getb(33976, 36))) {
+    putb(33976, 36, true);
     val = true;
     tell("\n");
     await CTHE_PRINT(NERD);

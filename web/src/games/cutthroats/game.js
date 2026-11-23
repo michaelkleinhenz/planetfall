@@ -380,6 +380,7 @@ export const MG_TIME = 1;
 export const MG_VARIATION = 2;
 export const MG_LENGTH = 6;
 export const MG_NEXT = 4;
+export const LAST_OBJECT = 223;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

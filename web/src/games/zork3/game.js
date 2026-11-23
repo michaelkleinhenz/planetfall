@@ -371,6 +371,7 @@ export const YEAR_CAGED = 777;
 export const REAL_YEAR_CLOSED = 883;
 export const YEAR_PRESENT = 948;
 export const ZORK_NUMBER = 3;
+export const LAST_OBJECT = 228;
 export const LOW_DIRECTION = 18;
 
 // ---- Actions (V?xxx) ----

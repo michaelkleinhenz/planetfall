@@ -404,6 +404,7 @@ export const S_FIREPROOF = 10;
 export const S_FENCE = 11;
 export const S_FANTASIZE = 12;
 export const ZORK_NUMBER = 2;
+export const LAST_OBJECT = 251;
 export const LOW_DIRECTION = 18;
 
 // ---- Actions (V?xxx) ----

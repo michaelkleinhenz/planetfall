@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  copyTable, encodeWord, inTable, printTable, readChar, restoreUndo, saveUndo, setColor, setFont, tokenize,
+  copyTable, encodeWord, inTable, printTable, readChar, restoreUndo, s16, saveUndo, setColor, setFont, tokenize,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -539,7 +539,7 @@ export const C128 = 7;
 export const C64 = 8;
 export const APPLE_2C = 9;
 export const APPLE_2GS = 10;
-export const MACHINES = 48800;
+export const MACHINES = 49116;
 export const F_OLD = 0;
 export const F_DEFAULT = 1;
 export const F_PICTURES = 2;
@@ -571,13 +571,13 @@ export const C_BLUE = 6;
 export const C_MAGENTA = 7;
 export const C_CYAN = 8;
 export const C_WHITE = 9;
-export const BWWW = 48824;
-export const BWCR = 48828;
-export const WBBB = 48832;
-export const DWWW = 48836;
-export const DEFCOLORS = 48840;
-export const ST_MONO = 48852;
-export const MACHINE_COLORS = 48932;
+export const BWWW = 49140;
+export const BWCR = 49144;
+export const WBBB = 49148;
+export const DWWW = 49152;
+export const DEFCOLORS = 49156;
+export const ST_MONO = 49168;
+export const MACHINE_COLORS = 49248;
 export const APPLE_LEFT = 95;
 export const APPLE_RIGHT = 90;
 export const APPLE_HORZ = 76;
@@ -587,7 +587,7 @@ export const IBM_BRC = 217;
 export const IBM_TLC = 218;
 export const IBM_HORZ = 196;
 export const IBM_VERT = 179;
-export const DIR_HACKS = 48954;
+export const DIR_HACKS = 49270;
 export const I_NORTH = 0;
 export const I_NE = 1;
 export const I_EAST = 2;
@@ -598,9 +598,9 @@ export const I_WEST = 6;
 export const I_NW = 7;
 export const I_U = 8;
 export const I_D = 9;
-export const DIR_NAMES = 48970;
-export const PDIR_LIST = 48990;
-export const XPDIR_LIST = 49002;
+export const DIR_NAMES = 49286;
+export const PDIR_LIST = 49306;
+export const XPDIR_LIST = 49318;
 export const UP_ARROW = 129;
 export const DOWN_ARROW = 130;
 export const LEFT_ARROW = 131;
@@ -631,11 +631,11 @@ export const CLICK1 = 254;
 export const CLICK2 = 253;
 export const MAC_DOWN_ARROW = 47;
 export const MAC_UP_ARROW = 92;
-export const TCHARS = 49014;
+export const TCHARS = 49330;
 export const FIRST_MAC_ARROW = 26;
-export const PAD_NAMES = 49044;
+export const PAD_NAMES = 49360;
 export const C_TABLE_LENGTH = 100;
-export const C_TABLE = 49062;
+export const C_TABLE = 49378;
 export const C_INTLEN = 4;
 export const C_RTN = 0;
 export const C_TICK = 1;
@@ -651,34 +651,34 @@ export const CEXITFLAG = 4;
 export const CEXITSTR = 1;
 export const DEXITOBJ = 1;
 export const DEXITSTR = 2;
-export const NEW_STATS = 49264;
+export const NEW_STATS = 49580;
 export const NORMAL_RATE = 2;
 export const BLESSED_RATE = 4;
 export const MIN_HIT_PROB = 50;
 export const MAX_HIT_PROB = 95;
-export const STSTR = 49272;
-export const KEY_LABELS = 49286;
-export const APPLE_LABELS = 49306;
+export const STSTR = 49588;
+export const KEY_LABELS = 49602;
+export const APPLE_LABELS = 49622;
 export const SOFT_LEN = 36;
 export const NSOFT_LEN = -36;
-export const SOFT_KEYS = 49706;
-export const KEY_DEFAULTS = 49766;
+export const SOFT_KEYS = 50022;
+export const KEY_DEFAULTS = 50082;
 export const FUMBLE_NUMBER = 6;
 export const LOAD_ALLOWED = 30;
 export const NORMAL_ATTACK = 0;
 export const PARRYING = 1;
 export const THRUSTING = 2;
-export const YAWNS = 49786;
-export const HO_HUM = 49798;
-export const YUKS = 49814;
-export const FIRMS = 49824;
-export const ATTACHES = 49836;
-export const POINTLESS = 49844;
-export const PUZZLES = 49854;
-export const UNKNOWN_MSGS = 49878;
-export const LIKELIES = 49888;
-export const CAPS = 49904;
-export const VOCAB2 = 50022;
+export const YAWNS = 50102;
+export const HO_HUM = 50114;
+export const YUKS = 50130;
+export const FIRMS = 50140;
+export const ATTACHES = 50152;
+export const POINTLESS = 50160;
+export const PUZZLES = 50170;
+export const UNKNOWN_MSGS = 50194;
+export const LIKELIES = 50204;
+export const CAPS = 50220;
+export const VOCAB2 = 50338;
 export const BASE_CHAR = 79;
 export const MARKBIT = 128;
 export const SHOWING_ROOM = 1;
@@ -686,49 +686,49 @@ export const SHOWING_INV = 2;
 export const SHOWING_ALL = 3;
 export const SHOWING_STATS = 4;
 export const SLINE_LENGTH = 82;
-export const SLINE = 50182;
+export const SLINE = 50498;
 export const MAX_HEIGHT = 25;
 export const MAX_DWIDTH = 62;
 export const DBOX_LENGTH = 1552;
-export const DBOX = 50264;
+export const DBOX = 50580;
 export const MWIDTH = 17;
 export const MHEIGHT = 11;
 export const MAP_SIZE = 187;
-export const MAP = 51816;
+export const MAP = 52132;
 export const CENTERX = 8;
 export const NCENTERX = 0;
 export const CENTERY = 5;
 export const NCENTERY = 0;
 export const ROOMS_MAPPED_LENGTH = 46;
-export const ROOMS_MAPPED = 52004;
+export const ROOMS_MAPPED = 52320;
 export const MAP_TOP = 1;
 export const MAP_BOT = 9;
 export const MAP_LEFT = 256;
 export const MAP_RIGHT = 3840;
 export const NGVERBS = 33;
-export const GAME_VERBS = 52050;
+export const GAME_VERBS = 52366;
 export const NR_VERBS = 19;
-export const R_VERBS = 52116;
+export const R_VERBS = 52432;
 export const NHAVES = 23;
-export const HAVEVERBS = 52154;
+export const HAVEVERBS = 52470;
 export const NTVERBS = 17;
-export const TALKVERBS = 52200;
+export const TALKVERBS = 52516;
 export const NTOUCHES = 81;
-export const TOUCHVERBS = 52234;
+export const TOUCHVERBS = 52550;
 export const NHVERBS = 17;
-export const HURTVERBS = 52396;
+export const HURTVERBS = 52712;
 export const NUMPUTS = 10;
-export const PUTVERBS = 52430;
+export const PUTVERBS = 52746;
 export const NMVERBS = 28;
-export const MOVEVERBS = 52450;
+export const MOVEVERBS = 52766;
 export const NSVERBS = 19;
-export const SEEVERBS = 52506;
+export const SEEVERBS = 52822;
 export const ENTER_VERBS = 5;
 export const CLIMB_ON_VERBS = 13;
-export const E_VERBS = 52544;
+export const E_VERBS = 52860;
 export const EXIT_VERBS = 3;
 export const CLIMB_DOWN_VERBS = 5;
-export const X_VERBS = 52570;
+export const X_VERBS = 52886;
 export const D_N = 1;
 export const D_NE = 2;
 export const D_E = 4;
@@ -737,7 +737,7 @@ export const D_S = 16;
 export const D_SW = 32;
 export const D_W = 64;
 export const D_NW = 128;
-export const DBIT_LIST = 52580;
+export const DBIT_LIST = 52896;
 export const XD_N = 254;
 export const XD_NE = 253;
 export const XD_E = 251;
@@ -746,22 +746,22 @@ export const XD_S = 239;
 export const XD_SW = 223;
 export const XD_W = 191;
 export const XD_NW = 127;
-export const XDBIT_LIST = 52588;
+export const XDBIT_LIST = 52904;
 export const D_ALL = 255;
 export const D_LEFT = 31;
 export const D_RIGHT = 241;
 export const D_TOP = 124;
 export const D_BOTTOM = 199;
-export const DEFAULT_BORDERS = 52600;
-export const XLIST_NAMES = 52650;
+export const DEFAULT_BORDERS = 52916;
+export const XLIST_NAMES = 52966;
 export const NORMAL_DHEIGHT = 9;
-export const XOFFS = 52674;
-export const YOFFS = 52690;
-export const SHITCHARS = 52706;
-export const QDIRS = 52714;
-export const ZDIRS = 52720;
-export const SETOFFS = 52726;
-export const SNAMES = 52736;
+export const XOFFS = 52990;
+export const YOFFS = 53006;
+export const SHITCHARS = 53022;
+export const QDIRS = 53030;
+export const ZDIRS = 53036;
+export const SETOFFS = 53042;
+export const SNAMES = 53052;
 export const QMARK = 96;
 export const IQMARK = 126;
 export const TRCORNER = 71;
@@ -798,9 +798,9 @@ export const UARROW = 92;
 export const DARROW = 93;
 export const UDARROW = 94;
 export const SMBOX = 95;
-export const MCHARS = 52754;
-export const XCHARS = 52762;
-export const NXCHARS = 52770;
+export const MCHARS = 53070;
+export const XCHARS = 53078;
+export const NXCHARS = 53086;
 export const IUARROW = 123;
 export const IDARROW = 124;
 export const IUDARROW = 125;
@@ -833,54 +833,54 @@ export const BEGINNERS_EXPERIENCE = 0;
 export const STATMAX = 99;
 export const READING_IQ = 40;
 export const WINNING_COMPASSION = -45;
-export const DEFAULT_STATS = 52778;
+export const DEFAULT_STATS = 53094;
 export const CNAME_LEN = 7;
 export const BARMAR = 10;
 export const APPBOX = 18;
-export const CNAMES = 52794;
-export const CSTATS = 52878;
+export const CNAMES = 53110;
+export const CSTATS = 53194;
 export const INIT_POTENTIAL = 60;
 export const AVERAGE = 0;
 export const SPREAD = 0;
-export const THRESHOLDS = 52890;
+export const THRESHOLDS = 53206;
 export const MAX_LEVEL = 8;
-export const RANK_NAMES = 52908;
+export const RANK_NAMES = 53224;
 export const CHARNAME_LENGTH = 24;
-export const CHARNAME = 52914;
+export const CHARNAME = 53230;
 export const NAMES_LENGTH = 12;
 export const DEFAULT_NAME_LENGTH = 13;
-export const DEFAULT_NAME = 52940;
+export const DEFAULT_NAME = 53256;
 export const LABEL_WIDTH = 12;
-export const BAR_LABELS = 52946;
-export const STAT_NAMES = 52960;
-export const BORDERS = 52976;
-export const MAZE_ROOMS = 53026;
-export const MOOR_ROOMS = 53078;
-export const CELLAR_ROOMS = 53086;
-export const TOWER1_ROOMS = 53094;
-export const TOWER2_ROOMS = 53100;
-export const TOWER3_ROOMS = 53106;
-export const PLAIN_ROOMS = 53112;
+export const BAR_LABELS = 53262;
+export const STAT_NAMES = 53276;
+export const BORDERS = 53292;
+export const MAZE_ROOMS = 53342;
+export const MOOR_ROOMS = 53394;
+export const CELLAR_ROOMS = 53402;
+export const TOWER1_ROOMS = 53410;
+export const TOWER2_ROOMS = 53416;
+export const TOWER3_ROOMS = 53422;
+export const PLAIN_ROOMS = 53428;
 export const INIT_STORM_TIMER = 4;
-export const MIZNIA_ROOMS = 53120;
-export const JUNGLE_ROOMS = 53124;
-export const CAVE_ROOMS = 53132;
-export const GRUE_SIGHTS = 53140;
+export const MIZNIA_ROOMS = 53436;
+export const JUNGLE_ROOMS = 53440;
+export const CAVE_ROOMS = 53448;
+export const GRUE_SIGHTS = 53456;
 export const MIRROR_LIFE = 36;
-export const GRUE_ROOMS = 53150;
-export const FOREST_ROOMS = 53162;
-export const RUIN_ROOMS = 53170;
-export const ACCARDI_ROOMS = 53178;
-export const SHORE_ROOMS = 53184;
-export const WAND_LIST = 53188;
-export const WAND_FUNCTIONS = 53234;
-export const POTION_LIST = 53248;
-export const POTION_TABLES = 53292;
-export const ALL_SCROLLS = 53306;
-export const SCROLL_LIST = 53322;
-export const SCROLL_FUNCTIONS = 53396;
-export const TELEROOMS = 53410;
-export const OVERS = 53420;
+export const GRUE_ROOMS = 53466;
+export const FOREST_ROOMS = 53478;
+export const RUIN_ROOMS = 53486;
+export const ACCARDI_ROOMS = 53494;
+export const SHORE_ROOMS = 53500;
+export const WAND_LIST = 53504;
+export const WAND_FUNCTIONS = 53550;
+export const POTION_LIST = 53564;
+export const POTION_TABLES = 53608;
+export const ALL_SCROLLS = 53622;
+export const SCROLL_LIST = 53638;
+export const SCROLL_FUNCTIONS = 53712;
+export const TELEROOMS = 53726;
+export const OVERS = 53736;
 export const HIGHEST_ZBOT = 16384;
 export const ORUINS = 1;
 export const OBRIDGE = 2;
@@ -896,134 +896,134 @@ export const OMOOR = 11;
 export const OJUNGLE = 12;
 export const OMIZNIA = 13;
 export const OTHRIFF = 14;
-export const FLY_TABLES = 53522;
-export const PICT_LIST = 53552;
-export const GURDY_EFFECTS = 53564;
-export const GURDY_PEEKS = 53576;
-export const Q_BUZZES = 53588;
-export const N_BUZZES = 53610;
-export const SWEAR_WORDS = 53634;
-export const COLOR_WORDS = 53674;
+export const FLY_TABLES = 53838;
+export const PICT_LIST = 53868;
+export const GURDY_EFFECTS = 53880;
+export const GURDY_PEEKS = 53892;
+export const Q_BUZZES = 53904;
+export const N_BUZZES = 53926;
+export const SWEAR_WORDS = 53950;
+export const COLOR_WORDS = 53990;
 export const NO_MIRROR = -1;
-export const PILLAR_DOINGS = 53692;
-export const PILLAR_MOVES = 53702;
-export const BFLY_EATINGS = 53712;
-export const BFLY_DOINGS = 53722;
-export const BFLY_HOVERS = 53732;
-export const REACH_TABLES = 53778;
-export const MIRROR_LIST = 53790;
+export const PILLAR_DOINGS = 54008;
+export const PILLAR_MOVES = 54018;
+export const BFLY_EATINGS = 54028;
+export const BFLY_DOINGS = 54038;
+export const BFLY_HOVERS = 54048;
+export const REACH_TABLES = 54094;
+export const MIRROR_LIST = 54106;
 export const AMB = 255;
-export const TREE_DOINGS = 53806;
-export const SAD_TREES = 53816;
-export const HUNTER_DOINGS = 53826;
-export const MINX_DOINGS = 53836;
-export const DARK_MINXES = 53848;
-export const MINX_SETTLES = 53858;
-export const MINX_RESTLESS = 53868;
-export const MINX_SLEEPS = 53878;
-export const MINX_NERVES = 53888;
-export const ARCH_SNIFFS = 53898;
-export const CORBIE_SOUNDS = 53908;
-export const FEAR_CORBIES = 53918;
-export const MAD_CORBIES = 53928;
-export const SICK_DACT = 53938;
-export const HAPPY_DACT = 53952;
-export const DACT_WAITS = 53966;
-export const FLYING_DACT = 53976;
-export const TORTURES = 53988;
-export const MAMA_CLIMBS = 54002;
-export const CLERIC_WOES = 54012;
-export const MAGIC_WORDS = 54134;
-export const SCARE_COLORS = 54160;
-export const SHYNESS = 54170;
-export const CAROLS = 54180;
-export const HOW_SINGS = 54196;
-export const XTREE_DOINGS = 54206;
-export const COOK_DOINGS = 54218;
-export const MAGIC_ITEMS = 54230;
-export const WEAPON_ITEMS = 54318;
-export const ARMOR_ITEMS = 54330;
-export const LIGHT_SOURCES = 54348;
-export const WIND_ALERTS = 54354;
+export const TREE_DOINGS = 54122;
+export const SAD_TREES = 54132;
+export const HUNTER_DOINGS = 54142;
+export const MINX_DOINGS = 54152;
+export const DARK_MINXES = 54164;
+export const MINX_SETTLES = 54174;
+export const MINX_RESTLESS = 54184;
+export const MINX_SLEEPS = 54194;
+export const MINX_NERVES = 54204;
+export const ARCH_SNIFFS = 54214;
+export const CORBIE_SOUNDS = 54224;
+export const FEAR_CORBIES = 54234;
+export const MAD_CORBIES = 54244;
+export const SICK_DACT = 54254;
+export const HAPPY_DACT = 54268;
+export const DACT_WAITS = 54282;
+export const FLYING_DACT = 54292;
+export const TORTURES = 54304;
+export const MAMA_CLIMBS = 54318;
+export const CLERIC_WOES = 54328;
+export const MAGIC_WORDS = 54450;
+export const SCARE_COLORS = 54476;
+export const SHYNESS = 54486;
+export const CAROLS = 54496;
+export const HOW_SINGS = 54512;
+export const XTREE_DOINGS = 54522;
+export const COOK_DOINGS = 54534;
+export const MAGIC_ITEMS = 54546;
+export const WEAPON_ITEMS = 54634;
+export const ARMOR_ITEMS = 54646;
+export const LIGHT_SOURCES = 54664;
+export const WIND_ALERTS = 54670;
 export const STORAGE_SPACE = 1024;
-export const FREE_STORAGE = 54364;
+export const FREE_STORAGE = 54680;
 export const PRESENT = 6;
 export const MAX_ATIME = 11;
-export const ARCH_ROOMS = 55388;
-export const DORN_MISSES = 55400;
-export const DORN_HITS = 55412;
-export const DORN_ROOMS = 55424;
-export const PUPP_DOINGS = 55430;
-export const PUPP_MISSES = 55446;
-export const PUPP_HITS = 55458;
-export const STRANGLES = 55472;
+export const ARCH_ROOMS = 55704;
+export const DORN_MISSES = 55716;
+export const DORN_HITS = 55728;
+export const DORN_ROOMS = 55740;
+export const PUPP_DOINGS = 55746;
+export const PUPP_MISSES = 55762;
+export const PUPP_HITS = 55774;
+export const STRANGLES = 55788;
 export const S_LADDER = 0;
 export const S_CAT = 1;
 export const S_13 = 2;
 export const S_UMBRELLA = 3;
-export const SUCKER_TYPES = 55482;
-export const SUCKER_NAMES = 55494;
-export const SUCKER_SYNS_A = 55502;
-export const SUCKER_SYNS_B = 55510;
-export const SUCKER_ADJS = 55518;
-export const SUCKER_SMASHES = 55526;
-export const SUCKER_HITS = 55574;
-export const SUCKER_MISSES = 55622;
-export const SUCKER_STALKS = 55630;
-export const LUCKY_OBJECTS = 55640;
-export const EMPTY_WANDS = 55648;
-export const NO_SLEEPS = 55658;
-export const OFFERS = 55676;
-export const USED_OFFERS = 55688;
-export const JUNGLE_DESCS = 55714;
-export const CITY_ENTRIES = 55726;
-export const FOREST_DESCS = 55760;
-export const RUIN_DESCS = 55796;
-export const BRIDGE_TYPES = 55810;
-export const NOPEELS = 55822;
+export const SUCKER_TYPES = 55798;
+export const SUCKER_NAMES = 55810;
+export const SUCKER_SYNS_A = 55818;
+export const SUCKER_SYNS_B = 55826;
+export const SUCKER_ADJS = 55834;
+export const SUCKER_SMASHES = 55842;
+export const SUCKER_HITS = 55890;
+export const SUCKER_MISSES = 55938;
+export const SUCKER_STALKS = 55946;
+export const LUCKY_OBJECTS = 55956;
+export const EMPTY_WANDS = 55964;
+export const NO_SLEEPS = 55974;
+export const OFFERS = 55992;
+export const USED_OFFERS = 56004;
+export const JUNGLE_DESCS = 56030;
+export const CITY_ENTRIES = 56042;
+export const FOREST_DESCS = 56076;
+export const RUIN_DESCS = 56112;
+export const BRIDGE_TYPES = 56126;
+export const NOPEELS = 56138;
 export const FULL = 5;
 export const SUSS_WIDTH = 18;
 export const SUSS_HEIGHT = 5;
 export const SUSSY = 7;
-export const SUSS_STATS = 55832;
-export const AH_YESSES = 55836;
-export const MENU_LIST = 55852;
-export const SALT_DABS = 55862;
-export const DARK_WALKS = 55874;
-export const OWOMAN_SNORTS = 55884;
-export const DARK_MOVINGS = 55898;
-export const URGRUE_GREETS = 55910;
-export const URGRUE_BYES = 55920;
-export const CHARLIST = 55930;
-export const BUNNY_SPLITS = 55958;
-export const OWOMAN_MOVES = 55970;
-export const BANDIT_MUTTERS = 55982;
-export const OWOMAN_EYES = 55992;
-export const OUCHES = 56002;
-export const CRAB_ATTACKS = 56012;
-export const CRAB_MISSES = 56024;
-export const RAT_ATTACKS = 56042;
-export const RAT_MISSES = 56054;
-export const SNIPE_HITS = 56072;
-export const SNIPE_MISSES = 56084;
-export const VAPOR_DOINGS = 56102;
-export const VAPOR_LAUGHS = 56112;
-export const VAPOR_TICKLES = 56122;
-export const VAPOR_SNEERS = 56132;
-export const SPIDER_HITS = 56146;
-export const SPIDER_MISSES = 56158;
-export const SLUG_HITS = 56176;
-export const SLUG_MISSES = 56188;
-export const WORM_HITS = 56204;
-export const WORM_MISSES = 56216;
-export const JAW_HITS = 56234;
-export const JAW_MISSES = 56246;
-export const DEAD_HITS = 56264;
-export const DEAD_MISSES = 56276;
-export const GHOUL_HITS = 56294;
-export const GHOUL_MISSES = 56306;
-export const MISSES = 56324;
-export const NO_MINX = 56336;
+export const SUSS_STATS = 56148;
+export const AH_YESSES = 56152;
+export const MENU_LIST = 56168;
+export const SALT_DABS = 56178;
+export const DARK_WALKS = 56190;
+export const OWOMAN_SNORTS = 56200;
+export const DARK_MOVINGS = 56214;
+export const URGRUE_GREETS = 56226;
+export const URGRUE_BYES = 56236;
+export const CHARLIST = 56246;
+export const BUNNY_SPLITS = 56274;
+export const OWOMAN_MOVES = 56286;
+export const BANDIT_MUTTERS = 56298;
+export const OWOMAN_EYES = 56308;
+export const OUCHES = 56318;
+export const CRAB_ATTACKS = 56328;
+export const CRAB_MISSES = 56340;
+export const RAT_ATTACKS = 56358;
+export const RAT_MISSES = 56370;
+export const SNIPE_HITS = 56388;
+export const SNIPE_MISSES = 56400;
+export const VAPOR_DOINGS = 56418;
+export const VAPOR_LAUGHS = 56428;
+export const VAPOR_TICKLES = 56438;
+export const VAPOR_SNEERS = 56448;
+export const SPIDER_HITS = 56462;
+export const SPIDER_MISSES = 56474;
+export const SLUG_HITS = 56492;
+export const SLUG_MISSES = 56504;
+export const WORM_HITS = 56520;
+export const WORM_MISSES = 56532;
+export const JAW_HITS = 56550;
+export const JAW_MISSES = 56562;
+export const DEAD_HITS = 56580;
+export const DEAD_MISSES = 56592;
+export const GHOUL_HITS = 56610;
+export const GHOUL_MISSES = 56622;
+export const MISSES = 56640;
+export const NO_MINX = 56652;
 export const C_ENABLED$ = 0;
 export const C_ENABLED = 1;
 export const C_DISABLED = 0;
@@ -1079,7 +1079,7 @@ export const O_START = 1;
 export const O_LENGTH = 2;
 export const O_END = 3;
 export const LAST_BAD_LEN = 13;
-export const LAST_BAD = 56348;
+export const LAST_BAD = 56664;
 export const P_SYNLEN = 8;
 export const P_SBITS = 0;
 export const P_SPREP1 = 1;
@@ -1097,7 +1097,7 @@ export const SOG = 16;
 export const STAKE = 8;
 export const SMANY = 4;
 export const SHAVE = 2;
-export const LAST_OBJECT_OBJECT = 0;
+export const LAST_OBJECT = 0;
 export const P_SRCTOP = 0;
 export const P_SRCALL = 1;
 export const P_SRCBOT = 2;
@@ -1107,15 +1107,16 @@ export const DOOR_CRASHER = 30;
 export const RESET_GURDY = 4;
 export const INIT_CLERIC_SCRIPT = 4;
 export const INIT_TRUFFLE = 50;
-export const OWOMAN_TABLE = 56426;
-export const MAYOR_TABLE = 56480;
-export const CLERIC_TABLE = 56508;
+export const OWOMAN_TABLE = 56742;
+export const MAYOR_TABLE = 56796;
+export const CLERIC_TABLE = 56824;
 export const BMAX = 10946;
 export const YES_INBUF_LENGTH = 14;
-export const YES_INBUF = 56518;
+export const YES_INBUF = 56834;
 export const YES_LEXV_LENGTH = 10;
-export const YES_LEXV = 56532;
-export const LAST_OBJECT = 448;
+export const YES_LEXV = 56848;
+export const FATAL_VALUE = 2;
+export const M_ENTER = 2;
 export const LOW_DIRECTION = 52;
 export const VOCAB = 64;
 
@@ -1839,14 +1840,14 @@ async function MAIN_LOOP() {
     num = 1;
     if (ocnt == 0) {
       num = 0;
-    } else if (ocnt > 1) {
+    } else if (s16(ocnt) > s16(1)) {
       tbl = g.P_PRSO;
       obj = false;
       if (!(icnt == 0)) {
         obj = get(g.P_PRSI, 1);
       }
       num = ocnt;
-    } else if (icnt > 1) {
+    } else if (s16(icnt) > s16(1)) {
       ptbl = false;
       tbl = g.P_PRSI;
       obj = get(g.P_PRSO, 1);
@@ -1882,13 +1883,13 @@ async function MAIN_LOOP() {
     } else {
       x = 0;
       g.P_MULT$ = false;
-      if (num > 1) {
+      if (s16(num) > s16(1)) {
         g.P_MULT$ = true;
       }
       tmp = false;
       loop3: for (;;) {
         if (++cnt > num) {
-          if (x > 0) {
+          if (s16(x) > s16(0)) {
             tell("[The ");
             if (!(x == num)) {
               tell("other ");
@@ -1914,7 +1915,7 @@ async function MAIN_LOOP() {
         } else {
           obj1 = get(g.P_PRSI, cnt);
         }
-        if ((num > 1) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
+        if ((s16(num) > s16(1)) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
           if (obj1 == NOT_HERE_OBJECT) {
             ++x;
             continue loop3;
@@ -2027,7 +2028,7 @@ async function QUEUED$(rtn) {
   let tbl = 0, len = 0;
   tbl = C_TABLE + g.C_INTS;
   len = div((C_TABLE + C_TABLE_LENGTH) - tbl, C_INTLEN);
-  if (len < 1) {
+  if (s16(len) < s16(1)) {
     return false;
   } else if (rtn = inTable(rtn, tbl, len, 132)) {
     if (get(rtn, C_TICK) == 0) {
@@ -2047,7 +2048,7 @@ async function QUEUE(rtn, tick = (-1)) {
       if (!(int == 0)) {
         c_ = int;
       } else {
-        if (g.C_INTS < C_INTLEN) {
+        if (s16(g.C_INTS) < s16(C_INTLEN)) {
           return true;
         }
         g.C_INTS = g.C_INTS - C_INTLEN;
@@ -2063,7 +2064,7 @@ async function QUEUE(rtn, tick = (-1)) {
     }
     c_ = c_ + C_INTLEN;
   }
-  if (int > g.CLOCK_HAND) {
+  if (s16(int) > s16(g.CLOCK_HAND)) {
     tick = -(tick + 3);
   }
   put(int, C_TICK, tick);
@@ -2087,18 +2088,18 @@ async function CLOCKER() {
       break loop1;
     } else if (get(g.CLOCK_HAND, C_RTN)) {
       tick = get(g.CLOCK_HAND, C_TICK);
-      if (tick < (-1)) {
+      if (s16(tick) < s16(-1)) {
         put(g.CLOCK_HAND, C_TICK, (-tick) - 3);
         q$ = g.CLOCK_HAND;
       } else if (!(tick == 0)) {
-        if (tick > 0) {
+        if (s16(tick) > s16(0)) {
           tick = tick - 1;
           put(g.CLOCK_HAND, C_TICK, tick);
         }
         if (!(tick == 0)) {
           q$ = g.CLOCK_HAND;
         }
-        if (!(tick > 0)) {
+        if (!(s16(tick) > s16(0))) {
           rtn = get(g.CLOCK_HAND, C_RTN);
           if (tick == 0) {
             copyTable(g.CLOCK_HAND, 0, C_INTLEN);
@@ -2136,17 +2137,17 @@ async function REFRESH_STATS$() {
       g.NO_REFRESH = -1;
     } else if (!(ostat == max)) {
       delta = div(rate * max, 100);
-      if (delta < 1) {
+      if (s16(delta) < s16(1)) {
         delta = 1;
       }
-      if (ostat > max) {
+      if (s16(ostat) > s16(max)) {
         nstat = ostat - delta;
-        if (nstat < max) {
+        if (s16(nstat) < s16(max)) {
           nstat = max;
         }
       } else {
         nstat = ostat + delta;
-        if (nstat > max) {
+        if (s16(nstat) > s16(max)) {
           nstat = max;
         }
       }
@@ -2193,7 +2194,7 @@ async function REFRESH_STATS$() {
     }
   }
   tell(C(SP));
-  if (cnt > 1) {
+  if (s16(cnt) > s16(1)) {
     tell(S(W.ARE));
   } else {
     tell(S(W.IS));
@@ -2227,7 +2228,7 @@ async function INITVARS() {
   highlight(H_NORMAL);
   x = get(0, 17);
   g.WIDTH = div(x, g.CWIDTH);
-  if (g.WIDTH > 80) {
+  if (s16(g.WIDTH) > s16(80)) {
     g.WIDTH = 80;
   }
   x = get(0, 18);
@@ -2442,7 +2443,7 @@ async function DISPLAY_PLACE() {
   } else if (g.OLD_HERE == 0) {
   } else if (dest = inTable(g.OLD_HERE, ROOMS_MAPPED + 1, len, 1)) {
     end = ROOMS_MAPPED + len;
-    if (dest < end) {
+    if (s16(dest) < s16(end)) {
       x = 0 - (end - dest);
       copyTable(dest + 1, dest, x);
     }
@@ -2458,7 +2459,7 @@ async function DISPLAY_PLACE() {
     loop1: for (;;) {
       if (g.P_WALK_DIR == getb(PDIR_LIST, dir)) {
         x = dir + 4;
-        if (x > I_NW) {
+        if (s16(x) > s16(I_NW)) {
           x = x - 8;
         }
         len = getProp(g.HERE, getb(PDIR_LIST, x));
@@ -2480,7 +2481,7 @@ async function DISPLAY_PLACE() {
         }
         x = x * len;
         g.MAPX = g.MAPX + x;
-        if ((g.MAPY < 1) || (g.MAPY > 9) || (g.MAPX < 1) || (g.MAPX > 15)) {
+        if ((s16(g.MAPY) < s16(1)) || (s16(g.MAPY) > s16(9)) || (s16(g.MAPX) < s16(1)) || (s16(g.MAPX) > s16(15))) {
           await NEW_MAP();
           break loop1;
         }
@@ -2550,7 +2551,7 @@ async function ANNOUNCE_RANK() {
   stat = get(g.STATS, EXPERIENCE);
   tell("Level ");
   loop1: for (;;) {
-    if (stat < get(THRESHOLDS, level)) {
+    if (s16(stat) < s16(get(THRESHOLDS, level))) {
       break loop1;
     } else if (++level > MAX_LEVEL) {
       level = 0;
@@ -2695,7 +2696,7 @@ async function CLOSE_MAP(rm, y, x) {
     putb(ROOMS_MAPPED, len, rm);
     putb(ROOMS_MAPPED, 0, len);
   }
-  if ((y > (-1)) && (y < MHEIGHT) && (x > (-1)) && (x < MWIDTH)) {
+  if ((s16(y) > s16(-1)) && (s16(y) < s16(MHEIGHT)) && (s16(x) > s16(-1)) && (s16(x) < s16(MWIDTH))) {
     if (!(g.VT220 == 0)) {
       char = await SMART_CHAR$(rm);
     } else {
@@ -2741,7 +2742,7 @@ async function CLOSE_MAP(rm, y, x) {
     xoff = get(XOFFS, dir);
     ny = y + yoff;
     nx = x + xoff;
-    if ((ny < 0) || (ny > 10) || (nx < 0) || (nx > 16)) {
+    if ((s16(ny) < s16(0)) || (s16(ny) > s16(10)) || (s16(nx) < s16(0)) || (s16(nx) > s16(16))) {
       continue loop1;
     }
     char = getb(ctbl, dir);
@@ -2754,7 +2755,7 @@ async function CLOSE_MAP(rm, y, x) {
       char = char + 17;
     }
     putb(MAP + (ny * MWIDTH), nx, char);
-    if ((tbl == 0) || (type == 0) || (dest == 0) || (y < 0) || (y > 10) || (x < 0) || (x > 16)) {
+    if ((tbl == 0) || (type == 0) || (dest == 0) || (s16(y) < s16(0)) || (s16(y) > s16(10)) || (s16(x) < s16(0)) || (s16(x) > s16(16))) {
       continue loop1;
     }
     len = len + (len & 254);
@@ -2782,7 +2783,7 @@ async function CLOSE_MAP(rm, y, x) {
     loop2: for (;;) {
       ny = ny + yoff;
       nx = nx + xoff;
-      if ((ny < 0) || (ny > 10) || (nx < 0) || (nx > 16)) {
+      if ((s16(ny) < s16(0)) || (s16(ny) > s16(10)) || (s16(nx) < s16(0)) || (s16(nx) > s16(16))) {
         break loop2;
       }
       putb(MAP + (ny * MWIDTH), nx, char);
@@ -2801,7 +2802,7 @@ async function CLOSE_MAP(rm, y, x) {
     }
     ny = ny + (yoff + yoff);
     nx = nx + (xoff + xoff);
-    if ((ny < (-1)) || (ny > MHEIGHT) || (nx < (-1)) || (nx > MWIDTH)) {
+    if ((s16(ny) < s16(-1)) || (s16(ny) > s16(MHEIGHT)) || (s16(nx) < s16(-1)) || (s16(nx) > s16(MWIDTH))) {
       continue loop1;
     }
     await CLOSE_MAP(dest, ny, nx);
@@ -2893,7 +2894,7 @@ async function FAR_MAP(rm, y, x) {
     putb(ROOMS_MAPPED, len, rm);
     putb(ROOMS_MAPPED, 0, len);
   }
-  if ((y > (-1)) && (y < MHEIGHT) && (x > (-1)) && (x < MWIDTH)) {
+  if ((s16(y) > s16(-1)) && (s16(y) < s16(MHEIGHT)) && (s16(x) > s16(-1)) && (s16(x) < s16(MWIDTH))) {
     if (g.VT220 == 0) {
       char = await DUMB_CHAR$(rm);
     } else {
@@ -2935,7 +2936,7 @@ async function FAR_MAP(rm, y, x) {
         return false;
       }
     }
-    if ((dest == 0) || (y < 0) || (y > 10) || (x < 0) || (x > 16)) {
+    if ((dest == 0) || (s16(y) < s16(0)) || (s16(y) > s16(10)) || (s16(x) < s16(0)) || (s16(x) > s16(16))) {
       continue loop1;
     }
     len = len & 127;
@@ -2967,7 +2968,7 @@ async function FAR_MAP(rm, y, x) {
     loop2: for (;;) {
       ny = ny + yoff;
       nx = nx + xoff;
-      if ((ny < 0) || (ny > 10) || (nx < 0) || (nx > 16)) {
+      if ((s16(ny) < s16(0)) || (s16(ny) > s16(10)) || (s16(nx) < s16(0)) || (s16(nx) > s16(16))) {
         break loop2;
       }
       putb(MAP + (ny * MWIDTH), nx, char);
@@ -2986,7 +2987,7 @@ async function FAR_MAP(rm, y, x) {
     }
     ny = ny + yoff;
     nx = nx + xoff;
-    if ((ny < (-1)) || (ny > MHEIGHT) || (nx < (-1)) || (nx > MWIDTH)) {
+    if ((s16(ny) < s16(-1)) || (s16(ny) > s16(MHEIGHT)) || (s16(nx) < s16(-1)) || (s16(nx) > s16(MWIDTH))) {
       continue loop1;
     }
     await FAR_MAP(dest, ny, nx);
@@ -3144,7 +3145,7 @@ async function TEXT_STATS() {
     tell(S(get(STSTR, stat)));
     printC(58);
     x = get(g.STATS, stat);
-    if (x < 10) {
+    if (s16(x) < s16(10)) {
       printC(48);
     }
     tell(N(x), C(SP));
@@ -3249,7 +3250,7 @@ async function JUSTIFY_DBOX() {
   base = base + (line * g.BOXWIDTH);
   end = g.BOXWIDTH - 1;
   loop1: for (;;) {
-    if (base > ((DBOX + 2) + len)) {
+    if (s16(base) > s16((DBOX + 2) + len)) {
       break loop1;
     }
     if (ptr = inTable(EOL, base, end, 1)) {
@@ -3258,7 +3259,7 @@ async function JUSTIFY_DBOX() {
       loop2: for (;;) {
         ++x;
         char = getb(base, x);
-        if ((char == EOL) || (char > 31)) {
+        if ((char == EOL) || (s16(char) > s16(31))) {
           break loop2;
         }
       }
@@ -3323,7 +3324,7 @@ async function DISPLAY_DBOX() {
   lines = g.DHEIGHT;
   if (btst(g.IN_DBOX, SHOWING_STATS)) {
     lines = g.MAX_DHEIGHT;
-  } else if ((g.DBOX_LINES - g.DBOX_TOP) > g.DHEIGHT) {
+  } else if (s16(g.DBOX_LINES - g.DBOX_TOP) > s16(g.DHEIGHT)) {
     ++more;
     --lines;
   }
@@ -4255,7 +4256,7 @@ async function ITALICIZE(str) {
   dirOut(D_TABLE_OFF);
   len = get(g.AUX_TABLE, 0);
   ++len;
-  if (len < 2) {
+  if (s16(len) < s16(2)) {
     return true;
   } else if (btst(getb(0, 1), 8)) {
     highlight(H_ITALIC);
@@ -4278,7 +4279,7 @@ async function ITALICIZE(str) {
   }
   loop2: for (;;) {
     char = getb(g.AUX_TABLE, ptr);
-    if ((char > 96) && (char < 123)) {
+    if ((s16(char) > s16(96)) && (s16(char) < s16(123))) {
       char = char - SP;
     }
     printC(char);
@@ -4446,9 +4447,9 @@ async function BAR_NUMBER(stat, val) {
   highlight(H_NORMAL);
   y = stat + g.BARY;
   cursorSet(y, g.BARX + 13);
-  if (val < 10) {
+  if (s16(val) < s16(10)) {
     tell("  ");
-  } else if (val < 100) {
+  } else if (s16(val) < s16(100)) {
     tell(C(SP));
   }
   tell(N(val));
@@ -4465,7 +4466,7 @@ async function RAWBAR(stat, val) {
   z = g.SWIDTH - 1;
   ptr = 1;
   loop1: for (;;) {
-    if (ptr > y) {
+    if (s16(ptr) > s16(y)) {
       break loop1;
     }
     putb(SLINE, ptr, x);
@@ -4486,7 +4487,7 @@ async function RAWBAR(stat, val) {
   await DO_CURSET(y, z + x);
   z = setFont(F_DEFAULT);
   setColor(g.FORE, g.BGND);
-  if (val < 10) {
+  if (s16(val) < s16(10)) {
     printC(SP);
   }
   tell(N(val), "%");
@@ -4499,7 +4500,7 @@ async function APPLE_STATS() {
   loop1: for (;;) {
     tell(S(get(STSTR, cnt)), ":");
     x = get(g.STATS, cnt);
-    if (x < 10) {
+    if (s16(x) < s16(10)) {
       tell("0");
     }
     tell(N(x));
@@ -4507,7 +4508,7 @@ async function APPLE_STATS() {
       break loop1;
     }
     printC(SP);
-    if (g.DWIDTH > 46) {
+    if (s16(g.DWIDTH) > s16(46)) {
       printC(SP);
     }
   }
@@ -4523,10 +4524,10 @@ async function UPDATE_STAT(delta, stat = ENDURANCE, update_max = false) {
   }
   ostat = get(g.STATS, stat);
   nstat = ostat + delta;
-  if (nstat < 0) {
+  if (s16(nstat) < s16(0)) {
     nstat = 0;
   } else if (stat == EXPERIENCE) {
-  } else if (nstat > STATMAX) {
+  } else if (s16(nstat) > s16(STATMAX)) {
     nstat = STATMAX;
   }
   if (ostat == nstat) {
@@ -4538,9 +4539,9 @@ async function UPDATE_STAT(delta, stat = ENDURANCE, update_max = false) {
   } else if (stat == EXPERIENCE) {
   } else if (!(nstat == omax)) {
     max = delta + omax;
-    if (max < 0) {
+    if (s16(max) < s16(0)) {
       max = 0;
-    } else if (max > STATMAX) {
+    } else if (s16(max) > s16(STATMAX)) {
       max = STATMAX;
     }
     put(g.MAXSTATS, stat, max);
@@ -4551,7 +4552,7 @@ async function UPDATE_STAT(delta, stat = ENDURANCE, update_max = false) {
   if (stat == EXPERIENCE) {
     nlvl = await GET_LEVEL$(nstat);
     olvl = await GET_LEVEL$(ostat);
-    if ((nlvl > olvl) || ((nlvl == 0) && (olvl == MAX_LEVEL))) {
+    if ((s16(nlvl) > s16(olvl)) || ((nlvl == 0) && (olvl == MAX_LEVEL))) {
       await UPGRADE_RANK();
       ++newrank;
     }
@@ -4566,7 +4567,7 @@ async function UPDATE_STAT(delta, stat = ENDURANCE, update_max = false) {
       tell(" is back to normal");
     } else {
       tell(" just went ");
-      if (delta < 0) {
+      if (s16(delta) < s16(0)) {
         x = S_BOOP;
         tell(S(W.DOWN));
       } else {
@@ -4616,7 +4617,7 @@ async function UPDATE_STAT(delta, stat = ENDURANCE, update_max = false) {
 async function GET_LEVEL$(val) {
   let lvl = 0;
   for (;;) {
-    if (val < get(THRESHOLDS, lvl)) {
+    if (s16(val) < s16(get(THRESHOLDS, lvl))) {
       return lvl;
     } else if (++lvl > MAX_LEVEL) {
       return false;
@@ -4630,13 +4631,13 @@ async function UPGRADE_RANK() {
   for (;;) {
     o = get(tbl, ENDURANCE);
     n_ = div(STATMAX - o, 10);
-    if (n_ < 1) {
+    if (s16(n_) < s16(1)) {
       n_ = 1;
     }
     n_ = o + n_;
-    if (n_ > STATMAX) {
+    if (s16(n_) > s16(STATMAX)) {
       n_ = STATMAX;
-    } else if (n_ < 1) {
+    } else if (s16(n_) < s16(1)) {
       n_ = 1;
     }
     put(tbl, ENDURANCE, n_);
@@ -4709,7 +4710,7 @@ async function NEW_EXIT$(obj, dir, type, room = 0, data = 0) {
     }
     ptr = g.STORAGE;
     x = g.STORAGE + bytes;
-    if (x > STORAGE_SPACE) {
+    if (s16(x) > s16(STORAGE_SPACE)) {
       (await SAY_ERROR("NEW-EXIT?"));
       return false;
     }
@@ -4885,10 +4886,10 @@ async function VIEW_MONSTER(context = 0) {
     return true;
   }
   x = random(100);
-  if (x < 33) {
+  if (s16(x) < s16(33)) {
     await PRINTCA(g.DESCING);
     tell(" is attacking you");
-  } else if (x < 67) {
+  } else if (s16(x) < s16(67)) {
     tell("You're being attacked by ");
     await PRINTA(g.DESCING);
   } else {
@@ -4956,13 +4957,13 @@ async function NEXT_ENDURANCE$(obj) {
     return x;
   }
   max = getProp(obj, P.EMAX);
-  if (max > x) {
+  if (s16(max) > s16(x)) {
     change = div(2 * max, 100);
-    if (change < 1) {
+    if (s16(change) < s16(1)) {
       change = 1;
     }
     x = x + change;
-    if (x > max) {
+    if (s16(x) > s16(max)) {
       x = max;
     }
     putProp(obj, P.ENDURANCE, x);
@@ -5020,7 +5021,7 @@ async function MONSTER_STRIKES$(obj) {
   let damage = 0, str = 0, chance = 0, x = 0;
   await SEE_MONSTER(obj);
   str = getProp(obj, P.STRENGTH);
-  if (str < 1) {
+  if (s16(str) < s16(1)) {
     return false;
   }
   setFlag(obj, STRICKEN);
@@ -5032,7 +5033,7 @@ async function MONSTER_STRIKES$(obj) {
     }
     chance = div(chance * 45, 100);
     chance = chance + MIN_HIT_PROB;
-    if (chance > MAX_HIT_PROB) {
+    if (s16(chance) > s16(MAX_HIT_PROB)) {
       chance = MAX_HIT_PROB;
     }
   }
@@ -5040,7 +5041,7 @@ async function MONSTER_STRIKES$(obj) {
   if (prob(chance)) {
     damage = STATMAX - get(g.STATS, ARMOR_CLASS);
     damage = div((damage * str) + 99, 100);
-    if (damage < 2) {
+    if (s16(damage) < s16(2)) {
       damage = 1;
     } else {
       damage = random(damage);
@@ -5150,7 +5151,7 @@ async function MOVE_MONSTER$(obj, ud = 0) {
   }
   if (!(dir == P.UP || dir == P.DOWN)) {
     dir = dir + 4;
-    if (dir > P.NORTH) {
+    if (s16(dir) > s16(P.NORTH)) {
       dir = dir - 8;
     }
     g.LAST_MONSTER_DIR = dir;
@@ -5321,7 +5322,7 @@ async function V_PARRY() {
 async function HARMLESS(obj = g.PRSO) {
   await CTHE_PRINT(obj);
   tell(" obviously means you no harm; ");
-  if (get(g.STATS, COMPASSION) < 15) {
+  if (s16(get(g.STATS, COMPASSION)) < s16(15)) {
     tell("even your meager compassion is enough to stay ");
   } else {
     tell("compassion stays ");
@@ -5386,21 +5387,21 @@ async function HIT_MONSTER(mode = NORMAL_ATTACK) {
   pcent = MAX_HIT_PROB;
   if (!(hasFlag(g.PRSO, SLEEPING))) {
     pcent = get(g.STATS, DEXTERITY);
-    if (pcent < MAX_HIT_PROB) {
-      if (pcent < MIN_HIT_PROB) {
+    if (s16(pcent) < s16(MAX_HIT_PROB)) {
+      if (s16(pcent) < s16(MIN_HIT_PROB)) {
         pcent = MIN_HIT_PROB;
       }
       x = div(l * (MAX_HIT_PROB - pcent), 100);
-      if (!(x < 1)) {
+      if (!(s16(x) < s16(1))) {
         pcent = pcent + x;
       }
     }
   }
   if (mode == THRUSTING) {
     pcent = MAX_HIT_PROB;
-  } else if (pcent > MAX_HIT_PROB) {
+  } else if (s16(pcent) > s16(MAX_HIT_PROB)) {
     pcent = MAX_HIT_PROB;
-  } else if (pcent < MIN_HIT_PROB) {
+  } else if (s16(pcent) < s16(MIN_HIT_PROB)) {
     pcent = MIN_HIT_PROB;
   }
   if (prob(pcent)) {
@@ -5408,32 +5409,32 @@ async function HIT_MONSTER(mode = NORMAL_ATTACK) {
       tell(S(g.TAB));
     }
     mend = getProp(g.PRSO, P.ENDURANCE);
-    if (mend < 1) {
+    if (s16(mend) < s16(1)) {
       return false;
     }
-    if (str > 1) {
+    if (s16(str) > s16(1)) {
       dam = random(str);
     }
     x = div(get(g.STATS, LUCK) * dam, 100);
-    if (x < 1) {
+    if (s16(x) < s16(1)) {
       x = 1;
     }
     dam = dam + x;
-    if (dam > str) {
+    if (s16(dam) > s16(str)) {
       dam = str;
     }
     min = div(dam, 5);
     dam = div((getProp(g.PRSI, P.EFFECT) * dam) + 99, 100);
-    if (dam < min) {
+    if (s16(dam) < s16(min)) {
       dam = min;
     } else if (!(hasFlag(g.PRSI, WIELDED))) {
       dam = div(dam, 2);
-      if (dam < min) {
+      if (s16(dam) < s16(min)) {
         dam = min;
       }
     }
     setFlag(g.PRSO, STRICKEN);
-    if (dam < mend) {
+    if (s16(dam) < s16(mend)) {
       pcent = div(dam * 100, mend);
       mend = mend - dam;
       putProp(g.PRSO, P.ENDURANCE, mend);
@@ -5446,7 +5447,7 @@ async function HIT_MONSTER(mode = NORMAL_ATTACK) {
       await HOW_BAD(pcent);
       tell("ly wounds ");
       await THE_PRINT();
-      if (pcent < 20) {
+      if (s16(pcent) < s16(20)) {
         await TOO_BAD();
       }
       printS(g.PERIOD);
@@ -5578,16 +5579,16 @@ async function DIAGNOSE_MONSTER(obj = g.PRSO) {
 }
 
 async function HOW_BAD(pcent) {
-  if (pcent < 20) {
+  if (s16(pcent) < s16(20)) {
     tell("dangerous");
     return true;
-  } else if (pcent < 40) {
+  } else if (s16(pcent) < s16(40)) {
     tell("grave");
     return true;
-  } else if (pcent < 60) {
+  } else if (s16(pcent) < s16(60)) {
     tell("serious");
     return true;
-  } else if (pcent < 80) {
+  } else if (s16(pcent) < s16(80)) {
     tell("noticeab");
     return true;
   } else {
@@ -5984,7 +5985,7 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
-    if ((1 < g.P_LEN) && eq(get(g.P_LEXV, ptr), W.GO) && (nw = get(g.P_LEXV, ptr + P_LEXELEN)) && (await WT$(nw, PS$VERB))) {
+    if ((s16(1) < s16(g.P_LEN)) && eq(get(g.P_LEXV, ptr), W.GO) && (nw = get(g.P_LEXV, ptr + P_LEXELEN)) && (await WT$(nw, PS$VERB))) {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
@@ -6012,12 +6013,12 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
-    if (!(g.P_LEN > 1)) {
+    if (!(s16(g.P_LEN) > s16(1))) {
       printC(91);
       tell(S(g.CANT), "use OOPS that way.]\n");
       return false;
     } else if (get(g.OOPS_TABLE, O_PTR)) {
-      if (g.P_LEN > 2) {
+      if (s16(g.P_LEN) > s16(2)) {
         if (eq(get(g.P_LEXV, ptr + P_LEXELEN), W.QUOTE)) {
           tell("[Sorry. ", S(g.CANT), "correct mistakes in quoted text.]\n");
           return false;
@@ -6048,7 +6049,7 @@ async function PARSER() {
       printC(91);
       tell(S(g.CANT), "use AGAIN that way.]\n");
       return false;
-    } else if (g.P_LEN > 1) {
+    } else if (s16(g.P_LEN) > s16(1)) {
       if (eq(get(g.P_LEXV, ptr + P_LEXELEN), W.PERIOD, W.COMMA, W.THEN) || eq(get(g.P_LEXV, ptr + P_LEXELEN), W.AND)) {
         ptr = ptr + (2 * P_LEXELEN);
         putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 2);
@@ -6060,7 +6061,7 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 1);
     }
-    if (getb(g.P_LEXV, P_LEXWORDS) > 0) {
+    if (s16(getb(g.P_LEXV, P_LEXWORDS)) > s16(0)) {
       copyTable(g.P_LEXV, g.RESERVE_LEXV, P_LEXV_LENGTH);
       copyTable(g.P_INBUF, g.RESERVE_INBUF, P_INBUF_LENGTH);
       g.RESERVE_PTR = ptr;
@@ -6104,7 +6105,7 @@ async function PARSER() {
         if ((wrd == W.TO) && (verb == ACT.TELL || verb == ACT.ASK)) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           wrd = W.QUOTE;
-        } else if ((wrd == W.THEN) && (g.P_LEN > 0) && (verb == 0) && (g.QUOTE_FLAG == 0)) {
+        } else if ((wrd == W.THEN) && (s16(g.P_LEN) > s16(0)) && (verb == 0) && (g.QUOTE_FLAG == 0)) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           put(g.P_ITBL, P_VERBN, 0);
           wrd = W.QUOTE;
@@ -6132,13 +6133,13 @@ async function PARSER() {
           (g.P_LEN == 0) || (g.P_CONT = ptr + P_LEXELEN);
           putb(g.P_LEXV, P_LEXWORDS, g.P_LEN);
           break loop3;
-        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && (len > 1)) || (!(g.QUOTE_FLAG == 0) && (len == 2) && (nw == W.QUOTE)) || ((len > 2) && (nw == W.COMMA || nw == W.AND)))) {
+        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && (s16(len) > s16(1))) || (!(g.QUOTE_FLAG == 0) && (len == 2) && (nw == W.QUOTE)) || ((s16(len) > s16(2)) && (nw == W.COMMA || nw == W.AND)))) {
           dir = val;
           g.P_DIR_WORD = wrd;
           if (nw == W.COMMA || nw == W.AND) {
             await CHANGE_LEXV(ptr + P_LEXELEN, W.THEN);
           }
-          if (!(len > 2)) {
+          if (!(s16(len) > s16(2))) {
             g.QUOTE_FLAG = false;
             break loop3;
           }
@@ -6152,12 +6153,12 @@ async function PARSER() {
           putb(g.P_VTBL, 2, getb(g.P_LEXV, x));
           putb(g.P_VTBL, 3, getb(g.P_LEXV, x + 1));
         } else if ((val = await WT$(wrd, PS$PREPOSITION, 0)) || (wrd == W.ALL || wrd == W.EVERYTHING) || (wrd == W.BOTH || wrd == W.A) || (await WT$(wrd, PS$ADJECTIVE)) || (await WT$(wrd, PS$OBJECT))) {
-          if ((g.P_LEN > 1) && (nw == W.OF) && !(verb == ACT.TAKE) && (val == 0) && !(wrd == W.A) && !(wrd == W.ALL || wrd == W.BOTH || wrd == W.EVERYTHING)) {
+          if ((s16(g.P_LEN) > s16(1)) && (nw == W.OF) && !(verb == ACT.TAKE) && (val == 0) && !(wrd == W.A) && !(wrd == W.ALL || wrd == W.BOTH || wrd == W.EVERYTHING)) {
             put(g.P_OFW, g.P_NCN, wrd);
             of_flag = true;
           } else if (!(val == 0) && ((g.P_LEN == 0) || (nw == W.THEN || nw == W.PERIOD))) {
             g.P_END_ON_PREP = true;
-            if (g.P_NCN < 2) {
+            if (s16(g.P_NCN) < s16(2)) {
               put(g.P_ITBL, P_PREP1, val);
               put(g.P_ITBL, P_PREP1N, wrd);
             }
@@ -6170,7 +6171,7 @@ async function PARSER() {
             ptr = await CLAUSE(ptr, val, wrd);
             if (ptr == 0) {
               return false;
-            } else if (ptr < 0) {
+            } else if (s16(ptr) < s16(0)) {
               g.QUOTE_FLAG = false;
               break loop3;
             }
@@ -6248,7 +6249,7 @@ async function WT$(ptr, bit, b1 = 5) {
   typ = getb(ptr, P_PSOFF);
   if (!(btst(typ, bit))) {
     return false;
-  } else if (b1 > 4) {
+  } else if (s16(b1) > s16(4)) {
     return true;
   }
   typ = typ & P_P1BITS;
@@ -6318,7 +6319,7 @@ async function CLAUSE(ptr, val, wrd) {
         await CHANGE_LEXV(ptr + 2, W.THEN);
         g.P_LEN = g.P_LEN + 2;
       } else if (await WT$(wrd, PS$OBJECT)) {
-        if ((g.P_LEN > 0) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.EVERYTHING)) {
+        if ((s16(g.P_LEN) > s16(0)) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.EVERYTHING)) {
           put(g.P_OFW, g.P_NCN - 1, wrd);
         } else if ((await WT$(wrd, PS$ADJECTIVE)) && !(nw == 0) && (await WT$(nw, PS$OBJECT))) {
         } else if ((andflg == 0) && !(nw == W.BUT || nw == W.EXCEPT) && !(nw == W.AND || nw == W.COMMA)) {
@@ -6666,7 +6667,7 @@ async function BUZZER_WORD$(word) {
   len = get(SWEAR_WORDS, 0);
   if (tbl = inTable(word, SWEAR_WORDS + 2, len)) {
     word = get(g.STATS, INTELLIGENCE);
-    if (word < 1) {
+    if (s16(word) < s16(1)) {
       tell("Such language betrays your low intelligence.\n");
       return true;
     }
@@ -6740,7 +6741,7 @@ async function NUMBER$(ptr) {
   tmp = g.P_LEXV + (ptr + ptr);
   bptr = getb(tmp, 3);
   cnt = getb(tmp, 2);
-  if (cnt > 3) {
+  if (s16(cnt) > s16(3)) {
     cnt = 3;
   }
   loop1: for (;;) {
@@ -6760,9 +6761,9 @@ async function NUMBER$(ptr) {
       }
       exc = sum;
       sum = 0;
-    } else if (sum > 9999) {
+    } else if (s16(sum) > s16(9999)) {
       return false;
-    } else if ((chr > NaN) && (chr < NaN)) {
+    } else if ((s16(chr) > s16(NaN)) && (s16(chr) < s16(NaN))) {
       sum = (sum * 10) + (chr - 48);
     } else {
       return false;
@@ -6771,18 +6772,18 @@ async function NUMBER$(ptr) {
   }
   await CHANGE_LEXV(ptr, W.INTNUM);
   nw = get(g.P_LEXV, ptr + P_LEXELEN);
-  if (sum > 9999) {
+  if (s16(sum) > s16(9999)) {
     return false;
   } else if (!(exc == 0)) {
     g.P_EXCHANGE = exc;
   } else if (!(tim == 0)) {
     g.P_EXCHANGE = 0;
-    if (tim > 23) {
+    if (s16(tim) > s16(23)) {
       return false;
-    } else if (tim > 19) {
-    } else if (tim > 12) {
+    } else if (s16(tim) > s16(19)) {
+    } else if (s16(tim) > s16(12)) {
       return false;
-    } else if (tim > 7) {
+    } else if (s16(tim) > s16(7)) {
     } else {
       tim = 12 + tim;
     }
@@ -6924,7 +6925,7 @@ async function CLAUSE_WIN(adj = false, x = 0) {
 }
 
 async function WORD_PRINT(cnt, buf) {
-  if (buf > 1) {
+  if (s16(buf) > s16(1)) {
     for (;;) {
       if (--cnt < 0) {
         return false;
@@ -6944,7 +6945,7 @@ async function UNKNOWN_WORD(ptr) {
   offset = g.P_LEXV + (ptr * 2);
   len = getb(offset, 2);
   offset = getb(offset, 3);
-  if (offset > 1) {
+  if (s16(offset) > s16(1)) {
     loop1: for (;;) {
       if (--len < 0) {
         break loop1;
@@ -6952,7 +6953,7 @@ async function UNKNOWN_WORD(ptr) {
       char = getb(g.P_INBUF, offset);
       printC(char);
       ++offset;
-      if (cnt < 12) {
+      if (s16(cnt) < s16(12)) {
         ++cnt;
         putb(LAST_BAD, cnt, char);
       }
@@ -6979,8 +6980,8 @@ async function SYNTAX_CHECK() {
     num = getb(syn, P_SBITS) & P_SONUMS;
     prep = get(g.P_ITBL, P_PREP1);
     x = getb(syn, P_SPREP1);
-    if (g.P_NCN > num) {
-    } else if (!(num < 1) && (g.P_NCN == 0) && (prep == 0 || prep == x)) {
+    if (s16(g.P_NCN) > s16(num)) {
+    } else if (!(s16(num) < s16(1)) && (g.P_NCN == 0) && (prep == 0 || prep == x)) {
       drive1 = syn;
     } else if (x == get(g.P_ITBL, P_PREP1)) {
       if ((num == 2) && (g.P_NCN == 1)) {
@@ -7090,7 +7091,7 @@ async function ORPHAN(d1, d2) {
   if (g.P_NCN == 2) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC2, P_NC2L, g.P_OCL2);
   }
-  if (!(g.P_NCN < 1)) {
+  if (!(s16(g.P_NCN) < s16(1))) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC1, P_NC1L, g.P_OCL1);
   }
   if (!(d1 == 0)) {
@@ -7232,7 +7233,7 @@ async function CLAUSE_COPY(src, dest, bb, ee, ocl, insrt = false) {
     beg = beg + P_WORDLEN;
   }
   cnt = get(ocl, P_MATCHLEN) - obeg;
-  if ((obeg > 0) && !(cnt == 0)) {
+  if ((s16(obeg) > s16(0)) && !(cnt == 0)) {
     put(ocl, P_MATCHLEN, 0);
     obeg = obeg + 1;
     loop3: for (;;) {
@@ -7491,14 +7492,14 @@ async function GET_OBJECT(tbl, vrb = true) {
     len = get(tbl, P_MATCHLEN) - tlen;
     if (btst(g.P_GETFLAGS, P_ALL)) {
     } else if (!(len == 0) && btst(g.P_GETFLAGS, P_ONE)) {
-      if (len > 1) {
+      if (s16(len) > s16(1)) {
         put(tbl, 1, get(tbl, random(len)));
         tell("[How about ");
         await THE_PRINT(get(tbl, 1));
         tell("?]\n");
       }
       put(tbl, P_MATCHLEN, 1);
-    } else if ((len > 1) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
+    } else if ((s16(len) > s16(1)) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
       if (g.P_SLOCBITS == (-1)) {
         g.P_SLOCBITS = xbits;
         olen = len;
@@ -7538,7 +7539,7 @@ async function GET_OBJECT(tbl, vrb = true) {
           }
           if (isVerb(V.NAME)) {
             await MORE_SPECIFIC();
-          } else if (get(xtbl, 0) > 22) {
+          } else if (s16(get(xtbl, 0)) > s16(22)) {
             put(xtbl, 0, 0);
             await NYMPH_APPEARS();
             tell("Parser overflow! Please try something else");
@@ -7651,7 +7652,7 @@ async function WHICH_PRINT(tlen, len, tbl) {
         tell(",");
       }
       tell(" or");
-    } else if (len > 2) {
+    } else if (s16(len) > s16(2)) {
       tell(",");
     }
     if (--len < 1) {
@@ -7711,7 +7712,7 @@ async function GLOBAL_CHECK(tbl) {
         break loop2;
       }
       cnt = cnt + 3;
-      if (!(cnt < rmgl)) {
+      if (!(s16(cnt) < s16(rmgl))) {
         break loop2;
       }
     }
@@ -7902,9 +7903,9 @@ async function TAKING_OBJ_FIRST(obj) {
 
 async function MANY_CHECK() {
   let loss = false, tmp = 0;
-  if ((get(g.P_PRSO, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
+  if ((s16(get(g.P_PRSO, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
     loss = 1;
-  } else if ((get(g.P_PRSI, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
+  } else if ((s16(get(g.P_PRSI, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
     loss = 2;
   }
   if (!(loss == 0)) {
@@ -7974,7 +7975,7 @@ async function IS_LIT$(rm = g.HERE, rmbit = true) {
       }
     }
     await DO_SL(rm, 1, 1);
-    if (get(g.P_TABLE, P_MATCHLEN) > 0) {
+    if (s16(get(g.P_TABLE, P_MATCHLEN)) > s16(0)) {
       ++lit;
     }
   }
@@ -8150,7 +8151,7 @@ async function FIND_NOT_HERE(tbl, prso$) {
     }
     g.PRSI = g.P_MOBY_FOUND;
     return false;
-  } else if ((m_f > 1) && (obj = get(tbl, 1)) && (obj = await apply(getProp(obj, P.GENERIC), tbl))) {
+  } else if ((s16(m_f) > s16(1)) && (obj = get(tbl, 1)) && (obj = await apply(getProp(obj, P.GENERIC), tbl))) {
     if (obj == false || obj == NOT_HERE_OBJECT) {
       return true;
     } else if (!(prso$ == 0)) {
@@ -8315,7 +8316,7 @@ async function READ_LEXV() {
     ilen = getb(g.P_INBUF, 1);
     dest = g.P_INBUF + (ilen + 2);
     offset = 0;
-    if ((key > PAD0) && (key < 155)) {
+    if ((s16(key) > s16(PAD0)) && (s16(key) < s16(155))) {
       tbl = await KEYPAD(key);
       if (tbl == 0) {
         sound(S_BOOP);
@@ -8325,19 +8326,19 @@ async function READ_LEXV() {
     } else if (key == CLICK1 || key == CLICK2) {
       y = 0 /* mouse position */;
       x = 0 /* mouse position */;
-      if (g.CWIDTH > 1) {
+      if (s16(g.CWIDTH) > s16(1)) {
         --x;
         x = div(x, g.CWIDTH);
         ++x;
       }
-      if (g.CHEIGHT > 1) {
+      if (s16(g.CHEIGHT) > s16(1)) {
         --y;
         y = div(y, g.CHEIGHT);
         ++y;
       }
-      if (y > 12) {
+      if (s16(y) > s16(12)) {
         continue loop1;
-      } else if (x < g.MOUSEDGE) {
+      } else if (s16(x) < s16(g.MOUSEDGE)) {
         continue loop1;
       }
       tbl = await CLICKED(key, y, x);
@@ -8351,28 +8352,28 @@ async function READ_LEXV() {
         continue loop1;
       }
       g.DBOX_TOP = g.DBOX_TOP - page_size;
-      if (g.DBOX_TOP < 0) {
+      if (s16(g.DBOX_TOP) < s16(0)) {
         g.DBOX_TOP = 0;
       }
       await DISPLAY_DBOX();
       continue loop1;
     } else if (key == DOWN_ARROW || key == MAC_DOWN_ARROW) {
       x = g.DBOX_LINES - g.DHEIGHT;
-      if (btst(g.IN_DBOX, SHOWING_STATS) || (g.DBOX_TOP > x) || (g.DBOX_TOP > (last_page - 1))) {
+      if (btst(g.IN_DBOX, SHOWING_STATS) || (s16(g.DBOX_TOP) > s16(x)) || (s16(g.DBOX_TOP) > s16(last_page - 1))) {
         sound(2);
         continue loop1;
       }
       ++x;
       g.DBOX_TOP = g.DBOX_TOP + page_size;
-      if (g.DBOX_TOP > x) {
+      if (s16(g.DBOX_TOP) > s16(x)) {
         g.DBOX_TOP = x;
-      } else if (g.DBOX_TOP > last_page) {
+      } else if (s16(g.DBOX_TOP) > s16(last_page)) {
         g.DBOX_TOP = last_page;
       }
       await DISPLAY_DBOX();
       continue loop1;
     }
-    if ((key > 132) && (key < 143)) {
+    if ((s16(key) > s16(132)) && (s16(key) < s16(143))) {
       tbl = get(SOFT_KEYS, key - F1);
     }
     if (tbl == 0) {
@@ -8383,7 +8384,7 @@ async function READ_LEXV() {
       sound(S_BOOP);
       continue loop1;
     } else if (ilen == 0) {
-    } else if (len > (76 - ilen)) {
+    } else if (s16(len) > s16(76 - ilen)) {
       sound(S_BOOP);
       continue loop1;
     } else if (!(eq(getb(dest - 1, 0), SP))) {
@@ -8438,7 +8439,7 @@ async function SHOW_TABLE(tbl, len) {
     if ((char == EOL || char == LF) || (char == 124 || char == 33)) {
       crlf();
       return false;
-    } else if ((char > NaN) && (char < NaN)) {
+    } else if ((s16(char) > s16(NaN)) && (s16(char) < s16(NaN))) {
       char = char - SP;
     }
     printC(char);
@@ -8464,37 +8465,37 @@ async function CLICKED(clk, y, x) {
   } else {
     nx = x - g.MAPX;
     ny = y - g.MAPY;
-    if (ny < 0) {
+    if (s16(ny) < s16(0)) {
       my = -ny;
     } else {
       my = ny;
     }
-    if (nx < 0) {
+    if (s16(nx) < s16(0)) {
       mx = -nx;
     } else {
       mx = nx;
     }
     if ((mx == 0) && (my == 0)) {
       dir = AMB;
-    } else if ((3 * mx) <= my) {
-      if (ny > 0) {
+    } else if (s16(3 * mx) <= s16(my)) {
+      if (s16(ny) > s16(0)) {
         dir = I_SOUTH;
       } else {
         dir = I_NORTH;
       }
-    } else if ((2 * my) <= mx) {
-      if (nx > 0) {
+    } else if (s16(2 * my) <= s16(mx)) {
+      if (s16(nx) > s16(0)) {
         dir = I_EAST;
       } else {
         dir = I_WEST;
       }
-    } else if (nx > 0) {
-      if (ny > 0) {
+    } else if (s16(nx) > s16(0)) {
+      if (s16(ny) > s16(0)) {
         dir = I_SE;
       } else {
         dir = I_NE;
       }
-    } else if (ny > 0) {
+    } else if (s16(ny) > s16(0)) {
       dir = I_SW;
     } else {
       dir = I_NW;
@@ -8590,7 +8591,7 @@ async function QUOTED_PHRASE$(ptr, verb) {
   ptr = ptr + P_LEXELEN;
   bptr = g.P_LEXV + (ptr * 2);
   for (;;) {
-    if (len < 0) {
+    if (s16(len) < s16(0)) {
       await PCLEAR();
       tell("[You forgot a second quote.]\n");
       return false;
@@ -8731,7 +8732,7 @@ async function GOTO(where) {
 
 async function MARK_DIR(dir = g.P_WALK_DIR) {
   let tbl = 0, wrd = 0, type = 0, len = 0;
-  if (dir < P.DOWN) {
+  if (s16(dir) < s16(P.DOWN)) {
     return false;
   }
   tbl = getProp(g.HERE, getb(XPDIR_LIST, 0 - (dir - P.NORTH)));
@@ -8970,15 +8971,15 @@ async function NEXT_SKY() {
     return M_FATAL;
   }
   d1 = g.WINDIR + 4;
-  if (d1 > I_NW) {
+  if (s16(d1) > s16(I_NW)) {
     d1 = d1 - 8;
   }
   d2 = d1 + 1;
-  if (d2 > I_NW) {
+  if (s16(d2) > s16(I_NW)) {
     d2 = I_NORTH;
   }
   d3 = d1 - 1;
-  if (d3 < I_NORTH) {
+  if (s16(d3) < s16(I_NORTH)) {
     d3 = I_NW;
   }
   idir = 0 - (dir - P.NORTH);
@@ -8991,23 +8992,23 @@ async function NEXT_SKY() {
   }
   setFlag(BREEZE, SEEN);
   d1 = g.WINDIR - 2;
-  if (d1 < I_NORTH) {
+  if (s16(d1) < s16(I_NORTH)) {
     d1 = d1 + 8;
   }
   if (idir == d1) {
     d2 = g.WINDIR - 3;
-    if (d2 < I_NORTH) {
+    if (s16(d2) < s16(I_NORTH)) {
       d2 = d2 + 8;
     }
     return await DO_CROSSWIND(idir, d2);
   }
   d1 = g.WINDIR + 2;
-  if (d1 > I_NW) {
+  if (s16(d1) > s16(I_NW)) {
     d1 = d1 - 8;
   }
   if (idir == d1) {
     d2 = g.WINDIR + 3;
-    if (d2 > I_NW) {
+    if (s16(d2) > s16(I_NW)) {
       d2 = d2 - 8;
     }
     return await DO_CROSSWIND(idir, d2);
@@ -9431,7 +9432,7 @@ async function ITAKE(vb = true) {
     }
     x = await WEIGHT(g.PRSO);
     max = LOAD_ALLOWED + div(get(g.STATS, STRENGTH), 10);
-    if (!(loc(l) == g.WINNER) && ((x + (await WEIGHT(g.WINNER))) > max)) {
+    if (!(loc(l) == g.WINNER) && (s16(x + (await WEIGHT(g.WINNER))) > s16(max))) {
       if (!(vb == 0)) {
         if (x = first(g.WINNER)) {
           tell("Your load is ");
@@ -9456,7 +9457,7 @@ async function ITAKE(vb = true) {
       }
     }
     max = FUMBLE_NUMBER + div(get(g.STATS, DEXTERITY), 10);
-    if (cnt > max) {
+    if (s16(cnt) > s16(max)) {
       if (!(vb == 0)) {
         tell("Your hands are full.\n");
       }
@@ -9554,7 +9555,7 @@ async function SPARK$(indent = true, obj = g.PRSO) {
   }
   (await ITALICIZE("Snap"));
   tell("! You feel a ");
-  if (g.STATIC > 2) {
+  if (s16(g.STATIC) > s16(2)) {
     tell("painful ");
   }
   tell("spark as you touch ");
@@ -9587,7 +9588,7 @@ async function SPARK_TO$(obj1 = g.PRSO, obj2 = g.PRSI) {
 async function SAY_SNAP() {
   (await ITALICIZE("Snap"));
   tell("! A ");
-  if (g.STATIC > 3) {
+  if (s16(g.STATIC) > s16(3)) {
     tell("painful ");
   }
   tell("spark leaps between ");
@@ -9660,7 +9661,7 @@ async function MSPARK$(obj, damage) {
   await SAY_SNAP();
   tell("you and ");
   await THE_PRINT(obj);
-  if (x < 1) {
+  if (s16(x) < s16(1)) {
     x = 1;
     tell(", leaving it nearly stunned");
   }
@@ -11695,13 +11696,13 @@ async function EMPTY_PRSO(dest) {
             tell("It ");
           }
           await FALLS(obj);
-        } else if (osize > icap) {
+        } else if (s16(osize) > s16(icap)) {
           await CTHE_PRINT(obj);
           await IS_ARE(obj);
           tell("too big to fit in ");
           await THE_PRINT(dest);
           tell(S(g.PERIOD));
-        } else if ((iload + osize) > icap) {
+        } else if (s16(iload + osize) > s16(icap)) {
           await NO_ROOM_IN(dest);
         } else {
           clearFlag(obj, WIELDED);
@@ -11920,14 +11921,14 @@ async function V_PUT() {
   iload = iload - getProp(g.PRSI, P.SIZE);
   icap = getProp(g.PRSI, P.CAPACITY);
   osize = getProp(g.PRSO, P.SIZE);
-  if (osize > icap) {
+  if (s16(osize) > s16(icap)) {
     await CTHE_PRINT();
     await IS_ARE();
     tell("too big to fit");
     await ON_IN(g.PRSI);
     tell(S(g.PERIOD));
     return true;
-  } else if ((iload + osize) > icap) {
+  } else if (s16(iload + osize) > s16(icap)) {
     await NO_ROOM_IN(g.PRSI);
     return true;
   }
@@ -12724,7 +12725,7 @@ async function V_NAME(obj = g.PRSO) {
   any = 0;
   loop1: for (;;) {
     char = getb(g.AUX_TABLE, ptr);
-    if ((char > NaN) && (char < NaN)) {
+    if ((s16(char) > s16(NaN)) && (s16(char) < s16(NaN))) {
       ++any;
     } else {
       ++bad;
@@ -12737,7 +12738,7 @@ async function V_NAME(obj = g.PRSO) {
   if ((any == 0) || !(bad == 0)) {
     (await HOLLOW_VOICE("too complex"));
     return true;
-  } else if (len > 11) {
+  } else if (s16(len) > s16(11)) {
     (await HOLLOW_VOICE("too long"));
     return true;
   }
@@ -13087,7 +13088,7 @@ async function V_WAIT(n_ = 3) {
   let x = false;
   tell("Time passes.\n");
   for (;;) {
-    if (!(x == 0) || (n_ < 1)) {
+    if (!(x == 0) || (s16(n_) < s16(1))) {
       return true;
     } else if (await CLOCKER()) {
       x = true;
@@ -13104,7 +13105,7 @@ async function V_WAIT_FOR() {
       g.CLOCK_WAIT$ = true;
       await IMPOSSIBLE();
       return true;
-    } else if (g.P_NUMBER > 120) {
+    } else if (s16(g.P_NUMBER) > s16(120)) {
       g.CLOCK_WAIT$ = true;
       tell("[That's too long to WAIT.]\n");
       return true;
@@ -13257,9 +13258,9 @@ async function PERPLEXED(who) {
   str = await PICK_NEXT(PUZZLES);
   await CTHE_PRINT(who);
   x = random(100);
-  if (x < 33) {
+  if (s16(x) < s16(33)) {
     tell(" gives you a ", S(str), "ed look");
-  } else if (x < 67) {
+  } else if (s16(x) < s16(67)) {
     if (prob(50)) {
       tell(" look");
     } else {
@@ -13521,7 +13522,7 @@ async function SAY_CASH() {
 }
 
 async function NOT_ENOUGH_LOOT$(amt) {
-  if (amt > g.LOOT) {
+  if (s16(amt) > s16(g.LOOT)) {
     tell("You only have ");
     await SAY_LOOT();
     tell(S(g.PERIOD));
@@ -13742,7 +13743,7 @@ async function BUY_X_WITH_Y(x = g.PRSO, y = g.PRSI) {
     return true;
   }
   val = getProp(x, P.VALUE);
-  if (val < 1) {
+  if (s16(val) < s16(1)) {
     await NO_WORTH(x);
     return true;
   } else if (y == false || y == MONEY || y == INTNUM) {
@@ -13755,14 +13756,14 @@ async function BUY_X_WITH_Y(x = g.PRSO, y = g.PRSI) {
     } else if (await NOT_ENOUGH_LOOT$(offer)) {
       return true;
     }
-    if (offer < val) {
+    if (s16(offer) < s16(val)) {
       tell(S(g.CTHELADY), " shakes her head firmly. \"My price is ");
       await SAY_LOOT(val);
       tell(", dear.\"\n");
       return true;
     }
     putProp(x, P.VALUE, div(val, 2));
-    if (!(g.P_NUMBER == (-1)) && (offer > val)) {
+    if (!(g.P_NUMBER == (-1)) && (s16(offer) > s16(val))) {
       g.LOOT = g.LOOT - g.P_NUMBER;
       printS("\"You are too kind");
     } else {
@@ -13787,7 +13788,7 @@ async function BUY_X_WITH_Y(x = g.PRSO, y = g.PRSI) {
   if (offer == 0) {
     await NO_WORTH(y);
     return true;
-  } else if (offer < val) {
+  } else if (s16(offer) < s16(val)) {
     await WORTHLESS(y);
     tell(" only worth ");
     await SAY_LOOT(offer);
@@ -13803,7 +13804,7 @@ async function BUY_X_WITH_Y(x = g.PRSO, y = g.PRSI) {
   setFlag(y, USED);
   putProp(y, P.VALUE, offer + offer);
   putProp(x, P.VALUE, div(val, 2));
-  if (offer > val) {
+  if (s16(offer) > s16(val)) {
     printS("\"You are too kind");
   } else {
     tell("\"Done");
@@ -13812,7 +13813,7 @@ async function BUY_X_WITH_Y(x = g.PRSO, y = g.PRSI) {
   await THE_PRINT(OWOMAN);
   tell(", taking ");
   await SAY_YOUR(y);
-  if (offer > val) {
+  if (s16(offer) > s16(val)) {
     change = offer - val;
     g.LOOT = g.LOOT + change;
     await SOLD(x, change);
@@ -14284,9 +14285,9 @@ async function V_$VERIFY() {
 }
 
 async function INTERPRETER_ID() {
-  if (g.HOST < 1) {
+  if (s16(g.HOST) < s16(1)) {
     tell("XZIP");
-  } else if (g.HOST > get(MACHINES, 0)) {
+  } else if (s16(g.HOST) > s16(get(MACHINES, 0))) {
     tell("Interpreter ", N(g.HOST));
   } else {
     tell(S(get(MACHINES, g.HOST)));
@@ -14336,7 +14337,7 @@ async function V_MONITOR() {
   } else if (g.AUTO == 0) {
     g.AUTO = true;
     x = get(g.STATS, ENDURANCE);
-    if (x < get(g.MAXSTATS, ENDURANCE)) {
+    if (s16(x) < s16(get(g.MAXSTATS, ENDURANCE))) {
       await BMODE_ON();
     }
     printS("[Combat monitor o");
@@ -14358,7 +14359,7 @@ async function BMODE_OFF() {
     return false;
   }
   x = get(g.STATS, ENDURANCE);
-  if (!(x < get(g.MAXSTATS, ENDURANCE))) {
+  if (!(s16(x) < s16(get(g.MAXSTATS, ENDURANCE)))) {
     await BATTLE_MODE_OFF();
   }
   return false;
@@ -15037,7 +15038,7 @@ async function I_CRAB() {
   let $1, $2;
   l = loc(CRAB);
   if (l == g.HERE) {
-    if (getProp(CRAB, P.ENDURANCE) < 1) {
+    if (s16(getProp(CRAB, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB), "Something falls to your feet with a ");
       (await ITALICIZE("plink"));
       tell(S(g.COMMA_AND));
@@ -15134,7 +15135,7 @@ async function I_RAT() {
   let $1, $2;
   l = loc(RAT);
   if (l == g.HERE) {
-    if (getProp(RAT, P.ENDURANCE) < 1) {
+    if (s16(getProp(RAT, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       if (g.LIT$ == 0) {
         tell(S(g.YOU_HEAR), S(W.SOMETHING), " retreat");
@@ -15209,7 +15210,7 @@ async function I_SNIPE() {
   let $1, $2;
   l = loc(SNIPE);
   if (l == g.HERE) {
-    if (getProp(SNIPE, P.ENDURANCE) < 1) {
+    if (s16(getProp(SNIPE, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB), "Battered beyond endurance, ");
       await THE_PRINT(SNIPE);
       printS(" retreats into the ");
@@ -15263,7 +15264,7 @@ async function I_VAPOR() {
   let $1, $2, $3, $4, $5;
   l = loc(VAPOR);
   if (l == g.HERE) {
-    if (getProp(VAPOR, P.ENDURANCE) < 1) {
+    if (s16(getProp(VAPOR, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       await CTHE_PRINT(VAPOR);
       printS(" disappears in a spectral flash");
@@ -15407,7 +15408,7 @@ async function VAPOR_SNATCH$() {
     return true;
   }
   x = get(g.STATS, LUCK);
-  if (x < 2) {
+  if (s16(x) < s16(2)) {
   } else if (prob(x)) {
     return false;
   }
@@ -15430,7 +15431,7 @@ async function VAPOR_SNATCH$() {
   }
   await GOTO(rm);
   x = get(g.STATS, ENDURANCE);
-  if (x > 5) {
+  if (s16(x) > s16(5)) {
     x = -5;
   } else {
     x = 0 - (x - 1);
@@ -15445,7 +15446,7 @@ async function I_SPIDER() {
   let $1, $2;
   l = loc(SPIDER);
   if (l == g.HERE) {
-    if (getProp(SPIDER, P.ENDURANCE) < 1) {
+    if (s16(getProp(SPIDER, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       await CTHE_PRINT(SPIDER);
       printS(" retreats down the passageway, ");
@@ -15498,7 +15499,7 @@ async function I_SLUG() {
   let $1, $2;
   l = loc(SLUG);
   if (l == g.HERE) {
-    if (getProp(SLUG, P.ENDURANCE) < 1) {
+    if (s16(getProp(SLUG, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       await CTHE_PRINT(SLUG);
       printS(" retreats down the passageway, ");
@@ -15552,7 +15553,7 @@ async function I_WORM() {
   let $1, $2;
   l = loc(WORM);
   if (l == g.HERE) {
-    if (getProp(WORM, P.ENDURANCE) < 1) {
+    if (s16(getProp(WORM, P.ENDURANCE)) < s16(1)) {
       tell("  Hissing with humiliation, ");
       await THE_PRINT(WORM);
       tell(" slithers away into the undergrowth.\n");
@@ -15609,7 +15610,7 @@ async function I_CROC() {
   let damage = 0;
   let $1, $2;
   if (loc(CROC) == g.HERE) {
-    if (getProp(CROC, P.ENDURANCE) < 1) {
+    if (s16(getProp(CROC, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       await CTHE_PRINT(CROC);
       tell(" drags itself off into the bushes.\n");
@@ -15680,7 +15681,7 @@ async function I_HOUND() {
   let damage = 0;
   let $1, $2;
   if (loc(HOUND) == g.HERE) {
-    if (getProp(HOUND, P.ENDURANCE) < 1) {
+    if (s16(getProp(HOUND, P.ENDURANCE)) < s16(1)) {
       tell("  Whining with pain, ");
       await THE_PRINT(HOUND);
       tell(" limps away into the forest.\n");
@@ -15727,7 +15728,7 @@ async function I_PUPP() {
   let $1, $2;
   l = loc(PUPP);
   if (l == g.HERE) {
-    if (getProp(PUPP, P.ENDURANCE) < 1) {
+    if (s16(getProp(PUPP, P.ENDURANCE)) < s16(1)) {
       tell("  With a furious snarl, ");
       await THE_PRINT(PUPP);
       printS(" retreats into the ");
@@ -15791,7 +15792,7 @@ async function I_DEAD() {
   let dir = 0, damage = 0;
   let $1, $2;
   if (loc(DEAD) == g.HERE) {
-    if (getProp(DEAD, P.ENDURANCE) < 1) {
+    if (s16(getProp(DEAD, P.ENDURANCE)) < s16(1)) {
       tell("  Wailing with self-pity, ");
       await THE_PRINT(DEAD);
       tell(" fades out of existence.\n");
@@ -15843,7 +15844,7 @@ async function I_GHOUL() {
   let dir = 0, damage = 0;
   let $1, $2;
   if (loc(GHOUL) == g.HERE) {
-    if (getProp(GHOUL, P.ENDURANCE) < 1) {
+    if (s16(getProp(GHOUL, P.ENDURANCE)) < s16(1)) {
       await NEXT_MONSTER(DEAD);
       tell(S(g.TAB), "Howling with pain and rage, ");
       await THE_PRINT(GHOUL);
@@ -15916,7 +15917,7 @@ async function MOVE_SUCKERS(obj, nxt = 0) {
   l = loc(obj);
   if (l == g.HERE) {
     tell(S(g.TAB));
-    if (getProp(obj, P.ENDURANCE) < 1) {
+    if (s16(getProp(obj, P.ENDURANCE)) < s16(1)) {
       tell("Squealing with fear, ");
       await THE_PRINT(obj);
       tell(" retreats down the passageway.\n");
@@ -15952,9 +15953,9 @@ async function MOVE_SUCKERS(obj, nxt = 0) {
       return true;
     }
     x = get(g.STATS, LUCK);
-    if (x > 9) {
+    if (s16(x) > s16(9)) {
       damage = div(10 * x, 100);
-    } else if (x > 1) {
+    } else if (s16(x) > s16(1)) {
       damage = 1;
     }
     await NEXT_ENDURANCE$(obj);
@@ -16097,7 +16098,7 @@ async function I_BANDITS() {
   }
   setFlag(BANDITS, SEEN);
   tell(S(g.TAB));
-  if (g.GOSSIP > 4) {
+  if (s16(g.GOSSIP) > s16(4)) {
     $1 = await PICK_NEXT(BANDIT_MUTTERS);
     tell(S($1));
     tell(S(g.PERIOD));
@@ -16697,7 +16698,7 @@ async function I_URGRUE() {
     } else {
       printS("a voice in the darkness");
     }
-    if (g.URSCRIPT < 2) {
+    if (s16(g.URSCRIPT) < s16(2)) {
       tell(S(g.PERIOD));
       return true;
     }
@@ -17214,7 +17215,7 @@ async function BAD_MINX_PLACE$(rm) {
   x = getb(NO_MINX, 0);
   if (x = inTable(rm, NO_MINX + 1, x, 1)) {
     return true;
-  } else if ((rm == IN_GARDEN) && (g.PTIMER > 1)) {
+  } else if ((rm == IN_GARDEN) && (s16(g.PTIMER) > s16(1))) {
     return true;
   } else if ((rm == SADDLE) && (loc(SADDLE) == DACT) && (loc(DACT) == IN_SKY)) {
     return true;
@@ -17280,10 +17281,10 @@ async function DIG_UP_TRENCH() {
 async function SAY_LEAP() {
   let x = 0;
   x = random(100);
-  if (x < 33) {
+  if (s16(x) < s16(33)) {
     tell(S(W.LEAP));
     return true;
-  } else if (x < 67) {
+  } else if (s16(x) < s16(67)) {
     tell(S(W.BOUND));
     return true;
   }
@@ -17306,15 +17307,15 @@ async function I_CORBIES() {
     emotion = await PICK_NEXT(FEAR_CORBIES);
   }
   x = random(100);
-  if (x < 33) {
+  if (s16(x) < s16(33)) {
     tell("Corbies ", S(sound_), S(g.WITH), S(emotion), " overhead.\n");
     return true;
-  } else if (x < 67) {
+  } else if (s16(x) < s16(67)) {
     tell("You can hear corbies ");
   } else {
     tell("Corbies ");
     x = random(100);
-    if (!(fear == 0) || (x < 33)) {
+    if (!(fear == 0) || (s16(x) < s16(33))) {
       tell("circle ");
       if (prob(50)) {
         if (fear == 0) {
@@ -17323,7 +17324,7 @@ async function I_CORBIES() {
           tell("high ");
         }
       }
-    } else if (x < 67) {
+    } else if (s16(x) < s16(67)) {
       tell("dive ");
       if (prob(50)) {
         tell("down from ");
@@ -17970,7 +17971,7 @@ async function I_TWISTER() {
 
 async function I_FROON() {
   if (g.HERE == IN_FARM) {
-    if (g.FSCRIPT > 2) {
+    if (s16(g.FSCRIPT) > s16(2)) {
       if (hasFlag(FCROWD, SEEN)) {
         clearFlag(FCROWD, SEEN);
         return false;
@@ -18266,7 +18267,7 @@ async function I_GRINDER() {
   }
   ++g.GRTIMER;
   tell(S(g.TAB));
-  if (getProp(GRINDER, P.ENDURANCE) < 1) {
+  if (s16(getProp(GRINDER, P.ENDURANCE)) < s16(1)) {
     await EXIT_GRINDER();
     await CTHE_PRINT(GURDY);
     tell(" falls from ");
@@ -18300,7 +18301,7 @@ async function I_GRINDER() {
   } else if (g.GRTIMER == 4) {
     tell("\"Guess I'll just have to finish you off.\"\n", S(g.TAB));
   }
-  if (g.GRTIMER > 3) {
+  if (s16(g.GRTIMER) > s16(3)) {
     await CTHE_PRINT(GRINDER);
     tell(" turns the crank, and ");
     $1 = await PICK_NEXT(TORTURES);
@@ -18321,7 +18322,7 @@ async function I_DORN() {
   if (l == g.HERE) {
     setFlag(DORN, SEEN);
     tell(S(g.TAB));
-    if (getProp(DORN, P.ENDURANCE) < 1) {
+    if (s16(getProp(DORN, P.ENDURANCE)) < s16(1)) {
       tell("Howling with pain, ");
       await THE_PRINT(DORN);
       tell(" beats a hasty retreat.\n");
@@ -18462,7 +18463,7 @@ async function I_MOSS() {
   tell(S(g.TAB));
   if (g.MOSS_TIMER == 1) {
     tell("Those itchy fingers are becoming quite a nuisance");
-    if (g.MOSSES > 1) {
+    if (s16(g.MOSSES) > s16(1)) {
       tell(" again");
     }
     printS(g.PERIOD);
@@ -18496,7 +18497,7 @@ async function DO_MOSS() {
     } else {
       tell("the light");
     }
-    if (g.MOSSES > 1) {
+    if (s16(g.MOSSES) > s16(1)) {
       tell(" and flex your fingers again, noting their improved agility");
     } else {
       tell("... and gasp with shock!\n", S(g.TAB), "Your fingers, once fat and stubby, are now long and slender as a pianist's. You flex the new digits one at a time; they respond with unfamiliar agility. Fact is, your whole body feels tighter and more coordinated than ever");
@@ -18596,7 +18597,7 @@ async function I_MAMA() {
     }
     g.P_HER_OBJECT = MAMA;
     setFlag(MAMA, SEEN);
-    if (getProp(MAMA, P.ENDURANCE) < 1) {
+    if (s16(getProp(MAMA, P.ENDURANCE)) < s16(1)) {
       tell("  Bellowing with defeat, ");
       await THE_PRINT(MAMA);
       tell(" limps away into the jungle.\n");
@@ -18767,7 +18768,7 @@ async function I_IMPS_TAKE() {
     return true;
   } else if (g.IMPSAY == 1) {
     tell("\"Pick up that ", D(COCO), ",\" growls the Implementor, \"or I'll ");
-    if (!(get(g.STATS, INTELLIGENCE) < READING_IQ)) {
+    if (!(s16(get(g.STATS, INTELLIGENCE)) < s16(READING_IQ))) {
       (await ITALICIZE("remove"));
     } else if (g.VT220 == 0) {
       tell("(something unintelligible)");
@@ -19045,7 +19046,7 @@ async function BFLY_ARRIVES(dir = 0) {
   tell(" flutters into view");
   if (arguments.length > 0) {
     dir = dir + 4;
-    if (dir > I_NW) {
+    if (s16(dir) > s16(I_NW)) {
       dir = dir - 8;
     }
     tell(" from the ", S(get(DIR_NAMES, dir)));
@@ -19198,9 +19199,9 @@ async function CLERIC_WHINES() {
   if (prob(50)) {
     tell(", ");
     x = random(100);
-    if (x < 33) {
+    if (s16(x) < s16(33)) {
       tell("beating his breast");
-    } else if (x < 67) {
+    } else if (s16(x) < s16(67)) {
       tell("wringing his hands");
     } else {
       tell("covering his face");
@@ -19234,9 +19235,9 @@ async function WHIMPERS(obj) {
   let x = 0;
   tell("\" ");
   x = random(100);
-  if (x < 33) {
+  if (s16(x) < s16(33)) {
     tell("mourn");
-  } else if (x < 67) {
+  } else if (s16(x) < s16(67)) {
     tell("whine");
   } else {
     tell("whimper");
@@ -19509,7 +19510,7 @@ async function I_DUST(indent = 0) {
 
 async function MORE_BUNNIES() {
   let x = 0;
-  if (g.BUNNIES > BMAX) {
+  if (s16(g.BUNNIES) > s16(BMAX)) {
     return true;
   } else if (g.BUNNIES == BMAX) {
     ++g.BUNNIES;
@@ -19583,10 +19584,10 @@ async function I_STRANGLE() {
   let $1;
   x = get(g.STATS, ENDURANCE);
   tell(S(g.TAB));
-  if (g.CHOKE < x) {
+  if (s16(g.CHOKE) < s16(x)) {
     $1 = await PICK_NEXT(STRANGLES);
     tell(S($1));
-    if (div(x, g.CHOKE) < 2) {
+    if (s16(div(x, g.CHOKE)) < s16(2)) {
       tell(". Your endurance won't last much longer");
     }
     tell("!\n");
@@ -19644,7 +19645,7 @@ async function I_GRUE() {
   }
   see = await WEARING_MAGIC$(HELM);
   if (loc(GRUE) == g.HERE) {
-    if (getProp(GRUE, P.ENDURANCE) < 1) {
+    if (s16(getProp(GRUE, P.ENDURANCE)) < s16(1)) {
       if (++g.GRUE_KILLS > 2) {
         await DEQUEUE(I_GRUE.id);
       }
@@ -19702,7 +19703,7 @@ async function I_GRUE() {
 async function I_WIGHT() {
   let damage = 0;
   if (g.HERE == ON_TRAIL) {
-    if (getProp(WIGHT, P.ENDURANCE) < 1) {
+    if (s16(getProp(WIGHT, P.ENDURANCE)) < s16(1)) {
       tell(S(g.TAB));
       if (!(hasFlag(WIGHT, SLEEPING))) {
         tell("Battered and confused, ");
@@ -20180,7 +20181,7 @@ async function I_HEAL() {
   loop1: for (;;) {
     old = get(g.STATS, stat);
     max = get(g.MAXSTATS, stat);
-    if (max > old) {
+    if (s16(max) > s16(old)) {
       await UPDATE_STAT(max - old, stat);
     } else if (max == old) {
       await UPDATE_STAT(5, stat, true);
@@ -20198,7 +20199,7 @@ async function I_MIGHT() {
   tell(S(g.TAB), "You feel a surge of tension in your arms and shoulders.\n");
   old = get(g.STATS, STRENGTH);
   max = get(g.MAXSTATS, STRENGTH);
-  if (max > old) {
+  if (s16(max) > s16(old)) {
     await UPDATE_STAT(max - old, STRENGTH);
   } else if (max == old) {
     await UPDATE_STAT(16, STRENGTH, true);
@@ -20368,11 +20369,11 @@ async function DEAF_SALT() {
   let x = 0;
   setFlag(SALT, SEEN);
   x = random(100);
-  if (x < 33) {
+  if (s16(x) < s16(33)) {
     await CTHE_PRINT(SALT);
     tell(" doesn't look up from his work. Perhaps he didn't hear you.\n");
     return true;
-  } else if (x < 67) {
+  } else if (s16(x) < s16(67)) {
     await CTHE_PRINT(SALT);
     tell(" cocks his head. \"Eh? Didn't catch that.\"\n");
     return true;
@@ -22689,7 +22690,7 @@ async function DESCRIBE_DUST(obj) {
 async function DUST_F(context = false) {
   let x = 0;
   if (context == M_OBJDESC) {
-    if (g.BUNNIES < 5) {
+    if (s16(g.BUNNIES) < s16(5)) {
       tell(S(g.XA));
       if (g.BUNNIES == 1) {
         tell("dust bunny is ");
@@ -22709,9 +22710,9 @@ async function DUST_F(context = false) {
       tell("Eight");
     } else if (g.BUNNIES == 13) {
       tell("Thirteen");
-    } else if (g.BUNNIES > BMAX) {
+    } else if (s16(g.BUNNIES) > s16(BMAX)) {
       tell("Countless");
-    } else if (g.BUNNIES > 999) {
+    } else if (s16(g.BUNNIES) > s16(999)) {
       tell(N(div(g.BUNNIES, 1000)), C(COMMA), N(mod(g.BUNNIES, 1000)));
     } else {
       tell(N(g.BUNNIES));
@@ -22743,13 +22744,13 @@ async function DUST_F(context = false) {
     if (g.BUNNIES == 1) {
       await ONLY_ONE();
       return true;
-    } else if (g.BUNNIES > BMAX) {
+    } else if (s16(g.BUNNIES) > s16(BMAX)) {
       await CTHE_PRINT();
       tell(" number in the countless thousands.\n");
       return true;
     }
     tell("A quick count turns up ");
-    if (g.BUNNIES > 999) {
+    if (s16(g.BUNNIES) > s16(999)) {
       tell(N(div(g.BUNNIES, 1000)), C(COMMA), N(mod(g.BUNNIES, 1000)));
     } else {
       tell(N(g.BUNNIES));
@@ -22973,9 +22974,9 @@ async function PUPP_F(context = false) {
     return true;
   } else if (isVerb(V.LAUGH) && (g.P_PRSA_WORD == W.INSULT || g.P_PRSA_WORD == W.OFFEND)) {
     x = getProp(g.PRSO, P.EMAX);
-    if (getProp(g.PRSO, P.ENDURANCE) < x) {
+    if (s16(getProp(g.PRSO, P.ENDURANCE)) < s16(x)) {
       putProp(g.PRSO, P.ENDURANCE, x);
-    } else if (x < 32762) {
+    } else if (s16(x) < s16(32762)) {
       x = x + 5;
       putProp(g.PRSO, P.EMAX, x);
       putProp(g.PRSO, P.ENDURANCE, x);
@@ -24352,7 +24353,7 @@ async function UPSTACK() {
     return false;
   }
   tell("You teeter ");
-  if (get(g.STATS, DEXTERITY) < 15) {
+  if (s16(get(g.STATS, DEXTERITY)) < s16(15)) {
     ++bad;
     tell("uncertainly");
   } else {
@@ -24506,9 +24507,9 @@ async function IN_CHAPEL_F(context = false) {
       await PCLEAR();
       tell(C(QUOTATION));
       x = random(100);
-      if (x < 33) {
+      if (s16(x) < s16(33)) {
         tell("Shhh");
-      } else if (x < 67) {
+      } else if (s16(x) < s16(67)) {
         tell("Quiet");
       } else {
         tell("Shush");
@@ -25327,7 +25328,7 @@ async function LEVEL3B_F(context = false) {
     if (loc(DUST) == LEVEL3B) {
       g.P_IT_OBJECT = DUST;
       g.P_THEM_OBJECT = DUST;
-      if (g.BUNNIES > 89) {
+      if (s16(g.BUNNIES) > s16(89)) {
         tell("A cloud of dust billows up as you enter!\n");
         if (!(g.VERBOSITY == 0)) {
           crlf();
@@ -25344,7 +25345,7 @@ async function LEVEL3B_F(context = false) {
     if (g.P_WALK_DIR == false || g.P_WALK_DIR == P.UP || g.P_WALK_DIR == P.DOWN) {
     } else if (loc(DUST) == g.HERE) {
       clearFlag(DUST, SEEN);
-      if (g.BUNNIES > 89) {
+      if (s16(g.BUNNIES) > s16(89)) {
         printS("Your path is hopelessly blocked by ");
         tell(D(DUST), S(g.PERIOD));
         return M_FATAL;
@@ -25431,7 +25432,7 @@ async function AT_DOCK_F(context = false) {
     tell("Aggressive ad campaigns and the deregulation of ZIFMIA spells have made Miznia's Jungle Skyway the fifth biggest tourist attraction in the Southlands. Passengers ");
     if (loc(GONDOLA) == g.HERE) {
       tell("are ");
-      if (g.GON < 2) {
+      if (s16(g.GON) < s16(2)) {
         tell("streaming out of ");
       } else {
         tell("crowding for a space in ");
@@ -26116,7 +26117,7 @@ async function MENTION_BEAM$() {
     printS("  A beam of sunlight ");
     tell("shines in from the ", S(get(DIR_NAMES, dir)));
     dir = dir + 4;
-    if (dir > I_NW) {
+    if (s16(dir) > s16(I_NW)) {
       dir = dir - 8;
     }
     tbl = getProp(g.HERE, getb(PDIR_LIST, dir));
@@ -26792,7 +26793,7 @@ async function DESCRIBE_ON_BRIDGE(obj) {
   } else if (g.ZBOT == (-1)) {
     tell("Immeasurably Close");
   } else {
-    if ((g.ZBOT == HIGHEST_ZBOT) && (g.ZTOP < (HIGHEST_ZBOT - 1))) {
+    if ((g.ZBOT == HIGHEST_ZBOT) && (s16(g.ZTOP) < s16(HIGHEST_ZBOT - 1))) {
       tell("About ");
     }
     printN(g.ZTOP);
@@ -26892,7 +26893,7 @@ async function JUMP_OFF_BRIDGE() {
     clearFlag(AT_BROOK, TOUCHED);
     await GOTO(AT_BROOK);
     x = get(g.STATS, ENDURANCE);
-    if (x > 1) {
+    if (s16(x) > s16(1)) {
       if (!(g.AUTO == 0)) {
         await BMODE_ON();
       }
@@ -27089,7 +27090,7 @@ async function HANDLE_ARCH_ROOMS$(context) {
     return false;
   } else if (x = inTable(g.PRSA, TALKVERBS, NTVERBS)) {
     tell("Your voice has the faint, wistful quality of words ");
-    if (g.ATIME < PRESENT) {
+    if (s16(g.ATIME) < s16(PRESENT)) {
       tell("yet to be spoken");
     } else {
       tell("spoken long ago");
@@ -27257,7 +27258,7 @@ async function IN_FROON_F(context = false) {
     }
     return false;
   } else if (context == M_EXIT) {
-    if ((g.P_WALK_DIR == P.SOUTH || g.P_WALK_DIR == P.IN) && hasFlag(FARM_DOOR, OPENED) && (loc(MAYOR) == IN_FROON) && (g.FSCRIPT > 5)) {
+    if ((g.P_WALK_DIR == P.SOUTH || g.P_WALK_DIR == P.IN) && hasFlag(FARM_DOOR, OPENED) && (loc(MAYOR) == IN_FROON) && (s16(g.FSCRIPT) > s16(5))) {
       await BYE_MAYOR();
       return M_FATAL;
     }
@@ -27954,7 +27955,7 @@ async function NEXT_ROOM$(rm) {
   await NEW_EXIT$(rm, getb(PDIR_LIST, dir), len, nrm);
   putb(BORDERS, rnum, bits & getb(XDBIT_LIST, dir));
   dir = dir + 4;
-  if (dir > 7) {
+  if (s16(dir) > s16(7)) {
     dir = dir - 8;
   }
   await NEW_EXIT$(nrm, getb(PDIR_LIST, dir), len, rm);
@@ -27966,7 +27967,7 @@ async function NEXT_ROOM$(rm) {
 async function CAN_EXTEND$(rnum, dir) {
   let cnt = 0, xdir = 0, x = 0, bits = 0;
   xdir = dir + 4;
-  if (xdir > 7) {
+  if (s16(xdir) > s16(7)) {
     xdir = xdir - 8;
   }
   loop1: for (;;) {
@@ -27986,7 +27987,7 @@ async function EXTEND(rnum, dir) {
   putb(BORDERS, rnum, 0);
   list = XDBIT_LIST + 4;
   xdir = dir + 4;
-  if (xdir > 7) {
+  if (s16(xdir) > s16(7)) {
     xdir = xdir - 8;
   }
   for (;;) {
@@ -28038,7 +28039,7 @@ async function N_ROOM$() {
       }
     }
     row = row + 7;
-    if (row > 46) {
+    if (s16(row) > s16(46)) {
       break loop1;
     }
   }
@@ -28067,7 +28068,7 @@ async function S_ROOM$() {
       }
     }
     row = row - 7;
-    if (row < 4) {
+    if (s16(row) < s16(4)) {
       break loop1;
     }
   }
@@ -28093,7 +28094,7 @@ async function W_ROOM$() {
         return rm;
       }
       offset = offset + 7;
-      if (offset > 21) {
+      if (s16(offset) > s16(21)) {
         break loop2;
       }
     }
@@ -28123,7 +28124,7 @@ async function E_ROOM$() {
         return rm;
       }
       offset = offset + 7;
-      if (offset > 21) {
+      if (s16(offset) > s16(21)) {
         break loop2;
       }
     }
@@ -28468,7 +28469,7 @@ async function CRASH_CELLAR_DOOR(obj = HANDS) {
   tell(" deals ");
   await THE_PRINT(CELLAR_DOOR);
   tell(" a mighty blow");
-  if (get(g.STATS, STRENGTH) < 50) {
+  if (s16(get(g.STATS, STRENGTH)) < s16(50)) {
     await NOTE_NOISE();
     return true;
   }
@@ -28732,10 +28733,10 @@ async function LANTERN_F() {
     }
     if (hasFlag(g.PRSO, LIGHTED)) {
       tell(". Its glow is ");
-      if (g.LAMP_LIFE > 20) {
+      if (s16(g.LAMP_LIFE) > s16(20)) {
         tell("bright and strong.\n");
         return true;
-      } else if (g.LAMP_LIFE > 10) {
+      } else if (s16(g.LAMP_LIFE) > s16(10)) {
         tell("a bit dim.\n");
         return true;
       }
@@ -28762,7 +28763,7 @@ async function LANTERN_F() {
     }
     await CTHE_PRINT();
     tell(" emits a ");
-    if (g.LAMP_LIFE > 20) {
+    if (s16(g.LAMP_LIFE) > s16(20)) {
       tell("brilliant");
     } else {
       tell("feeble");
@@ -29175,7 +29176,7 @@ async function AMULET_F() {
   } else if ((await NOUN_USED$(W.STARS, W.STAR)) || (await ADJ_USED$(W.SILVER))) {
     if (isVerb(V.EXAMINE, V.LOOK_ON, V.READ)) {
       if (!(g.AMULET_TIMER == 0)) {
-        if (g.AMULET_STARS > 1) {
+        if (s16(g.AMULET_STARS) > s16(1)) {
           printS("One of the stars");
         } else {
           printS("The star");
@@ -29197,7 +29198,7 @@ async function AMULET_F() {
       return true;
     } else if (x = inTable(g.PRSA, MOVEVERBS, NMVERBS)) {
       printS("The star");
-      if (g.AMULET_STARS > 1) {
+      if (s16(g.AMULET_STARS) > s16(1)) {
         tell("s are ");
       } else {
         tell(S(g.SIS));
@@ -29237,7 +29238,7 @@ async function AMULET_F() {
     printS("confusingly intertwined with ");
     await SAY_RED();
     printS(" swirls and flourishes");
-    if (g.AMULET_STARS > 0) {
+    if (s16(g.AMULET_STARS) > s16(0)) {
       tell(S(g.AND));
       if (g.AMULET_STARS == 1) {
         tell("a shiny star.\n");
@@ -29350,7 +29351,7 @@ async function SAY_AMULET_WORD() {
         await NORMAL_STRENGTH();
       }
       return true;
-    } else if (g.AMULET_STARS > 1) {
+    } else if (s16(g.AMULET_STARS) > s16(1)) {
       printS("One of the stars");
     } else {
       printS("The star");
@@ -29373,7 +29374,7 @@ async function SAY_AMULET_WORD() {
 async function MEGA_STRENGTH() {
   let s_ = 0;
   s_ = get(g.STATS, STRENGTH);
-  if (s_ < 2) {
+  if (s16(s_) < s16(2)) {
     s_ = 9;
   } else {
     s_ = 9 * s_;
@@ -29388,7 +29389,7 @@ async function NORMAL_STRENGTH() {
   tell(S(g.TAB), "The tension in your muscles subsides.\n");
   s_ = get(g.STATS, STRENGTH);
   max = get(g.MAXSTATS, STRENGTH);
-  if (s_ > max) {
+  if (s16(s_) > s16(max)) {
     await UPDATE_STAT(0 - (s_ - max), STRENGTH);
   }
   return true;
@@ -30933,7 +30934,7 @@ async function LEV_WAND_F() {
 async function DO_LEV(obj, w_) {
   let m = 0, l = 0, x = 0, s_ = 0;
   s_ = get(g.STATS, STRENGTH);
-  if (s_ > 24) {
+  if (s16(s_) > s16(24)) {
     s_ = -24;
   } else {
     s_ = 0 - (s_ - 1);
@@ -31005,21 +31006,21 @@ async function DO_LEV(obj, w_) {
     tell(" as ");
     await THE_PRINT(obj);
     tell(" tugs against his wound.\n");
-    if (s_ < (-3)) {
+    if (s16(s_) < s16(-3)) {
       s_ = -3;
     }
     await UPDATE_STAT(s_, STRENGTH);
     return true;
   } else if (obj == XTREES) {
     tell("Ornaments and tinsel disappear into the sky.\n");
-    if (s_ < (-3)) {
+    if (s16(s_) < s16(-3)) {
       s_ = -3;
     }
     await UPDATE_STAT(s_, STRENGTH);
     return true;
   } else if (obj == DUST) {
     tell("Dust bunnies scatter all over the room.\n");
-    if (s_ < (-3)) {
+    if (s16(s_) < s16(-3)) {
       s_ = -3;
     }
     await UPDATE_STAT(s_, STRENGTH);
@@ -31029,7 +31030,7 @@ async function DO_LEV(obj, w_) {
     tell(" retrieves the rising ");
     await DPRINT(obj);
     tell(" with a chuckle. \"Cute.\"\n");
-    if (s_ < (-3)) {
+    if (s16(s_) < s16(-3)) {
       s_ = -3;
     }
     await UPDATE_STAT(s_, STRENGTH);
@@ -31070,9 +31071,9 @@ async function DO_LEV(obj, w_) {
     }
     x = getProp(obj, P.SIZE);
     s_ = get(g.STATS, STRENGTH) - 1;
-    if (x < 1) {
+    if (s16(x) < s16(1)) {
       x = 1;
-    } else if (x > s_) {
+    } else if (s16(x) > s16(s_)) {
       x = s_;
     }
     await UPDATE_STAT(0 - x, STRENGTH);
@@ -31293,7 +31294,7 @@ async function DO_DISPEL(obj, w_) {
     await HAZE_ENVELOPS(obj);
     x = getProp(obj, P.EMAX);
     y = getProp(obj, P.EFFECT);
-    if (!(0 == x || 0 == y) && (y > x)) {
+    if (!(0 == x || 0 == y) && (s16(y) > s16(x))) {
       putProp(obj, P.EFFECT, x);
       nac = y - x;
       printS("You hear a noise like a vacuum cleaner, then a satisfied slurp as ");
@@ -31304,7 +31305,7 @@ async function DO_DISPEL(obj, w_) {
     await HAZE_ENVELOPS(obj);
     x = getProp(obj, P.EMAX);
     y = getProp(obj, P.EFFECT);
-    if (!(0 == x || 0 == y) && (y > x)) {
+    if (!(0 == x || 0 == y) && (s16(y) > s16(x))) {
       putProp(obj, P.EFFECT, x);
       printS("You hear a noise like a vacuum cleaner, then a satisfied slurp as ");
     } else {
@@ -31345,9 +31346,9 @@ async function WAND_STRENGTH$(obj) {
   let s_ = 0, x = 0;
   s_ = getProp(obj, P.STRENGTH);
   x = get(g.STATS, ENDURANCE) - 1;
-  if (s_ < 1) {
+  if (s16(s_) < s16(1)) {
     s_ = 1;
-  } else if (s_ > x) {
+  } else if (s16(s_) > s16(x)) {
     s_ = x;
   }
   return 0 - s_;
@@ -31485,9 +31486,9 @@ async function CURTAIN_F(context = false) {
     await GOTO(x);
     tell(S(g.TAB), S(g.CTHELADY), " glances up as you appear. \"");
     x = random(100);
-    if (x < 33) {
+    if (s16(x) < s16(33)) {
       tell("Hello");
-    } else if (x < 67) {
+    } else if (s16(x) < s16(67)) {
       tell("Welcome");
     } else {
       tell("Greetings");
@@ -31570,7 +31571,7 @@ async function BEAM_DETAILS(obj) {
     return true;
   }
   x1 = sdir + 1;
-  if (x1 > I_NW) {
+  if (s16(x1) > s16(I_NW)) {
     x1 = I_NORTH;
   }
   if (dir == x1) {
@@ -31581,7 +31582,7 @@ async function BEAM_DETAILS(obj) {
     return true;
   }
   x1 = sdir - 1;
-  if (x1 < I_NORTH) {
+  if (s16(x1) < s16(I_NORTH)) {
     x1 = I_NW;
   }
   if (dir == x1) {
@@ -31592,11 +31593,11 @@ async function BEAM_DETAILS(obj) {
     return true;
   }
   x1 = sdir - 2;
-  if (x1 < I_NORTH) {
+  if (s16(x1) < s16(I_NORTH)) {
     x1 = x1 + 8;
   }
   x2 = sdir + 2;
-  if (x2 > I_NW) {
+  if (s16(x2) > s16(I_NW)) {
     x2 = x2 - 8;
   }
   if (dir == x1 || dir == x2) {
@@ -31604,15 +31605,15 @@ async function BEAM_DETAILS(obj) {
     return true;
   }
   x1 = sdir + 4;
-  if (x1 > I_NW) {
+  if (s16(x1) > s16(I_NW)) {
     x1 = x1 - 8;
   }
   x2 = sdir + 3;
-  if (x2 > I_NW) {
+  if (s16(x2) > s16(I_NW)) {
     x2 = x2 - 8;
   }
   x3 = sdir - 3;
-  if (x3 < I_NORTH) {
+  if (s16(x3) < s16(I_NORTH)) {
     x3 = x3 + 8;
   }
   if (dir == x1 || dir == x2 || dir == x3) {
@@ -31721,7 +31722,7 @@ async function HANDLE_MIRRORS$(obj, context) {
     tell(" strikes ");
     await THE_PRINT();
     tell(", ");
-    if (getProp(g.PRSI, P.SIZE) < 1) {
+    if (s16(getProp(g.PRSI, P.SIZE)) < s16(1)) {
       g.NEW_DBOX = g.NEW_DBOX | SHOWING_ROOM;
       tell("slides off and lands at your feet.\n");
       return true;
@@ -31878,7 +31879,7 @@ async function JAR_F(context = false) {
       } else if (loc(CIRCLET) == g.PRSI) {
         (await YOUD_HAVE_TO("take out", CIRCLET));
         return true;
-      } else if (getProp(P.SIZE, g.PRSO) > 1) {
+      } else if (s16(getProp(P.SIZE, g.PRSO)) > s16(1)) {
         await CTHE_PRINT();
         tell(" is too big to fit in ");
         await THEI_PRINT();
@@ -31976,7 +31977,7 @@ async function GENERIC_BUBBLE_F(tbl, len = get(tbl, 0)) {
   tbl = tbl + 2;
   if (isVerb(V.BLOW_INTO) && (x = inTable(CIRCLET, tbl, len))) {
     return CIRCLET;
-  } else if (len > 2) {
+  } else if (s16(len) > s16(2)) {
     return false;
   }
   x = get(tbl, 0);
@@ -32197,7 +32198,7 @@ async function REFLECTIONS() {
         break loop2;
       }
       xdir = dir + 4;
-      if (xdir > I_NW) {
+      if (s16(xdir) > s16(I_NW)) {
         xdir = xdir - 8;
       }
       rm = get(tbl, XROOM);
@@ -32227,7 +32228,7 @@ async function REFLECTIONS() {
         break loop2;
       }
       x = dir + 2;
-      if (x > I_NW) {
+      if (s16(x) > s16(I_NW)) {
         x = x - 8;
       }
       if (angle == x) {
@@ -32237,7 +32238,7 @@ async function REFLECTIONS() {
         continue loop2;
       }
       x = dir - 2;
-      if (x < I_NORTH) {
+      if (s16(x) < s16(I_NORTH)) {
         x = x + 8;
       }
       if (angle == x) {
@@ -32247,12 +32248,12 @@ async function REFLECTIONS() {
         continue loop2;
       }
       x = dir + 3;
-      if (x > I_NW) {
+      if (s16(x) > s16(I_NW)) {
         x = x - 8;
       }
       if (angle == x) {
         dir = dir + 2;
-        if (dir > I_NW) {
+        if (s16(dir) > s16(I_NW)) {
           dir = dir - 8;
         }
         if (g.HERE == rm) {
@@ -32261,12 +32262,12 @@ async function REFLECTIONS() {
         continue loop2;
       }
       x = dir + 5;
-      if (x > I_NW) {
+      if (s16(x) > s16(I_NW)) {
         x = x - 8;
       }
       if (angle == x) {
         dir = dir - 2;
-        if (dir < I_NORTH) {
+        if (s16(dir) < s16(I_NORTH)) {
           dir = dir + 8;
         }
         if (g.HERE == rm) {
@@ -32660,7 +32661,7 @@ async function NORMAL_IQ() {
   g.NEW_DBOX = g.NEW_DBOX | SHOWING_ALL;
   x = get(g.STATS, INTELLIGENCE);
   max = get(g.MAXSTATS, INTELLIGENCE);
-  if (x > max) {
+  if (s16(x) > s16(max)) {
     await UPDATE_STAT(0 - (x - max), INTELLIGENCE);
   }
   return false;
@@ -34272,10 +34273,10 @@ async function TURN_DIAL() {
     await CLICK_DIAL();
     return true;
   } else if (g.PRSI == INTNUM) {
-    if (g.P_NUMBER < 1) {
+    if (s16(g.P_NUMBER) < s16(1)) {
       await HOW_TO_CLICK();
       return true;
-    } else if (g.P_NUMBER > 6) {
+    } else if (s16(g.P_NUMBER) > s16(6)) {
       tell("There are only six ", S(W.PAINTINGS), S(g.SON));
       await THE_PRINT(GURDY);
       tell(S(g.PERIOD));
@@ -35284,12 +35285,12 @@ async function SPENSE_F() {
     tell(S(g.SINTO), D(MOUTH), " and swallow it whole, enjoying its sweet, wholesome taste.\n");
     x = get(g.STATS, ENDURANCE);
     max = get(g.MAXSTATS, ENDURANCE);
-    if (x < max) {
+    if (s16(x) < s16(max)) {
       await UPDATE_STAT(max - x);
     }
     x = get(g.STATS, STRENGTH);
     max = get(g.MAXSTATS, STRENGTH);
-    if (x < max) {
+    if (s16(x) < s16(max)) {
       await UPDATE_STAT(max - x, STRENGTH);
     }
     return true;
@@ -35575,7 +35576,7 @@ async function ROSE_F() {
       wrd = W.RIGHT;
     } else {
       if (g.PRSI == INTDIR) {
-        if ((g.P_DIRECTION > (P.NW - 1)) && (g.P_DIRECTION < (P.NORTH + 1))) {
+        if ((s16(g.P_DIRECTION) > s16(P.NW - 1)) && (s16(g.P_DIRECTION) < s16(P.NORTH + 1))) {
           g.WINDIR = 0 - (g.P_DIRECTION - P.NORTH);
           wrd = get(DIR_NAMES, g.WINDIR);
         } else if (g.P_DIRECTION == P.UP || g.P_DIRECTION == P.DOWN) {
@@ -35966,7 +35967,7 @@ async function PICK_UP_ONION() {
     }
   }
   printS("Sweat breaks out on your forehead as you ");
-  if (get(g.STATS, STRENGTH) < 25) {
+  if (s16(get(g.STATS, STRENGTH)) < s16(25)) {
     h = true;
     tell("try to ");
   }
@@ -36268,7 +36269,7 @@ async function MUNG_STALL(obj = g.PRSI) {
   tell("! ");
   await YOUR_OBJ(obj);
   tell(" deals the gate a mighty blow");
-  if (get(g.STATS, STRENGTH) < 50) {
+  if (s16(get(g.STATS, STRENGTH)) < s16(50)) {
     await NOTE_NOISE();
     if (loc(UNICORN) == STALL) {
       setFlag(UNICORN, SEEN);
@@ -36830,7 +36831,7 @@ async function QUICKSAND_F(context = false) {
       await THEI_PRINT();
       tell(S(g.AND));
       if ((g.PRSO == PARASOL) && hasFlag(g.PRSO, OPENED)) {
-      } else if (getProp(g.PRSO, P.SIZE) > 2) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(2)) {
         await VANISH();
         tell("slowly sinks out of sight.\n");
         return true;
@@ -36891,7 +36892,7 @@ async function HIT_SANDED_OBJ_WITH(obj, with_) {
     tell(S(g.SIN));
     await THE_PRINT(QUICKSAND);
     tell(S(g.AND));
-    if (hasFlag(obj, BUOYANT) || (getProp(obj, P.SIZE) < 3) || ((obj == PARASOL) && hasFlag(obj, OPENED))) {
+    if (hasFlag(obj, BUOYANT) || (s16(getProp(obj, P.SIZE)) < s16(3)) || ((obj == PARASOL) && hasFlag(obj, OPENED))) {
       move(with_, QUICKSAND);
       g.NEW_DBOX = g.NEW_DBOX | SHOWING_ALL;
       tell("floats there uncertainly");
@@ -37325,7 +37326,7 @@ async function WHISTLE_F() {
     } else {
       printC(QUOTATION);
     }
-    if (g.HOOTS < 3) {
+    if (s16(g.HOOTS) < s16(3)) {
       if (g.HOOTS == 1) {
         tell("Twice");
       } else {
@@ -37415,7 +37416,7 @@ async function PEW_F(context = false) {
     return false;
   } else if (!(g.NOW_PRSI$ == 0)) {
     if (isVerb(V.PUT_UNDER, V.PUT_BEHIND)) {
-      if (getProp(g.PRSO, P.SIZE) > 6) {
+      if (s16(getProp(g.PRSO, P.SIZE)) > s16(6)) {
         await CTHE_PRINT();
         tell(" won't fit under ");
         await THEI_PRINT();
@@ -37982,7 +37983,7 @@ async function OAK_FIND(obj) {
 
 async function TRUFFLE_F() {
   let fresh = 0, x = 0, wrd = 0;
-  if (hasFlag(TRUFFLE, MUNGED) || (g.TRUFFLE_TIMER > 40)) {
+  if (hasFlag(TRUFFLE, MUNGED) || (s16(g.TRUFFLE_TIMER) > s16(40))) {
     ++fresh;
   }
   wrd = W.GRAY;
@@ -38000,10 +38001,10 @@ async function TRUFFLE_F() {
     await CTHE_PRINT();
     tell(S(g.SIS));
     if (!(fresh == 0)) {
-    } else if (g.TRUFFLE_TIMER < 11) {
+    } else if (s16(g.TRUFFLE_TIMER) < s16(11)) {
       tell("almost too runny to be edible.\n");
       return true;
-    } else if (g.TRUFFLE_TIMER < 31) {
+    } else if (s16(g.TRUFFLE_TIMER) < s16(31)) {
       tell("getting a bit runny. Still edible, though.\n");
       return true;
     }
@@ -38215,7 +38216,7 @@ async function ROOT_F() {
       tell("and newfound vitality bubbles in your veins.\n");
       putProp(g.PRSO, P.VALUE, 0);
       x = div(get(g.STATS, STRENGTH), 3);
-      if (x < 1) {
+      if (s16(x) < s16(1)) {
         x = 1;
       }
       await UPDATE_STAT(x, STRENGTH, true);
@@ -38833,7 +38834,7 @@ async function SCABBARD_F() {
       await CTHE_PRINT();
       if (g.PRSO == SWORD) {
         tell(" seems oddly reluctant to enter ");
-      } else if (getProp(g.PRSO, P.SIZE) > 2) {
+      } else if (s16(getProp(g.PRSO, P.SIZE)) > s16(2)) {
         tell(" won't fit in ");
       } else {
         tell(" would just fall through ");
@@ -39027,7 +39028,7 @@ async function READ_SCROLL() {
   tell(" is obscure. It seems to have something to do with ", S(getProp(g.PRSO, P.DNUM)), ". ");
   x = getProp(g.PRSO, P.READIQ);
   stat = get(g.STATS, INTELLIGENCE);
-  if (!(stat < x)) {
+  if (!(s16(stat) < s16(x))) {
     printS("The word ");
     if (g.HOST == APPLE_2E || g.HOST == APPLE_2C || g.HOST == C128) {
       tell("\"");
@@ -39048,7 +39049,7 @@ async function READ_SCROLL() {
     tell(" are ");
   }
   tell("inscribed across the top");
-  if (stat < x) {
+  if (s16(stat) < s16(x)) {
     tell("; you could probably understand them if you'd studied harder at school");
   }
   printS(g.PERIOD);
@@ -39065,7 +39066,7 @@ async function RUNE(wrd) {
   loop1: for (;;) {
     x = setFont(F_NEWFONT);
     char = getb(g.AUX_TABLE, ptr);
-    if ((char < 97) || (char > 122)) {
+    if ((s16(char) < s16(97)) || (s16(char) > s16(122))) {
       x = setFont(F_DEFAULT);
     }
     printC(char);
@@ -39149,7 +39150,7 @@ async function DO_BLESS_ARMOR(scr = g.PRSO) {
           ++cnt;
           wobj = obj;
           x = x + div(x, 2);
-          if (x > STATMAX) {
+          if (s16(x) > s16(STATMAX)) {
             x = STATMAX;
           }
           nac = nac + x;
@@ -39220,7 +39221,7 @@ async function GWORD_F(context = false) {
   let dumb = 0, tbl = 0, x = 0;
   tbl = getProp(GWORD, P.NAME_TABLE);
   x = getProp(GWORD, P.READIQ);
-  if (get(g.STATS, INTELLIGENCE) < x) {
+  if (s16(get(g.STATS, INTELLIGENCE)) < s16(x)) {
     ++dumb;
   }
   if (context == M_OBJDESC) {
@@ -39371,7 +39372,7 @@ async function DO_RENEWAL(obj = g.PRSO) {
   loop1: for (;;) {
     max = get(g.MAXSTATS, stat);
     old = get(g.STATS, stat);
-    if (max > old) {
+    if (s16(max) > s16(old)) {
       await UPDATE_STAT(max - old, stat);
     }
     if (++stat > LUCK) {
@@ -39405,7 +39406,7 @@ async function RENEW_ALL_IN(obj) {
       clearFlag(TRUFFLE, MUNGED);
       g.TRUFFLE_TIMER = INIT_TRUFFLE;
       await QUEUE(I_TRUFFLE.id);
-    } else if (g.TRUFFLE_TIMER > 1) {
+    } else if (s16(g.TRUFFLE_TIMER) > s16(1)) {
       g.TRUFFLE_TIMER = div(g.TRUFFLE_TIMER, 2);
     }
   }
@@ -39500,7 +39501,7 @@ async function MUNG_ALL_IN(obj) {
   l = loc(LANTERN);
   if (l == 0) {
   } else if ((l == obj) || (loc(l) == obj)) {
-    if (!(g.LAMP_LIFE < 20)) {
+    if (!(s16(g.LAMP_LIFE) < s16(20))) {
       g.LAMP_LIFE = 20;
     }
     clearFlag(LANTERN, MAPPED);
@@ -40118,7 +40119,7 @@ async function MAGMA_GLOW_F(context = false) {
 }
 
 async function GLOW_COLOR() {
-  if (g.MAGMA_TIMER > 2) {
+  if (s16(g.MAGMA_TIMER) > s16(2)) {
     tell("fiery yellow ");
   } else if (g.MAGMA_TIMER == 2) {
     tell("warm orange ");
@@ -40535,7 +40536,7 @@ async function STONE_F() {
     }
     x = loc(STONE);
     printS("You fix your gaze deep within the crystal, ");
-    if (hasFlag(g.PRSO, NEUTRALIZED) || (get(g.STATS, INTELLIGENCE) < 69)) {
+    if (hasFlag(g.PRSO, NEUTRALIZED) || (s16(get(g.STATS, INTELLIGENCE)) < s16(69))) {
       tell("but an unintelligible swirl is all you can see.\n");
       return true;
     }
@@ -42182,7 +42183,7 @@ async function SETUP_CHARACTER() {
       break loop4;
     }
   }
-  if (g.CHECKSUM > 6) {
+  if (s16(g.CHECKSUM) > s16(6)) {
     await CHEATER();
     return false;
   }
@@ -42491,7 +42492,7 @@ async function MANUAL() {
       continue loop2;
     } else if ((key == LEFT_ARROW || key == 45 || key == 95) && !(g.POTENTIAL == INIT_POTENTIAL)) {
       x = get(g.STATS, a_);
-      if (x > 1) {
+      if (s16(x) > s16(1)) {
         ++g.POTENTIAL;
         nx = x - 1;
         put(g.STATS, a_, nx);
@@ -42577,7 +42578,7 @@ async function ROLL_YOUR_OWN() {
         delta = random(1);
         --delta;
         delta = AVERAGE + (SPREAD - delta);
-        if (delta > g.POTENTIAL) {
+        if (s16(delta) > s16(g.POTENTIAL)) {
           delta = g.POTENTIAL;
         }
         g.POTENTIAL = g.POTENTIAL - delta;
@@ -42657,7 +42658,7 @@ async function GET_NAME() {
     any = 0;
     loop3: for (;;) {
       char = getb(g.P_INBUF, ptr);
-      if ((char > NaN) && (char < NaN)) {
+      if ((s16(char) > s16(NaN)) && (s16(char) < s16(NaN))) {
         ++any;
       } else if (char == SP) {
       } else if (char == 39) {
@@ -42672,10 +42673,10 @@ async function GET_NAME() {
         break loop3;
       }
     }
-    if ((any == 0) || !(bad == 0) || (apo > 1) || (dash > 1)) {
+    if ((any == 0) || !(bad == 0) || (s16(apo) > s16(1)) || (s16(dash) > s16(1))) {
       (await BAD_NAME("silly"));
       continue loop1;
-    } else if (len > CHARNAME_LENGTH) {
+    } else if (s16(len) > s16(CHARNAME_LENGTH)) {
       (await BAD_NAME("too long"));
       continue loop1;
     }
@@ -42982,7 +42983,7 @@ async function V_COLOR() {
     tbl = get(MACHINE_COLORS, g.HOST);
     if ((g.COLORS$ == 0) && (g.HOST == ATARI_ST)) {
       tbl = ST_MONO;
-    } else if ((g.COLORS$ == 0) || (tbl == 0) || ((cnt = get(tbl, 0)) && (cnt < 2))) {
+    } else if ((g.COLORS$ == 0) || (tbl == 0) || ((cnt = get(tbl, 0)) && (s16(cnt) < s16(2)))) {
       await NOT_AVAILABLE();
       return true;
     }
@@ -43088,7 +43089,7 @@ async function V_$CREDITS() {
   setColor(g.FORE, g.BGND);
   tell("Carl Genatossio       Jon Palace       Elizabeth Langosy");
   x = 15;
-  if (g.HEIGHT > 23) {
+  if (s16(g.HEIGHT) > s16(23)) {
     await CENTER(x, 57);
     setColor(g.INCOLOR, g.BGND);
     tell("Cover           Map & Book       Photography     Production");

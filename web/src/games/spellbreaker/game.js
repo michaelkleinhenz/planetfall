@@ -394,6 +394,7 @@ export const DIR_DIR = 2;
 export const DIR_NAME = 3;
 export const ZDEBUGGING$ = 0;
 export const SERIAL = 0;
+export const LAST_OBJECT = 248;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

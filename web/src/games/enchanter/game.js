@@ -409,6 +409,7 @@ export const ROAD_START = 10000;
 export const ROAD_TABLE_LENGTH = 80;
 export const ZORK_NUMBER = 4;
 export const SERIAL = 0;
+export const LAST_OBJECT = 255;
 export const LOW_DIRECTION = 20;
 
 // ---- Actions (V?xxx) ----

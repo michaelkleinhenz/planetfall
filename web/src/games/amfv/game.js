@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  inTable, readChar,
+  inTable, readChar, s16,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -761,7 +761,9 @@ export const _2061_MIN = 20;
 export const _2071_MIN = 40;
 export const _2081_MIN = 14;
 export const ZSTR_ON = 1147;
+export const FATAL_VALUE = 2;
 export const LOW_DIRECTION = 52;
+export const VOCAB = 64;
 
 // ---- Actions (V?xxx) ----
 export const V = {
@@ -978,115 +980,115 @@ export const P = {
 
 // ---- Vocabulary words (W?xxx): dictionary addresses ----
 export const W = {
-  A: 154,
-  ABE: 172,
-  ABRAHAM: 208,
-  AFFIRMATI: 343,
-  AGAIN: 361,
-  ALARM: 415,
-  ALL: 451,
-  ALPHA: 478,
-  ALYSON: 496,
-  AN: 532,
-  AND: 541,
-  ANSWER: 604,
-  ASEEJH: 793,
-  AT: 838,
-  AYE: 964,
-  BATH: 1135,
-  BETA: 1324,
-  BOOK: 1549,
-  BOTH: 1666,
-  BROWN: 1900,
-  BSF: 1909,
-  BUT: 2044,
-  CLAVE: 2593,
-  CLOTHES: 2692,
-  CLOTHING: 2701,
-  COMMA: 100,
-  CONVERSAT: 3061,
-  DAD: 3439,
-  DELTA: 3637,
-  DOCTOR: 4033,
-  DR: 4204,
-  ELEANOR: 4510,
-  EMILY: 4564,
-  ERNEST: 4654,
-  ESTHER: 4690,
-  EVENING: 4699,
-  EXCEPT: 4726,
-  FABB: 4825,
-  FATHER: 4951,
-  FOOD: 5329,
-  FORTZMAN: 5392,
-  FRANCISCO: 5446,
-  FRITA: 5527,
-  FYLA: 5563,
-  G: 5572,
-  GAMMA: 5599,
-  GOLD: 5806,
-  GRIMWOLD: 5959,
-  HALLEY: 6103,
-  HVAC: 6706,
-  IN: 6796,
-  INTNUM: 6976,
-  IT: 7030,
-  JANITORIA: 7057,
-  JILL: 7093,
-  ME: 8155,
-  MITCH: 8416,
-  MITCHELL: 8434,
-  MODE: 8461,
-  MOM: 8506,
-  MORNING: 8560,
-  MOTHER: 8587,
-  MR: 8623,
-  MUSIC: 8758,
-  MY: 8776,
-  NO: 9001,
-  OF: 9145,
-  OK: 9208,
-  OKAY: 9217,
-  OMNI: 9262,
-  OMNI_FABB: 9271,
-  ON: 9280,
-  ONE: 9325,
-  OOPS: 9352,
-  OUT: 9424,
-  OZ: 9532,
-  PERELMAN: 9901,
-  PERIOD: 91,
-  PRICE: 10495,
-  PSYCHIATR: 10711,
-  Q: 10819,
-  QUIT: 10900,
-  QUOTE: 145,
-  RANDU: 10990,
-  RAV: 11080,
-  RED: 11197,
-  RESTART: 11305,
-  RESTORE: 11323,
-  RICHARD: 11395,
-  ROCKVIL: 11566,
-  RYDER: 11854,
-  SAVE: 11935,
-  SAY: 11962,
-  SCRIPT: 12088,
-  ST: 13375,
-  SURE: 13969,
-  THE: 14311,
-  THEN: 14356,
-  TO: 14545,
-  UNSCRIPT: 15130,
-  VERA: 15355,
-  WARREN: 15580,
-  WIZARD: 16057,
-  Y: 16201,
-  YEA: 16228,
-  YEAH: 16237,
-  YEP: 16264,
-  YES: 16273,
-  YUP: 16309,
+  A: 161,
+  ABE: 179,
+  ABRAHAM: 215,
+  AFFIRMATI: 350,
+  AGAIN: 368,
+  ALARM: 422,
+  ALL: 458,
+  ALPHA: 485,
+  ALYSON: 503,
+  AN: 539,
+  AND: 548,
+  ANSWER: 611,
+  ASEEJH: 800,
+  AT: 845,
+  AYE: 971,
+  BATH: 1142,
+  BETA: 1331,
+  BOOK: 1556,
+  BOTH: 1673,
+  BROWN: 1907,
+  BSF: 1916,
+  BUT: 2051,
+  CLAVE: 2600,
+  CLOTHES: 2699,
+  CLOTHING: 2708,
+  COMMA: 107,
+  CONVERSAT: 3068,
+  DAD: 3446,
+  DELTA: 3644,
+  DOCTOR: 4040,
+  DR: 4211,
+  ELEANOR: 4517,
+  EMILY: 4571,
+  ERNEST: 4661,
+  ESTHER: 4697,
+  EVENING: 4706,
+  EXCEPT: 4733,
+  FABB: 4832,
+  FATHER: 4958,
+  FOOD: 5336,
+  FORTZMAN: 5399,
+  FRANCISCO: 5453,
+  FRITA: 5534,
+  FYLA: 5570,
+  G: 5579,
+  GAMMA: 5606,
+  GOLD: 5813,
+  GRIMWOLD: 5966,
+  HALLEY: 6110,
+  HVAC: 6713,
+  IN: 6803,
+  INTNUM: 6983,
+  IT: 7037,
+  JANITORIA: 7064,
+  JILL: 7100,
+  ME: 8162,
+  MITCH: 8423,
+  MITCHELL: 8441,
+  MODE: 8468,
+  MOM: 8513,
+  MORNING: 8567,
+  MOTHER: 8594,
+  MR: 8630,
+  MUSIC: 8765,
+  MY: 8783,
+  NO: 9008,
+  OF: 9152,
+  OK: 9215,
+  OKAY: 9224,
+  OMNI: 9269,
+  OMNI_FABB: 9278,
+  ON: 9287,
+  ONE: 9332,
+  OOPS: 9359,
+  OUT: 9431,
+  OZ: 9539,
+  PERELMAN: 9908,
+  PERIOD: 98,
+  PRICE: 10502,
+  PSYCHIATR: 10718,
+  Q: 10826,
+  QUIT: 10907,
+  QUOTE: 152,
+  RANDU: 10997,
+  RAV: 11087,
+  RED: 11204,
+  RESTART: 11312,
+  RESTORE: 11330,
+  RICHARD: 11402,
+  ROCKVIL: 11573,
+  RYDER: 11861,
+  SAVE: 11942,
+  SAY: 11969,
+  SCRIPT: 12095,
+  ST: 13382,
+  SURE: 13976,
+  THE: 14318,
+  THEN: 14363,
+  TO: 14552,
+  UNSCRIPT: 15137,
+  VERA: 15362,
+  WARREN: 15587,
+  WIZARD: 16064,
+  Y: 16208,
+  YEA: 16235,
+  YEAH: 16244,
+  YEP: 16271,
+  YES: 16280,
+  YUP: 16316,
 };
 
 // ---- Adjective numbers (A?xxx) ----
@@ -1139,7 +1141,7 @@ async function RUNNING$(rtn) {
   let c_ = 0, tick = 0;
   if (c_ = await INT_NO_INSERT(rtn)) {
     tick = get(c_, C_TICK);
-    if ((tick == 0) || (tick > 1)) {
+    if ((tick == 0) || (s16(tick) > s16(1))) {
       return false;
     } else {
       return c_;
@@ -1167,11 +1169,11 @@ async function PICK_ONE(frob) {
 }
 
 async function SPRINT(obj) {
-  if (obj < 10) {
+  if (s16(obj) < s16(10)) {
     tell("   ");
-  } else if (obj < 100) {
+  } else if (s16(obj) < s16(100)) {
     tell("  ");
-  } else if (obj < 1000) {
+  } else if (s16(obj) < s16(1000)) {
     tell(" ");
   }
   tell(N(obj));
@@ -1243,7 +1245,7 @@ async function MAIN_LOOP_1() {
     if (g.P_IT_OBJECT && (await ACCESSIBLE$(g.P_IT_OBJECT))) {
       tmp = false;
       loop1: for (;;) {
-        if ((cnt = cnt + 1) > icnt) {
+        if (s16(cnt = cnt + 1) > s16(icnt)) {
           break loop1;
         } else {
           if (eq(get(g.P_PRSI, cnt), IT)) {
@@ -1256,7 +1258,7 @@ async function MAIN_LOOP_1() {
       if (!tmp) {
         cnt = 0;
         loop2: for (;;) {
-          if ((cnt = cnt + 1) > ocnt) {
+          if (s16(cnt = cnt + 1) > s16(ocnt)) {
             break loop2;
           } else {
             if (eq(get(g.P_PRSO, cnt), IT)) {
@@ -1268,7 +1270,7 @@ async function MAIN_LOOP_1() {
       }
       cnt = 0;
     }
-    num = ocnt == 0 ? ocnt : (ocnt > 1 ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (icnt > 1 ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
+    num = ocnt == 0 ? ocnt : (s16(ocnt) > s16(1) ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (s16(icnt) > s16(1) ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
     if (!obj && (icnt == 1)) {
       obj = get(g.P_PRSI, 1);
     }
@@ -1296,8 +1298,8 @@ async function MAIN_LOOP_1() {
       not_here = 0;
       tmp = false;
       loop3: for (;;) {
-        if ((cnt = cnt + 1) > num) {
-          if (not_here > 0) {
+        if (s16(cnt = cnt + 1) > s16(num)) {
+          if (s16(not_here) > s16(0)) {
             tell("[The ");
             if (!(not_here == num)) {
               tell("other ");
@@ -1327,7 +1329,7 @@ async function MAIN_LOOP_1() {
             g.PRSO = obj;
             g.PRSI = obj1;
           }
-          if ((num > 1) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL)) {
+          if ((s16(num) > s16(1)) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL)) {
             if (obj1 == NOT_HERE_OBJECT) {
               not_here = not_here + 1;
               continue loop3;
@@ -1515,7 +1517,7 @@ async function INT(rtn, e = 0, c_ = 0, int = false) {
   for (;;) {
     if (c_ == e) {
       if (!int) {
-        if (g.C_INTS < C_INTLEN) {
+        if (s16(g.C_INTS) < s16(C_INTLEN)) {
           tell("Bug #25I\n");
         }
         g.C_INTS = g.C_INTS - C_INTLEN;
@@ -1553,7 +1555,7 @@ async function CLOCKER() {
         }
       } else {
         tick = tick - g.ELAPSED_TIME;
-        if (tick > 0) {
+        if (s16(tick) > s16(0)) {
           put(c_, C_TICK, tick);
         } else {
           put(c_, C_RTN, 0);
@@ -1570,7 +1572,7 @@ async function CLOCKER() {
 async function INCREMENT_TIME(x) {
   let tmp = 0;
   g.TIME = g.TIME + x;
-  if (g.TIME > 1439) {
+  if (s16(g.TIME) > s16(1439)) {
     g.TIME = g.TIME - 1440;
     g.DATE = g.DATE + 1;
     if (g.DATE == 18) {
@@ -1578,7 +1580,7 @@ async function INCREMENT_TIME(x) {
     } else {
       g.FEED_BUFFER = NEWS_BUFFER;
     }
-    if (g.DATE > 28) {
+    if (s16(g.DATE) > s16(28)) {
       if ((g.DATE == 32) || (g.MONTH == 2) || ((g.DATE == 31) && ((g.MONTH == 4 || g.MONTH == 6 || g.MONTH == 9) || (g.MONTH == 11)))) {
         g.DATE = 1;
         g.MONTH = g.MONTH + 1;
@@ -1599,10 +1601,10 @@ async function INCREMENT_TIME(x) {
   if (g.SIMULATING) {
     tmp = g.STIME;
     g.STIME = g.STIME + x;
-    if (g.STIME > 1439) {
+    if (s16(g.STIME) > s16(1439)) {
       g.STIME = g.STIME - 1440;
       g.SDATE = g.SDATE + 1;
-      if (g.SDATE > 28) {
+      if (s16(g.SDATE) > s16(28)) {
         if ((g.SDATE == 32) || (g.SMONTH == 2) || ((g.SDATE == 31) && ((g.SMONTH == 4 || g.SMONTH == 6 || g.SMONTH == 9) || (g.SMONTH == 11)))) {
           g.SDATE = 1;
           g.SMONTH = g.SMONTH + 1;
@@ -1620,7 +1622,7 @@ async function INCREMENT_TIME(x) {
       }
       await DO_WALK(P.UP);
     } else if ((g.HERE == ROCKVIL_STADIUM) && (g.SYEAR == 2061 || g.SYEAR == 2071)) {
-      if ((g.STIME > 1154) && (g.STIME < 1200) && !g.INCREMENT_WAIT) {
+      if ((s16(g.STIME) > s16(1154)) && (s16(g.STIME) < s16(1200)) && !g.INCREMENT_WAIT) {
         g.INCREMENT_WAIT = true;
         tell("\nAs the day's executions wind to a conclusion, the people in the stands begin heading toward the exits.\n");
       } else if (g.STIME == 480) {
@@ -1629,12 +1631,12 @@ async function INCREMENT_TIME(x) {
       }
     }
     if (!(g.SYEAR == 2041 || g.SYEAR == 2081)) {
-      if ((g.STIME > 1260) && !(tmp > 1260)) {
+      if ((s16(g.STIME) > s16(1260)) && !(s16(tmp) > s16(1260))) {
         await QUEUE(I_CURFEW.id, 15);
         g.STOP_WAIT = true;
         await SCORE(116);
         tell("\nA surge of adrenal fear passes through you as sirens all around begin wailing, an audio sine wave announcing the beginning of curfew.\n");
-      } else if ((g.STIME > 420) && !(tmp > 420) && !(isVerb(V.SLEEP))) {
+      } else if ((s16(g.STIME) > s16(420)) && !(s16(tmp) > s16(420)) && !(isVerb(V.SLEEP))) {
         g.STOP_WAIT = true;
         tell("\nT");
         await END_CURFEW();
@@ -1664,11 +1666,11 @@ async function INCREMENT_TIME(x) {
     if (g.SIMULATING) {
       g.RECORDINGS_INCLUDE_SIMULATION = true;
     }
-    if ((getProp(RECORD_BUFFER, P.SIZE) > 45) && !(tmp > 45)) {
+    if ((s16(getProp(RECORD_BUFFER, P.SIZE)) > s16(45)) && !(s16(tmp) > s16(45))) {
       sound(1);
       tell("\nWARNING: Record buffer is now half-full.\n");
       return true;
-    } else if (getProp(RECORD_BUFFER, P.SIZE) > 90) {
+    } else if (s16(getProp(RECORD_BUFFER, P.SIZE)) > s16(90)) {
       g.RECORDING = false;
       putProp(RECORD_BUFFER, P.SIZE, 90);
       sound(1);
@@ -1685,7 +1687,7 @@ async function INCREMENT_TIME(x) {
 async function TUBES_CLOSE$() {
   if (g.SYEAR == 2041) {
     return false;
-  } else if (g.STIME < 1250) {
+  } else if (s16(g.STIME) < s16(1250)) {
     return false;
   } else if (hasFlag(g.HERE, TUBEBIT)) {
     return true;
@@ -1745,7 +1747,7 @@ async function ITALICIZE(str, no_caps$ = false) {
   } else {
     for (;;) {
       char = getb(g.SL_BUFFER, ptr);
-      if ((char > 96) && (char < 123)) {
+      if ((s16(char) > s16(96)) && (s16(char) < s16(123))) {
         char = char - 32;
       }
       printC(char);
@@ -1767,7 +1769,7 @@ async function PARSER() {
   let $1;
   loop1: for (;;) {
     cnt = cnt + 1;
-    if (cnt > P_ITBLLEN) {
+    if (s16(cnt) > s16(P_ITBLLEN)) {
       break loop1;
     } else {
       if (!g.P_OFLAG) {
@@ -1835,11 +1837,11 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
-    if (!(g.P_LEN > 1)) {
+    if (!(s16(g.P_LEN) > s16(1))) {
       tell("[There was no word after OOPS!]\n");
       return false;
     } else if (val = get(g.OOPS_TABLE, O_PTR)) {
-      if (g.P_LEN > 2) {
+      if (s16(g.P_LEN) > s16(2)) {
         tell("[Warning: only the first word after OOPS is used.]\n");
       }
       put(g.AGAIN_LEXV, val, get(g.P_LEXV, ptr + P_LEXELEN));
@@ -1870,7 +1872,7 @@ async function PARSER() {
       tell(" anymore.]\n");
       await CLEAR_BUF();
       return false;
-    } else if (g.P_LEN > 1) {
+    } else if (s16(g.P_LEN) > s16(1)) {
       if (eq(get(g.P_LEXV, ptr + P_LEXELEN), W.PERIOD, W.COMMA, W.THEN) || eq(get(g.P_LEXV, ptr + P_LEXELEN), W.AND)) {
         ptr = ptr + (2 * P_LEXELEN);
         putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 2);
@@ -1882,7 +1884,7 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 1);
     }
-    if (getb(g.P_LEXV, P_LEXWORDS) > 0) {
+    if (s16(getb(g.P_LEXV, P_LEXWORDS)) > s16(0)) {
       await STUFF(g.RESERVE_LEXV, g.P_LEXV);
       await INBUF_STUFF(g.RESERVE_INBUF, g.P_INBUF);
       g.RESERVE_PTR = ptr;
@@ -1915,14 +1917,14 @@ async function PARSER() {
     g.P_GETFLAGS = 0;
     loop3: for (;;) {
       g.P_LEN = g.P_LEN - 1;
-      if (g.P_LEN < 0) {
+      if (s16(g.P_LEN) < s16(0)) {
         g.QUOTE_FLAG = false;
         break loop3;
       } else if ((wrd = get(g.P_LEXV, ptr)) || (wrd = await NUMBER$(ptr))) {
         if ((wrd == W.TO) && (verb == ACT.TELL || verb == ACT.ASK)) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           wrd = W.QUOTE;
-        } else if ((wrd == W.THEN) && (g.P_LEN > 0) && !verb && !g.QUOTE_FLAG) {
+        } else if ((wrd == W.THEN) && (s16(g.P_LEN) > s16(0)) && !verb && !g.QUOTE_FLAG) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           put(g.P_ITBL, P_VERBN, 0);
           wrd = W.QUOTE;
@@ -1943,12 +1945,12 @@ async function PARSER() {
           (g.P_LEN == 0) || (g.P_CONT = ptr + P_LEXELEN);
           putb(g.P_LEXV, P_LEXWORDS, g.P_LEN);
           break loop3;
-        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK) && ((len == 1) || ((len == 2) && (verb == ACT.WALK)) || (eq(nw = get(g.P_LEXV, ptr + P_LEXELEN), W.THEN, W.PERIOD, W.QUOTE) && !(len < 2)) || (g.QUOTE_FLAG && (len == 2) && (nw == W.QUOTE)) || ((len > 2) && (nw == W.COMMA || nw == W.AND)))) {
+        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK) && ((len == 1) || ((len == 2) && (verb == ACT.WALK)) || (eq(nw = get(g.P_LEXV, ptr + P_LEXELEN), W.THEN, W.PERIOD, W.QUOTE) && !(s16(len) < s16(2))) || (g.QUOTE_FLAG && (len == 2) && (nw == W.QUOTE)) || ((s16(len) > s16(2)) && (nw == W.COMMA || nw == W.AND)))) {
           dir = val;
           if (nw == W.COMMA || nw == W.AND) {
             await CHANGE_LEXV(ptr + P_LEXELEN, W.THEN);
           }
-          if (!(len > 2)) {
+          if (!(s16(len) > s16(2))) {
             g.QUOTE_FLAG = false;
             break loop3;
           }
@@ -1960,11 +1962,11 @@ async function PARSER() {
           putb(g.P_VTBL, 2, getb(g.P_LEXV, cnt = (ptr * 2) + 2));
           putb(g.P_VTBL, 3, getb(g.P_LEXV, cnt + 1));
         } else if ((val = await WT$(wrd, PS$PREPOSITION, 0)) || (((wrd == W.ALL || wrd == W.ONE || wrd == W.BOTH) || (await WT$(wrd, PS$ADJECTIVE)) || (await WT$(wrd, PS$OBJECT))) && (val = 0, true))) {
-          if ((g.P_LEN > 1) && eq(get(g.P_LEXV, ptr + P_LEXELEN), W.OF) && (val == 0) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.A) && !(wrd == W.BOTH)) {
+          if ((s16(g.P_LEN) > s16(1)) && eq(get(g.P_LEXV, ptr + P_LEXELEN), W.OF) && (val == 0) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.A) && !(wrd == W.BOTH)) {
             of_flag = true;
           } else if (!(val == 0) && ((g.P_LEN == 0) || eq(get(g.P_LEXV, ptr + 2), W.THEN, W.PERIOD))) {
             g.P_END_ON_PREP = true;
-            if (g.P_NCN < 2) {
+            if (s16(g.P_NCN) < s16(2)) {
               put(g.P_ITBL, P_PREP1, val);
               put(g.P_ITBL, P_PREP1N, wrd);
             }
@@ -1977,7 +1979,7 @@ async function PARSER() {
             if (!$1) {
               return false;
             }
-            if (ptr < 0) {
+            if (s16(ptr) < s16(0)) {
               g.QUOTE_FLAG = false;
               break loop3;
             }
@@ -2094,7 +2096,7 @@ async function INBUF_ADD(len, beg, slot) {
 async function WT$(ptr, bit, b1 = 5) {
   let offs = P_P1OFF, typ = 0;
   if (btst(typ = getb(ptr, P_PSOFF), bit)) {
-    if (b1 > 4) {
+    if (s16(b1) > s16(4)) {
       return true;
     } else {
       typ = typ & P_P1BITS;
@@ -2127,7 +2129,7 @@ async function CLAUSE(ptr, val, wrd) {
     put(g.P_ITBL, num, get(g.P_ITBL, num) + 4);
   }
   for (;;) {
-    if ((g.P_LEN = g.P_LEN - 1) < 0) {
+    if (s16(g.P_LEN = g.P_LEN - 1) < s16(0)) {
       put(g.P_ITBL, num + 1, g.P_LEXV + (ptr * 2));
       return -1;
     }
@@ -2155,7 +2157,7 @@ async function CLAUSE(ptr, val, wrd) {
         await CHANGE_LEXV(ptr + 2, W.THEN);
         g.P_LEN = g.P_LEN + 2;
       } else if (await WT$(wrd, PS$OBJECT)) {
-        if ((g.P_LEN > 0) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.ONE)) {
+        if ((s16(g.P_LEN) > s16(0)) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.ONE)) {
         } else if ((await WT$(wrd, PS$ADJECTIVE)) && !(nw == 0) && (await WT$(nw, PS$OBJECT))) {
         } else if (!andflg && !(nw == W.BUT || nw == W.EXCEPT) && !(nw == W.AND || nw == W.COMMA)) {
           put(g.P_ITBL, num + 1, g.P_LEXV + ((ptr + 2) * 2));
@@ -2184,16 +2186,16 @@ async function NUMBER$(ptr) {
   cnt = getb(g.P_LEXV + (ptr * 2), 2);
   bptr = getb(g.P_LEXV + (ptr * 2), 3);
   loop1: for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       break loop1;
     } else {
       chr = getb(g.P_INBUF, bptr);
       if (chr == 58) {
         tim = sum;
         sum = 0;
-      } else if (sum > 10000) {
+      } else if (s16(sum) > s16(10000)) {
         return false;
-      } else if ((chr < 58) && (chr > 47)) {
+      } else if ((s16(chr) < s16(58)) && (s16(chr) > s16(47))) {
         sum = (sum * 10) + (chr - 48);
       } else {
         return false;
@@ -2202,10 +2204,10 @@ async function NUMBER$(ptr) {
     }
   }
   await CHANGE_LEXV(ptr, W.INTNUM);
-  if (sum > 9999) {
+  if (s16(sum) > s16(9999)) {
     return false;
   } else if (tim) {
-    if (tim > 23) {
+    if (s16(tim) > s16(23)) {
       return false;
     }
     sum = sum + (tim * 60);
@@ -2312,7 +2314,7 @@ async function ORPHAN_MERGE() {
   put(g.P_OTBL, P_VERBN, g.P_VTBL);
   putb(g.P_VTBL, 2, 0);
   for (;;) {
-    if ((cnt = cnt + 1) > P_ITBLLEN) {
+    if (s16(cnt = cnt + 1) > s16(P_ITBLLEN)) {
       g.P_MERGED = true;
       return true;
     } else {
@@ -2377,8 +2379,8 @@ async function SYNTAX_CHECK() {
   syn = syn + 1;
   loop1: for (;;) {
     num = getb(syn, P_SBITS) & P_SONUMS;
-    if (g.P_NCN > num) {
-    } else if (!(num < 1) && (g.P_NCN == 0) && (((prep = get(g.P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
+    if (s16(g.P_NCN) > s16(num)) {
+    } else if (!(s16(num) < s16(1)) && (g.P_NCN == 0) && (((prep = get(g.P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
       drive1 = syn;
     } else if (eq(getb(syn, P_SPREP1), get(g.P_ITBL, P_PREP1))) {
       if ((num == 2) && (g.P_NCN == 1)) {
@@ -2502,7 +2504,7 @@ async function ORPHAN(d1, d2) {
   if (g.P_NCN == 2) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC2, P_NC2L, P_NC2, P_NC2L);
   }
-  if (!(g.P_NCN < 1)) {
+  if (!(s16(g.P_NCN) < s16(1))) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC1, P_NC1L, P_NC1, P_NC1L);
   }
   if (d1) {
@@ -2862,7 +2864,7 @@ async function GET_OBJECT(tbl, vrb = true) {
         tell("?]\n");
       }
       put(tbl, P_MATCHLEN, 1);
-    } else if ((len > 1) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
+    } else if ((s16(len) > s16(1)) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
       if (g.P_SLOCBITS == (-1)) {
         g.P_SLOCBITS = xbits;
         olen = len;
@@ -2996,10 +2998,10 @@ async function WHICH_PRINT(tlen, len, tbl) {
           tell(",");
         }
         tell(" or ");
-      } else if (len > 2) {
+      } else if (s16(len) > s16(2)) {
         tell(", ");
       }
-      if ((len = len - 1) < 1) {
+      if (s16(len = len - 1) < s16(1)) {
         break loop1;
       }
     }
@@ -3089,7 +3091,7 @@ async function ITAKE_CHECK(tbl, ibits) {
   let ptr = 0, obj = 0, taken = 0;
   if ((ptr = get(tbl, P_MATCHLEN)) && (btst(ibits, SHAVE) || btst(ibits, STAKE))) {
     for (;;) {
-      if ((ptr = ptr - 1) < 0) {
+      if (s16(ptr = ptr - 1) < s16(0)) {
         return true;
       } else {
         obj = get(tbl, ptr + 1);
@@ -3114,7 +3116,7 @@ async function ITAKE_CHECK(tbl, ibits) {
             taken = true;
           }
           if (taken && btst(ibits, SHAVE)) {
-            if (1 < get(tbl, P_MATCHLEN)) {
+            if (s16(1) < s16(get(tbl, P_MATCHLEN))) {
               tell(S(g.NOT_HOLDING), " all those things!\n");
               return false;
             } else if (obj == NOT_HERE_OBJECT) {
@@ -3148,9 +3150,9 @@ async function ITAKE_CHECK(tbl, ibits) {
 
 async function MANY_CHECK() {
   let loss = false, tmp = 0;
-  if ((get(g.P_PRSO, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
+  if ((s16(get(g.P_PRSO, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
     loss = 1;
-  } else if ((get(g.P_PRSI, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
+  } else if ((s16(get(g.P_PRSI, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
     loss = 2;
   }
   if (loss) {
@@ -3197,12 +3199,12 @@ async function THIS_IT$(obj) {
 
 async function I_PERELMAN() {
   let told = false;
-  if ((g.PART_FLAG > 2) || g.REVIEWING_RECORDINGS) {
+  if ((s16(g.PART_FLAG) > s16(2)) || g.REVIEWING_RECORDINGS) {
     disable(await INT(I_PERELMAN.id));
     return false;
   }
   await QUEUE(I_PERELMAN.id, -1);
-  if ((g.TIME > 536) && !(g.LAST_ABE_TIME > 536)) {
+  if ((s16(g.TIME) > s16(536)) && !(s16(g.LAST_ABE_TIME) > s16(536))) {
     if (g.HERE == CONTROL_CENTER) {
       tell("\nDoctor Perelman walks jauntily into the ");
       printD(CONTROL_CENTER_OBJECT);
@@ -3210,7 +3212,7 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 550) && !(g.LAST_ABE_TIME > 550)) {
+  } else if ((s16(g.TIME) > s16(550)) && !(s16(g.LAST_ABE_TIME) > s16(550))) {
     if (g.HERE == CONTROL_CENTER) {
       if (loc(PERELMAN) == CONTROL_CENTER) {
         tell("\nPerelman stops talking to the technician, who hangs up his white overcoat and leaves the control room. Perelman crosses the room and picks up a thick report.\n");
@@ -3220,25 +3222,25 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 599) && !(g.LAST_ABE_TIME > 599)) {
+  } else if ((s16(g.TIME) > s16(599)) && !(s16(g.LAST_ABE_TIME) > s16(599))) {
     if ((g.HERE == CONTROL_CENTER) && (loc(PERELMAN) == CONTROL_CENTER)) {
       tell("\nPerelman puts down the report and walks toward the door. He calls to one of the technicians. \"Nat, I'll be in my office.\"\n");
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 616) && !(g.LAST_ABE_TIME > 616)) {
+  } else if ((s16(g.TIME) > s16(616)) && !(s16(g.LAST_ABE_TIME) > s16(616))) {
     told = await PERELMAN_WALKS_IN_WITH_COFFEE();
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 711) && !(g.LAST_ABE_TIME > 711)) {
+  } else if ((s16(g.TIME) > s16(711)) && !(s16(g.LAST_ABE_TIME) > s16(711))) {
     if ((g.HERE == OFFICE) && (loc(PERELMAN) == OFFICE)) {
       tell("\nThe telephone buzzes. \"Perelman,\" says Perelman into the receiver. The voice at the other end is so quiet that even your sensitive audio monitors can't pick it up. \"Hi, Aseejh.\" Pause. \"Yes, let's get together on that.\" He glances up at his terminal. \"It's almost lunch time; want to meet me in the cafeteria?\" Pause. \"Okay, ten minutes.\" Perelman replaces the receiver and leaves the room.\n");
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 790) && !(g.LAST_ABE_TIME > 790)) {
+  } else if ((s16(g.TIME) > s16(790)) && !(s16(g.LAST_ABE_TIME) > s16(790))) {
     told = await PERELMAN_WALKS_IN_WITH_COFFEE();
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 834) && !(g.LAST_ABE_TIME > 834)) {
+  } else if ((s16(g.TIME) > s16(834)) && !(s16(g.LAST_ABE_TIME) > s16(834))) {
     if ((g.HERE == OFFICE) && (loc(PERELMAN) == OFFICE)) {
       crlf();
       printD(PRICE);
@@ -3246,7 +3248,7 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 980) && !(g.LAST_ABE_TIME > 980)) {
+  } else if ((s16(g.TIME) > s16(980)) && !(s16(g.LAST_ABE_TIME) > s16(980))) {
     if (g.HERE == OFFICE) {
       tell("\nDoctor Perelman walks into the office, carrying a pile of pink message slips. He scans them, drops all but one into a basket on his desk, picks up the phone receiver, and presses two or three buttons. Your sensitive audio pickup hears a few rings, a click, and then a young woman's voice: \"This is ");
       printD(ESTHER);
@@ -3254,7 +3256,7 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 1157) && !(g.LAST_ABE_TIME > 1157)) {
+  } else if ((s16(g.TIME) > s16(1157)) && !(s16(g.LAST_ABE_TIME) > s16(1157))) {
     if (g.HERE == OFFICE) {
       if (loc(PERELMAN) == OFFICE) {
         crlf();
@@ -3269,13 +3271,13 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 1241) && !(g.LAST_ABE_TIME > 1241)) {
+  } else if ((s16(g.TIME) > s16(1241)) && !(s16(g.LAST_ABE_TIME) > s16(1241))) {
     if ((g.HERE == OFFICE) && (loc(PERELMAN) == OFFICE)) {
       tell("Perelman shoves some papers into a notebook, types something on his desk terminal, and leaves the room.\n");
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 1281) && !(g.LAST_ABE_TIME > 1281)) {
+  } else if ((s16(g.TIME) > s16(1281)) && !(s16(g.LAST_ABE_TIME) > s16(1281))) {
     if (g.HERE == CONTROL_CENTER) {
       tell("\nDoctor Perelman walks into the ");
       printD(CONTROL_CENTER_OBJECT);
@@ -3283,7 +3285,7 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 1312) && !(g.LAST_ABE_TIME > 1312)) {
+  } else if ((s16(g.TIME) > s16(1312)) && !(s16(g.LAST_ABE_TIME) > s16(1312))) {
     if ((g.HERE == CONTROL_CENTER) && (loc(PERELMAN) == CONTROL_CENTER)) {
       tell("\nPerelman puts down the printout and rubs his eyes. He stands and unsuccessfully stifles a yawn. \"I'm going home,\" he announces to the tiny evening staff");
       if (prob(50)) {
@@ -3293,7 +3295,7 @@ async function I_PERELMAN() {
       told = true;
     }
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
-  } else if ((g.TIME > 1318) && !(g.LAST_ABE_TIME > 1318)) {
+  } else if ((s16(g.TIME) > s16(1318)) && !(s16(g.LAST_ABE_TIME) > s16(1318))) {
     if (g.HERE == OFFICE) {
       tell("Doctor Perelman walks wearily into the office, puts on a thin overcoat, and grabs a notebook stuffed with papers. He stops at the doorway, glancing about the room, and", S(g.SPOTS_ACTIVE_LIGHT), ". A smile breaks through the weary lines on his face. He raises his hand to his forehead in a friendly salute. \"Good night, PRISM.\" He dims the light and closes the office door. The sensors on your monitor automatically adjust to the lower light level.\n");
       told = true;
@@ -3308,60 +3310,60 @@ async function I_PERELMAN() {
 }
 
 async function PUT_PERELMAN_IN_THE_RIGHT_PLACE() {
-  if (g.TIME < 536) {
+  if (s16(g.TIME) < s16(536)) {
     if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
       await CLEAR_BUF();
     }
     move(PERELMAN, LOCAL_GLOBALS);
     return move(COFFEE, LOCAL_GLOBALS);
-  } else if ((g.TIME > 535) && (g.TIME < 550)) {
+  } else if ((s16(g.TIME) > s16(535)) && (s16(g.TIME) < s16(550))) {
     move(PERELMAN, CONTROL_CENTER);
     move(COFFEE, LOCAL_GLOBALS);
     return putProp(PERELMAN, P.LDESC, "Doctor Perelman is at the far end of the room, speaking to the head technician of the night shift.");
-  } else if ((g.TIME > 549) && (g.TIME < 599)) {
+  } else if ((s16(g.TIME) > s16(549)) && (s16(g.TIME) < s16(599))) {
     move(PERELMAN, CONTROL_CENTER);
     move(COFFEE, LOCAL_GLOBALS);
     return putProp(PERELMAN, P.LDESC, "Doctor Perelman is here, reading a report.");
-  } else if ((g.TIME > 598) && (g.TIME < 616)) {
+  } else if ((s16(g.TIME) > s16(598)) && (s16(g.TIME) < s16(616))) {
     if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
       await CLEAR_BUF();
     }
     move(PERELMAN, LOCAL_GLOBALS);
     return move(COFFEE, LOCAL_GLOBALS);
-  } else if ((g.TIME > 615) && (g.TIME < 711)) {
+  } else if ((s16(g.TIME) > s16(615)) && (s16(g.TIME) < s16(711))) {
     move(PERELMAN, OFFICE);
     move(COFFEE, OFFICE);
     return putProp(PERELMAN, P.LDESC, "Doctor Perelman is sitting at his desk, reading through stacks of papers and occasionally typing on his desk terminal.");
-  } else if ((g.TIME > 710) && (g.TIME < 790)) {
+  } else if ((s16(g.TIME) > s16(710)) && (s16(g.TIME) < s16(790))) {
     if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
       await CLEAR_BUF();
     }
     move(PERELMAN, LOCAL_GLOBALS);
     return move(COFFEE, LOCAL_GLOBALS);
-  } else if ((g.TIME > 789) && (g.TIME < 834)) {
+  } else if ((s16(g.TIME) > s16(789)) && (s16(g.TIME) < s16(834))) {
     move(PERELMAN, OFFICE);
     move(COFFEE, OFFICE);
     return putProp(PERELMAN, P.LDESC, "Doctor Perelman is sitting at his desk, reading through stacks of papers and occasionally typing on his desk terminal.");
-  } else if ((g.TIME > 833) && (g.TIME < 980)) {
+  } else if ((s16(g.TIME) > s16(833)) && (s16(g.TIME) < s16(980))) {
     if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
       await CLEAR_BUF();
     }
     move(COFFEE, LOCAL_GLOBALS);
     return move(PERELMAN, LOCAL_GLOBALS);
-  } else if ((g.TIME > 979) && (g.TIME < 1241)) {
+  } else if ((s16(g.TIME) > s16(979)) && (s16(g.TIME) < s16(1241))) {
     move(PERELMAN, OFFICE);
     return putProp(PERELMAN, P.LDESC, "Doctor Perelman is sitting at his desk, reading through stacks of papers and occasionally typing on his desk terminal.");
-  } else if ((g.TIME > 1240) && (g.TIME < 1281)) {
+  } else if ((s16(g.TIME) > s16(1240)) && (s16(g.TIME) < s16(1281))) {
     if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
       await CLEAR_BUF();
     }
     move(PERELMAN, LOCAL_GLOBALS);
     return move(COFFEE, LOCAL_GLOBALS);
-  } else if ((g.TIME > 1280) && (g.TIME < 1312)) {
+  } else if ((s16(g.TIME) > s16(1280)) && (s16(g.TIME) < s16(1312))) {
     move(PERELMAN, CONTROL_CENTER);
     move(COFFEE, LOCAL_GLOBALS);
     return putProp(PERELMAN, P.LDESC, "Doctor Perelman is sitting in a swivel chair, reading a long printout.");
-  } else if (g.TIME > 1311) {
+  } else if (s16(g.TIME) > s16(1311)) {
     if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
       await CLEAR_BUF();
     }
@@ -3457,7 +3459,7 @@ async function I_JILL() {
     } else if (loc(JILL) == g.HERE) {
       tell("\nJill walks slowly into the room.\n");
     }
-  } else if ((g.STIME > 1402) && (g.JILL_COUNTER == 12)) {
+  } else if ((s16(g.STIME) > s16(1402)) && (g.JILL_COUNTER == 12)) {
     g.JILL_COUNTER = 0;
     move(JILL, BEDROOM);
     clearFlag(JILL_BOOK, NDESCBIT);
@@ -3465,7 +3467,7 @@ async function I_JILL() {
       tell("\nJill puts down her book and curls under the covers. Moments later, her breathing indicates that she is asleep.\n");
       return true;
     }
-  } else if ((g.STIME > 1299) && (g.JILL_COUNTER == 11)) {
+  } else if ((s16(g.STIME) > s16(1299)) && (g.JILL_COUNTER == 11)) {
     g.JILL_COUNTER = 12;
     move(JILL, BEDROOM);
     move(JILL_BOOK, BEDROOM);
@@ -3479,7 +3481,7 @@ async function I_JILL() {
       tell("\nJill finishes drying her hair and leaves the bathroom.\n");
       return true;
     }
-  } else if ((g.STIME > 1242) && (g.JILL_COUNTER == 10)) {
+  } else if ((s16(g.STIME) > s16(1242)) && (g.JILL_COUNTER == 10)) {
     g.JILL_COUNTER = 11;
     move(JILL, BATHROOM);
     move(JILL_BOOK, BEDROOM);
@@ -3498,7 +3500,7 @@ async function I_JILL() {
       tell("\nJill stands, stretches, and walks into the bedroom.\n");
       return true;
     }
-  } else if ((g.STIME > 1137) && (g.JILL_COUNTER == 9)) {
+  } else if ((s16(g.STIME) > s16(1137)) && (g.JILL_COUNTER == 9)) {
     g.JILL_COUNTER = 10;
     move(JILL, LIVING_ROOM);
     move(JILL_BOOK, LIVING_ROOM);
@@ -3507,14 +3509,14 @@ async function I_JILL() {
       tell("\nJill picks up a book and sits down on the couch to read it.\n");
       return true;
     }
-  } else if ((g.STIME > 1084) && (g.JILL_COUNTER == 8)) {
+  } else if ((s16(g.STIME) > s16(1084)) && (g.JILL_COUNTER == 8)) {
     g.JILL_COUNTER = 9;
     move(JILL, LIVING_ROOM);
     if (g.HERE == LIVING_ROOM) {
       tell("\nJill puts down the paintbrush and begins cleaning up the room.\n");
       return true;
     }
-  } else if ((g.STIME > 912) && (g.JILL_COUNTER == 7)) {
+  } else if ((s16(g.STIME) > s16(912)) && (g.JILL_COUNTER == 7)) {
     g.JILL_COUNTER = 8;
     move(JILL, LIVING_ROOM);
     if (g.HERE == LIVING_ROOM) {
@@ -3526,7 +3528,7 @@ async function I_JILL() {
       tell("\nJill finishes the last of the dishes and walks into the living room.\n");
       return true;
     }
-  } else if ((g.STIME > 859) && (g.JILL_COUNTER == 6)) {
+  } else if ((s16(g.STIME) > s16(859)) && (g.JILL_COUNTER == 6)) {
     g.JILL_COUNTER = 7;
     move(JILL, KITCHEN);
     move(SALAD, LOCAL_GLOBALS);
@@ -3534,7 +3536,7 @@ async function I_JILL() {
       tell("\nJill finishes her salad, walks over to the sink, and begins cleaning some dishes.\n");
       return true;
     }
-  } else if ((g.STIME > 813) && (g.JILL_COUNTER == 5)) {
+  } else if ((s16(g.STIME) > s16(813)) && (g.JILL_COUNTER == 5)) {
     g.JILL_COUNTER = 6;
     move(SALAD, KITCHEN);
     setFlag(SALAD, NDESCBIT);
@@ -3555,7 +3557,7 @@ async function I_JILL() {
       tell("\nJill lays down her brush. \"I'm getting hungry.\" She heads off into the kitchen.\n");
       return true;
     }
-  } else if ((g.STIME > 697) && (g.JILL_COUNTER == 4)) {
+  } else if ((s16(g.STIME) > s16(697)) && (g.JILL_COUNTER == 4)) {
     g.JILL_COUNTER = 5;
     move(JILL, LIVING_ROOM);
     clearFlag(JILL_BOOK, NDESCBIT);
@@ -3563,7 +3565,7 @@ async function I_JILL() {
       tell("\nJill puts down the book and stretches. She walks over to her easel, stares at the painting for a moment, and picks up a paintbrush.\n");
       return true;
     }
-  } else if ((g.STIME > 644) && (g.JILL_COUNTER == 3)) {
+  } else if ((s16(g.STIME) > s16(644)) && (g.JILL_COUNTER == 3)) {
     g.JILL_COUNTER = 4;
     move(JILL, LIVING_ROOM);
     move(JILL_BOOK, LIVING_ROOM);
@@ -3584,7 +3586,7 @@ async function I_JILL() {
       tell(" and goes into the living room.\n");
       return true;
     }
-  } else if ((g.STIME > 591) && (g.JILL_COUNTER == 2)) {
+  } else if ((s16(g.STIME) > s16(591)) && (g.JILL_COUNTER == 2)) {
     g.JILL_COUNTER = 3;
     move(JILL, KITCHEN);
     move(SALAD, KITCHEN);
@@ -3603,14 +3605,14 @@ async function I_JILL() {
       tell("\nJill passes through on her way from the bedroom to the kitchen.\n");
       return true;
     }
-  } else if ((g.STIME > 522) && (g.JILL_COUNTER == 1)) {
+  } else if ((s16(g.STIME) > s16(522)) && (g.JILL_COUNTER == 1)) {
     g.JILL_COUNTER = 2;
     move(JILL, BEDROOM);
     if (g.HERE == BEDROOM) {
       tell("\nJill finishes dressing and begins neatening up the room.\n");
       return true;
     }
-  } else if ((g.STIME > 478) && (g.STIME < 1380) && (g.JILL_COUNTER == 0)) {
+  } else if ((s16(g.STIME) > s16(478)) && (s16(g.STIME) < s16(1380)) && (g.JILL_COUNTER == 0)) {
     g.JILL_COUNTER = 1;
     move(JILL, BEDROOM);
     if (g.HERE == BEDROOM) {
@@ -3631,7 +3633,7 @@ async function I_JILL() {
 async function I_MITCHELL() {
   if (!(await IN_APARTMENT$()) && !(g.HERE == PARKVIEW_HALL)) {
     disable(await INT(I_MITCHELL.id));
-  } else if ((g.STIME > 1374) && (g.MITCHELL_COUNTER == 4)) {
+  } else if ((s16(g.STIME) > s16(1374)) && (g.MITCHELL_COUNTER == 4)) {
     g.MITCHELL_COUNTER = 0;
     move(HOMEWORK, LOCAL_GLOBALS);
     move(MITCHELL, LOCAL_GLOBALS);
@@ -3641,7 +3643,7 @@ async function I_MITCHELL() {
       tell("\n\"Good night, Dad.\" Mitch gives you a quick kiss and goes to his \"room\" on the other side of the partition.\n");
       return true;
     }
-  } else if ((g.STIME > 1120) && (g.MITCHELL_COUNTER == 3)) {
+  } else if ((s16(g.STIME) > s16(1120)) && (g.MITCHELL_COUNTER == 3)) {
     g.MITCHELL_COUNTER = 4;
     move(HOMEWORK, LIVING_ROOM);
     move(LOGIC_GAME, LOCAL_GLOBALS);
@@ -3651,7 +3653,7 @@ async function I_MITCHELL() {
       tell(" and spreads out his homework.\n");
       return true;
     }
-  } else if ((g.STIME > 1011) && (g.MITCHELL_COUNTER == 2)) {
+  } else if ((s16(g.STIME) > s16(1011)) && (g.MITCHELL_COUNTER == 2)) {
     g.MITCHELL_COUNTER = 3;
     move(MITCHELL, LIVING_ROOM);
     move(LOGIC_GAME, MITCHELL);
@@ -3690,7 +3692,7 @@ async function I_MITCHELL() {
       crlf();
       return true;
     }
-  } else if ((g.STIME > 505) && (g.MITCHELL_COUNTER == 1)) {
+  } else if ((s16(g.STIME) > s16(505)) && (g.MITCHELL_COUNTER == 1)) {
     g.MITCHELL_COUNTER = 2;
     move(MITCHELL, LOCAL_GLOBALS);
     if (g.HERE == PARKVIEW_HALL) {
@@ -3708,7 +3710,7 @@ async function I_MITCHELL() {
       crlf();
       return true;
     }
-  } else if ((g.STIME > 463) && (g.STIME < 720) && (g.MITCHELL_COUNTER == 0)) {
+  } else if ((s16(g.STIME) > s16(463)) && (s16(g.STIME) < s16(720)) && (g.MITCHELL_COUNTER == 0)) {
     g.MITCHELL_COUNTER = 1;
     move(MITCHELL, LIVING_ROOM);
     if (g.HERE == LIVING_ROOM) {
@@ -3731,7 +3733,7 @@ async function I_APARTMENT() {
   } else if (!(await IN_APARTMENT$())) {
     disable(await INT(I_APARTMENT.id));
     return false;
-  } else if ((g.STIME > 1320) || (g.STIME < 480)) {
+  } else if ((s16(g.STIME) > s16(1320)) || (s16(g.STIME) < s16(480))) {
     return await QUEUE(I_APARTMENT.id, 30);
   } else if (!(g.SYEAR == 2041) && !g.APARTMENT_RAID_FLAG) {
     if (prob(g.RAID_PROB)) {
@@ -3793,7 +3795,7 @@ async function I_APARTMENT() {
 
 async function I_CURFEW() {
   if (g.HERE == JAIL_CELL) {
-    if (g.ELAPSED_TIME > 100) {
+    if (s16(g.ELAPSED_TIME) > s16(100)) {
       await QUEUE(I_CURFEW.id, 5);
       return false;
     } else {
@@ -3804,7 +3806,7 @@ async function I_CURFEW() {
       tell(".\n\n");
       return await GOTO(ELM_AND_PARK);
     }
-  } else if ((g.STIME > 420) && (g.STIME < 1260)) {
+  } else if ((s16(g.STIME) > s16(420)) && (s16(g.STIME) < s16(1260))) {
     disable(await INT(I_CURFEW.id));
     return false;
   } else if (!(hasFlag(g.HERE, STREETBIT))) {
@@ -3815,7 +3817,7 @@ async function I_CURFEW() {
       await SCORE(117);
       return (await JIGS_UP("\nA police car pulls up next to you, and a fat, leering officer leans a red face out the window. \"Hey, geezer! Ever hear of curfew?\" Even from three meters away you can smell the odor of beer from the car. The barrel of a pellet gun suddenly emerges from the window, and as you turn to run, a tremendous explosion from behind is followed by a spasm of pain..."));
     } else {
-      if (g.STIME > 1260) {
+      if (s16(g.STIME) > s16(1260)) {
         await QUEUE(I_CURFEW.id, 420 + (1440 - g.STIME));
       } else {
         await QUEUE(I_CURFEW.id, 420 - g.STIME);
@@ -3833,12 +3835,12 @@ async function I_CURFEW() {
 async function I_SUNRISE_SUNSET() {
   let x = 0;
   x = (g.SMONTH * 20) - 20;
-  if (((g.STIME + x) > 455) && !((g.LAST_SUN_TIME + x) > 455)) {
+  if ((s16(g.STIME + x) > s16(455)) && !(s16(g.LAST_SUN_TIME + x) > s16(455))) {
     g.LIGHT_LEVEL = 1;
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
       tell("\nYou begin to see the faint glow of dawn from the east.\n");
     }
-  } else if (((g.STIME + x) > 469) && !((g.LAST_SUN_TIME + x) > 469)) {
+  } else if ((s16(g.STIME + x) > s16(469)) && !(s16(g.LAST_SUN_TIME + x) > s16(469))) {
     g.LIGHT_LEVEL = 2;
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
       if (g.SYEAR == 2041 || g.SYEAR == 2051) {
@@ -3848,14 +3850,14 @@ async function I_SUNRISE_SUNSET() {
         tell("\nThe glow in the east brightens, as the sun attempts to break through the hazy smog.\n");
       }
     }
-  } else if (((g.STIME + x) > 490) && !((g.LAST_SUN_TIME + x) > 490)) {
+  } else if ((s16(g.STIME + x) > s16(490)) && !(s16(g.LAST_SUN_TIME + x) > s16(490))) {
     g.LIGHT_LEVEL = 3;
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
       tell("\nThe sky continues to brighten. Dawn is over; day has begun.\n");
     }
-  } else if ((g.STIME > 725) && !(g.LAST_SUN_TIME > 725)) {
+  } else if ((s16(g.STIME) > s16(725)) && !(s16(g.LAST_SUN_TIME) > s16(725))) {
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
-      if (x > 50) {
+      if (s16(x) > s16(50)) {
         if (g.SYEAR == 2041 || g.SYEAR == 2051) {
           tell("\nThe sun, beating down warmly on you, has reached its midday apex.\n");
         } else {
@@ -3871,7 +3873,7 @@ async function I_SUNRISE_SUNSET() {
         }
       }
     }
-  } else if (((g.STIME - x) > 1010) && !((g.LAST_SUN_TIME - x) > 1010)) {
+  } else if ((s16(g.STIME - x) > s16(1010)) && !(s16(g.LAST_SUN_TIME - x) > s16(1010))) {
     g.LIGHT_LEVEL = 2;
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
       if (g.SYEAR == 2041 || g.SYEAR == 2051) {
@@ -3881,7 +3883,7 @@ async function I_SUNRISE_SUNSET() {
         tell("\nThe sky is darkening as the sun sinks into the smoggy haze of the horizon.\n");
       }
     }
-  } else if (((g.STIME - x) > 1028) && !((g.LAST_SUN_TIME - x) > 1028)) {
+  } else if ((s16(g.STIME - x) > s16(1028)) && !(s16(g.LAST_SUN_TIME - x) > s16(1028))) {
     g.LIGHT_LEVEL = 1;
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
       if (g.SYEAR == 2041 || g.SYEAR == 2051) {
@@ -3890,7 +3892,7 @@ async function I_SUNRISE_SUNSET() {
         tell("\nThe dusk continues to gather; an ominous darkness settles onto the city.\n");
       }
     }
-  } else if (((g.STIME - x) > 1049) && !((g.LAST_SUN_TIME - x) > 1049)) {
+  } else if ((s16(g.STIME - x) > s16(1049)) && !(s16(g.LAST_SUN_TIME - x) > s16(1049))) {
     g.LIGHT_LEVEL = 0;
     if (hasFlag(g.HERE, OUTSIDEBIT)) {
       tell("\nIt is night.\n");
@@ -4001,9 +4003,9 @@ async function I_AIR_CONDITIONING() {
 
 async function I_RORSCHACH() {
   await QUEUE(I_RORSCHACH.id, -1);
-  if (g.GRIMWOLD_COUNTER > 0) {
+  if (s16(g.GRIMWOLD_COUNTER) > s16(0)) {
     g.GRIMWOLD_COUNTER = g.GRIMWOLD_COUNTER + 1;
-    if (g.GRIMWOLD_COUNTER > 8) {
+    if (s16(g.GRIMWOLD_COUNTER) > s16(8)) {
       move(GRIMWOLD, LOCAL_GLOBALS);
       move(PERELMAN, LOCAL_GLOBALS);
       clearFlag(PERELMAN, NDESCBIT);
@@ -4031,7 +4033,7 @@ async function I_RORSCHACH() {
     } else {
       disable(await INT(I_MESSAGE_E.id));
       tell("\nPerelman enters with Dr. Ernest Grimwold, a quintessential Viennese psychiatrist whom you met a few days earlier, and nods to you. \"Good ");
-      if (g.TIME > 720) {
+      if (s16(g.TIME) > s16(720)) {
         tell("afternoon");
       } else {
         tell("morning");
@@ -4072,7 +4074,7 @@ async function BLOT_ACTION() {
       print(">");
       await read(g.P_INBUF, g.P_LEXV);
       words_in_response = await BLOT_WORD_COUNT();
-      if (words_in_response > 1) {
+      if (s16(words_in_response) > s16(1)) {
         tell("\"You're not following my instructions, PRISM. Just tell me the one word that pops into your mind.\"\n");
         continue loop2;
       } else if (getb(g.P_LEXV, P_LEXWORDS) == 0) {
@@ -4204,13 +4206,13 @@ async function INK_BLOT() {
       } else if (prob(67)) {
         center_offset = center_offset + random(2);
       }
-      if (side_offset < 0) {
+      if (s16(side_offset) < s16(0)) {
         side_offset = 1;
       }
-      if (center_offset < 0) {
+      if (s16(center_offset) < s16(0)) {
         center_offset = 0;
       }
-      if ((side_offset + center_offset) > 18) {
+      if (s16(side_offset + center_offset) > s16(18)) {
         center_offset = center_offset - 1;
         side_offset = 18 - center_offset;
       }
@@ -4240,7 +4242,7 @@ async function I_POST_OFFICE() {
     printD(POST_OFFICE_OBJECT);
     tell(".\n");
     return true;
-  } else if (((g.SYEAR == 2071) && (g.STIME > 888) && (g.STIME < 901)) || ((g.SYEAR == 2061) && (g.STIME > 594) && (g.STIME < 601))) {
+  } else if (((g.SYEAR == 2071) && (s16(g.STIME) > s16(888)) && (s16(g.STIME) < s16(901))) || ((g.SYEAR == 2061) && (s16(g.STIME) > s16(594)) && (s16(g.STIME) < s16(601)))) {
     tell("A line is forming at the window with the sign.\n");
     await QUEUE(I_POST_OFFICE.id, 15);
     return true;
@@ -4299,7 +4301,7 @@ async function ROCKVILLE_CENTRE_F(rarg) {
 }
 
 async function DUNBARS_ENTER_F() {
-  if ((g.STIME > 1260) || (g.STIME < 600)) {
+  if ((s16(g.STIME) > s16(1260)) || (s16(g.STIME) < s16(600))) {
     (await CLOSED_PRINT("Dunbar's"));
     return false;
   } else if (g.SYEAR == 2071) {
@@ -4441,7 +4443,7 @@ async function CLOTHES_F() {
         return true;
       }
     } else if (g.HERE == HEIMAN_VILLAGE || g.HERE == ROCKVIL_MALL) {
-      if ((g.STIME < 480) || (g.STIME > 1380)) {
+      if ((s16(g.STIME) < s16(480)) || (s16(g.STIME) > s16(1380))) {
         tell("Every store is closed for the night.\n");
         return true;
       } else if (!(hasFlag(SWEATER, TRYTAKEBIT)) || !(hasFlag(VEST, TRYTAKEBIT)) || !(loc(SCARF) == LOCAL_GLOBALS)) {
@@ -4549,7 +4551,7 @@ async function CITY_HALL_F(rarg) {
 }
 
 async function CITY_HALL_ENTER_F() {
-  if ((g.STIME > 600) && (g.STIME < 1080)) {
+  if ((s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(1080))) {
     return CITY_HALL;
   } else {
     (await CLOSED_PRINT("City Hall"));
@@ -4870,7 +4872,7 @@ async function ELM_AND_PARK_F(rarg) {
 }
 
 async function COURTHOUSE_ENTER_F() {
-  if ((g.STIME > 990) || (g.STIME < 570)) {
+  if ((s16(g.STIME) > s16(990)) || (s16(g.STIME) < s16(570))) {
     (await CLOSED_PRINT("The courthouse"));
     return false;
   } else {
@@ -4883,7 +4885,7 @@ async function COURTHOUSE_F(rarg) {
     tell("The ");
     printD(COURTHOUSE_OBJECT);
     tell(" is of the same vintage as the other governmental buildings in the area, dating from around 1990 or so. An exit leads southeast.");
-    if ((g.STIME > 570) && (g.STIME < 1080)) {
+    if ((s16(g.STIME) > s16(570)) && (s16(g.STIME) < s16(1080))) {
       tell("\n\nThe court is in session. ");
       if (g.SYEAR == 2041) {
         tell("A woman is being tried for petty theft");
@@ -5022,7 +5024,7 @@ async function POST_OFFICE_F(rarg) {
     printD(POST_OFFICE_OBJECT);
     tell(", probably built back in the days when \"mail\" usually meant letters and packages delivered by human messengers. ");
     if (g.SYEAR == 2041 || g.SYEAR == 2051) {
-      if ((g.STIME > 480) && (g.STIME < 1020)) {
+      if ((s16(g.STIME) > s16(480)) && (s16(g.STIME) < s16(1020))) {
         tell("A ");
         if (g.SYEAR == 2041) {
           tell("couple");
@@ -5033,7 +5035,7 @@ async function POST_OFFICE_F(rarg) {
       } else {
         tell("The windows are all closed for the night");
       }
-    } else if (((g.SYEAR == 2061) && (g.STIME > 600) && (g.STIME < 960)) || ((g.SYEAR == 2071) && (g.STIME > 900) && (g.STIME < 960))) {
+    } else if (((g.SYEAR == 2061) && (s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(960))) || ((g.SYEAR == 2071) && (s16(g.STIME) > s16(900)) && (s16(g.STIME) < s16(960)))) {
       await SCORE(124);
       tell("A long queue of people with resigned expressions are waiting at the solitary open window");
     } else {
@@ -5128,7 +5130,7 @@ async function GROCERY_STORE_DESC() {
 }
 
 async function MAIN_LIBRARY_ENTER_F() {
-  if (((g.SYEAR == 2041 || g.SYEAR == 2051) && (g.STIME > 510) && (g.STIME < 1320)) || ((g.SYEAR == 2061) && (g.STIME > 600) && (g.STIME < 1260)) || ((g.SYEAR == 2071) && (g.STIME > 750) && (g.STIME < 990))) {
+  if (((g.SYEAR == 2041 || g.SYEAR == 2051) && (s16(g.STIME) > s16(510)) && (s16(g.STIME) < s16(1320))) || ((g.SYEAR == 2061) && (s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(1260))) || ((g.SYEAR == 2071) && (s16(g.STIME) > s16(750)) && (s16(g.STIME) < s16(990)))) {
     return MAIN_LIBRARY;
   } else {
     (await CLOSED_PRINT("The library"));
@@ -5270,11 +5272,11 @@ async function FOODVILLE_1_F(rarg) {
 
 async function FOODVILLE_ENTER_F() {
   let x = true;
-  if ((g.SYEAR == 2041 || g.SYEAR == 2051) && ((g.STIME > 1320) || (g.STIME < 480))) {
+  if ((g.SYEAR == 2041 || g.SYEAR == 2051) && ((s16(g.STIME) > s16(1320)) || (s16(g.STIME) < s16(480)))) {
     x = false;
-  } else if ((g.SYEAR == 2061) && ((g.STIME > 1140) || (g.STIME < 600))) {
+  } else if ((g.SYEAR == 2061) && ((s16(g.STIME) > s16(1140)) || (s16(g.STIME) < s16(600)))) {
     x = false;
-  } else if ((g.SYEAR == 2071) && ((g.STIME > 960) || (g.STIME < 700))) {
+  } else if ((g.SYEAR == 2071) && ((s16(g.STIME) > s16(960)) || (s16(g.STIME) < s16(700)))) {
     x = false;
   }
   if (x) {
@@ -5591,7 +5593,7 @@ async function ROY_F() {
 }
 
 async function ROYS_PAGODA_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(RESTAURANT_OBJECT);
     return false;
   } else {
@@ -5614,7 +5616,7 @@ async function ROYS_PAGODA_F(rarg) {
     }
     tell(". There is an exit to the north.");
     return true;
-  } else if ((rarg == M_END) && !(g.SYEAR == 2041) && (g.STIME > 1200)) {
+  } else if ((rarg == M_END) && !(g.SYEAR == 2041) && (s16(g.STIME) > s16(1200))) {
     tell("\nA waiter, pointing frantically at the clock, urges you politely but insistently through the door.\n\n");
     return await GOTO(ELM_UNDERPASS);
   } else {
@@ -5623,7 +5625,7 @@ async function ROYS_PAGODA_F(rarg) {
 }
 
 async function EZZIS_BAR_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(BAR_OBJECT);
     return false;
   } else {
@@ -6126,7 +6128,7 @@ async function SOUTHWAY_AND_RIVER_F(rarg) {
         return false;
       }
     }
-  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (getProp(SOUTHWAY_AND_RIVER, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (s16(getProp(SOUTHWAY_AND_RIVER, P.SCENE)) < s16(101))) {
     if (prob(getProp(SOUTHWAY_AND_RIVER, P.SCENE))) {
       putProp(SOUTHWAY_AND_RIVER, P.SCENE, 101);
       await SCORE(27);
@@ -6176,7 +6178,7 @@ async function CONSTRUCTION_SITE_2_F(rarg) {
 }
 
 async function ROCKVIL_MALL_ENTER_F() {
-  if (((g.SYEAR == 2041 || g.SYEAR == 2051 || g.SYEAR == 2061) && (g.STIME > 480) && (g.STIME < 1320)) || ((g.SYEAR == 2071) && (g.STIME > 720) && (g.STIME < 1080))) {
+  if (((g.SYEAR == 2041 || g.SYEAR == 2051 || g.SYEAR == 2061) && (s16(g.STIME) > s16(480)) && (s16(g.STIME) < s16(1320))) || ((g.SYEAR == 2071) && (s16(g.STIME) > s16(720)) && (s16(g.STIME) < s16(1080)))) {
     return ROCKVIL_MALL;
   } else {
     (await CLOSED_PRINT("The Mall"));
@@ -6395,7 +6397,7 @@ async function ELM_AND_RIVER_F(rarg) {
 }
 
 async function STOCK_EXCHANGE_ENTER_F() {
-  if (((g.SYEAR == 2041) && (g.STIME > 360) && (g.STIME < 1320)) || ((g.SYEAR == 2051 || g.SYEAR == 2061 || g.SYEAR == 2071) && (g.STIME > 420) && (g.STIME < 1320))) {
+  if (((g.SYEAR == 2041) && (s16(g.STIME) > s16(360)) && (s16(g.STIME) < s16(1320))) || ((g.SYEAR == 2051 || g.SYEAR == 2061 || g.SYEAR == 2071) && (s16(g.STIME) > s16(420)) && (s16(g.STIME) < s16(1320)))) {
     return STOCK_EXCHANGE;
   } else {
     (await CLOSED_PRINT("The stock exchange building"));
@@ -6460,7 +6462,7 @@ async function MAIN_AND_RIVER_F(rarg) {
     }
     tell(". The fourth corner, the northwest, is the site of Perez Towers, a luxury apartment building.");
     return true;
-  } else if ((rarg == M_END) && (g.SYEAR == 2051) && (getProp(MAIN_AND_RIVER, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2051) && (s16(getProp(MAIN_AND_RIVER, P.SCENE)) < s16(101))) {
     if (prob(getProp(MAIN_AND_RIVER, P.SCENE))) {
       putProp(MAIN_AND_RIVER, P.SCENE, 101);
       await SCORE(33);
@@ -6664,7 +6666,7 @@ async function MAIN_AND_CHURCH_F(rarg) {
       tell("A particularly blockish Indoor City towers over Church Street south of here.");
       return true;
     }
-  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (getProp(MAIN_AND_CHURCH, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (s16(getProp(MAIN_AND_CHURCH, P.SCENE)) < s16(101))) {
     if (prob(getProp(MAIN_AND_CHURCH, P.SCENE))) {
       putProp(MAIN_AND_CHURCH, P.SCENE, 101);
       await SCORE(35);
@@ -6740,7 +6742,7 @@ async function MAIN_AND_WICKER_F(rarg) {
       tell(", occupies the southwest corner and a restaurant stands amid a large car lot on the southeast corner. There is an entrance to the cemetery to the north.");
       return true;
     }
-  } else if ((rarg == M_END) && (g.SYEAR == 2051) && (g.LIGHT_LEVEL == 3) && !(g.L_HERE == MAIN_AND_WICKER) && (getProp(MAIN_AND_WICKER, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2051) && (g.LIGHT_LEVEL == 3) && !(g.L_HERE == MAIN_AND_WICKER) && (s16(getProp(MAIN_AND_WICKER, P.SCENE)) < s16(101))) {
     if (prob(getProp(MAIN_AND_WICKER, P.SCENE))) {
       putProp(MAIN_AND_WICKER, P.SCENE, 101);
       move(UNSHAVEN_MAN, g.HERE);
@@ -6929,7 +6931,7 @@ async function MOLD_F() {
 }
 
 async function THE_COACHMAN_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(RESTAURANT_OBJECT);
     return false;
   } else {
@@ -7004,7 +7006,7 @@ async function RESTAURANT_TABLE_F() {
       return true;
     } else if (g.HERE == ROYS_PAGODA) {
       return false;
-    } else if (g.MEAL_STATUS > 2) {
+    } else if (s16(g.MEAL_STATUS) > s16(2)) {
       move(PLAYER, RESTAURANT_TABLE);
       tell("You resume your seat.\n");
       return true;
@@ -7088,7 +7090,7 @@ async function MEAL_F() {
       }
       tell(".\" You pay with your ");
       printD(CREDIT_CARD);
-      if (g.CREDIT < 30) {
+      if (s16(g.CREDIT) < s16(30)) {
         tell(", but the waiter returns a minute later with your card and says, \"Sorry, not enough balance to pay for meal. You pay next time you come.\"\n");
         return true;
       }
@@ -7213,7 +7215,7 @@ async function I_MEAL() {
   }
   if (loc(CREDIT_CARD) == SPEAR_CARRIER) {
     move(CREDIT_CARD, PLAYER);
-    if (g.CREDIT < 65) {
+    if (s16(g.CREDIT) < s16(65)) {
       tell("\nThe waiter returns with your card, informing you that you have insufficient funds to cover the meal. He escorts you out of the restaurant.\n\n");
       old_winner = g.WINNER;
       g.WINNER = PLAYER;
@@ -7259,9 +7261,9 @@ async function I_MEAL() {
     g.P_IT_OBJECT = SPEAR_CARRIER;
     g.MEAL_STATUS = 4;
     tell("\nThe waiter hands you a ");
-    if (g.STIME < 690) {
+    if (s16(g.STIME) < s16(690)) {
       tell("breakfast");
-    } else if (g.STIME > 960) {
+    } else if (s16(g.STIME) > s16(960)) {
       tell("dinner");
     } else {
       tell("lunch");
@@ -7283,7 +7285,7 @@ async function I_MEAL() {
 async function PARTY_OF_ONE() {
   if (g.MEAL_STATUS == 1) {
     crlf();
-    if (g.MAITRE_COUNTER > 8) {
+    if (s16(g.MAITRE_COUNTER) > s16(8)) {
       tell("\"I'm afraid you'll have to leave,\" says the maitre d'. \"There's no loitering here.\" He escorts you to the door.\n\n");
       return await DO_WALK(P.OUT);
     } else {
@@ -7789,7 +7791,7 @@ async function ALI_BUILDING_F() {
 }
 
 async function TRAIN_STATION_ENTER_F() {
-  if (((g.SYEAR == 2041) && (g.STIME > 660) && (g.STIME < 1260)) || (g.SYEAR == 2051 || g.SYEAR == 2061 || g.SYEAR == 2071)) {
+  if (((g.SYEAR == 2041) && (s16(g.STIME) > s16(660)) && (s16(g.STIME) < s16(1260))) || (g.SYEAR == 2051 || g.SYEAR == 2061 || g.SYEAR == 2071)) {
     return TRAIN_STATION;
   } else {
     (await CLOSED_PRINT("The station"));
@@ -7937,7 +7939,7 @@ async function RACK_F() {
 }
 
 async function CENTRE_AND_KENNEDY_F(rarg) {
-  if ((rarg == M_END) && (g.SYEAR == 2071) && (g.LIGHT_LEVEL == 3) && (getProp(CENTRE_AND_KENNEDY, P.SCENE) < 101)) {
+  if ((rarg == M_END) && (g.SYEAR == 2071) && (g.LIGHT_LEVEL == 3) && (s16(getProp(CENTRE_AND_KENNEDY, P.SCENE)) < s16(101))) {
     if (prob(getProp(CENTRE_AND_KENNEDY, P.SCENE))) {
       putProp(CENTRE_AND_KENNEDY, P.SCENE, 101);
       await SCORE(57);
@@ -8047,7 +8049,7 @@ async function HALLEY_MUSEUM_ENTER_F() {
     await SCORE(62);
     tell(S(g.BOARDED_OVER), "\n");
     return false;
-  } else if ((g.STIME > 600) && (g.STIME < 1290)) {
+  } else if ((s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(1290))) {
     return HALLEY_MUSEUM;
   } else {
     (await CLOSED_PRINT("The museum"));
@@ -8315,7 +8317,7 @@ async function ZOO_F(rarg) {
       await SCORE(68);
       g.P_IT_OBJECT = BANNER;
       tell(". Affluent estates, recently built on the site of Halley Park, form the southeastern boundary of the zoo.\n\nSeveral of the nearby cages are empty, with cheaply-made \"EXTINCT\" signs bolted over the animal names and descriptions.");
-      if ((g.STIME > 840) && (g.STIME < 900)) {
+      if ((s16(g.STIME) > s16(840)) && (s16(g.STIME) < s16(900))) {
         await SCORE(69);
         tell("\n\nYou can hear squeals of pain from the Monkey Cage, where the daily torturing of the apes is going on for the amusement of zoo visitors.");
         return true;
@@ -8483,7 +8485,7 @@ async function AQUARIUM_AND_PARK_F(rarg) {
 }
 
 async function AQUARIUM_ENTER_F() {
-  if (((g.SYEAR == 2041) && (g.STIME > 600) && (g.STIME < 1320)) || ((g.SYEAR == 2051) && (g.STIME > 600) && (g.STIME < 1200)) || ((g.SYEAR == 2061) && (g.STIME > 660) && (g.STIME < 1080)) || ((g.SYEAR == 2071) && (g.STIME > 720) && (g.STIME < 1020))) {
+  if (((g.SYEAR == 2041) && (s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(1320))) || ((g.SYEAR == 2051) && (s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(1200))) || ((g.SYEAR == 2061) && (s16(g.STIME) > s16(660)) && (s16(g.STIME) < s16(1080))) || ((g.SYEAR == 2071) && (s16(g.STIME) > s16(720)) && (s16(g.STIME) < s16(1020)))) {
     return AQUARIUM;
   } else {
     (await CLOSED_PRINT("The Aquarium"));
@@ -8564,7 +8566,7 @@ async function TANK_F() {
   if (isVerb(V.LOOK_INSIDE)) {
     if (g.SYEAR == 2041) {
       tell("The water is crystal clear, sparkling with ");
-      if (g.LIGHT_LEVEL > 2) {
+      if (s16(g.LIGHT_LEVEL) > s16(2)) {
         tell("sun");
       } else {
         tell("artificial ");
@@ -8652,7 +8654,7 @@ async function SERVICE_STATION_OBJECT_F() {
 }
 
 async function BURGER_MEISTER_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(BURGER_MEISTER);
     return false;
   } else {
@@ -8701,7 +8703,7 @@ async function BURGER_MEISTER_EXIT_F() {
 }
 
 async function ZOO_ENTRANCE_F(rarg) {
-  if ((g.SYEAR == 2061) && (rarg == M_END) && (g.LIGHT_LEVEL == 3) && (getProp(ZOO_ENTRANCE, P.SCENE) < 101)) {
+  if ((g.SYEAR == 2061) && (rarg == M_END) && (g.LIGHT_LEVEL == 3) && (s16(getProp(ZOO_ENTRANCE, P.SCENE)) < s16(101))) {
     putProp(ZOO_ENTRANCE, P.SCENE, 101);
     await SCORE(74);
     tell("\nDown the block, you can see two youths, wearing Church of God's Word pendants, harassing a middle-aged Hassidic Jew.\n");
@@ -8861,7 +8863,7 @@ async function ROCKVIL_STADIUM_F(rarg) {
   if (rarg == M_ENTER) {
     return setFlag(STADIUM_STANDS, FURNITUREBIT);
   } else if (rarg == M_LOOK) {
-    if ((g.SYEAR == 2061 || g.SYEAR == 2071) && ((g.STIME > 1200) || (g.STIME < 480))) {
+    if ((g.SYEAR == 2061 || g.SYEAR == 2071) && ((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(480)))) {
       tell("The stadium is dark and deserted");
     } else if (g.SYEAR == 2071) {
       await SCORE(79);
@@ -8987,7 +8989,7 @@ async function RIVER_AND_KENNEDY_F(rarg) {
 }
 
 async function ROCKVIL_HIGH_ENTER_F() {
-  if ((g.STIME < 420) || (g.STIME > 1020)) {
+  if ((s16(g.STIME) < s16(420)) || (s16(g.STIME) > s16(1020))) {
     (await CLOSED_PRINT("The school"));
     return false;
   } else {
@@ -9045,7 +9047,7 @@ async function CHUN_BUILDING_F() {
 }
 
 async function BANK_ENTER_F() {
-  if ((g.STIME > 480) && (g.STIME < 960)) {
+  if ((s16(g.STIME) > s16(480)) && (s16(g.STIME) < s16(960))) {
     return BANK;
   } else {
     (await CLOSED_PRINT("The bank"));
@@ -9238,11 +9240,11 @@ async function FIRST_METHODIST_CHURCH_F(rarg) {
 }
 
 async function ELDER_MOVE() {
-  if ((g.SYEAR == 2041 || g.SYEAR == 2051) && (g.STIME > 480) && (g.STIME < 1200) && !(hasFlag(CHURCH_OFFICIAL, TOUCHBIT)) && !(loc(CHURCH_OFFICIAL) == g.HERE)) {
+  if ((g.SYEAR == 2041 || g.SYEAR == 2051) && (s16(g.STIME) > s16(480)) && (s16(g.STIME) < s16(1200)) && !(hasFlag(CHURCH_OFFICIAL, TOUCHBIT)) && !(loc(CHURCH_OFFICIAL) == g.HERE)) {
     move(CHURCH_OFFICIAL, g.HERE);
     tell("\nYou suddenly notice a church elder, pacing around at the other end of the building.\n");
     return true;
-  } else if ((loc(CHURCH_OFFICIAL) == g.HERE) && (g.STIME > 1200)) {
+  } else if ((loc(CHURCH_OFFICIAL) == g.HERE) && (s16(g.STIME) > s16(1200))) {
     move(CHURCH_OFFICIAL, LOCAL_GLOBALS);
     tell("\nThe church official wanders off.\n");
     return true;
@@ -9388,7 +9390,7 @@ async function NEWSPAPER_F() {
 }
 
 async function SIMONS_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(RESTAURANT_OBJECT);
     return false;
   } else {
@@ -9467,7 +9469,7 @@ async function PICKFORD_THEATRE_OBJECT_F() {
 }
 
 async function PICKFORD_THEATRE_F(rarg) {
-  if ((rarg == M_END) && (g.SYEAR == 2061 || g.SYEAR == 2071) && (g.STIME > 1160) && (g.STIME < 1200)) {
+  if ((rarg == M_END) && (g.SYEAR == 2061 || g.SYEAR == 2071) && (s16(g.STIME) > s16(1160)) && (s16(g.STIME) < s16(1200))) {
     tell("\nSkycar after skycar settles onto the sidewalk outside the theatre, and extravagantly dressed couples walk elegantly into the theatre for the evening's performance");
     if ((g.SYEAR == 2071) && prob(50) && !g.BEGGAR_FLAG) {
       g.BEGGAR_FLAG = true;
@@ -9493,7 +9495,7 @@ async function AIRPORTWAY_AND_RIVER_F(rarg) {
     }
     tell(" school, a theatre, and a hotel can be entered to the west, southwest, and southeast, respectively. To the northeast is the perimeter fence of the Manville Border Security Force Base.");
     return true;
-  } else if ((rarg == M_END) && (g.SYEAR == 2061) && (g.LIGHT_LEVEL == 3) && (getProp(AIRPORTWAY_AND_RIVER, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2061) && (g.LIGHT_LEVEL == 3) && (s16(getProp(AIRPORTWAY_AND_RIVER, P.SCENE)) < s16(101))) {
     if (prob(getProp(AIRPORTWAY_AND_RIVER, P.SCENE))) {
       putProp(AIRPORTWAY_AND_RIVER, P.SCENE, 101);
       await SCORE(88);
@@ -9607,7 +9609,7 @@ async function SKYCAR_LOT_6_F(rarg) {
 
 async function RAILROAD_MUSEUM_ENTER_F() {
   if (g.SYEAR == 2041 || g.SYEAR == 2051) {
-    if ((g.STIME > 615) && (g.STIME < 1185)) {
+    if ((s16(g.STIME) > s16(615)) && (s16(g.STIME) < s16(1185))) {
       return RAILROAD_MUSEUM;
     } else {
       (await CLOSED_PRINT("The museum"));
@@ -9671,7 +9673,7 @@ async function RIVERSIDE_PARK_ENTER_F() {
 }
 
 async function CINEMA_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(MOVIE_THEATRE_OBJECT);
     return false;
   } else {
@@ -10042,7 +10044,7 @@ async function TERMINAL_F(rarg) {
       tell(".");
       return true;
     }
-  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (getProp(TERMINAL, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (s16(getProp(TERMINAL, P.SCENE)) < s16(101))) {
     if (prob(getProp(TERMINAL, P.SCENE))) {
       putProp(TERMINAL, P.SCENE, 101);
       await SCORE(100);
@@ -10268,7 +10270,7 @@ async function DRUG_STORE_OBJECT_F() {
 }
 
 async function DRUG_STORE_ENTER_F() {
-  if ((g.STIME > 480) && (g.STIME < 1305)) {
+  if ((s16(g.STIME) > s16(480)) && (s16(g.STIME) < s16(1305))) {
     return DRUG_STORE;
   } else {
     (await CLOSED_PRINT("The drug store"));
@@ -10360,7 +10362,7 @@ async function HARDWARE_STORE_OBJECT_F() {
 }
 
 async function HARDWARE_STORE_ENTER_F() {
-  if ((g.STIME > 600) && (g.STIME < 1080)) {
+  if ((s16(g.STIME) > s16(600)) && (s16(g.STIME) < s16(1080))) {
     return HARDWARE_STORE;
   } else {
     (await CLOSED_PRINT("The hardware store"));
@@ -10473,7 +10475,7 @@ async function WICKER_AND_RIVER_F(rarg) {
       tell(".");
       return true;
     }
-  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (getProp(WICKER_AND_RIVER, P.SCENE) < 101)) {
+  } else if ((rarg == M_END) && (g.SYEAR == 2071) && (s16(getProp(WICKER_AND_RIVER, P.SCENE)) < s16(101))) {
     if (prob(getProp(WICKER_AND_RIVER, P.SCENE))) {
       putProp(WICKER_AND_RIVER, P.SCENE, 101);
       await SCORE(103);
@@ -10874,7 +10876,7 @@ async function SKYCAR_FACTORY_F(rarg) {
     if (g.SYEAR == 2061 || g.SYEAR == 2071) {
       tell(", although not nearly as many as before the suspension of federal regulations limiting robotic job replacement");
     }
-    if (!(g.SYEAR == 2041) && (g.STIME < 480) && (g.STIME > 990)) {
+    if (!(g.SYEAR == 2041) && (s16(g.STIME) < s16(480)) && (s16(g.STIME) > s16(990))) {
       await SCORE(109);
       tell(". The parking lot is empty; there must currently be only one shift per day");
     } else {
@@ -10901,7 +10903,7 @@ async function SKYCAR_FACTORY_F(rarg) {
 }
 
 async function GUN_SHOP_ENTER_F() {
-  if ((g.STIME > 630) && (g.STIME < 1230)) {
+  if ((s16(g.STIME) > s16(630)) && (s16(g.STIME) < s16(1230))) {
     return GUN_SHOP;
   } else {
     (await CLOSED_PRINT("The gun store"));
@@ -10977,7 +10979,7 @@ async function GUN_F() {
 
 async function BAR_F(rarg) {
   if (rarg == M_ENTER) {
-    if (g.STIME < 1201) {
+    if (s16(g.STIME) < s16(1201)) {
       clearFlag(BAR, ONBIT);
     }
     move(SPEAR_CARRIER, g.HERE);
@@ -10987,7 +10989,7 @@ async function BAR_F(rarg) {
   } else if (rarg == M_LOOK) {
     tell("This is a tiny, smoke-filled bar, with exits to the west and northeast. Loud, distorted music comes from an old jukebox", S(g.STOOL_DESC));
     return await PEOPLE_IN_BAR_DESC();
-  } else if ((rarg == M_END) && !(g.SYEAR == 2041) && (g.STIME > 1195) && (g.STIME < 1255) && !(hasFlag(BAR, ONBIT))) {
+  } else if ((rarg == M_END) && !(g.SYEAR == 2041) && (s16(g.STIME) > s16(1195)) && (s16(g.STIME) < s16(1255)) && !(hasFlag(BAR, ONBIT))) {
     setFlag(BAR, ONBIT);
     tell("\nSomeone, possibly the owner, shouts above the din, \"It's getting near curfew time; anyone who doesn't wanna stay 'til morning should get a move on it! Of course, we'll be staying open all night, as usual -- you just gotta know the right people!\" He rubs his fingers together, indicating that some official of the Curfew Board is now slightly richer. \"Well, drink up!\"\n");
     return true;
@@ -11133,7 +11135,7 @@ async function PIER_F(rarg) {
 }
 
 async function POOL_HALL_ENTER_F() {
-  if (((g.STIME > 1200) || (g.STIME < 420)) && !(g.SYEAR == 2041)) {
+  if (((s16(g.STIME) > s16(1200)) || (s16(g.STIME) < s16(420))) && !(g.SYEAR == 2041)) {
     await OF_COURSE(POOL_HALL_OBJECT);
     return false;
   } else {
@@ -11292,7 +11294,7 @@ async function BOOKSTORE_ENTER_F() {
     await SCORE(113);
     tell("The bookstore is locked. Through the grimy window, the bookstore looks empty and barren.\n");
     return false;
-  } else if ((g.STIME > 1083) || (g.STIME < 501)) {
+  } else if ((s16(g.STIME) > s16(1083)) || (s16(g.STIME) < s16(501))) {
     (await CLOSED_PRINT("The bookstore"));
     return false;
   } else {
@@ -11460,7 +11462,7 @@ async function LIQUOR_STORE_OBJECT_F() {
 }
 
 async function LIQUOR_STORE_ENTER_F() {
-  if ((g.STIME > 660) && (g.STIME < 1320)) {
+  if ((s16(g.STIME) > s16(660)) && (s16(g.STIME) < s16(1320))) {
     return LIQUOR_STORE;
   } else {
     (await CLOSED_PRINT("The liquor store"));
@@ -11649,7 +11651,7 @@ async function TUBES_ENTER_F() {
     await SCORE(32);
     tell("The Tube system closed five years ago!\n");
     return false;
-  } else if ((g.SYEAR == 2051 || g.SYEAR == 2061) && ((g.STIME < 420) || (g.STIME > 1250))) {
+  } else if ((g.SYEAR == 2051 || g.SYEAR == 2061) && ((s16(g.STIME) < s16(420)) || (s16(g.STIME) > s16(1250)))) {
     tell("As usual, the Tubes have closed for curfew.\n");
     return false;
   } else if (g.HERE == HALLEY_PARK_WEST) {
@@ -11695,7 +11697,7 @@ async function TUBE_STATION_DESC(brown = false) {
 
 async function DEBARK() {
   tell("he doors open and ");
-  if (g.STIME < 360) {
+  if (s16(g.STIME) < s16(360)) {
     tell("a few ");
   }
   tell("people begin boarding and debarking.\n");
@@ -12385,7 +12387,7 @@ async function SLOT_F() {
       if (g.JOYBOOTH_USED) {
         tell("You almost succumb and put your card in the slot again, but years of warning messages about joybooth addiction finally prevail and prevent you from going ahead with it.\n");
         return true;
-      } else if (g.CREDIT < 12) {
+      } else if (s16(g.CREDIT) < s16(12)) {
         tell("A small \"Insufficient Credit\" light flashes incessantly for a moment.\n");
         return true;
       }
@@ -12548,7 +12550,7 @@ async function V_SUPER_BRIEF() {
 }
 
 async function V_DIAGNOSE() {
-  if (g.AIR_CONDITIONING_COUNTER > 34) {
+  if (s16(g.AIR_CONDITIONING_COUNTER) > s16(34)) {
     crlf();
     if (g.SIMULATING) {
       tell("You feel as if you're burning up with fever: weak, hot, and sweaty.\n");
@@ -12557,7 +12559,7 @@ async function V_DIAGNOSE() {
       tell("You detect a throbbing feeling, almost like a dull pain or a wave of heat, which is severely impairing your functioning.\n");
       return true;
     }
-  } else if (g.AIR_CONDITIONING_COUNTER > 19) {
+  } else if (s16(g.AIR_CONDITIONING_COUNTER) > s16(19)) {
     crlf();
     if (g.SIMULATING) {
       tell("Despite the coolness of the air, you feel hot and flushed, almost as though you were running a slight fever.\n");
@@ -12770,7 +12772,7 @@ async function V_VERSION() {
   await TITLE_PRINT();
   tell(" is a trademark of Infocom, Inc.\nRelease ", N(v_), " / Serial number ");
   loop1: for (;;) {
-    if ((cnt = cnt + 1) > 23) {
+    if (s16(cnt = cnt + 1) > s16(23)) {
       break loop1;
     } else {
       printC(getb(0, cnt));
@@ -12908,11 +12910,11 @@ async function ANSWER_SAY_SHARE() {
     await V_NO();
     await CLEAR_BUF();
     return true;
-  } else if ((g.GRIMWOLD_COUNTER > 0) && (await NEXT_WORD_YES$())) {
+  } else if ((s16(g.GRIMWOLD_COUNTER) > s16(0)) && (await NEXT_WORD_YES$())) {
     await V_YES();
     await CLEAR_BUF();
     return true;
-  } else if ((g.GRIMWOLD_COUNTER > 0) && eq(get(g.P_LEXV, g.P_CONT), W.NO)) {
+  } else if ((s16(g.GRIMWOLD_COUNTER) > s16(0)) && eq(get(g.P_LEXV, g.P_CONT), W.NO)) {
     await V_NO();
     await CLEAR_BUF();
     return true;
@@ -13595,7 +13597,7 @@ async function V_LISTEN() {
         tell("jukebox.\n");
         return true;
       }
-    } else if ((g.HERE == MAIN_STREET_BRIDGE) && (g.WILD_DOG_COUNTER > 0)) {
+    } else if ((g.HERE == MAIN_STREET_BRIDGE) && (s16(g.WILD_DOG_COUNTER) > s16(0))) {
       await PERFORM(V.LISTEN, BARKING);
       return true;
     } else if (loc(RYDER) == g.HERE) {
@@ -13821,7 +13823,7 @@ async function V_NO() {
     g.MEAL_STATUS = 2;
     tell("\"Fine,\" says the maitre d'. \"I'll come back when the rest of your party arrives.\" He walks away.\n");
     return true;
-  } else if (g.GRIMWOLD_COUNTER > 0) {
+  } else if (s16(g.GRIMWOLD_COUNTER) > s16(0)) {
     tell("Grimwold fidgets impatiently.\n");
     return true;
   } else if ((g.YES_NO_FLAG == 1 || g.YES_NO_FLAG == 2 || g.YES_NO_FLAG == 3) || (g.YES_NO_FLAG == 4 || g.YES_NO_FLAG == 5)) {
@@ -14086,7 +14088,7 @@ async function V_PUT() {
   } else if (!(hasFlag(g.PRSI, OPENBIT)) && !(hasFlag(g.PRSI, SURFACEBIT))) {
     cont_closed = true;
   }
-  if ((((await WEIGHT(g.PRSI)) + getProp(g.PRSO, P.SIZE)) - getProp(g.PRSI, P.SIZE)) > getProp(g.PRSI, P.CAPACITY)) {
+  if (s16(((await WEIGHT(g.PRSI)) + getProp(g.PRSO, P.SIZE)) - getProp(g.PRSI, P.SIZE)) > s16(getProp(g.PRSI, P.CAPACITY))) {
     if (hasFlag(g.PRSI, VEHBIT)) {
       return await V_YELL();
     } else {
@@ -14241,7 +14243,7 @@ async function V_RECORD_ON() {
     return (await ERR("Record feature is already active."));
   } else if (!g.SIMULATING && !(g.HERE == NEWS || g.HERE == OFFICE || g.HERE == ROOFTOP) && !(g.HERE == CORE || g.HERE == CONTROL_CENTER || g.HERE == CAFETERIA)) {
     return (await ERR("Record feature does not function here."));
-  } else if (getProp(RECORD_BUFFER, P.SIZE) > 90) {
+  } else if (s16(getProp(RECORD_BUFFER, P.SIZE)) > s16(90)) {
     return (await ERR("Record buffer is full; record feature cannot be activated."));
   } else {
     g.RECORDING = true;
@@ -14425,16 +14427,16 @@ async function V_SLEEP() {
     await PERFORM(V.THROUGH, SLEEP_MODE);
     return true;
   } else if (g.HERE == BEDROOM) {
-    if ((g.STIME < 1320) && (g.STIME > 1019)) {
+    if ((s16(g.STIME) < s16(1320)) && (s16(g.STIME) > s16(1019))) {
       tell("You never go to bed this early.\n");
       return true;
-    } else if ((g.STIME < 1020) && (g.STIME > 720)) {
+    } else if ((s16(g.STIME) < s16(1020)) && (s16(g.STIME) > s16(720))) {
       tell("It's the middle of the afternoon!\n");
       return true;
-    } else if ((g.STIME > 540) && (g.STIME < 721)) {
+    } else if ((s16(g.STIME) > s16(540)) && (s16(g.STIME) < s16(721))) {
       tell("The day's barely begun!\n");
       return true;
-    } else if ((g.STIME > 419) && (g.STIME < 541)) {
+    } else if ((s16(g.STIME) > s16(419)) && (s16(g.STIME) < s16(541))) {
       tell("You've never been able to fall asleep once the sun has come up.\n");
       return true;
     } else if (await HELD$(BABY)) {
@@ -14448,7 +14450,7 @@ async function V_SLEEP() {
         g.MITCHELL_COUNTER = 0;
         wake_time = 421;
       }
-      if (g.STIME > 1319) {
+      if (s16(g.STIME) > s16(1319)) {
         g.ELAPSED_TIME = (1440 - g.STIME) + wake_time;
       } else {
         g.ELAPSED_TIME = wake_time - g.STIME;
@@ -14486,7 +14488,7 @@ async function V_SLEEP() {
       return true;
     }
   } else if (g.HERE == JAIL_CELL) {
-    if (g.STIME > 415) {
+    if (s16(g.STIME) > s16(415)) {
       tell("You try to sleep, and fail.\n");
       return true;
     } else {
@@ -14888,12 +14890,12 @@ async function V_WAIT(num = 10) {
     return true;
   }
   tell("Time passes...\n");
-  if (num < 11) {
+  if (s16(num) < s16(11)) {
     short_wait = true;
   }
   loop1: for (;;) {
     x = await CLOCKER();
-    if (((num = num - 1) < 1) || (g.HERE == NEWS)) {
+    if ((s16(num = num - 1) < s16(1)) || (g.HERE == NEWS)) {
       x = true;
     }
     if ((g.HERE == SIMONS || g.HERE == THE_COACHMAN) && (g.MEAL_STATUS == 1) && !(g.SYEAR == 2081)) {
@@ -14911,7 +14913,7 @@ async function V_WAIT(num = 10) {
 
 async function V_WAIT_FOR() {
   if (g.PRSO == INTNUM) {
-    if (g.P_NUMBER > 120) {
+    if (s16(g.P_NUMBER) > s16(120)) {
       tell("That's too long to wait.\n");
       return true;
     } else {
@@ -14959,20 +14961,20 @@ async function V_WAIT_UNTIL() {
   }
   if (named_time) {
     g.PRSO = INTNUM;
-    if (g.P_NUMBER > tim) {
+    if (s16(g.P_NUMBER) > s16(tim)) {
       g.P_NUMBER = g.P_NUMBER - tim;
     } else {
       g.P_NUMBER = g.P_NUMBER + (1440 - tim);
     }
     return await V_WAIT_FOR();
   } else if (g.PRSO == INTNUM) {
-    if (g.P_NUMBER < 13) {
+    if (s16(g.P_NUMBER) < s16(13)) {
       g.P_NUMBER = g.P_NUMBER * 60;
     }
-    if (tim > 720) {
+    if (s16(tim) > s16(720)) {
       tim = tim - 720;
     }
-    if (g.P_NUMBER > tim) {
+    if (s16(g.P_NUMBER) > s16(tim)) {
       g.P_NUMBER = g.P_NUMBER - tim;
     } else {
       g.P_NUMBER = g.P_NUMBER + (720 - tim);
@@ -15200,7 +15202,7 @@ async function V_YES() {
     putProp(SPEAR_CARRIER, P.SDESC, "waiter");
     tell("The maitre d' shows you to a small table at the back of the restaurant.\n");
     return true;
-  } else if (g.GRIMWOLD_COUNTER > 0) {
+  } else if (s16(g.GRIMWOLD_COUNTER) > s16(0)) {
     return await BLOT_ACTION();
   } else if ((g.YES_NO_FLAG == 1 || g.YES_NO_FLAG == 2 || g.YES_NO_FLAG == 3) || (g.YES_NO_FLAG == 4 || g.YES_NO_FLAG == 5)) {
     tell("[That was just a rhetorical question.]\n");
@@ -15276,12 +15278,12 @@ async function ITAKE(vb = true) {
     }
     return M_FATAL;
   } else if (!(loc(loc(g.PRSO)) == g.WINNER)) {
-    if (((await WEIGHT(g.PRSO)) + (await WEIGHT(g.WINNER))) > 100) {
+    if (s16((await WEIGHT(g.PRSO)) + (await WEIGHT(g.WINNER))) > s16(100)) {
       if (vb) {
         tell("Your load is too heavy.\n");
       }
       return M_FATAL;
-    } else if ((cnt = await CCOUNT(g.WINNER)) > 7) {
+    } else if (s16(cnt = await CCOUNT(g.WINNER)) > s16(7)) {
       if (vb) {
         tell("You're holding too many things already.\n");
       }
@@ -15397,14 +15399,14 @@ async function CROWD_DESC() {
   if (hasFlag(g.HERE, STREETBIT) && !(g.HERE == AIRPORT_ENTRANCE) && !(g.HERE == BASE_GATE) && !(g.HERE == ROCKVIL_UNIVERSITY) && !(g.HERE == INTERCHANGE) && !(hasFlag(g.HERE, BADAREABIT)) && !(g.SYEAR == 2081) && g.DESCRIBE_CROWDS) {
     g.DESCRIBE_CROWDS = false;
     await QUEUE(I_DESCRIBE_CROWDS.id, 90);
-    if ((g.STIME > 720) && (g.STIME < 810)) {
+    if ((s16(g.STIME) > s16(720)) && (s16(g.STIME) < s16(810))) {
       tell(" The street is bustling with lunchtime crowds.");
       return true;
     } else if (g.LIGHT_LEVEL == 3) {
       tell(" The sidewalks and street are crowded with people.");
       return true;
     } else if (g.LIGHT_LEVEL == 2) {
-      if (g.STIME < 720) {
+      if (s16(g.STIME) < s16(720)) {
         tell(" The street is getting more crowded as the new day begins.");
         return true;
       } else {
@@ -15412,14 +15414,14 @@ async function CROWD_DESC() {
         return true;
       }
     } else if (g.LIGHT_LEVEL == 1) {
-      if (g.STIME < 720) {
+      if (s16(g.STIME) < s16(720)) {
         tell(" The city is still fairly quiet, but there are more people around now than during the dead of night.");
         return true;
       } else {
         tell(" The midday crowds have almost completely dispersed; the street is much less busy now.");
         return true;
       }
-    } else if ((g.SYEAR == 2041) || ((g.STIME > 720) && (g.STIME < 1260))) {
+    } else if ((g.SYEAR == 2041) || ((s16(g.STIME) > s16(720)) && (s16(g.STIME) < s16(1260)))) {
       tell(" The street is dark and almost completely deserted. Only a few people are visible, hurrying to destinations unknown to you.");
       return true;
     } else {
@@ -15516,7 +15518,7 @@ async function PRINT_CONT(obj, v$ = false, level = 0) {
       if (!(hasFlag(y, NDESCBIT))) {
         if (_1st$) {
           if (await FIRSTER(obj, level)) {
-            if (level < 0) {
+            if (s16(level) < s16(0)) {
               level = 0;
             }
           }
@@ -15569,7 +15571,7 @@ async function FIRSTER(obj, level) {
   if (obj == g.WINNER) {
     return true;
   } else if (!(loc(obj) == ROOMS)) {
-    if (level > 0) {
+    if (s16(level) > s16(0)) {
       tell(S(get(g.INDENTS, level)));
     }
     if (hasFlag(obj, SURFACEBIT)) {
@@ -15778,7 +15780,7 @@ async function JIGS_UP(desc) {
     if (g.PART_FLAG == 1) {
       move(PERELMAN, LOCAL_GLOBALS);
       await QUEUE(I_MESSAGE_D.id, 6);
-    } else if (g.PART_FLAG < 3) {
+    } else if (s16(g.PART_FLAG) < s16(3)) {
       await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
       await QUEUE(I_PERELMAN.id, -1);
       g.LAST_ABE_TIME = g.TIME - 1;
@@ -15851,7 +15853,7 @@ async function META_LOC(obj, inv = false) {
 async function OTHER_SIDE(dobj) {
   let p_ = 0, tee = 0;
   for (;;) {
-    if ((p_ = nextProp(g.HERE, p_)) < LOW_DIRECTION) {
+    if (s16(p_ = nextProp(g.HERE, p_)) < s16(LOW_DIRECTION)) {
       return false;
     } else {
       tee = getPropAddr(g.HERE, p_);
@@ -16085,7 +16087,7 @@ async function FIND_NOT_HERE(tbl, prso$) {
       g.PRSI = g.P_MOBY_FOUND;
     }
     return false;
-  } else if ((1 < m_f) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC)))) {
+  } else if ((s16(1) < s16(m_f)) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC)))) {
     if (obj == NOT_HERE_OBJECT) {
       return true;
     } else if (prso$) {
@@ -16314,7 +16316,7 @@ async function SKY_F() {
       tell("dark");
     } else if (g.LIGHT_LEVEL == 1 || g.LIGHT_LEVEL == 2) {
       tell("getting ");
-      if (g.STIME < 720) {
+      if (s16(g.STIME) < s16(720)) {
         tell("lighter");
       } else {
         tell("darker");
@@ -16672,7 +16674,7 @@ async function PEOPLE_F() {
     return await V_WALK_AROUND();
   } else if (isVerb(V.WAIT_FOR) && (g.HERE == CORE || g.HERE == ROOFTOP) && (g.PART_FLAG == 3)) {
     return await V_WAIT(120);
-  } else if (isVerb(V.EXAMINE, V.LISTEN) && (g.HERE == ROCKVIL_STADIUM) && (g.SYEAR == 2071) && ((g.STIME < 1201) && (g.STIME > 481))) {
+  } else if (isVerb(V.EXAMINE, V.LISTEN) && (g.HERE == ROCKVIL_STADIUM) && (g.SYEAR == 2071) && ((s16(g.STIME) < s16(1201)) && (s16(g.STIME) > s16(481)))) {
     tell("The mob is frenzied and bloodthirsty.\n");
     return true;
   } else if (isVerb(V.EXAMINE) && (g.HERE == BAR)) {
@@ -16843,7 +16845,7 @@ async function ROCKVIL_OBJECT_F() {
     return await CANT_SEE(ROCKVIL_OBJECT);
   } else if ((g.HERE == ROOFTOP) && isVerb(V.EXAMINE)) {
     tell("All you can see of the city is a g");
-    if ((g.TIME > 1155) || (g.TIME < 430)) {
+    if ((s16(g.TIME) > s16(1155)) || (s16(g.TIME) < s16(430))) {
       tell("low");
     } else {
       tell("ray haze");
@@ -16866,7 +16868,7 @@ async function CANT_BUY(obj) {
 }
 
 async function TOO_POOR(amount, item) {
-  if (g.CREDIT < amount) {
+  if (s16(g.CREDIT) < s16(amount)) {
     tell(", but are embarrassed when");
     await ARTICLE(SPEAR_CARRIER);
     tell(" returns with your card and");
@@ -16900,7 +16902,7 @@ async function VENDING(vendor, item, amount) {
   tell("You insert your card into the ");
   printD(vendor);
   tell(". A readout flashes \"");
-  if (g.CREDIT < amount) {
+  if (s16(g.CREDIT) < s16(amount)) {
     tell("INSUFFICIENT FUNDS\" and your card spits back into your hand.\n");
     return true;
   } else {
@@ -16916,7 +16918,7 @@ async function VENDING(vendor, item, amount) {
 }
 
 async function CLOSING_TIME(time, loc_string, actor_string, new_loc) {
-  if (g.STIME > time) {
+  if (s16(g.STIME) > s16(time)) {
     tell("\nAn announcement heralds the closing of ", S(loc_string), " for the evening, and ", S(actor_string), " shows you to the exit.\n\n");
     if (g.HERE == JOYBOOTH) {
       move(HEADSET, g.HERE);
@@ -16931,7 +16933,7 @@ async function CLOSING_TIME(time, loc_string, actor_string, new_loc) {
 }
 
 async function CURFEW_CLOSE(new_loc) {
-  if ((g.STIME > 1200) && !(g.SYEAR == 2041)) {
+  if ((s16(g.STIME) > s16(1200)) && !(g.SYEAR == 2041)) {
     tell("\nSomeone calls out something about \"getting late\" and \"we gotta close up.\" You follow everyone out.\n\n");
     move(BEER, LOCAL_GLOBALS);
     await GOTO(new_loc);
@@ -16942,7 +16944,7 @@ async function CURFEW_CLOSE(new_loc) {
 }
 
 async function RESTAURANT_CLOSES(new_loc) {
-  if (!(g.SYEAR == 2041) && (g.STIME > 1200)) {
+  if (!(g.SYEAR == 2041) && (s16(g.STIME) > s16(1200))) {
     tell("\nThe waiter approaches. \"I'm sorry, but notice the hour.\" He ");
     if (loc(CREDIT_CARD) == SPEAR_CARRIER) {
       move(CREDIT_CARD, PLAYER);
@@ -16957,7 +16959,7 @@ async function RESTAURANT_CLOSES(new_loc) {
 }
 
 async function SHOP_CLOSES(time, loc_string, actor_string, new_loc) {
-  if (g.STIME > time) {
+  if (s16(g.STIME) > s16(time)) {
     tell("\n", S(actor_string), " informs you that the ", S(loc_string), " is closing and ushers you to the door.\n\n");
     await GOTO(new_loc);
     return true;
@@ -16967,7 +16969,7 @@ async function SHOP_CLOSES(time, loc_string, actor_string, new_loc) {
 }
 
 async function CLOSED_PRINT(loc_) {
-  if ((g.STIME > 300) && (g.STIME < 840)) {
+  if ((s16(g.STIME) > s16(300)) && (s16(g.STIME) < s16(840))) {
     tell(S(loc_), " isn't open yet.\n");
     return true;
   } else {
@@ -16987,7 +16989,7 @@ async function SUBURBS_ENTER_F() {
 }
 
 async function OFFICE_BUILDING_ENTER_F() {
-  if ((g.STIME > 1120) || (g.STIME < 475)) {
+  if ((s16(g.STIME) > s16(1120)) || (s16(g.STIME) < s16(475))) {
     (await CLOSED_PRINT("The building"));
   } else if (g.SYEAR == 2071) {
     g.BRUISED = true;
@@ -17020,7 +17022,7 @@ async function APARTMENT_ENTER_F() {
     g.FOLLOW_FLAG = 9;
     await QUEUE(I_UNFOLLOW.id, 2);
     tell("A ");
-    if (g.STIME < 420) {
+    if (s16(g.STIME) < s16(420)) {
       tell("tired-looking ");
     }
     tell("doorman, not recognizing you as a resident, ");
@@ -17250,7 +17252,7 @@ async function GLOBAL_SIGN_F() {
 
 async function GLOBAL_WINDOW_F() {
   if (g.HERE == POST_OFFICE) {
-    if (isVerb(V.LOOK_INSIDE, V.EXAMINE, V.OPEN) && (g.SYEAR == 2071) && ((g.STIME < 900) || (g.STIME > 960))) {
+    if (isVerb(V.LOOK_INSIDE, V.EXAMINE, V.OPEN) && (g.SYEAR == 2071) && ((s16(g.STIME) < s16(900)) || (s16(g.STIME) > s16(960)))) {
       tell("The window is shut tight.\n");
       return true;
     } else if (isVerb(V.LOOK_INSIDE)) {
@@ -18322,7 +18324,7 @@ async function INVERSE_LINE(line_number, center_half = false) {
 
 async function PRINT_SPACES(cnt) {
   for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       return true;
     } else {
       printC(32);
@@ -18332,7 +18334,7 @@ async function PRINT_SPACES(cnt) {
 
 async function CONTINUE() {
   let currently_scripting = false, cnt = 0;
-  if (getb(0, 32) > 21) {
+  if (s16(getb(0, 32)) > s16(21)) {
     cnt = getb(0, 32) - 21;
     loop1: for (;;) {
       cnt = cnt - 1;
@@ -18423,11 +18425,11 @@ async function STATUS_LINE() {
 
 async function TIME_PRINT(tm, skip_am_pm = false) {
   let hr = 0;
-  if (tm > 1440) {
+  if (s16(tm) > s16(1440)) {
     tm = tm - 1440;
   }
   hr = div(tm, 60);
-  if (hr > 12) {
+  if (s16(hr) > s16(12)) {
     hr = hr - 12;
   }
   if (hr == 0) {
@@ -18437,7 +18439,7 @@ async function TIME_PRINT(tm, skip_am_pm = false) {
   }
   tell(":");
   hr = mod(tm, 60);
-  if (hr < 10) {
+  if (s16(hr) < s16(10)) {
     tell("0");
   }
   tell(N(hr));
@@ -18448,16 +18450,16 @@ async function TIME_PRINT(tm, skip_am_pm = false) {
 }
 
 async function JUSTIFY_TIME_PRINT(num) {
-  if ((num > 59) && (num < 600)) {
+  if ((s16(num) > s16(59)) && (s16(num) < s16(600))) {
     tell(" ");
-  } else if ((num < 1320) && (num > 779)) {
+  } else if ((s16(num) < s16(1320)) && (s16(num) > s16(779))) {
     tell(" ");
   }
   return await TIME_PRINT(num, true);
 }
 
 async function AM_PM_PRINT(num) {
-  if ((num < 720) || (num == 1440)) {
+  if ((s16(num) < s16(720)) || (num == 1440)) {
     tell("am");
     return true;
   } else {
@@ -18702,7 +18704,7 @@ async function I_MESSAGE_M() {
 }
 
 async function I_MESSAGE_Q() {
-  if ((g.TIME < 540) || (g.TIME > 1260)) {
+  if ((s16(g.TIME) < s16(540)) || (s16(g.TIME) > s16(1260))) {
     await QUEUE(I_MESSAGE_Q.id, 30);
     return false;
   }
@@ -18780,7 +18782,7 @@ async function SIMULATION_CHECK() {
 }
 
 async function PSYCH_CHECK() {
-  if (g.GRIMWOLD_COUNTER > 0) {
+  if (s16(g.GRIMWOLD_COUNTER) > s16(0)) {
     tell("It would be impolite to leave during the psych test.\n");
     return true;
   } else {
@@ -18893,7 +18895,7 @@ async function LIBRARY_BOX() {
       }
       cnt = cnt + 1;
       dir = first(PRISM_MESSAGES_DIRECTORY);
-      if (cnt > g.NUMBER_OF_MESSAGES) {
+      if (s16(cnt) > s16(g.NUMBER_OF_MESSAGES)) {
         break loop2;
       }
     }
@@ -19103,7 +19105,7 @@ async function MESSAGE_C_F() {
     loop1: for (;;) {
       tell("   ", S(get(g.RECORDING_TABLE, cnt)), "\n");
       cnt = cnt + 2;
-      if (cnt > 17) {
+      if (s16(cnt) > s16(17)) {
         break loop1;
       }
     }
@@ -19121,7 +19123,7 @@ async function MESSAGE_D_F() {
     tell("\"Perelman here. We see that you're out of ");
     printD(SIMULATION_MODE);
     tell(". ");
-    if (g.SHORT_FIRST_SIMULATION || (get(g.SIM_LEVEL_TABLE, 0) < 150)) {
+    if (g.SHORT_FIRST_SIMULATION || (s16(get(g.SIM_LEVEL_TABLE, 0)) < s16(150))) {
       g.SHORT_FIRST_SIMULATION = true;
       tell("We didn't expect you to be done this soon! ");
     }
@@ -19175,7 +19177,7 @@ async function SIM_SLEEP() {
   if (g.PART_FLAG == 4) {
     tell(S(g.NOT_ACTIVE), "\n");
     return M_FATAL;
-  } else if ((g.DATE < g.NEXT_SLEEP_DATE) || ((g.NEXT_SLEEP_DATE == g.DATE) && (g.TIME < g.NEXT_SLEEP_TIME))) {
+  } else if ((s16(g.DATE) < s16(g.NEXT_SLEEP_DATE)) || ((g.NEXT_SLEEP_DATE == g.DATE) && (s16(g.TIME) < s16(g.NEXT_SLEEP_TIME)))) {
     tell("It's too soon since your last sleep.\n");
     return M_FATAL;
   }
@@ -19201,7 +19203,7 @@ async function SIM_SLEEP() {
     }
   }
   await INCREMENT_TIME(360 - cnt);
-  if (g.PART_FLAG < 3) {
+  if (s16(g.PART_FLAG) < s16(3)) {
     await PUT_PERELMAN_IN_THE_RIGHT_PLACE();
     await QUEUE(I_PERELMAN.id, -1);
     g.LAST_ABE_TIME = g.TIME - 1;
@@ -19210,12 +19212,12 @@ async function SIM_SLEEP() {
     tell("Some time later, you awake feeling relaxed and notice that about six hours have passed.\n");
   }
   g.CLOCK_WAIT = true;
-  if (cnt > 300) {
+  if (s16(cnt) > s16(300)) {
     g.NEXT_SLEEP_TIME = g.TIME;
   } else {
     g.NEXT_SLEEP_TIME = g.TIME + (360 - cnt);
   }
-  if (g.NEXT_SLEEP_TIME > 1439) {
+  if (s16(g.NEXT_SLEEP_TIME) > s16(1439)) {
     g.NEXT_SLEEP_TIME = g.NEXT_SLEEP_TIME - 1440;
     return g.NEXT_SLEEP_DATE = g.DATE + 1;
   } else {
@@ -19327,11 +19329,11 @@ async function COMPUTER_TERMINAL_F() {
 
 async function ROOFTOP_F(rarg) {
   if (rarg == M_LOOK) {
-    if ((g.TIME < 1073) && (g.TIME > 378)) {
+    if ((s16(g.TIME) < s16(1073)) && (s16(g.TIME) > s16(378))) {
       tell("The rooftop visual offers a view of the ");
       printD(COUNTRYSIDE);
       tell(" around the PRISM complex. The perimeter fence is visible near the horizon. A wide road leads north toward a distant gray haze, presumably Rockvil.");
-    } else if ((g.TIME > 1103) || (g.TIME < 348)) {
+    } else if ((s16(g.TIME) > s16(1103)) || (s16(g.TIME) < s16(348))) {
       tell("It is a dark, cloud");
       if (g.DATE == 17 || g.DATE == 19) {
         tell("less");
@@ -19339,7 +19341,7 @@ async function ROOFTOP_F(rarg) {
         tell("y");
       }
       tell(" night. The roof is splotchily lit by harsh spotlights. Beyond the edge of the roof, the only thing you can see is Rockvil, glowing with visible and infrared light on the northern horizon.");
-    } else if (g.TIME < 720) {
+    } else if (s16(g.TIME) < s16(720)) {
       tell("The ");
       printD(PROTRUSIONS);
       tell(" of the rooftop cast long shadows in the gray light of dawn. A glistening layer of dew covers every surface.");
@@ -19350,7 +19352,7 @@ async function ROOFTOP_F(rarg) {
     return true;
   } else if ((rarg == M_END) && (await RUSH_HOUR()) && prob(5)) {
     tell("A skybus glides by, carrying commuters ");
-    if (g.TIME > 700) {
+    if (s16(g.TIME) > s16(700)) {
       tell("away from");
     } else {
       tell("into");
@@ -19363,9 +19365,9 @@ async function ROOFTOP_F(rarg) {
 }
 
 async function RUSH_HOUR() {
-  if ((g.TIME > 420) && (g.TIME < 540)) {
+  if ((s16(g.TIME) > s16(420)) && (s16(g.TIME) < s16(540))) {
     return true;
-  } else if ((g.TIME > 960) && (g.TIME < 1080)) {
+  } else if ((s16(g.TIME) > s16(960)) && (s16(g.TIME) < s16(1080))) {
     return true;
   } else {
     return false;
@@ -19474,7 +19476,7 @@ async function I_FIRST_SIMULATION_RESULT() {
       num = num + 1;
     }
     cnt = cnt + 2;
-    if (cnt > 16) {
+    if (s16(cnt) > s16(16)) {
       break loop1;
     }
   }
@@ -19555,7 +19557,7 @@ async function I_FIRST_SIMULATION_RESULT() {
         tell(S(get(g.RECORDING_TABLE, cnt + 1)), ". ");
       }
       cnt = cnt + 2;
-      if (cnt > 16) {
+      if (s16(cnt) > s16(16)) {
         break loop3;
       }
     }
@@ -19606,11 +19608,11 @@ async function PERELMAN_F() {
       g.WINNER = PLAYER;
       await I_RECORDINGS_VIEWED();
       return await CLEAR_BUF();
-    } else if ((g.GRIMWOLD_COUNTER > 0) && isVerb(V.YES)) {
+    } else if ((s16(g.GRIMWOLD_COUNTER) > s16(0)) && isVerb(V.YES)) {
       g.WINNER = PLAYER;
       await BLOT_ACTION();
       return await CLEAR_BUF();
-    } else if ((g.GRIMWOLD_COUNTER > 0) && isVerb(V.NO)) {
+    } else if ((s16(g.GRIMWOLD_COUNTER) > s16(0)) && isVerb(V.NO)) {
       g.WINNER = PLAYER;
       await V_NO();
       return await CLEAR_BUF();
@@ -19715,7 +19717,7 @@ async function PERELMAN_F() {
     if (loc(RYDER) == OFFICE) {
       await PERFORM(V.TELL, RYDER);
       return true;
-    } else if (get(g.SIM_LEVEL_TABLE, 0) < 1) {
+    } else if (s16(get(g.SIM_LEVEL_TABLE, 0)) < s16(1)) {
       tell("Perelman looks confused. \"But...you haven't entered ");
       printD(SIMULATION_MODE);
       tell(" yet!\"\n");
@@ -19750,7 +19752,7 @@ async function CAFETERIA_F(rarg) {
     tell("From this communication outlet, located in an upper corner of this high-ceilinged room, you can see most of the huge PRISM Facility dining hall. ");
     await CAFETERIA_TABLE_DESC();
     tell(" Through the tall glass windows of the cafeteria you can see the well-manicured lawns");
-    if ((g.TIME > 1103) || (g.TIME < 348)) {
+    if ((s16(g.TIME) > s16(1103)) || (s16(g.TIME) < s16(348))) {
       tell(", lit by powerful floodlights,");
     }
     tell(" that surround the Facility.");
@@ -19765,7 +19767,7 @@ async function CAFETERIA_TABLE_DESC() {
   if (g.SEIGE) {
     tell("totally vacant.");
     return true;
-  } else if (((g.TIME > 480) && (g.TIME < 570)) || ((g.TIME > 705) && (g.TIME < 795)) || ((g.TIME > 1035) && (g.TIME < 1125))) {
+  } else if (((s16(g.TIME) > s16(480)) && (s16(g.TIME) < s16(570))) || ((s16(g.TIME) > s16(705)) && (s16(g.TIME) < s16(795))) || ((s16(g.TIME) > s16(1035)) && (s16(g.TIME) < s16(1125)))) {
     tell("filled with mealtime crowds.");
     return true;
   } else {
@@ -19807,7 +19809,7 @@ async function CORE_F(rarg) {
 
 async function AIR_CONDITIONING_UNIT_F() {
   if (isVerb(V.EXAMINE)) {
-    if (g.SABOTAGE_COUNTER > 2) {
+    if (s16(g.SABOTAGE_COUNTER) > s16(2)) {
       tell("One of the panels on the unit looks scratched and loose.\n");
       return true;
     } else if (g.SABOTAGE_COUNTER == 2) {
@@ -19858,13 +19860,13 @@ async function NEWS_F(rarg) {
     } else if (!(hasFlag(TRANSMITTER, ONBIT))) {
       tell(S(g.TECHNICAL_DIFFICULTIES), "\n");
     } else if (g.FEED_BUFFER == RECORD_BUFFER) {
-      if (g.RYDER_RECORDED > 1) {
+      if (s16(g.RYDER_RECORDED) > s16(1)) {
         tell("The ");
         printD(NEWS);
         tell(" is showing ");
         printD(RYDER);
         tell(" trying to strong-arm Dr. Perelman in his office!\n");
-      } else if (getProp(RECORD_BUFFER, P.SIZE) > 0) {
+      } else if (s16(getProp(RECORD_BUFFER, P.SIZE)) > s16(0)) {
         tell("You see the sights and sounds of your recordings.\n");
       } else {
         tell(S(g.TECHNICAL_DIFFICULTIES), "\n");
@@ -20227,7 +20229,7 @@ async function WEATHER_SHARE() {
   loop1: for (;;) {
     tell(S(get(g.WEATHER_TABLE, cnt)), N(get(g.WEATHER_TABLE, cnt + date_offset)));
     cnt = cnt + 4;
-    if (cnt > 32) {
+    if (s16(cnt) > s16(32)) {
       break loop1;
     }
   }
@@ -20436,7 +20438,7 @@ async function HVAC_CONTROLLER_F() {
           put(g.HVAC_STATUS_TABLE, x, 0);
           g.INTERFACE_CHANGE = HVAC_CONTROLLER;
           await QUEUE(I_INTERFACE_CHANGE.id, 22);
-          if ((g.PRSO == VENTILATION) && (g.PRSI == DELTA_SECTOR) && (g.SUFFOCATE_COUNTER < 17) && (loc(SABOTEURS) == CORE)) {
+          if ((g.PRSO == VENTILATION) && (g.PRSI == DELTA_SECTOR) && (s16(g.SUFFOCATE_COUNTER) < s16(17)) && (loc(SABOTEURS) == CORE)) {
             await QUEUE(I_SUFFOCATE.id, -1);
           }
           if ((g.PRSO == VENTILATION) && (g.PRSI == GAMMA_SECTOR) && g.SEIGE) {
@@ -20452,7 +20454,7 @@ async function HVAC_CONTROLLER_F() {
           put(g.HVAC_STATUS_TABLE, x, 1);
           g.INTERFACE_CHANGE = HVAC_CONTROLLER;
           await QUEUE(I_INTERFACE_CHANGE.id, 22);
-          if ((g.PRSO == VENTILATION) && (g.PRSI == DELTA_SECTOR) && (g.SUFFOCATE_COUNTER < 16) && (loc(SABOTEURS) == CORE)) {
+          if ((g.PRSO == VENTILATION) && (g.PRSI == DELTA_SECTOR) && (s16(g.SUFFOCATE_COUNTER) < s16(16)) && (loc(SABOTEURS) == CORE)) {
             disable(await INT(I_SUFFOCATE.id));
           }
           return (await AFFIRMATIVE("n"));
@@ -20558,7 +20560,7 @@ async function JANITORIAL_CONTROLLER_F() {
         return (await ERR("That is not one of the defined janitorial functions.\""));
       } else if (!(g.PRSI == INTNUM)) {
         return await NUMERIC_FORM();
-      } else if ((g.P_NUMBER < 1200) || (g.P_NUMBER > 1410)) {
+      } else if ((s16(g.P_NUMBER) < s16(1200)) || (s16(g.P_NUMBER) > s16(1410))) {
         tell("\"");
         return (await ERR("Allowed time range is 8:00pm to 11:30pm.\""));
       } else {
@@ -20627,18 +20629,18 @@ async function TRAFFIC_COMPUTER_F() {
       } else if (!(g.PRSI == INTNUM)) {
         await NUMERIC_FORM();
         return true;
-      } else if ((g.P_NUMBER > 719) || (g.P_NUMBER == 0 || g.P_NUMBER == 12)) {
+      } else if ((s16(g.P_NUMBER) > s16(719)) || (g.P_NUMBER == 0 || g.P_NUMBER == 12)) {
         tell("\"");
         (await ERR("Invalid time input.\""));
         return true;
       }
-      if (g.P_NUMBER < 13) {
+      if (s16(g.P_NUMBER) < s16(13)) {
         g.P_NUMBER = g.P_NUMBER * 60;
       }
       if (g.PRSO == EVENING_START || g.PRSO == EVENING_END) {
         g.P_NUMBER = g.P_NUMBER + 720;
       }
-      if (((g.PRSO == MORNING_START) && ((g.P_NUMBER + 1) > getProp(MORNING_END, P.SIZE))) || ((g.PRSO == MORNING_END) && ((g.P_NUMBER - 1) < getProp(MORNING_START, P.SIZE)))) {
+      if (((g.PRSO == MORNING_START) && (s16(g.P_NUMBER + 1) > s16(getProp(MORNING_END, P.SIZE)))) || ((g.PRSO == MORNING_END) && (s16(g.P_NUMBER - 1) < s16(getProp(MORNING_START, P.SIZE))))) {
         tell("\"");
         sound(2);
         tell("ERROR: ");
@@ -20647,7 +20649,7 @@ async function TRAFFIC_COMPUTER_F() {
         printD(MORNING_END);
         tell(".\"\n");
         return true;
-      } else if (((g.PRSO == EVENING_START) && ((g.P_NUMBER + 1) > getProp(EVENING_END, P.SIZE))) || ((g.PRSO == EVENING_END) && ((g.P_NUMBER - 1) < getProp(EVENING_START, P.SIZE)))) {
+      } else if (((g.PRSO == EVENING_START) && (s16(g.P_NUMBER + 1) > s16(getProp(EVENING_END, P.SIZE)))) || ((g.PRSO == EVENING_END) && (s16(g.P_NUMBER - 1) < s16(getProp(EVENING_START, P.SIZE))))) {
         tell("\"");
         sound(2);
         tell("ERROR: ");
@@ -20692,16 +20694,16 @@ async function SIMULATION_CONTROLLER_F() {
       } else {
         await SIM_STATUS(2041, get(g.SIM_LEVEL_TABLE, 0));
       }
-      if (get(g.SIM_LEVEL_TABLE, 1) > 0) {
+      if (s16(get(g.SIM_LEVEL_TABLE, 1)) > s16(0)) {
         await SIM_STATUS(2051, get(g.SIM_LEVEL_TABLE, 1));
       }
-      if (get(g.SIM_LEVEL_TABLE, 2) > 0) {
+      if (s16(get(g.SIM_LEVEL_TABLE, 2)) > s16(0)) {
         await SIM_STATUS(2061, get(g.SIM_LEVEL_TABLE, 2));
       }
-      if (get(g.SIM_LEVEL_TABLE, 3) > 0) {
+      if (s16(get(g.SIM_LEVEL_TABLE, 3)) > s16(0)) {
         await SIM_STATUS(2071, get(g.SIM_LEVEL_TABLE, 3));
       }
-      if (get(g.SIM_LEVEL_TABLE, 4) > 0) {
+      if (s16(get(g.SIM_LEVEL_TABLE, 4)) > s16(0)) {
         await SIM_STATUS(2081, get(g.SIM_LEVEL_TABLE, 4));
       }
       tell("    (time in minutes.seconds.tenths-of-seconds)\n");
@@ -20746,7 +20748,7 @@ async function SIM_STATUS(year, level) {
   tell("Total of real-time simulation, Year ", N(year), ": ");
   await SPRINT(level);
   tell(".");
-  if (seconds < 10) {
+  if (s16(seconds) < s16(10)) {
     tell("0");
   }
   tell(N(seconds), ".", N(tenths), "\n");
@@ -20800,7 +20802,7 @@ async function WNN_FEEDER_F() {
         return (await ERR("Transmitter is already on.\""));
       } else {
         setFlag(TRANSMITTER, ONBIT);
-        if ((g.FEED_BUFFER == RECORD_BUFFER) && (g.RYDER_RECORDED > 1) && !(g.LOSE_COUNTER > 0)) {
+        if ((g.FEED_BUFFER == RECORD_BUFFER) && (s16(g.RYDER_RECORDED) > s16(1)) && !(s16(g.LOSE_COUNTER) > s16(0))) {
           await QUEUE(I_WIN.id, 13);
         }
         tell("\"Transmitter is now on.\"\n");
@@ -20840,7 +20842,7 @@ async function WNN_FEEDER_F() {
         }
         g.INTERFACE_CHANGE = WNN_FEEDER;
         await QUEUE(I_INTERFACE_CHANGE.id, 22);
-        if ((g.PRSO == RECORD_BUFFER) && (g.RYDER_RECORDED > 1) && !(g.LOSE_COUNTER > 0)) {
+        if ((g.PRSO == RECORD_BUFFER) && (s16(g.RYDER_RECORDED) > s16(1)) && !(s16(g.LOSE_COUNTER) > s16(0))) {
           await QUEUE(I_WIN.id, 13);
         }
         tell("\"Now transmitting ");
@@ -20882,9 +20884,9 @@ async function AUDITING_SYSTEM_F() {
         await PRINT_SPACES(10);
         tell("0\n");
       } else {
-        if (x < 10) {
+        if (s16(x) < s16(10)) {
           tell("  ");
-        } else if (x < 100) {
+        } else if (s16(x) < s16(100)) {
           tell(" ");
         }
         tell(N(x), ",000,000\n");
@@ -20902,10 +20904,10 @@ async function AUDITING_SYSTEM_F() {
       tell("\nCURRENT AUDITING PERCENTAGE:  ", N(getProp(AUDIT_PERCENT, P.SIZE)), "\n");
       return true;
     } else if (isVerb(V.SET) && (g.PRSO == AUDIT_PERCENT)) {
-      if (!(g.PRSI == INTNUM) || (g.P_NUMBER > 100)) {
+      if (!(g.PRSI == INTNUM) || (s16(g.P_NUMBER) > s16(100))) {
         tell("\"");
         (await ERR("Illegal parameter setting to ", true));
-        if (g.P_NUMBER > 100) {
+        if (s16(g.P_NUMBER) > s16(100)) {
           tell("numeric value above 100");
         } else {
           tell("non-numeric value");
@@ -20986,7 +20988,7 @@ async function I_INTERFACE_CHANGE() {
     tell("PRISM, you shouldn't be messing with the settings in ");
     printD(INTERFACE_MODE);
     tell(". ");
-    if ((g.TIME > 420) || (g.TIME < 1400) || (await VISIBLE$(PERELMAN)) || (await QUEUED$(I_VIEW.id)) || (await QUEUED$(I_FIRST_SIMULATION_RESULT.id)) || (await QUEUED$(I_RECORDINGS_VIEWED.id)) || (await QUEUED$(I_MESSAGE_E.id))) {
+    if ((s16(g.TIME) > s16(420)) || (s16(g.TIME) < s16(1400)) || (await VISIBLE$(PERELMAN)) || (await QUEUED$(I_VIEW.id)) || (await QUEUED$(I_FIRST_SIMULATION_RESULT.id)) || (await QUEUED$(I_RECORDINGS_VIEWED.id)) || (await QUEUED$(I_MESSAGE_E.id))) {
     } else {
       tell("Not only was it a dumb thing to do, but you got me woken up in the middle of the night. ");
     }
@@ -21044,7 +21046,7 @@ async function SECURITY_CHECK() {
   }
   color = random(16) - 1;
   innernum = random(32) - 1;
-  if (((color * 2) + innernum) > 31) {
+  if (s16((color * 2) + innernum) > s16(31)) {
     outernum = ((color * 2) + innernum) - 32;
   } else {
     outernum = (color * 2) + innernum;
@@ -21112,16 +21114,16 @@ async function SIMULATION_ACTION() {
     loop1: for (;;) {
       await read(g.P_INBUF, g.P_LEXV);
       if (eq(await NUMBER$(P_LEXSTART), W.INTNUM)) {
-        if (g.P_NUMBER > 2031) {
+        if (s16(g.P_NUMBER) > s16(2031)) {
           g.P_NUMBER = g.P_NUMBER - 2031;
         }
         if (g.COMPLETED_TASKS && (g.P_NUMBER == 10 || g.P_NUMBER == 20)) {
           break loop1;
-        } else if ((get(g.SIM_LEVEL_TABLE, 1) > 300) && (g.P_NUMBER == 10 || g.P_NUMBER == 20 || g.P_NUMBER == 30)) {
+        } else if ((s16(get(g.SIM_LEVEL_TABLE, 1)) > s16(300)) && (g.P_NUMBER == 10 || g.P_NUMBER == 20 || g.P_NUMBER == 30)) {
           break loop1;
-        } else if ((get(g.SIM_LEVEL_TABLE, 2) > 400) && ((g.P_NUMBER == 10 || g.P_NUMBER == 20 || g.P_NUMBER == 30) || (g.P_NUMBER == 40))) {
+        } else if ((s16(get(g.SIM_LEVEL_TABLE, 2)) > s16(400)) && ((g.P_NUMBER == 10 || g.P_NUMBER == 20 || g.P_NUMBER == 30) || (g.P_NUMBER == 40))) {
           break loop1;
-        } else if ((get(g.SIM_LEVEL_TABLE, 3) > 600) && ((g.P_NUMBER == 10 || g.P_NUMBER == 20 || g.P_NUMBER == 30) || (g.P_NUMBER == 40 || g.P_NUMBER == 50))) {
+        } else if ((s16(get(g.SIM_LEVEL_TABLE, 3)) > s16(600)) && ((g.P_NUMBER == 10 || g.P_NUMBER == 20 || g.P_NUMBER == 30) || (g.P_NUMBER == 40 || g.P_NUMBER == 50))) {
           break loop1;
         }
       }
@@ -21239,11 +21241,11 @@ async function SIMULATION_ACTION() {
 
 async function SIMULATIONS_AVAILABLE() {
   tell("imulations are available for 10");
-  if (get(g.SIM_LEVEL_TABLE, 3) > 600) {
+  if (s16(get(g.SIM_LEVEL_TABLE, 3)) > s16(600)) {
     tell(", 20, 30, 40, and 50");
-  } else if (get(g.SIM_LEVEL_TABLE, 2) > 400) {
+  } else if (s16(get(g.SIM_LEVEL_TABLE, 2)) > s16(400)) {
     tell(", 20, 30, and 40");
-  } else if (get(g.SIM_LEVEL_TABLE, 1) > 300) {
+  } else if (s16(get(g.SIM_LEVEL_TABLE, 1)) > s16(300)) {
     tell(", 20 and 30");
   } else {
     tell(" and 20");
@@ -21259,10 +21261,10 @@ async function GRIMWOLD_DESCFCN(rarg = 0) {
 
 async function GRIMWOLD_F() {
   if (GRIMWOLD == g.WINNER) {
-    if ((g.GRIMWOLD_COUNTER > 0) && isVerb(V.YES)) {
+    if ((s16(g.GRIMWOLD_COUNTER) > s16(0)) && isVerb(V.YES)) {
       g.WINNER = PLAYER;
       await BLOT_ACTION();
-    } else if ((g.GRIMWOLD_COUNTER > 0) && isVerb(V.NO)) {
+    } else if ((s16(g.GRIMWOLD_COUNTER) > s16(0)) && isVerb(V.NO)) {
       g.WINNER = PLAYER;
       await V_NO();
     } else {
@@ -21278,9 +21280,9 @@ async function GRIMWOLD_F() {
 }
 
 async function I_MESSAGE_X() {
-  if (g.PART_FLAG > 2) {
+  if (s16(g.PART_FLAG) > s16(2)) {
     return false;
-  } else if (g.SIMULATING || (g.TIME < 540) || (g.TIME > 1080) || (await QUEUED$(I_VIEW.id)) || (await QUEUED$(I_RECORDINGS_VIEWED.id))) {
+  } else if (g.SIMULATING || (s16(g.TIME) < s16(540)) || (s16(g.TIME) > s16(1080)) || (await QUEUED$(I_VIEW.id)) || (await QUEUED$(I_RECORDINGS_VIEWED.id))) {
     await QUEUE(I_MESSAGE_X.id, 13);
     return false;
   } else {
@@ -21357,31 +21359,31 @@ async function I_RECORDINGS_VIEWED() {
   }
   disable(await INT(I_MESSAGE_E.id));
   g.MESSAGE_E_COUNTER = 0;
-  if (g._2051_SCORE > _2051_MIN) {
+  if (s16(g._2051_SCORE) > s16(_2051_MIN)) {
     a_ = true;
     total = total + 1;
-  } else if (g._2051_SCORE > div(_2051_MIN, 2)) {
+  } else if (s16(g._2051_SCORE) > s16(div(_2051_MIN, 2))) {
     w_ = true;
     half_total = half_total + 1;
   }
-  if (g._2061_SCORE > _2061_MIN) {
+  if (s16(g._2061_SCORE) > s16(_2061_MIN)) {
     b = true;
     total = total + 1;
-  } else if (g._2061_SCORE > div(_2061_MIN, 2)) {
+  } else if (s16(g._2061_SCORE) > s16(div(_2061_MIN, 2))) {
     x = true;
     half_total = half_total + 1;
   }
-  if (g._2071_SCORE > _2071_MIN) {
+  if (s16(g._2071_SCORE) > s16(_2071_MIN)) {
     c_ = true;
     total = total + 1;
-  } else if (g._2071_SCORE > div(_2071_MIN, 2)) {
+  } else if (s16(g._2071_SCORE) > s16(div(_2071_MIN, 2))) {
     y = true;
     half_total = half_total + 1;
   }
-  if (g._2081_SCORE > _2081_MIN) {
+  if (s16(g._2081_SCORE) > s16(_2081_MIN)) {
     d_ = true;
     total = total + 1;
-  } else if (g._2081_SCORE > div(_2081_MIN, 2)) {
+  } else if (s16(g._2081_SCORE) > s16(div(_2081_MIN, 2))) {
     z = true;
     half_total = half_total + 1;
   }
@@ -21394,7 +21396,7 @@ async function I_RECORDINGS_VIEWED() {
     printD(RECORD_BUFFER);
     tell(". I assumed that you had recorded something interesting from the simulations", S(g.PRACTICAL_JOKE), "\n");
   } else if (total == 4) {
-    if (g.TIME < 720) {
+    if (s16(g.TIME) < s16(720)) {
       g.TIME = 730 + random(105);
       g.DATE = g.DATE + 1;
     } else {
@@ -21563,7 +21565,7 @@ async function I_RECORDINGS_VIEWED() {
   if ((await VISIBLE$(PERELMAN)) && (PERELMAN == g.WINNER)) {
     await CLEAR_BUF();
   }
-  if ((await QUEUED$(I_MESSAGE_X.id)) && (get(await INT(I_MESSAGE_X.id), C_TICK) < 3)) {
+  if ((await QUEUED$(I_MESSAGE_X.id)) && (s16(get(await INT(I_MESSAGE_X.id), C_TICK)) < s16(3))) {
     await QUEUE(I_MESSAGE_X.id, 7);
   }
   move(PERELMAN, LOCAL_GLOBALS);
@@ -21584,7 +21586,7 @@ async function PARTIAL(scor) {
   tell(" ");
   if (scor == 0) {
     tell("anything interesting");
-  } else if (scor > half_level) {
+  } else if (s16(scor) > s16(half_level)) {
     tell("quite enough");
   } else {
     tell("anywhere near enough");
@@ -22091,7 +22093,7 @@ async function MY_BUZZER_F() {
   if (!(g.HERE == PARKVIEW_APARTMENTS) && !(await MOBY_VERB$())) {
     return await CANT_SEE(MY_BUZZER);
   } else if (isVerb(V.PUSH)) {
-    if ((g.SYEAR == 2061 || g.SYEAR == 2071) || (g.STIME > 1402) || (g.STIME < 478)) {
+    if ((g.SYEAR == 2061 || g.SYEAR == 2071) || (s16(g.STIME) > s16(1402)) || (s16(g.STIME) < s16(478))) {
       tell("There's no response to your buzzing.\n");
       return true;
     } else {
@@ -22155,20 +22157,20 @@ async function INNER_LOBBY_ENTER_F() {
       tell(", since the elevators are out as usual, you slowly walk up the several flights to your floor.\n\n");
     } else {
       if (g.SYEAR == 2051) {
-        if (g.STIME > 1374) {
+        if (s16(g.STIME) > s16(1374)) {
           g.MITCHELL_COUNTER = 0;
           move(MITCHELL, LOCAL_GLOBALS);
-        } else if (g.STIME > 1120) {
+        } else if (s16(g.STIME) > s16(1120)) {
           g.MITCHELL_COUNTER = 4;
           move(HOMEWORK, LIVING_ROOM);
           move(MITCHELL, LIVING_ROOM);
-        } else if (g.STIME > 1011) {
+        } else if (s16(g.STIME) > s16(1011)) {
           g.MITCHELL_COUNTER = 3;
           move(MITCHELL, LIVING_ROOM);
-        } else if (g.STIME > 505) {
+        } else if (s16(g.STIME) > s16(505)) {
           g.MITCHELL_COUNTER = 2;
           move(MITCHELL, LOCAL_GLOBALS);
-        } else if (g.STIME > 463) {
+        } else if (s16(g.STIME) > s16(463)) {
           g.MITCHELL_COUNTER = 1;
           move(MITCHELL, LIVING_ROOM);
         } else {
@@ -22237,7 +22239,7 @@ async function APARTMENT_DOOR_F() {
     if (g.HERE == LIVING_ROOM || g.HERE == FOYER) {
       tell("There's no need to knock from the inside.\n");
       return true;
-    } else if ((g.SYEAR == 2061 || g.SYEAR == 2071) || (g.STIME > 1400) || (g.STIME < 478)) {
+    } else if ((g.SYEAR == 2061 || g.SYEAR == 2071) || (s16(g.STIME) > s16(1400)) || (s16(g.STIME) < s16(478))) {
       tell("There's no response.\n");
       return true;
     } else if (hasFlag(APARTMENT_DOOR, OPENBIT)) {
@@ -22480,7 +22482,7 @@ async function MITCHELL_F() {
       return false;
     }
   } else if (isVerb(V.WALK_TO) && (g.PRSO == BED)) {
-    if (g.STIME < 1320) {
+    if (s16(g.STIME) < s16(1320)) {
       tell("\"Aw, Dad, it's too early!\"\n");
       return true;
     } else {
@@ -23136,64 +23138,64 @@ async function JILL_DESCFCN(x = 0) {
 }
 
 async function PUT_JILL_IN_THE_RIGHT_PLACE() {
-  if (g.STIME > 1402) {
+  if (s16(g.STIME) > s16(1402)) {
     g.JILL_COUNTER = 0;
     move(JILL, BEDROOM);
     return move(JILL_BOOK, BEDROOM);
-  } else if (g.STIME > 1299) {
+  } else if (s16(g.STIME) > s16(1299)) {
     g.JILL_COUNTER = 12;
     move(JILL_BOOK, BEDROOM);
     setFlag(JILL_BOOK, NDESCBIT);
     return move(JILL, BEDROOM);
-  } else if (g.STIME > 1242) {
+  } else if (s16(g.STIME) > s16(1242)) {
     g.JILL_COUNTER = 11;
     move(JILL_BOOK, BEDROOM);
     return move(JILL, BATHROOM);
-  } else if (g.STIME > 1137) {
+  } else if (s16(g.STIME) > s16(1137)) {
     g.JILL_COUNTER = 10;
     move(JILL_BOOK, LIVING_ROOM);
     setFlag(JILL_BOOK, NDESCBIT);
     return move(JILL, LIVING_ROOM);
-  } else if (g.STIME > 1084) {
+  } else if (s16(g.STIME) > s16(1084)) {
     g.JILL_COUNTER = 9;
     move(JILL, LIVING_ROOM);
     return move(JILL_BOOK, LIVING_ROOM);
-  } else if (g.STIME > 912) {
+  } else if (s16(g.STIME) > s16(912)) {
     g.JILL_COUNTER = 8;
     move(JILL, LIVING_ROOM);
     return move(JILL_BOOK, LIVING_ROOM);
-  } else if (g.STIME > 859) {
+  } else if (s16(g.STIME) > s16(859)) {
     g.JILL_COUNTER = 7;
     move(JILL, KITCHEN);
     return move(JILL_BOOK, LIVING_ROOM);
-  } else if (g.STIME > 813) {
+  } else if (s16(g.STIME) > s16(813)) {
     g.JILL_COUNTER = 6;
     move(JILL, KITCHEN);
     move(JILL_BOOK, LIVING_ROOM);
     move(SALAD, KITCHEN);
     return setFlag(SALAD, NDESCBIT);
-  } else if (g.STIME > 697) {
+  } else if (s16(g.STIME) > s16(697)) {
     g.JILL_COUNTER = 5;
     move(JILL, LIVING_ROOM);
     move(JILL_BOOK, LIVING_ROOM);
     return move(SALAD, REFRIGERATOR);
-  } else if (g.STIME > 644) {
+  } else if (s16(g.STIME) > s16(644)) {
     g.JILL_COUNTER = 4;
     move(JILL, LIVING_ROOM);
     move(SALAD, REFRIGERATOR);
     move(JILL_BOOK, LIVING_ROOM);
     return setFlag(JILL_BOOK, NDESCBIT);
-  } else if (g.STIME > 591) {
+  } else if (s16(g.STIME) > s16(591)) {
     g.JILL_COUNTER = 3;
     move(JILL, KITCHEN);
     move(SALAD, KITCHEN);
     setFlag(SALAD, NDESCBIT);
     return move(JILL_BOOK, BEDROOM);
-  } else if (g.STIME > 522) {
+  } else if (s16(g.STIME) > s16(522)) {
     move(JILL, BEDROOM);
     move(JILL_BOOK, BEDROOM);
     return g.JILL_COUNTER = 2;
-  } else if (g.STIME > 478) {
+  } else if (s16(g.STIME) > s16(478)) {
     move(JILL, BEDROOM);
     move(JILL_BOOK, BEDROOM);
     return g.JILL_COUNTER = 1;

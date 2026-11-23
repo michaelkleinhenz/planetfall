@@ -99,10 +99,13 @@ function ww(a, v) {
   if (a === 16 || a === 17) headerFlagsChanged();
 }
 
-export function get(tbl, i) { return rw(Number(tbl) + 2 * Number(i)); }
-export function put(tbl, i, v) { ww(Number(tbl) + 2 * Number(i), v); return true; }
-export function getb(tbl, i) { return mem[Number(tbl) + Number(i)]; }
-export function putb(tbl, i, v) { mem[Number(tbl) + Number(i)] = Number(v) & 255; return true; }
+// Addresses are unsigned 16-bit (a table above 32767 can come back from memory
+// as a negative number).
+const addr = (tbl, off) => (Number(tbl) + off) & 0xffff;
+export function get(tbl, i) { return rw(addr(tbl, 2 * Number(i))); }
+export function put(tbl, i, v) { ww(addr(tbl, 2 * Number(i)), v); return true; }
+export function getb(tbl, i) { return mem[addr(tbl, Number(i))]; }
+export function putb(tbl, i, v) { mem[addr(tbl, Number(i))] = Number(v) & 255; return true; }
 
 function headerFlagsChanged() {
   const fixed = (mem[17] & 2) !== 0;
@@ -311,7 +314,7 @@ let screenOut = true;
 export function dirOut(n, table) {
   n = Number(n);
   if (n === 3 || (V <= 3 && table && n === 1)) {
-    const t = { addr: Number(table), len: 0 };
+    const t = { addr: Number(table) & 0xffff, len: 0 };
     put(t.addr, 0, 0);
     tableOut.push(t);
   } else if (n === -3 || (V <= 3 && tableOut.length && (n === 0 || n === -1))) {
@@ -328,7 +331,7 @@ export function dirIn() { return true; }
 
 /** INTBL? value table length [form]: address of the entry holding value, or 0. */
 export function inTable(value, table, len, form = 0x82) {
-  value = Number(value) & 0xffff; table = Number(table); len = Number(len); form = Number(form);
+  value = Number(value) & 0xffff; table = Number(table) & 0xffff; len = Number(len); form = Number(form);
   const words = (form & 0x80) !== 0;
   const size = form & 0x7f || (words ? 2 : 1);
   for (let i = 0, a = table; i < len; i++, a += size) {
@@ -340,7 +343,7 @@ export function inTable(value, table, len, form = 0x82) {
 
 /** COPYT from to size: copy (or, with to = 0, clear) a table. */
 export function copyTable(from, to, size) {
-  from = Number(from); to = Number(to); size = Number(size);
+  from = Number(from) & 0xffff; to = Number(to) & 0xffff; size = Number(size);
   if (!to) { mem.fill(0, from, from + Math.abs(size)); return true; }
   if (size < 0) { for (let i = 0; i < -size; i++) mem[to + i] = mem[from + i]; return true; }
   mem.copyWithin(to, from, from + size);
@@ -349,7 +352,7 @@ export function copyTable(from, to, size) {
 
 /** PRINTT table width [height skip]: print a block of characters. */
 export function printTable(table, width, height = 1, skip = 0) {
-  table = Number(table); width = Number(width); height = Number(height); skip = Number(skip);
+  table = Number(table) & 0xffff; width = Number(width); height = Number(height); skip = Number(skip);
   const rows = [];
   for (let r = 0, a = table; r < height; r++, a += width + skip) {
     let row = '';
@@ -362,9 +365,18 @@ export function printTable(table, width, height = 1, skip = 0) {
 /** ZWSTR text length from coded: dictionary encoding of a word in a text buffer. */
 export function encodeWord(text, len, from, coded) {
   let word = '';
-  for (let i = 0; i < Number(len); i++) word += String.fromCharCode(mem[Number(text) + Number(from) + i]);
-  dictBytes(word, V).forEach((b, i) => { mem[Number(coded) + i] = b; });
+  for (let i = 0; i < Number(len); i++) word += String.fromCharCode(mem[(Number(text) & 0xffff) + Number(from) + i]);
+  dictBytes(word, V).forEach((b, i) => { mem[(Number(coded) & 0xffff) + i] = b; });
   return true;
+}
+
+/** A value as a signed 16-bit number (for comparisons in version 4+ games). */
+export function s16(x) {
+  x = Number(x);
+  // (addresses the original kept above 32767 are negative there; see the compiler)
+  const neg = story.LAYOUT.negativeFrom;
+  if (neg && x >= neg && x < 0x8000) return x - 0x10000;
+  return (x << 16) >> 16;
 }
 
 export function shift(n, places) {
@@ -440,7 +452,7 @@ const SEPARATORS = new Set(['.', ',', '"']);
 
 /** READ: wait for a line of input and tokenize it into the parse buffer. */
 export async function read(inbuf, lexv) {
-  inbuf = Number(inbuf); lexv = Number(lexv);
+  inbuf = Number(inbuf) & 0xffff; lexv = Number(lexv) & 0xffff;
   keyBuffer.length = 0;
   io.status?.({ room: objectName(g.HERE), score: g.SCORE, moves: g.MOVES });
   let line = await io.input();
@@ -468,7 +480,7 @@ export async function read(inbuf, lexv) {
 
 /** Split the text in a read buffer into words and look them up (also LEX). */
 export function tokenize(inbuf, lexv, dict = 0, keepUnknown = false) {
-  inbuf = Number(inbuf); lexv = Number(lexv);
+  inbuf = Number(inbuf) & 0xffff; lexv = Number(lexv) & 0xffff;
   const start = V <= 4 ? 1 : 2;
   let line = '';
   if (V <= 4) { for (let i = inbuf + 1; mem[i]; i++) line += String.fromCharCode(mem[i]); }

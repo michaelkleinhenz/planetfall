@@ -405,10 +405,22 @@ class Compiler {
       'PS?OBJECT': 128, 'PS?VERB': 64, 'PS?ADJECTIVE': 32, 'PS?DIRECTION': 16, 'PS?PREPOSITION': 8,
       'PS?BUZZ-WORD': 4, 'P1?NONE': 0, 'P1?OBJECT': 0, 'P1?VERB': 1, 'P1?ADJECTIVE': 2, 'P1?DIRECTION': 3,
     };
-    for (const [k, v] of Object.entries(builtins)) this.constants.set(k, { t: 'num', v });
+    for (const [k, v] of Object.entries(builtins)) { this.constants.set(k, { t: 'num', v }); this.mdl.globals.set(k, { t: 'num', v }); }
     const queue = [...forms];
+    // <REPLACE-DEFINITION NAME forms...> replaces <DEFAULT-DEFINITION NAME forms...>
+    const replaced = new Set(forms.filter((f) => f.items?.[0]?.v === 'REPLACE-DEFINITION').map((f) => f.items[1].v));
     this.mdl.structField = (name) => this.structFields.get(name) ?? null;
-    this.mdl.onDeclare = (decl) => queue.unshift({ ...decl, file: 'compile-time' });
+    this.mdl.onDeclare = (decl) => {
+      if (queue.done) {
+        // declared by compile-time code run later (Sherlock's hint tables)
+        const [h, name, value] = decl.items;
+        const nm = name.v.replace(/:.*$/, '');
+        if (h.v === 'GLOBAL' || h.v === 'SETG') this.globals.set(nm, value);
+        else this.constants.set(nm, value);
+        return;
+      }
+      queue.unshift({ ...decl, file: 'compile-time' });
+    };
     while (queue.length) {
       const f = queue.shift();
       const head = f.items[0]?.v;
@@ -422,11 +434,13 @@ class Compiler {
           this.objects.push({ name: it[1].v, room: head === 'ROOM', props: it.slice(2) });
           break;
         case 'GLOBAL': this.globals.set(it[1].v.replace(/:.*$/, ''), it[2]); break;
-        case 'CONSTANT': case 'MSETG':
-          this.constants.set(it[1].v, it[2]);
+        case 'CONSTANT': case 'MSETG': {
+          const name = it[1].v.replace(/:.*$/, ''); // NAME or NAME:TYPE
+          this.constants.set(name, it[2]);
           // also visible to compile-time code
-          if (it[2]?.t === 'num' || it[2]?.t === 'str') this.mdl.globals.set(it[1].v, it[2]);
+          if (it[2]?.t === 'num' || it[2]?.t === 'str') this.mdl.globals.set(name, it[2]);
           break;
+        }
         case 'SET-DEFSTRUCT-FILE-DEFAULTS':
           this.structDefaults.set(f.file, structOptions(it.slice(1), { nth: 'GET', put: 'PUT', start: 0 }));
           break;
@@ -488,6 +502,12 @@ class Compiler {
         case 'PROPDEF': this.propdefs.set(it[1].v, it[2].v); break;
         case 'TELL-TOKENS': this.tellTokens = parseTellTokens(it.slice(1)); break;
         case 'SETG20': this.mdl.eval(f, new Map()); break;
+        case 'REPLACE-DEFINITION':
+          queue.unshift(...it.slice(2).filter((x) => x.t === 'form').map((x) => ({ ...x, file: f.file })));
+          break;
+        case 'DEFAULT-DEFINITION':
+          if (!replaced.has(it[1].v)) queue.unshift(...it.slice(2).filter((x) => x.t === 'form').map((x) => ({ ...x, file: f.file })));
+          break;
         // <PUTPROP THINGS PROPSPEC PSEUDO>: the property's values go through a
         // compile-time function (DIRECTIONS PROPSPEC!-IZILCH is the built-in exit format).
         case 'PUTPROP':
@@ -542,8 +562,9 @@ class Compiler {
           warn('ignored top-level form ' + head);
       }
     }
+    queue.done = true;
     // Constants the MDL-ZIL environment predefined (Bureaucracy)
-    if (CFG.defineRoutines) {
+    if (CFG.defineRoutines || this.mdl.has('MC-VERB?') || ZV >= 4) {
       for (const [k, v] of Object.entries({ 'M-FATAL': 2, 'FATAL-VALUE': 2, 'M-ENTER': 2 })) {
         if (!this.constants.has(k) && !this.globals.has(k)) this.constants.set(k, { t: 'num', v });
       }
@@ -638,7 +659,7 @@ class Compiler {
         return v;
       }
       // MDL-ZIL's Z-prefixed names for the Z-machine operations (ZGET = GET ...)
-      if (CFG.defineRoutines && node.t === 'form' && Z_ALIASES[node.items[0]?.v] && !this.routines.has(node.items[0].v)) {
+      if (node.t === 'form' && Z_ALIASES[node.items[0]?.v] && !this.routines.has(node.items[0].v) && !this.mdl.has(node.items[0].v)) {
         node = { ...node, items: [{ ...node.items[0], v: Z_ALIASES[node.items[0].v] }, ...node.items.slice(1)] };
       }
       if (node.t === 'form' && ['MAP-CONTENTS', 'MAP-DIRECTIONS', 'DO'].includes(node.items[0]?.v) && !this.mdl.has(node.items[0].v)
@@ -650,14 +671,17 @@ class Compiler {
         let r;
         try { r = this.mdl.expand(node); } catch (e) { if (process.env.ZDEBUG) console.error(e.stack); throw new Error(`expanding ${show(node).slice(0, 120)}: ${e.message}`); }
         if (r === null) return { t: 'form', items: [] };
+        // #SPLICE (...): the elements go into the surrounding form
+        if (r.t === 'hash' && r.type === 'SPLICE') return { t: 'splice', items: (r.v?.items || []).map((x) => walk(x, depth + 1)) };
         if (node.items[0].v === 'TELL') return walk(tellFromExpansion(r), depth + 1);
         if (r.t === 'atom' && r.v === 'T') return r;
         return walk(r, depth + 1);
       }
-      if (node.items) return { ...node, items: node.items.map((x) => walk(x, depth)) };
+      if (node.items) return { ...node, items: node.items.flatMap((x) => { const r = walk(x, depth); return r?.t === 'splice' ? r.items : [r]; }) };
       if (node.v && typeof node.v === 'object' && node.v.t) return { ...node, v: walk(node.v, depth) };
       return node;
     };
+    this.expandNode = (n) => walk(n);
     for (const [name, form] of this.routines) this.routines.set(name, walk(form));
     for (const o of this.objects) o.props = o.props.map((p) => walk(p));
     // Properties with a PROPSPEC function are evaluated now (they may create words).
@@ -692,6 +716,14 @@ class Compiler {
       order = this.matchStoryObjects();
     }
     const byName = new Map(this.objects.map((o) => [o.name, o]));
+    if (!order && CFG.roomsFirst) {
+      // (Sherlock stores rooms in bytes, so its compiler numbered them first.)
+      const isRoom = (o) => o.room || o.props.some((p) => (p.items[0].v === 'IN' || p.items[0].v === 'LOC') && p.items[1]?.v === 'ROOMS');
+      // then the objects named in GLOBAL properties (byte tables in Sherlock)
+      const globalsUsed = new Set(this.objects.flatMap((o) => o.props.filter((p) => p.items[0].v === 'GLOBAL').flatMap((p) => p.items.slice(1).map((x) => x.v))));
+      const lg = (o) => !isRoom(o) && globalsUsed.has(o.name);
+      order = [...this.objects.filter(isRoom), ...this.objects.filter(lg), ...this.objects.filter((o) => !isRoom(o) && !lg(o))].map((o) => o.name);
+    }
     if (!order || order.length !== this.objects.length || !order.every((n) => byName.has(n))) {
       if (order) warn('object numbering from the original does not fit the source; using source order');
       return;
@@ -923,6 +955,10 @@ class Compiler {
     const words = new Map(); // key -> entry
     const byName = new Map(); // source word name -> entry
     const entry = (name) => {
+      if (typeof name !== 'string') {
+        if (process.env.ZDEBUG) console.error('ENTRY', JSON.stringify(name)?.slice(0, 200), new Error().stack.split('\n')[2]);
+        name = String(name?.v ?? name);
+      }
       const text = name === 'PERIOD' ? '.' : name === 'COMMA' ? ',' : name === 'QUOTE' ? '"' : name.toLowerCase();
       const key = dictKey(text, ZV);
       let e = words.get(key);
@@ -1195,7 +1231,7 @@ class Compiler {
       // <ITABLE [NONE|BYTE|WORD] count [(flags)] [element pattern...]>
       let spec = 'NONE';
       if (args[0].t === 'atom') { spec = args[0].v; args = args.slice(1); }
-      const count = this.staticValue(args[0]); // a number or a named constant
+      const count = process.env.OLDCOUNT ? args[0].v : this.staticValue(args[0]); // a number or a named constant
       args = args.slice(1);
       if (spec === 'BYTE') { byteMode = true; lengthPrefix = true; }
       if (spec === 'WORD') lengthPrefix = true;
@@ -1288,14 +1324,19 @@ class Compiler {
     // Vocabulary entries are placed later, but their addresses are needed by
     // tables (W?FOO), so reserve the dictionary space up front.
     this.align();
+    // <SETG COMPACT-VOCABULARY? T> (Sherlock): one value byte per word; prepositions
+    // are looked up in PREPOSITIONS instead.
+    const cv = this.mdl.globals.get('COMPACT-VOCABULARY?') ?? this.constants.get('COMPACT-VOCABULARY?');
+    this.compactVocab = !!cv && !(cv.t === 'form' && !cv.items.length);
+    this.entryLength = DICT_KEY() + (this.compactVocab ? 2 : 3);
     const entries = [...this.vocab.words.values()].sort((a, b) => (a.key < b.key ? -1 : 1));
-    if (ZV >= 4) {
+    if (ZV >= 4 && !process.env.NOHDR) {
       // The standard dictionary header (games like Beyond Zork read and copy it):
       // separators, entry length, number of entries. ,VOCAB is its address.
       this.vocabAddr = this.here();
       const seps = ['.', ',', '"'];
       this.byte(seps.length); seps.forEach((c) => this.byte(c.charCodeAt(0)));
-      this.byte(DICT_KEY() + 3);
+      this.byte(this.entryLength);
       this.word(entries.length);
       this.mem[8] = this.vocabAddr >> 8; this.mem[9] = this.vocabAddr & 255;
       this.constants.set('VOCAB', { t: 'num', v: this.vocabAddr });
@@ -1303,10 +1344,14 @@ class Compiler {
     this.dictStart = this.here();
     for (const e of entries) {
       e.addr = this.here();
-      for (let i = 0; i < DICT_KEY() + 3; i++) this.byte(0);
+      for (let i = 0; i < this.entryLength; i++) this.byte(0);
     }
     this.dictEntries = entries;
 
+    // If the original keeps its tables above 32767 (Trinity), they compare as
+    // negative numbers there, and code depends on that (QUEUE). Our tables lie
+    // lower, so the runtime treats addresses from here on as negative in comparisons.
+    if (this.story && ZV >= 4 && ((this.story.data[12] << 8) | this.story.data[13]) > 0x8000) this.negativeFrom = this.here();
     // Global initial values (tables are allocated here)
     this.globalInit = {};
     for (const name of this.globalOrder) {
@@ -1323,7 +1368,7 @@ class Compiler {
     }
     const vtblEntries = new Map();
     // The game's parser reads compact syntax tables when it defines P-SYNLEN-1.
-    const compact = this.constants.has('P-SYNLEN-1');
+    const compact = this.constants.has('P-SYNLEN-1') || this.constants.has('K-P-SLEN-1');
     for (const act of verbs) {
       const list = this.verbSyntax.get(act);
       vtblEntries.set(act, this.here());
@@ -1352,7 +1397,7 @@ class Compiler {
     const prtbl = this.here();
     const preps = [...this.prepNums].reverse();
     this.word(preps.length);
-    for (const [w, n] of preps) { this.word(this.wordAddr(w)); this.word(n); }
+    for (const [w, n] of preps) { this.word(this.wordAddr(w)); if (this.compactVocab) this.byte(n); else this.word(n); }
     this.globalInit.VERBS = vtbl;
     this.globalInit.ACTIONS = atbl;
     this.globalInit.PREACTIONS = patbl;
@@ -1370,8 +1415,9 @@ class Compiler {
       const P1 = { object: 0, verb: 1, adj: 2, dir: 3, prep: 0, buzz: 0 };
       if (e.object) ps |= 128;
       for (const p of e.order) ps |= PSBIT[p];
-      // Version 4+: adjectives carry no value byte.
-      const valued = ZV >= 4 ? e.order.filter((p) => p !== 'adj') : e.order;
+      // Version 4+: adjectives carry no value byte; compact vocabularies keep
+      // prepositions in the PREPOSITIONS table.
+      const valued = (ZV >= 4 ? e.order.filter((p) => p !== 'adj') : e.order).filter((p) => !(this.compactVocab && p === 'prep'));
       const v1 = valued[0], v2 = valued[1];
       if (valued.length > 2) warn(`word ${e.text} has too many parts of speech: ${valued}`);
       if (v1) ps |= P1[v1];
@@ -1380,7 +1426,7 @@ class Compiler {
       const k = DICT_KEY();
       this.mem[a + k] = ps;
       this.mem[a + k + 1] = v1 ? e.parts[v1] : 0;
-      this.mem[a + k + 2] = v2 ? e.parts[v2] : 0;
+      if (!this.compactVocab) this.mem[a + k + 2] = v2 ? e.parts[v2] : 0;
     }
 
     // Objects
@@ -1468,6 +1514,19 @@ class Compiler {
     if ((this.directions.includes(pname) || (vals[0]?.t === 'atom' && (vals[0].v === 'TO' || vals[0].v === 'PER')))
         && !(vals.length === 1 && (vals[0].t === 'num' || vals[0].t === 'form'))) {
       // Exits
+      // Sherlock: rooms are bytes; sizes 1 TO, 2 PER, 3 door, 4 message, 5 conditional.
+      if (CFG.exits === 'byte-rooms') {
+        if (vals[0].t === 'str') return [...w(this.stringId(zilText(vals[0].v))), 0, 0];
+        if (vals[0].v === 'PER') return w(this.routineId(vals[1].v));
+        if (vals[0].v === 'SORRY') return [...w(this.stringId(zilText(vals[1].v))), 0, 0];
+        const room = this.objIndex.get(vals[1].v);
+        if (room > 255) throw new Error(`room ${vals[1].v} has a number above 255`);
+        if (vals.length === 2) return [room];
+        const elseStr = vals.findIndex((v) => v.t === 'atom' && v.v === 'ELSE');
+        const str = elseStr >= 0 ? this.stringId(zilText(vals[elseStr + 1].v)) : 0;
+        if (vals[4] && vals[4].v === 'IS') return [room, ...w(this.objIndex.get(vals[3].v))];
+        return [room, this.globalNumber(vals[3].v), ...w(str), 0];
+      }
       // Version 4+ (EZIP): rooms and objects are words, and each exit type has
       // its own size (UEXIT 2, NEXIT 3, FEXIT 4, CEXIT 5, DEXIT 6).
       const big = ZV >= 4;
@@ -1492,7 +1551,8 @@ class Compiler {
         // Version 4+: the adjectives' dictionary words; version 3: their numbers.
         if (ZV >= 4) return vals.flatMap((a) => w(this.wordAddr(a.v)));
         return vals.map((a) => this.vocab.byName.get(a.v).parts.adj);
-      case 'GLOBAL': return vals.map((a) => this.objIndex.get(a.v));
+      // Local globals: object numbers as words from version 4 (bytes in Sherlock)
+      case 'GLOBAL': return ZV >= 4 && !CFG.globalBytes ? vals.flatMap((a) => w(this.objIndex.get(a.v))) : vals.map((a) => this.objIndex.get(a.v));
       case 'PSEUDO': {
         const out = [];
         for (let i = 0; i < vals.length; i += 2) {
@@ -1902,7 +1962,7 @@ class RoutineCompiler {
         const e = custom.find((e) => !e.arg || e.arg === '*' || (next?.t === 'gval' && next.v.v === e.arg));
         if (e) {
           const x = e.arg ? args[++i] : null;
-          const form = substLval(e.template, 'X', x);
+          const form = this.c.expandNode ? this.c.expandNode(substLval(e.template, 'X', x)) : substLval(e.template, 'X', x);
           const h = form.items?.[0]?.v;
           const simple = { PRINTD: 'D', PRINTN: 'N', PRINTC: 'C', PRINT: 'S', PRINTB: 'S' }[h];
           if (h === 'CRLF') { parts.push('"\\n"'); continue; }
@@ -2102,8 +2162,10 @@ class RoutineCompiler {
         return `eq(${[this.ex(first), ...rest].map(stripParens).join(', ')})`;
       }
       case 'N==?': return `(${A(0)} != ${A(1)})`;
-      case 'L?': return `(${A(0)} < ${A(1)})`;
-      case 'G?': return `(${A(0)} > ${A(1)})`;
+      // Comparisons are signed 16-bit: in version 4+ tables can lie above 32767
+      // and then compare as negative numbers (Trinity's QUEUE relies on it).
+      case 'L?': return (ZV >= 4 ? (this.c.usedHelpers.add('s16'), `(s16(${stripParens(A(0))}) < s16(${stripParens(A(1))}))`) : `(${A(0)} < ${A(1)})`);
+      case 'G?': return (ZV >= 4 ? (this.c.usedHelpers.add('s16'), `(s16(${stripParens(A(0))}) > s16(${stripParens(A(1))}))`) : `(${A(0)} > ${A(1)})`);
       case 'GVAL': if (args[0]?.t === 'atom') return this.gval(args[0].v); break;
       case 'LVAL': if (args[0]?.t === 'atom') return this.varRef(args[0]); break;
       case 'LOWCORE': case 'LOWCORE-TABLE': {
@@ -2147,8 +2209,8 @@ class RoutineCompiler {
         // <VALUE NAME>: the variable called NAME (local first, then global).
         if (args[0].t === 'atom') return this.varRef(args[0]);
         return `globalValue(${stripParens(A(0))})`;
-      case 'G=?': return `(${A(0)} >= ${A(1)})`;
-      case 'L=?': return `(${A(0)} <= ${A(1)})`;
+      case 'G=?': return (ZV >= 4 ? (this.c.usedHelpers.add('s16'), `(s16(${stripParens(A(0))}) >= s16(${stripParens(A(1))}))`) : `(${A(0)} >= ${A(1)})`);
+      case 'L=?': return (ZV >= 4 ? (this.c.usedHelpers.add('s16'), `(s16(${stripParens(A(0))}) <= s16(${stripParens(A(1))}))`) : `(${A(0)} <= ${A(1)})`);
       case 'T?': return `!!${wrap(A(0))}`;
       case 'F?': return `!${wrap(A(0))}`;
       case '0?': case 'ZERO?': return `(${A(0)} == 0)`;
@@ -2160,6 +2222,7 @@ class RoutineCompiler {
       case '-': return args.length === 1 ? `(-${A(0)})` : `(${args.map((a) => this.ex(a)).join(' - ')})`;
       case '*': return `(${args.map((a) => this.ex(a)).join(' * ')})`;
       case 'BAND': case 'ANDB': return `(${A(0)} & ${A(1)})`;
+      case 'LSH': this.c.usedHelpers.add('shift'); return `shift(${stripParens(A(0))}, ${stripParens(A(1))})`;
       case 'XORB': return `((${A(0)} ^ ${A(1)}) << 16 >> 16)`;
       case 'CHTYPE': return A(0); // a type cast: the value itself
       case 'BOR': case 'ORB': return `(${A(0)} | ${A(1)})`;
@@ -2195,8 +2258,8 @@ class RoutineCompiler {
         // <SET .X value>: sets the variable whose number is the value of X.
         if (args[0].t === 'lval' || args[0].t === 'gval') return `setVarIndirect(${stripParens(A(0))}, ${stripParens(A(1))})`;
         return `(${this.varRef(args[0], h === 'SETG')} = ${stripParens(A(1))})`;
-      case 'INC': return `(++${this.varRef(args[0])})`;
-      case 'DEC': return `(--${this.varRef(args[0])})`;
+      case 'INC': return `(++${this.varRef(args[0].t === 'lval' || args[0].t === 'gval' ? args[0].v : args[0], args[0].t === 'gval')})`;
+      case 'DEC': return `(--${this.varRef(args[0].t === 'lval' || args[0].t === 'gval' ? args[0].v : args[0], args[0].t === 'gval')})`;
       case 'DLESS?': return `(--${this.varRef(args[0])} < ${A(1)})`;
       case 'IGRTR?': return `(++${this.varRef(args[0])} > ${A(1)})`;
       case 'APPLY': return `(await apply(${all().join(', ')}))`;
@@ -2208,6 +2271,9 @@ class RoutineCompiler {
       case 'USL': return 'true';
       case 'ASCII': return args[0].t === 'char' ? String(args[0].v.charCodeAt(0)) : A(0);
     }
+    // A game routine with the name of a later operation (Moonmist's PRINTT) is a call.
+    const helper = SIMPLE_HELPERS[h] ?? ASYNC_HELPERS[h];
+    if (helper && !BASE_IMPORTS.has(helper) && this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
     if (SIMPLE_HELPERS[h]) { this.c.usedHelpers.add(SIMPLE_HELPERS[h]); return `${SIMPLE_HELPERS[h]}(${all().join(', ')})`; }
     if (ASYNC_HELPERS[h]) { this.c.usedHelpers.add(ASYNC_HELPERS[h]); return `(await ${ASYNC_HELPERS[h]}(${all().join(', ')}))`; }
     if (this.c.routines.has(h)) return `(await ${jsName(h)}(${all().join(', ')}))`;
@@ -2462,7 +2528,9 @@ function emit({ c, code }) {
   lines.push('];');
   lines.push(`export const ROUTINE_BASE = ${ROUTINE_BASE};`);
   lines.push('ROUTINES.forEach((fn, i) => { if (fn) fn.id = ROUTINE_BASE + i; });');
-  lines.push(`export { GO as start, MAIN_LOOP as mainLoop };`);
+  // The main loop (Sherlock calls it RT-MAIN-LOOP)
+  const mainLoop = ['MAIN-LOOP', 'RT-MAIN-LOOP'].find((n) => c.routines.has(n)) ?? 'MAIN-LOOP';
+  lines.push(`export { GO as start, ${jsName(mainLoop)} as mainLoop };`);
   const OUT_DIR = path.join(ROOT, 'web/src/games', GAME_ID);
   fs.mkdirSync(OUT_DIR, { recursive: true });
   fs.writeFileSync(path.join(OUT_DIR, 'game.js'), lines.join('\n'));
@@ -2493,7 +2561,8 @@ function emit({ c, code }) {
     `export const LAYOUT = ${JSON.stringify({
       propDefaults: c.propDefaults, objTable: c.objTable, objectCount: c.objects.length,
       stringBase: STRING_BASE, routineBase: ROUTINE_BASE,
-      dictionary: c.dictStart, dictionaryCount: c.dictEntries.length, entryLength: DICT_KEY() + 3, version: ZV,
+      dictionary: c.dictStart, dictionaryCount: c.dictEntries.length, entryLength: c.entryLength, version: ZV,
+      ...(c.negativeFrom ? { negativeFrom: c.negativeFrom } : {}),
       objectNames: c.objects.map((o) => o.name), rooms: c.objects.filter((o) => o.room).map((o) => o.name),
       flags: Object.fromEntries(c.flags), props: Object.fromEntries(c.props),
     })};`,

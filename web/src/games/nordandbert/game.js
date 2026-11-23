@@ -7,7 +7,7 @@ import {
   getProp, putProp, getPropAddr, propSize, nextProp, get, put, getb, putb, random, prob, isVerb,
   enable, disable, apply, globalValue, setVarIndirect, splitWindow, setWindow, sound, cursorSet, highlight, bufOut, clearScreen, btst, verify, dirOut, dirIn, div, mod,
   read, save, restore, restart, quit, printD, printB, printC, printN, printS, D, N, C, S,
-  inTable, readChar,
+  inTable, readChar, s16,
 } from '../../engine/runtime.js';
 
 // ---- Flags (object attributes) ----
@@ -446,7 +446,9 @@ export const D_TABLE_ON = 3;
 export const D_TABLE_OFF = -3;
 export const ZSTR_ON = 0;
 export const NEW_VOC$ = 1;
+export const FATAL_VALUE = 2;
 export const LOW_DIRECTION = 52;
+export const VOCAB = 64;
 
 // ---- Actions (V?xxx) ----
 export const V = {
@@ -719,441 +721,441 @@ export const P = {
 
 // ---- Vocabulary words (W?xxx): dictionary addresses ----
 export const W = {
-  A: 118,
-  AGAIN: 172,
-  AJAR: 226,
-  ALL: 235,
-  AN: 262,
-  AND: 271,
-  ANT: 307,
-  ANTS: 325,
-  APPLE: 352,
-  APPLES: 370,
-  ATTIC: 469,
-  AUNT: 487,
-  AUNTS: 496,
-  BABY: 541,
-  BACK_STROKE: 559,
-  BACKSTROKE: 568,
-  BALL: 604,
-  BARN: 631,
-  BARNYARD: 640,
-  BATH: 649,
-  BATHROOM: 658,
-  BATHWATER: 676,
-  BEAN: 694,
-  BEANSTALK: 703,
-  BED: 739,
-  BEET: 757,
-  BEETS: 766,
-  BEGIN: 784,
-  BEGINNING: 793,
-  BICYCLE: 847,
-  BIKE: 856,
-  BIRD: 865,
-  BIRDS: 874,
-  BIZARRE: 892,
-  BLOCK: 955,
-  BLOW: 973,
-  BLUSHING: 991,
-  BOB: 1009,
-  BOB_S: 1018,
-  BOBS: 1027,
-  BOILED: 1036,
-  BOTH: 1090,
-  BOX: 1135,
-  BRAT: 1189,
-  BRATWURST: 1198,
-  BREAK: 1207,
-  BREASTSTROKE: 1216,
-  BRIT: 1243,
-  BRITISH: 1252,
-  BRITTLE: 1261,
-  BROTHER_IN_LAW: 1288,
-  BUNNY: 1315,
-  BUT: 1378,
-  CAN: 1423,
-  CAN_T: 1432,
-  CANDIES: 1441,
-  CANDY: 1450,
-  CANISTER: 1459,
-  CANNISTER: 1468,
-  CANT: 1486,
-  CARPET: 1531,
-  CART: 1549,
-  CELLAR: 1594,
-  CENT: 1603,
-  CHEEK: 1693,
-  CLAUSE: 1783,
-  CLAW: 1792,
-  CLAWS: 1801,
-  CLEAN: 1810,
-  CLEARING: 1819,
-  CLIENT: 1828,
-  CLIENT_S: 1837,
-  CLOSET: 1891,
-  CLOTH: 1900,
-  CLOUD: 1927,
-  CLOWN: 1936,
-  CLUMP: 1963,
-  COAT: 1990,
-  COLONY: 2017,
-  COMEDY: 2035,
-  COMEUPPANCE: 2044,
-  COMMA: 100,
-  COMPLEMENT: 2071,
-  CONG: 2089,
-  CRANK: 2206,
-  CRAWL: 2215,
-  CROP: 2233,
-  CROW: 2260,
-  CROWN: 2278,
-  CRUSHING: 2296,
-  CUSTOMER: 2350,
-  DEAN: 2431,
-  DEAN_S: 2440,
-  DEAR: 2449,
-  DECORATED: 2485,
-  DECORATION: 2494,
-  DEEP: 2512,
-  DEEP_SIX: 2521,
-  DESERT: 2584,
-  DESS: 2593,
-  DESSERT: 2602,
-  DESSERTS: 2611,
-  DOG_S: 2773,
-  DOLDRUM: 2782,
-  DOLDRUMS: 2791,
-  DON_T: 2809,
-  DONKEY_S: 2836,
-  DONT: 2845,
-  DOOR: 2854,
-  DUCK_S: 2917,
-  DUNE: 2935,
-  DWAYNE: 2944,
-  ELF: 3016,
-  ELF_S: 3025,
-  EVERYTHING: 3079,
-  EVIL: 3088,
-  EXCEPT: 3106,
-  EYE: 3160,
-  EYES: 3169,
-  FACTORY: 3178,
-  FARM: 3196,
-  FAT: 3214,
-  FED: 3250,
-  FEED: 3259,
-  FEET: 3277,
-  FIDDLE: 3286,
-  FIELD: 3295,
-  FIELDS: 3304,
-  FINGER: 3367,
-  FLIP: 3430,
-  FLOUR: 3448,
-  FLOWER: 3457,
-  FLOWERS: 3466,
-  FOOT: 3520,
-  FOX: 3556,
-  FRACTION: 3565,
-  FRESH: 3601,
-  FRONT: 3637,
-  G: 3700,
-  GET: 3736,
-  GIANT: 3745,
-  GIANT_S: 3754,
-  GIRL: 3772,
-  GIRL_S: 3781,
-  GORE: 3880,
-  GORILLA: 3889,
-  GRAIN: 3907,
-  GRAINFALL: 3916,
-  GRITTY: 3979,
-  GUEST: 4033,
-  HABIT: 4042,
-  HAIR: 4051,
-  HAIR_RAISING: 4060,
-  HAMMER: 4078,
-  HAND: 4087,
-  HANDS: 4105,
-  HAT: 4123,
-  HAZING: 4159,
-  HEAD: 4168,
-  HELP: 4213,
-  HER: 4222,
-  HERSELF: 4249,
-  HILL: 4276,
-  HIM: 4285,
-  HIMSELF: 4294,
-  HIS: 4321,
-  HIT: 4339,
-  HOLD: 4357,
-  HOLE: 4366,
-  HONORED: 4375,
-  HORSE_S: 4420,
-  HOT: 4429,
-  HOUSE: 4447,
-  HURL: 4465,
-  I: 4474,
-  I_LL: 4483,
-  ICE: 4492,
-  ICICLE: 4501,
-  IN: 4519,
-  INTERIOR: 4591,
-  IT: 4654,
-  JACK: 4681,
-  JACK_S: 4690,
-  JACK_IN_THE_BOX: 4699,
-  JACKET: 4708,
-  JACKHAMMER: 4717,
-  JACKKNIFE: 4726,
-  JACKRABBIT: 4735,
-  JACKS: 4744,
-  JACKSTER: 4753,
-  JACUZZI: 4762,
-  JAM: 4771,
-  JAMB: 4780,
-  JAR: 4789,
-  JAUNDICED: 4798,
-  JEAN: 4807,
-  JENNY: 4834,
-  JENNY_S: 4843,
-  JESTER: 4852,
-  JUST: 4879,
-  KEY: 4906,
-  KEYS: 4915,
-  KING: 4951,
-  KINKERING: 4960,
-  KITCHEN: 4978,
-  KNIFE: 4987,
-  KONG: 5005,
-  KREMLIN: 5014,
-  LADIES: 5059,
-  LADY: 5068,
-  LADY_S: 5077,
-  LAME: 5086,
-  LEAD: 5194,
-  LEOPARD: 5239,
-  LEOPARD_S: 5248,
-  LID: 5275,
-  LIP: 5383,
-  LIPS: 5392,
-  LITTLE: 5410,
-  LIVING: 5428,
-  LOBBY: 5437,
-  LOCK: 5464,
-  LOCKS: 5473,
-  LOFT: 5482,
-  LOUSE: 5536,
-  LOVING: 5545,
-  LOX: 5563,
-  MAKE: 5581,
-  MAN: 5590,
-  MAN_S: 5599,
-  MANICOTTI: 5608,
-  MANOR: 5617,
-  MARE: 5653,
-  MARKET: 5662,
-  MAYOR: 5707,
-  MAYOR_S: 5716,
-  ME: 5725,
-  MEAL: 5734,
-  MEAT: 5743,
-  MEET: 5770,
-  MEETS: 5779,
-  MERMAID_S: 5797,
-  MINCE: 5842,
-  MINT: 5851,
-  MINTS: 5860,
-  MISC: 5869,
-  MOHAIR: 5887,
-  MOLE: 5896,
-  MOLEHILL: 5905,
-  MOOSE: 5914,
-  MOUSSE: 5968,
-  MOUTH: 5977,
-  MR: 5995,
-  MUSCLE: 6049,
-  MUSCLES: 6058,
-  MUSSEL: 6067,
-  MUSSELANEOUS: 6076,
-  MUSSELS: 6085,
-  MY: 6094,
-  N: 6112,
-  NAH: 6121,
-  NO: 6256,
-  NOPE: 6274,
-  NOSE: 6310,
-  NUMBER: 6346,
-  NUMBERS: 6355,
-  OF: 6409,
-  OILED: 6445,
-  OK: 6454,
-  OKAY: 6463,
-  OLD: 6472,
-  OLIVE: 6481,
-  ONE: 6499,
-  OOPS: 6517,
-  OTHER: 6562,
-  OUT: 6580,
-  OUTSIDE: 6589,
-  OWN: 6607,
-  PAIR: 6643,
-  PALM: 6661,
-  PAN: 6670,
-  PART: 6688,
-  PEA: 6724,
-  PEARL: 6733,
-  PEAS: 6742,
-  PECK: 6751,
-  PEDDLE: 6760,
-  PENNY: 6787,
-  PEPPERS: 6805,
-  PERIOD: 91,
-  PHARMACY: 6832,
-  PI: 6841,
-  PICKED: 6859,
-  PICKLED: 6868,
-  PIE: 6886,
-  PIPER_S: 7003,
-  PLAY: 7021,
-  PLUG: 7075,
-  POKE: 7102,
-  POOL: 7120,
-  POSSESSION: 7147,
-  POWDER: 7192,
-  PRETTY: 7228,
-  PRIDE: 7237,
-  PUBLIC: 7282,
-  PUDDING: 7291,
-  PULL: 7300,
-  PUTTING: 7372,
-  Q: 7381,
-  QUART: 7390,
-  QUARTS: 7399,
-  QUARTZ: 7408,
-  QUEEN: 7417,
-  QUEEN_S: 7426,
-  QUEER: 7435,
-  QUIT: 7444,
-  QUOTE: 109,
-  RABBIT: 7453,
-  RAISE: 7462,
-  RAISING: 7471,
-  RARE: 7498,
-  RAT: 7507,
-  REAM: 7534,
-  REAMS: 7543,
-  RED: 7561,
-  RESTART: 7642,
-  RESTORE: 7660,
-  RESTROOM: 7669,
-  RIDE: 7768,
-  ROAD: 7813,
-  ROCK: 7831,
-  ROCKS: 7840,
-  ROME: 7858,
-  ROOM: 7876,
-  RUBBLE: 7930,
-  RUG: 7939,
-  RX: 7993,
-  SAIL: 8020,
-  SALE: 8029,
-  SALMON: 8038,
-  SATISFIED: 8083,
-  SAUSAGE: 8092,
-  SAVER: 8110,
-  SCENT: 8164,
-  SEAT: 8227,
-  SELF: 8263,
-  SELLER: 8281,
-  SERIAL: 8290,
-  SHAKE: 8326,
-  SHED: 8389,
-  SHEET: 8398,
-  SHEETS: 8407,
-  SHEPHERD: 8434,
-  SHOE: 8470,
-  SHOES: 8479,
-  SHOPPING: 8488,
-  SHORE: 8497,
-  SHOULDER: 8515,
-  SHOVING: 8542,
-  SHOWING: 8560,
-  SMALL: 8776,
-  SMOCK: 8812,
-  SMOKED: 8821,
-  SNOWBALL: 8866,
-  SODBUSTER: 8884,
-  SOLD: 8902,
-  SOLID: 8911,
-  SPEAKING: 8992,
-  SPILLED: 9019,
-  SPILT: 9028,
-  SPLEEN: 9046,
-  SPONGE: 9055,
-  SPREAD: 9064,
-  SQUARE: 9082,
-  SQUEAL: 9091,
-  STABLE: 9118,
-  STABLES: 9127,
-  STACK: 9136,
-  STAKE: 9199,
-  STALK: 9208,
-  STAND: 9217,
-  STATIONARY: 9244,
-  STATIONERY: 9253,
-  STEAK: 9271,
-  STICK: 9298,
-  STOCK: 9307,
-  STONE: 9316,
-  STRAWBERRY: 9343,
-  SUPER: 9424,
-  SUPERSAVER: 9442,
-  SURE: 9451,
-  SWALLOW: 9469,
-  SWIMMING: 9487,
-  TACK: 9559,
-  TACKS: 9568,
-  TAKE: 9586,
-  TALK: 9595,
-  TALL: 9604,
-  TAX: 9649,
-  TEAPOT: 9667,
-  TEMPEST: 9694,
-  THE: 9748,
-  THEM: 9766,
-  THEN: 9775,
-  THROW: 9829,
-  TO: 9910,
-  TOE: 9919,
-  TOES: 9928,
-  TOSS: 9964,
-  TOWER: 9991,
-  TURN: 10126,
-  UH_UH: 10162,
-  UNLOX: 10243,
-  WAITRESS: 10486,
-  WELL_BOILED: 10594,
-  WELL_OILED: 10603,
-  WHITE: 10684,
-  WIFE_S: 10747,
-  WOMAN: 10819,
-  WOMAN_S: 10828,
-  WONDERFUL: 10846,
-  WORD: 10909,
-  WORDS: 10918,
-  WORST: 10927,
-  WREATH: 10945,
-  WRITE: 10963,
-  WURST: 10972,
-  Y: 10999,
-  YARD: 11008,
-  YAWN: 11017,
-  YELLOW: 11044,
-  YELLOWING: 11053,
-  YES: 11062,
-  YOUR: 11080,
-  YUP: 11098,
+  A: 125,
+  AGAIN: 179,
+  AJAR: 233,
+  ALL: 242,
+  AN: 269,
+  AND: 278,
+  ANT: 314,
+  ANTS: 332,
+  APPLE: 359,
+  APPLES: 377,
+  ATTIC: 476,
+  AUNT: 494,
+  AUNTS: 503,
+  BABY: 548,
+  BACK_STROKE: 566,
+  BACKSTROKE: 575,
+  BALL: 611,
+  BARN: 638,
+  BARNYARD: 647,
+  BATH: 656,
+  BATHROOM: 665,
+  BATHWATER: 683,
+  BEAN: 701,
+  BEANSTALK: 710,
+  BED: 746,
+  BEET: 764,
+  BEETS: 773,
+  BEGIN: 791,
+  BEGINNING: 800,
+  BICYCLE: 854,
+  BIKE: 863,
+  BIRD: 872,
+  BIRDS: 881,
+  BIZARRE: 899,
+  BLOCK: 962,
+  BLOW: 980,
+  BLUSHING: 998,
+  BOB: 1016,
+  BOB_S: 1025,
+  BOBS: 1034,
+  BOILED: 1043,
+  BOTH: 1097,
+  BOX: 1142,
+  BRAT: 1196,
+  BRATWURST: 1205,
+  BREAK: 1214,
+  BREASTSTROKE: 1223,
+  BRIT: 1250,
+  BRITISH: 1259,
+  BRITTLE: 1268,
+  BROTHER_IN_LAW: 1295,
+  BUNNY: 1322,
+  BUT: 1385,
+  CAN: 1430,
+  CAN_T: 1439,
+  CANDIES: 1448,
+  CANDY: 1457,
+  CANISTER: 1466,
+  CANNISTER: 1475,
+  CANT: 1493,
+  CARPET: 1538,
+  CART: 1556,
+  CELLAR: 1601,
+  CENT: 1610,
+  CHEEK: 1700,
+  CLAUSE: 1790,
+  CLAW: 1799,
+  CLAWS: 1808,
+  CLEAN: 1817,
+  CLEARING: 1826,
+  CLIENT: 1835,
+  CLIENT_S: 1844,
+  CLOSET: 1898,
+  CLOTH: 1907,
+  CLOUD: 1934,
+  CLOWN: 1943,
+  CLUMP: 1970,
+  COAT: 1997,
+  COLONY: 2024,
+  COMEDY: 2042,
+  COMEUPPANCE: 2051,
+  COMMA: 107,
+  COMPLEMENT: 2078,
+  CONG: 2096,
+  CRANK: 2213,
+  CRAWL: 2222,
+  CROP: 2240,
+  CROW: 2267,
+  CROWN: 2285,
+  CRUSHING: 2303,
+  CUSTOMER: 2357,
+  DEAN: 2438,
+  DEAN_S: 2447,
+  DEAR: 2456,
+  DECORATED: 2492,
+  DECORATION: 2501,
+  DEEP: 2519,
+  DEEP_SIX: 2528,
+  DESERT: 2591,
+  DESS: 2600,
+  DESSERT: 2609,
+  DESSERTS: 2618,
+  DOG_S: 2780,
+  DOLDRUM: 2789,
+  DOLDRUMS: 2798,
+  DON_T: 2816,
+  DONKEY_S: 2843,
+  DONT: 2852,
+  DOOR: 2861,
+  DUCK_S: 2924,
+  DUNE: 2942,
+  DWAYNE: 2951,
+  ELF: 3023,
+  ELF_S: 3032,
+  EVERYTHING: 3086,
+  EVIL: 3095,
+  EXCEPT: 3113,
+  EYE: 3167,
+  EYES: 3176,
+  FACTORY: 3185,
+  FARM: 3203,
+  FAT: 3221,
+  FED: 3257,
+  FEED: 3266,
+  FEET: 3284,
+  FIDDLE: 3293,
+  FIELD: 3302,
+  FIELDS: 3311,
+  FINGER: 3374,
+  FLIP: 3437,
+  FLOUR: 3455,
+  FLOWER: 3464,
+  FLOWERS: 3473,
+  FOOT: 3527,
+  FOX: 3563,
+  FRACTION: 3572,
+  FRESH: 3608,
+  FRONT: 3644,
+  G: 3707,
+  GET: 3743,
+  GIANT: 3752,
+  GIANT_S: 3761,
+  GIRL: 3779,
+  GIRL_S: 3788,
+  GORE: 3887,
+  GORILLA: 3896,
+  GRAIN: 3914,
+  GRAINFALL: 3923,
+  GRITTY: 3986,
+  GUEST: 4040,
+  HABIT: 4049,
+  HAIR: 4058,
+  HAIR_RAISING: 4067,
+  HAMMER: 4085,
+  HAND: 4094,
+  HANDS: 4112,
+  HAT: 4130,
+  HAZING: 4166,
+  HEAD: 4175,
+  HELP: 4220,
+  HER: 4229,
+  HERSELF: 4256,
+  HILL: 4283,
+  HIM: 4292,
+  HIMSELF: 4301,
+  HIS: 4328,
+  HIT: 4346,
+  HOLD: 4364,
+  HOLE: 4373,
+  HONORED: 4382,
+  HORSE_S: 4427,
+  HOT: 4436,
+  HOUSE: 4454,
+  HURL: 4472,
+  I: 4481,
+  I_LL: 4490,
+  ICE: 4499,
+  ICICLE: 4508,
+  IN: 4526,
+  INTERIOR: 4598,
+  IT: 4661,
+  JACK: 4688,
+  JACK_S: 4697,
+  JACK_IN_THE_BOX: 4706,
+  JACKET: 4715,
+  JACKHAMMER: 4724,
+  JACKKNIFE: 4733,
+  JACKRABBIT: 4742,
+  JACKS: 4751,
+  JACKSTER: 4760,
+  JACUZZI: 4769,
+  JAM: 4778,
+  JAMB: 4787,
+  JAR: 4796,
+  JAUNDICED: 4805,
+  JEAN: 4814,
+  JENNY: 4841,
+  JENNY_S: 4850,
+  JESTER: 4859,
+  JUST: 4886,
+  KEY: 4913,
+  KEYS: 4922,
+  KING: 4958,
+  KINKERING: 4967,
+  KITCHEN: 4985,
+  KNIFE: 4994,
+  KONG: 5012,
+  KREMLIN: 5021,
+  LADIES: 5066,
+  LADY: 5075,
+  LADY_S: 5084,
+  LAME: 5093,
+  LEAD: 5201,
+  LEOPARD: 5246,
+  LEOPARD_S: 5255,
+  LID: 5282,
+  LIP: 5390,
+  LIPS: 5399,
+  LITTLE: 5417,
+  LIVING: 5435,
+  LOBBY: 5444,
+  LOCK: 5471,
+  LOCKS: 5480,
+  LOFT: 5489,
+  LOUSE: 5543,
+  LOVING: 5552,
+  LOX: 5570,
+  MAKE: 5588,
+  MAN: 5597,
+  MAN_S: 5606,
+  MANICOTTI: 5615,
+  MANOR: 5624,
+  MARE: 5660,
+  MARKET: 5669,
+  MAYOR: 5714,
+  MAYOR_S: 5723,
+  ME: 5732,
+  MEAL: 5741,
+  MEAT: 5750,
+  MEET: 5777,
+  MEETS: 5786,
+  MERMAID_S: 5804,
+  MINCE: 5849,
+  MINT: 5858,
+  MINTS: 5867,
+  MISC: 5876,
+  MOHAIR: 5894,
+  MOLE: 5903,
+  MOLEHILL: 5912,
+  MOOSE: 5921,
+  MOUSSE: 5975,
+  MOUTH: 5984,
+  MR: 6002,
+  MUSCLE: 6056,
+  MUSCLES: 6065,
+  MUSSEL: 6074,
+  MUSSELANEOUS: 6083,
+  MUSSELS: 6092,
+  MY: 6101,
+  N: 6119,
+  NAH: 6128,
+  NO: 6263,
+  NOPE: 6281,
+  NOSE: 6317,
+  NUMBER: 6353,
+  NUMBERS: 6362,
+  OF: 6416,
+  OILED: 6452,
+  OK: 6461,
+  OKAY: 6470,
+  OLD: 6479,
+  OLIVE: 6488,
+  ONE: 6506,
+  OOPS: 6524,
+  OTHER: 6569,
+  OUT: 6587,
+  OUTSIDE: 6596,
+  OWN: 6614,
+  PAIR: 6650,
+  PALM: 6668,
+  PAN: 6677,
+  PART: 6695,
+  PEA: 6731,
+  PEARL: 6740,
+  PEAS: 6749,
+  PECK: 6758,
+  PEDDLE: 6767,
+  PENNY: 6794,
+  PEPPERS: 6812,
+  PERIOD: 98,
+  PHARMACY: 6848,
+  PI: 6857,
+  PICKED: 6875,
+  PICKLED: 6884,
+  PIE: 6902,
+  PIPER_S: 7019,
+  PLAY: 7037,
+  PLUG: 7091,
+  POKE: 7118,
+  POOL: 7136,
+  POSSESSION: 7163,
+  POWDER: 7208,
+  PRETTY: 7244,
+  PRIDE: 7253,
+  PUBLIC: 7298,
+  PUDDING: 7307,
+  PULL: 7316,
+  PUTTING: 7388,
+  Q: 7397,
+  QUART: 7406,
+  QUARTS: 7415,
+  QUARTZ: 7424,
+  QUEEN: 7433,
+  QUEEN_S: 7442,
+  QUEER: 7451,
+  QUIT: 7460,
+  QUOTE: 116,
+  RABBIT: 7469,
+  RAISE: 7478,
+  RAISING: 7487,
+  RARE: 7514,
+  RAT: 7523,
+  REAM: 7550,
+  REAMS: 7559,
+  RED: 7577,
+  RESTART: 7658,
+  RESTORE: 7676,
+  RESTROOM: 7685,
+  RIDE: 7784,
+  ROAD: 7829,
+  ROCK: 7847,
+  ROCKS: 7856,
+  ROME: 7874,
+  ROOM: 7892,
+  RUBBLE: 7946,
+  RUG: 7955,
+  RX: 8009,
+  SAIL: 8036,
+  SALE: 8045,
+  SALMON: 8054,
+  SATISFIED: 8099,
+  SAUSAGE: 8108,
+  SAVER: 8126,
+  SCENT: 8180,
+  SEAT: 8243,
+  SELF: 8279,
+  SELLER: 8297,
+  SERIAL: 8306,
+  SHAKE: 8342,
+  SHED: 8405,
+  SHEET: 8414,
+  SHEETS: 8423,
+  SHEPHERD: 8450,
+  SHOE: 8486,
+  SHOES: 8495,
+  SHOPPING: 8504,
+  SHORE: 8513,
+  SHOULDER: 8531,
+  SHOVING: 8558,
+  SHOWING: 8576,
+  SMALL: 8792,
+  SMOCK: 8828,
+  SMOKED: 8837,
+  SNOWBALL: 8882,
+  SODBUSTER: 8900,
+  SOLD: 8918,
+  SOLID: 8927,
+  SPEAKING: 9008,
+  SPILLED: 9035,
+  SPILT: 9044,
+  SPLEEN: 9062,
+  SPONGE: 9071,
+  SPREAD: 9080,
+  SQUARE: 9098,
+  SQUEAL: 9107,
+  STABLE: 9134,
+  STABLES: 9143,
+  STACK: 9152,
+  STAKE: 9215,
+  STALK: 9224,
+  STAND: 9233,
+  STATIONARY: 9260,
+  STATIONERY: 9269,
+  STEAK: 9287,
+  STICK: 9314,
+  STOCK: 9323,
+  STONE: 9332,
+  STRAWBERRY: 9359,
+  SUPER: 9440,
+  SUPERSAVER: 9458,
+  SURE: 9467,
+  SWALLOW: 9485,
+  SWIMMING: 9503,
+  TACK: 9575,
+  TACKS: 9584,
+  TAKE: 9602,
+  TALK: 9611,
+  TALL: 9620,
+  TAX: 9665,
+  TEAPOT: 9683,
+  TEMPEST: 9710,
+  THE: 9764,
+  THEM: 9782,
+  THEN: 9791,
+  THROW: 9845,
+  TO: 9926,
+  TOE: 9935,
+  TOES: 9944,
+  TOSS: 9980,
+  TOWER: 10007,
+  TURN: 10142,
+  UH_UH: 10178,
+  UNLOX: 10259,
+  WAITRESS: 10502,
+  WELL_BOILED: 10610,
+  WELL_OILED: 10619,
+  WHITE: 10700,
+  WIFE_S: 10763,
+  WOMAN: 10835,
+  WOMAN_S: 10844,
+  WONDERFUL: 10862,
+  WORD: 10925,
+  WORDS: 10934,
+  WORST: 10943,
+  WREATH: 10961,
+  WRITE: 10979,
+  WURST: 10988,
+  Y: 11015,
+  YARD: 11024,
+  YAWN: 11033,
+  YELLOW: 11060,
+  YELLOWING: 11069,
+  YES: 11078,
+  YOUR: 11096,
+  YUP: 11114,
 };
 
 // ---- Adjective numbers (A?xxx) ----
@@ -1244,7 +1246,7 @@ async function IS_ARE_PRINT(obj) {
 async function GO() {
   restart: for (;;) {
     g.WIDTH = getb(0, 33);
-    if (g.WIDTH > 76) {
+    if (s16(g.WIDTH) > s16(76)) {
       g.WIDE = true;
     } else {
       putProp(FROST_ROOM, P.SDESC, "Whiteness");
@@ -1290,7 +1292,7 @@ async function MAIN_LOOP_1() {
     if (g.P_IT_OBJECT && (await ACCESSIBLE$(g.P_IT_OBJECT))) {
       tmp = false;
       loop1: for (;;) {
-        if ((cnt = cnt + 1) > icnt) {
+        if (s16(cnt = cnt + 1) > s16(icnt)) {
           break loop1;
         } else {
           if (eq(get(g.P_PRSI, cnt), IT)) {
@@ -1303,7 +1305,7 @@ async function MAIN_LOOP_1() {
       if (!tmp) {
         cnt = 0;
         loop2: for (;;) {
-          if ((cnt = cnt + 1) > ocnt) {
+          if (s16(cnt = cnt + 1) > s16(ocnt)) {
             break loop2;
           } else {
             if (eq(get(g.P_PRSO, cnt), IT)) {
@@ -1316,7 +1318,7 @@ async function MAIN_LOOP_1() {
       cnt = 0;
     }
     onum = getb(g.P_SYNTAX, P_SBITS) & P_SONUMS;
-    num = (ocnt == 0) || ((icnt == 0) && (onum == 2)) ? 0 : (ocnt > 1 ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (icnt > 1 ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
+    num = (ocnt == 0) || ((icnt == 0) && (onum == 2)) ? 0 : (s16(ocnt) > s16(1) ? (tbl = g.P_PRSO, icnt == 0 ? (obj = false) : (obj = get(g.P_PRSI, 1)), ocnt) : (s16(icnt) > s16(1) ? (ptbl = false, tbl = g.P_PRSI, obj = get(g.P_PRSO, 1), icnt) : 1));
     if (!obj && (icnt == 1)) {
       obj = get(g.P_PRSI, 1);
     }
@@ -1353,13 +1355,13 @@ async function MAIN_LOOP_1() {
     } else {
       g.P_NOT_HERE = 0;
       g.P_MULT = false;
-      if (num > 1) {
+      if (s16(num) > s16(1)) {
         g.P_MULT = true;
       }
       tmp = false;
       loop3: for (;;) {
-        if ((cnt = cnt + 1) > num) {
-          if (g.P_NOT_HERE > 0) {
+        if (s16(cnt = cnt + 1) > s16(num)) {
+          if (s16(g.P_NOT_HERE) > s16(0)) {
             tell("[The ");
             if (!(g.P_NOT_HERE == num)) {
               tell("other ");
@@ -1387,11 +1389,11 @@ async function MAIN_LOOP_1() {
           }
           g.PRSO = ptbl ? obj1 : obj;
           g.PRSI = ptbl ? obj : obj1;
-          if ((num > 1) && (g.SCENE == HAZING || g.SCENE == AISLE) && !(eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING))) {
+          if ((s16(num) > s16(1)) && (g.SCENE == HAZING || g.SCENE == AISLE) && !(eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING))) {
             g.CLOCK_WAIT = true;
             await PREGNANT();
             break loop3;
-          } else if ((num > 1) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
+          } else if ((s16(num) > s16(1)) || eq(get(get(g.P_ITBL, P_NC1), 0), W.ALL, W.EVERYTHING)) {
             if (await DONT_ALL(obj1)) {
               continue loop3;
             } else {
@@ -1648,7 +1650,7 @@ async function RUNNING$(rtn) {
     if (c_ == e) {
       return false;
     } else if (eq(get(c_, C_RTN), rtn)) {
-      if ((get(c_, C_TICK) == 0) || (get(c_, C_TICK) > 1)) {
+      if ((get(c_, C_TICK) == 0) || (s16(get(c_, C_TICK)) > s16(1))) {
         return false;
       } else {
         return true;
@@ -1667,11 +1669,11 @@ async function QUEUE(rtn, tick) {
       if (int) {
         c_ = int;
       } else {
-        if (g.C_INTS < C_INTLEN) {
+        if (s16(g.C_INTS) < s16(C_INTLEN)) {
           tell("**Too many ints!**\n");
         }
         g.C_INTS = g.C_INTS - C_INTLEN;
-        if (g.C_INTS < g.C_MAXINTS) {
+        if (s16(g.C_INTS) < s16(g.C_MAXINTS)) {
           g.C_MAXINTS = g.C_INTS;
         }
         int = g.C_TABLE + g.C_INTS;
@@ -1686,7 +1688,7 @@ async function QUEUE(rtn, tick) {
     }
     c_ = c_ + C_INTLEN;
   }
-  if (g.CLOCK_HAND && (int > g.CLOCK_HAND)) {
+  if (g.CLOCK_HAND && (s16(int) > s16(g.CLOCK_HAND))) {
     tick = -(tick + 3);
   }
   put(int, C_TICK, tick);
@@ -1711,18 +1713,18 @@ async function CLOCKER() {
       return flg;
     } else if (!(get(g.CLOCK_HAND, C_RTN) == 0)) {
       tick = get(g.CLOCK_HAND, C_TICK);
-      if (tick < (-1)) {
+      if (s16(tick) < s16(-1)) {
         put(g.CLOCK_HAND, C_TICK, (-tick) - 3);
         q$ = g.CLOCK_HAND;
       } else if (!(tick == 0)) {
-        if (tick > 0) {
+        if (s16(tick) > s16(0)) {
           tick = tick - 1;
           put(g.CLOCK_HAND, C_TICK, tick);
         }
         if (!(tick == 0)) {
           q$ = g.CLOCK_HAND;
         }
-        if (!(tick > 0)) {
+        if (!(s16(tick) > s16(0))) {
           rtn = get(g.CLOCK_HAND, C_RTN);
           if (tick == 0) {
             put(g.CLOCK_HAND, C_RTN, 0);
@@ -2152,7 +2154,7 @@ async function EIGHT_ROOMS() {
 }
 
 async function I_WIFE() {
-  if ((g.HERE == FRONT_ROOM) && (getProp(g.SCENE, P.SCENE_SCORE) > 3) && !(loc(WIFE) == g.HERE) && hasFlag(WATER_BOTTLE, PHRASEBIT) && hasFlag(BOB_SHOE, RMUNGBIT) && !(await RUNNING$(I_KNOCK.id)) && !(await RUNNING$(I_BOB.id))) {
+  if ((g.HERE == FRONT_ROOM) && (s16(getProp(g.SCENE, P.SCENE_SCORE)) > s16(3)) && !(loc(WIFE) == g.HERE) && hasFlag(WATER_BOTTLE, PHRASEBIT) && hasFlag(BOB_SHOE, RMUNGBIT) && !(await RUNNING$(I_KNOCK.id)) && !(await RUNNING$(I_BOB.id))) {
     g.KNOCK_JOKE = W.GORILLA;
     await DEQUEUE(I_WIFE.id);
     return await I_KNOCK();
@@ -2200,7 +2202,7 @@ async function PICK_NEXT(tbl) {
   cnt = get(tbl, 1);
   str = get(tbl, cnt);
   ++cnt;
-  if (cnt > get(tbl, 0)) {
+  if (s16(cnt) > s16(get(tbl, 0))) {
     cnt = 2;
   }
   put(tbl, 1, cnt);
@@ -2253,7 +2255,7 @@ async function PARSER() {
   let $1;
   loop1: for (;;) {
     cnt = cnt + 1;
-    if (cnt > P_ITBLLEN) {
+    if (s16(cnt) > s16(P_ITBLLEN)) {
       break loop1;
     } else {
       if (!g.P_OFLAG) {
@@ -2326,11 +2328,11 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       g.P_LEN = g.P_LEN - 1;
     }
-    if (!(g.P_LEN > 1)) {
+    if (!(s16(g.P_LEN) > s16(1))) {
       tell("[There was no word after OOPS!]\n");
       return false;
     } else if (val = get(g.OOPS_TABLE, O_PTR)) {
-      if (g.P_LEN > 2) {
+      if (s16(g.P_LEN) > s16(2)) {
         tell("[Warning: only the first word after OOPS is used.]\n");
       }
       put(g.AGAIN_LEXV, val, get(g.P_LEXV, ptr + P_LEXELEN));
@@ -2364,7 +2366,7 @@ async function PARSER() {
       tell(" anymore.]\n");
       await STOP();
       return false;
-    } else if (g.P_LEN > 1) {
+    } else if (s16(g.P_LEN) > s16(1)) {
       if (eq(get(g.P_LEXV, ptr + P_LEXELEN), W.PERIOD, W.COMMA, W.THEN) || eq(get(g.P_LEXV, ptr + P_LEXELEN), W.AND, W.PICKED, W.CANT, W.CAN_T)) {
         if (eq(get(g.P_LEXV, ptr + P_LEXELEN), W.AND)) {
           g.AND_FLAG = true;
@@ -2385,7 +2387,7 @@ async function PARSER() {
       ptr = ptr + P_LEXELEN;
       putb(g.P_LEXV, P_LEXWORDS, getb(g.P_LEXV, P_LEXWORDS) - 1);
     }
-    if (getb(g.P_LEXV, P_LEXWORDS) > 0) {
+    if (s16(getb(g.P_LEXV, P_LEXWORDS)) > s16(0)) {
       await STUFF(g.RESERVE_LEXV, g.P_LEXV);
       await INBUF_STUFF(g.RESERVE_INBUF, g.P_INBUF);
       g.RESERVE_PTR = ptr;
@@ -2418,7 +2420,7 @@ async function PARSER() {
     g.P_GETFLAGS = 0;
     loop3: for (;;) {
       g.P_LEN = g.P_LEN - 1;
-      if (g.P_LEN < 0) {
+      if (s16(g.P_LEN) < s16(0)) {
         g.QUOTE_FLAG = false;
         break loop3;
       } else if ((wrd = get(g.P_LEXV, ptr)) || (wrd = await NUMBER$(ptr))) {
@@ -2433,7 +2435,7 @@ async function PARSER() {
         } else if ((wrd == W.TO) && (verb == ACT.TELL || verb == ACT.ASK)) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           wrd = W.QUOTE;
-        } else if ((wrd == W.THEN) && (g.P_LEN > 0) && !verb && !g.QUOTE_FLAG) {
+        } else if ((wrd == W.THEN) && (s16(g.P_LEN) > s16(0)) && !verb && !g.QUOTE_FLAG) {
           put(g.P_ITBL, P_VERB, ACT.TELL);
           put(g.P_ITBL, P_VERBN, 0);
           wrd = W.QUOTE;
@@ -2454,7 +2456,7 @@ async function PARSER() {
           (g.P_LEN == 0) || (g.P_CONT = ptr + P_LEXELEN);
           putb(g.P_LEXV, P_LEXWORDS, g.P_LEN);
           break loop3;
-        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && !(len < 2)) || (g.QUOTE_FLAG && (len == 2) && (nw == W.QUOTE)) || ((len > 2) && (nw == W.COMMA || nw == W.AND || nw == W.PICKED || nw == W.CANT || nw == W.CAN_T)))) {
+        } else if ((val = await WT$(wrd, PS$DIRECTION, P1$DIRECTION)) && (verb == false || verb == ACT.WALK || verb == ACT.GO) && ((len == 1) || ((len == 2) && (verb == ACT.WALK || verb == ACT.GO)) || ((nw == W.THEN || nw == W.PERIOD || nw == W.QUOTE) && !(s16(len) < s16(2))) || (g.QUOTE_FLAG && (len == 2) && (nw == W.QUOTE)) || ((s16(len) > s16(2)) && (nw == W.COMMA || nw == W.AND || nw == W.PICKED || nw == W.CANT || nw == W.CAN_T)))) {
           if (nw == W.AND) {
             g.AND_FLAG = true;
           }
@@ -2468,7 +2470,7 @@ async function PARSER() {
           if (nw == W.COMMA || nw == W.AND || nw == W.PICKED || nw == W.CANT || nw == W.CAN_T) {
             await CHANGE_LEXV(ptr + P_LEXELEN, W.THEN);
           }
-          if (!(len > 2)) {
+          if (!(s16(len) > s16(2))) {
             g.QUOTE_FLAG = false;
             break loop3;
           }
@@ -2483,12 +2485,12 @@ async function PARSER() {
           putb(g.P_VTBL, 2, getb(g.P_LEXV, cnt = (ptr * 2) + 2));
           putb(g.P_VTBL, 3, getb(g.P_LEXV, cnt + 1));
         } else if ((val = await WT$(wrd, PS$PREPOSITION, 0)) || (wrd == W.ALL || wrd == W.ONE || wrd == W.BOTH) || (wrd == W.EVERYTHING) || (await WT$(wrd, PS$ADJECTIVE)) || (await WT$(wrd, PS$OBJECT))) {
-          if ((g.P_LEN > 1) && (nw == W.OF) && (val == 0) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.A) && !(wrd == W.BOTH || wrd == W.EVERYTHING)) {
+          if ((s16(g.P_LEN) > s16(1)) && (nw == W.OF) && (val == 0) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.A) && !(wrd == W.BOTH || wrd == W.EVERYTHING)) {
             put(g.P_OFW, g.P_NCN, wrd);
             of_flag = true;
           } else if (!(val == 0) && ((g.P_LEN == 0) || (nw == W.THEN || nw == W.PERIOD))) {
             g.P_END_ON_PREP = true;
-            if (g.P_NCN < 2) {
+            if (s16(g.P_NCN) < s16(2)) {
               put(g.P_ITBL, P_PREP1, val);
               put(g.P_ITBL, P_PREP1N, wrd);
             }
@@ -2499,14 +2501,14 @@ async function PARSER() {
             g.P_NCN = g.P_NCN + 1;
             if ((val == PR.IN) && (nw == W.FRONT)) {
               g.IN_FRONT_FLAG = true;
-            } else if ((val == PR.DOWN) && (nw == W.IN) && (g.P_LEN > 1) && eq(get(g.P_LEXV, ptr + (2 * P_LEXELEN)), W.FRONT)) {
+            } else if ((val == PR.DOWN) && (nw == W.IN) && (s16(g.P_LEN) > s16(1)) && eq(get(g.P_LEXV, ptr + (2 * P_LEXELEN)), W.FRONT)) {
               g.IN_FRONT_FLAG = true;
             }
             $1 = ptr = await CLAUSE(ptr, val, wrd);
             if (!$1) {
               return false;
             }
-            if (ptr < 0) {
+            if (s16(ptr) < s16(0)) {
               g.QUOTE_FLAG = false;
               break loop3;
             }
@@ -2666,7 +2668,7 @@ async function INBUF_ADD(len, beg, slot) {
 async function WT$(ptr, bit, b1 = 5) {
   let offs = P_P1OFF, typ = 0;
   if (btst(typ = getb(ptr, P_PSOFF), bit)) {
-    if (b1 > 4) {
+    if (s16(b1) > s16(4)) {
       return true;
     } else if (bit == PS$OBJECT) {
       return 1;
@@ -2701,7 +2703,7 @@ async function CLAUSE(ptr, val, wrd) {
     put(g.P_ITBL, num, get(g.P_ITBL, num) + 4);
   }
   for (;;) {
-    if ((g.P_LEN = g.P_LEN - 1) < 0) {
+    if (s16(g.P_LEN = g.P_LEN - 1) < s16(0)) {
       put(g.P_ITBL, num + 1, g.P_LEXV + (ptr * 2));
       return -1;
     }
@@ -2741,7 +2743,7 @@ async function CLAUSE(ptr, val, wrd) {
         await CHANGE_LEXV(ptr + 2, W.THEN);
         g.P_LEN = g.P_LEN + 2;
       } else if (await WT$(wrd, PS$OBJECT)) {
-        if ((g.P_LEN > 0) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.BOTH || wrd == W.EVERYTHING)) {
+        if ((s16(g.P_LEN) > s16(0)) && (nw == W.OF) && !(wrd == W.ALL || wrd == W.ONE || wrd == W.BOTH || wrd == W.EVERYTHING)) {
           put(g.P_OFW, g.P_NCN - 1, wrd);
         } else if (eq(get(g.P_ITBL, P_VERB), ACT.SHOW, ACT.HAND, ACT.FEED) && (wrd == W.HER) && (nw == W.JUST || nw == W.DESSERTS)) {
         } else if ((await WT$(wrd, PS$ADJECTIVE, P1$ADJECTIVE)) && !(nw == 0) && !(nw == W.HIS || nw == W.HER || nw == W.MY) && ((await WT$(nw, PS$OBJECT)) || (await WT$(nw, PS$ADJECTIVE))) && !(eq(get(g.P_ITBL, P_VERB), ACT.SHOW, ACT.HAND, ACT.FEED))) {
@@ -2773,7 +2775,7 @@ async function NUMBER$(ptr) {
   cnt = getb(g.P_LEXV + (ptr * 2), 2);
   bptr = getb(g.P_LEXV + (ptr * 2), 3);
   loop1: for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       break loop1;
     } else {
       chr = getb(g.P_INBUF, bptr);
@@ -2789,9 +2791,9 @@ async function NUMBER$(ptr) {
         }
         exc = sum;
         sum = 0;
-      } else if (sum > 9999) {
+      } else if (s16(sum) > s16(9999)) {
         return false;
-      } else if ((chr < 58) && (chr > 47)) {
+      } else if ((s16(chr) < s16(58)) && (s16(chr) > s16(47))) {
         sum = (sum * 10) + (chr - 48);
       } else {
         return false;
@@ -2800,18 +2802,18 @@ async function NUMBER$(ptr) {
     }
   }
   put(g.P_LEXV, ptr, W.NUMBER);
-  if (sum > 9999) {
+  if (s16(sum) > s16(9999)) {
     return false;
   } else if (exc) {
     g.P_EXCHANGE = exc;
   } else if (tim) {
     g.P_EXCHANGE = 0;
-    if (tim > 23) {
+    if (s16(tim) > s16(23)) {
       return false;
-    } else if (tim > 19) {
-    } else if (tim > 12) {
+    } else if (s16(tim) > s16(19)) {
+    } else if (s16(tim) > s16(12)) {
       return false;
-    } else if (tim > 7) {
+    } else if (s16(tim) > s16(7)) {
     } else {
       tim = 12 + tim;
     }
@@ -2921,7 +2923,7 @@ async function ORPHAN_MERGE() {
   put(g.P_OTBL, P_VERBN, g.P_VTBL);
   putb(g.P_VTBL, 2, 0);
   for (;;) {
-    if ((cnt = cnt + 1) > P_ITBLLEN) {
+    if (s16(cnt = cnt + 1) > s16(P_ITBLLEN)) {
       g.P_MERGED = true;
       return true;
     } else {
@@ -2995,8 +2997,8 @@ async function SYNTAX_CHECK() {
   syn = syn + 1;
   loop1: for (;;) {
     num = getb(syn, P_SBITS) & P_SONUMS;
-    if (g.P_NCN > num) {
-    } else if (!(num < 1) && (g.P_NCN == 0) && (((prep = get(g.P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
+    if (s16(g.P_NCN) > s16(num)) {
+    } else if (!(s16(num) < s16(1)) && (g.P_NCN == 0) && (((prep = get(g.P_ITBL, P_PREP1)) == 0) || (prep == getb(syn, P_SPREP1)))) {
       drive1 = syn;
     } else if (eq(getb(syn, P_SPREP1), get(g.P_ITBL, P_PREP1))) {
       if ((num == 2) && (g.P_NCN == 1)) {
@@ -3105,7 +3107,7 @@ async function ORPHAN(d1, d2) {
   if (g.P_NCN == 2) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC2, P_NC2L, P_NC2, P_NC2L);
   }
-  if (!(g.P_NCN < 1)) {
+  if (!(s16(g.P_NCN) < s16(1))) {
     await CLAUSE_COPY(g.P_ITBL, g.P_OTBL, P_NC1, P_NC1L, P_NC1, P_NC1L);
   }
   if (d1) {
@@ -3480,7 +3482,7 @@ async function GET_OBJECT(tbl, vrb = true) {
         }
       }
       put(tbl, P_MATCHLEN, 1);
-    } else if ((len > 1) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
+    } else if ((s16(len) > s16(1)) || ((len == 0) && !(g.P_SLOCBITS == (-1)))) {
       if (g.P_SLOCBITS == (-1)) {
         g.P_SLOCBITS = xbits;
         olen = len;
@@ -3619,10 +3621,10 @@ async function WHICH_PRINT(tlen, len, tbl) {
         tell(",");
       }
       tell(" or ");
-    } else if (len > 2) {
+    } else if (s16(len) > s16(2)) {
       tell(", ");
     }
-    if ((len = len - 1) < 1) {
+    if (s16(len = len - 1) < s16(1)) {
       break loop1;
     }
   }
@@ -3711,7 +3713,7 @@ async function ITAKE_CHECK(tbl, ibits) {
   let ptr = 0, obj = 0, taken = 0;
   if ((ptr = get(tbl, P_MATCHLEN)) && (btst(ibits, SHAVE) || btst(ibits, STAKE))) {
     for (;;) {
-      if ((ptr = ptr - 1) < 0) {
+      if (s16(ptr = ptr - 1) < s16(0)) {
         return true;
       } else {
         obj = get(tbl, ptr + 1);
@@ -3750,7 +3752,7 @@ async function ITAKE_CHECK(tbl, ibits) {
             taken = true;
           }
           if (taken && btst(ibits, SHAVE)) {
-            if (1 < get(tbl, P_MATCHLEN)) {
+            if (s16(1) < s16(get(tbl, P_MATCHLEN))) {
               tell(S(g.YNH), " all those things!\n");
               return false;
             } else if (obj == NOT_HERE_OBJECT) {
@@ -3786,9 +3788,9 @@ async function ITAKE_CHECK(tbl, ibits) {
 
 async function MANY_CHECK() {
   let loss = false, tmp = 0;
-  if ((get(g.P_PRSO, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
+  if ((s16(get(g.P_PRSO, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC1), SMANY))) {
     loss = 1;
-  } else if ((get(g.P_PRSI, P_MATCHLEN) > 1) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
+  } else if ((s16(get(g.P_PRSI, P_MATCHLEN)) > s16(1)) && !(btst(getb(g.P_SYNTAX, P_SLOC2), SMANY))) {
     loss = 2;
   }
   if (loss == 1) {
@@ -4001,7 +4003,7 @@ async function FINISH() {
     } else if (eq(get(g.P_LEXV, 1), W.RESTORE) && !(await restore())) {
       tell(S(g.FAILED));
       continue loop1;
-    } else if (eq(get(g.P_LEXV, 1), W.QUIT, W.Q) || (cnt > 10)) {
+    } else if (eq(get(g.P_LEXV, 1), W.QUIT, W.Q) || (s16(cnt) > s16(10))) {
       await quit();
     }
     continue loop1;
@@ -4015,7 +4017,7 @@ async function V_VERSION() {
   await V_$ID();
   tell("Release ", N(v_), " / Serial number ");
   loop1: for (;;) {
-    if ((cnt = cnt + 1) > 23) {
+    if (s16(cnt = cnt + 1) > s16(23)) {
       break loop1;
     } else {
       printC(getb(0, cnt));
@@ -5834,7 +5836,7 @@ async function V_PUT() {
   } else if (hasFlag(g.PRSI, ACTORBIT)) {
     tell(S(g.HUH));
     return true;
-  } else if (((((await WEIGHT(g.PRSI)) + (await WEIGHT(g.PRSO))) - getProp(g.PRSI, P.SIZE)) > getProp(g.PRSI, P.CAPACITY)) && !(await HELD$(g.PRSO, g.PRSI))) {
+  } else if ((s16(((await WEIGHT(g.PRSI)) + (await WEIGHT(g.PRSO))) - getProp(g.PRSI, P.SIZE)) > s16(getProp(g.PRSI, P.CAPACITY))) && !(await HELD$(g.PRSO, g.PRSI))) {
     tell("There's no room ");
     if (hasFlag(g.PRSI, SURFACEBIT)) {
       tell("on");
@@ -6039,7 +6041,7 @@ async function V_REVOLVE() {
     await QUEUE(I_END_SCENE.id, 1);
     tell("You get that long, drawn-out sudden feeling of movement in the pit of your stomach as the attic begins tilting straight up to one side, and it continues tilting until you're in a figurative sense literally climbing the walls and fall...\n\n\"CRUNCH!\" Your shoulders slam softly against the hardwood floor");
     await ROB(PROTAGONIST, g.HERE);
-    if ((await CCOUNT(PROTAGONIST)) > 1) {
+    if (s16(await CCOUNT(PROTAGONIST)) > s16(1)) {
       tell(", and your belongings scatter neatly into a pile next to you");
     } else if (x = first(PROTAGONIST)) {
       tell(", and");
@@ -6912,7 +6914,7 @@ async function CANT_GET_THERE() {
 async function V_WAIT(num = 3) {
   tell("Time passes...\n");
   loop1: for (;;) {
-    if ((num = num - 1) < 0) {
+    if (s16(num = num - 1) < s16(0)) {
       break loop1;
     } else if (await CLOCKER()) {
       break loop1;
@@ -7125,12 +7127,12 @@ async function ITAKE(vb = true) {
       tell(S(g.PERIOD));
     }
     return M_FATAL;
-  } else if (!(await HELD$(g.PRSO)) && (((await WEIGHT(g.PRSO)) + (await WEIGHT(PROTAGONIST))) > 100)) {
+  } else if (!(await HELD$(g.PRSO)) && (s16((await WEIGHT(g.PRSO)) + (await WEIGHT(PROTAGONIST))) > s16(100))) {
     if (vb) {
       tell("It's too heavy, considering your current load.\n");
     }
     return M_FATAL;
-  } else if ((await CCOUNT(PROTAGONIST)) > 10) {
+  } else if (s16(await CCOUNT(PROTAGONIST)) > s16(10)) {
     if (vb) {
       tell("You're already juggling as many items as you could possibly carry.\n");
     }
@@ -7591,7 +7593,7 @@ async function META_LOC(obj) {
 async function OTHER_SIDE(dobj) {
   let p_ = 0, tee = 0;
   for (;;) {
-    if ((p_ = nextProp(g.HERE, p_)) < LOW_DIRECTION) {
+    if (s16(p_ = nextProp(g.HERE, p_)) < s16(LOW_DIRECTION)) {
       return false;
     } else {
       tee = getPropAddr(g.HERE, p_);
@@ -7952,7 +7954,7 @@ async function FIND_NOT_HERE(tbl, prso$) {
       g.PRSI = g.P_MOBY_FOUND;
     }
     return false;
-  } else if ((1 < m_f) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC)))) {
+  } else if ((s16(1) < s16(m_f)) && (obj = await apply(getProp(obj = get(tbl, 1), P.GENERIC)))) {
     if (obj == NOT_HERE_OBJECT) {
       return true;
     } else if (prso$) {
@@ -8919,7 +8921,7 @@ async function INIT_STATUS_LINE(dont_clear = false) {
 
 async function PRINT_SPACES(cnt) {
   for (;;) {
-    if ((cnt = cnt - 1) < 0) {
+    if (s16(cnt = cnt - 1) < s16(0)) {
       return true;
     } else {
       printC(32);
@@ -8961,7 +8963,7 @@ async function ITALICIZE(str, no_caps$ = false) {
   } else {
     for (;;) {
       char = getb(g.SLINE, ptr);
-      if ((char > 96) && (char < 123)) {
+      if ((s16(char) > s16(96)) && (s16(char) < s16(123))) {
         char = char - 32;
       }
       printC(char);
@@ -9417,14 +9419,14 @@ async function DISPLAY_HINT(n_) {
     if (chr == 81 || chr == 113) {
       return true;
     } else if (chr == 13 || chr == 10) {
-      if (cnt > mx) {
+      if (s16(cnt) > s16(mx)) {
       } else {
         flg = true;
         tell(S(get(h, cnt)));
         crlf();
         crlf();
         cnt = cnt + 1;
-        if (cnt > mx) {
+        if (s16(cnt) > s16(mx)) {
           flg = false;
           tell("[That's all folks!]\n");
         }
@@ -9438,7 +9440,7 @@ async function PUT_UP_QUESTIONS(st) {
   mxq = get(g.HINT_TBL, 0);
   mxl = getb(0, 32) - 1;
   for (;;) {
-    if (st > mxq) {
+    if (s16(st) > s16(mxq)) {
       return true;
     } else {
       cursorSet(get(g.LINE_TABLE, g.CUR_POS), get(g.COLUMN_TABLE, g.CUR_POS) - 1);
@@ -10778,7 +10780,7 @@ async function STALK_EXIT() {
       tell("You climb down stalk.\n\n");
       return STALK_ROOM;
     }
-  } else if ((obj = first(PROTAGONIST)) && (((await HELD$(RAT)) && !(hasFlag(RAT, WORNBIT))) || ((loc(HOUSE) == PROTAGONIST) && !g.LOUSE_ON_HEAD) || ((await CCOUNT(PROTAGONIST)) > 2) || !(eq(first(PROTAGONIST), RAT, HOUSE)) || (next(obj) && !(eq(next(obj), RAT, HOUSE))))) {
+  } else if ((obj = first(PROTAGONIST)) && (((await HELD$(RAT)) && !(hasFlag(RAT, WORNBIT))) || ((loc(HOUSE) == PROTAGONIST) && !g.LOUSE_ON_HEAD) || (s16(await CCOUNT(PROTAGONIST)) > s16(2)) || !(eq(first(PROTAGONIST), RAT, HOUSE)) || (next(obj) && !(eq(next(obj), RAT, HOUSE))))) {
     tell("You'd never make it up the stalk while holding anything in your hands.\n");
     return false;
   } else {
@@ -11285,7 +11287,7 @@ async function CLOCK_F() {
 
 async function I_CLOCK() {
   g.CLOCK_N = g.CLOCK_N + 1;
-  if (g.CLOCK_N > 10) {
+  if (s16(g.CLOCK_N) > s16(10)) {
     if (eq(await META_LOC(CLOCK), g.HERE)) {
       tell("\nThe clock gives off its last \"tick\" and stops.\n");
     }
@@ -12126,7 +12128,7 @@ async function BRAT_F(oarg = false) {
       }
       setFlag(BRAT, TRANSFORMED);
       tell("The little girl");
-      if (!(g.BRAT_C > 5)) {
+      if (!(s16(g.BRAT_C) > s16(5))) {
         tell(" begins running away in horror. She");
       }
       tell(" tumbles head over heels to the floor in a blur, and then you observe a sausage come rolling to a stop.\n");
@@ -12172,7 +12174,7 @@ async function I_BRAT() {
   if (g.BRAT_C == 1) {
     move(BRAT, g.HERE);
     tell("\nYou notice a blur of colorful lace and flowing blond hair come rolling off one of the shelves. A little girl stands at your feet.\n");
-  } else if ((g.BRAT_C < 5) && (loc(BRAT) == g.HERE)) {
+  } else if ((s16(g.BRAT_C) < s16(5)) && (loc(BRAT) == g.HERE)) {
     tell("\n");
     $1 = await PICK_NEXT(get(g.S_BRAT, 0));
     tell(S($1));
@@ -12191,10 +12193,10 @@ async function I_BRAT() {
       await PERFORM(V.EXAMINE, RIBBON);
     }
     return true;
-  } else if ((g.BRAT_C > 5) && (loc(BRAT) == g.HERE)) {
+  } else if ((s16(g.BRAT_C) > s16(5)) && (loc(BRAT) == g.HERE)) {
     remove(BRAT);
     tell("\nThe girl, screaming at the top of her lungs, runs by you and out of sight again.\n");
-  } else if (g.BRAT_C > 28) {
+  } else if (s16(g.BRAT_C) > s16(28)) {
     g.BRAT_C = 5;
   }
   return true;
@@ -12231,7 +12233,7 @@ async function ANTS_F(oarg = false) {
     clearFlag(ANTS, ACTORBIT);
     setFlag(ANTS, PLURALBIT);
   } else if ((await NOUN_USED(ANTS, W.AUNT, W.AUNTS, W.LADIES)) && (await TRANS_PRINT(ANTS))) {
-    if (g.ANTS_C > 5) {
+    if (s16(g.ANTS_C) > s16(5)) {
       g.ANTS_C = 5;
     }
     await QUEUE(I_ANTS.id, -1);
@@ -12267,15 +12269,15 @@ async function I_ANTS() {
   if (g.ANTS_C == 1) {
     move(ANTS, g.HERE);
     tell("\nThe aunts start milling.\n");
-  } else if ((g.ANTS_C < 5) && (loc(ANTS) == g.HERE)) {
+  } else if ((s16(g.ANTS_C) < s16(5)) && (loc(ANTS) == g.HERE)) {
     tell("\nThe milling aunts are gawking and talking among themselves.\n");
-  } else if ((g.ANTS_C > 4) && (loc(ANTS) == g.HERE)) {
+  } else if ((s16(g.ANTS_C) > s16(4)) && (loc(ANTS) == g.HERE)) {
     remove(ANTS);
     tell("\nFinding nothing of interest here, the aunts walk in a line around the corner of the aisle and out of sight.\n");
   } else if ((g.ANTS_C == 9 || g.ANTS_C == 15 || g.ANTS_C == 21 || g.ANTS_C == 26) && !(loc(ANTS) == g.HERE) && !(g.HERE == CELLAR_ROOM)) {
     move(ANTS, g.HERE);
     tell("\nThe motley line of aunts comes strolling into your aisle.\n");
-  } else if (g.ANTS_C > 28) {
+  } else if (s16(g.ANTS_C) > s16(28)) {
     g.ANTS_C = 5;
   }
   return true;
@@ -13577,7 +13579,7 @@ async function OLD_DOG_F(oarg = false) {
 }
 
 async function STONE_F() {
-  if (!(g.P_NUMBER == 0) && (await ADJ_USED(STONE, W.NUMBER)) && (g.P_NUMBER > 1)) {
+  if (!(g.P_NUMBER == 0) && (await ADJ_USED(STONE, W.NUMBER)) && (s16(g.P_NUMBER) > s16(1))) {
     return await IMPOSSIBLES();
   } else if ((isVerb(V.THROW) && (loc(OLD_DOG) == g.HERE)) || (isVerb(V.THROW_TO, V.THROW) && (g.PRSI == OLD_DOG))) {
     move(STONE, OLD_DOG);
@@ -14294,7 +14296,7 @@ async function CROPS_F() {
 }
 
 async function BIRDS_F() {
-  if (!(g.P_NUMBER == 0) && (g.P_NUMBER > 2)) {
+  if (!(g.P_NUMBER == 0) && (s16(g.P_NUMBER) > s16(2))) {
     return await IMPOSSIBLES();
   } else if (isVerb(V.EXAMINE)) {
     tell("Hovering above, the two birds appear as menacing as vultures and seem to be having a field day with the crops.\n");
@@ -14635,7 +14637,7 @@ async function FLOOR_1_F(rarg) {
     tell(".");
     if (loc(SHRIFT) == REST_TABLE) {
       tell("\n\nYour table is only partially covered by a skimpy little tablecloth");
-      if ((await CCOUNT(REST_TABLE)) > 1) {
+      if (s16(await CCOUNT(REST_TABLE)) > s16(1)) {
         tell(" upon which rests");
         await D_CONTENTS(REST_TABLE, 2);
         return true;
@@ -14688,7 +14690,7 @@ async function SHRIFT_F() {
     await DPRINT(SHRIFT);
     tell(", this shrunken little tablecloth that's hardly big enough to cover a table.\n");
     return true;
-  } else if (isVerb(V.TAKE) && (loc(SHRIFT) == REST_TABLE) && ((await CCOUNT(REST_TABLE)) > 1) && !(eq(await ITAKE(false), M_FATAL, false))) {
+  } else if (isVerb(V.TAKE) && (loc(SHRIFT) == REST_TABLE) && (s16(await CCOUNT(REST_TABLE)) > s16(1)) && !(eq(await ITAKE(false), M_FATAL, false))) {
     tell("With the flair for the dramatic that has so marked your progress through this strange universe, you yank the ");
     await DPRINT(SHRIFT);
     tell(" away without at all disturbing");
@@ -15098,7 +15100,7 @@ async function WAITRESS_F() {
     } else {
       return false;
     }
-  } else if (isVerb(V.PASS) && (g.HERE == FLOOR_1) && (g.OFFENCES < 11)) {
+  } else if (isVerb(V.PASS) && (g.HERE == FLOOR_1) && (s16(g.OFFENCES) < s16(11))) {
     await DO_WALK(P.IN);
     return true;
   } else {
@@ -15269,7 +15271,7 @@ async function CAPE_F() {
 async function FLOOR_1_EXIT() {
   let sc = 0;
   sc = getProp(g.SCENE, P.SCENE_SCORE);
-  if (sc > 11) {
+  if (s16(sc) > s16(11)) {
     if (!(hasFlag(KITCHEN, TOUCHBIT))) {
       clearFlag(CAPE, TRYTAKEBIT);
       clearFlag(CAPE, NDESCBIT);
@@ -15280,13 +15282,13 @@ async function FLOOR_1_EXIT() {
     return KITCHEN;
   } else {
     tell("As you head toward the kitchen, the waitress heads you off at the pass. ");
-    if (sc > 8) {
+    if (s16(sc) > s16(8)) {
       tell("But you're certainly wearing down her defenses.");
-    } else if (sc > 6) {
+    } else if (s16(sc) > s16(6)) {
       tell("But you're gradually getting to her.");
-    } else if (sc > 4) {
+    } else if (s16(sc) > s16(4)) {
       tell("But you're on the right track.");
-    } else if (sc > 2) {
+    } else if (s16(sc) > s16(2)) {
       tell("You don't have nearly enough gall to storm into the kitchen, but you're getting there.");
     } else if (!(sc == 0)) {
       tell("You're not hot enough yet to take the kitchen by storm.");
