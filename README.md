@@ -93,6 +93,10 @@ Microsoft). All others are shared by historicalsource for education and research
   move it, scroll or use +/− to zoom; the 🗺 button in the toolbar shows or hides it. It
   isn't shown on phones and tablets. It only knows what you have seen, so it gives
   nothing away.
+- **Title sequence:** a new game opens with its original box cover as a 3D card that
+  flips in, tilts with the pointer and catches the light, over a backdrop and sparkles in
+  the cover's own colours; the title is set letter by letter. *Begin* (or Enter) sends the
+  card flying and the story fades in. Respects reduced-motion settings.
 - Undo, named save slots, autosave and resume, and a main menu to switch games.
 - **Debug reports:** Settings → *Report a problem* downloads a file that describes the
   current state: the inputs sent to the game with its raw replies, the full game state

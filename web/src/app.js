@@ -8,6 +8,7 @@ import { interpret, isParserError } from './ai/interpreter.js';
 import { currentScene, actionContext, currentRoom as roomObject } from './ai/scene.js';
 import { Automap, drawMap } from './automap.js';
 import { DebugLog, downloadJSON, BUILD, REPORT_README } from './debug.js';
+import { playIntro } from './intro.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
@@ -1236,8 +1237,11 @@ async function boot() {
   // Time games have no score: only the clock is shown.
   if (meta.clock) els.score.closest('.stat').hidden = true;
   updateMode();
-  const opening = await session.start();
   const saved = store.get(K('autosave'), null);
+  // A new game opens with its title sequence (?intro=0 skips it).
+  const intro = !saved?.snapshot && new URLSearchParams(location.search).get('intro') !== '0'
+    ? playIntro(meta, { t, lang: settings.language }) : null;
+  const opening = await session.start();
   if (saved?.snapshot) {
     try {
       transcriptLog = saved.transcript || [];
@@ -1265,7 +1269,8 @@ async function boot() {
     updateMode();
   }
   setInputEnabled(true);
-  els.input.focus({ preventScroll: true });
+  if (intro) intro.then(() => els.input.focus({ preventScroll: true }));
+  else els.input.focus({ preventScroll: true });
   updatePageSpace();
   renderActions();
   if (paging) {
