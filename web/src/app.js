@@ -9,6 +9,7 @@ import { currentScene, actionContext, currentRoom as roomObject } from './ai/sce
 import { Automap, drawMap } from './automap.js';
 import { DebugLog, downloadJSON, BUILD, REPORT_README } from './debug.js';
 import { playIntro, paletteOf } from './intro.js';
+import { initRetro, retroControls, refreshRetroControls, sfx } from './retro.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
@@ -52,6 +53,10 @@ const settings = Object.assign(
 );
 settings.language = normalizeLanguage(settings.language);
 setLanguage(settings.language);
+// 80s mode (CRT look, soundscapes): applied before anything is drawn.
+initRetro();
+document.getElementById('retro-menu')?.append(retroControls());
+document.getElementById('retro-settings')?.append(retroControls());
 const saveSettings = () => store.set('pf.settings', settings);
 const aiActive = () => settings.aiEnabled && !!settings.apiKey;
 // Translation is active when a non-English language is chosen and the AI is on.
@@ -329,9 +334,12 @@ let aiHistory = []; // {input, commands, output}
 let commandHistory = GAME_ID ? store.get(K('cmdhistory'), []) : [];
 let historyPos = -1;
 let gameEnded = false;
+let lastScore = null; // for the 80s mode's score jingle
 
 const session = new GameSession({
   onStatus: ({ room, score, moves }) => {
+    if (typeof score === 'number' && typeof lastScore === 'number' && score > lastScore && !GAMES[GAME_ID]?.clock) sfx.score();
+    lastScore = score;
     currentRoom = room;
     els.room.textContent = room || '—';
     if (targetLanguage()) updateStatusRoom();
@@ -1003,6 +1011,7 @@ els.settings.addEventListener('close', async () => {
     saveSettings();
     setLanguage(settings.language);
     applyStatic();
+    refreshRetroControls();
     renderMenu({ openSettings });
     return;
   }
@@ -1018,6 +1027,7 @@ els.settings.addEventListener('close', async () => {
   saveSettings();
   setLanguage(settings.language);
   applyStatic();
+  refreshRetroControls();
   updateMode();
   updateStatusRoom();
   renderActions();
@@ -1091,7 +1101,11 @@ for (const b of document.querySelectorAll('dialog [data-close]')) {
 
 // The text field is never disabled while the game works: disabling it would
 // blur it and close the phone keyboard. Submits are ignored while busy instead.
+let workingSound = false;
 function setInputEnabled(on) {
+  // 80s mode: the floppy drive runs while the game or the AI works; a blip when done.
+  if (!on && !workingSound) { workingSound = true; sfx.busy(true); }
+  else if (on && workingSound) { workingSound = false; sfx.busy(false); sfx.reply(); }
   els.input.disabled = false;
   els.send.disabled = !on;
   els.form.classList.toggle('busy', !on);
@@ -1379,6 +1393,7 @@ async function boot() {
   setInputEnabled(true);
   if (intro) {
     intro.then(() => {
+      sfx.begin();
       els.input.focus({ preventScroll: true });
       // Replay the header title's reveal, which ran hidden behind the title sequence.
       const fill = document.querySelector('.title-fill');

@@ -102,6 +102,12 @@ Microsoft). All others are shared by historicalsource for education and research
   move it, scroll or use +/− to zoom; the 🗺 button in the toolbar shows or hides it. It
   isn't shown on phones and tablets. It only knows what you have seen, so it gives
   nothing away.
+- **80s mode:** a switch on the main game list (and in the settings) turns the whole app
+  into a 1984 TV ident: phosphor glow on black, scanlines and an aperture grille, sliced
+  neon lettering, slanted rainbow stripes, terminal type and a CRT that powers on. Optional
+  soundscapes, synthesized live in the browser (no audio files): a synthwave track, or a
+  1980s computer room whose floppy drive chatters while the game or the AI is thinking;
+  plus key clicks and blips, with a volume control.
 - **Title sequence:** a new game opens with its original box cover as a 3D card that
   flips in, tilts with the pointer and catches the light, over a backdrop and sparkles in
   the cover's own colours; the title is set letter by letter. *Begin* (or Enter) sends the
@@ -198,6 +204,6 @@ is fully static and needs no secrets.
   stated not to be under an open license.
 - The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
   now Microsoft). It isn't covered by any license in this repository.
-- Fonts: Literata, Inter and JetBrains Mono, under the SIL Open Font License.
+- Fonts: Literata, Inter and JetBrains Mono, plus Orbitron and VT323 for the 80s mode, all under the SIL Open Font License.
 - The converter, runtime, AI layer and web app in `tools/`, `web/` (except the generated
   games, fonts and covers) and `tests/` were written for this project.
