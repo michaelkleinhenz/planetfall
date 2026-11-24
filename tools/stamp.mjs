@@ -52,4 +52,32 @@ fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
 copy(src);
 fs.writeFileSync(path.join(out, 'version.json'), JSON.stringify({ version }) + '\n');
+
+// The service worker: this release's cache name and the app shell to cache at
+// install (code and styles with the same ?v= URLs the pages request; the games
+// themselves are cached when first opened).
+const list = (dir, filter) => {
+  const outList = [];
+  const walk = (rel) => {
+    for (const e of fs.readdirSync(path.join(src, rel), { withFileTypes: true })) {
+      const r = path.posix.join(rel, e.name);
+      if (e.isDirectory()) walk(r); else if (filter(r)) outList.push(r);
+    }
+  };
+  walk(dir);
+  return outList;
+};
+const shell = [
+  './',
+  ...['styles.css', 'retro.css'].map(stamp),
+  ...list('src', (r) => r.endsWith('.js') && (!r.startsWith('src/games/') || r === 'src/games/registry.js')).map(stamp),
+  ...list('fonts', (r) => r.endsWith('.woff2')),
+  ...list('img', (r) => /\.(jpg|png|svg)$/.test(r)),
+  'manifest.webmanifest',
+];
+const swFile = path.join(out, 'sw.js');
+fs.writeFileSync(swFile, fs.readFileSync(swFile, 'utf8')
+  .replace("'__VERSION__'", JSON.stringify(version))
+  .replace('[/* __PRECACHE__ */]', JSON.stringify(shell, null, 1)));
+console.log(`service worker: ${shell.length} files cached at install`);
 console.log(`stamped ${path.relative(root, out) || out} with v=${version}`);

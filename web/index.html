@@ -6,7 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
   <title>Planetfall AI</title>
   <meta name="description" content="Infocom classics (Planetfall, Zork I) translated from their original source to JavaScript, with an AI command interpreter.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='36' r='18' fill='%23e8a33d'/%3E%3Cellipse cx='32' cy='36' rx='29' ry='7' fill='none' stroke='%237fd1c7' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="icon" href="img/icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Planetfall AI">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="preload" href="fonts/literata-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
@@ -57,6 +63,14 @@
     <section class="menu-hero">
       <h1 data-i18n="menuTitle"></h1>
       <p data-i18n="menuIntro"></p>
+      <!-- Install as an app (install.js); shown where the browser supports it -->
+      <div id="install-app" class="install-app" hidden>
+        <button id="install-btn" type="button" class="btn primary install-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg>
+          <span data-i18n="installApp">Install as an app</span>
+        </button>
+        <span class="muted small" data-i18n="installNote"></span>
+      </div>
       <!-- 80s mode switch and soundscapes (retro.js) -->
       <div id="retro-menu"></div>
     </section>
@@ -166,5 +180,16 @@
   </dialog>
 
   <script type="module" src="src/app.js"></script>
+  <dialog id="install-dialog" class="dialog">
+    <form method="dialog">
+      <h2 data-i18n="installApp">Install as an app</h2>
+      <ol class="install-steps">
+        <li data-i18n-html="installIos1"></li>
+        <li data-i18n-html="installIos2"></li>
+        <li data-i18n="installIos3"></li>
+      </ol>
+      <div class="dialog-actions"><button value="ok" class="btn primary" data-i18n="installOk">Got it</button></div>
+    </form>
+  </dialog>
 </body>
 </html>

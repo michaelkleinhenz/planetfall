@@ -95,6 +95,10 @@ Microsoft). All others are shared by historicalsource for education and research
 - **Play with buttons:** a quick-action row shows the room's exits, Look / Inventory /
   Wait, and everything in view. Each thing offers only the verbs that fit it. Buttons talk
   to the game directly, without the AI.
+- **Installable app:** the main game list offers *Install as an app* (Chrome, Edge,
+  Android; on iPhone and iPad it shows how to add it to the home screen). The installed
+  app opens full screen from its icon, starts fast, and plays offline: the app itself is
+  cached at install, and each game once it has been opened.
 - **Built for phones:** the keyboard stays open, and each reply starts at the top of the
   screen. Long replies page with a "More" button instead of scrolling.
 - **Automap (desktop):** a panel beside the story draws the rooms you have visited and

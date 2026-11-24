@@ -10,6 +10,7 @@ import { Automap, drawMap } from './automap.js';
 import { DebugLog, downloadJSON, BUILD, REPORT_README } from './debug.js';
 import { playIntro, paletteOf } from './intro.js';
 import { initRetro, retroControls, refreshRetroControls, sfx } from './retro.js';
+import { initInstall } from './install.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
 import { translate, translateLabel } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
@@ -55,6 +56,8 @@ settings.language = normalizeLanguage(settings.language);
 setLanguage(settings.language);
 // 80s mode (CRT look, soundscapes): applied before anything is drawn.
 initRetro();
+// Installable app: service worker and the install button.
+initInstall();
 document.getElementById('retro-menu')?.append(retroControls());
 document.getElementById('retro-settings')?.append(retroControls());
 const saveSettings = () => store.set('pf.settings', settings);
@@ -1343,7 +1346,14 @@ async function boot() {
     return;
   }
   const meta = GAMES[GAME_ID];
-  await loadGame(meta);
+  try {
+    await loadGame(meta);
+  } catch (err) {
+    // Offline, with a game that has never been opened here (so it is not cached).
+    $('game-title').textContent = meta.title.toUpperCase();
+    addEntry({ system: navigator.onLine === false ? t('offlineNotCached', { title: meta.title }) : t('gameLoadFailed', { error: err.message }) });
+    return;
+  }
   document.title = `${meta.title} AI`;
   $('game-title').textContent = meta.title.toUpperCase();
   if (meta.cover) coverTitle(meta);
