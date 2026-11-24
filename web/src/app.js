@@ -85,6 +85,16 @@ function el(tag, cls, text) {
   return e;
 }
 
+/** Append text to a node, turning the model's **bold** markup into <strong>. Built from text nodes, so nothing is parsed as HTML. */
+function appendWithBold(node, text) {
+  const parts = String(text).split(/\*\*(?=\S)([^*]*?\S)\*\*/);
+  parts.forEach((part, i) => {
+    if (!part) return;
+    node.append(i % 2 ? el('strong', null, part) : document.createTextNode(part));
+  });
+  return node;
+}
+
 // On phones the keyboard stays open and only a small part of the transcript is
 // visible, so each new turn is shown from its first line ("paging"); if the reply
 // is longer than the visible area, a "More" button (or Enter on an empty line)
@@ -290,7 +300,7 @@ function renderEntry(entry, animate = true) {
       turn.append(p);
     }
     if (step.hint) {
-      const note = el('div', 'ai-note hint-note', step.note);
+      const note = appendWithBold(el('div', 'ai-note hint-note'), step.note);
       note.dataset.label = t(`hintLabel${step.level}`);
       if (step.level < 3 && entry === lastHintEntry) {
         const more = el('button', 'hint-more', t('hintStronger'));
