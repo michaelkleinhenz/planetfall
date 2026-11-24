@@ -3,6 +3,7 @@
 
 import { chat } from './openrouter.js';
 import { current } from '../engine/current.js';
+import { store, gameKey } from '../storage.js';
 
 // v2: v1 could contain untranslated (echoed) entries.
 const CACHE_KEY = 'pf.translations.v2';
@@ -32,7 +33,13 @@ const SYSTEM = (language) => `You translate text from ${current.meta.title.toUpp
 - Always translate, even single short sentences. Never return the English text unchanged.
 - Output only the translation, with no comments, quotes or tags.`;
 
-const wrap = (language, text) => `Translate this game text into ${language}:\n<game-text>\n${text}\n</game-text>`;
+const wrap = (language, text) => {
+  const known = roomGlossary(language, text);
+  const glossary = known.length
+    ? `These room names already have a translation. Use exactly these:\n${known.map(([en, tl]) => `${en} = ${tl}`).join('\n')}\n\n`
+    : '';
+  return `${glossary}Translate this game text into ${language}:\n<game-text>\n${text}\n</game-text>`;
+};
 const clean = (out) => out.replace(/^```[a-z]*\n?|\n?```$/g, '').replace(/<\/?game-text>/g, '').replace(/^\n+|\n+$/g, '');
 // True if the model handed the English text back instead of translating it.
 const unchanged = (a, b) => a.replace(/\s+/g, ' ').trim().toLowerCase() === b.replace(/\s+/g, ' ').trim().toLowerCase();
@@ -50,11 +57,24 @@ async function limited(fn) {
   try { return await fn(); } finally { active--; waiting.shift()?.(); }
 }
 
-export async function translate({ apiKey, model, language, text, signal }) {
-  if (!text.trim()) return text;
+// Requests in flight, so the same text asked for twice at once (the status bar
+// and the map both want the new room's name) gets one answer, not two.
+const inflight = new Map();
+
+export function translate(opts) {
+  const { language, text } = opts;
+  if (!text.trim()) return Promise.resolve(text);
   const c = loadCache();
   const key = `${language}\u0000${text}`;
-  if (c.has(key)) return c.get(key);
+  if (c.has(key)) return Promise.resolve(c.get(key));
+  if (!inflight.has(key)) {
+    inflight.set(key, translateNow(opts, key).finally(() => inflight.delete(key)));
+  }
+  return inflight.get(key);
+}
+
+async function translateNow({ apiKey, model, language, text, signal }, key) {
+  const c = loadCache();
   const ask = (extra = '') => limited(() => chat({
     apiKey, model, signal, maxTokens: Math.min(4000, 600 + text.length * 2),
     messages: [{ role: 'system', content: SYSTEM(language), cache: true }, { role: 'user', content: wrap(language, text) + extra }],
@@ -69,7 +89,47 @@ export async function translate({ apiKey, model, language, text, signal }) {
   return out;
 }
 
-/** Translate a short label (e.g. a room name for the status bar). */
+/** Translate a short label (e.g. an object name for the action bar). */
 export function translateLabel(opts) {
   return translate(opts).then((t) => t.split('\n')[0].trim());
+}
+
+// ---------------------------------------------------------------------------
+// Room names
+// ---------------------------------------------------------------------------
+// A room keeps the name it was first given, for good: the map, the status bar
+// and the transcript all use it. These live apart from the translation cache
+// above, which drops old entries, so a room is never translated a second time
+// (and named differently).
+
+const roomKey = () => gameKey(current.id, 'roomnames');
+let rooms = null; // {gameId, names: {language: {english: translated}}}
+
+function roomNames(language) {
+  if (rooms?.gameId !== current.id) rooms = { gameId: current.id, names: store.get(roomKey(), {}) };
+  return (rooms.names[language] ??= {});
+}
+
+/** The room name's translation if it already has one, or null. */
+export function knownRoomName(language, name) {
+  return Object.hasOwn(roomNames(language), name) ? roomNames(language)[name] : null;
+}
+
+/** Translate a room name once, and give the same answer from then on. */
+export async function translateRoomName(opts) {
+  const { language, text } = opts;
+  const known = knownRoomName(language, text);
+  if (known != null) return known;
+  const tl = await translateLabel(opts);
+  if (!tl || unchanged(tl, text)) return text; // not translated: try again next time
+  const names = roomNames(language);
+  names[text] ??= tl; // a request that finished first wins
+  store.set(roomKey(), rooms.names);
+  return names[text];
+}
+
+/** Known room names (English, translated) that occur in a piece of game text. */
+function roomGlossary(language, text) {
+  if (!current.id) return [];
+  return Object.entries(roomNames(language)).filter(([en]) => en.length > 2 && text.includes(en));
 }
