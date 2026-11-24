@@ -1217,13 +1217,16 @@ class Compiler {
   table(node) {
     const kind = node.items[0].v;
     let args = node.items.slice(1);
-    let byteMode = false, lengthPrefix = kind === 'LTABLE' || kind === 'PLTABLE', lexv = false;
+    let byteMode = false, lengthPrefix = kind === 'LTABLE' || kind === 'PLTABLE', lexv = false, stringMode = false;
     const readFlags = () => {
       while (args.length && args[0].t === 'list') {
         for (const f of args[0].items) {
           if (f.v === 'BYTE') byteMode = true;
           if (f.v === 'LENGTH') lengthPrefix = true;
           if (f.v === 'LEXV') lexv = true;
+          // (STRING): strings are stored as their characters, one byte each,
+          // and the other elements are bytes too.
+          if (f.v === 'STRING') { stringMode = true; byteMode = true; }
         }
         args = args.slice(1);
       }
@@ -1257,7 +1260,9 @@ class Compiler {
     }
     readFlags();
     // Nested tables and strings must be allocated before this table starts.
-    const values = args.map(element);
+    const values = stringMode
+      ? args.flatMap((a) => (a.t === 'str' ? [...zilText(a.v)].map((c) => ({ v: c.charCodeAt(0), byte: true })) : [element(a)]))
+      : args.map(element);
     this.align();
     const addr = this.here();
     if (lengthPrefix) (byteMode ? this.byte(values.length) : this.word(values.length));
