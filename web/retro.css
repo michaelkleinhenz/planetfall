@@ -183,7 +183,7 @@
 :root[data-retro="80s"] .intro { background: #000; }
 :root[data-retro="80s"] .intro-bg { filter: blur(60px) saturate(2) brightness(.32); }
 :root[data-retro="80s"] .intro-title { font-size: clamp(30px, 5.4vw, 64px) !important; transform: skewX(-8deg); }
-:root[data-retro="80s"] .intro-title span { background: linear-gradient(180deg, #fff6c9 15%, var(--rb-5) 45%, var(--rb-4) 70%, var(--rb-3) 100%); -webkit-background-clip: text; background-clip: text; }
+:root[data-retro="80s"] .intro-word > span { background: linear-gradient(180deg, #fff6c9 15%, var(--rb-5) 45%, var(--rb-4) 70%, var(--rb-3) 100%); -webkit-background-clip: text; background-clip: text; }
 :root[data-retro="80s"] .intro-text::before {
   content: ""; display: block; width: 120px; height: 22px; margin-bottom: 16px;
   background: var(--rainbow-stripes); transform: skewX(-28deg); filter: drop-shadow(0 0 10px rgba(192, 77, 255, .8));
