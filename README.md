@@ -97,8 +97,10 @@ Microsoft). All others are shared by historicalsource for education and research
   to the game directly, without the AI.
 - **Installable app:** the main game list offers *Install as an app* (Chrome, Edge,
   Android; on iPhone and iPad it shows how to add it to the home screen). The installed
-  app opens full screen from its icon, starts fast, and plays offline: the app itself is
-  cached at install, and each game once it has been opened.
+  app opens full screen from its icon, starts fast, and plays offline: the app is cached
+  at install, and all 31 games (about 4.5 MB) download in the background right after
+  (the menu shows the progress; skipped when the browser asks to save data). Every file
+  is versioned by its content, so an update downloads only what changed.
 - **Built for phones:** the keyboard stays open, and each reply starts at the top of the
   screen. Long replies page with a "More" button instead of scrolling.
 - **Automap (desktop):** a panel beside the story draws the rooms you have visited and
