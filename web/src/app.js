@@ -12,7 +12,7 @@ import { playIntro, paletteOf } from './intro.js';
 import { initRetro, retroControls, refreshRetroControls, sfx } from './retro.js';
 import { initInstall } from './install.js';
 import { pickDefaultModel, listModels } from './ai/openrouter.js';
-import { translate, translateLabel } from './ai/translator.js';
+import { translate, translateLabel, translateRoomName, knownRoomName } from './ai/translator.js';
 import { getHint } from './ai/hints.js';
 import { immerse, needsAtmosphere } from './ai/immersive.js';
 import { t, setLanguage, applyStatic, normalizeLanguage, AI_LANGUAGE_NAME } from './i18n.js';
@@ -382,13 +382,14 @@ const mapEls = { panel: $('automap'), svg: $('automap-svg'), empty: $('am-empty'
 const desktopMedia = matchMedia('(min-width: 1100px) and (hover: hover) and (pointer: fine)');
 let automap = null;
 const mapView = { scale: 0.85, cx: 0, cy: 0, panX: 0, panY: 0 };
-const mapLabels = new Map(); // English room name -> translated label (or a pending promise)
+const mapPending = new Set(); // room names being translated for the map
 
 function safeRoom() { try { return roomObject(); } catch { return 0; } }
 const mapOpen = () => !mapEls.panel.hidden && desktopMedia.matches;
 const saveMap = () => store.set(K('automap'), automap.toJSON());
 
 function initMap() {
+  setMapWidth(settings.mapWidth);
   automap = new Automap(store.get(K('automap'), null));
   try { automap.sync(); saveMap(); } catch { /* no room yet */ }
   setMapOpen(settings.mapOpen);
@@ -401,17 +402,22 @@ function setMapOpen(open) {
   renderMap();
 }
 
-/** Room names in the transcript's language (translated once, then cached). */
+/**
+ * Room names in the transcript's language. Each room is translated once and
+ * keeps that name (shared with the status bar and the transcript).
+ */
 function mapLabel(name) {
   const language = targetLanguage();
   if (!language) return name;
+  const known = knownRoomName(language, name);
+  if (known != null) return known;
   const key = `${language}:${name}`;
-  const hit = mapLabels.get(key);
-  if (typeof hit === 'string') return hit;
-  if (!hit) {
-    mapLabels.set(key, translateLabel({ apiKey: settings.apiKey, model: settings.model, language, text: name })
-      .then((label) => { mapLabels.set(key, label); renderMap(false); })
-      .catch(() => mapLabels.set(key, name)));
+  if (!mapPending.has(key)) {
+    mapPending.add(key);
+    translateRoomName({ apiKey: settings.apiKey, model: settings.model, language, text: name })
+      .then(() => renderMap(false))
+      .catch(() => { /* shown in English; tried again on the next redraw */ })
+      .finally(() => mapPending.delete(key));
   }
   return name;
 }
@@ -432,9 +438,56 @@ function applyMapView() {
   mapEls.svg.setAttribute('viewBox', `${mapView.cx + mapView.panX - w / 2} ${mapView.cy + mapView.panY - h / 2} ${w} ${h}`);
 }
 
+// The map can be made wider or narrower by dragging its left edge. The width
+// is kept in the settings; the text column keeps at least MAP_TEXT_MIN pixels.
+const MAP_DEFAULT_W = 340;
+const MAP_MIN_W = 240;
+const MAP_TEXT_MIN = 380;
+const MAP_GAP = 18 + 24 + 16; // right margin, gap to the text, left margin
+
+function mapWidthLimit() { return Math.max(MAP_MIN_W, window.innerWidth - MAP_GAP - MAP_TEXT_MIN); }
+
+function setMapWidth(w, save = false) {
+  const width = Math.round(Math.min(mapWidthLimit(), Math.max(MAP_MIN_W, w || MAP_DEFAULT_W)));
+  document.body.style.setProperty('--map-width', `${width}px`);
+  if (save) { settings.mapWidth = width; saveSettings(); }
+  updateMapShift();
+  applyMapView();
+}
+
+const mapResize = $('am-resize');
+mapResize.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  const start = { x: e.clientX, w: mapEls.panel.offsetWidth };
+  mapResize.setPointerCapture(e.pointerId);
+  document.body.classList.add('map-resizing');
+  // The panel sits at the right edge, so dragging left makes it wider.
+  const move = (ev) => setMapWidth(start.w + (start.x - ev.clientX));
+  const up = () => {
+    document.body.classList.remove('map-resizing');
+    mapResize.removeEventListener('pointermove', move);
+    mapResize.removeEventListener('pointerup', up);
+    mapResize.removeEventListener('pointercancel', up);
+    setMapWidth(mapEls.panel.offsetWidth, true);
+  };
+  mapResize.addEventListener('pointermove', move);
+  mapResize.addEventListener('pointerup', up);
+  mapResize.addEventListener('pointercancel', up);
+});
+mapResize.addEventListener('dblclick', () => setMapWidth(MAP_DEFAULT_W, true));
+mapResize.addEventListener('keydown', (e) => {
+  const step = e.shiftKey ? 80 : 20;
+  if (e.key === 'ArrowLeft') setMapWidth(mapEls.panel.offsetWidth + step, true);
+  else if (e.key === 'ArrowRight') setMapWidth(mapEls.panel.offsetWidth - step, true);
+  else return;
+  e.preventDefault();
+});
+
 /** Move the text column left where it would run under the open map. */
 function updateMapShift() {
   let shift = 0;
+  const reserve = mapOpen() ? mapEls.panel.offsetWidth + MAP_GAP : 0;
+  document.body.style.setProperty('--map-reserve', `${reserve}px`);
   if (mapOpen()) {
     const left = els.transcript.offsetLeft;
     const right = left + els.transcript.offsetWidth;
@@ -485,7 +538,7 @@ mapEls.svg.addEventListener('pointerdown', (e) => {
   mapEls.svg.addEventListener('pointercancel', up);
 });
 desktopMedia.addEventListener('change', () => { updateMapShift(); renderMap(); });
-window.addEventListener('resize', () => { updateMapShift(); applyMapView(); });
+window.addEventListener('resize', () => setMapWidth(settings.mapWidth));
 new ResizeObserver(() => { updatePageSpace(); applyMapView(); }).observe(els.topbar);
 
 /** A new game started (RESTART, or any input after QUIT): show it like a fresh page load. */
@@ -792,6 +845,12 @@ async function translateEntry(entry, node) {
   if (!segs.length) return node;
   segs.forEach((sg) => { sg.translating = true; });
   node = rerender(node, entry);
+  // A room's heading in the text gets the same name as on the map and in the
+  // status bar: settle that name first, so the translation can be told it.
+  const room = currentRoom;
+  if (room && segs.some((sg) => sg.text.includes(room))) {
+    await translateRoomName({ apiKey: settings.apiKey, model: settings.model, language, text: room }).catch(() => {});
+  }
   await Promise.all(segs.map(async (sg) => {
     try {
       sg.translated = await translate({ apiKey: settings.apiKey, model: settings.model, language, text: sg.text });
@@ -810,7 +869,7 @@ async function updateStatusRoom() {
   if (!language || !currentRoom) { els.room.textContent = currentRoom || '—'; return; }
   const room = currentRoom;
   try {
-    const t = await translateLabel({ apiKey: settings.apiKey, model: settings.model, language, text: room });
+    const t = await translateRoomName({ apiKey: settings.apiKey, model: settings.model, language, text: room });
     if (room === currentRoom) els.room.textContent = t;
   } catch { /* keep English */ }
 }

@@ -1,6 +1,6 @@
 // All user data lives in this browser's localStorage under keys starting with
 // "pf.": settings (pf.settings), per-game data (pf.<game>.autosave, .saves,
-// .cmdhistory) and the translation cache. Nothing is sent to any server.
+// .cmdhistory, .roomnames) and the translation cache. Nothing is sent to any server.
 // Backups are plain JSON files the user downloads and can load again.
 
 const PREFIX = 'pf.';
