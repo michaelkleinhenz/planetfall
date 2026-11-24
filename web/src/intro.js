@@ -100,6 +100,26 @@ function sparkles(canvas, palette) {
 }
 
 /**
+ * Scale the title's font down (from its CSS size) until its longest word fits
+ * on one line and the whole title fits in `maxLines` lines.
+ */
+function fitTitle(title, { maxLines = 3, minPx = 18 } = {}) {
+  title.style.removeProperty('font-size');
+  const width = title.clientWidth;
+  if (!width) return;
+  const words = [...title.querySelectorAll('.intro-word')];
+  let size = parseFloat(getComputedStyle(title).fontSize);
+  const fits = () => {
+    const lineH = parseFloat(getComputedStyle(title).lineHeight) || size * 1.05;
+    return words.every((w) => w.offsetWidth <= width) && title.offsetHeight <= lineH * maxLines + 1;
+  };
+  while (size > minPx && !fits()) {
+    size = Math.max(minPx, size * 0.94);
+    title.style.setProperty('font-size', `${size}px`, 'important'); // beats the 80s theme's !important
+  }
+}
+
+/**
  * Show the title sequence for a game. Resolves when the player begins.
  * `t(key)` translates; `lang` picks the blurb.
  */
@@ -129,10 +149,18 @@ export function playIntro(meta, { t, lang = 'en' }) {
     const text = el('div', 'intro-text');
     const kicker = el('p', 'intro-kicker', `Infocom · ${meta.year}`);
     const title = el('h1', 'intro-title');
-    [...meta.title].forEach((ch, i) => {
-      const s = el('span', ch === ' ' ? 'sp' : '', ch === ' ' ? ' ' : ch);
-      s.style.setProperty('--i', i);
-      title.append(s);
+    // Letters animate one by one, but are grouped per word so lines only
+    // break between words (never "The Lurking H / orror").
+    let i = 0;
+    meta.title.split(/\s+/).filter(Boolean).forEach((word, w) => {
+      if (w) { title.append(' '); i++; }
+      const wordEl = el('span', 'intro-word');
+      for (const ch of word) {
+        const s = el('span', '', ch);
+        s.style.setProperty('--i', i++);
+        wordEl.append(s);
+      }
+      title.append(wordEl);
     });
     const by = el('p', 'intro-by', meta.author);
     const blurb = el('p', 'intro-blurb', meta.blurb?.[lang] ?? meta.blurb?.en ?? '');
@@ -146,6 +174,13 @@ export function playIntro(meta, { t, lang = 'en' }) {
     root.append(bg, canvas, stage);
     document.body.append(root);
     document.body.classList.add('intro-open');
+
+    // Shrink long titles until every word fits the column and the title
+    // takes at most three lines; re-fit when the window or the font changes.
+    const fit = () => fitTitle(title);
+    fit();
+    document.fonts?.ready.then(fit);
+    addEventListener('resize', fit);
 
     let fx = null;
     const ready = () => {
@@ -182,6 +217,7 @@ export function playIntro(meta, { t, lang = 'en' }) {
       removeEventListener('keydown', onKey, true);
       const end = () => {
         fx?.stop();
+        removeEventListener('resize', fit);
         root.remove();
         document.body.classList.remove('intro-open', 'intro-leaving');
         resolve();

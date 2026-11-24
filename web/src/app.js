@@ -49,9 +49,15 @@ const GAME_ID = (() => {
 const K = (name) => gameKey(GAME_ID, name);
 
 const settings = Object.assign(
-  { apiKey: '', model: '', aiEnabled: true, showCommands: true, language: 'en', mapOpen: true },
+  { apiKey: '', model: '', aiEnabled: true, showCommands: true, titleMotion: true, language: 'en', mapOpen: true },
   store.get('pf.settings', {}),
 );
+/** The header title's drifting art and light sweep can be turned off in settings. */
+const applyTitleMotion = () => {
+  if (settings.titleMotion) delete document.documentElement.dataset.titleMotion;
+  else document.documentElement.dataset.titleMotion = 'off';
+};
+applyTitleMotion();
 settings.language = normalizeLanguage(settings.language);
 setLanguage(settings.language);
 // 80s mode (CRT look, soundscapes): applied before anything is drawn.
@@ -984,6 +990,7 @@ async function openSettings() {
   els.setModel.value = settings.model;
   els.setAi.checked = settings.aiEnabled;
   els.setShow.checked = settings.showCommands;
+  $('set-title-motion').checked = settings.titleMotion;
   els.setLang.value = settings.language;
   $('set-immersive-field').hidden = !GAME_ID;
   if (GAME_ID) {
@@ -1009,6 +1016,8 @@ els.settings.addEventListener('close', async () => {
     settings.model = els.setModel.value.trim();
     settings.aiEnabled = els.setAi.checked;
     settings.showCommands = els.setShow.checked;
+    settings.titleMotion = $('set-title-motion').checked;
+    applyTitleMotion();
     settings.language = normalizeLanguage(els.setLang.value);
     if (settings.apiKey && !settings.model) settings.model = await pickDefaultModel();
     saveSettings();
@@ -1024,6 +1033,8 @@ els.settings.addEventListener('close', async () => {
   settings.model = els.setModel.value.trim();
   settings.aiEnabled = els.setAi.checked;
   settings.showCommands = els.setShow.checked;
+  settings.titleMotion = $('set-title-motion').checked;
+  applyTitleMotion();
   const prevLang = settings.language;
   settings.language = normalizeLanguage(els.setLang.value);
   if (settings.apiKey && !settings.model) settings.model = await pickDefaultModel();
