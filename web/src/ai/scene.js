@@ -4,6 +4,9 @@
 
 import { g, inspect } from '../engine/runtime.js';
 import { current } from '../engine/current.js';
+import * as MS from '../engine/ms/host.js';
+
+const isMagnetic = () => current.code?.ENGINE === 'magnetic';
 
 const G = () => current.code;
 // A flag the current game doesn't define is treated as never set.
@@ -31,6 +34,7 @@ function visibleChildren(container, depth, out, { includeActor = false } = {}) {
 
 /** Snapshot of the current scene for the AI prompt. */
 export function currentScene() {
+  if (isMagnetic()) return magneticScene();
   const here = g.HERE;
   const lit = !!g.LIT;
   const scene = {
@@ -98,6 +102,7 @@ const DIR_PROP = { north: 'NORTH', ne: 'NE', east: 'EAST', se: 'SE', south: 'SOU
  * room that (perhaps through a vehicle) contains the player.
  */
 export function currentRoom() {
+  if (isMagnetic()) return MS.currentRoomId();
   if (typeof g.HERE === 'number' && g.HERE > 0) return g.HERE;
   const code = G();
   let o = code.PLAYER ?? code.PROTAGONIST ?? code.ADVENTURER ?? code.CH_PLAYER ?? g.WINNER;
@@ -111,6 +116,7 @@ export function currentRoom() {
 
 /** Directions with an exit defined for a room (excluding plain "you can't go" messages). */
 export function roomExits(room = currentRoom()) {
+  if (isMagnetic()) return MS.exits(room);
   const out = [];
   if (!room) return out;
   // Size of a message-only exit: 2 bytes in version 3, 3 in later versions.
@@ -150,6 +156,7 @@ function verbsFor(o, held) {
 
 /** What the action buttons can offer right now. */
 export function actionContext() {
+  if (isMagnetic()) return magneticActions();
   const scene = { dark: !g.LIT, exits: g.LIT ? exits() : [], objects: [] };
   if (!g.LIT) {
     // Still allow handling what you carry.
@@ -178,4 +185,75 @@ function addObject(scene, obj, held, scenery = false) {
   const adjs = inspect.objectAdjectives(obj);
   const adjective = adjs.find((a) => name.toLowerCase().includes(a) && a !== noun) || adjs[0];
   scene.objects.push({ obj, name, label: shortLabel(name), noun, adjective, held, scenery, verbs: verbsFor(obj, held) });
+}
+
+// ---------------------------------------------------------------------------
+// Magnetic Scrolls games: the same views, from the game's noun table
+// ---------------------------------------------------------------------------
+
+/** Score and moves (or time), as the status line shows them. */
+export function gameStatus() {
+  if (isMagnetic()) { const st = MS.status(); return { score: st.score, moves: st.moves }; }
+  return { score: g.SCORE, moves: g.MOVES };
+}
+
+/** A room's name (the map and debug reports use it for any game). */
+export function roomName(id) {
+  if (!id) return '';
+  return isMagnetic() ? MS.roomName(id) : inspect.objectName(id);
+}
+
+function msDescribe(x) {
+  return { name: x.name, nouns: [x.word], adjectives: x.adjectives.slice(0, 8) };
+}
+
+function magneticScene() {
+  const lit = MS.isLit();
+  const scene = { location: MS.roomName(MS.currentRoomId()), dark: !lit, inventory: [], visible: [], scenery: [] };
+  for (const x of MS.sceneNouns()) {
+    const d = msDescribe(x);
+    if (x.how === 'carried' || x.how === 'worn') {
+      if (x.how === 'worn') d.worn = true;
+      if (x.inside) d.in = x.inside;
+      scene.inventory.push(d);
+    } else if (!lit) continue;
+    else if (x.how === 'scenery' && !x.npc) scene.scenery.push(d);
+    else {
+      if (x.inside) d.in = x.inside;
+      scene.visible.push(d);
+    }
+  }
+  return scene;
+}
+
+function msVerbs(x, held) {
+  const v = ['examine'];
+  if (x.npc) v.push('talk');
+  if (held) v.push('drop');
+  else if (x.moveable && !x.npc && x.how === 'here') v.push('take');
+  if (x.closed || x.open) v.push(x.open ? 'close' : 'open');
+  if (x.container && x.open) v.push('lookin');
+  if (x.edible) v.push('eat');
+  if (x.wearable) v.push(x.worn ? 'remove' : 'wear');
+  if (x.lightable) v.push(x.lit ? 'turnoff' : 'turnon');
+  if (/^(button|switch|lever)$/.test(x.word)) v.push('push');
+  return v;
+}
+
+function magneticActions() {
+  const lit = MS.isLit();
+  const scene = { dark: !lit, exits: lit ? MS.exits() : [], objects: [] };
+  for (const x of MS.sceneNouns()) {
+    const held = x.how === 'carried' || x.how === 'worn';
+    if (!lit && !held) continue;
+    if (!x.word || x.word === 'outside') continue;
+    scene.objects.push({
+      obj: x.n, name: x.name, label: shortLabel(x.name), noun: x.word, adjective: x.adjectives[0],
+      held, scenery: x.how === 'scenery' && !x.npc, verbs: msVerbs(x, held),
+    });
+  }
+  const byNoun = new Map();
+  for (const o of scene.objects) byNoun.set(o.noun, (byNoun.get(o.noun) || 0) + 1);
+  for (const o of scene.objects) o.cmd = byNoun.get(o.noun) > 1 && o.adjective ? `${o.adjective} ${o.noun}` : o.noun;
+  return scene;
 }

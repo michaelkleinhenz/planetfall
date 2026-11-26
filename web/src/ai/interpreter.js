@@ -5,14 +5,25 @@
 // still comes from the original game.
 
 import { chat } from './openrouter.js';
-import { current } from '../engine/current.js';
+import { current, publisher } from '../engine/current.js';
 import { sceneText } from './scene.js';
 import { INTERPRETER_RULE } from './immersive.js';
+import * as MS from '../engine/ms/host.js';
+
+const isMagnetic = () => current.code?.ENGINE === 'magnetic';
 
 // Debugging/meta syntaxes the AI should never produce.
 const HIDDEN = /^(#|\$|script|unscript|verify)/;
 
 function verbReference() {
+  if (isMagnetic()) {
+    // Magnetic Scrolls' parser takes whole sentences; its dictionary lists the verbs.
+    const v = MS.vocabulary();
+    return {
+      patterns: `VERB [OBJ] [PREP OBJ], e.g. "put the coin in the box", "ask NAME about OBJ", "get all except OBJ"; verbs: ${v.verbs.join(', ')}; game commands: ${v.meta.join(', ')}`,
+      synonyms: v.synonyms.length ? `also understood: ${v.synonyms.join(', ')}` : '(none listed)',
+    };
+  }
   const { SYNTAX_HELP, VERB_SYNONYMS } = current.story;
   const lines = SYNTAX_HELP.filter((s) => !HIDDEN.test(s))
     .map((s) => s.replace(/^restar\b/, 'restart').replace(/^restor\b/, 'restore'));
@@ -24,12 +35,18 @@ function verbReference() {
 
 
 // Every word the original parser knows (full spellings; it compares only the first 6 letters).
-const vocabulary = () => [...new Set(Object.values(current.story.FULL_WORDS).flat())]
+const vocabulary = () => (isMagnetic() ? msWords() : [...new Set(Object.values(current.story.FULL_WORDS).flat())])
   .filter((w) => /^[a-z][a-z-]*$/.test(w) && !/^(zzmgck|intnum|shit|fuck|damn)$/.test(w))
   .sort()
   .join(' ');
 
-const buildSystemPrompt = (REF, VOCABULARY, GAME) => `You are the command interpreter for ${GAME}, the ${current.meta.year} Infocom text adventure.
+function msWords() {
+  const v = MS.vocabulary();
+  return [...v.verbs, ...v.adjectives, ...v.nouns, ...v.directions, ...v.meta, ...v.prepositions, ...v.synonyms]
+    .flatMap((w) => w.split(' '));
+}
+
+const buildSystemPrompt = (REF, VOCABULARY, GAME) => `You are the command interpreter for ${GAME}, the ${current.meta.year} ${publisher()} text adventure.
 The original game logic and its original text parser run unchanged. Your only job is to translate what the player types (free natural language, any phrasing, typos, other languages) into commands the original parser understands.
 
 HOW THE ORIGINAL PARSER WORKS
@@ -41,7 +58,7 @@ HOW THE ORIGINAL PARSER WORKS
 - Useful commands: look, examine X, inventory, wait, again, score, time, diagnose, sleep, read X, open/close X, turn on/off X, wear/remove X, eat/drink X, give X to Y, show X to Y, throw X at Y, save, restore, restart, verbose, brief.
 - Known verb patterns (OBJ = object): ${REF.patterns}
 - Verb synonyms: ${REF.synonyms}
-- The parser knows ONLY these words (plus numbers like 4600); any other word makes it fail with "I don't know the word". Rephrase with these words: ${VOCABULARY}
+- The parser knows ONLY these words (plus numbers like 4600); any other word makes it fail ("I don't know the word", "I don't understand"). Rephrase with these words: ${VOCABULARY}
 
 RULES
 1. Output ONLY a JSON object, no prose, no code fences:
@@ -59,9 +76,9 @@ RULES
 
 VOICE OF "reply"
 Every "reply" is shown to the player as if the game itself had said it, so it must sound exactly like ${GAME}'s narrator and parser:
-- Second person, present tense, dry and wry Infocom humour, short (usually one sentence, at most two).
+- Second person, present tense, dry and wry ${publisher()} humour, short (usually one sentence, at most two).
 - Never sound like an assistant or chatbot: no "I can't help with that", "As an AI", "Sure!", "Let me", no apologies, no emoji, no markdown, no quoting of commands like "type X".
-- For things the game cannot do, answer like Infocom would, e.g. "You can't do that to a chronometer, no matter how much you'd like to.", "That's not a verb I recognize.", "Your training didn't cover that.", "Time is not something you can adjust."
+- For things the game cannot do, answer like ${publisher()} would, e.g. "You can't do that to a chronometer, no matter how much you'd like to.", "That's not a verb I recognize.", "Your training didn't cover that.", "Time is not something you can adjust."
 - For questions about the story, answer briefly in the same narrator voice, using only what the transcript shows.
 - Use the player's language if a language is given; otherwise English.`;
 
@@ -158,6 +175,11 @@ const PARSER_ERRORS = [
   /^I can't use multiple/,
   /^Please consult your manual/,
   /^That sentence isn't one I recognize/,
+  // Magnetic Scrolls parser
+  /^I don't understand /,
+  /^Eh - I don't follow you/,
+  /^I don't know how to /,
+  /^Pardon\?/,
 ];
 
 export function isParserError(output) {

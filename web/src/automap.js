@@ -4,8 +4,7 @@
 // from (or the nearest free cell). Exits that haven't been taken yet show as
 // short stubs; nothing is revealed about rooms the player hasn't seen.
 
-import { inspect } from './engine/runtime.js';
-import { currentRoom, roomExits } from './ai/scene.js';
+import { currentRoom, roomExits, roomName } from './ai/scene.js';
 
 const VEC = {
   north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0],
@@ -66,7 +65,7 @@ export class Automap {
     if (!id) return false;
     const room = this.rooms[id];
     if (room) {
-      room.name = inspect.objectName(id) || room.name;
+      room.name = roomName(id) || room.name;
       return false;
     }
     let x = 0; let y = 0;
@@ -89,7 +88,7 @@ export class Automap {
       const maxY = Math.max(...Object.values(this.rooms).map((r) => r.y));
       [x, y] = this.freeCell(0, maxY + 2);
     }
-    this.rooms[id] = { name: inspect.objectName(id) || '?', x, y, exits: [] };
+    this.rooms[id] = { name: roomName(id) || '?', x, y, exits: [] };
     return true;
   }
 

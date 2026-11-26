@@ -2,13 +2,15 @@
 // compares the output with the recorded transcript. Planetfall's and Zork I's
 // transcripts come from the original story files; the other games' were
 // recorded from the translation after comparing it with the originals.
+// The Magnetic Scrolls games run their program built from source; their
+// transcripts were compared with the original releases (.mag files).
 //
 //   node tests/transcripts.test.mjs
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normalize } from './normalize.mjs';
-import { runGame } from '../web/src/engine/game.js';
+import { runGame, isMagnetic } from '../web/src/engine/game.js';
 import { loadGame } from '../web/src/engine/current.js';
 import { GAMES } from '../web/src/games/registry.js';
 import { random, seedRandom } from '../web/src/engine/runtime.js';
@@ -17,10 +19,12 @@ const base = path.join(path.dirname(fileURLToPath(import.meta.url)), 'transcript
 
 function play(commands) {
   // Fixed generator state for anything random before the first command.
+  // Magnetic Scrolls games have no #RANDOM command: their generator is seeded.
+  const magnetic = isMagnetic();
   seedRandom(12345);
   return new Promise((resolve, reject) => {
     let out = '';
-    const lines = ['#random 42', ...commands];
+    const lines = magnetic ? [...commands] : ['#random 42', ...commands];
     let saved = null;
     const io = {
       output: (t) => { out += t; },
@@ -43,7 +47,7 @@ function play(commands) {
       restore: async () => saved,
       ended: async () => { resolve(out); return new Promise(() => {}); },
     };
-    runGame(io).catch(reject);
+    runGame(io, magnetic ? { seed: 42 } : {}).catch(reject);
   });
 }
 

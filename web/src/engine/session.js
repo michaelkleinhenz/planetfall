@@ -1,8 +1,7 @@
 // GameSession: runs the game and exposes it as "send a command, get the
 // response".  Each response is the text the game printed between two READs.
 
-import { runGame } from './game.js';
-import { snapshot as takeSnapshot } from './runtime.js';
+import { runGame, snapshot as takeSnapshot } from './game.js';
 
 export class GameSession {
   constructor({ onStatus, onSave, onRestore, onUpper } = {}) {

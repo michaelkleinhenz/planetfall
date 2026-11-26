@@ -1,0 +1,17 @@
+look
+inventory
+examine wristband
+n
+s
+w
+e
+e
+w
+s
+take all
+inventory
+save
+n
+restore
+look
+score

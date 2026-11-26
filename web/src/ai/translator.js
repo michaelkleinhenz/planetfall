@@ -2,7 +2,7 @@
 // The game itself always runs in English; translation is a display layer.
 
 import { chat } from './openrouter.js';
-import { current } from '../engine/current.js';
+import { current, publisher } from '../engine/current.js';
 import { store, gameKey } from '../storage.js';
 
 // v2: v1 could contain untranslated (echoed) entries.
@@ -23,8 +23,8 @@ function saveCache() {
   } catch { /* storage full: keep in memory only */ }
 }
 
-const SYSTEM = (language) => `You translate text from ${current.meta.title.toUpperCase()}, the ${current.meta.year} Infocom text adventure, into ${language}.
-- Translate faithfully and completely, keeping the dry, witty Infocom tone and the characters' voices.
+const SYSTEM = (language) => `You translate text from ${current.meta.title.toUpperCase()}, the ${current.meta.year} ${publisher()} text adventure, into ${language}.
+- Translate faithfully and completely, keeping the dry, witty ${publisher()} tone and the characters' voices.
 - Keep EXACTLY the same line structure: the same number of lines, in the same order, with the same blank lines. Never merge or split lines.
 - Keep proper names (${current.meta.names}, ...) unchanged.
 - ${current.meta.translatorNotes}

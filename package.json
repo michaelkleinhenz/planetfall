@@ -2,10 +2,11 @@
   "name": "planetfall-ai",
   "version": "1.0.0",
   "private": true,
-  "description": "Infocom classics (Planetfall, Zork I) translated from their original ZIL source to JavaScript, playable in the browser with an AI command interpreter.",
+  "description": "Infocom and Magnetic Scrolls classics built from their original source, playable in the browser with an AI command interpreter.",
   "type": "module",
   "scripts": {
     "build": "node tools/zil2js/compile.mjs",
+    "build:magnetic": "node tools/magnetic/build.mjs",
     "verify": "node tools/zil2js/verify.mjs",
     "test": "node tools/zil2js/verify.mjs && node tests/transcripts.test.mjs",
     "play": "node tools/play.mjs",

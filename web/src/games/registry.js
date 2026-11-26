@@ -576,6 +576,68 @@ export const GAMES = {
     license: 'Source shared by historicalsource for education and research; not under an open license.',
     load: () => Promise.all([import('./sherlock/game.js'), import('./sherlock/story-data.js')]),
   },
+
+  // ---- Magnetic Scrolls -------------------------------------------------------
+  // Their original 68000 programs, assembled from the source Strand Games
+  // released (tools/magnetic/build.mjs) and run by engine/ms.
+  pawn: {
+    id: 'pawn',
+    publisher: 'Magnetic Scrolls',
+    title: 'The Pawn',
+    year: 1985,
+    author: 'Rob Steggles',
+    blurb: {
+      en: 'A blow on the head, a silver wristband you cannot remove, and the land of Kerovnia, where a magician, a guru and a talking snowman all want something from you.',
+      de: 'Ein Schlag auf den Kopf, ein silbernes Armband, das du nicht abbekommst, und das Land Kerovnia, wo ein Magier, ein Guru und ein sprechender Schneemann alle etwas von dir wollen.',
+    },
+    statusSecond: 'moves',
+    example: { en: 'go east and ask Honest John about his goods', de: 'geh nach Osten und frag Honest John nach seinen Waren' },
+    bannerTitle: 'The Pawn - Copyright (c) 1985, 1986 Magnetic Scrolls Ltd.',
+    bannerEnd: '^Version \\d',
+    maxScore: 350,
+    names: 'Kerovnia, Kronos, King Erik, Honest John, Jerry Lee Lewis, Aerial, Adventurer',
+    translatorNotes: 'Keep the names of places and characters as written.',
+    license: 'Source released by Strand Games under the Voidware Public Source Licence 1.0 (non-commercial use only).',
+    load: () => Promise.all([import('./pawn/game.js'), import('./pawn/story-data.js')]),
+  },
+  guild: {
+    id: 'guild',
+    publisher: 'Magnetic Scrolls',
+    title: 'The Guild of Thieves',
+    year: 1987,
+    author: 'Rob Steggles',
+    blurb: {
+      en: 'To join the infamous Guild of Thieves you must ransack a castle and the country around it of every valuable, while the master thief watches from his boat.',
+      de: 'Um in die berüchtigte Diebesgilde aufgenommen zu werden, musst du eine Burg und ihr Umland um jede Kostbarkeit erleichtern, während der Meisterdieb von seinem Boot aus zusieht.',
+    },
+    statusSecond: 'moves',
+    example: { en: 'jump onto the jetty and look around', de: 'spring auf den Steg und schau dich um' },
+    bannerTitle: 'The Guild of Thieves v1.3',
+    bannerEnd: '^Copyright',
+    maxScore: 501,
+    names: 'Guild of Thieves, Kerovnia, master thief',
+    translatorNotes: 'Keep the names of places and characters as written.',
+    license: 'Source released by Strand Games under the Voidware Public Source Licence 1.0 (non-commercial use only).',
+    load: () => Promise.all([import('./guild/game.js'), import('./guild/story-data.js')]),
+  },
+  jinxter: {
+    id: 'jinxter',
+    publisher: 'Magnetic Scrolls',
+    title: 'Jinxter',
+    year: 1987,
+    author: 'Georgina Sinclair & Michael Bywater',
+    blurb: {
+      en: 'Bad luck is spreading through Aquitania: the Green Witches have stolen the charms of the bracelet that keeps it in check, and your guardian angel is not impressed with you.',
+      de: 'Pech breitet sich in Aquitanien aus: Die Grünen Hexen haben die Anhänger des Armbands gestohlen, das es in Schach hält, und dein Schutzengel hält nicht viel von dir.',
+    },
+    statusSecond: 'moves',
+    example: { en: 'show my ticket to the inspector', de: 'zeig dem Kontrolleur meine Fahrkarte' },
+    maxScore: 215,
+    names: 'Aquitania, Xam, Jannedor, Green Witches, Turani, Guardian',
+    translatorNotes: 'Keep the names of places and characters as written.',
+    license: 'Source released by Strand Games under the Voidware Public Source Licence 1.0 (non-commercial use only).',
+    load: () => Promise.all([import('./jinxter/game.js'), import('./jinxter/story-data.js')]),
+  },
 };
 
 export const GAME_IDS = Object.keys(GAMES);

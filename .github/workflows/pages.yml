@@ -28,6 +28,10 @@ jobs:
           node-version: 22
       - name: Regenerate the JavaScript translation from the ZIL source
         run: npm run build
+      - name: Build the Magnetic Scrolls games from their 68000 source
+        run: |
+          sudo apt-get install -y flex
+          npm run build:magnetic
       - name: Verify against the original game
         run: npm test
       - name: Version all script and stylesheet URLs (so a normal reload gets the new release)

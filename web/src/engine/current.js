@@ -4,6 +4,9 @@
 
 export const current = { id: null, meta: null, code: null, story: null };
 
+/** Who made the current game ("Infocom", "Magnetic Scrolls"). */
+export const publisher = () => current.meta?.publisher ?? 'Infocom';
+
 export function setCurrentGame(meta, code, story) {
   current.id = meta.id;
   current.meta = meta;
