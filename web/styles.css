@@ -189,6 +189,7 @@ body.no-pictures .game-picture { display: none; }
   display: flex; align-items: center; gap: 14px; margin: 2px 0 6px;
   font: 650 12px/1.4 var(--ui-font); letter-spacing: .24em; text-transform: uppercase; color: var(--accent);
 }
+.game-text .room-title.after-text { margin-top: 26px; }
 .game-text .room-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 45%, transparent), transparent); }
 .game-text.fixed, pre.fixed {
   font-family: var(--mono); font-size: 13.5px; line-height: 1.5; white-space: pre; overflow-x: auto;
@@ -266,6 +267,7 @@ body.no-pictures .game-picture { display: none; }
   background: linear-gradient(92deg, var(--accent), color-mix(in srgb, var(--accent) 40%, var(--accent-2)) 60%, var(--accent-2));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+.banner-copyright { position: relative; margin-top: 6px; font: 400 12.5px/1.5 var(--ui-font); letter-spacing: .02em; color: var(--muted); }
 .banner-sub { position: relative; margin-top: 6px; font: italic 400 16px/1.4 var(--story-font); color: var(--text-dim); }
 .banner-meta { position: relative; margin-top: 12px; font: 400 11.5px/1.65 var(--mono); color: var(--muted); }
 /* With the box cover beside the text, when there is room for it. */

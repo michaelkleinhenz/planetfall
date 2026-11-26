@@ -641,6 +641,8 @@ export const GAMES = {
     },
     statusSecond: 'moves',
     example: { en: 'show my ticket to the inspector', de: 'zeig dem Kontrolleur meine Fahrkarte' },
+    bannerTitle: 'JINXTER. Copyright (c) 1987 Magnetic Scrolls Ltd. Remastered by Strand Games 2019. Version 2.0. And a jolly good version it is too! All Rights Reserved. We really mean it. No messing.',
+    bannerEnd: '^JINXTER\\. Copyright',
     maxScore: 215,
     names: 'Aquitania, Xam, Jannedor, Green Witches, Turani, Guardian',
     translatorNotes: 'Keep the names of places and characters as written.',
