@@ -144,6 +144,11 @@ export class Machine {
     c &= 0x7f;
     if (c === 0x7f) { f.capital = true; return; }
     if (c === 0) return;
+    // Channel 255 is the status line ("room <tab> score/moves"), one line per turn.
+    if (channel === 255) {
+      if (c === 10) { this.statusLine = this.statusBuf || ''; this.statusBuf = ''; } else this.statusBuf = (this.statusBuf || '') + String.fromCharCode(c);
+      return;
+    }
     if (channel !== 0) return;
     if (c === 0x5e) c = 10; // ^
     if (c === 0x40) { if (plural) return; c = 0x73; } // @ -> s
@@ -160,7 +165,7 @@ export class Machine {
     }
     if (c === 0x5f) c = 32; // _
     if (f.last === 0x7c) { f.last = c; return; } // '|x' is dropped
-    const punct = f.last === 0x2c || f.last === 0x2e || f.last === 0x21 || f.last === 0x3f;
+    const punct = f.last === 0x2c || f.last === 0x2e || f.last === 0x21 || f.last === 0x3f || f.last === 0x3a || f.last === 0x3b;
     if (punct && ((c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a))) this.emit(32);
     f.last = c;
     if (c === 0x7c) return;
