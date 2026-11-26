@@ -17,6 +17,11 @@ Two files of the release were left out: a Windows binary (`kl.exe`) and a map im
 which are only used to compare transcripts. Their picture files are in
 `web/img/pictures/` (`pawn.gfx`, `guild.gfx`, `jinxter.gfx`), where the app loads them.
 
+It also holds the original releases of Corruption (`corrupt.mag`), Fish! (`fish.mag`),
+Myth (`myth.mag`) and Wonderland (`wonder.mag`), which have no released source: the first
+three run from these files as they are (see `tools/magnetic/games.mjs`), and their
+pictures are in `web/img/pictures/` too. Wonderland is not playable yet.
+
 `npm run build:magnetic` builds the games into `web/src/games/<id>/`
 (see `tools/magnetic/build.mjs`).
 

@@ -46,11 +46,15 @@ export function createMachine({ seed } = {}) {
     code: base64ToBytes(story.CODE_BASE64),
     wtable: base64ToBytes(story.WTABLE_BASE64),
     messages: story.MESSAGES,
+    // Original releases: memory as their interpreters set it up.
+    ...(current.code.MEMORY ?? {}),
   });
   machine.seed(seed ?? ((Math.random() * 0x7fffffff) | 1));
   world = null;
   picture = null;
   pictureRoom = 0;
+  pictureCache = new Map();
+  roomNames = new Map();
   return machine;
 }
 
@@ -61,7 +65,7 @@ export function createMachine({ seed } = {}) {
 export function snapshot() {
   if (!machine) return null;
   const s = machine.snapshot();
-  return { engine: 'magnetic', mem: bytesToBase64(s.mem), wtable: machine.wtable ? bytesToBase64(machine.wtable) : null, cpu: s.cpu, nouns: s.nouns, fmt: s.fmt, rng: s.rng };
+  return { engine: 'magnetic', mem: bytesToBase64(s.mem), wtable: machine.wtable ? bytesToBase64(machine.wtable) : null, cpu: s.cpu, nouns: s.nouns, fmt: s.fmt, rng: s.rng, statusLine: machine.statusLine ?? '' };
 }
 
 // ---------------------------------------------------------------------------
@@ -70,12 +74,14 @@ export function snapshot() {
 
 let picture = null;     // picture shown now (0-based number in the .gfx file), or null
 let pictureRoom = 0;    // the room it was chosen for
+let pictureCache = new Map(); // original releases (no picture table): room -> picture last drawn there
+let roomNames = new Map();    // original releases: room noun -> name from the status line
 
 /** The picture the game's own table gives a room (classic pictures only). */
 export function roomPicture(room = roomNumber()) {
   if (!machine || !room) return null;
   const idx = current.code.SYMBOLS.PICTURE_INDEX;
-  if (idx == null) return null;
+  if (idx == null) return pictureCache.get(room) ?? null;
   const mem = machine.mem;
   if (current.code.PICTURE_INDEX === 'rooms') {
     const n = mem[idx + room - 1];
@@ -99,8 +105,13 @@ function updatePicture(reset = false) {
   const room = roomNumber();
   const ev = machine.picture;
   machine.picture = null;
-  if (ev && !reset) picture = ev.show ? (ev.version === 0 ? ev.n : roomPicture(room)) : null;
-  else if (reset || room !== pictureRoom) picture = roomPicture(room);
+  // Built from source: version 0 is the classic picture (others are the remaster's).
+  // Original releases: d2 is not a version, and the picture is remembered per room.
+  const original = current.code.SYMBOLS.PICTURE_INDEX == null;
+  if (ev && !reset) {
+    picture = ev.show ? (original || ev.version === 0 ? ev.n : roomPicture(room)) : null;
+    if (original) pictureCache.set(room, picture);
+  } else if (reset || room !== pictureRoom) picture = roomPicture(room);
   pictureRoom = room;
   return picture;
 }
@@ -108,6 +119,7 @@ function updatePicture(reset = false) {
 export function loadSnapshot(s) {
   machine.restore({ mem: base64ToBytes(s.mem), cpu: s.cpu, nouns: s.nouns, fmt: s.fmt, rng: s.rng });
   if (s.wtable && machine.wtable) machine.wtable.set(base64ToBytes(s.wtable));
+  machine.statusLine = s.statusLine ?? '';
   machine.input = [];
   machine.output = [];
 }
@@ -132,6 +144,7 @@ export async function runMagnetic(io, { seed } = {}) {
     // here, so they are not shown.
     const shown = text.replace(/please enter filename\s*:\s*$/i, '').replace(/are you sure \(y\/n\)\??\s*$/i, askedName ? '' : '$&');
     if (shown.trim()) { io.output(started ? shown : shown.replace(/^\s+/, '')); started = true; }
+    if (text.trim()) lastText = text;
     return text;
   };
   for (;;) {
@@ -168,7 +181,11 @@ export async function runMagnetic(io, { seed } = {}) {
       case 'save': {
         // The saved game is the state at the prompt where SAVE was typed.
         let ok = false;
-        try { ok = !!(await io.save(lastInput)); } catch { ok = false; }
+        // The block the game asked to save is kept as it is now: the original
+        // releases add a checksum to it while saving, and check it on RESTORE.
+        const { addr, length } = machine.saveRequest;
+        const saved = { ...lastInput, block: { addr, data: bytesToBase64(machine.mem.subarray(addr, addr + length)) } };
+        try { ok = !!(await io.save(saved)); } catch { ok = false; }
         machine.cpu.d[7] = ok ? 0 : 0xffffffff;
         if (ok) io.output('Saved.\n');
         continue;
@@ -180,7 +197,16 @@ export async function runMagnetic(io, { seed } = {}) {
         try { s = await io.restore(); } catch { s = null; }
         if (!s || s.engine !== 'magnetic') { machine.cpu.d[7] = 0xffffffff; continue; }
         const { addr, length } = machine.loadRequest;
-        machine.mem.set(base64ToBytes(s.mem).subarray(addr, addr + length), addr);
+        const block = s.block?.addr === addr ? base64ToBytes(s.block.data) : null;
+        if (!block && current.code.STATUS_LINE) {
+          // A save from the app's own save button has no checksummed block,
+          // which the original releases would reject: load the whole state.
+          loadSnapshot(s);
+          io.output('Restored.\n');
+          io.picture?.(updatePicture(true));
+          continue;
+        }
+        machine.mem.set(block?.length === length ? block : base64ToBytes(s.mem).subarray(addr, addr + length), addr);
         if (s.wtable && machine.wtable) machine.wtable.set(base64ToBytes(s.wtable));
         machine.cpu.d[7] = 0;
         io.output('Restored.\n');
@@ -229,10 +255,12 @@ function dictionary() {
     if (c & 0x80) { sections[sections.length - 1].push(w); w = ''; }
   }
   // Each noun's adjective list.
-  const nounCount = sections[6]?.length ?? 0;
+  // The noun table has maxNoun records; the dictionary can list more words.
+  const nounCount = Math.min(sections[6]?.length ?? 0, m.nouns.maxNoun || Infinity);
   const adjectives = [];
-  let p = sym('ADJ.TBL');
-  for (let n = 1; n <= nounCount; n++) {
+  // (Original releases: the adjective table's place is not known.)
+  let p = current.code.SYMBOLS['ADJ.TBL'];
+  for (let n = 1; n <= nounCount && p !== undefined; n++) {
     const list = [];
     for (let b; (b = m.mem[p++]) !== 0;) list.push(sections[5]?.[b - 4]);
     adjectives[n] = list.filter(Boolean);
@@ -282,7 +310,24 @@ export function roomNoun(room = roomNumber()) {
 
 /** Room ids for the app are the room nouns; their names are the nouns' words. */
 export function currentRoomId() { return roomNoun(); }
-export function roomName(id) { return id ? noun(id).name : ''; }
+export function roomName(id) {
+  if (!id) return '';
+  return roomNames.get(id) ?? noun(id).name;
+}
+
+/** The status line: "room <tab> score/moves" or "room <tab> 8:59am". */
+// The status line has the room's name in lower case; the room heading in the
+// text has it as the game prints it, so that is preferred when there is one.
+let lastText = '';
+function statusLine() {
+  const [raw = '', second = ''] = (machine.statusLine ?? '').split('\t');
+  const key = raw.trim().replace(/\s+/g, ' ').toLowerCase();
+  const heading = lastText.split('\n').map((l) => l.trim().replace(/\s+/g, ' ')).find((l) => l.toLowerCase() === key);
+  const id = currentRoomId();
+  const known = id && roomNames.get(id);
+  const name = heading || (known && known.toLowerCase() === key ? known : key.replace(/(^|\s)([a-z])/g, (m, s, c) => s + c.toUpperCase()));
+  return { name, second: second.trim() };
+}
 
 function roomCount() {
   return Math.floor((sym('NET_END') - sym('NETWORK')) / current.code.NET_SIZE);
@@ -308,6 +353,19 @@ export function isLit() {
 }
 
 export function status() {
+  if (current.code.STATUS_LINE) {
+    // Original releases: what the game's own status line says.
+    const { name, second } = statusLine();
+    const id = currentRoomId();
+    if (id && name) roomNames.set(id, name);
+    const time = /^(\d+):(\d+)\s*([ap])m$/i.exec(second);
+    if (time) {
+      const h = (Number(time[1]) % 12) + (time[3].toLowerCase() === 'p' ? 12 : 0);
+      return { room: name || roomName(id), score: h, moves: Number(time[2]) };
+    }
+    const sm = /^(-?\d+)\s*\/\s*(\d+)$/.exec(second);
+    return { room: name || roomName(id), score: sm ? Number(sm[1]) : 0, moves: sm ? Number(sm[2]) : 0 };
+  }
   const scale = current.code.SCORE_SCALE ?? 1;
   return {
     room: roomName(currentRoomId()),
@@ -337,6 +395,8 @@ export function sceneNouns() {
     seen.add(n);
     const x = noun(n);
     if (!x.name || x.pseudo && how !== 'scenery') return;
+    // Without adjectives (original releases) same-named things can't be told apart.
+    if (!x.adjectives.length && out.some((o) => o.name === x.name && o.how === how)) return;
     out.push({ ...x, how, inside });
   };
   for (let n = 1; n <= nounCount; n++) {

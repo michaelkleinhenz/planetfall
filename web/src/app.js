@@ -292,6 +292,9 @@ function magneticBanner(lines) {
   const out = { title: lines[0], copyright: [], rest: [] };
   const m = /^(.*?)[\s.\-–]*\b(Copyright\b.*)$/i.exec(lines[0]);
   if (m && m[1].trim()) { out.title = m[1].trim(); out.copyright.push(strip(m[2])); }
+  // "Myth. Version 1.0.": the version goes below the title.
+  const v = /^(.*?)[\s.\-–]+(Version [\d.]*\d)\.?$/i.exec(out.title);
+  if (v && v[1].trim()) { out.title = v[1].trim(); out.rest.push(v[2]); }
   for (const l of lines.slice(1)) {
     if (/^Version [\d.]+\.\s*Remastered by/i.test(l)) continue;
     const s = strip(l);

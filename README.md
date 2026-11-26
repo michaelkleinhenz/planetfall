@@ -67,8 +67,8 @@ Microsoft). All others are shared by historicalsource for education and research
 
 ### Magnetic Scrolls games
 
-Three Magnetic Scrolls adventures are included too, built from the 68000 assembly source
-that Strand Games released with their remasters:
+Six Magnetic Scrolls adventures are included too. Three are built from the 68000 assembly
+source that Strand Games released with their remasters:
 
 | Game | Year | Author | Source | Compared with |
 |---|---|---|---|---|
@@ -95,8 +95,24 @@ and the app shows it in the transcript above the text, at the original resolutio
 up without smoothing. The settings can turn them off.
 
 The source is under the Voidware Public Source Licence 1.0, for non-commercial use only
-(see `games/magnetic/README.md`). The Corruption, Fish! and Wonderland sources are not
-included: only their game data, not their program source, was released.
+(see `games/magnetic/README.md`).
+
+Corruption, Fish! and Myth have no released source, so they run from their original
+game files (`games/magnetic/original/*.mag`), unchanged:
+
+| Game | Year | Author | Game file |
+|---|---|---|---|
+| Corruption | 1988 | Rob Steggles & Hugh Steers | v1.11 (`corrupt.mag`) |
+| Fish! | 1988 | John Molloy, Pete Kemp, Phil South & Rob Steggles | v1.07 (`fish.mag`) |
+| Myth | 1989 | Paul Findley | v1.0 (`myth.mag`) |
+
+Without a symbol table, the build finds what the app needs by playing the game:
+`tools/magnetic/probe.mjs` walks every exit from the start, finds the word that holds the
+room number and the table of exits (the map), and `tools/magnetic/games.mjs` records them.
+The status line (room, score and moves, or Corruption's clock) is the one the game prints,
+and a room's picture is the one the game draws there. The noun table has no adjectives in
+these releases, so things with the same name (Fish!'s three warps) get one action button.
+Wonderland (a later game format with animated pictures) is not included yet.
 
 ## Features
 
@@ -194,7 +210,7 @@ npm test               # vocabulary/object-tree check + transcript comparison wi
 | Original sources | `games/<game>/` | Unmodified ZIL source archives plus the original compiled story files (see `games/README.md`). |
 | ZIL → JS compiler | `tools/zil2js/` | Reads the ZIL source and translates every routine (516 in Planetfall, 440 in Zork I) into readable async JavaScript. It also builds each game's data image: object tree, property tables, vocabulary and syntax tables. Per-game settings are in `games.mjs`. |
 | Generated games | `web/src/games/<game>/` | `game.js` (the code) and `story-data.js` (the data), plus `registry.js` with per-game metadata for the app. |
-| Magnetic Scrolls | `tools/magnetic/`, `web/src/engine/ms/` | Builds The Pawn, The Guild of Thieves and Jinxter from their 68000 source, and runs them in a JavaScript 68000 core. |
+| Magnetic Scrolls | `tools/magnetic/`, `web/src/engine/ms/` | Builds The Pawn, The Guild of Thieves and Jinxter from their 68000 source, prepares Corruption, Fish! and Myth from their original game files, and runs them in a JavaScript 68000 core. |
 | Runtime | `web/src/engine/` | The Z-machine-style primitives the translated code calls: objects, properties, tables, text, the tokenizer, save/restore and a seeded RNG. Also the session that turns the game's input loop into request/response. |
 | AI | `web/src/ai/` | OpenRouter client (with prompt caching), command interpreter, live translation, scene description and hints. |
 | Web app | `web/` | Menu, transcript, quick actions, settings, storage and backups. Fonts are self-hosted (SIL OFL, `web/fonts/`). |
@@ -246,11 +262,13 @@ is fully static and needs no secrets.
   are under the MIT License, © 2025 Microsoft (reproduced in `games/zork*/LICENSE` and next
   to the generated code). All other sources are shared for education and research and are
   stated not to be under an open license.
-- The Magnetic Scrolls games are © Magnetic Scrolls; their source was released by Strand
-  Games under the Voidware Public Source Licence 1.0, for non-commercial use only
-  (`games/magnetic/README.md`).
+- The Magnetic Scrolls games are © Magnetic Scrolls; the source of The Pawn, The Guild of
+  Thieves and Jinxter was released by Strand Games under the Voidware Public Source
+  Licence 1.0, for non-commercial use only (`games/magnetic/README.md`). The game files of
+  Corruption, Fish! and Myth are the original releases and are not covered by any license
+  in this repository.
 - The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
-  now Microsoft; The Pawn, The Guild of Thieves and Jinxter © Magnetic Scrolls/Rainbird).
+  now Microsoft; The Pawn, The Guild of Thieves, Jinxter, Corruption, Fish! and Myth © Magnetic Scrolls/Rainbird).
   The Magnetic Scrolls pictures in `web/img/pictures/` are from the original releases
   (© Magnetic Scrolls). Neither is covered by any license in this repository.
 - The manuals and feelies are linked, not included: the

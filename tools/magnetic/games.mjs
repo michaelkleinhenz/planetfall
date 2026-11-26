@@ -6,6 +6,15 @@
 //   netSize   - bytes per room in the NETWORK (exits) table: N NE E SE S SW W NW U D [IN OUT]
 //   scoreScale- the status line shows SCORE_ times this
 //   original  - the original release in games/magnetic/original (reference for tests)
+//
+// Games whose program source was never released run from their original
+// release instead ("mag": the .mag file in games/magnetic/original).  Without
+// a symbol table, the few addresses the app reads were found with
+// tools/magnetic/probe.mjs:
+//   room      - the word holding the player's room number (ROOM)
+//   network   - the exits table (NETWORK), netSize bytes per room
+//   rooms     - number of rooms (the largest room noun location)
+//   clock     - the status line shows a time of day instead of score/moves
 
 export const GAMES = {
   pawn: {
@@ -22,5 +31,17 @@ export const GAMES = {
     id: 'jinxter', title: 'Jinxter', year: '1987', dir: 'jinxter', makefile: false,
     search: ['jinxter/last', 'newcommonlast'], text: 'jinxter/text/magic.text',
     netSize: 12, original: 'ji11pc.mag',
+  },
+  corruption: {
+    id: 'corruption', title: 'Corruption', year: '1988', mag: 'corrupt.mag',
+    room: 0x29a, network: 0x1a0c, netSize: 12, clock: true,
+  },
+  fish: {
+    id: 'fish', title: 'Fish!', year: '1988', mag: 'fish.mag',
+    room: 0x4a4, network: 0x198e, netSize: 12,
+  },
+  myth: {
+    id: 'myth', title: 'Myth', year: '1989', mag: 'myth.mag',
+    room: 0x28a, network: 0xfd4, netSize: 12,
   },
 };
