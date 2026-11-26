@@ -14,7 +14,8 @@ c65909352f77af300de5e2d8ec72d58705ce5eb6), together with what is needed to build
 Two files of the release were left out: a Windows binary (`kl.exe`) and a map image.
 
 `original/` holds the original PC releases (`pa23pc.mag`, `gu11pc.mag`, `ji11pc.mag`),
-which are only used to compare transcripts.
+which are only used to compare transcripts. Their picture files are in
+`web/img/pictures/` (`pawn.gfx`, `guild.gfx`, `jinxter.gfx`), where the app loads them.
 
 `npm run build:magnetic` builds the games into `web/src/games/<id>/`
 (see `tools/magnetic/build.mjs`).
