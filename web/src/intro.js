@@ -147,7 +147,7 @@ export function playIntro(meta, { t, lang = 'en' }) {
     tilt.append(card, el('div', 'intro-shadow'));
 
     const text = el('div', 'intro-text');
-    const kicker = el('p', 'intro-kicker', `Infocom · ${meta.year}`);
+    const kicker = el('p', 'intro-kicker', `${meta.publisher ?? 'Infocom'} · ${meta.year}`);
     const title = el('h1', 'intro-title');
     // Letters animate one by one, but are grouped per word so lines only
     // break between words (never "The Lurking H / orror").

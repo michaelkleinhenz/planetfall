@@ -3,9 +3,8 @@
 // games/) to the page and to the AI interpreter (ai/).
 
 import { GameSession } from './engine/session.js';
-import { inspect } from './engine/runtime.js';
 import { interpret, isParserError } from './ai/interpreter.js';
-import { currentScene, actionContext, currentRoom as roomObject } from './ai/scene.js';
+import { currentScene, actionContext, currentRoom as roomObject, roomName } from './ai/scene.js';
 import { Automap, drawMap } from './automap.js';
 import { DebugLog, downloadJSON, BUILD, REPORT_README } from './debug.js';
 import { playIntro, paletteOf } from './intro.js';
@@ -229,9 +228,11 @@ const BANNER_END = /^(Release|Revision)( number)? \d+ \/ Serial [Nn]umber \d+$/;
 function findBanner(text) {
   const lines = text.split('\n');
   const start = lines.indexOf(current.meta?.bannerTitle);
+  // Infocom banners end with the release and serial number; other games say where theirs ends.
+  const endLine = current.meta?.bannerEnd ? new RegExp(current.meta.bannerEnd) : BANNER_END;
   if (start >= 0) {
     for (let end = start + 1; end < Math.min(lines.length, start + 8); end++) {
-      if (BANNER_END.test(lines[end])) return { start, end };
+      if (endLine.test(lines[end])) return { start, end };
     }
   }
   // Otherwise: the paragraph that ends with the release / serial number line.
@@ -1022,10 +1023,10 @@ function debugReport() {
       language: settings.language, aiEnabled: settings.aiEnabled, hasApiKey: !!settings.apiKey, aiActive: aiActive(),
       model: settings.model, showCommands: settings.showCommands, mapOpen: settings.mapOpen, immersive: immersiveOn(),
     },
-    game: { id: GAME_ID, title: meta?.title, zVersion: current.story?.LAYOUT?.version },
+    game: { id: GAME_ID, title: meta?.title, engine: current.code?.ENGINE ?? 'zil', zVersion: current.story?.LAYOUT?.version },
     state: {
       busy, gameEnded, waitingForKey: !!session.waitingForKey,
-      room: { id: roomId, name: safe(() => (roomId ? inspect.objectName(roomId) : '')) },
+      room: { id: roomId, name: safe(() => roomName(roomId)) },
       header: { room: els.room.textContent, score: els.score.textContent, time: els.time.textContent },
       upperWindow: document.getElementById('upper-window')?.hidden ? null : document.getElementById('upper-window')?.textContent,
       lastInput: commandHistory[commandHistory.length - 1] ?? null,

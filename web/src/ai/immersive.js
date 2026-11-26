@@ -6,10 +6,10 @@
 // no objects to take, exits, characters, clues or solutions.
 
 import { chat } from './openrouter.js';
-import { current } from '../engine/current.js';
+import { current, publisher } from '../engine/current.js';
 import { sceneText } from './scene.js';
 import { hintContext } from './hints.js';
-import { g } from '../engine/runtime.js';
+import { gameStatus } from './scene.js';
 
 // The game's stock answers when it has nothing particular to say.
 const STOCK = [
@@ -46,7 +46,7 @@ export const INTERPRETER_RULE =
   'do not describe it yourself: return no commands, no reply, and "describe": "<that thing, in English, e.g. the posters>". ' +
   'Things nobody has mentioned do not exist: answer those as before, without "describe".';
 
-const systemPrompt = () => `You add atmosphere to ${current.meta.title}, the ${current.meta.year} Infocom text adventure by ${current.meta.author}, in "immersive mode".
+const systemPrompt = () => `You add atmosphere to ${current.meta.title}, the ${current.meta.year} ${publisher()} text adventure by ${current.meta.author}, in "immersive mode".
 The original game runs unchanged and has just given a terse stock answer (such as "There's nothing special about the posters." or "I don't know the word ..."). Write what the player perceives instead, so that the world feels alive.
 
 RULES
@@ -80,9 +80,9 @@ export async function immerse({ apiKey, model, language, input, command, output,
   let situation = '';
   try {
     const { code, vars } = hintContext();
-    situation = `SCORE: ${g.SCORE ?? '-'}${current.meta.maxScore ? ` of ${current.meta.maxScore}` : ''}\n\n` +
+    situation = `SCORE: ${gameStatus().score ?? '-'}${current.meta.maxScore ? ` of ${current.meta.maxScore}` : ''}\n\n` +
       `GAME VARIABLES USED BY THE CODE BELOW:\n${vars.join('\n') || '(none)'}\n\n` +
-      `GAME CODE FOR THIS SITUATION:\n${code || '(none)'}\n\n`;
+      `GAME CODE FOR THIS SITUATION:\n${code || '(not available for this game)'}\n\n`;
   } catch { /* games without HERE (Sherlock): atmosphere only */ }
   const messages = [
     { role: 'system', content: systemPrompt(), cache: true },

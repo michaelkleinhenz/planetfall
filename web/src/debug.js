@@ -88,7 +88,7 @@ export function downloadJSON(data, filename) {
 }
 
 export const REPORT_README = [
-  'Debug report of Planetfall AI (Infocom games translated from ZIL to JavaScript).',
+  'Debug report of Planetfall AI (Infocom games translated from ZIL to JavaScript, Magnetic Scrolls games built from 68000 source).',
   'log: every input sent to the game (n, kind line/key, input, raw game output, room object before/after).',
   'checkpoints: the complete game state (base64 memory, globals, RNG) before log entry n.',
   'current: the game state now (before the next input).',

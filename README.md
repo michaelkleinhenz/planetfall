@@ -65,6 +65,33 @@ Licenses: only the Zork I, II and III sources are under an open license (MIT, ©
 Microsoft). All others are shared by historicalsource for education and research and are
 "not considered to be under an open license". The menu shows each game's license.
 
+### Magnetic Scrolls games
+
+Three Magnetic Scrolls adventures are included too, built from the 68000 assembly source
+that Strand Games released with their remasters:
+
+| Game | Year | Author | Source | Compared with |
+|---|---|---|---|---|
+| The Pawn | 1985 | Rob Steggles | `games/magnetic/src/pawn/` | v2.3 (`pa23pc.mag`) |
+| The Guild of Thieves | 1987 | Rob Steggles | `games/magnetic/src/guild/` | v1.1 (`gu11pc.mag`) |
+| Jinxter | 1987 | Georgina Sinclair & Michael Bywater | `games/magnetic/src/jinxter/` | v1.1 (`ji11pc.mag`) |
+
+These are not translated: `npm run build:magnetic` compiles Magnetic Scrolls' own
+assembler and linker (C, from the same release; needs a C compiler, make and flex),
+assembles and links each game exactly as its makefile says, and the browser runs the
+resulting 68000 program in a small JavaScript 68000 core (`web/src/engine/ms/`), with the
+game's host calls (text, input, save, restore) answered by the app. The noun table,
+dictionary and symbol table of the program give the app what it needs for the status
+line, the map, the quick actions and the AI parser. The source is the remastered one, so
+the games differ from the 1980s releases where Strand Games changed them: room
+descriptions list their exits, some messages were reworded, and Jinxter has 215 points
+instead of 205. The original releases in `games/magnetic/original/` are only used for
+comparison.
+
+The source is under the Voidware Public Source Licence 1.0, for non-commercial use only
+(see `games/magnetic/README.md`). The Corruption, Fish! and Wonderland sources are not
+included: only their game data, not their program source, was released.
+
 ## Features
 
 - **AI interpreter (optional):** it uses an [OpenRouter](https://openrouter.ai/keys) API
@@ -147,6 +174,7 @@ Node.js 18+ is needed for the tools and tests.
 
 ```sh
 npm run build          # regenerate web/src/games/* from the ZIL sources
+npm run build:magnetic # rebuild the Magnetic Scrolls games from their 68000 source
 npm test               # vocabulary/object-tree check + transcript comparison with the originals
 ```
 
@@ -157,6 +185,7 @@ npm test               # vocabulary/object-tree check + transcript comparison wi
 | Original sources | `games/<game>/` | Unmodified ZIL source archives plus the original compiled story files (see `games/README.md`). |
 | ZIL → JS compiler | `tools/zil2js/` | Reads the ZIL source and translates every routine (516 in Planetfall, 440 in Zork I) into readable async JavaScript. It also builds each game's data image: object tree, property tables, vocabulary and syntax tables. Per-game settings are in `games.mjs`. |
 | Generated games | `web/src/games/<game>/` | `game.js` (the code) and `story-data.js` (the data), plus `registry.js` with per-game metadata for the app. |
+| Magnetic Scrolls | `tools/magnetic/`, `web/src/engine/ms/` | Builds The Pawn, The Guild of Thieves and Jinxter from their 68000 source, and runs them in a JavaScript 68000 core. |
 | Runtime | `web/src/engine/` | The Z-machine-style primitives the translated code calls: objects, properties, tables, text, the tokenizer, save/restore and a seeded RNG. Also the session that turns the game's input loop into request/response. |
 | AI | `web/src/ai/` | OpenRouter client (with prompt caching), command interpreter, live translation, scene description and hints. |
 | Web app | `web/` | Menu, transcript, quick actions, settings, storage and backups. Fonts are self-hosted (SIL OFL, `web/fonts/`). |
@@ -208,6 +237,9 @@ is fully static and needs no secrets.
   are under the MIT License, © 2025 Microsoft (reproduced in `games/zork*/LICENSE` and next
   to the generated code). All other sources are shared for education and research and are
   stated not to be under an open license.
+- The Magnetic Scrolls games are © Magnetic Scrolls; their source was released by Strand
+  Games under the Voidware Public Source Licence 1.0, for non-commercial use only
+  (`games/magnetic/README.md`).
 - The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
   now Microsoft). It isn't covered by any license in this repository.
 - Fonts: Literata, Inter and JetBrains Mono, plus Orbitron and VT323 for the 80s mode, all under the SIL Open Font License.

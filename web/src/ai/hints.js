@@ -9,11 +9,16 @@
 
 import { chat } from './openrouter.js';
 import { g, getProp, getPropAddr, propSize, get, inspect } from '../engine/runtime.js';
-import { current } from '../engine/current.js';
+import { current, publisher } from '../engine/current.js';
 
 const G = () => current.code;
-import { actionContext } from './scene.js';
+import { actionContext, gameStatus } from './scene.js';
 import { sceneText, currentScene } from './scene.js';
+import * as MS from '../engine/ms/host.js';
+
+// Magnetic Scrolls games: the variables of the original source that describe
+// the player's situation (the 68000 code itself is not sent).
+const MS_VARIABLES = ['ROOM', 'SCORE_', 'LIGHT', 'DIED', 'RIDING', 'SEATED', 'CLOCK', 'ENERGY'];
 
 const DIRS = ['NORTH', 'NE', 'EAST', 'SE', 'SOUTH', 'SW', 'WEST', 'NW', 'UP', 'DOWN', 'IN', 'OUT'];
 const MAX_ROUTINE = 3500;   // characters per routine
@@ -29,6 +34,10 @@ function routineSource(id) {
 
 /** Collect the code and state relevant to the player's current situation. */
 export function hintContext() {
+  if (G().ENGINE === 'magnetic') {
+    const vars = Object.entries(MS.variables(MS_VARIABLES)).map(([n, v]) => `${n} = ${v}`);
+    return { code: '', vars };
+  }
   const sections = [];
   const seen = new Set();
   let budget = MAX_CODE;
@@ -70,9 +79,13 @@ export function hintContext() {
   return { code, vars };
 }
 
-const SYSTEM = (language) => `You are the hint system for ${current.meta.title.toUpperCase()}, the ${current.meta.year} Infocom text adventure, in the spirit of Infocom's InvisiClues booklets.
+// Magnetic Scrolls games run their original 68000 program: there is no
+// readable code to show, only the game's state.
+const MAGNETIC_CONTEXT = () => `You receive the player's current situation and recent transcript, plus the current values of a few game variables. Use your knowledge of ${current.meta.title}, the published walkthroughs and the original hint books, together with what the transcript shows the player has already found and done.`;
 
-You receive the player's current situation and recent transcript, plus the ACTUAL GAME CODE that governs it: the JavaScript translation of the original ZIL routines for the current location, its exits, and every object in view or carried, together with the current values of the game variables those routines test. Read the code to work out what the player can do here, what is blocked, and what each object reacts to (look for the verbs a routine handles with isVerb(V.X, ...), the conditions on flags and variables, and what changes the score). You may also use your general knowledge of ${current.meta.title}, but the code and the current state are authoritative.
+const SYSTEM = (language) => `You are the hint system for ${current.meta.title.toUpperCase()}, the ${current.meta.year} ${publisher()} text adventure, in the spirit of Infocom's InvisiClues booklets.
+
+${current.code?.ENGINE === 'magnetic' ? MAGNETIC_CONTEXT() : `You receive the player's current situation and recent transcript, plus the ACTUAL GAME CODE that governs it: the JavaScript translation of the original ZIL routines for the current location, its exits, and every object in view or carried, together with the current values of the game variables those routines test. Read the code to work out what the player can do here, what is blocked, and what each object reacts to (look for the verbs a routine handles with isVerb(V.X, ...), the conditions on flags and variables, and what changes the score). You may also use your general knowledge of ${current.meta.title}, but the code and the current state are authoritative.`}
 
 Decide the most useful next step for making progress or staying alive. If the transcript shows urgent trouble (hunger, thirst, exhaustion, sickness, a countdown, danger), address that first.
 
@@ -82,7 +95,7 @@ Answer at the requested HINT LEVEL:
 - Level 3: the explicit solution, including the exact command(s) to type.
 
 Rules:
-- Write for the player, in ${language}, in 1–3 short sentences, in a light, friendly Infocom tone.
+- Write for the player, in ${language}, in 1–3 short sentences, in a light, friendly ${publisher()} tone.
 - Never mention code, routines, functions, variables, flags, numbers from the code, or "the game logic".
 - Do not reveal places, objects or events the player has not encountered yet, except at level 3 when necessary for the next step.
 - Output only the hint text.`;
@@ -98,11 +111,11 @@ export async function getHint({ apiKey, model, language, level, history, signal 
     `${h.input ? `PLAYER: ${h.input}\n` : ''}GAME: ${h.output.trim().slice(0, 1200)}`).join('\n---\n');
   const user =
     `HINT LEVEL: ${level}\n\n` +
-    `SCORE: ${g.SCORE}${current.meta.maxScore ? ` of ${current.meta.maxScore}` : ""}. MOVES/TIME: ${g.MOVES}.\n\n` +
+    `SCORE: ${gameStatus().score}${current.meta.maxScore ? ` of ${current.meta.maxScore}` : ""}. MOVES/TIME: ${gameStatus().moves}.\n\n` +
     `CURRENT SCENE:\n${sceneText(currentScene())}\n\n` +
     `RECENT TRANSCRIPT (oldest first):\n${transcript || '(none)'}\n\n` +
     `GAME VARIABLES USED BY THE CODE BELOW:\n${vars.join('\n') || '(none)'}\n\n` +
-    `GAME CODE FOR THIS SITUATION:\n${code}`;
+    (code ? `GAME CODE FOR THIS SITUATION:\n${code}` : 'GAME CODE: (not available for this game: use the scene, the transcript and your knowledge of the game)');
   const text = await chat({
     apiKey, model, signal, temperature: 0.3, maxTokens: 1200,
     messages: [{ role: 'system', content: SYSTEM(language), cache: true }, { role: 'user', content: user }],
