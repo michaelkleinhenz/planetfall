@@ -179,6 +179,12 @@ code { font-family: var(--mono); font-size: .9em; }
 
 .game-text { white-space: pre-wrap; margin: 0; overflow-wrap: anywhere; text-wrap: pretty; hanging-punctuation: first; }
 .game-text + .game-text { margin-top: .9em; }
+/* Magnetic Scrolls pictures: the original 16-colour art, scaled up without smoothing. */
+.game-picture { margin: 4px 0 18px; max-width: 560px; aspect-ratio: var(--ratio, 256 / 150); border-radius: 10px; overflow: hidden;
+  background: color-mix(in srgb, var(--muted) 12%, transparent); box-shadow: 0 6px 24px -12px rgb(0 0 0 / .45); opacity: 0; transition: opacity .4s; }
+.game-picture.ready { opacity: 1; }
+.game-picture canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+body.no-pictures .game-picture { display: none; }
 .game-text .room-title {
   display: flex; align-items: center; gap: 14px; margin: 2px 0 6px;
   font: 650 12px/1.4 var(--ui-font); letter-spacing: .24em; text-transform: uppercase; color: var(--accent);

@@ -11,7 +11,7 @@ export const GAMES = {
   pawn: {
     id: 'pawn', title: 'The Pawn', year: '1985, 1986', dir: 'pawn', makefile: true,
     search: ['pawn/last', 'nonalterable'], text: 'pawn/text/pawn.text',
-    netSize: 10, scoreScale: 5, original: 'pa23pc.mag',
+    netSize: 10, scoreScale: 5, original: 'pa23pc.mag', pictureIndex: 'rooms',
   },
   guild: {
     id: 'guild', title: 'The Guild of Thieves', year: '1987', dir: 'guild', makefile: true,

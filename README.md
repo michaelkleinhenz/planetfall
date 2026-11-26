@@ -88,6 +88,12 @@ descriptions list their exits, some messages were reworded, and Jinxter has 215 
 instead of 205. The original releases in `games/magnetic/original/` are only used for
 comparison.
 
+The pictures come from the original releases' picture files (`web/img/pictures/*.gfx`)
+and are decoded in the browser (`web/src/engine/ms/pictures.js`). The game itself says
+which picture belongs to a room (its `PICTURE_INDEX` table and the `LOAD_PIC` host call),
+and the app shows it in the transcript above the text, at the original resolution scaled
+up without smoothing. The settings can turn them off.
+
 The source is under the Voidware Public Source Licence 1.0, for non-commercial use only
 (see `games/magnetic/README.md`). The Corruption, Fish! and Wonderland sources are not
 included: only their game data, not their program source, was released.
@@ -153,8 +159,11 @@ included: only their game data, not their program source, was released.
   report.json` replays it exactly and shows where the result differs.
 - **Manuals and feelies:** several games need items from their original package to be
   played (maps, codes, documents). Each game links to its page in the
-  [Infocom Gallery](https://gallery.guetech.org/greybox.html), on the menu card and with
-  the 📖 button in the game's toolbar.
+  [Infocom Gallery](https://gallery.guetech.org/greybox.html) (Magnetic Scrolls games: the
+  [Magnetic Scrolls Memorial](https://msmemorial.if-legends.org/)), on the menu card and
+  with the 📖 button in the game's toolbar.
+- **Pictures:** the Magnetic Scrolls games show their original pictures in the transcript,
+  decoded from the original picture files.
 - **Your data stays in your browser:** settings, progress and saves live in
   localStorage, per game, and nothing is sent to any server except your AI requests to
   OpenRouter. There are no cookies, analytics or third-party scripts. The menu can
@@ -241,7 +250,12 @@ is fully static and needs no secrets.
   Games under the Voidware Public Source Licence 1.0, for non-commercial use only
   (`games/magnetic/README.md`).
 - The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
-  now Microsoft). It isn't covered by any license in this repository.
+  now Microsoft; The Pawn, The Guild of Thieves and Jinxter © Magnetic Scrolls/Rainbird).
+  The Magnetic Scrolls pictures in `web/img/pictures/` are from the original releases
+  (© Magnetic Scrolls). Neither is covered by any license in this repository.
+- The manuals and feelies are linked, not included: the
+  [Infocom Gallery](https://gallery.guetech.org/greybox.html) and the
+  [Magnetic Scrolls Memorial](https://msmemorial.if-legends.org/).
 - Fonts: Literata, Inter and JetBrains Mono, plus Orbitron and VT323 for the 80s mode, all under the SIL Open Font License.
 - The converter, runtime, AI layer and web app in `tools/`, `web/` (except the generated
   games, fonts and covers) and `tests/` were written for this project.

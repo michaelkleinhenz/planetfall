@@ -49,6 +49,8 @@ export function createMachine({ seed } = {}) {
   });
   machine.seed(seed ?? ((Math.random() * 0x7fffffff) | 1));
   world = null;
+  picture = null;
+  pictureRoom = 0;
   return machine;
 }
 
@@ -60,6 +62,47 @@ export function snapshot() {
   if (!machine) return null;
   const s = machine.snapshot();
   return { engine: 'magnetic', mem: bytesToBase64(s.mem), wtable: machine.wtable ? bytesToBase64(machine.wtable) : null, cpu: s.cpu, nouns: s.nouns, fmt: s.fmt, rng: s.rng };
+}
+
+// ---------------------------------------------------------------------------
+// Pictures
+// ---------------------------------------------------------------------------
+
+let picture = null;     // picture shown now (0-based number in the .gfx file), or null
+let pictureRoom = 0;    // the room it was chosen for
+
+/** The picture the game's own table gives a room (classic pictures only). */
+export function roomPicture(room = roomNumber()) {
+  if (!machine || !room) return null;
+  const idx = current.code.SYMBOLS.PICTURE_INDEX;
+  if (idx == null) return null;
+  const mem = machine.mem;
+  if (current.code.PICTURE_INDEX === 'rooms') {
+    const n = mem[idx + room - 1];
+    return n ? n - 1 : null;
+  }
+  // (picture, room, version) entries up to a negative picture number.
+  for (let a = idx; a + 2 < mem.length && mem[a] < 0x80; a += 3) {
+    if (mem[a + 1] === (room & 0xff) && mem[a + 2] === 0) return mem[a] ? mem[a] - 1 : null;
+  }
+  return null;
+}
+
+/** The picture shown now, or null. */
+export function currentPicture() { return picture; }
+
+/**
+ * After a turn: the picture the game asked for (LOAD_PIC), or, when the room
+ * changed without one (a brief description doesn't draw), the room's picture.
+ */
+function updatePicture(reset = false) {
+  const room = roomNumber();
+  const ev = machine.picture;
+  machine.picture = null;
+  if (ev && !reset) picture = ev.show ? (ev.version === 0 ? ev.n : roomPicture(room)) : null;
+  else if (reset || room !== pictureRoom) picture = roomPicture(room);
+  pictureRoom = room;
+  return picture;
 }
 
 export function loadSnapshot(s) {
@@ -109,10 +152,12 @@ export async function runMagnetic(io, { seed } = {}) {
         if (askedName && CONFIRM_PROMPT.test(text)) { askedName = false; machine.type('y'); continue; }
         askedName = false;
         io.status?.(status());
+        io.picture?.(updatePicture());
         lastInput = snapshot();
         const line = await io.input();
         if (line && typeof line === 'object') {
           loadSnapshot(line.snapshot);
+          io.picture?.(updatePicture(true));
           if (line.notice) io.output(line.notice);
           io.status?.(status());
           continue;

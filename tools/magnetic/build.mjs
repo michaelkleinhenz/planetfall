@@ -90,7 +90,9 @@ function writeGame(cfg, prog) {
     `// How the game ran: the program is Magnetic Scrolls' 68000 code, run by\n// engine/ms (a 68000 core and the Magnetic Scrolls host calls).\n` +
     `export const ENGINE = 'magnetic';\n` +
     `export const NET_SIZE = ${cfg.netSize};\n` +
-    `export const SCORE_SCALE = ${cfg.scoreScale ?? 1};\n\n` +
+    `export const SCORE_SCALE = ${cfg.scoreScale ?? 1};\n` +
+    `// PICTURE_INDEX: one picture number per room ('rooms', The Pawn), or a list of\n// (picture, room, version) entries ('list').\n` +
+    `export const PICTURE_INDEX = '${cfg.pictureIndex ?? 'list'}';\n\n` +
     `// The assembler's symbol table: every label of the original source and its address.\n` +
     `export const SYMBOLS = ${JSON.stringify(sorted)};\n`);
   fs.writeFileSync(path.join(out, 'story-data.js'), header +

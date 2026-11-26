@@ -20,6 +20,7 @@ import { renderMenu } from './menu.js';
 import { emblem } from './emblems.js';
 import { GAMES } from './games/registry.js';
 import { loadGame, current } from './engine/current.js';
+import { PictureFile } from './engine/ms/pictures.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -48,7 +49,7 @@ const GAME_ID = (() => {
 const K = (name) => gameKey(GAME_ID, name);
 
 const settings = Object.assign(
-  { apiKey: '', model: '', aiEnabled: true, showCommands: true, titleMotion: true, language: 'en', mapOpen: true },
+  { apiKey: '', model: '', aiEnabled: true, showCommands: true, pictures: true, titleMotion: true, language: 'en', mapOpen: true },
   store.get('pf.settings', {}),
 );
 /** The header title's drifting art and light sweep can be turned off in settings. */
@@ -178,17 +179,57 @@ function renderUpper(rows, cursor) {
   box.replaceChildren(frag);
 }
 
+// ---------------------------------------------------------------------------
+// Pictures (Magnetic Scrolls games): drawn from the original .gfx file
+// ---------------------------------------------------------------------------
+
+let pictureFile = null; // Promise<PictureFile|null> for the current game
+
+function loadPictures(meta) {
+  pictureFile = meta.pictures
+    ? fetch(meta.pictures).then((r) => (r.ok ? r.arrayBuffer() : null))
+      .then((buf) => (buf ? new PictureFile(new Uint8Array(buf)) : null)).catch(() => null)
+    : null;
+}
+
+function pictureFigure(n) {
+  const fig = el('figure', 'game-picture');
+  const canvas = document.createElement('canvas');
+  canvas.setAttribute('role', 'img');
+  fig.append(canvas);
+  pictureFile?.then((file) => {
+    const pic = file?.picture(n);
+    if (!pic) { fig.remove(); return; }
+    canvas.width = pic.width;
+    canvas.height = pic.height;
+    canvas.setAttribute('aria-label', t('pictureLabel'));
+    fig.style.setProperty('--ratio', `${pic.width} / ${pic.height}`);
+    const ctx = canvas.getContext('2d');
+    const img = ctx.createImageData(pic.width, pic.height);
+    for (let i = 0; i < pic.pixels.length; i++) {
+      const [r, g, b] = pic.palette[pic.pixels[i]];
+      img.data.set([r, g, b, 255], i * 4);
+    }
+    ctx.putImageData(img, 0, 0);
+    fig.classList.add('ready');
+  });
+  return fig;
+}
+
 function renderGameText(segments, container) {
   for (const seg of segments) {
+    // A picture goes above the text, but below the title block (see below).
+    const banner = !seg.fixed && findBanner(seg.text);
+    if (seg.picture != null && pictureFile && !banner) container.append(pictureFigure(seg.picture));
     if (seg.fixed) {
       container.append(el('pre', 'game-text fixed', seg.text));
       continue;
     }
     // The title/copyright block (opening text and VERSION) gets its own compact styling.
-    const banner = findBanner(seg.text);
     if (banner) {
       container.append(renderBanner(seg.text.split('\n').slice(banner.start, banner.end + 1)));
       const rest = splitAround(seg, banner);
+      if (rest && seg.picture != null) rest.picture = seg.picture;
       if (rest) renderGameText([rest], container);
       continue;
     }
@@ -1055,11 +1096,15 @@ $('debug-report').addEventListener('click', () => {
 // Settings
 // ---------------------------------------------------------------------------
 
+/** Pictures on or off (a class on <body>, so the transcript keeps them). */
+function applyPictures() { document.body.classList.toggle('no-pictures', settings.pictures === false); }
+
 async function openSettings() {
   els.setKey.value = settings.apiKey;
   els.setModel.value = settings.model;
   els.setAi.checked = settings.aiEnabled;
   els.setShow.checked = settings.showCommands;
+  $('set-pictures').checked = settings.pictures;
   $('set-title-motion').checked = settings.titleMotion;
   els.setLang.value = settings.language;
   $('set-immersive-field').hidden = !GAME_ID;
@@ -1086,6 +1131,8 @@ els.settings.addEventListener('close', async () => {
     settings.model = els.setModel.value.trim();
     settings.aiEnabled = els.setAi.checked;
     settings.showCommands = els.setShow.checked;
+    settings.pictures = $('set-pictures').checked;
+    applyPictures();
     settings.titleMotion = $('set-title-motion').checked;
     applyTitleMotion();
     settings.language = normalizeLanguage(els.setLang.value);
@@ -1103,6 +1150,8 @@ els.settings.addEventListener('close', async () => {
   settings.model = els.setModel.value.trim();
   settings.aiEnabled = els.setAi.checked;
   settings.showCommands = els.setShow.checked;
+  settings.pictures = $('set-pictures').checked;
+  applyPictures();
   settings.titleMotion = $('set-title-motion').checked;
   applyTitleMotion();
   const prevLang = settings.language;
@@ -1439,8 +1488,10 @@ async function boot() {
   $('game-title').textContent = meta.title.toUpperCase();
   if (meta.cover) coverTitle(meta);
   $('emblem').innerHTML = emblem(meta.id);
-  // The game's box contents (manual, maps, feelies) in the Infocom Gallery.
+  // The game's box contents (manual, maps, feelies): the Infocom Gallery or the Magnetic Scrolls Memorial.
   if (meta.gallery) { $('btn-gallery').href = meta.gallery; $('btn-gallery').hidden = false; }
+  loadPictures(meta);
+  applyPictures();
   document.body.dataset.game = meta.id;
   const second = $('status-second-label');
   second.dataset.i18n = meta.statusSecond === 'time' ? 'time' : 'moves';

@@ -320,7 +320,12 @@ export class Machine {
       }
       case A.SAVEFILE: d[7] = 0; this.saveRequest = { addr: a[1], length: d[1] & 0xffff }; this.state = 'save'; return;
       case A.LOADFILE: d[7] = 0; this.loadRequest = { addr: a[1], length: d[1] & 0xffff }; this.state = 'load'; return;
-      case A.GRAPHICS: case A.PRINTER: case A.NOTIFY: case A.PROMPT_EV: case A.MAKE_DIFF: return;
+      case A.GRAPHICS:
+        // LOAD_PIC: d0 = picture (0-based), d1 = 1 to show or 0 to hide, d2 = version.
+        this.picture = { n: d[0] & 0xffff, show: (d[1] & 0xff) !== 0, version: d[2] & 0xff };
+        this.pictureCount = (this.pictureCount || 0) + 1;
+        return;
+      case A.PRINTER: case A.NOTIFY: case A.PROMPT_EV: case A.MAKE_DIFF: return;
       case A.UNDO_DIFF: return;
       case A.RESTART: this.state = 'restart'; return;
       case A.QUIT: this.state = 'quit'; return;

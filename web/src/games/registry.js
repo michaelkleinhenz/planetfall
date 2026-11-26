@@ -583,6 +583,9 @@ export const GAMES = {
   pawn: {
     id: 'pawn',
     publisher: 'Magnetic Scrolls',
+    cover: 'img/covers/pawn.jpg',
+    pictures: 'img/pictures/pawn.gfx',
+    gallery: 'https://msmemorial.if-legends.org/games.htm/pawn.php',
     title: 'The Pawn',
     year: 1985,
     author: 'Rob Steggles',
@@ -603,6 +606,9 @@ export const GAMES = {
   guild: {
     id: 'guild',
     publisher: 'Magnetic Scrolls',
+    cover: 'img/covers/guild.jpg',
+    pictures: 'img/pictures/guild.gfx',
+    gallery: 'https://msmemorial.if-legends.org/games.htm/guild.php',
     title: 'The Guild of Thieves',
     year: 1987,
     author: 'Rob Steggles',
@@ -623,6 +629,9 @@ export const GAMES = {
   jinxter: {
     id: 'jinxter',
     publisher: 'Magnetic Scrolls',
+    cover: 'img/covers/jinxter.jpg',
+    pictures: 'img/pictures/jinxter.gfx',
+    gallery: 'https://msmemorial.if-legends.org/games.htm/jinxter.php',
     title: 'Jinxter',
     year: 1987,
     author: 'Georgina Sinclair & Michael Bywater',
