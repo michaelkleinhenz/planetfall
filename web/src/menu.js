@@ -41,6 +41,9 @@ function gameCard(meta, save) {
     img.width = 264; img.height = 352;
     img.loading = 'lazy';
     img.decoding = 'async';
+    // The card takes the scan's own proportions, so taller boxes aren't cut off.
+    const fit = () => { if (img.naturalWidth) cover.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; };
+    if (img.complete) fit(); else img.addEventListener('load', fit, { once: true });
     cover.classList.add('has-image');
     cover.append(img);
   } else {
