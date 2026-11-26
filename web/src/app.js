@@ -245,7 +245,8 @@ function renderGameText(segments, container) {
     const lines = (showTranslation ? seg.translated : seg.text).split('\n');
     const titleSet = new Set(lines.length === orig.length || !showTranslation ? seg.titles : []);
     lines.forEach((line, i) => {
-      if (titleSet.has(i)) p.append(el('span', 'room-title', line));
+      // A heading straight after text (no blank line, as in the Magnetic Scrolls games) gets the paragraph gap.
+      if (titleSet.has(i)) p.append(el('span', `room-title${i > 0 && lines[i - 1].trim() ? ' after-text' : ''}`, line));
       else p.append(document.createTextNode(line + (i < lines.length - 1 ? '\n' : '')));
     });
     if (seg.translated) {
@@ -272,7 +273,7 @@ function findBanner(text) {
   // Infocom banners end with the release and serial number; other games say where theirs ends.
   const endLine = current.meta?.bannerEnd ? new RegExp(current.meta.bannerEnd) : BANNER_END;
   if (start >= 0) {
-    for (let end = start + 1; end < Math.min(lines.length, start + 8); end++) {
+    for (let end = start; end < Math.min(lines.length, start + 8); end++) {
       if (endLine.test(lines[end])) return { start, end };
     }
   }
@@ -284,10 +285,31 @@ function findBanner(text) {
   return s < end ? { start: s, end } : null;
 }
 
+// Magnetic Scrolls banners: the copyright on its own small line, and without the
+// remaster credits (the pictures and presentation here are the original ones).
+function magneticBanner(lines) {
+  const strip = (l) => l.replace(/\s*Remastered by Strand Games[^.]*\.?/i, '').trim();
+  const out = { title: lines[0], copyright: [], rest: [] };
+  const m = /^(.*?)[\s.\-–]*\b(Copyright\b.*)$/i.exec(lines[0]);
+  if (m && m[1].trim()) { out.title = m[1].trim(); out.copyright.push(strip(m[2])); }
+  for (const l of lines.slice(1)) {
+    if (/^Version [\d.]+\.\s*Remastered by/i.test(l)) continue;
+    const s = strip(l);
+    if (!s) continue;
+    (/^Copyright\b/i.test(s) ? out.copyright : out.rest).push(s);
+  }
+  return out;
+}
+
 function renderBanner(lines) {
   const box = el('div', 'banner');
   const text = el('div', 'banner-text');
-  text.append(el('div', 'banner-title', lines[0]));
+  if (current.code?.ENGINE === 'magnetic') {
+    const b = magneticBanner(lines);
+    text.append(el('div', 'banner-title', b.title));
+    for (const c of b.copyright) text.append(el('div', 'banner-copyright', c));
+    lines = ['', b.rest[0], ...b.rest.slice(1)];
+  } else text.append(el('div', 'banner-title', lines[0]));
   if (lines[1]) text.append(el('div', 'banner-sub', lines[1]));
   const meta = el('div', 'banner-meta');
   lines.slice(2).forEach((l, i) => {
