@@ -86,7 +86,7 @@ const STRINGS = {
     errOther: 'OpenRouter error',
     moves: 'Moves',
     menuTitle: 'Text adventures, read by the original code, understood by AI',
-    menuIntro: 'Infocom classics, translated line by line from their original ZIL source into JavaScript, Magnetic Scrolls classics, built from their original 68000 source, and Legend's Gateway, running its original program. Type in plain language: an AI turns it into commands the original parser understands, and every word of the story comes from the original game.',
+    menuIntro: 'Infocom classics, translated line by line from their original ZIL source into JavaScript, Magnetic Scrolls classics, built from their original 68000 source, and Legend’s Gateway, running its original program. Type in plain language: an AI turns it into commands the original parser understands, and every word of the story comes from the original game.',
     menuGames: 'Choose a game',
     menuSearch: 'Search {n} games by title, author or year',
     menuYourGames: 'Continue playing',
