@@ -111,6 +111,12 @@ export class LegendMachine {
     return String.fromCharCode(...this.dos.grid.subarray(y * 80 + TEXT_LEFT, y * 80 + 80)).replace(/\xdb/g, ' ');
   }
 
+  /** The story window's text on the cursor's row, up to the cursor. */
+  lineBeforeCursor() {
+    const y = this.dos.cursor >> 8, x = this.dos.cursor & 0xff;
+    return String.fromCharCode(...this.dos.grid.subarray(y * 80 + TEXT_LEFT, y * 80 + Math.max(TEXT_LEFT, x))).replace(/\xdb/g, ' ');
+  }
+
   /** Is the game waiting at its ">" prompt? (The transcript gets the prompt only with the next line.) */
   atPrompt() {
     const y = this.dos.cursor >> 8;
@@ -210,7 +216,7 @@ export class LegendMachine {
 
   /** The whole screen as a picture: {width, height, palette, pixels}. */
   screen() {
-    return { width: 640, height: 480, palette: this.dos.vga.palette(), pixels: this.dos.vga.pixels() };
+    return this.dos.vga.screen();
   }
 
   // ---- pictures -----------------------------------------------------------------------
@@ -249,6 +255,7 @@ export class LegendMachine {
    */
   command(line) {
     this.script = '';
+    this.dialog = new Map();
     this.typed = line;
     this.dos.key(line + '\r');
     return this.continue();
@@ -270,18 +277,26 @@ export class LegendMachine {
 
   /** Run until the next prompt or question (after typing an answer). */
   continue() {
-    this.dialog = new Map();
+    // (A box drawn while a screen of the game's own was up still counts.)
+    this.dialog ??= new Map();
     for (let i = 0; i < 500; i++) {
       const state = this.dos.run();
       if (state === 'exit') return { text: this.takeScript(), state: 'exit' };
       // A screen of the game's own (the PV commset): it reads keys.
-      if (!this.isMainScreen()) return { text: this.takeScript(), state: 'screen' };
+      // (Unless it is a question box, which can come on a cleared screen.)
+      if (!this.isMainScreen() && !this.dialogText()) return { text: this.takeScript(), state: 'screen' };
       const row = this.cursorRow();
       if (/- MORE -/.test(row)) { this.dos.key(KEYS.SPACE); continue; }
       if (this.atPrompt()) return { text: this.takeScript(), state: 'prompt' };
-      // Some other question, asked on the screen only.
-      const question = this.dialogText() || row.replace(/^>/, '').trim();
-      return { text: this.takeScript(), state: 'question', question };
+      // Some other question: in a box (QUIT's, answered with one key), or on
+      // the story's last line ("Do you want to continue waiting? >", which
+      // the transcript gets only with the answer).
+      const text = this.takeScript();
+      const box = this.dialogText();
+      this.dialog = new Map();
+      const question = box || this.lineBeforeCursor().replace(/>\s*$/, '').trim();
+      this.question = box ? null : question;
+      return { text, state: 'question', question, box: !!box };
     }
     throw new LegendError('The game kept pausing.');
   }
@@ -296,6 +311,13 @@ export class LegendMachine {
       const i = lines.findIndex((l) => l.replace(/^>/, '').trim().toLowerCase() === this.typed.trim().toLowerCase());
       if (i >= 0 && i < 6) t = lines.slice(i + 1).join('\n');
       this.typed = null;
+    }
+    // A question on the last line comes with its answer.
+    if (this.question) {
+      const q = this.question.toLowerCase();
+      const lines = t.split('\n');
+      if (lines.length > 1 && lines[0].trim().toLowerCase().startsWith(q)) t = lines.slice(1).join('\n');
+      this.question = null;
     }
     // Lines broken at a space continue on the next line.
     t = t.replace(/ \n(?=\S)/g, ' ');

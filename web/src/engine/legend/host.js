@@ -158,6 +158,8 @@ function countScore(text) {
   if (m) score = Number(m[1]);
 }
 
+const ENDED = /game has ended/i;
+const ENDED_HINT = ' [Undo takes back your last move (the ↶ button); or type RESTART, RESTORE or QUIT.]';
 const SCREEN_HINT = '[The game shows a screen of its own. Type the keys to press (a number or letter, or a key name: Enter, Space, Esc, Up, Down, Left, Right, PgUp, PgDn); an empty line is Enter.]\n';
 
 const KEY_NAMES = {
@@ -177,7 +179,10 @@ export function screenKeys(line) {
   if (t.length === 1 && ARROWS[t.charCodeAt(0)]) return [ARROWS[t.charCodeAt(0)]];
   const words = t.toLowerCase().split(/[\s,]+/);
   if (words.every((w) => KEY_NAMES[w] !== undefined)) return words.map((w) => KEY_NAMES[w]);
-  return [t];
+  // A number (to dial) goes in whole; otherwise the first letter ("next": N),
+  // so that the rest of a word doesn't reach the game after the screen closes.
+  if (/^[\d#*]+$/.test(t)) return [t];
+  return [t[0]];
 }
 
 /** The game loop: run until the game wants input, then ask the host. */
@@ -198,7 +203,7 @@ export async function runLegend(io) {
       state = { state: 'prompt' };
       continue;
     }
-    if (state.state === 'question' && state.question) io.output(state.question + '\n');
+    if (state.state === 'question' && state.question) io.output(state.question + (ENDED.test(state.question) ? ENDED_HINT : '') + '\n');
     io.status?.(status());
     if (state.state === 'screen') {
       // A screen of the game's own: shown as it is, and it gets keys.
@@ -233,8 +238,26 @@ export async function runLegend(io) {
         state = { state: 'prompt' };
         continue;
       }
-      // Yes/no questions take one key.
-      machine.dos.key(YES_NO.test(cmd) ? cmd.trim()[0].toLowerCase() : cmd + '\r');
+      // The game has ended (you died): the app's own restart and restore.
+      if (ENDED.test(state.question ?? '')) {
+        if (/^\s*(restart|start|new)/i.test(cmd)) {
+          opening = createMachine(f);
+          io.restarted?.();
+          pending = opening;
+          state = { state: 'prompt' };
+          continue;
+        }
+        if (RESTORE.test(cmd) || /^\s*restore\b/i.test(cmd)) {
+          let s = null;
+          try { s = await io.restore(); } catch { s = null; }
+          if (s?.engine === 'legend') { loadSnapshot(s); io.output('Restored.\n'); state = { state: 'prompt' }; } else io.output('Not restored.\n');
+          continue;
+        }
+        if (/^\s*q/i.test(cmd)) { machine.dos.key('q'); state = machine.continue(); pending = state.text; continue; }
+        continue;
+      }
+      // A question in a box takes one key (yes/no); one on the story's last line, a line.
+      machine.dos.key(state.box && YES_NO.test(cmd) ? cmd.trim()[0].toLowerCase() : cmd + '\r');
       state = machine.continue();
       pending = state.text;
       continue;

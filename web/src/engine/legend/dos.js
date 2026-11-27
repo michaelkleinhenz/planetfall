@@ -445,7 +445,7 @@ export class Dos {
   video() {
     const c = this.cpu, ah = c.r[AX] >> 8, al = c.r[AX] & 0xff;
     switch (ah) {
-      case 0x00: this.mem[0x449] = al & 0x7f; this.videoMode = al & 0x7f; this.grid.fill(32); this.vga.reset(); this.onMode?.(al & 0x7f); return;
+      case 0x00: this.mem[0x449] = al & 0x7f; this.videoMode = al & 0x7f; this.grid.fill(32); this.vga.reset(); this.vga.mode = al & 0x7f; this.onMode?.(al & 0x7f); return;
       case 0x10: this.vga.bios(al, c.r[BX], c.r[CX], c.r[DX], c.s[ES], this.mem); return;
       case 0x0c: case 0x0d: {
         // A pixel (16-colour planar modes).

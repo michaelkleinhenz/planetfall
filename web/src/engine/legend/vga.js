@@ -139,6 +139,20 @@ export class Vga {
     return out;
   }
 
+  /**
+   * The screen as a picture: {width, height, palette, pixels}. Mode 13h
+   * (320x200, 256 colours, which the game uses for the ship's panel) has its
+   * pixels one per byte (every write reaches all four planes here).
+   */
+  screen() {
+    if (this.mode === 0x13) {
+      const palette = [];
+      for (let i = 0; i < 256; i++) palette.push([0, 1, 2].map((k) => Math.round(this.dac[i * 3 + k] * 255 / 63)));
+      return { width: 320, height: 200, palette, pixels: this.planes[0].slice(0, 320 * 200) };
+    }
+    return { width: 640, height: 480, palette: this.palette(), pixels: this.pixels() };
+  }
+
   /** The screen (640x480) as colour numbers. */
   pixels(width = 640, height = 480) {
     const out = new Uint8Array(width * height);
@@ -163,7 +177,7 @@ export class Vga {
       planes: this.planes.map((p) => p.slice()), latch: Array.from(this.latch),
       seq: Array.from(this.seq), gc: Array.from(this.gc), attr: Array.from(this.attr), dac: Array.from(this.dac),
       seqIndex: this.seqIndex, gcIndex: this.gcIndex, attrIndex: this.attrIndex, attrFlip: this.attrFlip,
-      dacWrite: this.dacWrite, dacRead: this.dacRead, dacPart: this.dacPart,
+      dacWrite: this.dacWrite, dacRead: this.dacRead, dacPart: this.dacPart, mode: this.mode ?? 0x12,
     };
   }
 
@@ -172,7 +186,7 @@ export class Vga {
     this.latch.set(s.latch); this.seq.set(s.seq); this.gc.set(s.gc); this.attr.set(s.attr); this.dac.set(s.dac);
     Object.assign(this, {
       seqIndex: s.seqIndex, gcIndex: s.gcIndex, attrIndex: s.attrIndex, attrFlip: s.attrFlip,
-      dacWrite: s.dacWrite, dacRead: s.dacRead, dacPart: s.dacPart,
+      dacWrite: s.dacWrite, dacRead: s.dacRead, dacPart: s.dacPart, mode: s.mode ?? 0x12,
     });
     this.dirty = true;
   }

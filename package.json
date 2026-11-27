@@ -8,7 +8,7 @@
     "build": "node tools/zil2js/compile.mjs",
     "build:magnetic": "node tools/magnetic/build.mjs",
     "verify": "node tools/zil2js/verify.mjs",
-    "test": "node tools/zil2js/verify.mjs && node tests/transcripts.test.mjs",
+    "test": "node tools/zil2js/verify.mjs && node tests/transcripts.test.mjs && node tests/legend.test.mjs",
     "play": "node tools/play.mjs",
     "start": "python3 -m http.server 8000 --directory web"
   },
