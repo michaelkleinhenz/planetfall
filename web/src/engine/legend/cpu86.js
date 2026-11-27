@@ -37,23 +37,32 @@ export class Cpu {
     this.portOut = () => {};
     this.pendingIrq = [];           // hardware interrupt vectors waiting for IF
     this.trace = null;
+    this.vga = null;                // the VGA's planes (A0000-AFFFF)
   }
 
   // ---- memory ---------------------------------------------------------------
-  rb(seg, off) { return this.mem[((seg << 4) + (off & 0xffff)) & 0xfffff]; }
+  // (Addresses A0000-AFFFF go to the VGA's planes when there is one.)
+  rb(seg, off) {
+    const a = ((seg << 4) + (off & 0xffff)) & 0xfffff;
+    if (a >= 0xa0000 && a < 0xb0000 && this.vga) return this.vga.read(a - 0xa0000);
+    return this.mem[a];
+  }
   rw(seg, off) {
     const a = ((seg << 4) + (off & 0xffff)) & 0xfffff;
-    if ((off & 0xffff) === 0xffff) return this.mem[a] | (this.mem[((seg << 4)) & 0xfffff] << 8);
+    if ((off & 0xffff) === 0xffff || (a >= 0x9ffff && a < 0xb0000 && this.vga)) return this.rb(seg, off) | (this.rb(seg, off + 1) << 8);
     return this.mem[a] | (this.mem[a + 1] << 8);
   }
-  wb(seg, off, v) { this.mem[((seg << 4) + (off & 0xffff)) & 0xfffff] = v; }
+  wb(seg, off, v) {
+    const a = ((seg << 4) + (off & 0xffff)) & 0xfffff;
+    if (a >= 0xa0000 && a < 0xb0000 && this.vga) this.vga.write(a - 0xa0000, v & 0xff);
+    else this.mem[a] = v;
+  }
   ww(seg, off, v) {
     const a = ((seg << 4) + (off & 0xffff)) & 0xfffff;
+    if ((off & 0xffff) === 0xffff || (a >= 0x9ffff && a < 0xb0000 && this.vga)) { this.wb(seg, off, v); this.wb(seg, off + 1, v >> 8); return; }
     this.mem[a] = v;
-    if ((off & 0xffff) === 0xffff) this.mem[(seg << 4) & 0xfffff] = v >> 8;
-    else this.mem[a + 1] = v >> 8;
+    this.mem[a + 1] = v >> 8;
   }
-
   fetchb() { const v = this.rb(this.s[CS], this.ip); this.ip = (this.ip + 1) & 0xffff; return v; }
   fetchw() { const v = this.rw(this.s[CS], this.ip); this.ip = (this.ip + 2) & 0xffff; return v; }
   fetchsb() { const v = this.fetchb(); return v & 0x80 ? v - 256 : v; }
@@ -229,7 +238,8 @@ export class Cpu {
     const end = this.count + n;
     this.stop = false;
     while (this.count < end && !this.stop) {
-      if (this.pendingIrq.length && (this.flags & IF) && !this.inhibit) this.interrupt(this.pendingIrq.shift());
+      // (A BIOS service that waits takes interrupts, as the BIOS enables them.)
+      if (this.pendingIrq.length && (((this.flags & IF) && !this.inhibit) || this.waitingInService)) { this.waitingInService = false; this.interrupt(this.pendingIrq.shift()); }
       this.inhibit = false;
       if (this.s[CS] === STUB_SEG && this.ip < 0x400) {
         // A BIOS/DOS service stub: the service runs, then returns like IRET

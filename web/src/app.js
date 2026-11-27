@@ -224,6 +224,7 @@ function renderGameText(segments, container) {
     // A picture goes above the text, but below the title block (see below).
     const banner = !seg.fixed && findBanner(seg.text);
     if (seg.picture != null && pictureFile && !banner) container.append(pictureFigure(seg.picture));
+    if (!seg.text) continue;
     if (seg.fixed) {
       container.append(el('pre', 'game-text fixed', seg.text));
       continue;

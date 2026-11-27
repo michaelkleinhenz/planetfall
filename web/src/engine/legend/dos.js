@@ -3,13 +3,20 @@
 // the game writes, kept in memory), the keyboard, the timer, and a video BIOS
 // whose screen is not shown (the app shows the game's text, not its screen).
 
+import { Vga } from './vga.js';
 import { Cpu, CpuError, AX, CX, DX, BX, SP, BP, SI, DI, ES, CS, SS, DS, STUB_SEG, FLAGS } from './cpu86.js';
 
 const MEM_SIZE = 0x110000;
 const MEM_TOP = 0x9fff;          // last paragraph of conventional memory (640 KB)
 const FIRST_MCB = 0x0070;
 const COLS = 80, ROWS = 60;
-const TICK_INSTRUCTIONS = 40000; // instructions per 18.2 Hz timer tick
+const TICK_INSTRUCTIONS = 4000;  // instructions per 18.2 Hz timer tick (time runs fast: delays pass quickly)
+// A reprogrammed (faster) timer still interrupts no more often than this: the
+// game times the CPU with it at start-up and turns off its sound driver (then
+// crashes calling it) on a machine that seems too slow.
+const MIN_IRQ_INSTRUCTIONS = 3000;
+const KEY_GAP = 3000;          // instructions between a key's make and break codes
+const KEY_IDLE = 3_000_000;    // instructions without keys before a program with its own keyboard handler counts as waiting
 
 export class DosError extends Error {}
 
@@ -23,10 +30,13 @@ export class Dos {
     this.cpu.service = (v) => this.service(v);
     this.cpu.portIn = (p, w) => this.portIn(p, w);
     this.cpu.portOut = (p, v, w) => this.portOut(p, v, w);
+    this.vga = new Vga();
+    this.cpu.vga = this.vga;
     this.files = new Map(Object.entries(files).map(([k, v]) => [k.toUpperCase(), v]));
     this.written = new Map();       // files the game created: NAME -> { data: number[] }
     this.handles = [];              // index = handle
-    this.keys = [];                 // pending BIOS key codes (scan << 8 | ascii)
+    this.keys = new KeyBuffer(this.mem); // the BIOS key buffer (scan << 8 | ascii)
+    this.typed = [];                // keys typed but not yet pressed (see pumpKeys)
     this.state = 'running';
     this.waiting = null;            // why the CPU stopped: 'key'
     this.onWrite = null;            // (name, bytes) for writes to created files
@@ -234,7 +244,10 @@ export class Dos {
     const cpu = this.cpu;
     const start = cpu.count;
     this.state = 'running';
+    this.kbLast = cpu.count;
     while (this.state === 'running') {
+      this.pumpKeys();
+      if (this.state !== 'running') break;
       const slice = Math.max(1, Math.min(this.nextTick - cpu.count, 20000));
       try {
         cpu.run(slice);
@@ -256,31 +269,71 @@ export class Dos {
   tick() {
     // The timer interrupt comes at the rate the program set (PIT channel 0).
     const div = this.pitDivisor || 0x10000;
-    this.nextTick = this.cpu.count + Math.max(20, Math.round(TICK_INSTRUCTIONS * div / 0x10000));
+    this.nextTick = this.cpu.count + Math.max(MIN_IRQ_INSTRUCTIONS, Math.round(TICK_INSTRUCTIONS * div / 0x10000));
     if (!this.cpu.pendingIrq.includes(8)) this.cpu.pendingIrq.push(8);
+  }
+
+  /**
+   * Typed keys reach the program as the hardware gives them: a make code,
+   * then a break code, each through IRQ 1 (INT 9). The BIOS's handler puts
+   * the key in its buffer on the make code; a program with its own handler
+   * may pass it on or not. A program with its own handler waits for keys by
+   * watching its own variables, so after a while with nothing to deliver it
+   * counts as waiting.
+   */
+  pumpKeys() {
+    const cpu = this.cpu;
+    if (this.kbPhase) {
+      if (cpu.count < this.kbNext || cpu.pendingIrq.includes(9)) return;
+      if (this.kbPhase === 'make') {
+        this.lastScan = this.kbScan | 0x80;
+        cpu.pendingIrq.push(9);
+        this.kbPhase = 'break';
+        this.kbNext = cpu.count + KEY_GAP;
+        return;
+      }
+      this.kbPhase = null;
+      this.kbLast = cpu.count;
+    }
+    if (this.typed.length) {
+      if (this.keys.full) return;
+      const k = this.typed.shift();
+      this.kbKey = k;
+      this.kbScan = (k >> 8) || SCAN[String.fromCharCode(k & 0xff).toLowerCase()] || 0;
+      this.lastScan = this.kbScan;
+      cpu.pendingIrq.push(9);
+      this.kbPhase = 'make';
+      this.kbNext = cpu.count + KEY_GAP;
+      return;
+    }
+    if (this.r16(9 * 4 + 2) !== STUB_SEG && cpu.count - this.kbLast > KEY_IDLE) { this.state = 'key'; this.kbLast = cpu.count; }
   }
 
   /** Queue a key: a character, or a BIOS code (scan << 8 | ascii). */
   key(k) {
     if (typeof k === 'string') {
-      for (const ch of k) this.keys.push(SCAN[ch.toLowerCase()] !== undefined ? (SCAN[ch.toLowerCase()] << 8) | ch.charCodeAt(0) : ch.charCodeAt(0));
-    } else this.keys.push(k);
+      for (const ch of k) this.typed.push(SCAN[ch.toLowerCase()] !== undefined ? (SCAN[ch.toLowerCase()] << 8) | ch.charCodeAt(0) : ch.charCodeAt(0));
+    } else this.typed.push(k);
   }
 
   // ---- I/O ports ----------------------------------------------------------------
   portIn(p, w) {
+    if (w) return this.portIn(p, 0) | (this.portIn(p + 1, 0) << 8);
+    const v = this.vga.portIn(p);
+    if (v !== null) return v;
     switch (p) {
-      case 0x3da: case 0x3ba: this.retrace = (this.retrace + 1) & 3; return this.retrace & 2 ? 0x09 : 0x00;
+      case 0x3da: case 0x3ba: this.vga.attrFlip = false; this.retrace = (this.retrace + 1) & 3; return this.retrace & 2 ? 0x09 : 0x00;
       case 0x40: { const c = (TICK_INSTRUCTIONS - (this.nextTick - this.cpu.count)) * 65536 / TICK_INSTRUCTIONS; this.pitLatch = (65535 - c) & 0xffff; const v = this.pitLow ? this.pitLatch >> 8 : this.pitLatch & 0xff; this.pitLow = !this.pitLow; return v; }
       case 0x60: return this.lastScan ?? 0;
       case 0x61: return this.port61 ?? 0;
       case 0x21: return this.picMask ?? 0;
       case 0x201: return 0xf0;
-      case 0x3c9: return 0;
     }
     return w ? 0xffff : 0xff;
   }
-  portOut(p, v) {
+  portOut(p, v, w) {
+    if (w) { this.portOut(p, v & 0xff, 0); this.portOut(p + 1, (v >> 8) & 0xff, 0); return; }
+    if (this.vga.portOut(p, v)) return;
     switch (p) {
       case 0x61: this.port61 = v; break;
       case 0x21: this.picMask = v; break;
@@ -321,7 +374,7 @@ export class Dos {
         }
         return;
       }
-      case 0x09: return; // keyboard IRQ (keys go straight to the BIOS buffer)
+      case 0x09: if (this.lastScan < 0x80 && this.kbKey != null) { this.keys.push(this.kbKey); this.kbKey = null; } return; // the BIOS's keyboard handler
       case 0x10: return this.video();
       case 0x11: c.r[AX] = this.r16(0x410); return;
       case 0x12: c.r[AX] = 640; return;
@@ -351,6 +404,8 @@ export class Dos {
   }
 
   waitKey() {
+    // (Typed keys still on their way: run on and try again.)
+    if (this.typed.length || this.kbPhase) { this.cpu.stop = true; this.cpu.retry = true; this.cpu.waitingInService = true; return; }
     this.state = 'key';
     this.cpu.stop = true;
     this.cpu.retry = true;
@@ -363,7 +418,7 @@ export class Dos {
         if (!this.keys.length) return this.waitKey();
         c.r[AX] = this.keys.shift(); this.keyPolls = 0; return;
       case 0x01: case 0x11:
-        if (this.keys.length) { c.r[AX] = this.keys[0]; this.setZero(false); this.keyPolls = 0; return; }
+        if (this.keys.length) { c.r[AX] = this.keys.peek(); this.setZero(false); this.keyPolls = 0; return; }
         this.setZero(true);
         // A program that only polls is waiting too.
         if (++this.keyPolls > 200) { this.keyPolls = 0; return this.waitKey(); }
@@ -390,10 +445,22 @@ export class Dos {
   video() {
     const c = this.cpu, ah = c.r[AX] >> 8, al = c.r[AX] & 0xff;
     switch (ah) {
-      case 0x00: this.mem[0x449] = al & 0x7f; this.videoMode = al & 0x7f; this.grid.fill(32); this.onMode?.(al & 0x7f); return;
+      case 0x00: this.mem[0x449] = al & 0x7f; this.videoMode = al & 0x7f; this.grid.fill(32); this.vga.reset(); this.onMode?.(al & 0x7f); return;
+      case 0x10: this.vga.bios(al, c.r[BX], c.r[CX], c.r[DX], c.s[ES], this.mem); return;
+      case 0x0c: case 0x0d: {
+        // A pixel (16-colour planar modes).
+        const x = c.r[CX], y = c.r[DX], a = y * 80 + (x >> 3), bit = 0x80 >> (x & 7), planes = this.vga.planes;
+        if (ah === 0x0d) { let v = 0; for (let i = 0; i < 4; i++) if (planes[i][a] & bit) v |= 1 << i; c.setr8(0, v); return; }
+        for (let i = 0; i < 4; i++) {
+          const on = (al >> i) & 1;
+          if (al & 0x80) { if (on) planes[i][a] ^= bit; } else if (on) planes[i][a] |= bit; else planes[i][a] &= ~bit;
+        }
+        this.vga.dirty = true;
+        return;
+      }
       case 0x0f: c.r[AX] = (80 << 8) | this.mem[0x449]; c.setr8(7, 0); return;
       case 0x02: this.cursor = c.r[DX]; return;
-      case 0x01: case 0x05: case 0x0b: case 0x0c: return;
+      case 0x01: case 0x05: case 0x0b: return;
       case 0x06: case 0x07: {
         // Scroll a window of the text grid.
         const top = c.r[CX] >> 8, left = c.r[CX] & 0xff, bottom = c.r[DX] >> 8, right = c.r[DX] & 0xff;
@@ -475,7 +542,7 @@ export class Dos {
         }
         this.console(String.fromCharCode(r[DX] & 0xff)); return;
       case 0x0b: c.setr8(0, this.keys.length ? 0xff : 0); if (!this.keys.length && ++this.keyPolls > 200) { this.keyPolls = 0; return this.waitKey(); } return;
-      case 0x0c: this.keys.length = 0; if (al === 1 || al === 6 || al === 7 || al === 8) { r[AX] = al << 8; return this.dos(); } return;
+      case 0x0c: this.keys.clear(); if (al === 1 || al === 6 || al === 7 || al === 8) { r[AX] = al << 8; return this.dos(); } return;
       case 0x02: this.console(String.fromCharCode(r[DX] & 0xff)); return;
       case 0x09: { let t = ''; for (let i = 0; i < 4096; i++) { const ch = c.rb(s[DS], r[DX] + i); if (ch === 0x24) break; t += String.fromCharCode(ch); } this.console(t); return; }
       case 0x0d: return;
@@ -668,6 +735,38 @@ export class Dos {
   console(text) {
     this.onConsole?.(text);
   }
+}
+
+// The BIOS keyboard buffer, in the BIOS data area as on a PC (some programs
+// look at its head and tail themselves to see whether a key is waiting).
+class KeyBuffer {
+  constructor(mem) { this.mem = mem; }
+  r16(a) { return this.mem[a] | (this.mem[a + 1] << 8); }
+  w16(a, v) { this.mem[a] = v & 0xff; this.mem[a + 1] = (v >> 8) & 0xff; }
+  get start() { return this.r16(0x480) || 0x1e; }
+  get end() { return this.r16(0x482) || 0x3e; }
+  get length() {
+    const n = (this.r16(0x41c) - this.r16(0x41a)) / 2;
+    return n >= 0 ? n : n + (this.end - this.start) / 2;
+  }
+  next(p) { p += 2; return p >= this.end ? this.start : p; }
+  get full() { return this.next(this.r16(0x41c)) === this.r16(0x41a); }
+  push(...keys) {
+    for (const k of keys) {
+      const tail = this.r16(0x41c), n = this.next(tail);
+      if (n === this.r16(0x41a)) return; // full
+      this.w16(0x400 + tail, k);
+      this.w16(0x41c, n);
+    }
+  }
+  peek() { return this.length ? this.r16(0x400 + this.r16(0x41a)) : 0; }
+  shift() {
+    if (!this.length) return 0;
+    const head = this.r16(0x41a), k = this.r16(0x400 + head);
+    this.w16(0x41a, this.next(head));
+    return k;
+  }
+  clear() { this.w16(0x41a, this.r16(0x41c)); }
 }
 
 // Scan codes for typed characters (US layout).

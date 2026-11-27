@@ -9,6 +9,7 @@
 
 import { current } from '../current.js';
 import { LegendMachine } from './machine.js';
+import { KEYS } from './dos.js';
 import { LegendWorld, vocabulary as readVocabulary } from './world.js';
 import { LegendPictures } from './pictures.js';
 import { compress, decompress, bytesToBase64, base64ToBytes } from './pack.js';
@@ -66,10 +67,23 @@ export async function loadFiles() {
   return files;
 }
 
-/** The pictures of the current game (for the app). */
+// Screens of the game's own (the PV commset) as shown, by picture id ("screen:n").
+const screens = new Map();
+let screenCount = 0;
+
+function showScreen() {
+  const id = `screen:${++screenCount}`;
+  screens.set(id, machine.screen());
+  // (Only the recent ones are kept: the transcript shows them as they come.)
+  for (const k of screens.keys()) { if (screens.size <= 40) break; screens.delete(k); }
+  return id;
+}
+
+/** The pictures of the current game (for the app): room pictures and screens. */
 export async function pictureSource() {
   const f = await loadFiles();
-  return new LegendPictures(f, current.code.CONFIG.prefix);
+  const pics = new LegendPictures(f, current.code.CONFIG.prefix);
+  return { picture: (id) => (String(id).startsWith('screen:') ? screens.get(id) ?? null : pics.picture(id)) };
 }
 
 // ---------------------------------------------------------------------------
@@ -81,9 +95,9 @@ let baselines = new Map(); // game id -> first-prompt memory (the same on every 
 function createMachine(f) {
   const id = current.id;
   machine = new LegendMachine(f, current.code.CONFIG);
-  if (baselines.has(id)) machine.baseline = baselines.get(id);
+  if (baselines.has(id)) ({ mem: machine.baseline, vga: machine.vgaBaseline } = baselines.get(id));
   const opening = machine.boot();
-  baselines.set(id, machine.baseline);
+  baselines.set(id, { mem: machine.baseline, vga: machine.vgaBaseline });
   world = new LegendWorld(machine, f['OBJECT.DAT']);
   world.find();
   vocab = null;
@@ -110,6 +124,7 @@ export function snapshot() {
     engine: 'legend', v: 1,
     mem: bytesToBase64(compress(raw)),
     grid: bytesToBase64(compress(grid)),
+    vga: { regs: s.vga.regs, planes: bytesToBase64(compress(s.vga.planes)) },
     cpu: s.cpu, dos, drawn: s.drawn, scripting: s.scripting, score,
   };
 }
@@ -123,7 +138,8 @@ export function loadSnapshot(s) {
     diff.push([off, raw.subarray(p + 8, p + 8 + len)]);
     p += 8 + len;
   }
-  machine.restore({ diff, cpu: s.cpu, dos: { ...s.dos, grid: decompress(base64ToBytes(s.grid)), written: [] }, drawn: s.drawn, scripting: s.scripting });
+  const vga = s.vga && { regs: s.vga.regs, planes: decompress(base64ToBytes(s.vga.planes)) };
+  machine.restore({ diff, cpu: s.cpu, dos: { ...s.dos, grid: decompress(base64ToBytes(s.grid)), written: [] }, vga, drawn: s.drawn, scripting: s.scripting });
   score = s.score ?? 0;
 }
 
@@ -142,12 +158,35 @@ function countScore(text) {
   if (m) score = Number(m[1]);
 }
 
+const SCREEN_HINT = '[The game shows a screen of its own. Type the keys to press (a number or letter, or a key name: Enter, Space, Esc, Up, Down, Left, Right, PgUp, PgDn); an empty line is Enter.]\n';
+
+const KEY_NAMES = {
+  enter: KEYS.ENTER, return: KEYS.ENTER, space: KEYS.SPACE, esc: KEYS.ESC, escape: KEYS.ESC,
+  backspace: KEYS.BACKSPACE, tab: 0x0f09,
+  up: 0x4800, down: 0x5000, left: 0x4b00, right: 0x4d00,
+  pgup: 0x4900, pageup: 0x4900, pgdn: 0x5100, pagedown: 0x5100, home: 0x4700, end: 0x4f00,
+  f1: KEYS.F1, f2: KEYS.F2, f3: KEYS.F3, f4: KEYS.F4, f5: KEYS.F5,
+};
+// The app's codes for the cursor keys (as the Z-machine numbers them).
+const ARROWS = { 129: 0x4800, 130: 0x5000, 131: 0x4b00, 132: 0x4d00 };
+
+/** The keys for what the player typed on a screen of the game's own. */
+export function screenKeys(line) {
+  const t = line.trim();
+  if (!t) return [KEYS.ENTER];
+  if (t.length === 1 && ARROWS[t.charCodeAt(0)]) return [ARROWS[t.charCodeAt(0)]];
+  const words = t.toLowerCase().split(/[\s,]+/);
+  if (words.every((w) => KEY_NAMES[w] !== undefined)) return words.map((w) => KEY_NAMES[w]);
+  return [t];
+}
+
 /** The game loop: run until the game wants input, then ask the host. */
 export async function runLegend(io) {
   const f = await loadFiles();
   let opening = createMachine(f);
   let pending = opening;
   let state = { state: 'prompt' };
+  let inScreen = false;
   for (;;) {
     if (pending) { countScore(pending); io.output(pending); pending = ''; }
     if (state.state === 'exit') {
@@ -161,8 +200,16 @@ export async function runLegend(io) {
     }
     if (state.state === 'question' && state.question) io.output(state.question + '\n');
     io.status?.(status());
-    io.picture?.(machine.picture());
-    const line = await io.input();
+    if (state.state === 'screen') {
+      // A screen of the game's own: shown as it is, and it gets keys.
+      if (!inScreen) io.output(SCREEN_HINT);
+      inScreen = true;
+      io.picture?.(showScreen(), { alone: true });
+    } else {
+      inScreen = false;
+      io.picture?.(machine.picture());
+    }
+    const line = await (state.state === 'screen' && io.inputChar ? io.inputChar() : io.input());
     if (line && typeof line === 'object') {
       loadSnapshot(line.snapshot);
       if (line.notice) io.output(line.notice);
@@ -170,6 +217,12 @@ export async function runLegend(io) {
       continue;
     }
     const cmd = String(line);
+    if (state.state === 'screen') {
+      for (const k of screenKeys(cmd)) machine.dos.key(k);
+      state = machine.continue();
+      pending = state.text;
+      continue;
+    }
     if (state.state === 'question') {
       // RESTART: the app starts the game again itself (the game's own restart
       // would turn off the transcript).

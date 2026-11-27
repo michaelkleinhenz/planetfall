@@ -20,6 +20,7 @@ import { PicFile } from './pictures.js';
 const SCRIPT_FILE = 'GAME.TXT';
 const TEXT_LEFT = 33;        // the story window starts at this column
 const MEM_SAVED = 0xa0000;   // memory kept in snapshots (conventional memory)
+const LAYOUT_ROWS = 130, LAYOUT_BYTES = 15; // the main screen's command buttons (pixels 0-119, rows 0-129)
 
 export class LegendError extends Error {}
 
@@ -89,6 +90,8 @@ export class LegendMachine {
     this.script = '';
     this.drawnAtBoot = this.drawn.slice();
     if (!this.baseline) this.baseline = this.dos.mem.slice(0, MEM_SAVED);
+    if (!this.vgaBaseline) this.vgaBaseline = this.vgaPlanes();
+    this.layout = this.layoutSample();
     this.opening = opening;
     return opening;
   }
@@ -180,6 +183,36 @@ export class LegendMachine {
     return out;
   }
 
+  // ---- the graphics screen ---------------------------------------------------------------
+
+  /** The VGA's four planes, one after the other. */
+  vgaPlanes() {
+    const out = new Uint8Array(4 * 0x10000);
+    this.dos.vga.planes.forEach((p, i) => out.set(p, i * 0x10000));
+    return out;
+  }
+
+  /** The command buttons at the top left, which only the main screen has. */
+  layoutSample() {
+    const out = [];
+    for (const p of this.dos.vga.planes) for (let y = 0; y < LAYOUT_ROWS; y++) out.push(...p.subarray(y * 80, y * 80 + LAYOUT_BYTES));
+    return out;
+  }
+
+  /** Is the game's usual screen up (menus, picture and text), or one of its own (the PV commset, the DataMan)? */
+  isMainScreen() {
+    if (!this.layout) return true;
+    const now = this.layoutSample();
+    let diff = 0;
+    for (let i = 0; i < now.length; i++) if (now[i] !== this.layout[i]) diff++;
+    return diff < now.length / 20;
+  }
+
+  /** The whole screen as a picture: {width, height, palette, pixels}. */
+  screen() {
+    return { width: 640, height: 480, palette: this.dos.vga.palette(), pixels: this.dos.vga.pixels() };
+  }
+
   // ---- pictures -----------------------------------------------------------------------
 
   fileRead(name, pos) {
@@ -211,7 +244,8 @@ export class LegendMachine {
   /**
    * Type a line and run until the game wants the next one. Returns
    * { text, state }: state 'prompt' (the ">" prompt), 'question' (the game
-   * asks something else; text ends with the question) or 'exit'.
+   * asks something else; text ends with the question), 'screen' (a screen of
+   * the game's own that reads keys, see screen()) or 'exit'.
    */
   command(line) {
     this.script = '';
@@ -240,6 +274,8 @@ export class LegendMachine {
     for (let i = 0; i < 500; i++) {
       const state = this.dos.run();
       if (state === 'exit') return { text: this.takeScript(), state: 'exit' };
+      // A screen of the game's own (the PV commset): it reads keys.
+      if (!this.isMainScreen()) return { text: this.takeScript(), state: 'screen' };
       const row = this.cursorRow();
       if (/- MORE -/.test(row)) { this.dos.key(KEYS.SPACE); continue; }
       if (this.atPrompt()) return { text: this.takeScript(), state: 'prompt' };
@@ -295,11 +331,30 @@ export class LegendMachine {
         handles: dos.handles.map((h) => (h ? { ...h } : null)),
         written: [...dos.written].filter(([n]) => !dos.discard.has(n)).map(([n, f]) => [n, Uint8Array.from(f.data)]),
         cursor: dos.cursor, grid: dos.grid.slice(), ticks: dos.ticks, nextTick: dos.nextTick, psp: dos.psp, dta: dos.dta,
-        videoMode: dos.videoMode, port61: dos.port61, picMask: dos.picMask,
+        videoMode: dos.videoMode, port61: dos.port61, picMask: dos.picMask, pitDivisor: dos.pitDivisor ?? 0,
       },
+      vga: this.vgaState(),
       drawn: this.drawn.map((d) => ({ ...d })),
       scripting: this.scripting,
     };
+  }
+
+  /** The VGA: registers, and the planes as a difference (XOR) from the first prompt's. */
+  vgaState() {
+    const { planes, ...regs } = this.dos.vga.snapshot();
+    const now = this.vgaPlanes(), base = this.vgaBaseline;
+    for (let i = 0; i < now.length; i++) now[i] ^= base[i];
+    return { regs, planes: now };
+  }
+
+  setVgaState(v) {
+    const base = this.vgaBaseline, planes = [];
+    for (let i = 0; i < 4; i++) {
+      const p = new Uint8Array(0x10000);
+      for (let j = 0; j < 0x10000; j++) p[j] = v.planes[i * 0x10000 + j] ^ base[i * 0x10000 + j];
+      planes.push(p);
+    }
+    this.dos.vga.restore({ ...v.regs, planes });
   }
 
   restore(s) {
@@ -318,10 +373,13 @@ export class LegendMachine {
       for (const n of dos.discard) dos.written.set(n, { data: [] });
     }
     dos.cursor = d.cursor; dos.grid.set(d.grid); dos.ticks = d.ticks; dos.nextTick = d.nextTick; dos.psp = d.psp; dos.dta = d.dta;
-    dos.videoMode = d.videoMode; dos.port61 = d.port61; dos.picMask = d.picMask;
-    dos.keys = [];
+    dos.videoMode = d.videoMode; dos.port61 = d.port61; dos.picMask = d.picMask; dos.pitDivisor = d.pitDivisor ?? 0; dos.pitWrite = 0;
+    dos.kbPhase = null; dos.kbKey = null;
+    dos.keys.clear();
+    dos.typed = [];
     dos.keyPolls = 0;
     dos.state = 'key';
+    if (s.vga) this.setVgaState(s.vga);
     this.drawn = s.drawn.map((x) => ({ ...x }));
     this.scripting = s.scripting;
     this.script = '';

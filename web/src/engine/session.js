@@ -48,7 +48,7 @@ export class GameSession {
       eraseLine: () => this.upper.eraseLine(),
       status: (s) => this.onStatus(s),
       // Magnetic Scrolls games: the picture for the current scene (or null).
-      picture: (n) => { this.picture = n; },
+      picture: (n, { alone = false } = {}) => { this.picture = n; this.pictureAlone = alone; },
       // A new game begins: drop what the old game printed, and tell the host.
       restarted: () => { this.shownPicture = null; this.segments = []; this.restartedFlag = true; this.upper = new UpperWindow(); },
       save: (snap) => this.onSave(snap),
@@ -79,6 +79,8 @@ export class GameSession {
     if (this.picture !== this.shownPicture) {
       if (this.picture == null) this.shownPicture = null;
       else if (segments.length && !segments[0].fixed) { segments[0].picture = this.picture; this.shownPicture = this.picture; }
+      // (A picture with no text: Legend's screens, which come one after another.)
+      else if (!segments.length && this.pictureAlone) { segments.push({ text: '', fixed: false, picture: this.picture }); this.shownPicture = this.picture; }
     }
     const text = segments.map((s) => s.text).join('');
     const waiters = this.waiters;
