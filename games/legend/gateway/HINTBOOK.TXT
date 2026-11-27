@@ -1,0 +1,1359 @@
+/************************************************************************                            
+        This text originally appeared in the pages of THE OFFICIAL HINT *
+BOOK FROM LEGEND ENTERTAINMENT COMPANY OF FREDERICK POHL's GATEWAY      *
+************************************************************************/
+
+
+                            CONTENTS                                SECTION
+
+INTRODUCTION BY FREDERICK POHL
+
+QUICK REFERENCE: WHAT IS IN THE HINT BOOK ..............................1
+
+GENERAL TIPS ...........................................................2 
+
+PUZZLES AND ANSWERS ....................................................3
+
+        SECTION ONE ....................................................3A
+
+        SECTION TWO ....................................................3B
+
+COMPLETE LIST OF POINTS ................................................4
+
+***************************************************************************
+                                INTRODUCTION
+
+BY FREDERICK POHL
+
+Several years ago, I wrote a novel called Gateway, which told of an ancient 
+race of aliens who parked a fleet of auto-navigable, faster-than-light 
+spaceships on an asteroid, and then vanished. I was proud of the book when 
+I finished it, and delighted when it won just about all the awards the field
+of science fiction has to offer. And ever since its release I've been 
+thrilled by the way people respond to the Gateway experience. The original 
+novel is still in print, and the entire Heechee saga has sold several 
+million copies all over the world, with translations into nearly twenty 
+languages.
+
+Now I have a brand-new thrill with the appearance of the first computer game 
+to explore the Gateway universe. The designers at Legend have created a 
+wonderful adaptation that is true to the spirit of the original, yet tells a 
+host of entirely new stories. The game succeeds in capturing all the flavors 
+of danger, adventure, futuristic speculation- and even awe!- that I felt when
+I first began to tell the story of the Heechee's bizarre legacy.
+
+In addition to the story, I was fascinated by the game environment itself. As
+an author, I work hard to try to get inside the heads of my characters. But 
+when you play this game you become the main character, and you have the 
+marvelous power to leap off the assigned page and poke into the whole 
+unexplored landscape of the story, exploring all the "what if's" that we 
+novelists do not have the scope to investigate.  This is a whole new dimension 
+to me, which makes the story come to life and lets the reader participate in 
+new and wonderful ways.
+
+I think that Gateway "the game" is a first-rate example of science fiction at 
+its most colorful and exciting. I only hope that this talented team of 
+designers, artists and programmers has already started to work on a sequel.
+
+
+
+SECTION 1
+==========================================================================
+                        QUICK REFERENCE:
+                    WHAT IS IN THE HINT BOOK
+
+This hint book contains a great deal of information about Frederick Pohl's
+GATEWAY, from very general tips to detailed answers for every puzzle in the
+game. Also included are maps, and a list of where all of the points are 
+scored.
+
+For quick reference, we have included a summary of what is in every section
+of the book:
+
+GENERAL TIPS
+        Some tips and advice on playing the game and interacting with the 
+        game interface.
+
+PUZZLES AND ANSWERS
+        This section is composed of two parts. The first contains a numbered
+        listing of all the puzzles in the game followed by the several 
+        specific questions on each. The second section contains the answers.
+
+LIST OF POINTS
+        How all of the points are scored in the game, listed by puzzle.
+
+This book contains information pertaining only to game play. If you
+have a technical question dealing with installation or the specific
+behavior of the game on your computer, you should look in the of your game 
+manual entitled TROUBLESHOOTING AND TECHNICAL ASSISTANCE or call customer  
+support at 1-800-658-8891 between 9:00 a.m. and 5:00 p.m. Eastern Time.
+
+
+SECTION 2
+==========================================================================
+GENERAL TIPS
+
+This is organized according to game section and contains general tips and
+good advice which we hope will add to the enjoyment of the game.
+
+TIPS THAT APPLY TO ALL SECTIONS OF THE GAME
+
+        "Talking to Characters."  Getting information from characters is
+important part of this game.  The best way to talk to someone you meet in
+the game is to ask them about objects, people, or events that you have
+encountered in other parts of the game.  The command format for this is
+simply to ASK {name of character} ABOUT {whatever it is you want to ask
+about}.  For instance, if you want to ask Thom Seldridge about the
+Corporation, simply enter ASK THOM SELDRIDGE ABOUT CORPORATION.
+
+        "Taking advantage of the game interface."  If you have a mouse and
+are comfortable with typing to play the game.  One of the best features of
+our game system is its flexibility; there are enough ways to interact with
+the game that you can pick a combination of methods that is comfortable
+for you.
+        
+        Click on the compass rose directions to move from room to room.
+
+        Click on objects in the pictures to LOOK at them.
+
+        Click on the buttons in the upper left hand corner of the screen
+        to learn about your inventory (INVENTORY) and score (STATUS)
+
+        Click on PICTURE to make the picture come back.
+
+        Double click on verbs in the verb menu for single word command
+        inputs like WAIT, UNDO, SAVE, RESTORE, RESTART, QUIT, and AGAIN.
+
+        Use the verb and object menus to build simple commands like
+        EXAMINE ROCK, TAKE DEBIT CARD, DROP BADGE, or READ BOOK.
+
+        Use the verb and object menus to talk to characters.  Click on
+        ASK, then the character name, then ABOUT.  You will see a list of
+        objects and people in the object menu that this character is smart
+        about.  Double click on one of these choices to complete the
+        command.  Using the "ask about" menus will eliminate a lot of
+        typing of mouse clicking associated with asking the character
+        about things he or she doesn't know about.
+
+        If you are a good typist, you may consider typing in complex
+        commands that use many words and verbs that are farther down on
+        the verb list (like SHOOT THE UGLY GIANT SCORPION WITH THE LASER
+        GUN).  While typing will speed up entry in some cases, you should
+        keep in mind that you do not have to type:  All of the verbs and
+        objects you need to play the game are on the menus.
+
+For more on how to interact with the game, please see the game manual
+which was packaged with your game.
+
+        "Short cut for operating the ship control panel."  There is a
+short cut for selecting course codes on the ship control panel:  Click on
+the course code you want in the list of codes you'll find displayed in the
+window in the lower half of the screen.  The course code you click on will
+automatically be set.  Also:  If you don't have a mouse, you'll find that
+the "mouse emulator" for the ship control panel is very easy to use.
+Simply steer the mouse cursor with the four arrow keys and press <SPACE>
+to "click".
+
+TIPS FOR PART I:  GATEWAY PROSPECTOR
+
+        "News and Bullentin Board items on the PV commset."  The messages
+that you get on the PV commset are very important for solving puzzles.
+The news and bullentin board items are not.  While there are some minor
+clues in the news stories and bullentin board entries, you should remember
+that they are not essential to game play.  Don't feel like you have to
+read every word in every news story.  This text is here primarily for
+atmosphere and storytelling we have not buried the solutions to puzzles 
+here.
+
+        "The DataMan."  The DataMan has a great deal of background
+information about Gateway, a detailed explanation of how to operate the
+ships, a brief description of Gateway Station geography, and a
+continuously updated Corporate Record that shows you how you are doing in
+the game.  The Corporate Record is probably the most useful feature of the
+DataMan, and you should check on it periodically to monitor your progress
+(in tandem with the SCORE or STATUS commands from the command line).
+
+        "Ship Handling Class."  Be sure to attend your ship handling class
+and get a blue badge.  While the material covered in class is all in your
+DataMan, you must attend class to get your badge.  You need the blue badge
+in order to go on prospecting missions.  If you miss class on the first
+day, don't panic; there are sessions every day at 15:00 in room T20.
+
+        "Your Proctor."  It's a good idea to meet Thom Seldridge in the
+bar the first night, you can catch him again the next night at the same
+time.
+
+        "Nubar Kamalian."  If you don't meet Nubar the first night, don't
+worry; he comes back every night at 21:00 (nine o'clock)
+
+        "The Maintenance Man."  Read the text for the maintenance man's
+banter very carefully.  There are important clues here.
+
+        "A hint about the gun."  You need to get the gun out of the Armory
+for one of the adventures in Part II.
+
+TIPS FOR PART II: OTHER WORLDS
+
+        Where to find the Pedroza Lounge.  THe Pedroza Lounge is behind 
+the oak door in the Casino (go EAST).
+
+        Your Space Suit.  You don't need a space suit on worlds where the air
+is identified as breathable.  You'll find that the game will help you by
+telling you where you need a space suit and where you don't.  The space suit
+is not essential to solving puzzles - it is there to keep you alive in a 
+toxic atmosphere or a vacuum.
+
+        Inventory Management.  When you leave one of the shield generator
+planets, you'll notice that the game "makes" you drop everything that you
+picked up while on the planet.  The reason this happens is so inventory man-
+agement is simplified (who wants to carry around a hundred objects?).  While
+you might need something from Gateway to solve a puzzle on one of the four
+shield generator planets, you generally don't need to take anything from a
+shield planet back to Gateway or to another planet.
+
+TIPS FOR PART III: ENDGAME
+
+        Special hint.  Pay careful attention to your surroundings.
+
+SECTION 3
+==========================================================================
+PUZZLES AND ANSWERS
+
+All of the puzzles in the game are represented in this section. 
+First, scan Section One: Puzzles and look for the subhead which corresponds 
+to the puzzle you are having difficulty with.  Then read further to find
+your specific question.  Note the question number, and turn to Section Two:
+Answers.  Note that the Puzzle pages themselves give away a little bit of
+information about the puzzle solutions.
+
+SECTION 3A: PUZZLES
+
+PART I: GATEWAY PROSPECTOR
+
+1.      THE DEBIT CARD AND THE PV COMMSET
+1.A     Where is the debit card?
+1.B     How do I get my messagse?
+
+2.      THE DATAMAN
+2.A     How do I get the DataMan?
+
+3.      SHIP HANDLING CLASS     
+3.A     Where and when is the class held?
+3.B     Where do I get a blue badge?
+
+4.      THOM SELDRIDGE
+4.A     When and where am I supposed to meet Thom Seldridge?
+4.B     What is Thom waiting for after he tells me about Gateway?
+
+5.      NUBAR KAMALIAN, THE TRIVIA GAME, AND THE SILVER MEDALLION
+5.A     Where do I find Nubar?
+5.B     How do I get the silver medallion?
+5.C     What are the answers to the questions in the Old Earth Trivia
+        Game?
+
+6.      THE FIRST MEETING WITH TERRI NEILSON
+6.A     Where do I find Terri Neilson?
+6.B     How do I get Terri to sponsor me for the Orion Program?
+6.C     I called Terri and there was no answer or the line was busy,
+        what do I do now?
+
+7.      THE FIRST MISSIONS      
+7.A     How do I go on a mission?
+7.B     What am I looking for the first time I go on a mission?
+7.C     What is the significance of the Black Hole, Fragments, Red Giant,
+        Andromeda, and Nebula missions?
+
+8.      SIGMA DAYAN 7
+8.A     How do I get into the cave opening on the cliff?
+8.B     How do I solve the "moving portal" puzzle in the Entry Chamber?
+
+9.      GETTING THE GREEN BADGE
+9.A     I've gone on two missions and brought back an artifact.  How do I
+        get my green badge?
+
+10.     THE MAINTENANCE KEY
+10.A    What do I do with the machine in Central Park?
+10.B    How do I get the maintenance key from the old man?
+10.C    What is important about the old man's speech?
+
+11.     THE MAGAZINE
+11.A    How do I get the magazine?
+
+12.     THE TUNING FORK
+12.A    Where is the tuning fork?
+12.B    How do I get the tuning fork out of the museum without being
+        arrested?
+
+13.     THE GUN
+13.A    Where is the gun?
+13.B    How do I get the gun out of the Armory?
+
+14.     PERRY AND THE SECRET ROOM
+14.A    Where and when does Perry appear?
+14.B    How do I spy on him?
+14.C    How do I get into the secret room?
+14.D    What do I do in the secret room?
+
+15.     THE GREEN BADGE BRIEFING
+15.A    Where and when are the special Orion Program briefings?
+15.B    How do I get into the briefing?
+
+16.     THE METAL CYLINDER ON ALEPH 4
+16.A    How do I stop the Mutzer creatures from kicking me out of the 
+        clearing (so I can spy on them)?
+16.B    How do I get the metal cylinder from the chief Mutzer?
+
+17.     GETTING INTO THE DOME ON ALPH 4
+17.A    How do I get into the dome?
+
+18.     THE PRIMARY COLOR PUZZLE INSIDE THE DOME ON ALEPH 4
+18.A    How can I take the Heechee device that is inside the dome?
+
+
+PART II: OTHER WORLDS
+
+19.     THE BEACH VR AND THE PEDROZA CLUB MEMBERSHIP PIN
+19.A    Where is the Pedroza Lounge
+19.B    How do I get into the Pedroza Lounge to meet the person who
+        sent me that cryptic message?
+19.C    How do I get into the Beach VR?
+19.D    How do I break the Beach Virtual Reality?
+
+20.     LEONARD WORDEN'S SPECIAL BRIEFING
+20.A    I met the big shot in the Tanning Room - Now how do I get into
+        the special briefing?
+
+21.     THE METAL DISK ON AURIGAE 6
+21.A    How do I repair the metal disk?
+21.B    What do I do with the disk once I've repaired it?
+
+22.     GETTING THE BLACK PYRAMID FROM THE RESIDENCE ON AURIGAE 6
+22.A    How do I get the black pyramid from behind the panel in the
+        Residence?
+22.B    Why do I need the black pyramid?
+
+23.     THE TEMPLE COURT AND THE OCTAGONAL ROOM MAZE ON AURIGAE 6
+23.A    How do I deactivate the force field in the Temple Court?
+23.B    How do I get through the maze?
+23.C    What do I do once I've reached the middle of the maze?
+
+24.     ACTIVATING THE AURIGAE 6 SHIELD GENERATOR
+24.A    How do I activate the shield generator now that the force field 
+        is down?
+
+25.     THE SPIDER AND THE ANEMONES ON KADUNA 3
+25.A    How do I kill the spider?
+25.B    How do I get through the anemones?
+
+26.     THE SWAMP CREATURE ON KADUNA 3
+16.A    How do I get past the swamp?
+
+27.     THE PLAZA AND THE SNAKE ON KADUNA 3    
+27.A    How do I get past the snake?
+
+28.     THE PUFFERSLUG IN THE TOWER ON KADUNA 3
+28.A    How do I get past the pufferslug?
+
+29.     ACTIVATING THE KADUNA 3 SHIELD GENERATOR
+29.A    How do I activate the Kaduna 3 shield generator?
+
+SPECIAL NOTE: DORMA 5
+The dreams you will experience on Dorma 5 provide important clues.  You
+should SLEEP often on this planet so that you can have a chance to dream.
+
+30.     THE BOWL AND THE BERRIES ON DORMA 5
+30.A    What is the first thing I should do on Dorma 5?
+30.B    How do I get past the beast?
+30.C    How do I fix the bowl?
+30.D    What should I do with the bowl once I have fixed it?
+30.E    How do I get the crystal shard?
+
+31.     TAMING THE BEAST ON DORMA 5
+31.A    How do I tame the beast?
+
+32.     REPLACING THE BOULDER IN THE DIKE ON DORMA 5
+32.A    How do I get the beast to put the boulder back in the dike?
+
+33.     ACTIVATING THE DORMA 5 SHIELD GENERATOR
+33.A    How do I activate the Dorma 5 shield generator?
+
+SPECIAL NOTE: NEMIRA 3
+Your goal on Nemira 3 is to turn on the shield generator, and since
+many of the puzzles have more than one solution, there are a number
+of ways to accomplish this.  Your score may vary depending on the
+solutions you have chosen, and you may end up with an extra $1 million
+in bonus money when you return to gateway.
+
+34.     GETTING INTO BECKER'S HOUSE ON NEMIRA 3
+34.A    Where is Becker's house?
+34.B    How do I get across the rope bridge?
+34.C    What are these cairns for?
+
+35.     MOVING BECKER'S PET DINOSAUR ON NEMIRA
+35.A    How do I get the gopheria off the control panel?
+35.B    How do I keep the gopheria from getting back on the control
+        panel?
+35.C    How do I get past the small mattress on the control panel?
+
+36.     REPLACING THE MISSING FOCAL LENS ON NEMIRA 3
+36.A    Where is the focal lens?
+36.B    How do I get the lens from across the chasm?
+36.C    Where can I find an axe?
+36.D    Where can I find some rope?
+36.E    What do I do with the focal lens?
+
+37.     FINDING THE MISSING ACTUATOR CELL ON NEMIRA 3
+37.A    Where is the actuator cell?
+37.B    What do I need to dismantle the field actuator?
+37.C    Where is the grommet wrench?
+37.D    Where is the flange defuser?
+37.E    Where is the actuator calipers?
+37.G    Where is the shovel?
+37.H    Where is the canterlope grave?
+37.I    What do I do with the actuator cell?
+
+38.     DISMANTLING THE FIELD ACTUATOR ON NEMIRA 3
+38.A    How do I remove the grommets?
+38.B    How do I remove the cylinder cap?
+38.C    How do I remove the flange connector?
+38.D    How do I discharge the field actuator?
+38.E    How do I remove the core?
+
+39.     REPLACING THE MISSING LENS COVER ON NEMIRA 3
+39.A    Where is the missing lens cover?
+39.B    Where can I find some vermaculite ore?
+39.C    Where is the pickaxe?
+39.D    What do I do with the ore?
+39.E    How do I get Becker to give me the lens cover?
+39.F    What do I do with the lens cover?
+
+40.     THE RAFT TRIP ON NEMIRA 3
+40.A    What do I do with the raft?
+40.B    I agreed to help Becker get his cane.  Now what do I do?
+40.C    Where is the tiller?
+40.D    Where is the pail?
+40.E    How do I begin the river voyage?
+40.F    How do I survive the river voyage?
+
+41.     HINTS ABOUT ROLF BECKER
+41.A    What do I do with the magazine?
+41.B    What do I do with the wooden stand?
+41.C    What do I do with the personal log?
+41.D    What do I do with the field notebook?
+41.E    Does it matter whether I'm nice to Becker?
+41.F    How do I get Becker to come back to Gateway with me?
+
+PART III: ENDGAME
+
+42.     THE STARCHART
+42.A    Where can I find the silver sphere that Worden told me about in 
+        the briefing after all the shield generators were activated?
+42.B    What do I do with the sphere once I've got it?
+
+43.     DEEP PSYCH
+43.A    How do I get into the Deep Psych virtual reality?
+43.B    How do I pass the Deep Psych test?
+
+44.     THE HEECHEE SATELLITE
+44.A    How do I activate the cloaking system once I'm in the Heechee
+        satellite?
+44.B    What do I do with the ring in the compartment?
+44.C    There are sparks on the surface of the globe.  What do I do
+        now?
+44.D    I'm in the travel pod at the satellite.  What next?
+44.E    I've docked with the Watchtower.  What do I do with the orb?
+
+45.     THE BALLROOM
+45.A    Why do things keep changing?
+45.B    Why do I keep winning?
+45.C    How do I escape this environment?
+
+46.     THE DEMON GAUNTLET AND THE EMPTY CHAMBER
+46.A    What is this hell environment?
+46.B    How do I get across the Demon Gauntlet?
+46.C    How do I make the invisible demon in the Empty Chamber
+        visible?
+46.D    How do I get the ring?
+
+47.     ESCAPING FROM HELL
+47.A    What do I do in the Mirror Room?
+47.B    How do I escape this environment?
+
+48.     THE FINAL STEP
+48.A    How do I solve this puzzle?
+
+SECTION 3B: ANSWERS
+
+PART I: GATEWAY PROSPECTOR
+
+1. THE DEBIT CARD AND THE PV COMMSET
+1.A  You'll find the debit card on the desk in Your Quarters.  TAKE DEBIT 
+CARD to add it to your inventory.
+
+1.B  To use the PV commset, PUT DEBIT CARD IN PV COMMSET while
+you are in Your Quarters.  When the PV commset comes up on the screen,
+select menu option (1), Play New Messages.  Click on the "NEXT" button (or
+press the <N> key) until you have read all of your messages.
+
+2. THE DATAMAN
+2.A  While you are in your Quarters, OPEN THE DESK DRAWER and then 
+TAKE BOOK.  If you then READ BOOK, you will see a note from your proctor 
+telling you to exchange this book for the DataMan in the Corporation Offices.
+Go to the Corporation Offices and GIVE THE BOOK TO RECEPTIONIST.  She
+will take the hardcover book and give you the DataMan.  To use the DataMan,
+simply TURN ON DATAMAN.
+
+3. SHIP HANDLING CLASS
+3.A  Ship handling class is held in Room T20 at 15:00 (three o'clock in the
+afternoon).  Room T52 is on Level Tanya, just east of Corridor T6.  Take the
+dropshaft from Level Dog by going to Corridor D4 and then DOWN to Level
+Tanya.  You can get this information by reading your messages (see 1.B).
+
+3.B  You will be given a blue badge if you attend ship handling class
+(see 3.A).
+
+4.  THOM SELDRIDGE
+4.A  You should meet Thom Seldridge at the Blue Hell Bar at 20:00 (eight
+o'clock at night).  If you read your messages on the PV commset (see 1.B), you
+will see a message from him to that effect.
+
+4.B  After Thom tells you about Gateway and begins to look at you expec-
+tantly, BUY THOM A DRINK.  He will then tell you about the Orion Program,
+give you a Corporation memo about the Program, and tell you where and 
+when to meet Terri Neilson (in the Blue Hell Bar at 22:00).  BUY THOM A
+DRING again when he finishes talking about the Orion Program and he will
+introduce you to Nubar Kamalian.
+
+5. NUBAR KAMALIAN, THE TRIVIA GAME, AND THE SILVER MEDALLION
+5A.  Thom Seldridge will introduce you to Nubar if you have been friendly 
+and plied him with a couple of drinks (see 4.B).  If you miss Thom or you 
+didn't buy him drinks, you can meet up with Nubar the next night at 21:00
+(nine o'clock) in the Blue Hell Bar.
+
+5.B  BUY NUBAR A DRINK after he sits down and asks you for one.  Listen
+to him talk about his experiences and his woes.  Eventually he will challenge
+you to a game of Old Earth Trivia.  He will get a score of seven pionts.  PLAY
+GAME when he is done.  If you get a score higher than seven, Nubar will give
+you his medallion.
+
+5.C  The answers to the old Earth Trivia questions are as follows:
+Question     History &     Art &     Science &     Games
+Number       Geography     Ent.      Nature   
+(1)              3          4          3             1
+(2)              2          2          2             2
+(3)              4          4          4             4
+(4)              2          1          1             4
+(5)              4          1          4             1
+(6)              1          2          3             4
+(7)              2          3          2             2
+(8)              4          4          4             3
+(9)              1          1          3             2
+(10)             4          3          4             4
+
+6. THE FIRST MEETING WITH TERRI NEILSON
+6.A  Per you talk with Thom Seldridge (see 4.B) you learned that Terri
+shows up in the Blue Hell Bar around 22;00 hours (ten o'clock) to have a
+drink.  You should show up in the bar at that time.
+
+6.B  Terri will tell you about the Orion Program and its prerequisites if you
+ASK TERRI ABOUT ORION PROGRAM or GIVE TERRI THE MEMO.
+
+6.C  You have restarted or restored the game.  Go back and look at the 
+napkin to check the number.  The number changes.
+
+7. THE FIRST MISSIONS 
+7.A  Once you have your blue badge, you are flight crew (see 3.A and 3.B
+for information about how to get your blue badge).  You can go on a mission
+the day after you actually get your badge.  The procedure for going on a mis-
+sion is simple: Go to the Hangar Entrance on Level Tanya and GIVE BADGE
+TO AGENT or walk SOUTH.  If you have a valid blue or green badge, the agent
+will sign you up for a mission, escort you to the dock where the ship is, and
+program the on-board computers with your set of course codes.  When she
+leaves you at the dock, simply go UP to enter ship, CLOSE THE HATCH,
+and SIT to access the control panel.  See the section in the manual on How 
+to Operate the Heechee Ships for more information on the operation of the
+panel and the ship itself.
+
+7.B  You are prospecting.  You are looking for a planet that you can land
+on that has concentrations of Heechee metal.  Use the course codes that were
+assigned to you to explore the six destinations available to you.  If you 
+"strike out" by going on a mission to dead intergalactic space, the black 
+hole, the red giant, the nebula, or the planetary fragments, then return to 
+Gateway and ship out again.  Keep looking.  When you find yourslef in orbit 
+around a planet (Sigma Dayan 7), then you have found what you are looking 
+for.  See 8.A or 8.B for more information about what to do once you have 
+found Dayan 7.
+
+7.C  These missions are "strike out" missions - you don't find any Heechee
+technology, and you don't even have an opportunity to leave the ship.  You 
+need to ship out again after you get back from one of these missions.  There
+are no puzzles to solve on these missions.
+
+8. SIGMA DAYAN 7
+8.A  Go WEST from below the cave entrance to the base of the cliff, then 
+WEST again to the rockslide.  CLIMB ROCKSLIDE or go UP to reach the top of
+the butte (the plateau).  Walk EAST along the plateau and then EAST again.
+PUSH THE ROCK you see here to create a rockfall.  The resulting pile of rocks
+will give you access to the cave opening.  Retrace your steps until you are 
+standing below the entrance again, then CLIMB ROCKFALL or go UP to reach
+the Entry Chamber.
+
+8.B  Once in the Entry Chamber, note where the portal appeared last:
+
+      IF THE PORTAL                 YOU NEED TO GO
+      APPEARED TO THE...            TO THE...
+
+      Northeast                     EAST
+      East                          WEST
+      West                          NW
+      Northest                      NORTH
+      North                         NE
+
+You'll anticipate where the portal will appear and sail through just in time.
+After a crawl through a passageway, you will be in the Ovoid Room.  TAKE
+THE BOX you see there.  This box (and evidence of two trips out) is what you
+need to qualify for the Orion Program.
+
+9. GETTING A GREEN BADGE
+9.A Once you have gone on two missions and brought back the artifact 
+from Sigma Dayan 7, you have fulfilled the requirements that Terri outlined 
+for the Orion Program (see 6.A and 6.B).  You need to give Terri a call on 
+the PV commset using the phone number that is on the cocktail napkin she gave
+you during the first meeting.  Go to Your Quarters, INSERT DEBIT CARD IN 
+SLOT,and select menu option (6), Place Call.  Dial the number that you read 
+off of the cocktail napkin.  If Terri isn't in, call back an hour or two 
+later.  If Terri is in and you have met the requirements, then she will 
+agree to meet you in the Blue Hell and give you your green badge.  
+Note: If you have met the requirements for a green badge but you 
+never talked to Terri before you shipped out, then meet her in the bar at 
+22:00 and ask her about the Orion Program.
+
+10. THE MAINTENANCE KEY
+10.A  PULL THE RED LEVER on the machine in Central Park.  A maintenance
+man will show up a few turns later.  He has an access key that will allow 
+you to open the vents in the Armory, Your Quarters, and the conference
+rooms on Level Tanya.
+
+10.B  The old man will hand you the maintenance key right after he shows up.
+Simple DROP MAINTENANCE KEY IN HYDROPONICS TRAY to hide it. You can recover 
+it after he has left.  You should stick around until he finishes talking 
+because his banter contains very important clues. Note: There is an 
+alternate solution to this puzzle.  When he first arrives, the old man 
+will hand you the key. He will subsequently hand you various other tools 
+and ask you to put them in the toolbox.  If you hang on to the key but put 
+all of the other tools in the toolbox, the old man won't notice that the 
+key is missing when he gathers everything up after he is finished and leaves.
+
+10.C  The most important clue the old man gives you is that Perry shows up
+on Level Babe every night at midnight and then disappears.
+
+11. THE MAGAZINE
+11.A  You can get the magazine from the receptionist in the Corporation
+Offices by giving her the rose you find in Central Park.
+
+12. THE TUNING FORK
+12.A  The tuning fork is on display in the Gateway Museum.
+
+12.B  You need the medallion you got from Nubar Kamalian for winning the
+Trivia Game in order to solve this puzzle (see 5.B, 5.C).  Go to the Gateway
+Museum.  If you exaimine the device there, you will see that it has a circular
+depression on its upper surface.  PUT MEDALLION IN DEPRESSION (or PUT
+MEDALLION ON DEVICE) and the device will begin to hum.  TAKE TUNING
+FORK FROM PEDESTAL and PUT TUNING FORK INSIDE DEVICE.  A hologram of the
+tuning fork will appear above the medallion, which is actually holographic
+film.  TAKE HOLOGRAM.  PUT HOLOGRAM ON PEDESTAL.  The hologram will spoof the 
+alarm system.  You can now TAKE TUNING FORK FROM DEVICE and leave the museum
+with the tuning fork in hand.
+
+13. THE GUN
+13.A  The gun is sitting atop a storage cabinet in the Armory.
+
+13.B  You will need the maintenance key you got from the old man to solve
+this puzzle (see 10.B).  Go to the Armory and TAKE THE GUN.  STAND ON
+THE CABINET.  OPEN VENT WITH MAINTENANCE KEY.  Insdie the vent you will see
+a small button.  PRESS BUTTON.  THis will summon the maintenance robot,
+which will arrive within a few turns.  PUT GUN IN SPIDER ROBOT CONTAINER.
+The robot will scuttle off with the gun.  Go to another room with a vent
+(like Room T20).  STAND ON TABLE.  OPEN VENT WITH MAINTENANCE KEY.  PRESS
+BUTTON.  The spider robot will automatically re-appear with the gun.  TAKE
+GUN.  Note: The spider robot will automatically dump whatever is in its
+container after two hours.  You must reclaim the gun before this happens.
+
+14.  PERRY AND THE SECRET ROOM
+
+14.A  The old maintenance man will tell you that Perry appears on Level
+Babe at midnight (For infomration about the old man, see 10.A, 10.B, 10.C).
+He also tells you that he had a crate dragged into the corridor that Perry 
+uses so that the old man could spy on Perry.  These clues point to Corrifor 
+B4 on Level Babe.
+
+14.B  Go up to Corridor B4 before midnight.  HIDE IN CRATE.  WAIT while 
+Perry shows up and then disappears into the wall.
+
+14.C  Perry will drop a slip of paper when he is fumbling around by the
+Heechee metal wall.  EXIT CRATE and TAKE SLIP OF PAPER after Perry leaves.
+If you READ SLIP OF PAPER you will see a five digit code.  HIT TUNING FORK
+to make the blister appear.  PUT TUNING FORK IN BLISTER.  Enter the code
+you saw on the slip of paper.  A portal will appear in the wall and you can 
+enter the secret room.
+
+14.D  You don't need to come back to the secret room until much later in 
+the game (see 42.A).
+
+15.  THE GREEN BADGE BRIEFING
+15.A  The Orion Program briefings are held every day at 09:00 hours (nine
+o'clock in the morning) in Room T52 on Level Tanya.
+
+15.B  You need to have a green badge to participate in the briefing (see 6.B
+and 9.A for information about getting a green badge).
+
+16. THE METAL CYLINDER ON ALEPH 4
+16.A HIDE BEHIND BOULDER or go WEST from the clearing.  WAIT while the
+Mutzers file into the clearing and perform their ritual.  Note that the chief
+Mutzer has custody of the dome key (the metal cylinder).
+
+16.B  TAKE THE SALAMANDER from the Lake Shore.  If it is not there when
+you show up, then WAIT until it appears.  Once you have the salamander, 
+WAIT until you hear the second wailing sound (the second blast on the horn)
+from the north or east, then go to the Mutzer Village. The Mutzers will all be
+at the dome ritual, and you can ENTER BIG HUT (or go SE from the village) 
+and then go DOWN to hide under the hut.  WAIT until the Mutzer chief
+returns to the hut and climbs into the tank (you'll hear him).  Then: UP.
+DROP SALAMANDER IN TANK.  WAIT.  Go back DOWN to hide and WAIT until the
+Mutzer wakes up, finds the cylinder gone, and runs off to look for it.  Once
+they have gone away, return to the Lake Shore.  You will see the metal
+cylinder next to the pile of rocks.  TAKE CYLINDER.
+
+17. GETTING INTO THE DOME ON ALEPH 4
+17.A  Go to the base of the dome.  PUT METAL CYINDER IN DOME SLOT.  Then take
+the test that ensues.  The idea is to select the shape that doesn't belong
+with the others.  The answers (and reasons) are listed below.
+
+THE ANSWERS:
+
+     QUESTION          DESCRIPTION                    ANSWER
+       (1)             Triangles and circles            4
+       (2)             Starts with a pentagon           4
+       (3)             Lots of intersecting lines       3
+       (4)             Mirror images                    2
+       (5)             Circles within circles           5
+
+THE REASONS:
+
+     QUESTION         REASON
+       (1)            The circle is the odd shape
+
+       (2)            The circle is the only one that is not a polygon
+
+       (3)            The parallel lines are the only ones that
+                      don't intersect if projected into infinity
+
+       (4)            Figure number 2 has the only intersection that
+                      cannot be produced by translation of the encom-
+                      passing shapes (to look at it another way, Figure
+                      number 2 is the only one where the encompassing
+                      shapes are not parallel)
+
+       (5)            Figure number 5 is the only one where the little
+                      circle is not in the center of the largest circle
+
+When you have answered all five questions correctly, a portal will appear and
+you will enter the dome.
+
+18. THE PRIMARY COLOR PUZZLE INSIDE THE DOME ON ALEPH 4
+18.A  TAKE ALL FANS that you see when you first get inside the dome.
+CLIMB PLATFORM or go UP.  Solve the primary puzzle like this: PUT
+BLUE FAN IN RED SLOT.  PUT YELLOW FAN IN BLUE SLOT.  PUT RED FAN IN
+YELLOW SLOT.
+
+PART II: OTHER WORLDS
+
+19. THE BEACH VR AND THE PEDROZA CLUB MEMBERSHIP PIN
+19.A  The Pedroza Lounge is behind the oak door in the Casino.  If you go
+EAST from the Casino, you will enter the Lounge (assuming you have a mem-
+bership pin).
+
+19.B  You need a gold Pedroza Club membership pin to get into the Pedroza
+Lounge. The VR tech in the VR Terminal is a member, and he will offer you
+his membership if you can find a bug in his Beach Virtual Reality program.
+
+19.C  Go to the VR Terminal. LIE ON COUCH. PUT ON COLLAR. SET
+SWITCH TO BEACH. PRESS POWER BUTTON.
+
+19.D  The flaw in this virtual reality is the drink scanner/replicator on the
+bar counter. The key to breaking the reality is to overload it by creating an
+infinite number of Banana Daiquiris. Since the bartender is stopping you from
+using the scanner, you must disable him somehow. The answer is to get him 
+drunk. TAKE DRINK. GIVE DRINK TO BARTENDER. AGAIN. AGAIN.
+AGAIN. AGAIN. Once he is slumped over and singing to himself, TAKE 
+DRINK and PUT DRINK IN SCANNER. The result is an overload of the virtual
+reality.
+
+20. LEONARD WORDEN'S SPECIAL BRIEFING
+20.A  Go to the Corporation Offices. Make sure you are holding or wearing
+your green badge.
+
+21. THE METAL DISK ON AURIGAE 6
+21.A  Replace the cracked prism in the tray with the clear prism you get
+from the Residence.
+
+21.B  STEP ON DISK. It's a matter transporter.
+
+22. GETTING THE BLACK PYRAMID FROM THE RESIDENCE ON
+       AURIGAE 6
+22.A  The oval depression in the cabinet must be filled before you can take
+the black pyramid. Go to the Temple Court from the City Centre after trans-
+porting over from the Landing Pad on the metal disk (if you haven't fixed the
+disk, see 21.A and 21.B). CATCH BEETLE (the bugs are oval and will fit in the
+oval depression). The go back to the Landing Pad and take the clear prism
+and bright cube. Go to the Residence and PUT THE CLEAR PRISM IN DIA-
+MOND TRAY, then PUT BRIGHT CUBE IN SOCKET. The cabinet will open,
+and you can PUT BEETLE IN OVAL TRAY and then TAKE PYRAMID.
+
+22.B  The black pyramid is the key to deactivating the force field in the 
+Temple Court.
+
+23. THE TEMPLE COURT AND THE OCTAGONAL ROOM MAZE ON
+AURIGAE 6
+23.A  You need to navigate through the octagonal room maze and put the 
+black pyramid on the stand.
+
+23.B  The key to solving the maze is the color spectrum: Red, Orange,
+Yellow, Green, Blue, Indigo, Violet (ROY G BIV). All you need to do is go
+through the doors in the colored wall following the spectrum sequence. The 
+solution path is as follows: From the first room, go SE (through the red 
+door), EAST, NW, SOUTH, WEST, SE, NORTH.
+
+23.C  PUT PYRAMID ON STAND to deactivate the force field.
+
+24. ACTIVATING THE AURIGAE 6 SHIELD GENERATOR
+24.A  While in the Temple Court, TURN KNOB, PULL LEVER, and then
+PRESS BUTTON. The shield generator will come out of the surface of the
+planet and activate.
+
+25. THE SPIDER AND THE ANEMONES ON KADUNA 3
+25.A  You need the gun from the Armory to kill the spider. When it first 
+appears, SHOOT SPIDER WITH GUN. It will rear up, exposing its underbelly.
+SHOOT SPIDER WITH GUN again to finish him off, then go WEST to break the 
+grip of the shoots.
+
+25.B  Reclaim the gun from the spider. In the process of taking the gun,
+you will wade into the ichor from the spider's mortal wound. This ichor will
+protect you from the anenomes (if you don't want to reclaim the gun, then
+TOUCH ICHOR or PUT ICHOR ON ME).
+
+26. THE SWAMP CREATURE ON KADUNA 3
+26.A  The key to getting past the swamp is the worm that keeps attaching
+itself to you. The pterosaurs circling overhead and the beast in the swamp
+all like to eat the worms. If you THROW WORM INTO SWAMP, the octopus will
+fight with one of the pterosaurs. The result will be that the octopus is 
+killed and floats to the surface. You can walk along the carcass of the beast
+to get across to the other side of the swamp.
+
+27. THE PLAZA AND THE SNAKE ON KADUNA 3
+27.A  First you need to get the pod from the pod tree near your ship in the 
+Jungle Clearing. TAKE POD and head EAST untill you get to the Spikeball
+Field. DROP THE POD to entice one of the rats to run out of the forest. The
+rat will run into the spikeball plant and be killed. TAKE THE RAT. Go EAST to
+the Plaza, then GIVE RAT TO SNAKE. The snake will eat the rat and will settle
+down to digest its meal. it will ignore you.
+
+28. THE PUFFERSLUG IN THE TOWER ON KADUNA 3
+28.A  Back in the Spikeball Field there is a spike stuck into one of the 
+trees. You need to get that spike, then STAB PUFFERSLUG WITH SPIKE. Splat!
+
+29. ACTIVATING THE KADUNA 3 SHIELD GENERATOR
+29.A  TURN KNOB, PULL LEVER, and then PRESS BUTTON. If you haven't 
+killed the pufferslug, then see 28.A
+
+30. THE BOWL AND THE BERRIES ON DORMA 5
+30.A  TAKE THE BRANCH AND VINE while in the Dark Forest. Then WAIT
+and watch the beast's movement patterns.
+
+30.B  The key is the beast's movement patterns. Watch where he goes,
+where he appears from, and how long it takes. When the beast enters 
+the cave on the southeastern side of the clearing, you can go EAST into the 
+Forest Clearing and then NORTH into the Tunnel Antechamber.
+
+30.C  You need the small stone you will find 0on the Northern Shore. PUT
+SMALL STONE IN BOWL to plug the hole.
+
+30.D  You need to fill it with berries and then leave it in the Tunnel
+Antechamber to distract to distract the beast while you vnture into the cave
+on the other side of the clearing. You can find the berries on the 
+Northwestern Shore. PUT BERRIES IN BOWL, then return to the forest.
+
+30.E  Fill the bowl with berries (see 30.C and 30.D) and then go to the
+Tunnel Antechamber when the beast is in the cave. DROP BOWL. Then return
+to the Dark Forest, wait for the beast to go into the tunnel, and go into the 
+cave. In the Crystal Cave you need to HIT SHARD WITH THE BRANCH to dislodge
+it, then TAKE SHARD.
+
+31. TAMING THE BEAST ON DORMA 5
+31.A  You tame the beast using the crystal shard (see 30.E) that you find in
+the Crystal Cave.  First you must WASH SHARD in the pond. The next time
+you are in the same room with the beast, he will become transfixed by the 
+crystal. If you TETHER BEAST WITH VINE he will follow you around. 
+
+32. REPLACING THE BOULDER IN THE DIKE ON DORMA 5
+32.A  Lead the beast to the dike THROW CRYSTAL IN POND to break its
+hold on the beast. The beast will shake off the effects of the crystal and 
+see you. He will then pick up the boulder and throw it at you. Go EAST into 
+the pond during the turn that the boulder is in the air. The boulder will plug 
+into dike.
+
+33. ACTIVATING THE DORMA 5 SHIELD GENERATOR
+33.A TURN KNOG, PULL LEVER, and then PRESS BUTTON.
+
+34. GETTING INTO BECKER'S HOUSEON NEMIRA 3
+34.A  Becker's House is across the rope bridge from the Pinnacles. To get to
+the Pinnacles from the Mountain Plateau, head NE to the Halfway Point, NW
+to the Mountain Trailhead, NORTH to the Meadow, NORTH to the Cliff
+Trailhead, and finally NE.
+
+34.B  That pterodactyl means business. You can take either of two
+approaches with it. First, if you've got the pistol from Gateway, you can 
+shoot it (this is not nice). Alternately, you can blow the whistle that's
+hanging on the cactus at the Crash Site. Take the whistle to the Pinnacles 
+and blow it.
+
+34.C  Becker's a forgetful guy and the mountain trails can be confusing. He
+put them in the various places to remind him of the proper trails to reach
+specific mountain sites.
+
+35. MOVING BECKER'S PET DINOSAUR ON NEMIRA 3
+35.A  You can take either of the two approaches with the fierce gopheria. 
+First, if you've got the pistol from Gateway, you can shoot the little bugger.
+A kinder approach would be to ASK BECKER ABOUT THE GOPHERIA and learn
+about the Jubifruit leaves the animal craves. If you ASK BECKER ABOUT THE
+JUBIFRUIT LEAVES, he tells you that he grows them in his garden. Find
+Becker's garden northwest of the Mountain Trailhead and PICK LEAVES.
+Return to Becker's house and FEED THE LEAVES TO THE GOPHERIA.
+
+35.B  The gopheria gobbles the Jubifruit leaves and quickly returns to his 
+mattress on the control panel. While he's eating, MOVE THE SMALL MAT TO   
+THE FLOOR, and the animal will reluctantly return to the mattress in its new 
+position.
+
+35.C  Move it to the floor.
+
+36. REPLACING THE MISSING FOCAL LENS ON NEMIRA 3
+36.A  The focal lens is that glassy object visible across the chasm from the 
+Meadow, just north of the Mountain Trailhead.
+
+36.B  There are two ways of recovering the lens from across the chasm.
+The first way is to get the axe from Becker's tree house, up the ladder from
+his garden. Take the axe to the Meadow and CHOP DOWN THE TREE WITH THE
+AXE (not nice). The fallen tree spans the distance across the chasm. Walk
+EAST to recover the lens. A second and more gentle approach is to get the
+rope coil from the Pinnacles, take it to the Meadow and TIE THE ROPE TO
+THE TREE LIMB. Then you can SWING ACROSS CHASM to get the lens. 
+
+36.C  In Becker's tree house, up the rope ladder from his garden.
+
+36.D  On the trail beside the rope bridge, at the Pinnacles.
+
+36.E  You need to replace the lens in the lens housing underneath the con-
+trol panel in Becker's House. PUT LENS IN HOUSING or PUT LENS UNDER 
+PANEL to install it.
+
+37. FINDING THE MISSING ACTUATOR CELL ON NEMIRA 3
+37.A  There are actually two actuautor cells. One is buried in an old grave
+that Becker once dug. The other is within the core of a field actuator at the 
+Crash Site. If you read Becker's personal log, you can learn about the grave
+site. If you ASK BECKER ABOUT THE CELL, he'll tell you there's one in the
+actuator in his ship.
+
+37.B  To dismantle the field actuator without "blowing it," you'll need a
+grommet wrench, a flange defuser, an actuator discharger, and some
+actuator calipers.
+
+37.C Inside the maintenance crib at the Crash Site. 
+
+37.D  Inside the maintenace crib at the Crash Site.
+
+37.E  In the drawer in Becker's Tree House.
+
+37.F  In the drawer in Becker's Tree House.
+
+37.G  In the Garden.
+
+37.H  At the River Trailhead, although you'll need to read Becker's
+personal log to find out about it first.
+
+37.I  The actuator cell needs to be installed in the lens housing in
+Becker's house.  PUT CELL IN HOUSING to replace it.
+
+38.   DISMANTLING THE FIELD ACTUATOR ON NEMIRA 3
+38.A  You can remove the grommets from the actuator panel with the grommet 
+wrench.  REMOVE GROMMETS WITH WRENCH. 
+
+38.B  UNSCREW THE CYLINDER CAP.
+
+38.C  You can easily REMOVE FLANGE CONNECTOR WITH THE FLANGE DEFUSER.
+
+38.D  You can discharge the field actuator, preventing it from exploding, 
+by attaching the clips on actuator the discharger to the anodes on the 
+actuator plug.  ATTACH GRAY CLIP TO THE TETRAHEDRON ANODE and ATTACH BLUE
+CLIP TO THE PYRAMID ANODE.
+
+38.E  Pull the core out of the actuator canister with the actuator 
+calipers.  You'll need to remove the flange connector first.  REMOVE THE 
+CORE WITH THE CALIPERS and TAKE ACTUATOR CELL.
+
+39.   REPLACING THE MISSING LENS COVER ON NEMIRA 3
+39A.  Becker's got it.  If you ASK BECKER ABOUT LENS COVER, AS BECKER 
+ABOUT THE ORE, or ASK BECKER ABOUT ABANDONED MINE, he'll offer to trade
+you the lens cover for some ore.
+
+39.B  The purple ore that Becker wants is contained in a vein of rock
+beneath the surface of the River Overlook, southwest from the River
+Trailhead.  You'll need a pickaxe to mine it.
+
+39.C  The pickaxe is in Becker's abandoned mineshaft, just west of the 
+Mountain Plateau where you landed.
+
+39.D  GIVE ORE TO BECKER and he'll trade you the lens cover for it, after
+testing the ore first, of course.
+
+39.E  After you give Becker the ore, he says he's got to test it and 
+tells you to meet him at the Garden.  Go to the Garden, just northwest 
+of the Mountain Trailhead, and he'll give you the lens cover.
+
+39.F  The lens cover needs to be installed in the lens housing in 
+Becker's House.
+
+40.   THE RAFT TRIP ON NEMIRA 3
+40.A  You can't ride on the raft without some help.  Neither can Becker.  
+If you ASK BECKER ABOUT THE RAFT or ASK BECKER ABOUT THE GLINT you can 
+see from the Vantage Point, he'll ask you if you'll help him recover
+his cane.  Agree to help him.
+
+40.B  If you've agreed to help Becker retrieve his cane, ASK BECKER
+ABOUT THE RAFT and he'll tell you need a pail and a tiller to begin the
+voyage.
+
+40.C  At the River Trailhead, just south of the Garden.
+
+40.D  In Becker's garden.
+
+40.E  To get underway, you need to have the metal pail and Becker has to
+have the tiller.  GIVE THE TILLER TO BECKER.  Go to the River Shore and
+GET ON THE RAFT.  TELL BECKER TO GET ON THE RAFT.  You're ready to go.
+LAUNCH THE RAFT and you're on your way.
+
+40.F  Listen to Captain Becker and BAIL each and every turn until the 
+raft trip is over.
+
+41.   HINTS ABOUT ROLF BECKER
+41.A  Becker's been stranded on Nemira 3 for a long time so he's probably
+hungry for news of home.  Also, there's an article in the magazine about
+his wife, Adriana.  Give the magazine to him and you'll make him a happier
+guy.
+
+41.B  ASK BECKER ABOUT WOODEN STAND for a surprise.
+
+41.C  You might try reading it while Becker is napping.
+
+41.D  You can learn all about the wonders of Nemiran wildlife in 
+Becker's field notebook.  Winnerpellers, Mendobrillium, and Phylangomorphs
+are only a few of the natural wonders observable here.
+
+41.E  Yes and no.  You can win the game and turn on the shield generator
+regardless of how nice you are in solving the various puzzles on Nemira 3.
+However, Becker may not return with you if you've been especially nasty.
+
+41.F  Be nice to him and do as he says, respecting the delicate desert
+flora and fauna on Nemira 3.
+
+PART III: THE ENDGAME
+
+42.   THE STARCHART
+42.A  The silver sphere is a Heechee starchart.  You'll find it behind 
+the panel in the secret room after all four of the shield generators
+are turned on (hence the four illuminated sets of Heechee characters).  
+See 10.A, 10.C, 12.A, 12.B, 14.A, 14.B, 14.C and 14.D for information 
+about how to get into the secret room.
+
+42.B  Take it down to the Corporation Offices after you get out of the
+briefing with Leonard Worden.
+
+43.   DEEP PSYCH
+43.A  Leonard Worden will authorize you to enter Deep Psych during the
+briefing you undergo after the last shield generator is activated.  You
+simply need to go from that meeting to the VR Terminal, where the tech
+on duty will give you the password.  Once you have the password, LIE ON
+THE COUCH.  PUT ON COLLAR.  SET SWITCH TO DEEP PSYCH.  TYPE (password).
+PRESS BUTTON.
+
+43.B  The demon symbolizes your fears.  Confront your fears:  JUMP OVER 
+CHASM so that you are on the same side as the demon.  WAIT.  Continue 
+to WAIT until you read that the demon is clawing on the door.  Use your
+fear to solve the problem at hand: LIFT DEMON or PICK UP DEMON so that
+it can reach the bar on the door and dislodge it.  Together you will sail
+through the door and avoid plunging into the chasm.
+
+44.   THE HEECHEE SATELLITE
+44.A  Here's an easy one.  PRESS BUTTON.
+
+44.B  PUT ON THE RING.
+
+44.C  TOUCH THE GLOBE.
+
+44.D  PRESS PEDAL.
+
+44.E  TOUCH ORB.
+
+45.   THE BALLROOM
+45.A  This is a clue that you are in a virtual reality.
+
+45.B  The directive of the VR you are currently in is to keep you winning.
+
+45.C  You can destroy this VR by countering the VR's directive.  You must 
+find a way to lose.  There are two ways to do this:
+
+     The first is to accumulate a stake by visiting the Guess 
+     Your Weight Booth or the Ball Throw Booth, playing enough
+     times until you have over $100 on your card.  Then you 
+     should join the poker game.  Go to the secluded bar and 
+     SHOW CARD TO MAN.  Play a hand and then FOLD.  You can use
+     the rules of the card game you are playing (poker) to defeat
+     VR.  You win by losing.
+
+     The second way is to use a flaw in the Wheel of Fortune
+     Booth against the VR.  If you bet on more than one number, 
+     you will lose one of your bets.  This will short-circuit 
+     the VR.
+
+46.   THE DEMON GAUNTLET AND THE EMPTY CHAMBER
+46.A  It is another virtual reality generated by the Assassin.
+
+46.B  Take the sword from the Hydra Lair.  Go to the Demon Gauntlet and
+cross.  When you get hit with the net, CUT NET WITH SWORD.  CUT NET WITH
+SWORD again, then TAKE THE SACK that the demons throw at you.  TAKE THE 
+NET and continute along the gauntlet.
+
+46.C  You need to use the ash on the ground in the Hydra Lair to make the
+demon visible.  How?  PUT ASH IN THE SACK you got when you crossed the 
+Demon Gauntlet (see 46.A).  Go to the Empty Chamber.  WAIT.  Continue to
+WAIT until "you hear a scuffle on the stalagmite shelf."  This is your
+clue that the invisible demon is sitting on the shelf.  THROW ASH ON 
+SHELF.  The demon will become visible.
+
+46.D  THROW THE NET ON DEMON.  TAKE RING.  If you haven't got the net, 
+then see 46.A.
+
+47.   ESCAPING FROM HELL
+47.A  The statues in the Mirror Room breath out Berserker dust.  You can
+figure out which one is about to breath out because it will begin moving
+a turn before it "spews."  WAIT until one of the statues starts to move, 
+then note the name of the one that does.  PUT SACK ON (name of statue).
+If you don't have the sack, see 46.B.
+
+47.B  After the statue in the Mirror Room fills the sack with dust 
+(see 47.A), TAKE SACK and return to the Hydra Lair.  THROW DUST ON HYDRA.  
+The hydra will breath in the berserker dust and attack the first thing
+that it sees: its own heads.  The result is that two new heads are created
+for every head destroyed, and the new heads join the fray as soon as they
+appear.  The infinite progression continues until the VR locks up.
+
+48.   THE FINAL STEP
+48.A  Once you have slept and gotten your messages, youknow tht you are 
+in another Assasin virtual reality.  The puzzle is to figure out how to 
+get the Deep Psych password so you can unleash the virus program.  The
+answer is to use the UV light in the Tanning Room to read the VR Manual. 
+TAKE THE MANUAL from the VR Terminal, then go to the Tanning Room.  READ 
+THE MANUAL in the Tanning Room.  Note the day of the month on the status
+line and remember the password on the corresponding line in the manual.
+Return to the VR Terminal.  LIE ON COUCH. PUT ON COLLAR. TYPE (password).
+And - hold your breath here - PRESS BUTTON.  That's it.  You've won.
+
+SECTION 4
+==========================================================================
+COMPLETE LIST OF POINTS
+
+Number
+of 
+Points  Achievement
+
+Gateway
+3       Taking the book from the desk drawer       
+2       Taking the debit card from your desk
+2       Taking the rose from Central Park
+5       Getting the magazine from the receptionist
+5       Getting the DataMan from the receptionist
+5       Pulling the shut-off lever in Central park
+10      Getting the maintenance key by hiding it in the planter
+           tray or putting the old man's tools away
+5       Opening vent cover with maintenance key
+5       Pressing the call button for the spider robot
+5       Putting the gun in the spider robot's waste box
+15      Retrieving the gun from the spider robot
+10      Getting your blue badge at Hector's lecture
+15      Winning the medallion from Nubar
+5       Asking Terri about the Orion Program or the memo you got from Thom
+10      Getting Terri's phone number on the napkin
+25      Getting your mission bangle
+30      Getting your green badge from Terri
+15      Getting the green badge course code from Worden
+5       Putting the medallion in the depression in the Heechee camera
+           in the Gateway Museum
+10      Making a hologram on the tuning fork
+15      Putting the hologram on the pedestal
+5       Entering the Pedroze Lounge
+25      Listening to Big Shot's speech in the tanning room
+10      Meeting with Worden after Aleph 4 (and getting shield generator codes)
+5       Spying on Perry in Corridor B4
+5       Making the blister appear in Corridor B4
+3       Putting the tuning fork in the blister 
+10      Making the portal appear in Corridor B4
+5       Entering the Hidden Room
+50      Taking the silver sphere (star chart)
+10      Getting the code for the Assassin watchTower
+
+Dayan 7
+5       Pushing the rock to make a rockslide
+5       Getting into the Entry Chamber
+15      Getting into the Ovoid Room
+25      Taking the Heechee box
+
+Aleph 4
+5       Taking the salamander
+2       Entering the Mutzer village
+2       Hiding under the Chief's Hut
+10      Putting the salamander in the tank
+15      Getting the metal cylinder from the Lake Shore
+20      Getting into the Dome (passing the test)
+2       Taking the red prayer fan
+2       Taking the blue prayer fan
+2       Taking the yellow prayer fan
+2       Putting the red fan in the yellow slot
+2       Putting the blue fan in the red slot
+2       Putting the yellow fan in the blue slot
+25      Releasing the red fan
+
+Beach VR
+5       Giving a drink to the bartender
+10      Putting your dirink in the scanner to break the VR
+10      Taking the Pedroza Lounge membership pin
+
+Aurigae 6
+7       Putting the bright cube and clear prism in the transporter disk
+7       Stepping on the disk to arrive at the City Center
+7       Catching a beetle in the Temple Court
+7       Putting the bright cube and clear prism in the cabinet in 
+           the Residence
+7       Putting the beetle in the cabinet's oval tray
+7       Taking the black pyramid from the cabinet
+14      Getting through the maze to the pyramid stand
+19      Putting the pyramid on the stand
+25      Activating the schield generator
+
+Kaduna 3
+3       Taking the fruit pod
+4       Removing the work from your helmet
+10      Killing the spider
+5       Getting to the Swamp
+10      Killing the octopus
+5       Reaching the Field
+3       Taking the spike from the tree
+5       Kliing the rat
+5       Taking the dead rat
+10      Feeding the rat to the snake
+5       Entering the Tower
+10      Killing the pufferslug
+25      Activating the shield generator
+
+Dorma 5
+4       Seeing the beast for the first time
+12      Taking the wooden bowl
+6       Taking the small stone
+8       Filling the bowl with berries
+6       Getting the first dream
+5       Taking the strong vine
+9       Taking the long branch
+17      Leaving the berry bowl in the Tunnel Antechamber
+12      Dislodging the crystal fragment
+11      Taking the crystal shard
+20      Washing the crystal
+16      Tying the vine to the beast
+14      Bringing the beast to the dike
+15      Throwing the crystal in the pond
+20      Entering the pond so the boulder fixes the dike
+25      Turning on the shield generator
+
+Nemira 3
+5       Seeing the glint from the Vantage Point
+5       Taking the pickaxe
+1       Examining the Halfway Point cairn
+1       Examining the River Trailhead cairn
+1       Examining the Cliff Trailhead cairn
+3       Finding the wreckage
+7       Taking the whistle
+1       Greet Becker
+1       Give magazine to Becker
+5       Taking the jubifruit leaves
+5       Taking the shovel
+5       Taking the metal pail
+5       Finding Becker's house
+6       Taking the coil of rope
+1       Tying the rope to the winnerpeller limb
+12      Getting focal lens
+1       Blowing whistle at Pinnacles
+12      Digging up ore
+12      Taking ore
+12      Getting lens cover from Becker
+12      Getting actuator cell from wreckage or grave
+29      Putting cell in housing
+20      Putting lens in housing
+20      Putting lens cover in housing
+1       Playing drums with Becker
+7       Starting the raft trip
+1       Getting Becker's cane
+7       Finishing the raft trip
+1       Giving jubifruit leaves to T. Rex
+10      Moving the small mat to the floor
+25      Activating the shield generator
+20      Bringing Becker back to Gateway
+
+Deep Psych VR
+10      Jumping over chasm
+15      Lifting scrabbling demo to solve VR
+
+Satellite
+50      Turning on final component of cloaking system
+5       Wearing collar
+15      Touching the blue globe
+15      Touching the black orb
+
+Ballroom
+25      Breaking VR by folding from poker game or betting
+           on two wheel-of-fortune slots
+
+Hell
+5       Taking the sword
+5       Cutting the net once
+5       Cutting the net again
+5       Taking the net
+5       Taking the sack
+5       Putting ash on the shelf in the Empty Chamber
+15      Throwing ash at the invisible demon
+10      Throwing the net on the demon
+10      Taking the demon's ring
+10      Wearing the demon's ring
+15      Collecting the magic dust in the sack
+50      Throwing the dust at the hydra to break the VR
+
+Final Step
+20      Reading PV message from virus program
+15      Taking VR manual
+15      Reading VR passwords
+20      Entering Deep Psych password
+100     Beginning Deep VR inside Gateway VR (winning the game)
+
+1600 Total
+
+
+
+
+

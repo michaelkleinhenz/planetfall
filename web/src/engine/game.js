@@ -6,25 +6,31 @@
 //   ended() -> Promise<void> (called after QUIT; resolve to restart)
 //
 // Infocom games are JavaScript translations of their ZIL source (runtime.js);
-// Magnetic Scrolls games are their original 68000 program (ms/host.js).
+// Magnetic Scrolls games are their original 68000 program (ms/host.js);
+// Legend Entertainment games are their original DOS program (legend/host.js).
 
 import { current } from './current.js';
 import {
   initRuntime, resetState, RestartSignal, QuitSignal, RestoreSignal, tell, seedRandom, snapshot as zSnapshot,
 } from './runtime.js';
 import { runMagnetic, snapshot as msSnapshot } from './ms/host.js';
+import { runLegend, snapshot as lgSnapshot } from './legend/host.js';
 
 /** Is the current game a Magnetic Scrolls game? */
 export const isMagnetic = () => current.code?.ENGINE === 'magnetic';
+/** Is the current game a Legend Entertainment game? */
+export const isLegend = () => current.code?.ENGINE === 'legend';
 
 /** The current game state (for undo and saves). */
 export function snapshot() {
+  if (isLegend()) return lgSnapshot();
   return isMagnetic() ? msSnapshot() : zSnapshot();
 }
 
 export async function runGame(io, { seed } = {}) {
   if (!current.code) throw new Error('No game loaded (see engine/current.js).');
   if (isMagnetic()) return runMagnetic(io, { seed });
+  if (isLegend()) return runLegend(io);
   const { start, mainLoop, ROUTINES } = current.code;
   if (seed !== undefined) seedRandom(seed);
   initRuntime(current.story, ROUTINES, io);

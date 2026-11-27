@@ -4,9 +4,9 @@
 
 import { g, inspect } from '../engine/runtime.js';
 import { current } from '../engine/current.js';
-import * as MS from '../engine/ms/host.js';
+import { hasWorld, W } from '../engine/world.js';
 
-const isMagnetic = () => current.code?.ENGINE === 'magnetic';
+const isMagnetic = () => hasWorld();
 
 const G = () => current.code;
 // A flag the current game doesn't define is treated as never set.
@@ -102,7 +102,7 @@ const DIR_PROP = { north: 'NORTH', ne: 'NE', east: 'EAST', se: 'SE', south: 'SOU
  * room that (perhaps through a vehicle) contains the player.
  */
 export function currentRoom() {
-  if (isMagnetic()) return MS.currentRoomId();
+  if (isMagnetic()) return W().currentRoomId();
   if (typeof g.HERE === 'number' && g.HERE > 0) return g.HERE;
   const code = G();
   let o = code.PLAYER ?? code.PROTAGONIST ?? code.ADVENTURER ?? code.CH_PLAYER ?? g.WINNER;
@@ -116,7 +116,7 @@ export function currentRoom() {
 
 /** Directions with an exit defined for a room (excluding plain "you can't go" messages). */
 export function roomExits(room = currentRoom()) {
-  if (isMagnetic()) return MS.exits(room);
+  if (isMagnetic()) return W().exits(room);
   const out = [];
   if (!room) return out;
   // Size of a message-only exit: 2 bytes in version 3, 3 in later versions.
@@ -193,14 +193,14 @@ function addObject(scene, obj, held, scenery = false) {
 
 /** Score and moves (or time), as the status line shows them. */
 export function gameStatus() {
-  if (isMagnetic()) { const st = MS.status(); return { score: st.score, moves: st.moves }; }
+  if (isMagnetic()) { const st = W().status(); return { score: st.score, moves: st.clock ?? st.moves }; }
   return { score: g.SCORE, moves: g.MOVES };
 }
 
 /** A room's name (the map and debug reports use it for any game). */
 export function roomName(id) {
   if (!id) return '';
-  return isMagnetic() ? MS.roomName(id) : inspect.objectName(id);
+  return isMagnetic() ? W().roomName(id) : inspect.objectName(id);
 }
 
 function msDescribe(x) {
@@ -208,9 +208,9 @@ function msDescribe(x) {
 }
 
 function magneticScene() {
-  const lit = MS.isLit();
-  const scene = { location: MS.roomName(MS.currentRoomId()), dark: !lit, inventory: [], visible: [], scenery: [] };
-  for (const x of MS.sceneNouns()) {
+  const lit = W().isLit();
+  const scene = { location: W().roomName(W().currentRoomId()), dark: !lit, inventory: [], visible: [], scenery: [] };
+  for (const x of W().sceneNouns()) {
     const d = msDescribe(x);
     if (x.how === 'carried' || x.how === 'worn') {
       if (x.how === 'worn') d.worn = true;
@@ -241,9 +241,9 @@ function msVerbs(x, held) {
 }
 
 function magneticActions() {
-  const lit = MS.isLit();
-  const scene = { dark: !lit, exits: lit ? MS.exits() : [], objects: [] };
-  for (const x of MS.sceneNouns()) {
+  const lit = W().isLit();
+  const scene = { dark: !lit, exits: lit ? W().exits() : [], objects: [] };
+  for (const x of W().sceneNouns()) {
     const held = x.how === 'carried' || x.how === 'worn';
     if (!lit && !held) continue;
     if (!x.word || x.word === 'outside') continue;

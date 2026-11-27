@@ -21,6 +21,7 @@ import { emblem } from './emblems.js';
 import { GAMES } from './games/registry.js';
 import { loadGame, current } from './engine/current.js';
 import { PictureFile } from './engine/ms/pictures.js';
+import { pictureSource as legendPictures } from './engine/legend/host.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -180,12 +181,14 @@ function renderUpper(rows, cursor) {
 }
 
 // ---------------------------------------------------------------------------
-// Pictures (Magnetic Scrolls games): drawn from the original .gfx file
+// Pictures (Magnetic Scrolls and Legend games): drawn from the original files
 // ---------------------------------------------------------------------------
 
 let pictureFile = null; // Promise<PictureFile|null> for the current game
 
 function loadPictures(meta) {
+  // Legend games: the pictures come from the game's own files.
+  if (current.code?.ENGINE === 'legend') { pictureFile = legendPictures().catch(() => null); return; }
   pictureFile = meta.pictures
     ? fetch(meta.pictures).then((r) => (r.ok ? r.arrayBuffer() : null))
       .then((buf) => (buf ? new PictureFile(new Uint8Array(buf)) : null)).catch(() => null)
@@ -221,6 +224,7 @@ function renderGameText(segments, container) {
     // A picture goes above the text, but below the title block (see below).
     const banner = !seg.fixed && findBanner(seg.text);
     if (seg.picture != null && pictureFile && !banner) container.append(pictureFigure(seg.picture));
+    if (!seg.text) continue;
     if (seg.fixed) {
       container.append(el('pre', 'game-text fixed', seg.text));
       continue;
@@ -423,14 +427,14 @@ let gameEnded = false;
 let lastScore = null; // for the 80s mode's score jingle
 
 const session = new GameSession({
-  onStatus: ({ room, score, moves }) => {
+  onStatus: ({ room, score, moves, clock }) => {
     if (typeof score === 'number' && typeof lastScore === 'number' && score > lastScore && !GAMES[GAME_ID]?.clock) sfx.score();
     lastScore = score;
     currentRoom = room;
     els.room.textContent = room || '—';
     if (targetLanguage()) updateStatusRoom();
     els.score.textContent = score;
-    els.time.textContent = GAMES[GAME_ID]?.clock ? clockTime(score, moves) : moves;
+    els.time.textContent = GAMES[GAME_ID]?.clock ? clockTime(score, moves) : (clock ?? moves);
   },
   onUpper: (rows, cursor) => { renderUpper(rows, cursor); queueMicrotask(updateMode); },
   onSave: (snap) => openSlots('save', snap),

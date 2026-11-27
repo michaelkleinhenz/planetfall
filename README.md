@@ -114,6 +114,29 @@ and a room's picture is the one the game draws there. The noun table has no adje
 these releases, so things with the same name (Fish!'s three warps) get one action button.
 Wonderland (a later game format with animated pictures) is not included yet.
 
+### Legend Entertainment games
+
+Frederik Pohl's Gateway (Legend Entertainment, 1992, by Glen Dahlgren and Mike Verdu) has
+no released source and no other release format, so the app runs Legend's original DOS
+program, unchanged, from the game's own files (`games/legend/gateway/`, the 1996 CD
+release). `tools/legend/build.mjs` packs the files the game needs into
+`web/img/legend/gateway.pak` (music, sound effects and the 256-colour pictures are left
+out). The browser runs it in a small 8086/286 core with just enough of a PC, its BIOS and
+DOS (`web/src/engine/legend/`):
+
+- The story text is the game's own transcript (its SCRIPT command), and the app answers
+  its prompts, `- MORE -` pauses and questions.
+- The room picture is the one the game reads from its picture files, decoded in the
+  browser (Legend's PIC format, PKWARE DCL compression), with the overlays the game draws
+  on it (an open drawer).
+- The game's own screens (the PV commset, the DataMan) are drawn by the game on an emulated
+  VGA, and the app shows that screen in the transcript and sends it the keys you type.
+- The room, the things in view and carried, and the dictionary are read from the
+  program's memory and the game's data files, for the status line, the quick actions and
+  the AI parser. The exits are decided by the game's code, so the map has rooms but no
+  exits, and the AI hints use the game's own hint book (`HINTBOOK.TXT`).
+- Undo and saves store the memory as a compressed difference from the first prompt.
+
 ## Features
 
 - **AI interpreter (optional):** it uses an [OpenRouter](https://openrouter.ai/keys) API
@@ -178,8 +201,8 @@ Wonderland (a later game format with animated pictures) is not included yet.
   [Infocom Gallery](https://gallery.guetech.org/greybox.html) (Magnetic Scrolls games: the
   [Magnetic Scrolls Memorial](https://msmemorial.if-legends.org/)), on the menu card and
   with the 📖 button in the game's toolbar.
-- **Pictures:** the Magnetic Scrolls games show their original pictures in the transcript,
-  decoded from the original picture files.
+- **Pictures:** the Magnetic Scrolls and Legend games show their original pictures in the
+  transcript, decoded from the original picture files.
 - **Your data stays in your browser:** settings, progress and saves live in
   localStorage, per game, and nothing is sent to any server except your AI requests to
   OpenRouter. There are no cookies, analytics or third-party scripts. The menu can
@@ -211,6 +234,7 @@ npm test               # vocabulary/object-tree check + transcript comparison wi
 | ZIL → JS compiler | `tools/zil2js/` | Reads the ZIL source and translates every routine (516 in Planetfall, 440 in Zork I) into readable async JavaScript. It also builds each game's data image: object tree, property tables, vocabulary and syntax tables. Per-game settings are in `games.mjs`. |
 | Generated games | `web/src/games/<game>/` | `game.js` (the code) and `story-data.js` (the data), plus `registry.js` with per-game metadata for the app. |
 | Magnetic Scrolls | `tools/magnetic/`, `web/src/engine/ms/` | Builds The Pawn, The Guild of Thieves and Jinxter from their 68000 source, prepares Corruption, Fish! and Myth from their original game files, and runs them in a JavaScript 68000 core. |
+| Legend Entertainment | `tools/legend/`, `web/src/engine/legend/` | Packs Gateway's original files and runs its DOS program in a JavaScript 8086/286 core with a minimal PC, BIOS, DOS and VGA. |
 | Runtime | `web/src/engine/` | The Z-machine-style primitives the translated code calls: objects, properties, tables, text, the tokenizer, save/restore and a seeded RNG. Also the session that turns the game's input loop into request/response. |
 | AI | `web/src/ai/` | OpenRouter client (with prompt caching), command interpreter, live translation, scene description and hints. |
 | Web app | `web/` | Menu, transcript, quick actions, settings, storage and backups. Fonts are self-hosted (SIL OFL, `web/fonts/`). |
@@ -267,6 +291,10 @@ is fully static and needs no secrets.
   Licence 1.0, for non-commercial use only (`games/magnetic/README.md`). The game files of
   Corruption, Fish! and Myth are the original releases and are not covered by any license
   in this repository.
+- Frederik Pohl's Gateway is © Legend Entertainment; its files in `games/legend/gateway/`
+  and the pack built from them are the original release and are not covered by any
+  license in this repository. The PIC format was worked out with the help of the notes
+  of the gateway-port project (file layouts only; the decoder here is our own).
 - The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
   now Microsoft; The Pawn, The Guild of Thieves, Jinxter, Corruption, Fish! and Myth © Magnetic Scrolls/Rainbird).
   The Magnetic Scrolls pictures in `web/img/pictures/` are from the original releases

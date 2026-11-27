@@ -104,8 +104,9 @@ const shell = [
   ...list('img', (r) => /\.(jpg|png|svg)$/.test(r)),
   'manifest.webmanifest',
 ];
-// Games for offline play: their code and data, and the Magnetic Scrolls pictures.
-const games = [...list('src/games', isGameFile).map(withVersion), ...list('img/pictures', (r) => r.endsWith('.gfx'))];
+// Games for offline play: their code and data, the Magnetic Scrolls pictures
+// and the Legend games' files.
+const games = [...list('src/games', isGameFile).map(withVersion), ...list('img/pictures', (r) => r.endsWith('.gfx')), ...list('img/legend', (r) => r.endsWith('.pak'))];
 fs.writeFileSync(path.join(out, 'sw.js'), fs.readFileSync(path.join(src, 'sw.js'), 'utf8')
   .replace("'__VERSION__'", JSON.stringify(release))
   .replace('[/* __SHELL__ */]', JSON.stringify(shell, null, 1))

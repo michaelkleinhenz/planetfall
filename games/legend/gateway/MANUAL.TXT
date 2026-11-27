@@ -1,0 +1,1389 @@
+/**********************************************************************
+The following text originally appeared in the pages of the GATEWAY.   *
+game manual.                                                          *  
+**********************************************************************/        
+
+	What Is A LEGEND Adventure Game?
+
+In an adventure game from Legend, you become the main character in an 
+evolving story that takes place in a world populated with interesting people, 
+places, and things.  You see this world through your main character's eyes, 
+and you play the game by directing his actions.
+
+Like a book or a movie, the story unfolds as you travel from location to 
+location, encountering situations which require action on your part.  You 
+can think of each of these situations as a puzzle.  The key to solving these 
+puzzles will often be creative thinking and clever use of objects you have 
+picked up in your travels.  You will get points as you solve puzzles, and 
+your score will help you monitor your progress.
+
+Throughout the game the richly textured graphics, prose, sound effects 
+and music will draw you into a spellbinding adventure that could only be 
+brought to you by the master storytellers of Legend Entertainment Company.  
+
+Technical Support
+
+CompuServe E-Mail                                               
+	Game Publisher's Forum                  type GO GAMEPUB,
+						    Section 7
+	E-Mail                                      72662.1021
+
+America On-Line                                 Legend Entr
+
+Internet E-Mail                                 72662.1021@CompuServe.COM
+
+Telephone Fax Line                              703-222-3471
+
+(NO HINTS WILL BE GIVEN ON THIS NUMBER)
+From the continental U.S. call toll free
+9:00 a.m. - 5:00 p.m. weekdays EST/EDT          1-800-658-8891
+
+From Canada, and other locations                703-222-8515
+9:00 a.m. - 5:00 p.m. weekdays EST/EDT
+
+Hint Information
+
+The full hintbook is included in the Gateway Directory.  To access this
+file type < MORE HINTBOOK.TXT
+
+
+Executive Offices                                       
+
+Legend Entertainment Company
+P.O. Box 10810   
+14200 Park Meadow Drive
+Chantilly, Virginia 22021
+
+==========================================================================
+
+
+	Table of Contents                                   SECTION    
+	
+Introduction to GATEWAY ...................................... 1
+Quick Start:  Installation ................................... 2
+Quick Start:  Playing the Game ............................... 3
+Installation and Start-up .................................... 4
+Configuration Options ........................................ 5
+Music and Sound .............................................. 6
+Introduction to the Game Interface ........................... 7
+Playing the Game With a Mouse  ............................... 8
+Playing Without a Mouse ...................................... 9
+Save, Restore, and Quit ...................................... 10
+Talking to the Game .......................................... 11
+Operating the Heechee Ships .................................. 12
+Helpful Hints ................................................ 13
+Things to Try at the Start of the Game ....................... 14
+Game Commands and their Abbreviation ......................... 15
+Sample Transcript ............................................ 16
+About the Authors ............................................ 17
+Credits ...................................................... 18                                       
+Help! Troubleshooting and Technical Assistance ............... 19
+Legal Stuff .................................................. 20
+
+Even if you are an experienced adventure game player who thinks that 
+instruction manuals are best used as confetti at sporting events, you 
+should still read the sections with names in bold for valuable information 
+about this game.    
+
+
+SECTION 1 - Introduction to GATEWAY
+==========================================================================
+	     
+		    
+The gamble is the same for every Gateway prospector.  You strap yourself 
+into an alien starship whose destination was programmed 500,000 years ago 
+by a race called the Heechee.  At journey's end you may discover a 
+motherlode of technology that will make you rich.  More likely, you will die.
+
+This is the gamble that many of the 20 billion inhabitants of Earth dream 
+of taking.  This is the adventure that you find yourself about to begin.  
+During the month of December, 2101 you won the monthly lottery sponsored 
+by the State of Wyoming and your employer, the giant chemical food 
+conglomerate known as PetroFood, Incorporated.  The prize was a one way 
+ticket to Gateway, a passport out of the food mines in the blasted moonscape 
+of Wyoming, and a chance to become rich beyond your wildest dreams.
+
+After a four-month trip in one of the huge interplanetary transports that 
+ferry people and equipment to destinations like Titan, Io, Venus, and 
+Mercury, you arrive at Gateway.  This immense alien space station, 
+discovered by accident in 2077, is home to the 1,000 operational 
+faster-than-light starships that give it its name.  The once derelict 
+station is currently owned and operated by the most powerful multinational 
+corporation in history, and the ships are used for the exploration of the 
+galaxy by volunteers like you.
+   
+Your first ship handling class is scheduled for this afternoon.  
+There you will be certified by the Corporation as flight crew.  One day later 
+you can head down to the hangar spaces on Level Tanya and sign up for 
+a prospecting mission.  You will be put aboard a Heechee starship and will 
+take your life in your hands as you punch out for a destination that could 
+be the core of a star, a deadly black hole, or a new planet filled with the 
+riches of ancient Heechee technology.
+
+
+SECTION 2 - Quick Start:  Installation
+==========================================================================
+				
+The installation process is quite simple:
+
+1.  Place the Gateway II CD in your CD-ROM drive.
+
+2.  Make sure you are at the DOS prompt ( > ).
+
+3.  Switch your DOS prompt to the drive letter for the CD-ROM drive.
+
+4.  Type INSTALL <ENTER> to run the installatin program.
+
+5.  Follow the installation instructions on the screen.
+
+
+SECTION 3 - Quick Start:  Playing The Game
+==========================================================================
+				
+Like other Legend adventure game products, GATEWAY features a very flexible 
+game interface that you can customize.  You can use the mouse to interact 
+with the picture, build game commands, and change the game interface (using 
+the "buttons" in the upper left hand corner of the screen).  You can also 
+enter game commands by typing them in at the command line.  You are in 
+control and can decide what works best for you.  
+
+Using the mouse you can:
+
+	1. Move from place to place by clicking on the compass rose.
+
+	2. Single-click on an object in a picture to look at it and 
+	   double-click on an object to take it, open or close it, 
+	   etc.
+
+	3. Select a verb from the verb menu and then click on an object 
+	   in a picture to apply the verb to it.
+
+	4. Build complex commands quickly from the verb, object, and 
+	   preposition menus.  (Single-click selects the 
+	   word, double-click finishes the command.)
+
+You can start typing at any point, and the words you type will appear on 
+the command line.  You will be entering game commands, combinations of words 
+that tell the main character in the game what to do at each turn (i.e. 
+EXAMINE THE DESK, TAKE THE DEBIT CARD, PUT THE DEBIT CARD IN THE SLOT, 
+ASK TERRI ABOUT HERSELF, etc.).  Press the <ENTER> key to execute a command. 
+
+If you do not have a mouse, you can simulate one by pressing <TAB>.  This 
+puts a cursor on the screen which you can move around using the arrow keys.  
+"Click" by pressing <ENTER> and "double-click" by pressing <SHIFT> <ENTER>.  
+
+Again, if you do not have a mouse, there is yet another fast way to build 
+commands using the keyboard.  Press <TAB> again to begin using this feature.  
+Then use the arrow keys to move the highlight bar back and forth 
+between the menus, press the space bar to select a word, and 
+press <ENTER> to execute your command.  
+
+SECTION 4 - Installation and Start-up
+==========================================================================
+
+INSTALLATION
+
+
+START-UP
+To start an installed copy of GATEWAY, follow the instructions in the 
+Installation section above and then:
+
+	1. Change to the directory in which the game was installed (The 
+	   default directory that the installation program puts GATEWAY in 
+	   is \GATE).  For example, if you installed GATEWAY in 
+	   D:\GAMES\LEGEND, you would type:  D: <ENTER> followed by 
+	   CD \GAMES\LEGEND <ENTER>. 
+ 
+
+	2. Start the game by typing GATEWAY <ENTER>.  
+
+	3. The installation program will create a batch file named 
+	   GATEWAY.BAT.  You may decide to override these defaults by 
+	   running the application directly by typing GATE followed by 
+	   one or several of the configuration options described in the 
+	   section that follows.
+
+For additional information concerning configuration options and defaults, 
+refer to the Configuration, Options and Music and Sound sections.  
+
+SECTION 5 - Configuration Options
+==========================================================================
+
+If you wish to override any of the defaults for the game configuration, you 
+may type one or more of the following options, separated by spaces, after 
+typing GATE  (MS-DOS Version 5.0 users should type LOADFIX GATE ) on 
+the MS-DOS command line:
+
+	CGA      Forces the game into black and white CGA graphics on 
+		 computers with an EGA or VGA graphics adapter.
+
+	EGA      Makes the game display EGA graphics.  
+
+	SVGA    Makes the game display Super VGA graphics.  
+
+	XMOUSE  Overrides the default Microsoft mouse driver.
+		Use when you have a mouse that is not Microsoft compatible.
+
+	ADLIB   Causes music and RealSound sound effects to be played through 
+		an AdLib Music Synthesizer Card, if present.
+
+	BLASTER Causes music and RealSound sound effects to be played through 
+		a Sound Blaster card, if present.  You may set the IRQ number 
+		and I/O address for your Sound Blaster card by typing: 
+		GATE BLASTER  <irq number>  <i/o address>.
+	
+	MT32    Causes music to be played on a Roland MT-32 (or compatible) 
+		sound module, if present.  You may set the IRQ number and 
+		I/O address for your MIDI interface by typing:  
+		GATE MT32  <irq number> <i/o address>.
+
+	NOCYCLE Disables color cycling animation for computers with EGA and 
+		VGA adapters and color monitors. 
+ 
+
+	REAL    Disables AdLib, Sound Blaster, and Roland music and plays 
+		RealSound sound effects through the PC's internal speaker.  
+
+	NOREAL  Disables RealSound sound effects.  
+
+
+So, for example, if you have a VGA graphics adapter, a Sound Blaster sound 
+board on IRQ 9, and you want to see EGA pictures and play RealSound sound 
+effects through your sound card, you would type GATE EGA BLASTER 9 <ENTER> 
+at the MS-DOS system prompt.
+
+The XMOUSE parameter is used for mouse drivers that are not Microsoft 
+compatible.  If your mouse is not responding or the software is behaving 
+erratically (i.e. the mouse cursor is "eating" the graphics), then you may 
+want to start the game by typing GATE XMOUSE to override the default.
+
+Refer to the next section, Music And Sound, for more information on music 
+card and sound module configuration.
+
+SECTION 6 - Music And Sound
+==========================================================================
+
+GATEWAY supports the following music and sound effect technologies:
+
+	RealSound (TM)
+	AdLib Music Synthesizer Card
+	Creative Labs' Sound Blaster
+	Roland MT-32 and compatible MIDI sound modules including 
+	Roland's MT-100, CM-32L, and LAPC-1
+
+RealSound sound effects will be played through the PC's internal speaker if 
+you do not have an AdLib or Sound Blaster card.  See the Installation section 
+for instructions for proper installation of the game.
+
+REALSOUND (TM)
+RealSound is used throughout the game to play sound effects on the PC's 
+internal speaker or an AdLib or Sound Blaster card, if present.  No 
+additional hardware or software is required to hear RealSound effects in 
+GATEWAY.  If you do not have an AdLib card, Sound Blaster, or MIDI sound 
+module, you will hear RealSound sound effects on your PC speaker.
+
+RealSound is a Patent Pending technological breakthrough that works with any 
+IBM compatible computer with a built-in speaker.  If your machine beeps when 
+you turn it on, it is compatible with RealSound.  
+
+ROLAND MT-32, MT-100, CM-32L, AND LAPC-1 OWNERS
+To use your MIDI sound module, make sure your equipment is configured as 
+shown in the MIDI wiring diagram on the next page.  If you have problems, 
+check that the following steps have been taken to properly configure your 
+equipment:
+
+Note:   LAPC-1 owners may ignore items 1, 2, and 3.
+
+	1. A PC to MIDI Interface card is installed in your PC.
+
+	2. The PC to MIDI Interface card is connected to an MPU-401 or 
+	   compatible MIDI Interface or MIDI Processing Unit.
+
+	3. A MIDI cable is connected from a MIDI OUT connector on the 
+	   MIDI Interface to the MIDI IN connector on your sound module.
+
+	4. The audio output jacks on your sound module are connected to 
+	   the audio input jacks on your amplifier or stereo.
+
+	5. One or two speakers are attached to the speaker connectors on 
+	   your amplifier or stereo.
+
+If you are having trouble getting your MIDI sound module to operate, the 
+difficulty can probably be traced to one of two causes:  
+
+First, you may have two cards in your computer that are set to the same IRQ.  
+If this is the case, you can change the IRQ value for one of the cards by 
+using the card's jumpers or switches (although some cards do not allow this).  
+Consult the manual that came with your MIDI interface.
+
+The second possibility is that your MIDI interface may be set to an IRQ other 
+than the default value of 2 and/or an I/O address other than 330.  In this 
+case, you must specify the appropriate IRQ value and/or I/O address in the 
+command line when you start the game. For example, to use a MIDI interface 
+card set to operate on IRQ 5 and I/O address 300, you should start the game 
+by typing:   GATE MT32 5 300.    
+
+						   _____
+						  |  o  |
+       ============                               |  O  |----------
+       | -------- |                               :_____:         |
+       | |      | |                                _____          |
+       | -------- |                   SPEAKERS    |  o  |_____..  |
+    ==================                            |  O  |      |  | <-speaker
+    |      IBM PC    |                            :_____:      |  |   wires
+ -  |                |                                         |  |
+ |  ==================                                         |  |
+ |                                                             |  |
+ |                     midi             audio   audio          |  |
+ |      .-----------. cable .---------- cables   in_______     |  |
+ |.____ |    o o o-----------o o o     o--------o<        o-----  |
+	|        ^  |       |^         o--------o         o_______|
+	:___________|       |.__________:       :_________|
+	      midi out         midi in       
+	    
+	    MPU-401           ROLAND SOUND         AMPLIFIER
+	(OR COMPATIBLE)         MODULE             OR STEREO
+
+
+	MIDI Wiring Diagram for Roland MT-32, MT-100, and CM-32L
+
+
+SECTION 7 - Introduction to the Game Interface
+==========================================================================
+
+To install and start up the game, see the Installation and Start-up SECTION
+4.  
+
+When the game begins, you will see the title screen, followed by the 
+introduction sequence.  If you wish to skip to the beginning of the story, 
+you can hit <ESC> at any time to skip the introduction.  The game will 
+then ask you if you wish to restore to a previously saved position.  
+
+After the introduction sequence, the main interface will appear.  While there 
+are many alternate screen interfaces for flying the ships, operating 
+equipment, and solving puzzles, you will spend most of your time interacting 
+with this screen.  It looks like this:
+
+GRAPHICS WINDOW
+This window may contain:
+
+	A picture of your location
+	Your inventory (what you are wearing and carrying)
+	Your status (score, number of turns taken, etc.)
+	A verbal description of your surroundings
+
+
+COMMAND BUTTONS
+Many of these buttons have function key equivalents.  See the information on 
+function keys on SECTION 15 for more details.  
+
+	HELP        Displays a help screen
+	HALF        Removes the menus, making more room for text
+	ERASE       Removes the last word from the command line
+	DO          Executes the command on the command line
+	PICTURE     Displays a picture in the graphics window
+	STATUS      Displays your score and status in the graphics window
+	INVENTORY   Displays your inventory in the graphics window
+	LOOK        Puts a verbal description of your surroundings in the 
+		    graphics  window
+
+
+COMPASS ROSE AND DIRECTION BUTTONS
+If you have a mouse, you can move around in the game environment by clicking 
+on the various points of the compass rose and the IN, OUT, UP, and DOWN 
+buttons.  Legitimate exits from your current location are always highlighted.
+
+VERB MENU
+The verb menu contains every verb you need to play the game.  There are other 
+verbs you can use, but you will have to type them in.  The most commonly used 
+verbs are grouped at the top of the list.  The rest of them are in 
+alphabetical order.  
+
+PREPOSITION MENU
+After you select a verb, the verb menu is replaced with a preposition menu.  
+The amazing thing is that the game will display only those prepositions that 
+you can use with the verb you have selected.  Voila'!  No more pesky cursor 
+errors.
+
+OBJECT MENU
+This menu contains all the things that you see from your current location.  
+If you want to refer to other objects in the game, you must type them in.  
+
+HIGHLIGHT BAR
+This is a highlighted bar you can move around to select the next word you 
+want to place on the command line.  
+
+ELEVATOR BOXES
+Clicking on these boxes and dragging them down is a fast way to move through 
+the menus.  Clicking in the column above or below the box will cause rapid 
+movement up or down the menu.  Clicking on the arrows at the top or 
+bottom of the column will move the highlight bar up or down one entry 
+in the menu.  (Note:  Elevator boxes are only displayed when there are more 
+menu entries than there is room to display at once.)
+
+STORY WINDOW
+This is the window where all that wonderful prose we have been telling you 
+about appears.  If the window fills with words and you see "MORE" at the 
+bottom, press any key or click the mouse button and the rest of the message 
+will appear.  If you would like to expand the size of the window and you do 
+not mind sacrificing the menus, press <F3> for a half-screen or <F4> for a 
+full screen of text.  If you would like to see the text displayed before the 
+picture is updated, then type the command TEXTFIRST.  To switch back to the 
+default of pictures first, type PICFIRST.    
+
+COMMAND LINE
+All your commands will appear on this line, whether you enter them by typing, 
+selecting from the menu, or clicking on the compass rose or graphics window.  
+
+STATUS LINE
+This line displays your location and the local time of day.
+
+
+SECTION 8 - Playing The Game With A Mouse
+==========================================================================
+				
+If you have a mouse, playing this game is simplicity itself.  While you are 
+using the main interface, you can do all of the following by pointing and 
+clicking:
+
+MOVE AROUND     
+from place to place by single-clicking on the compass rose or the directional 
+buttons next to it.  Legitimate exits from your current location are always 
+highlighted.  Double-clicking on an exit that is pictured in the graphics 
+window will move you through that exit.  
+
+EXAMINE
+objects by single-clicking on them in the graphics window. Take them by 
+double-clicking.
+
+GREET
+characters you meet in the game by double-clicking on them in the graphics 
+window.
+
+CUSTOMIZE
+the interface by clicking on the command buttons in the upper left hand 
+corner of the screen.
+
+You can build game commands using the menus on the left hand side of the 
+screen or you can type them in directly. 
+If you choose to type, you will see the words that you type appear on the 
+command line in the story window on the screen.  Press <ENTER> to execute a 
+command.  
+
+For more on how to build commands, read the next two paragraphs and refer to 
+the sections entitled Talking to the Game, Game Commands and their 
+Abbreviations, and the Sample Transcript.  
+
+At several points in the game you will find yourself interacting with 
+different screen interfaces including a starship control panel, a combination 
+lock built by aliens, a two-way computerized telephone, and other pieces of 
+equipment.  These screen interfaces are easy to use with a mouse or keyboard.  
+Simply point and click with the mouse or press the key for the number or the 
+first letter of the word associated with the control you want to activate. 
+
+For more information on the most important alternative interface (the 
+starship control panel), please see the section entitled Operating the 
+Heechee Ships.
+
+BUILDING COMMANDS WITH THE MENUS 
+A single-click on a word in the verb menu will place that word on the command 
+line.  The verb menu will then be replaced by a preposition menu that lists 
+the prepositions you may legitimately use with the verb you have selected. 
+At this point you can select one of those prepositions, select a word from 
+the object menu, or execute your command by clicking on the DO button.
+
+Naturally, we have built in some short-cuts.  For example, if you know prior 
+to clicking on a word that it will be the last word in your command, you can 
+double-click on it and your command will be executed.  Or, if you've already 
+clicked on the last word in your command and you do not want to move the 
+mouse up to the DO button, just double-click on the last word and the command 
+will be executed.  Another short-cut is to select a verb from the menu and 
+then single-click on an object in the picture in the graphics window.
+
+FINDING WORDS QUICKLY
+Because the menus sometimes contain many words, we have also included a few 
+short-cuts for getting to words that are far down in the menu.  You can click 
+in the grey area to the right of each menu to rapidly move up or down in 
+that menu.  (If there is no grey area, the entire menu is visible.)  Or you 
+can click on the "elevator box" in the column to the right of each menu and 
+drag the box up or down while keeping the mouse button depressed.  
+
+An even faster method is to hold down the <SHIFT> key on the keyboard and 
+then press the first letter of the word you want.  The highlight bar will 
+then jump to the first word that begins with that letter.  You can also use 
+the <HOME> and <END> keys on the keyboard to jump to the top or the bottom 
+of the list, or the <PGDN> and <PGUP> keys to move up or down the list 
+quickly.    
+
+NOTES
+To remove the last word from the command line, click on ERASE.  
+
+Double-clicking on an object in the graphics window will "do the obvious 
+thing" with that object.  For example, climb stairs, eat food, turn off 
+lamp, etc.  
+
+If you are using the mouse and you want to type, go ahead.  However, once 
+you have begun typing on the command line, you cannot go back to using the 
+mouse until that command has been executed or erased.
+
+If you select a noun as the first word in your sentence, the game assumes 
+you are trying to speak to that person or thing, and therefore it adds a 
+comma after the word.  (For example, SAILOR, GIVE ME THE ROPE.)  
+
+If your mouse is not responding or is destroying the picture, then the 
+mouse driver is probably not Microsoft-compatible.  Try returning to DOS 
+and restart the game by typing GATE XMOUSE.
+
+If you definitely do not want to use the menus, press <F3> and they will 
+go away, creating more room for text.  If you want to return to the golden 
+years of adventuring, press <F4> for the all-text look.
+
+SECTION 9 - Playing Without A Mouse
+==========================================================================
+
+EMULATING THE MOUSE
+If you do not have a mouse, there are still quick and easy ways to build 
+commands from the menus on the main interface without typing.  To do this, 
+first press the <TAB> key.  When you do, a mouse cursor will appear on your 
+screen.  You can move this cursor around by using the arrow keys on your 
+keyboard.  Then you can "click" by hitting <ENTER>, and "double-click" by 
+hitting <SHIFT><ENTER>.  This will let you do all the things mentioned 
+in the previous section, Playing the Game With a Mouse.
+
+USING THE MENUS
+If you do not want to use the method outlined above, pressing the <TAB> 
+key again will give you yet another alternative.  This system puts a 
+highlight bar over the first word in the verb menu.  You can move this bar 
+back and forth between menus (and up and down within them) by using the arrow 
+keys on your keyboard.  Once you have highlighted the word you wish to 
+select, hitting the space bar will place that word on the command line.  
+After you have finished building your command, hitting <ENTER> will execute 
+it.   
+
+ALTERNATE SCREEN INTERFACES
+You will encounter a number of alternate screen interfaces during game play.  
+While these interfaces are graphical in nature, they are easy to use with 
+keyboard commands.  
+
+If you look at each of the pictures, you will see that there is a number or 
+word associated with each control on the screen.  By pressing the key that 
+corresponds to the number or the first letter of the word, you can activate 
+the control (if it is a button, you will press it).  
+
+For more information about the most important alternate interface, the 
+Heechee starship control panel, please see the section entitled Operating 
+the Heechee Ships.
+
+TYPING
+If you like to type, go ahead.  No matter what method you have been using to 
+build commands, you can always start to type.  The cursor will appear on the 
+command line and you can enter your commands.  Press <ENTER> to execute a 
+command.
+
+FUNCTION KEYS
+You can use function keys to customize the interface as follows:
+				 
+	<F1>      Displays the help screen
+	<F2>      Returns the menus to the screen if they are not there
+	<F3>      Removes the menus and creates more room for text
+	<F4>      Puts you into full-screen text mode
+	<F5>      Displays a picture in the graphics window
+	<F6>      Displays your score and status in the graphics window
+	<F7>      Displays your inventory in the graphics window
+	<F8>      Describes your surroundings in the graphics window
+      
+Many of these function keys have command button equivalents.  See the 
+information on command buttons on Page for more details.  
+
+SECTION 10 - Save, Restore, and Quit
+==========================================================================
+
+Once you have begun the game, you can use the SAVE command whenever you want 
+to capture and store everything you have done so far.  SAVE allows you to 
+define a point which you can return to if you are "killed" or if you just 
+want to turn off your computer for a while.  
+
+When you type SAVE (or when you select it from the verb menu), you will be 
+asked to name the SAVE file.  Choose a name that will remind you of where you 
+are, like "After First Mission" or "Solved Book Puzzle."  The description of 
+the saved game can have up to 33 characters in it.  
+
+In the course of playing this game, you may create up to 128 simultaneous 
+SAVE files.  You can delete SAVE files by pressing <ALT><D> when the 
+highlight bar is positioned over the name of the saved game.  If you pick the 
+name of an already existing file when you save, the original file will be 
+erased and the new file will take its place.  You can edit an existing 
+description by moving the highlight bar to the appropriate line and pressing 
+the space bar or single-clicking on the description if you have a mouse.  
+<ENTER> or a double-click will save your current game with the new 
+description.
+
+When you are ready to return to a place you have saved, type RESTORE 
+(or select it from the verb menu).  As a reminder, a list of your previously 
+saved games will appear in the RESTORE window.  When the game asks you for 
+a description, move the highlight bar to the description you want and press 
+<ENTER> or type in a new description.  If you type in the beginning of a 
+valid description and hit <ENTER>, the game will automatically match it and 
+fill in the rest of the name.  Once you have entered a valid description, you 
+will return to the spot you left as if you had never been away.  You will 
+have the same score, inventory, status, etc. that you had when you left.  If 
+you want to stop playing, use the QUIT command.  However, if you quit without 
+saving,  you will have to start from the beginning of the game the next time 
+you play.
+
+SECTION 11 - Talking To The Game
+==========================================================================
+				 
+You "talk" to GATEWAY by telling the game what you want the main character 
+in the game to do during each turn. You do this by typing your input on the 
+keyboard, or by clicking the mouse on the menus, the compass rose, or the 
+pictures (See Introduction to the Game Interface and Playing the Game With 
+a Mouse.)
+
+Your simplest inputs will be directions -- moving around from place to place:
+
+	>NORTH
+	>DOWN
+	>SW
+
+Equally simple are inputs which are just verbs:
+	>JUMP
+	>SCREAM
+
+Let's get a bit more complicated, and add some nouns (or, if you combine them 
+with adjectives, noun phrases).
+	>TAKE THE DEBIT CARD
+	>READ BOOK
+	>EXAMINE THE GLOWING BLUE BRACELET
+	>KISS THE PRETTY BLOND WOMAN
+
+(Note that you can use articles like "the" or "a" if you wish, but most 
+people just omit them to save time.)
+
+Shall we add a dash of prepositions?
+	>SIT DOWN
+	>LOOK OUT WINDOW
+	>HIDE BEHIND BROWN CURTAIN
+
+
+Take a deep breath.  So far, the noun phrases we have looked at have all 
+been the direct object of the sentence.  Now we are going to throw in a 
+second noun phrase, the indirect object! 
+	>GIVE BOOK TO WOMAN
+	>SHOOT GUN AT THE ALIEN
+	>BUY DRINK FOR TERRI
+
+Sorry, it is time to introduce some mind-boggling complicated concepts.  You 
+can include several inputs after a single prompt, as long as you separate 
+them by a period or by the word "then":
+	>GET IN SHIP THEN CLOSE HATCH
+	>LOOK AT MACHINE.  TAKE IT.
+
+You can also use pronouns:
+	>TAKE MACHINE.  TURN IT ON. 
+	>TAKE ARTIFACT FROM STAND.  EXAMINE IT.
+
+You can use multiple objects with certain verbs (like TAKE and DROP) as long 
+as you separate the noun phrases with a comma or the word "and."  You can 
+even use the amazingly useful word "all":
+	>TAKE BOOK AND DEBIT CARD   
+	>DROP BOOK, DEBIT CARD, BADGE
+	>TAKE ALL
+	>GIVE ALL THE ARTIFACTS TO RECEPTIONIST
+
+You will probably want to fortify yourself with some good strong scotch 
+before moving on to the next area:  talking to characters in the game.  This 
+can be useful if you want to ask a character for some information:
+	>ASK TERRI ABOUT GATEWAY
+	>ASK OLD MAN ABOUT HIMSELF
+	>ASK RECEPTIONIST ABOUT EARTH
+  
+or if you would like them to do something for you or give something to you:
+	>ASK RECEPTIONIST FOR BOOK
+
+
+SECTION 12 - Operating the Heechee Ships
+==========================================================================
+
+The screen you see below is the Heechee ship control panel.  This control 
+panel allows you to program the Heechee ship guidance system, activate the 
+faster-than-light interstellar drive, land and take off from planets with the 
+chemical rockets, and get sensor readings and camera views from outside the 
+spacecraft.
+
+COURSE CODES
+In the upper left hand corner is the course code display.  This is where you 
+lock in the course code for the ship's destination.  Click on the triangualar 
+yellow buttons or press the corresponding number keys (1, 2, 3, or 4) under 
+each of the little windows to set a course.  You can also click on the course 
+codes displayed in the window in the lower half of the screen (see CODE 
+button below) to enter a course into the course code display.  Note: The 
+characters that appear in the windows of the course code display are Heechee 
+numbers.  Clicking on the triangular buttons will increment or decrement the 
+number in the window.  If you are using the keyboard, you can press <SHIFT> 
+and the corresponding number keys (1, 2, 3, or 4) to decrement the number in 
+the window.
+
+FTL CONTROLS
+The two buttons labeled "GO" and "RETURN" are the faster-than-light drive 
+controls.  When you click on "GO" (or press <G>), the ship will go to 
+whatever course code is programmed in the four little windows of course code 
+display.  Once you have arrived at your destination, you must return to 
+Gateway before you can enter a new course code.  Click on the "RETURN" button 
+(or press <R>) to return to Gateway.  Note: You cannot activate the FTL 
+controls from the surface of a planet.  If you have landed on a planet and 
+you want to return to Gateway, then you must return to orbit again before 
+you can click on the "RETURN" button. 
+
+LANDER CONTROLS
+The two buttons labeled "ORBIT" and "LAND" are the landing system controls.  
+If you are in orbit around a planet and you want to land, simply click on the 
+"LAND" button (or press <L>).  The ship's autolanding systems will manage the 
+descent and touchdown next to whatever concentrations of Heechee metal were 
+detected from orbit by sensors.  When you are ready to take off and return 
+to orbit, click on the "ORBIT" button (or press <O>).
+
+CODE, VIEW, INFO BUTTONS
+The gray box on the lower half of the ship control panel is a human built 
+sensor system that has been piggy-backed on the Heechee panel.  On this 
+system you will find three buttons: CODE, VIEW, and INFO.  Click on the 
+"CODE" button (or press <C>) to get a list of Heechee course codes.  Click 
+on the "VIEW" button (or press <V>) to get a camera view outside the ship.  
+Click on the "INFO" button (or press <I>) to get information about the planet 
+you are circling or on which you have landed.
+
+EXIT
+To exit the ship control panel and return to the normal game interface 
+screen, click on "EXIT" or press <ESC>.
+
+
+SECTION 13 - Helpful Hints
+==========================================================================
+
+Here are ten rules of thumb for those of you new to adventure gaming:
+
+	 1. Crime pays.  TAKE everything that isn't nailed down.  
+
+	 2. Keep your eyes open.  EXAMINE things that you come across; 
+	    you'll get extra tidbits of info.
+
+	 3. Two heads are better than one.  Play with a friend, relative, 
+	    spouse, lover, etc.  Even your pet cat may think of something 
+	    you've overlooked.
+
+	 4. Jesus saves.  And so do all the apostles, when they're playing 
+	    a game as dangerous as GATEWAY!  SAVE early, SAVE often.
+
+	 5. If at first you don't succeed....  If you get stuck at some 
+	    point, do not go away mad, just go away!  Come back later with 
+	    a fresh mind.
+
+	 6. Draw a map.  Your hand-drawn map can include other information, 
+	    such as what things are found where.
+
+	 7. We didn't create this manual to support our local printer.  Read 
+	    all the documentation, especially the sample transcript.
+
+	 8. Take it slow.  Read ALL the text and examine all the pictures 
+	    carefully.
+
+	 9. Try weird stuff.  Sometimes trying wacky things will pay off 
+	    with a clue; at the least, you'll probably uncover some wacky 
+	    responses!
+
+	10. It never hurts to ask.  Many computer magazines and bulletin 
+	    boards will run tips and hints for GATEWAY...especially if you 
+	    ask!
+
+If all else fails, you can look in the hint book that came with your package. 
+
+SECTION 14 - Things To Try at the Start of the Game
+==========================================================================
+
+If you are really stuck on how to get started, try these twenty inputs right 
+from the start of the game:
+
+	>LOOK
+	>TAKE THE DEBIT CARD
+	>EXAMINE THE DEBIT CARD
+	>LOOK AT THE PV COMMSET
+	>EXAMINE THE CARD SLOT
+	>PUT THE DEBIT CARD IN THE PV COMMSET
+	>LOOK AT DESK
+	>OPEN DRAWER
+	>TAKE BOOK
+	>EXAMINE BOOK
+	>INVENTORY
+	>EAST
+	>LOOK AT THE BLUE HELL BAR
+	>EAST
+	>LOOK AT DANCERS
+	>SIT DOWN
+	>EXAMINE THE BAR COUNTER
+	>EXAMINE THE DRINK ORDER PANEL
+	>PUT DEBIT CARD IN COUNTER SLOT
+	>WAIT
+
+Note that these are not necessarily the "correct" first twenty inputs. Many 
+other inputs are possible during the first twenty turns.
+
+SECTION 15 - Game Commands and their Abbreviations
+==========================================================================
+
+Many of the game commands below have function key or command button 
+equivalents.  These are listed in parentheses after the description of the 
+command.  In addition, many game commands have single key equivalents.  
+
+AGAIN (G)       repeats your last command.
+
+BRIEF           tells the game to give you the normal level of 
+		descriptiveness, in which you see a full description of a 
+		place only the first time you go there.  On subsequent visits 
+		to the location, you will not get a description, although 
+		you can always get one by saying >LOOK (or by playing with 
+		the graphics screen in "LOOK" mode).  (See also VERBOSE).  
+
+CREDITS         displays a list of everyone who worked on GATEWAY and what 
+		they did.  
+
+FULL MODE       removes the menus, compass rose, and graphics window, leaving 
+		you with a full screen of text.
+
+HALF MODE       removes the menus, but still displays the compass rose and 
+		the graphics window.  (<F3> key) (HALF button)
+
+INVENTORY (I)   tells you what your character is carrying.
+
+LOOK (L)        will give you a full description of your current location.  
+		This is always a good thing to try if you do not know what 
+		else to do.
+
+LOOK MODE       displays a verbal description of your surroundings in the 
+		graphics window.  (<F8> key) (LOOK button)
+
+MENU MODE       restores the menus to the screen if you have removed them 
+		previously.  (<F2> key) (MENU button)
+
+MUSIC OFF       turns off the music.  (To turn off the sound effects, use 
+		SOUND OFF.)
+
+MUSIC ON        turns the music back on.
+
+NOTIFY          normally, the game will tell you when your score changes.  
+		If you do not want to be bothered, NOTIFY will turn off this 
+		feature.  And, if you change your mind, NOTIFY will turn it 
+		back on.
+
+OOPS (O)        if you mistype a word, use OOPS instead of retyping the 
+		entire input.  For example, if you type >TAKE BOK, and the 
+		game responds, "I do not know the word 'BOK'," you would 
+		simply type OOPS BOOK.  Naturally, you menu users will never 
+		need to use OOPS.
+
+PICFIRST        displays room pictures before room descriptions.  
+
+PICTURE MODE    restores the picture to the graphics window.  
+		(<F5> key) (PICTURE button)
+
+QUIT (Q)        tells the game "Hey, I'm outta here!"  You might want to SAVE 
+		first.
+
+RESTART         starts the game over.  Again, you might want to SAVE first.
+
+RESTORE         brings you back to any point in the game where you have 
+		previously saved.
+
+SAVE            creates a file which the RESTORE command can use to return 
+		you to this point in the story. You should SAVE now and then, 
+		and especially before trying dangerous things like 
+		>ATTACK GIANT SCORPION.
+
+SCRIPT          sends all the text output of the game into the specified file, 
+		which you can then read, print, edit, delete, etc.
+
+SOUND OFF       turns off the sound effects.  (To turn off the music, however, 
+		type MUSIC OFF.)
+
+
+SOUND ON        turns the sound effects back on.
+
+STATUS          gives you a brief report of your score, the number of turns 
+		you have taken, and other information about your progress 
+		through the game.
+
+STATUS MODE     displays your status in the graphics window.  (<F9> key) 
+
+TEXTFIRST       displays room descriptions before room pictures.  
+
+UNDO            probably the single most useful thing ever conceived of in 
+		all of recorded human history.  UNDO simply takes you back 
+		one turn, undoing the effects of your last move.  
+
+UNSCRIPT        stops sending the text output to a file.
+
+VERBOSE         puts you in the level of maximum location descriptions; you 
+		will get a full description of your location every single 
+		time you enter it.  (See also BRIEF).
+
+VERSION         gives you the release number of your copy of GATEWAY, as well 
+		as some legal stuff.
+
+VOLUME #        if you have a sound card or sound module, the VOLUME command, 
+		followed by a number from 1-10, allows you to control the 
+		volume of the game's music.  This command has no effect on 
+		the volume level of the RealSound sound effects.  
+
+WAIT (Z)        your character will just stand around while time passes in 
+		the story.  You can also enter commands like WAIT 45 MINUTES 
+		or WAIT 3 HOURS.  
+
+Abbreviations
+
+A-You would think this would be the abbreviation for AGAIN, wouldn't you.  
+Well, you would be wrong.  If that were the case, then a simple input like 
+>GIVE A DOG A BONE would turn into the nightmarish GIVE (AGAIN) DOG (AGAIN) 
+BONE.  Consequently, we treat "a" as an article rather than an abbreviation, 
+and shorten AGAIN to "G". 
+
+D       -       down
+E       -       east
+G       -       again
+I       -       inventory
+L       -       look
+N       -       north
+O       -       oops
+Q       -       quit
+S       -       south
+T       -       time
+U       -       up
+W       -       west
+X       -       examine
+Y       -       yes
+Z       -       wait
+NW      -       northwest
+NE      -       northeast
+SE      -       southeast
+SW      -       southwest
+
+
+SECTION 16 - Sample Transcript
+==========================================================================
+
+The following sample transcript shows a typical interaction with the first 
+couple of rooms on Gateway Station.  The transcript includes the game 
+responses as well as the player commands for the first few inputs described 
+in the section entitled Things to Try at the Start of the Game.
+
+>LOOK
+Your Quarters
+Your room is a spartan cubicle furnished with a desk, a chair, 
+a wall locker, and a fold-down bed. The only decorative touches 
+are a sickly looking plant sitting next to the desk and a 
+lonely picture of Earth adorning the far wall. A PV commset is 
+set into the south wall. Above the PV is a vent. To the east is 
+a door that leads outside.On the desk you see a debit card.
+The message light on the PV commset is blinking.
+
+>TAKE THE DEBIT CARD
+You take the debit card from the desk.
+[Your score has just gone up by 2. NOTE: You can activate and 
+deactivate score-change notification using the NOTIFY command.]
+The message light on the PV commset is blinking.
+
+>EXAMINE THE DEBIT CARD
+Your Gateway Enterprises debit card is a small plastic card 
+about the size and shape of a 20th century credit card. On the 
+back of the card in small print is the following: "GATEWAY 
+ENTERPRISES DEBIT CARD Code 398G-29A2. By accepting or using 
+this card you agree to the rules and regulations that govern 
+cash transactions on Gateway. Account status information can be 
+accessed through your PV commset. All amounts are in U.S. 
+Dollars."
+The message light on the PV commset is blinking.
+
+>LOOK AT THE PV COMMSET
+The PV commset is a terminal linked into the on-board computer 
+and communications systems. The console has a screen, a card 
+slot, a message light, and a small keypad with ten numbered 
+keys.The message light on the PV commset is blinking.
+
+>EXAMINE THE CARD SLOT
+A small placard above the slot says "Insert your Gateway 
+Enterprises debit card here."
+The message light on the PV commset is blinking.
+
+>PUT THE DEBIT CARD IN THE PV COMMSET
+You insert your debit card into the slot.
+After using the PV commset, you take your debit card from the slot.
+
+>LOOK AT DESK
+The desk is standard Corporation issue: Undistinguished 
+styling, drab colors, and thermoplastic construction. The desk 
+has one drawer, which is closed.
+
+>OPEN DRAWER
+You open the drawer and discover a book.
+
+>TAKE BOOK
+You take the book from the drawer.
+[Your score has just gone up by 3.]
+
+>EXAMINE BOOK
+The book is a hardcover volume entitled "Everything We Know 
+About the Heechee." 
+
+>INVENTORY
+You are holding a book and a debit card.
+You are wearing some boots, a white badge and a blue coverall.
+
+>EAST
+You leave the barracks that is your temporary home, walk along 
+a narrow alley for a few moments, and reach the center of 
+Heecheetown.
+
+Heecheetown
+Heecheetown is a huge spindle shaped cave in the center of 
+Gateway station. Empty when the Heechee left, Heecheetown is 
+now full of ugly Corporation pre-fab buildings. The barracks 
+that house your quarters are in a small alley to the west. To 
+the northwest is the Corporation Administrative Section 
+building. The Blue Hell bar and casino lie to the east. 
+Corridors lead north and south.
+
+>LOOK AT THE BLUE HELL BAR
+The Blue Hell Bar is located in a pre-fab structure to the 
+east. The building's battered and worn exterior lives up to the 
+seedy reputation of this famous prospector watering hole.
+
+>EAST
+Blue Hell Bar
+The Blue Hell is a rough and tumble bar inside a large pre-fab 
+structure in Heecheetown. The counter is located near the 
+entrance, across from a raised dance floor on the far side. 
+Prospectors, off-duty Navy crewmen, and Corporation employees 
+sit in groups and converse in a multi-lingual babble. The 
+casino lies to the east. Heecheetown is to the west.
+You see an empty seat here.
+
+>LOOK AT DANCERS
+The dancers are gyrating wildly to the pulsing, pounding, 
+painfully loud loud music blaring out of the speakers over the 
+dance floor.
+
+>SIT DOWN
+You sit in the empty bar seat.
+
+>EXAMINE THE BAR COUNTER
+The bar counter has a drink order panel and a card slot.
+
+>EXAMINE THE DRINK ORDER PANEL
+"INSERT DEBIT CARD IN CARD SLOT TO ORDER DRINK"
+
+>PUT DEBIT CARD IN COUNTER SLOT
+You insert the debit card into the slot in the bar counter. The 
+bar computer hums and the order panel lights up with a menu of 
+exotic cocktail selections. You order a drink for yourself. The 
+bar computer acknowledges your order with a series of musical 
+tones and spits out your debit card.
+
+>WAIT
+Time passes...
+The famous Gateway robotic bartender trundles over to where 
+you are sitting. It extends a tray bearing a full glass.
+
+>TAKE GLASS
+The robot bartender emits a happy "cheep" as you take the 
+drink.
+
+>EXAMINE THE BARTENDER
+The robotic bartender at the Blue Hell is the stuff of legend. 
+The robot was originally a heavy industrial model designed and 
+built by Hitachi for work in high radiation environments. 
+Imported by the Corporation in case the Heechee left any 
+hazardous materials aboard Gateway, the robot languished unused 
+for several years before it was modified by a group of 
+whimsical engineers and put to work serving drinks.
+
+>EXAMINE THE COCKTAIL
+The glass contains a locally brewed concoction that is known as 
+a "Heecheetown Special." It looks lethal.
+
+>DRINK THE COCKTAIL
+You gulp down your Heecheetown Special. Your eyes bulge out, 
+the little hairs on your neck stand up, and your stomach is 
+coated with a wave of cold fire. You put the empty glass on the 
+counter, your head spinning. You barely notice as the glass is 
+whisked away by the robot bartender.
+
+SECTION 17 - About The Authors
+==========================================================================
+
+Glen Dahlgren (1967 -   )
+
+Glen was born in Richland, WA.  Shortly thereafter, due to events beyond his 
+control, he moved to Pittsburgh, PA.  While practicing his self-taught 
+computer skills, Glen enrolled at Penn State University and emerged with a 
+B.S. in Computer Science and years of experience in programming, marketing, 
+and design of game software for the Tandy Color Computer.  He moved to 
+Virginia to work with Legend Entertainment, and has not yet (seriously) 
+regretted it. His interests include music composition (some of which you will 
+hear in this game), fantasy/science-fiction literature, and real volleyball.
+
+
+Michael Lindner (1959 -    )
+
+Michael was discovered in the wilds of Florida in 1959 by wandering nomads.  
+After a series of serious but unexplained incidents, he moved north to court 
+his beloved companion-for-life, Heather Peck.  Mr. Lindner spends most of his 
+time imagining how much fun he would be having if he were working on 
+adventure games.  Michael, Heather, and their mentally disturbed cat, Nigel, 
+live in the urban wilderness of Arlington, Virginia.
+
+
+Mike Verdu (1964 -    )
+
+Mike was born in Washington, D.C. and grew up overseas.  After returning to 
+the United States in 1981, Mike spent two years at Rensselaer Polytechnic 
+Institute in Troy, New York, and then founded a small programming services 
+company in the Washington, DC area.  His fifteen person company was acquired 
+by a large defense contractor in 1987, and Mike spent the next few years 
+working on US Army, Navy, and Air Force software development contracts.  
+In 1989 Mike came to his senses and founded Legend Entertainment with Bob 
+Bates, fulfilling a life long-dream of working in the field of entertainment 
+software.  While Mike co-produced two of Legend's previous products, GATEWAY 
+is his first writing effort.
+
+
+SECTION 18 - Credits
+==========================================================================
+				   
+Design & Implementation of Part I:Gateway Prospector...Mike Verdu, Duane Beck
+Design & Implementation of Part II:Other Worlds....Michael Lindner, Bob Bates
+Design & Implementation of Part III: Endgame................... Glen Dahlgren
+Additional Design ................................................  Bob Bates
+
+Computer Illustration ......................  Tanya Isaacson, Kathleen Bober, 
+ Fred Holz, Doug Chezem, Paul Mock, Chris Moore, Mark Stutzman, Cindy Kovalck
+
+System Architecture .................................  Duane Beck & Bob Bates
+System Programming .................. Duane Beck, Mark Poesch, Glen Dahlgren,
+							      Michael Lindner
+Special Cinematic Effects and Animation ............ Mark Poesch, Doug Chezem
+Graphics Systems Development ...................................  Mark Poesch
+
+Music Composition ...............  Arfing Dog, Glen Dahlgren, Michael Lindner
+Music System Development .................................... Michael Lindner
+AdLib Transcription ........................  Michael Lindner & Glen Dahlgren
+
+Sound Effects ................................................  Glen Dahlgren
+
+Production Coordination .......................................  Peggy Oriani
+
+Cover Art ......................................................  Chris Moore
+
+Game Testing ....Barbara DeFilippo, Raff Brooks, Ed Storazuk, Michael Sonesen
+
+Additional Testing ...........................  Steve Meretzky, Alyssa Verdu,
+				      Wendy Pry, Linda Duchaineau, Bob Bates,
+		  Dennis Kucharzyk, Caryl Evans, Judy Loveless, Glen Dahlgren
+
+Produced by .....................  Mike Verdu, Michael Lindner, Glen Dahlgren
+
+
+SECTION 19 - Help! Troubleshooting and Technical Assistance
+==========================================================================
+
+Some common problems and their solutions are described in this section.  If 
+your problem is not addressed, please call our toll-free customer support 
+line (1-800-658-8891) between 9:00 a.m. and 5:00 p.m. EDT/EST.  If you live 
+outside the United States, call 703-222-8515 and ask for customer support.  
+For game hints, look in the enclosed hint book, or try dialing into one of 
+the on-line services (with a modem) where you can talk to real live gamers 
+who have probably been stuck at the same place you are.
+
+-I've got an MT-32 and I do not hear any music
+If you have a Roland MT-32 (or compatible) sound module and you are not 
+hearing any music, start the game with the command GATE MT32.  If you are 
+still not hearing any music, the difficulty can probably be traced to one of 
+two sources:
+
+	1. You may have two cards in your computer that are set to the same 
+	   IRQ.  If this is the case, change the IRQ value for one of the 
+	   cards by using the card's jumpers or switches.  Some cards may not 
+	   allow this.  Consult the manual for the card for more details.
+
+	2. Your MIDI interface may be set to an IRQ or an I/O address other 
+	   than the default values of 2 and 330, respectively.  In this case, 
+	   you must specify the appropriate IRQ value or I/O address in the 
+	   command line when you start up the game.  For example, to use a 
+	   MIDI interface card set to operate on IRQ 5 and address 300, you 
+	   should start the game by typing GATE MT32 5 300.
+
+-I'm getting a low memory warning
+If you get a low memory warning when you start up the game, make sure you 
+have taken all of your TSR (terminate & stay resident) programs out of RAM.  
+You can also save memory by specifying CGA graphics instead of EGA or 
+VGA (type GATE CGA to force CGA graphics).
+
+-The mouse cursor is eating the graphics!
+If moving your mouse cursor over the picture destroys it, then the mouse you 
+are using is probably not Microsoft compatible.  If this happens, try exiting 
+to DOS and starting the game again by typing GATE XMOUSE.
+
+-The mouse cursor isn't anywhere to be seen
+If the mouse doesn't seem to be working, make sure you install the mouse 
+driver before you start up the game.  You can usually accomplish this by 
+typing MOUSE <ENTER> from the MS-DOS prompt.  If you get a "Bad command 
+or file name" error, find out where the mouse driver lives on the disk or 
+consult the documentation that came with your mouse and its driver software.
+
+-I have a color monitor and I'm seeing pictures in black and white
+If you have a CGA, MCGA, or TGA (Tandy Graphics Adapter) compatible graphics 
+interface card, then the pictures will appear in black and white, 640x200 
+resolution mode.  If you have a VGA or EGA card and you are seeing CGA black 
+and white pictures, then your VGA card may not have enough "on board" memory 
+or it might not be register compatible. 
+
+-None of this has helped me!
+If you have a hard drive and are suffering from problems that you cannot 
+explain, then there is one step to take before calling us: Try booting your 
+machine from a clean "system boot floppy" uncluttered with autoloading TSRs, 
+device drivers, and complicated CONFIG.SYS files.  Then run the game and see 
+if the problems go away.  To create a boot floppy, follow these instructions 
+carefully:
+
+	 1.  Find a blank diskette for your A drive.
+	 2.  Insert the blank diskette in the A drive and close the drive 
+	     door.
+	 3.  Type DIR A:  then hit the <ENTER> key.
+	 4.  If you see any files listed, you need to go back to step 1 
+	     because the disk is not blank and if you continue from 
+	     here you will wipe out everything on the disk.
+	 5.  Type FORMAT A: /S then hit the <ENTER> key.
+	 6.  Type N when DOS asks if you want to format another diskette
+	 7.  Type DIR A: then hit the <ENTER> key
+	 8.  You should see COMMAND. COM listed in the newly formatted disk's 
+	     directory.  If you do not, type COPY C: \COMMAND.COM A:  then 
+	     hit the <ENTER> key
+	 9.  Type A: then hit the <ENTER> key.
+	10.  Type COPY CON CONFIG.SYS then hit the <ENTER> key; the DOS 
+	     prompt is now gone, but the cursor is still there.  
+	11.  Type FILES=20 then hit the <ENTER> key
+	12.  Type BUFFERS=20 then hit the <ENTER> key
+	13.  Hold down the <CRTL> key and hit the letter Z once, then the 
+	     <ENTER> key.
+
+DOS tells you it copied one file and the DOS prompt is back on the screen.  
+Congratulations!  You just made your own DOS system configuration file on 
+your own DOS system boot floppy.  Now reboot your computer with this diskette 
+still in your A: drive.  When the boot process is complete you will see this 
+DOS prompt:  A:>
+
+	14. Type C: and hit the <ENTER> key
+	15. Type CD GATE for GATEWAY and hit the <ENTER> key
+	16. Type the command listed in your game manual to start the game.
+
+If you have any further trouble, please call Customer Support toll-free 
+between 9am and 5pm Eastern time Monday through Friday at 1-800-658-8891.
+
+
+SECTION 20 - Legal Stuff
+==========================================================================
+     
+We appreciate your purchasing a license to use our product, and we want you 
+to feel good about that purchase.  Unfortunately, our lawyers have forced us 
+to put some rather obnoxious verbiage here.  Fortunately, all of our 
+competition puts the same stuff in their manuals.  Some of the things written 
+below may appear to be outrageous and unconscionable.  But then, so are our 
+lawyers.  (Q.  You see 500 lawyers buried up to their necks in concrete. 
+What's missing?  A:  The last 12 inches of concrete.)
+     
+1. Limited Warranty.  This manual and the related software product are sold 
+"AS IS," without warranty as to their performance.  Wait a minute!  You mean 
+that if the program does not have a happy ending, I do not get my money back?
+Yes.  We have probably already spent your money to keep our programmers in 
+pizza anyway.  Here comes some more legalese to try to nail down that 
+concept.
+     
+The entire risk as to the quality and performance of the computer software 
+program is assumed by the user.  However, Legend Entertainment Company 
+warrants for a period of 90 days to the original purchaser that the 
+medium on which the software is recorded is free from defects in material and 
+workmanship.  If during that period ending 90 days from purchase a defect 
+should become apparent, return the disk to Legend or your dealer and 
+Legend will replace the disk without charge to you.  Your sole and exclusive 
+remedy in the event of a defect is expressly limited to replacement of the 
+disk as provided above.  This warranty gives you specific legal rights and 
+you may also have other rights which vary from state to state.  
+(NOTE:  After the warranty period, a defective disk may be returned to us 
+with a check or money order for $7.50 U. S. and we will replace it.)
+     
+THE WARRANTIES SET FORTH ABOVE ARE IN LIEU OF ALL WARRANTIES, EXPRESS OR 
+IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR 
+ANY PARTICULAR PURPOSE.  SOME STATES DO NOT ALLOW LIMITATIONS ON HOW LONG AN 
+IMPLIED WARRANTY LASTS, SO THE ABOVE LIMITATION MAY NOT APPLY TO YOU.  IN NO 
+EVENT SHALL LEGEND ENTERTAINMENT COMPANY OR ANYONE ELSE WHO HAS BEEN INVOLVED 
+IN THE CREATION OR PRODUCTION OF THIS COMPUTER SOFTWARE PROGRAM BE LIABLE FOR 
+DIRECT, INDIRECT, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF USE OF 
+THIS SOFTWARE OR ANY BREACH OF THE WARRANTY SET FORTH ABOVE.  SOME STATES DO 
+NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, 
+SO THE ABOVE LIMITATION MAY NOT APPLY TO YOU.  For example, you may be 
+playing our game when a friend passing by is distracted by some of the 
+graphics.  He walks into a floor lamp.  The lamp falls over, scaring your 
+cat.  The cat streaks from the room, upsetting a heater which sets some 
+curtains afire.  Unfortunately, it is a windy day and the fire is soon out 
+of control.  Three days later Chicago is still ablaze.  If we took out an 
+insurance policy against such remote contingencies, we'd have to 
+charge $1599.99 for the game, and you would not be reading this lame copy.  
+Anyway, we do not assume liability for things like this, even if the city 
+is a small one like Muleshoe, Texas.  
+     
+2. Copyright. This manual and the related software product are copyright 
+(C), 1992, by Legend Entertainment Company.  All rights are reserved.  This 
+document may not, in whole or part, be copied, reproduced, plagiarized, or 
+otherwise ripped off without our express consent (which we are not going to 
+give).  The money you spent on this product purchased a license to use it 
+(check your other software; almost no software is sold these days).  The 
+scope of the license is to make such copies as are reasonably necessary for 
+your personal use.  You do not have the right to give copies to your friends 
+(or enemies).  Unreasonable copying and/or distributing of this product is a 
+violation of law.  The U. S. Copyright Act provides for statutory damages of 
+up to $50,000 for willful infringement of a copyright.  Giving copies of our 
+software to your friends is an infringement.  GOTCHA!  Now that you know that 
+unauthorized copying is an infringement, if you do so it will be willful, 
+and you can be nailed for some big bucks if we catch you.
+     
+3. Other Copyright and Trademark Notices.
+"Legend Entertainment" is a registered trademark of 
+Legend Entertainment Company.
+"AdLib Music Synthesizer Card" is a trademark of AdLib Inc.
+"Sound Blaster" is a trademark of Creative Labs, Inc.
+"RealSound" is a trademark of RealSound, Incorporated.  Part of the 
+software on your disks which implements the RealSound music is Copyright 
+(C), 1990, by RealSound, Incorporated.  All rights reserved by RealSound.
+MIDI Interface Toolkit Copyright (C), 1987 and 1989, by MusicQuest, Inc.  
+All rights reserved by MusicQuest.  
+"MT-32," "MT-100," "CM-32L," and "LAPC-1" are trademarks of 
+Roland Corporation.
+"CompuServe" is a trademark of CompuServe Incorporated.  
+"GEnie" is a trademark of General Electric Information Services Company.  
+"PRODIGY" is a trademark of Prodigy Services Company.  
+"IBM" is a trademark of IBM Corporation.  
+"Microsoft" is a trademark of Microsoft Corporation.                                   
+Portions of the game code are Copyright (C), 1988-1990 
+by Genus Microprogramming, Incorporated.   
+
+
+(C)     1992 Legend Entertainment Company
+        All Rights Reserved     
+ 
+========================================================================== 
+END OF DOCUMENT
+
+
+
+ 
+
+ 
+
+
