@@ -296,7 +296,8 @@ is fully static and needs no secrets.
   license in this repository. The PIC format was worked out with the help of the notes
   of the gateway-port project (file layouts only; the decoder here is our own).
 - The box art in `web/img/covers/` is the original packaging artwork (© Infocom/Activision,
-  now Microsoft; The Pawn, The Guild of Thieves, Jinxter, Corruption, Fish! and Myth © Magnetic Scrolls/Rainbird).
+  now Microsoft; The Pawn, The Guild of Thieves, Jinxter, Corruption, Fish! and Myth © Magnetic Scrolls/Rainbird;
+  Gateway © Legend Entertainment).
   The Magnetic Scrolls pictures in `web/img/pictures/` are from the original releases
   (© Magnetic Scrolls). Neither is covered by any license in this repository.
 - The manuals and feelies are linked, not included: the
