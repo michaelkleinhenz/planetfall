@@ -14,7 +14,7 @@ import { current, publisher } from '../engine/current.js';
 const G = () => current.code;
 import { actionContext, gameStatus } from './scene.js';
 import { sceneText, currentScene } from './scene.js';
-import * as MS from '../engine/ms/host.js';
+import { hasWorld, W } from '../engine/world.js';
 
 // Magnetic Scrolls games: the variables of the original source that describe
 // the player's situation (the 68000 code itself is not sent).
@@ -34,8 +34,8 @@ function routineSource(id) {
 
 /** Collect the code and state relevant to the player's current situation. */
 export function hintContext() {
-  if (G().ENGINE === 'magnetic') {
-    const vars = Object.entries(MS.variables(MS_VARIABLES)).map(([n, v]) => `${n} = ${v}`);
+  if (hasWorld()) {
+    const vars = Object.entries(W().variables(MS_VARIABLES)).map(([n, v]) => `${n} = ${v}`);
     return { code: '', vars };
   }
   const sections = [];
@@ -83,9 +83,15 @@ export function hintContext() {
 // readable code to show, only the game's state.
 const MAGNETIC_CONTEXT = () => `You receive the player's current situation and recent transcript, plus the current values of a few game variables. Use your knowledge of ${current.meta.title}, the published walkthroughs and the original hint books, together with what the transcript shows the player has already found and done.`;
 
+// Legend games: the original hint book (puzzles and answers) is the reference.
+const LEGEND_CONTEXT = () => `You receive the player's current situation and recent transcript, plus a few values from the game's state. Legend Entertainment's own hint book for ${current.meta.title} is below: it lists every puzzle with its answers, in order of the story. Find the puzzle that matches where the player is and what the transcript shows they have and haven't done, and base your hint on its answers.
+
+THE HINT BOOK:
+${W().hintBook()}`;
+
 const SYSTEM = (language) => `You are the hint system for ${current.meta.title.toUpperCase()}, the ${current.meta.year} ${publisher()} text adventure, in the spirit of Infocom's InvisiClues booklets.
 
-${current.code?.ENGINE === 'magnetic' ? MAGNETIC_CONTEXT() : `You receive the player's current situation and recent transcript, plus the ACTUAL GAME CODE that governs it: the JavaScript translation of the original ZIL routines for the current location, its exits, and every object in view or carried, together with the current values of the game variables those routines test. Read the code to work out what the player can do here, what is blocked, and what each object reacts to (look for the verbs a routine handles with isVerb(V.X, ...), the conditions on flags and variables, and what changes the score). You may also use your general knowledge of ${current.meta.title}, but the code and the current state are authoritative.`}
+${current.code?.ENGINE === 'legend' ? LEGEND_CONTEXT() : current.code?.ENGINE === 'magnetic' ? MAGNETIC_CONTEXT() : `You receive the player's current situation and recent transcript, plus the ACTUAL GAME CODE that governs it: the JavaScript translation of the original ZIL routines for the current location, its exits, and every object in view or carried, together with the current values of the game variables those routines test. Read the code to work out what the player can do here, what is blocked, and what each object reacts to (look for the verbs a routine handles with isVerb(V.X, ...), the conditions on flags and variables, and what changes the score). You may also use your general knowledge of ${current.meta.title}, but the code and the current state are authoritative.`}
 
 Decide the most useful next step for making progress or staying alive. If the transcript shows urgent trouble (hunger, thirst, exhaustion, sickness, a countdown, danger), address that first.
 

@@ -8,9 +8,9 @@ import { chat } from './openrouter.js';
 import { current, publisher } from '../engine/current.js';
 import { sceneText } from './scene.js';
 import { INTERPRETER_RULE } from './immersive.js';
-import * as MS from '../engine/ms/host.js';
+import { hasWorld, W } from '../engine/world.js';
 
-const isMagnetic = () => current.code?.ENGINE === 'magnetic';
+const isMagnetic = () => hasWorld();
 
 // Debugging/meta syntaxes the AI should never produce.
 const HIDDEN = /^(#|\$|script|unscript|verify)/;
@@ -18,7 +18,7 @@ const HIDDEN = /^(#|\$|script|unscript|verify)/;
 function verbReference() {
   if (isMagnetic()) {
     // Magnetic Scrolls' parser takes whole sentences; its dictionary lists the verbs.
-    const v = MS.vocabulary();
+    const v = W().vocabulary();
     return {
       patterns: `VERB [OBJ] [PREP OBJ], e.g. "put the coin in the box", "ask NAME about OBJ", "get all except OBJ"; verbs: ${v.verbs.join(', ')}; game commands: ${v.meta.join(', ')}`,
       synonyms: v.synonyms.length ? `also understood: ${v.synonyms.join(', ')}` : '(none listed)',
@@ -41,7 +41,7 @@ const vocabulary = () => (isMagnetic() ? msWords() : [...new Set(Object.values(c
   .join(' ');
 
 function msWords() {
-  const v = MS.vocabulary();
+  const v = W().vocabulary();
   return [...v.verbs, ...v.adjectives, ...v.nouns, ...v.directions, ...v.meta, ...v.prepositions, ...v.synonyms]
     .flatMap((w) => w.split(' '));
 }

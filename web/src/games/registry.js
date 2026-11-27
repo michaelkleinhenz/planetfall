@@ -719,6 +719,25 @@ export const GAMES = {
     license: 'Original 1989 release (game file © Magnetic Scrolls), run as it was published; not under an open license.',
     load: () => Promise.all([import('./myth/game.js'), import('./myth/story-data.js')]),
   },
+  gateway: {
+    id: 'gateway',
+    publisher: 'Legend Entertainment',
+    title: "Frederik Pohl's Gateway",
+    year: 1992,
+    author: 'Glen Dahlgren & Mike Verdu',
+    blurb: {
+      en: 'You have won a one-way ticket to Gateway, the asteroid where the vanished Heechee left hundreds of starships. Nobody knows where they go. Climb in, push a button, and hope you come back rich.',
+      de: 'Du hast ein Ticket nach Gateway gewonnen, dem Asteroiden, auf dem die verschwundenen Heechee Hunderte von Raumschiffen zurückließen. Niemand weiß, wohin sie fliegen. Steig ein, drück einen Knopf und hoffe, dass du reich zurückkommst.',
+    },
+    // The status line shows the date and time; the score is counted as it changes.
+    statusSecond: 'time',
+    maxScore: 1600,
+    example: { en: 'open the drawer and take the book', de: 'öffne die Schublade und nimm das Buch' },
+    names: 'Gateway, Heechee, Heecheetown, Terri Neilson, Nubar Kamalian, Thom Seldridge, DataMan, PV commset, Blue Hell, Level Babe, Level Tanya',
+    translatorNotes: 'Keep the names of places, ships, programs and characters as written. "PV" is a phone/video console.',
+    license: 'Original 1992 release (game files © Legend Entertainment, given away by Legend as freeware in 1996), run as it was published; not under an open license.',
+    load: () => Promise.all([import('./gateway/game.js'), import('./gateway/story-data.js')]),
+  },
 };
 
 export const GAME_IDS = Object.keys(GAMES);
