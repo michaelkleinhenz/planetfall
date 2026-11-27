@@ -725,6 +725,7 @@ export const GAMES = {
     title: "Frederik Pohl's Gateway",
     year: 1992,
     author: 'Glen Dahlgren & Mike Verdu',
+    cover: 'img/covers/gateway.jpg',
     blurb: {
       en: 'You have won a one-way ticket to Gateway, the asteroid where the vanished Heechee left hundreds of starships. Nobody knows where they go. Climb in, push a button, and hope you come back rich.',
       de: 'Du hast ein Ticket nach Gateway gewonnen, dem Asteroiden, auf dem die verschwundenen Heechee Hunderte von Raumschiffen zurückließen. Niemand weiß, wohin sie fliegen. Steig ein, drück einen Knopf und hoffe, dass du reich zurückkommst.',
